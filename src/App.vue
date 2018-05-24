@@ -18,6 +18,11 @@
 </script>
 
 <style>
+    figcaption {
+        font-weight: bold;
+        padding: 10px 0px 20px 0px;
+    }
+
     .slide-leave-active {
         transition: opacity .5s ease;
         opacity: 0;
