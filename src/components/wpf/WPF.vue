@@ -1,7 +1,7 @@
 <template>
     <div class="panel panel-primary">
         <div class="panel-heading">
-            {{pageTitle}}
+            WPF
         </div>
         <div class="panel-body">
             <h2>Pluralsight Courses</h2>

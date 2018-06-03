@@ -318,20 +318,20 @@
                     <h3>Demo: Data Forms with No Data Binding</h3>
                     <div class="example">
                         <div class="input-group">
-                            <input id="Ex02-001" type="text" value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 2\before\DataBindingBasics\DataBindingBasics.sln">
-                            <span class="input-group-btn">
+                            <input id="Ex02-001" class="form-control" type="text" value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 2\before\DataBindingBasics\DataBindingBasics.sln">
+                            <span class="input-group-btn" >
                 	        <button class="btn" data-clipboard-target="#Ex02-001">
-                        	    <img src="app/images/clippy.svg" width="13" alt="Copy to clipboard">
+                        	    <img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard">
                             </button>
         	            </span>
                         </div>
                     </div>
                     <div class="example">
                         <div class="input-group">
-                            <input id="Ex02-002" type="text" value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 2\after\DataBindingBasics\DataBindingBasics.sln">
+                            <input id="Ex02-002" class="form-control" type="text" value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 2\after\DataBindingBasics\DataBindingBasics.sln">
                             <span class="input-group-btn">
                 	        <button class="btn" data-clipboard-target="#Ex02-002">
-                        	    <img src="app/images/clippy.svg" width="13" alt="Copy to clipboard">
+                        	    <img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard">
                             </button>
         	            </span>
                         </div>
@@ -369,14 +369,14 @@
                     </p>
                     <figure>
 <pre class="prettyprint"><code>public partial class MainWindow : Window
-    {
-        ZzaEntities _ZzaContext = new ZzaEntities();
+{
+    ZzaEntities _ZzaContext = new ZzaEntities();
 
-        public MainWindow()
-        {
-            InitializeComponent();
-            Loaded += MainWindow_Loaded;
-        }</code></pre>
+    public MainWindow()
+    {
+        InitializeComponent();
+        Loaded += MainWindow_Loaded;
+    }</code></pre>
                         <figcaption>Fig 01-017</figcaption>
                     </figure>
                     <p>
@@ -385,17 +385,17 @@
                     </p>
                     <figure>
 <pre class="prettyprint"><code>void MainWindow_Loaded(object sender, RoutedEventArgs e)
-    {
+{
 
-        var firstCustomer = _ZzaContext.Customers.FirstOrDefault();
-        CustomerIdLabel.Content = firstCustomer.Id;
-        CustomerLastNameTextBox.Text = firstCustomer.LastName;
+    var firstCustomer = _ZzaContext.Customers.FirstOrDefault();
+    CustomerIdLabel.Content = firstCustomer.Id;
+    CustomerLastNameTextBox.Text = firstCustomer.LastName;
 
-        var orderDates = _ZzaContext.Orders
-            .Where(o => o.CustomerId == firstCustomer.Id).Select(o => o.OrderDate).ToList();
-        OrdersList.ItemsSource = orderDates;
+    var orderDates = _ZzaContext.Orders
+        .Where(o => o.CustomerId == firstCustomer.Id).Select(o => o.OrderDate).ToList();
+    OrdersList.ItemsSource = orderDates;
 
-    }</code></pre>
+}</code></pre>
                         <figcaption>Fig 01-018</figcaption>
                     </figure>
                     <p>
@@ -492,22 +492,22 @@ OrdersList.ItemsSource = orderDates;</code></pre>
                     <h3>Demo: Data Binding Basics</h3>
                     <div class="example">
                         <div class="input-group">
-                            <input id="Ex02-003" type="text" value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 2\before\DataBindingBasics\DataBindingBasics.sln">
+                            <input id="Ex02-003" type="text" class="form-control" value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 2\before\DataBindingBasics\DataBindingBasics.sln">
                             <span class="input-group-btn">
-                	        <button class="btn" data-clipboard-target="#Ex02-003">
-                        	    <img src="app/images/clippy.svg" width="13" alt="Copy to clipboard">
-                            </button>
-        	            </span>
+                                <button class="btn" data-clipboard-target="#Ex02-003">
+                                    <img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard">
+                                </button>
+        	                </span>
                         </div>
                     </div>
                     <div class="example">
                         <div class="input-group">
-                            <input id="Ex02-004" type="text" value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 2\after\DataBindingBasics\DataBindingBasics.sln">
+                            <input id="Ex02-004" type="text" class="form-control"  value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 2\after\DataBindingBasics\DataBindingBasics.sln">
                             <span class="input-group-btn">
-                	        <button class="btn" data-clipboard-target="#Ex02-004">
-                        	    <img src="app/images/clippy.svg" width="13" alt="Copy to clipboard">
-                            </button>
-        	            </span>
+                                <button class="btn" data-clipboard-target="#Ex02-004">
+                                    <img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard">
+                                </button>
+        	                </span>
                         </div>
                     </div>
                     <p>
@@ -822,20 +822,20 @@ OrdersList.DataContext = orderDates;</code></pre>
                     <h3>Demo: Consolidating DataContexts</h3>
                     <div class="example">
                         <div class="input-group">
-                            <input id="Ex02-004" type="text" value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 2\before\DataBindingBasics\DataBindingBasics.sln">
+                            <input id="Ex02-004" class="form-control" type="text" value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 2\before\DataBindingBasics\DataBindingBasics.sln">
                             <span class="input-group-btn">
                 	        <button class="btn" data-clipboard-target="#Ex02-004">
-                        	    <img src="app/images/clippy.svg" width="13" alt="Copy to clipboard">
+                        	    <img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard">
                             </button>
         	            </span>
                         </div>
                     </div>
                     <div class="example">
                         <div class="input-group">
-                            <input id="Ex02-005" type="text" value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 2\after\DataBindingBasics\DataBindingBasics.sln">
+                            <input id="Ex02-005" class="form-control" type="text" value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 2\after\DataBindingBasics\DataBindingBasics.sln">
                             <span class="input-group-btn">
                 	        <button class="btn" data-clipboard-target="#Ex02-005">
-                        	    <img src="app/images/clippy.svg" width="13" alt="Copy to clipboard">
+                        	    <img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard">
                             </button>
         	            </span>
                         </div>
@@ -991,11 +991,11 @@ DataContext = _ViewModel;</code></pre>
                     </p>
                     <figure>
                 <pre class="prettyprint"><code>&lt;ListBox x:Name="OrdersList"
-                    ItemsSource="{Binding OrderDates}"
-                    Grid.Row="0"
-                    Grid.Column="1"
-                    Height="100"
-                    SelectionChanged="OnOrderSelected" /></code></pre>
+    ItemsSource="{Binding OrderDates}"
+    Grid.Row="0"
+    Grid.Column="1"
+    Height="100"
+    SelectionChanged="OnOrderSelected" /></code></pre>
                         <figcaption>Fig01-045</figcaption>
                     </figure>
                     <p>
