@@ -1,0 +1,1492 @@
+<template>
+    <div class="panel-group">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h2>Binding Core Concepts</h2>
+            </div>
+            <div class="panel-body">
+                <h3>Introduction</h3>
+                <p>
+                    Hi, this is Brian Noyes. In this module, we're going to dive a little deeper into bindings and get
+                    into some of the core concepts of how you can have explicit control over exactly what a binding is
+                    doing with respect to its source objects and its paths and the direction of flow of data through
+                    that binding.
+                </p>
+                <p>
+                    First we're going to dive into binding sources. We've already seen in previous modules how bindings
+                    use the DataContext as their source by default. In this section we'll talk about the other options
+                    that you have there, including the RelativeSource bindings, ElementName bindings, and Source
+                    bindings where you can point to a explicit Source object through those properties on the binding.
+                </p>
+                <p>
+                    Next we're going to get into Property Paths in a little more detail. We've seen simple paths that
+                    are just a property name in previous demos, and we've actually seen a couple of other examples that
+                    dot down. Here we'll just talk a little bit more about exactly what is supported, the fact that you
+                    can walk an entire object graph through the property path and even index into arrays
+                </p>
+                <p>
+                    And also we'll talk a little bit about debugging bindings when they're not working and see how you
+                    can spot the errors for your bindings in the output window.
+                </p>
+                <p>
+                    Finally, we'll close out this module with the mode and direction of bindings. Bindings flow from
+                    source to target, by default, and we've seen that you can have two-way bindings that flow from
+                    target to source as well. The binding mode property is the thing that lets you control this, and
+                    we'll also look into how the default direction is set for a given target property through its
+                    DependencyProperty metadata.
+                </p>
+            </div>
+            <div class="panel-body">
+                <h3>Binding Sources</h3>
+                <p>
+                    Let's talk about how the Source object for your binding is provided to that binding. The Source
+                    object that's going to be used is explicitly determined by the way the binding is defined.
+                    Typically, it's going to use the DataContext of the element that the binding is on, and we've seen
+                    that in previous demos, as well as talked about how the DataContext can flow down to that element by
+                    being set on some parent element.</p>
+                <p>
+                    But there's actually three other ways that you can explicitly point to some Source object. The first
+                    one is a RelativeSource binding. RelativeSource is a property on the binding that you can point to a
+                    RelativeSource markup extension that indicates where the Source object can be found in the element
+                    hierarchy. So it's called RelativeSource because it's kind of like a relative path within the
+                    element hierarchy, and there's a couple of different forms this can take on that we'll look at in a
+                    demo.
+                </p>
+                <p>
+                    Another way you can specify the Source object is with an ElementName. If you're going to use some
+                    other element within the current UI as the source object, then you can use ElementName= and the name
+                    of that element, and it will locate that element in the visual tree and treat that as the Source
+                    object.
+                </p>
+                <p>
+                    And then the last way is to use the Source property on a binding. Source property has to point to
+                    some object reference that you want to use as the source. Now the only reasonable way to get an
+                    object reference down into the Source property is to use a static resource that points to some
+                    object in a Resource collection. So let's see all of these in some demos.
+                </p>
+            </div>
+            <div class="panel-body">
+                <h3>Demo: RelativeSource Bindings</h3>
+                <div class="example">
+                    <div class="input-group">
+                        <input id="Ex04-001" type="text" class="form-control"
+                               value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 4\before\BindingSources\BindingSources.sln">
+                        <span class="input-group-btn">
+                	        <button class="btn" data-clipboard-target="#Ex04-001">
+                        	    <img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard">
+                            </button>
+        	            </span>
+                    </div>
+                </div>
+                <div class="example">
+                    <div class="input-group">
+                        <input id="Ex04-002" type="text" class="form-control"
+                               value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 4\after\BindingSources\BindingSources.sln">
+                        <span class="input-group-btn">
+                	        <button class="btn" data-clipboard-target="#Ex04-002">
+                        	    <img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard">
+                            </button>
+        	            </span>
+                    </div>
+                </div>
+
+
+                <p>
+                    In this series of demos, I want to get you familiar with the other ways you can provide a Source
+                    object to your bindings other than using the DataContext that is the default. The first one we're
+                    going to look at is RelativeSource bindings.
+                </p>
+                <p>
+                    So the starting point for these demos is that we have a solution here with a basic data bound form,
+                    it's got a DataGrid in it, I can fire it up here, and you can see that we have customers from the
+                    Zza database that we're using for sample data in this course.
+                </p>
+                <figure>
+                    <img src="./images/wpfdatabindingindepth/Fig03-001.png" class="image"/>
+                    <figcaption>Fig 03-001</figcaption>
+                </figure>
+                <p>The data access is being done through a data layer that's part of the solution. It just has plain old
+                    CLR objects for the data entities:
+                </p>
+                <figure>
+                <pre class="prettyprint"><code>namespace Zza.Data
+{
+    public class Customer
+    {
+        public Customer()
+        {
+            Orders = new List&lt;Order&gt;();
+        }
+        [Key]
+        public Guid Id { get; set; }
+        public Guid? StoreId { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string FullName { get { return FirstName + &quot; &quot; + LastName; } }
+        public string Phone { get; set; }
+        public string Email { get; set; }
+        public string Street { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public string Zip { get; set; }
+        public List&lt;Order&gt; Orders { get; set; }
+    }
+}
+                </code></pre>
+                    <figcaption>Fig 03-002</figcaption>
+                </figure>
+                <p>And it's got a DBContext and an Entity Framework DBContext that we're doing the data access
+                    through.</p>
+                <figure>
+                <pre class="prettyprint"><code>public class ZzaDbContext : DbContext
+{
+    public DbSet&lt;Customer&gt; Customers { get; set; }
+    public DbSet&lt;Order&gt; Orders { get; set; }
+    public DbSet&lt;Product&gt; Products { get; set; }
+    public DbSet&lt;OrderItem&gt; OrderItems { get; set; }
+    public DbSet&lt;OrderItemOption&gt; OrderItemOptions { get; set; }
+    public DbSet&lt;ProductOption&gt; ProductOptions { get; set; }
+    public DbSet&lt;ProductSize&gt; ProductSizes { get; set; }
+    public DbSet&lt;OrderStatus&gt; OrderStatuses { get; set; }</code></pre>
+                    <figcaption>Fig 03-003</figcaption>
+                </figure>
+                <p>
+                    Again, how you do your data access is up to you, just get it into Entities and you're ready to data
+                    bind.
+                </p>
+                <p>
+                    We've got the MainWindow code, which is mostly just the contents contained in the DataGrid here with
+                    the pre-defined columns. The DataGrid is bound to a Customers collection that we're exposing on our
+                    DataContext, and each of the columns is bound to properties on the individual Customer object that's
+                    being rendered out.
+                </p>
+                <figure>
+                <pre class="prettyprint"><code>&lt;DataGrid x:Name=&quot;customerDataGrid&quot;
+      Grid.Row=&quot;1&quot;
+      ItemsSource=&quot;{Binding Source={StaticResource customerViewSource}}&quot;
+      AutoGenerateColumns=&quot;False&quot;
+      SelectionChanged=&quot;customerDataGrid_SelectionChanged&quot;
+      CanUserAddRows=&quot;False&quot;&gt;
+&lt;DataGrid.Columns&gt;
+    &lt;DataGridTextColumn x:Name=&quot;idColumn&quot;
+                        Width=&quot;Auto&quot;
+                        Header=&quot;Id&quot;
+                        Binding=&quot;{Binding Id}&quot; /&gt;
+    &lt;DataGridTextColumn x:Name=&quot;firstNameColumn&quot;
+                        Width=&quot;Auto&quot;
+                        Header=&quot;First Name&quot;
+                        Binding=&quot;{Binding FirstName}&quot; /&gt;
+    &lt;DataGridTextColumn x:Name=&quot;lastNameColumn&quot;
+                        Width=&quot;Auto&quot;
+                        Header=&quot;Last Name&quot;
+                        Binding=&quot;{Binding LastName}&quot; /&gt;
+    &lt;DataGridTextColumn x:Name=&quot;emailColumn&quot;
+                        Width=&quot;Auto&quot;
+                        Header=&quot;Email&quot;
+                        Binding=&quot;{Binding Email}&quot; /&gt;</code></pre>
+                    <figcaption>Fig 03-004</figcaption>
+                </figure>
+                <p>
+                    As we talked about before, when a DataGrid renders its rows it sets the DataContext for the current
+                    row to the current object, which will be a customer in this case, so these bindings on the columns
+                    are relative to a single customer. Then we need to set the DataContext to a collection of Customers,
+                    and we do that from the code-behind.
+                </p>
+                <figure>
+                <pre class="prettyprint"><code>public MainWindow()
+{
+    InitializeComponent();
+    using (ZzaDbContext context = new ZzaDbContext())
+    {
+        Customers = new ObservableCollection&lt;Customer&gt;(context.Customers);
+    }
+    DataContext = this;
+}
+
+public ObservableCollection&lt;Customer&gt; Customers
+{
+    get { return (ObservableCollection&lt;Customer&gt;)GetValue(CustomersProperty); }
+    set { SetValue(CustomersProperty, value); }
+}
+
+public static readonly DependencyProperty CustomersProperty =
+    DependencyProperty.Register(&quot;Customers&quot;,
+    typeof(ObservableCollection&lt;Customer&gt;),
+    typeof(MainWindow),
+    new PropertyMetadata(null));</code></pre>
+                    <figcaption>Fig 03-005</figcaption>
+                </figure>
+                <p>
+                    Here you can see we're using our DBContext to execute a query on top of the Customers collection,
+                    push that into an observable collection that we called Customers, and exposed as a
+                    DependencyProperty from our code-behind, similar to previous demos.
+                </p>
+                <p>
+                    Then we set the DataContext programmatically here by setting DataContext = the this reference, the
+                    Window itself. So the first way we could use RelativeSource bindings is to get rid of this
+                    DataContext = this here. We can do that declaratively from the XAML.
+                </p>
+                <p>
+                    So I'll delete that from the code-behind:
+                </p>
+                <figure>
+                <pre class="prettyprint"><code>public MainWindow()
+{
+    InitializeComponent();
+    using (ZzaDbContext context = new ZzaDbContext())
+    {
+        Customers = new ObservableCollection&lt;Customer&gt;(context.Customers);
+    }
+    DataContext = this;
+}</code></pre>
+                    <figcaption>Fig 03-006</figcaption>
+                </figure>
+                <p>
+                    I'll switch over to the XAML and go up to the top to the window element, and I'll add in the
+                    declaration here that sets the DataContext declaratively through a binding, and remember, that
+                    binding would normally use the DataContext as its Source object.
+                </p>
+                <figure>
+                    <pre class="prettyprint"><code>DataContext=&quot;{Binding RelativeSource={RelativeSource Self}}&quot;</code></pre>
+                    <figcaption>Fig 03-007</figcaption>
+                </figure>
+                <p>
+                    Well, that's going to get you in kind of a recursive thing here, which isn't going to work, so we
+                    need the XAML equivalent here of pointing to the this reference on the Window and we can do that
+                    with a RelativeSource Self binding.
+                </p>
+                <p>
+                    So RelativeSource is a property on the binding when set, it's going to obtain an object reference
+                    that will be used as the Source object. And the way it's going to obtain that reference is through
+                    one of several modes that this RelativeSource markup extension supports.
+                </p>
+                <p>
+                    This one is the Self mode and it's basically like a this reference on whatever element the binding
+                    is on. So in this case it's going to obtain a reference to the Window and set that as the
+                    DataContext, which is exactly what we're looking for here.
+                </p>
+                <p>
+                    Now for another example of using a RelativeSource binding, let's say that in our DataGrid we want to
+                    add a Delete button to each row so that we can click on that and delete the corresponding customer.
+                </p>
+                <p>
+                    I'm going to drop into my code-behind here and go down to the bottom here, and the idea is that we
+                    want to have a method that looks like this OnDeleteCustomer that takes in a customer reference and
+                    removes it and possibly deletes it from our database.
+                </p>
+                <figure>
+                <pre class="prettyprint"><code>private void OnDeleteCustomer(Customer customer)
+{
+    Customers.Remove(customer);
+}</code></pre>
+                    <figcaption>Fig 03-008</figcaption>
+                </figure>
+                <p>In this case, I'm just going to remove it from the data bound collection, and we need a way to target
+                    that method in a data bound way.
+                </p>
+                <p>
+                    Now a common way to do that would be to use a Command object, so I'm going to add in a new
+                    DependencyProperty here called DeleteCustomerCommand:
+                </p>
+                <figure>
+                <pre class="prettyprint"><code>public RelayCommand&lt;Customer&gt; DeleteSelectedCommand
+{
+    get { return (RelayCommand&lt;Customer&gt;)GetValue(DeleteSelectedCommandProperty); }
+    set { SetValue(DeleteSelectedCommandProperty, value); }
+}
+
+public static readonly DependencyProperty DeleteSelectedCommandProperty =
+    DependencyProperty.Register(&quot;DeleteSelectedCommand&quot;,
+    typeof(RelayCommand&lt;Customer&gt;),
+    typeof(MainWindow),
+    new PropertyMetadata(null));</code></pre>
+                    <figcaption>Fig 03-009</figcaption>
+                </figure>
+                <p>
+                    DeleteCustomerCommand is of type RelayCommand&lt;T&gt;, and that's a type that's in my solution
+                    here, it's a common pattern in data bound scenarios where you use the ICommand interface of WPF to
+                    create an object that can target some other object's method and invoke it when this Command object
+                    gets executed.
+                </p>
+                <figure>
+                <pre class="prettyprint"><code>    public class RelayCommand : ICommand
+    {
+        Action _TargetExecuteMethod;
+        Func&lt;bool&gt; _TargetCanExecuteMethod;
+
+        public RelayCommand(Action executeMethod)
+        {
+            _TargetExecuteMethod = executeMethod;
+        }
+
+        public RelayCommand(Action executeMethod, Func&lt;bool&gt; canExecuteMethod)
+        {
+            _TargetExecuteMethod = executeMethod;
+            _TargetCanExecuteMethod = canExecuteMethod;
+        }
+
+        public void RaiseCanExecuteChanged()
+        {
+            CanExecuteChanged(this, EventArgs.Empty);
+        }
+        #region ICommand Members
+
+        bool ICommand.CanExecute(object parameter)
+        {
+            if (_TargetCanExecuteMethod != null)
+            {
+                return _TargetCanExecuteMethod();
+            }
+            if (_TargetExecuteMethod != null)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        // Beware - should use weak references if command instance lifetime is longer than lifetime of UI objects that get hooked up to command
+        // Prism commands solve this in their implementation
+        public event EventHandler CanExecuteChanged = delegate { };
+
+        void ICommand.Execute(object parameter)
+        {
+            if (_TargetExecuteMethod != null)
+            {
+                _TargetExecuteMethod();
+            }
+        }
+        #endregion
+    }</code></pre>
+                    <figcaption>Fig 03-010</figcaption>
+                </figure>
+                <p>
+                    RelayCommand just uses delegates under the covers to point to that method on some other object. The
+                    method we're going to be targeting is our DeleteCustomer method and some other object will be the
+                    Window itself.
+                </p>
+                <figure>
+                <pre class="prettyprint"><code>private void OnDeleteCustomer(Customer customer)
+{
+    Customers.Remove(customer);
+}</code></pre>
+                    <figcaption>Fig 03-011</figcaption>
+                </figure>
+                <p>
+                    So now we need to initialize this DeleteCustomerCommand to an instance of a RelayCommand that points
+                    to OnDeleteCustomer. So I'll just go up here to the constructor of the Window and add a line of code
+                    that sets that property to an instance of the RelayCommand:
+                </p>
+                <figure>
+                <pre class="prettyprint"><code>public MainWindow()
+{
+    InitializeComponent();
+    using (ZzaDbContext context = new ZzaDbContext())
+    {
+        Customers = new ObservableCollection&lt;Customer&gt;(context.Customers);
+    }
+    DeleteCustomerCommand = new RelayCommand&lt;Customer&gt;(OnDeleteCustomer);
+    DeleteSelectedCommand = new RelayCommand&lt;Customer&gt;(OnDeleteCustomer, CanDeleteCustomer);
+}</code></pre>
+                    <figcaption>Fig 03-012</figcaption>
+                </figure>
+                <p>
+                    and the RelayCommand constructor takes a delegate reference to the target method, which is our
+                    OnDeleteCustomer. So we're just using Delegate Inference here in C# to pass the method name
+                    directly, and it turns it into an action delegate reference that gets passed in as the argument to
+                    that RelayCommand. Then basically, if someone executes this command, they'll be executing the target
+                    method of that action, which is our OnDeleteCustomer.
+                </p>
+                <p>
+                    So now we just need a way to execute this command, but doing it with data binding from the button
+                    within the view, so let's go add that button. To add the button, I'm going to go into the DataGrid
+                    itself and just drop in here and add a new column at the front here.
+                </p>
+                <figure>
+                <pre class="prettyprint"><code>&lt;DataGrid x:Name=&quot;customerDataGrid&quot;
+            Grid.Row=&quot;1&quot;
+            AutoGenerateColumns=&quot;False&quot;
+            ItemsSource=&quot;{Binding Customers}&quot;
+            SelectionChanged=&quot;customerDataGrid_SelectionChanged&quot;
+            CanUserAddRows=&quot;False&quot;&gt;
+        &lt;DataGrid.Columns&gt;
+            &lt;DataGridTemplateColumn x:Name=&quot;deleteButtonColumn&quot;
+                Width=&quot;Auto&quot;&gt;
+            &lt;DataGridTemplateColumn.CellTemplate&gt;
+                &lt;DataTemplate&gt;
+                    &lt;Button Content=&quot;Delete&quot; /&gt;
+                &lt;/DataTemplate&gt;
+            &lt;/DataGridTemplateColumn.CellTemplate&gt;
+        &lt;/DataGridTemplateColumn&gt;
+    &lt;/DataGrid.Columns&gt;
+&lt;/DataGrid&gt;</code></pre>
+                    <figcaption>Fig 03-013</figcaption>
+                </figure>
+                <p>
+                    And the kind of column that I added here is a DataGridTemplateColumn. A DataGridTemplateColumn uses
+                    a DataTemplate, which we'll get into a lot more detail on in a later module, to specify the
+                    structure that we want to put into each cell within that column.
+                </p>
+                <p>
+                    So you can see we're just putting a Button with its contents set to "Delete", so that's what'll show
+                    on the button and that'll show up in each row, basically, right next to the Customer row.
+                </p>
+                <p>
+                    Now we need this button to be able to invoke our command or execute that command. So Buttons have a
+                    Command property on them which we can use to set a binding:
+                </p>
+                <figure>
+                    <pre class="prettyprint"><code>&lt;Button Command=&quot;{Binding}&quot; Content=&quot;Delete&quot; /&gt;</code></pre>
+                    <figcaption>Fig 03-014</figcaption>
+                </figure>
+                <p>
+                    and basically we need to be able to point this binding to that Command object in our code-behind.
+                    The challenge is, this binding is part of the column definition, and as we saw in other column
+                    definitions, the DataContext for those bindings is a single row object.
+                </p>
+                <p>
+                    So these bindings are binding against a single customer and, therefore, this binding up here would
+                    be pointing to a single customer if we relied on DataContext, but we don't want to put our Delete
+                    logic for removing a Customer from its parent collection down on the Customer object itself, so we
+                    need a way to point right here to the Window object and to the Command object on that Window, and
+                    one way to do that is with a RelativeSource binding.
+                </p>
+                <p>
+                    So what we're going to do is use a RelativeSource to kind of escape from the row and walk our way
+                    back out to the Window using the RelativeSource. So RelativeSource lets you walk up the visual tree
+                    from where you're at to get to some parent element and then look at properties on it.
+                </p>
+                <figure>
+                <pre class="prettyprint"><code>&lt;Button Command=&quot;{Binding
+    RelativeSource={RelativeSource AncestorType=DataGrid},
+    Path=DataContext.DeleteCustomerCommand}&quot;
+    Content="Delete" /></code></pre>
+                    <figcaption>Fig 03-015</figcaption>
+                </figure>
+                <p>
+                    So now I've fleshed out this binding and I'm setting a RelativeSource property on it like I did with
+                    the RelativeSource Self binding, but in this case I'm going to use a different mode of the
+                    RelativeSource object, which is to specify an ancestor. An ancestor would be a parent element within
+                    the visual tree. And what you can specify is what is the type of that parent element that we want to
+                    walk our way up to.
+                </p>
+                <p>
+                    So we're down here on a Button inside of cell, inside of a row, and that eventually walks its way up
+                    to the DataGrid itself and says, yes, that is a type match with the kind of Ancestor that we're
+                    trying to look for, so that is my Source object.
+                </p>
+                <p>
+                    Once I get to that source object, I can use any of the exposed properties on that Source object to
+                    get the data I'm trying to get to with this binding. In this case, we're trying to get to the
+                    DeleteCustomerCommand that's part of the window.
+                </p>
+                <p>
+                    Well, one way I could've done it is I could have walked all the way up to Window and pointed to
+                    DeleteCustomerCommand on that, but just to show another variation, I can just walk my way out to the
+                    DataGrid, then I know that the DataGrid's DataContext is the window itself, because that was set
+                    earlier on as the overall DataContext for the view. So then I can dot my way down using Property
+                    Paths to the DeleteCustomerCommand that is on that DataContext object, which is the window. Now my
+                    command is targeting what I want and I can invoke it.
+                </p>
+                <p>
+                    Now the other thing is, remember, we wanted to pass a customer. Well, objects that support commands
+                    also support CommandParameters, so I can set the CommandParameter to a binding and that binding can
+                    just use the current DataContext of the Button, which as I talked about a moment ago, is going to be
+                    a Customer object, the one we want to delete.
+                </p>
+                <figure>
+                <pre class="prettyprint"><code>&lt;Button Command=&quot;{Binding
+    RelativeSource={RelativeSource AncestorType=DataGrid},
+    Path=DataContext.DeleteCustomerCommand}&quot;
+    CommandParameter="{Binding}"
+    Content="Delete" /></code></pre>
+                    <figcaption>Fig 03-016</figcaption>
+                </figure>
+                <p>
+                    So I can just use binding with nothing else on it here, and it's going to grab the whole DataContext
+                    object and pass it as the CommandParameter. With that code in place, I can start and run.
+                </p>
+                <p>
+                    You can see the Delete button there, and I can start deleting, and we can see the rows are, in fact,
+                    deleting.
+                </p>
+                <figure>
+                    <img src="./images/wpfdatabindingindepth/Fig03-017.png" class="image"/>
+                    <figcaption>Fig 03-017</figcaption>
+                </figure>
+                <p>
+                    So those are the primary forms of RelativeSource bindings you'll use. An AncestorType one to walk up
+                    the element tree to find some parent element that's a given type, and then use a path off of that
+                    current object to get to where you want to go for a value.
+                </p>
+                <p>
+                    The other is a RelativeSource Self to effectively get a this reference back to the element that the
+                    binding is on, to access some other property on that object. In this case, we don't have a Path
+                    statement, so we're getting a reference to the whole object, the Window itself, and setting it as
+                    the DataContext.
+                </p>
+            </div>
+            <div class="panel-body">
+                <h3>Demo: ElementName Bindings</h3>
+                <div class="example">
+                    <div class="input-group">
+                        <input id="Ex04-003" type="text" class="form-control"
+                               value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 4\before\BindingSources\BindingSources.sln">
+                        <span class="input-group-btn">
+                	        <button class="btn" data-clipboard-target="#Ex04-003">
+                        	    <img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard">
+                            </button>
+        	            </span>
+                    </div>
+                </div>
+                <div class="example">
+                    <div class="input-group">
+                        <input id="Ex04-004" type="text" class="form-control"
+                               value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 4\after\BindingSources\BindingSources.sln">
+                        <span class="input-group-btn">
+                	        <button class="btn" data-clipboard-target="#Ex04-004">
+                        	    <img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard">
+                            </button>
+        	            </span>
+                    </div>
+                </div>
+                <p>In this demo, I'm going to show you how to use the ElementName to specify a Source object for a
+                    binding. Our scenario for this one is we still want to delete customers like in the last demo, but
+                    instead we decide we want to put the Delete button outside the DataGrid and not have it repeated in
+                    every row.
+                </p>
+                <p>We're also going to use commands here again as the way we're going to invoke our functionality. So
+                    the first thing we're going to want to do is define a new DependencyProperty that's a Command we can
+                    target from the separate button we're going to add.
+                </p>
+                <p>So I'm going to add a DeleteSelectedCommand that's also a RelayCommand&lt;Customer&gt;:</p>
+                <figure>
+                <pre class="prettyprint"><code>public RelayCommand&lt;Customer&gt; DeleteSelectedCommand
+{
+    get { return (RelayCommand&lt;Customer&gt;)GetValue(DeleteSelectedCommandProperty); }
+    set { SetValue(DeleteSelectedCommandProperty, value); }
+}
+
+public static readonly DependencyProperty DeleteSelectedCommandProperty =
+    DependencyProperty.Register(&quot;DeleteSelectedCommand&quot;,
+    typeof(RelayCommand&lt;Customer&gt;),
+    typeof(MainWindow),
+    new PropertyMetadata(null));</code></pre>
+                    <figcaption>Fig 03-018</figcaption>
+                </figure>
+                <p>And we're going to end up targeting that same OnDeleteCustomer as the Execute method for that
+                    command. We're going to need to initialize that, so we'll add an initializer up here in the
+                    constructor to set that property to an instance of a RelayCommand:
+                </p>
+                <figure>
+                    <pre class="prettyprint"><code>DeleteSelectedCommand = new RelayCommand&lt;Customer&gt;(OnDeleteCustomer, CanDeleteCustomer);</code></pre>
+                    <figcaption>Fig 03-019</figcaption>
+                </figure>
+                <p>But this one's going to pass an extra method here to the constructor of the RelayCommand.</p>
+                <p>RelayCommand supports the concept of executing a target method. It also supports having a CanExecute
+                    handler as a target method. And the CanExecute will be called first to determine whether the command
+                    should actually execute the target method, so we need to add that method to our class as well.
+                </p>
+                <p>That method takes this kind of signature:</p>
+                <figure>
+                <pre class="prettyprint"><code>private bool CanDeleteCustomer(Customer customer)
+{
+    return customerDataGrid.SelectedItem != null;
+}</code></pre>
+                    <figcaption>Fig 03-020</figcaption>
+                </figure>
+                <p>It takes in the same parameter as the Execute method does, a Customer, and it returns a Boolean. The
+                    Boolean, if it's true, says that the command is enabled, you can go ahead and invoke the Execute
+                    method. If it returns false, then it should not only, not invoke the Execute method, if it's hooked
+                    up to something like a Button, that Button will be disabled.
+                </p>
+                <p>And you can see the logic here is we're just going to check our DataGrid and see if there's actually
+                    a SelectedItem and return true or false based on that.
+                </p>
+                <p>Now the other thing we need to do is make sure we signal the Button to re-query this CanExecute
+                    method whenever the state that drives it changes, so whenever the SelectedItem changes, we want it
+                    to re-query this. The way you do that with the RelayCommand is you call RaiseCanExecuteChanged on it
+                    whenever the affected state is modified.
+                </p>
+                <figure>
+                <pre class="prettyprint"><code>private void customerDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+{
+    DeleteSelectedCommand.RaiseCanExecuteChanged();
+}</code></pre>
+                    <figcaption>Fig 03-021</figcaption>
+                </figure>
+                <p>So we have our SelectionChanged handler for DataGrid, we can just call that anytime Selection
+                    changes, and that's going to cause the CanDeleteCustomer method to be called by the Button to
+                    re-query the state and get a new true or false value.
+                </p>
+                <p>Now with all that Command nonsense out of the way, what does the binding look like? Let's jump over
+                    to our MainWindow, and we've got a StackPanel sitting here atop our DataGrid.
+                </p>
+                <p>I'm going to go ahead and add a Button that simply says, Content="Delete" on it, so it's just going
+                    to sit right on top of our DataGrid and be a Delete button:
+                </p>
+                <figure>
+                <pre class="prettyprint"><code>&lt;StackPanel Grid.Row=&quot;0&quot;
+            Orientation=&quot;Horizontal&quot;&gt;
+    &lt;Button Content=&quot;Delete&quot; /&gt;
+&lt;/StackPanel&gt;</code></pre>
+                    <figcaption>Fig 03-022</figcaption>
+                </figure>
+                <p>Now we need to hook this up to our command. Well hooking it up to the Command is actually easier here
+                    than it was down inside the DataGrid because the overall DataContext is flowing down to this from up
+                    above and that DataContext is the Window itself.
+                </p>
+                <p>So we just need to get to the exposed property on the Window that is the Command, so we can use a
+                    straightforward binding that goes to the DeleteSelectedCommand:
+                </p>
+                <figure>
+                <pre class="prettyprint"><code>&lt;StackPanel Grid.Row=&quot;0&quot;
+            Orientation=&quot;Horizontal&quot;&gt;
+    &lt;Button Content=&quot;Delete&quot; Command="{Binding DeleteSelectedCommand}" /&gt;
+&lt;/StackPanel&gt;</code></pre>
+                    <figcaption>Fig 03-023</figcaption>
+                </figure>
+                <p>Now we also need to pass a CommandParameter, so I'm also going to use the CommandParameter property
+                    and set that equal to a binding. But this binding needs to point to the Customer that needs to be
+                    deleted, and how do we know where that is? Well, it happens to be the SelectedItem on the DataGrid.
+                    So we basically need to turn the DataGrid into our Source object and you can do that through an
+                    ElementName binding. So I'm just going to say ElementName=customerDataGrid, which you can see down
+                    below is the x:Name of the DataGrid:
+                </p>
+                <figure>
+                <pre class="prettyprint"><code>&lt;StackPanel Grid.Row=&quot;0&quot;
+            Orientation=&quot;Horizontal&quot;&gt;
+    &lt;Button Content=&quot;Delete&quot;
+            Command=&quot;{Binding DeleteSelectedCommand}&quot;
+            CommandParameter=&quot;{Binding ElementName=customerDataGrid, Path=SelectedItem}&quot; /&gt;
+&lt;/StackPanel&gt;</code></pre>
+                    <figcaption>Fig 03-024</figcaption>
+                </figure>
+                <p>That makes that the Source object for this binding and then I just need the Path to point to the
+                    SelectedItem property of that Source object.
+                </p>
+                <p>With that in place, we're ready to go. I can go ahead and run. We can see our button up at the top is
+                    disabled because of the CanExecute checks, and there is no SelectedItem currently:
+                </p>
+                <figure>
+                    <img src="./images/wpfdatabindingindepth/Fig03-025.png" class="image"/>
+                    <figcaption>Fig 03-025</figcaption>
+                </figure>
+                <p>As soon as I select an item, the event handler fires, it raises CanExecuteChanged, and the Command
+                    calls that CanExecute handler again and sees that it can enable.
+                </p>
+                <p>Now that the button is enabled, I click it, and that first row goes away. Select another one, click
+                    it, and the row goes away. So our functionality is all hooked up through an ElementName binding,
+                    which points to some element by name that is in the overall XAML you're working with, and then uses
+                    the Path to refine what properties on that object you want to grab values from.
+                </p>
+            </div>
+            <div class="panel-body">
+                <h3>Demo: Source Bindings</h3>
+                <div class="example">
+                    <div class="input-group">
+                        <input id="Ex04-005" type="text" class="form-control"
+                               value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 4\before\BindingSources\BindingSources.sln">
+                        <span class="input-group-btn">
+                	        <button class="btn" data-clipboard-target="#Ex04-005">
+                        	    <img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard">
+                            </button>
+        	            </span>
+                    </div>
+                </div>
+                <div class="example">
+                    <div class="input-group">
+                        <input id="Ex04-006" type="text" class="form-control"
+                               value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 4\after\BindingSources\BindingSources.sln">
+                        <span class="input-group-btn">
+                	        <button class="btn" data-clipboard-target="#Ex04-006">
+                        	    <img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard">
+                            </button>
+        	            </span>
+                    </div>
+                </div>
+                <p>The last binding source we're going to look at here is the Source property on a binding. If I wanted
+                    to get customers down into my DataGrid here:
+                </p>
+                <figure>
+                <pre class="prettyprint"><code>&lt;DataGrid x:Name=&quot;customerDataGrid&quot;
+    Grid.Row=&quot;1&quot;
+    ItemsSource=&quot;{Binding Source={StaticResource customerViewSource}}&quot;
+    AutoGenerateColumns=&quot;False&quot;
+    SelectionChanged=&quot;customerDataGrid_SelectionChanged&quot;
+    CanUserAddRows=&quot;False&quot;&gt;</code></pre>
+                    <figcaption>Fig 03-026</figcaption>
+                </figure>
+                <p>And I didn't want to rely on the DataContext being set to something that exposed that Customers
+                    collection, I would point explicitly to some Source object that contained the Customer collection.
+                </p>
+                <p>Now the way you're typically going to do this when working with the Source property on a binding, is
+                    to define a resource on the current view that you're working with.
+                </p>
+                <figure>
+                <pre class="prettyprint"><code>&lt;Window.Resources&gt;
+    &lt;CollectionViewSource x:Key=&quot;customerViewSource&quot;
+                          Source=&quot;{Binding Customers}&quot; /&gt;
+&lt;/Window.Resources&gt;</code></pre>
+                    <figcaption>Fig 03-027</figcaption>
+                </figure>
+                <p>It could be an application-scoped resource in the window itself down in some user control that you're
+                    working with, but a resource that's in-scope for the element that's going to have the binding. And
+                    what I'm using here is a class called the CollectionViewSource.
+                </p>
+                <p>We covered the ICollectionView interface in a previous module. This is an object that implements
+                    that, and you point to some Source collection and it's going to wrap it in an ICollectionView. We
+                    define this as a Resource with a key so that we can refer to it somewhere else in the XAML and the
+                    Source can be set through a binding based on the DataContext.
+                </p>
+                <p>Once we've done that, we can drop down here to our DataGrid and change the ItemsSource here to say,
+                    Source=, and basically we have to point to some object here. Now really the only way to point to
+                    another object from within a binding is to use the StaticResource or DynamicResource markup
+                    extensions, and the StaticResource markup extension takes a key name of the object in a Resource
+                    dictionary that you want to point to.
+                </p>
+                <p>So we just need to go up and grab our Resource name that we just created, which is
+                    CustomerViewSource, and put that in the StaticResource markup extension:
+                </p>
+                <figure>
+                <pre class="prettyprint"><code>&lt;DataGrid x:Name=&quot;customerDataGrid&quot;
+    Grid.Row=&quot;1&quot;
+    ItemsSource=&quot;{Binding Source={StaticResource customerViewSource}}&quot;
+    AutoGenerateColumns=&quot;False&quot;
+    SelectionChanged=&quot;customerDataGrid_SelectionChanged&quot;
+    CanUserAddRows=&quot;False&quot;&gt;</code></pre>
+                    <figcaption>Fig 03-028</figcaption>
+                </figure>
+                <p>And you can see the squigglies go away, it's now pointing to that CustomerViewSource object, that's
+                    coming in as the Source object, and will provide the collection to the ItemsSource.
+                </p>
+                <p>So with that in place and one minor change to the code-behind, I had to move my Commands up to before
+                    I set the Customers context:</p>
+                <figure>
+                <pre class="prettyprint"><code> public MainWindow()
+{
+    InitializeComponent();
+    DeleteCustomerCommand = new RelayCommand&lt;Customer&gt;(OnDeleteCustomer);
+    DeleteSelectedCommand = new RelayCommand&lt;Customer&gt;(OnDeleteCustomer, CanDeleteCustomer);
+    using (ZzaDbContext context = new ZzaDbContext())
+    {
+        Customers = new ObservableCollection&lt;Customer&gt;(context.Customers.Include(&quot;Orders&quot;).Include(&quot;Orders.OrderItems&quot;).Include(&quot;Orders.OrderItems.Product&quot;));
+    }
+}</code></pre>
+                    <figcaption>Fig 03-029</figcaption>
+                </figure>
+                <p>Because as the Customers bind, it actually changes the selection, tries to use this command object,
+                    and if it wasn't initialized yet, it's null, that's going to throw a null reference exception. So we
+                    generally want to set up our commands earlier, I meant to put those before the loading of the data,
+                    so I've corrected that now.
+                </p>
+                <figure>
+                    <img src="./images/wpfdatabindingindepth/Fig03-030.png" class="image"/>
+                    <figcaption>Fig 03-030</figcaption>
+                </figure>
+                <p>So with that in place I go ahead and run, and we can see we have our Customers collection bound
+                    again:</p>
+                <p>But now we're doing it through an explicit Source reference on our binding that points to an object
+                    that provides a collection, which in this case happens to be a CollectionViewSource object that has
+                    bound itself through a DataContext binding to the Customers collection on the Window. So this one
+                    demo shows you RelativeSource Self, it shows you RelativeSource with an AncestorType, it shows you
+                    an ElementName binding, and it shows you a Source binding, as well as a number of DataContext-based
+                    bindings.
+                </p>
+            </div>
+            <div class="panel-body">
+                <h3>Binding Property Paths</h3>
+                <p>Once the binding has figured out what the Source object is, the next thing it needs to know is where
+                    to go on that Source object to obtain the value it's going to use to set the target property and
+                    that's where Property Paths come in. The Path property on a binding is what determines the property
+                    path. Typically it's going to be a simple value, but it could be a complex path.
+                </p>
+                <p>Basically, the path to the binding can be passed one of two ways:</p>
+                <figure>
+                    <img src="./images/wpfdatabindingindepth/Fig03-031.png" class="image"/>
+                    <figcaption>Fig 03-031</figcaption>
+                </figure>
+                <p>If you use the syntax on the left, which we've seen a number of times, where we just say Binding and
+                    Name, you're actually calling a parameterized constructor on the binding markup extension object and
+                    that name gets passed into the parameterized constructor and is used under the covers to set a Path
+                    property.
+                </p>
+                <p>The alternate way is to use the Path=Name syntax, in which case you're actually calling the default
+                    constructor of the binding and then setting the Path property explicitly after construction. Either
+                    way, the net result is exactly the same. The binding object is created and the Path property is set
+                    to Name.
+                </p>
+                <p>Now bindings are typically set to just a simple path, a property name on the Source object itself. So
+                    if your Source object is a customer and you want to grab the name value off that customer, you just
+                    say Path=Name. They can also be complex paths and walk an entire object graph from the Source
+                    object.
+                </p>
+                <p>So if your Source object is, say, the Window, and the Window exposes a customer, then your path may
+                    be Customer and then dot down into the Orders collection of that customer, index into that array,
+                    and get a single object out of the orders, in this case the second element in the array, then the
+                    Order object that you obtained can have a collection of OrderDetails, so we can dot down to
+                    that.</p>
+                <p>We could reach into that collection and grab out the third object from the OrderDetails collection.
+                    On that OrderDetail object it may have a Product-related object, we can dot down to that, and then
+                    finally dot down to the name once we get down to a discrete value that we're trying to set through
+                    our binding, we're ready to go.
+                </p>
+                <figure>
+                    <img src="./images/wpfdatabindingindepth/Fig03-032.png" class="image"/>
+                    <figcaption>Fig 03-032</figcaption>
+                </figure>
+                <p>You can also add no path at all. So you can basically let the bindings say, give me the whole Source
+                    object, and we've seen a couple of these in previous demos as well. You can express this with just
+                    Binding and no arguments whatsoever, and you're basically saying Path=. is the equivalent syntax,
+                    dot meaning the current object, similar to a file system path.
+                </p>
+                <figure>
+                    <img src="./images/wpfdatabindingindepth/Fig03-033.png" class="image"/>
+                    <figcaption>Fig 03-033</figcaption>
+                </figure>
+                <p>Now an important concept related to binding paths is how you go about debugging bindings that are not
+                    working for you. Basically, you want to always be paying attention to the output window when you're
+                    hooking up data binding and trying to get it working. If you have an error in one of your bindings,
+                    particularly the path is incorrect, what you're going to get is some information dumped to the
+                    Output window and it looks kind of like this.
+                </p>
+                <figure>
+                    <img src="./images/wpfdatabindingindepth/Fig03-034.png" class="image"/>
+                    <figcaption>Fig 03-034</figcaption>
+                </figure>
+                <p>You can either have data warnings or data errors and it's going to tell you detailed information
+                    including what property was not found on what Source object, in this case, 'Idx' and 'Customer', and
+                    then it's also going to tell you what the target element property and type is as well. So this is
+                    something you can stare at and then go inspect those objects and figure out whether you've actually
+                    got something that should be working.
+                </p>
+                <p>By default, Visual Studio is going to show both warnings and errors. If you want to only show errors,
+                    which are the more severe form, you can go through Tools Options and there's a place under the
+                    debugging section where you can change the data binding WPF Trace Settings.
+                </p>
+                <figure>
+                    <img src="./images/wpfdatabindingindepth/Fig03-035.png" class="image"/>
+                    <figcaption>Fig 03-035</figcaption>
+                </figure>
+                <p>So let's take a look at Property Paths and debugging in a demo.</p>
+            </div>
+            <div class="panel-body">
+                <h3>Demo: Binding Property Paths</h3>
+                <div class="example">
+                    <div class="input-group">
+                        <input id="Ex04-007" type="text" class="form-control"
+                               value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 4\before\BindingSources\BindingSources.sln">
+                        <span class="input-group-btn">
+                	        <button class="btn" data-clipboard-target="#Ex04-007">
+                        	    <img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard">
+                            </button>
+        	            </span>
+                    </div>
+                </div>
+                <div class="example">
+                    <div class="input-group">
+                        <input id="Ex04-008" type="text" class="form-control"
+                               value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 4\after\BindingSources\BindingSources.sln">
+                        <span class="input-group-btn">
+                	        <button class="btn" data-clipboard-target="#Ex04-008">
+                        	    <img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard">
+                            </button>
+        	            </span>
+                    </div>
+                </div>
+                <p>In this demo, I just want to quickly revisit Property Paths on bindings to make sure it is clear the
+                    power you have to locate the particular value you want once you have some Source object. I'm going
+                    to drop into the XAML of our last demo and just point out a couple of these paths that we've been
+                    using here.
+                </p>
+                <p>Most of the bindings we've looked at take on a form like this:</p>
+                <figure>
+                <pre class="prettyprint"><code>&lt;Window.Resources&gt;
+    &lt;CollectionViewSource x:Key=&quot;customerViewSource&quot;
+                          Source=&quot;{Binding Customers}&quot; /&gt;
+&lt;/Window.Resources&gt;</code></pre>
+                    <figcaption>Fig 03-036</figcaption>
+                </figure>
+                <p>which is really saying the Binding Path property is equal to Customers:</p>
+                <figure>
+                <pre class="prettyprint"><code> &lt;CollectionViewSource x:Key=&quot;customerViewSource&quot;
+    Source=&quot;{Binding Path=Customers}&quot; /&gt;</code></pre>
+                    <figcaption>Fig 03-037</figcaption>
+                </figure>
+                <p>The way it works out without the Path property is that the Binding markup extension itself has a
+                    parameterized constructor that takes one argument and it'll use that argument to set the Path
+                    property.
+                </p>
+                <p>So whether you say Binding Customers here or Binding Path=Customers, they mean exactly the same
+                    thing, just a different way of initializing the Binding object.
+                </p>
+                <p>Now another path we saw in one of the last demos was this Path=DataContext.DeleteCustomerCommand.</p>
+                <figure>
+                <pre class="prettyprint"><code>&lt;Button Command=&quot;{Binding
+    RelativeSource={RelativeSource AncestorType=DataGrid},
+    Path=DataContext.DeleteCustomerCommand}&quot;
+        CommandParameter=&quot;{Binding}&quot;
+        Content=&quot;Delete&quot; /&gt;
+                </code></pre>
+                    <figcaption>Fig 03-038</figcaption>
+                </figure>
+                <p>Remember this was with the RelativeSource binding where we were walking up the visual tree to get to
+                    the DataGrid and then basically saying, go to its DataContext property, which happened to be the
+                    Window in that demo, and then dot your way down into that object to get to the
+                    DeleteCustomerCommand.
+                </p>
+                <p>Well you can take this to the nth degree if you need to, so I'm going to go up here to our StackPanel
+                    and I'm going to add in a label:</p>
+                <figure>
+                    <pre class="prettyprint"><code>&lt;Label Content=&quot;{Binding Path=Customers[0].Orders[1].OrderItems[0].Product.Name}&quot; /&gt;</code></pre>
+                    <figcaption>Fig 03-039</figcaption>
+                </figure>
+                <p>and set the content of that label using a binding. That binding is going to be pointing to the
+                    DataContext, which is our Window, which exposes a Customers collection.
+                </p>
+                <p>I can then index into that Customers collection and grab the first item, that's going to be a single
+                    Customer object. I can then dot into that Customer object, which has an Orders collection, and index
+                    into that to get the second order. That order has an OrderItems collection, I can dot down to that,
+                    I can index into that to get the first OrderItem.
+                </p>
+                <p>That OrderItem has a Product property which is a complex object. I can dot down to that and dot down
+                    to the Name of that product and display the resulting value in my content.
+                </p>
+                <p>Now I just need to make sure that my query loads up all those related objects, so I'll go into the
+                    code-behind and replace my line of code that's loading up Customers so that .Includes all the
+                    related collections and objects there.
+                </p>
+                <figure>
+                <pre class="prettyprint"><code> using (ZzaDbContext context = new ZzaDbContext())
+{
+    Customers = new ObservableCollection&lt;Customer&gt;(context.Customers
+                    .Include(&quot;Orders&quot;)
+                    .Include(&quot;Orders.OrderItems&quot;)
+                    .Include(&quot;Orders.OrderItems.Product&quot;));
+}</code></pre>
+                    <figcaption>Fig 03-040</figcaption>
+                </figure>
+
+                <p>With that in place, I can go ahead and run, and notice up here next to the Delete button we have Taj
+                    Mahal is the name of the product that is on the related objects there.
+                </p>
+                <figure>
+                    <img src="./images/wpfdatabindingindepth/Fig03-041.png" class="image"/>
+                    <figcaption>Fig 03-041</figcaption>
+                </figure>
+                <p>Now one other thing that's related to property paths that's important is debugging when binding goes
+                    wrong. If I have a typo in my path here, say I put an inadvertent x on the end of my
+                    DeleteSelectedCommand:
+                </p>
+                <figure>
+                <pre class="prettyprint"><code>&lt;Button Content=&quot;Delete&quot;
+    Command=&quot;{Binding DeleteSelectedCommandx}&quot;
+    CommandParameter=&quot;{Binding ElementName=customerDataGrid, Path=SelectedItem}&quot; /&gt;</code></pre>
+                    <figcaption>Fig 03-042</figcaption>
+                </figure>
+                <p>I go ahead and run, the app is not going to blow up, it's just going to start up and run, and then
+                    you'll wonder why, in this case, the Delete button is enabled and I'm clicking away on it and
+                    nothing's happening, and you'll kind of wonder what's going on there and wonder how to debug it.
+                </p>
+                <p>The important thing is when you have that kind of thing going on you always want to look at your
+                    output window. If we go back up in our output window here, we'll see this entry that says,
+                    System.Windows.Data Error: BindingExpression path error:
+                </p>
+                <figure>
+                    <img src="./images/wpfdatabindingindepth/Fig03-043.png" class="image"/> <img
+                        src="./images/wpfdatabindingindepth/Fig03-044.png" class="image"/>
+                    <figcaption>Fig 03-043</figcaption>
+                </figure>
+                <p>and it basically breaks it down for you and it says, this property was not found on this object,
+                    which is the DataContext object.</p>
+                <p>And if you scroll over some more it tells you the BindingExpression path equals this, the DataItem is
+                    that DataContext object, and then it even tells you the target element, the thing you were trying to
+                    set was the 'Button' 'Command' property.
+                </p>
+                <figure>
+                    <img src="./images/wpfdatabindingindepth/Fig03-045.png" class="image"/> <img
+                        src="./images/wpfdatabindingindepth/Fig03-046.png" class="image"/>
+                    <figcaption>Fig 03-045</figcaption>
+                </figure>
+                <p>So when you screw up a binding path, you always want to be looking for these System.Windows.Data
+                    Errors in your output window for debugging your bindings.
+                </p>
+            </div>
+            <div class="panel-body">
+                <h3>Binding Mode and Directionality</h3>
+                <p>Now let's talk about directionality and the Mode property on bindings. Bindings can flow data in two
+                    directions. From the source to the target is the standard direction to populate data on the screen,
+                    but also from the target back down to the source if you're doing two-way data binding.
+                </p>
+                <p>The default mode for a binding is really determined by the DependencyProperty that's the target of
+                    that binding. So when that DependencyProperty is declared, if it doesn't say anything, the default
+                    is going to be one-way. But through its PropertyMetadata it can indicate that it wants to be a
+                    two-way binding by default, such that the text property on a TextBox or any primary property that's
+                    an edit input on editable controls.
+                </p>
+                <p>So in WPF, the primary properties of editable controls are set to two-way by default, but other
+                    read-only controls such as a label and other properties will be one-way be default. Just be aware if
+                    you're using other XAML technologies, the other XAML technologies don't do this, all properties are
+                    one-way be default, and you always have to set the Mode property to two-way if you mean it to be,
+                    but in WPF they make it a little easier.
+                </p>
+                <p>The way you can influence this in your bindings is simply by setting a Mode property on the binding.
+                    It's got a number of values. One-way is the default. Two-way might be the default if it's an
+                    editable control. There's OneWayToSource, which is basically from the target to the source, but it
+                    never reads from the source to the target. And there's OneTime, which means it reads from the source
+                    to the target once, and then it forgets the binding exists, so any changes to the source won't be
+                    reflected, even if there's property Change Notifications and then the editing in the UI will not
+                    push any values down to the Source object.
+                </p>
+                <p>There's also a value on the enumeration called Default, and that's basically saying, do whatever the
+                    target property wanted to do by default, which again, is going to be OneWay, in general, by default,
+                    but most editable properties on editable controls in WPF are set to TwoWay by default. So let's take
+                    a look at Binding Mode in a demo.
+                </p>
+            </div>
+            <div class="panel-body">
+                <h3>Demo: Binding Mode</h3>
+                <div class="example">
+                    <div class="input-group">
+                        <input id="Ex04-009" type="text" class="form-control"
+                               value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 4\before\BindingProperties\BindingProperties.sln">
+                        <span class="input-group-btn">
+                	        <button class="btn" data-clipboard-target="#Ex04-009">
+                        	    <img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard">
+                            </button>
+        	            </span>
+                    </div>
+                </div>
+                <div class="example">
+                    <div class="input-group">
+                        <input id="Ex04-010" type="text" class="form-control"
+                               value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 4\after\BindingProperties\BindingProperties.sln">
+                        <span class="input-group-btn">
+                	        <button class="btn" data-clipboard-target="#Ex04-010">
+                        	    <img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard">
+                            </button>
+        	            </span>
+                    </div>
+                </div>
+                <p>In this demo we're going to cover the Binding Mode property and how it influences the direction of
+                    flow of data through a binding. The starting point for this demo is a simple little data app that
+                    has a data entry form for a Customer object here and it has this button to trigger a customer
+                    change.
+                </p>
+
+                <figure>
+                    <img src="./images/wpfdatabindingindepth/Fig03-047.png" class="image"/>
+                    <figcaption>Fig 03-047</figcaption>
+                </figure>
+                <p>If you watch the Name field when I click on that, it's going to go programmatically set the name of
+                    the Customer. Now the current structure of the code is we're setting the DataContext to the Window
+                    itself through a RelativeSource binding like we saw earlier in this module:
+                </p>
+                <figure>
+                    <pre class="prettyprint"><code>DataContext="{Binding RelativeSource={RelativeSource Self}}"></code></pre>
+                    <figcaption>Fig 03-048</figcaption>
+                </figure>
+                <p>We've got the grid as a whole, bound to a Customer property exposed from the Windows code-behind:</p>
+                <figure>
+                <pre class="prettyprint"><code>&lt;Grid x:Name=&quot;grid1&quot;
+    DataContext=&quot;{Binding Customer}&quot;
+    VerticalAlignment=&quot;Top&quot;
+    Margin=&quot;10,10,0,0&quot;
+    HorizontalAlignment=&quot;Left&quot;&gt;</code></pre>
+                    <figcaption>Fig 03-049</figcaption>
+                </figure>
+                <p>and then the individual fields are just using DataContext bindings to point to the properties of that
+                    Customer object.</p>
+                <figure>
+                <pre class="prettyprint"><code> &lt;TextBox x:Name=&quot;idTextBox&quot;
+    Width=&quot;120&quot;
+    VerticalAlignment=&quot;Center&quot;
+    Text=&quot;{Binding Id}&quot;
+    Grid.Row=&quot;0&quot;
+    Margin=&quot;3&quot;
+    Height=&quot;23&quot;
+    HorizontalAlignment=&quot;Left&quot;
+    Grid.Column=&quot;1&quot; /&gt;
+&lt;Label VerticalAlignment=&quot;Center&quot;
+    Grid.Row=&quot;1&quot;
+    Margin=&quot;3&quot;
+    HorizontalAlignment=&quot;Left&quot;
+    Grid.Column=&quot;0&quot;
+    Content=&quot;Name:&quot; /&gt;
+&lt;TextBox x:Name=&quot;nameTextBox&quot;
+    Width=&quot;120&quot;
+    VerticalAlignment=&quot;Center&quot;
+    Text=&quot;{Binding Path=Name}&quot;
+    Grid.Row=&quot;1&quot;
+    Margin=&quot;3&quot;
+    Height=&quot;23&quot;
+    HorizontalAlignment=&quot;Left&quot;
+    Grid.Column=&quot;1&quot; /&gt;</code></pre>
+                    <figcaption>Fig 03-050</figcaption>
+                </figure>
+                <p>Now by default, a binding has a Mode, and the Default Mode depends on the property that you're
+                    binding on the control itself. Data entry controls, such as TextBoxes, ComboBoxes, DatePickers, and
+                    so on, set the Default Mode for their primary Edit properties to be a TwoWay binding. That means
+                    that if I run here and we edit the field and tab out of it, we can see from this breakpoint that the
+                    set block on our Name property on the Customer object is being called.
+                </p>
+                <figure>
+                <pre class="prettyprint"><code>public string Name
+{
+    get
+    {
+        return _Name;
+    }
+    set
+    {
+        if (value != _Name)
+        {
+            _Name = value;
+            PropertyChanged(this, new PropertyChangedEventArgs(&quot;Name&quot;));
+        }
+    }
+}</code></pre>
+                    <figcaption>Fig 03-051</figcaption>
+                </figure>
+
+                <p>So the normal flow is from the Source object to the element with the binding, but if we edit it in
+                    the bound element, then that property is going to change and push the value down into the Source
+                    object in a TwoWay data binding fashion. And as long as that object supports Property Change
+                    Notifications, if it gets changed programmatically like with our button, it will update on the
+                    screen. That's your typical TwoWay data binding scenario.
+                </p>
+                <p>Now we could modify the behavior here by going into our binding and setting the Mode property equal
+                    to one of the other values.</p>
+                <figure>
+                <pre class="prettyprint"><code>&lt;TextBox x:Name=&quot;nameTextBox&quot;
+    Width=&quot;120&quot;
+    VerticalAlignment=&quot;Center&quot;
+    Text=&quot;{Binding Path=Name}&quot;
+    Grid.Row=&quot;1&quot;
+    Margin=&quot;3&quot;
+    Height=&quot;23&quot;
+    HorizontalAlignment=&quot;Left&quot;
+    Grid.Column=&quot;1&quot; /&gt;</code></pre>
+                    <figcaption>Fig 03-052</figcaption>
+                </figure>
+                <p>I'll start with OneWay. If we explicitly set it to be a OneWay binding and we have that same
+                    breakpoint on our Customer object behind the scenes, I can modify that Name property and tab out of
+                    the field, but we never hit our breakpoint because it never pushed that value down into the Source
+                    object, because it's set to be a OneWay binding.
+                </p>
+                <p>OneWay means from source to target, not the other way around. Now if we did want it to be the other
+                    way around for some reason, we can set the Mode to OneWayToSource. If we do OneWayToSource and start
+                    up, we can see that our form starts up in the field as blank, even though there is a value in the
+                    underlying Customer object for Name:
+                </p>
+                <figure>
+                    <img src="./images/wpfdatabindingindepth/Fig03-053.png" class="image"/>
+                    <figcaption>Fig 03-053</figcaption>
+                </figure>
+                <p>it didn't read it because it's only got the one direction in the opposite direction that a binding
+                    normally works.</p>
+                <p>But if we change the value and tab out of the field, you can see that we called a set block on our
+                    bound object.</p>
+                <figure>
+                <pre class="prettyprint"><code>public string Name
+{
+    get
+    {
+        return _Name;
+    }
+    set
+    {
+        if (value != _Name)
+        {
+            _Name = value;
+            PropertyChanged(this, new PropertyChangedEventArgs(&quot;Name&quot;));
+        }
+    }
+}</code></pre>
+                    <figcaption>Fig 03-054</figcaption>
+                </figure>
+                <p>Now that's a pretty rarely used value, generally you want OneWay or TwoWay, but that's an option if
+                    you have a specialized scenario.</p>
+                <p>Another option you have there is OneTime.</p>
+                <figure>
+                <pre class="prettyprint"><code>&lt;TextBox x:Name=&quot;nameTextBox&quot;
+    Width=&quot;120&quot;
+    VerticalAlignment=&quot;Center&quot;
+    Text=&quot;{Binding Path=Name, Mode=OneTime}&quot;
+    Grid.Row=&quot;1&quot;
+    Margin=&quot;3&quot;
+    Height=&quot;23&quot;
+    HorizontalAlignment=&quot;Left&quot;
+    Grid.Column=&quot;1&quot; /&gt;</code></pre>
+                    <figcaption>Fig 03-055</figcaption>
+                </figure>
+                <p>OneTime means that it will do normal data binding from source to target one time, but if it changes
+                    behind the scenes, even if it's raising Change Notifications, notice if I click on the Trigger
+                    Customer Change here, under the covers we can see the property is being set, but the UI does not
+                    update because the mode of OneTime basically says, do data binding one time and then pretend that
+                    this binding is not even there, and changes to the field itself will not trigger any change to the
+                    underlying Source object. It's as if the binding evaporates after it does the initial read of the
+                    value from the Source object.
+                </p>
+            </div>
+            <div class="panel-body">
+                <h3>Demo: Defining Default Binding Mode</h3>
+                <div class="example">
+                    <div class="input-group">
+                        <input id="Ex04-011" type="text" class="form-control"
+                               value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 4\before\BindingProperties\BindingProperties.sln">
+                        <span class="input-group-btn">
+                	        <button class="btn" data-clipboard-target="#Ex04-011">
+                        	    <img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard">
+                            </button>
+        	            </span>
+                    </div>
+                </div>
+                <div class="example">
+                    <div class="input-group">
+                        <input id="Ex04-012" type="text" class="form-control"
+                               value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 4\after\BindingProperties\BindingProperties.sln">
+                        <span class="input-group-btn">
+                	        <button class="btn" data-clipboard-target="#Ex04-012">
+                        	    <img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard">
+                            </button>
+        	            </span>
+                    </div>
+                </div>
+                <p>Now, in this demo, I want to show you how the Default mode really works based on the property that
+                    you're binding. When controls are created and their properties are defined as DependencyProperties
+                    that can be bound to:
+                </p>
+                <figure>
+                    <img src="./images/wpfdatabindingindepth/Fig03-056.png" class="image"/>
+                    <figcaption>Fig 03-056</figcaption>
+                </figure>
+                <p>By default, binding will only be supported one way, but there's a property you can set on the
+                    DependencyProperty itself to make it so it will be a TwoWay binding by default.
+                </p>
+                <p>To show this, I'm going to create a custom control, just a simple User Control, and we'll call it
+                    MyCustomControl. For the content of that CustomControl, I'm just going to put a rectangle with a
+                    fill of gray by default and give it a name of "TheContent":
+                </p>
+                <figure>
+                <pre class="prettyprint"><code>&lt;UserControl x:Class=&quot;BindingProperties.MyCustomControl&quot;
+             xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+             xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+             xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+             xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
+             mc:Ignorable=&quot;d&quot;
+             d:DesignHeight=&quot;300&quot; d:DesignWidth=&quot;300&quot;&gt;
+    &lt;Rectangle x:Name=&quot;TheContent&quot; Fill=&quot;Gray&quot;&gt;&lt;/Rectangle&gt;
+&lt;/UserControl&gt;</code></pre>
+                    <figcaption>Fig 03-057</figcaption>
+                </figure>
+                <p>Then I'm going to drop into the code-behind of that control and define a DependencyProperty:</p>
+                <figure>
+                <pre class="prettyprint"><code>public MyCustomControl()
+{
+    InitializeComponent();
+    TheContent.MouseDown += ChangeIt;
+}
+
+public Brush MyBackground
+{
+    get { return (Brush)GetValue(MyBackgroundProperty); }
+    set { SetValue(MyBackgroundProperty, value); }
+}
+
+public static readonly DependencyProperty MyBackgroundProperty =
+    DependencyProperty.Register(&quot;MyBackground&quot;, typeof(Brush),
+    typeof(MyCustomControl),
+    new FrameworkPropertyMetadata(new SolidColorBrush(Colors.Gray),
+        FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+        OnBrushChanged));
+
+private static void OnBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+{
+    ((MyCustomControl)d).TheContent.Fill = e.NewValue as Brush;
+}</code></pre>
+                    <figcaption>Fig 03-058</figcaption>
+                </figure>
+                <p>So this DependencyProperty is going to be of type Brush called MyBackground, and what's different
+                    about the declaration of this DependencyProperty, is notice this down here.
+                </p>
+                <figure>
+                <pre class="prettyprint"><code>public static readonly DependencyProperty MyBackgroundProperty =
+    DependencyProperty.Register(&quot;MyBackground&quot;, typeof(Brush),
+    typeof(MyCustomControl),
+    new FrameworkPropertyMetadata(new SolidColorBrush(Colors.Gray),
+        FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+        OnBrushChanged));</code></pre>
+                    <figcaption>Fig 03-059</figcaption>
+                </figure>
+
+                <p>With the default code snippet, it's going to define just a PropertyMetadata object here and allow you
+                    to set the default and possibly hook up a Change handler.
+                </p>
+                <p>If you change that to be a FrameworkPropertyMetadata, you can still set a default value, which you
+                    can see I'm setting to gray here, but you have this FrameworkPropertyMetadataOptions, and you see
+                    that there's an option to say BindsTwoWayByDefault. Then I also hook up a Change handler here (<span
+                            class="code">OnBrushChanged</span>):
+                </p>
+                <figure>
+                <pre class="prettyprint"><code>private static void OnBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+{
+    ((MyCustomControl)d).TheContent.Fill = e.NewValue as Brush;
+}</code></pre>
+                    <figcaption>Fig 03-060</figcaption>
+                </figure>
+                <p>so that whenever my background gets set I'm going to go set the Fill property of the rectangle that's
+                    my content.</p>
+                <p>Im also going to drop into the contstructor of my Custom Control here and add an EventHandler for the
+                    MouseDown event on my rectangle that's my content.
+                </p>
+                <figure>
+                <pre class="prettyprint"><code>public MyCustomControl()
+{
+    InitializeComponent();
+    TheContent.MouseDown += ChangeIt;
+}
+
+void ChangeIt(object sender, MouseButtonEventArgs e)
+{
+    MyBackground = new SolidColorBrush(Colors.Red);
+}
+
+public Brush MyBackground
+{
+    get { return (Brush)GetValue(MyBackgroundProperty); }
+    set { SetValue(MyBackgroundProperty, value); }
+}</code></pre>
+                    <figcaption>Fig 03-061</figcaption>
+                </figure>
+                <p>And what I'm going to do when I get that click on is I am going to explicitly set the MyBackground
+                    property to red so that we can see that that change actually occurred.
+                </p>
+                <p>So I'm going to go out here to my MainWindow now and drop into the XAML and add an instance of our
+                    CustomControl:</p>
+                <figure>
+                <pre class="prettyprint"><code>&lt;local:MyCustomControl MyBackground=&quot;{Binding TheBrush}&quot;
+    HorizontalAlignment=&quot;Left&quot;
+    Height=&quot;74&quot;
+    Margin=&quot;292,57,0,0&quot;
+    VerticalAlignment=&quot;Top&quot;
+    Width=&quot;105&quot; /&gt;</code></pre>
+                    <figcaption>Fig 03-062</figcaption>
+                </figure>
+                <p>Notice that I'm setting the MyBackground property to a Brush returned from the current DataContext
+                    called TheBrush. So I need to go declare that in the code-behind in my MainWindow that is my
+                    DataContext.
+                </p>
+                <p>So I add this DependencyProperty called TheBrush to my code-behind:</p>
+                <figure>
+                <pre class="prettyprint"><code> public Brush TheBrush
+{
+    get { return (Brush)GetValue(TheBrushProperty); }
+    set { SetValue(TheBrushProperty, value); }
+}
+
+public static readonly DependencyProperty TheBrushProperty =
+    DependencyProperty.Register("TheBrush", typeof(Brush), typeof(MainWindow),
+    new PropertyMetadata(null, OnTheBrushChanged));
+                </code></pre>
+                    <figcaption>Fig 03-063</figcaption>
+                </figure>
+                <p>And it's just a standard DependencyProperty with a Change handler that's hooked up here so we can set
+                    a breakpoint and tell when the binding has actually set that value for us:
+                </p>
+                <figure>
+                <pre class="prettyprint"><code>private static void OnTheBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+{
+}</code></pre>
+                    <figcaption>Fig 03-064</figcaption>
+                </figure>
+                <p>And then I'm just going to go into my constructor and set an initial value for my Property of
+                    Chartreuse.</p>
+                <figure>
+                <pre class="prettyprint"><code>public MainWindow()
+{
+    InitializeComponent();
+    TheBrush = new SolidColorBrush(Colors.Chartreuse);
+}</code></pre>
+                    <figcaption>Fig 03-065</figcaption>
+                </figure>
+                <p>So with that in place, if I go ahead and run, we can see it starts up with our chartreuse
+                    rectangle:</p>
+                <figure>
+                    <img src="./images/wpfdatabindingindepth/Fig03-066.png" class="image"/>
+                    <figcaption>Fig 03-066</figcaption>
+                </figure>
+                <p>Remember that I have a MouseDown handler inside the CustomControl that's going to set the
+                    MyBackgroundProperty. That's equivalent to something like a TextBox setting the Text property when I
+                    do data input on the control here.
+                </p>
+                <figure>
+                    <img src="./images/wpfdatabindingindepth/Fig03-067.png" class="image"/>
+                    <figcaption>Fig 03-067</figcaption>
+                </figure>
+                <p>And we want to see that that value flows to the Source object because the data binding is TwoWay. So
+                    when I click on this, we can see that our breakpoint is being hit in our Change handler for TheBrush
+                    property and our DataContext:
+                </p>
+                <figure>
+                <pre class="prettyprint"><code>private static void OnTheBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+{
+}</code></pre>
+                    <figcaption>Fig 03-068</figcaption>
+                </figure>
+                <p>So the TwoWay data binding has worked out for us and is passing that value in.</p>
+                <p>So the default mode for a binding is basically going to be OneWay unless the DependencyProperty that
+                    you're binding to has gone and set its default to be TwoWay with this
+                    FrameworkPropertyMetadataOptions.
+                </p>
+            </div>
+            <div class="panel-body">
+                <h3>Summary</h3>
+                <p>Okay, to wrap up this module, we covered a number of things. First off, we reviewed the fact that the
+                    default source for a binding is always the DataContext and for the vast majority of data binding
+                    scenarios, you're going to use the DataContext as your Source object, but there's specialized
+                    scenarios where you need more control and so we looked at the RelativeSource binding as one way to
+                    do that where you can reference other elements in the visual tree through a relative path within the
+                    tree.
+                </p>
+                <p>You use the RelativeSource markup extension and the property on the binding, you can use the Self
+                    mode to point to the same element that the binding is on, or you can use the AncestorType to point
+                    to a parent element somewhere up the tree looking for a match based on the type of that element.
+                </p>
+                <p>The elementName binding is another way to get an explicit Source object for your binding by pointing
+                    to some other element within the visual tree that has a name on it and that doesn't necessarily have
+                    to be an explicit ancestor of the element that you're on.
+                </p>
+                <p>Then we looked at the Source binding and the Source binding allows you to explicitly point to some
+                    object that you have to place within a Resource dictionary and then get to it through a
+                    StaticResource or DynamicResource markup extension that points to that object, then that can become
+                    the Source object for your binding.
+                </p>
+                <p>Next we looked at Property Paths in a little more detail and we saw that there's a number of forms it
+                    can take on. You can have a simple property name on the Source object, you can have a dot, which
+                    means the whole Source object, you can exclude the Path, which means the same as the dot, or you can
+                    have a complex path that starts with the property name on the Source object, but then dots down
+                    through an object hierarchy, even indexing into arrays as part of that path syntax.
+                </p>
+                <p>We covered the directionality of bindings, the fact that they are one-way by default where the data
+                    flows from the source to the target at initial binding time, and when property Change Notifications
+                    occurs, but you can use two-way bindings either explicitly by setting the Mode property or if you're
+                    on an edit control, with the primary edit property such as Text on a TextBox. Those properties can
+                    be declared to be two-way by default, and the way you do that default declaration is through the
+                    metadata of the DependencyProperty that's going to end up being the target property on the element,
+                    and we saw how you can declare that yourself if you're writing a CustomControl with properties that
+                    you expect people to bind to.
+                </p>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+    export default {
+        name: "WPFDatabindingInDepth04BindingCoreConcepts.vue"
+    }
+</script>
+
+<style scoped>
+
+</style>

@@ -62,7 +62,7 @@
                         Sources, and how you can go about data binding to those.
                     </p>
                     <h4>Binding Core Concepts</h4>
-                    <router-link to="/wpf-databinding-in-depth-04-binding-concepts" active-class="active"><a>Binding Concepts</a></router-link>
+                    <router-link to="/wpf-databinding-in-depth-04-binding-core-concepts" active-class="active"><a>Binding Concepts</a></router-link>
                     <p>
                         Hi, this is Brian Noyes. In this module, we're going to dive a little deeper into bindings and get into some
                         of the core concepts of how you can have explicit control over exactly what a binding is doing with respect to
