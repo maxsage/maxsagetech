@@ -1,7 +1,7 @@
 <template>
     <div class="panel panel-primary">
         <div class="panel-heading">
-            {{pageTitle}}
+            WPF
         </div>
         <div class="panel-body">
             <h2>Pluralsight Courses</h2>
@@ -28,7 +28,7 @@
             <h3>WPF Data Binding in Depth</h3>
             <a href="https://app.pluralsight.com/library/courses/wpf-data-binding-in-depth/table-of-contents"> WPF Data
                 Binding in Depth On Pluralsight </a><br/>
-            <router-link to="/wpf-databinding-in-depth-00-course-content" active-class="active"><a>WPF Data Binding in Depth</a></router-link>
+            <router-link to="/wpf-databinding-in-depth-00-course-contents" active-class="active"><a>WPF Data Binding in Depth</a></router-link>
 
             <p>
                 Date Completed: 01/09/2016

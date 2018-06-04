@@ -1,7 +1,10 @@
 import Home from './components/Home.vue';
 import Header from './components/Header.vue';
 import WPF from './components/wpf/WPF.vue';
-import WPFDatabindingInDepth00CourseContent from './components/wpf/WPFDatabindingInDepth00CourseContent.vue';
+import WPFDatabindingInDepth00CourseContents from './components/wpf/WPFDatabindingInDepth00CourseContents.vue';
+import WPFDatabindingInDepth01CourseOverview from './components/wpf/WPFDatabindingInDepth01CourseOverview.vue';
+import WPFDatabindingInDepth02DataBindingOverview from './components/wpf/WPFDatabindingInDepth02DataBindingOverview.vue';
+import WPFDatabindingInDepth03DataSources from './components/wpf/WPFDatabindingInDepth03DataSources.vue';
 
 // I think this loads the route at application startup
 const User = resolve => {
@@ -30,11 +33,29 @@ export const routes = [
         }
     },
     {
-        path: '/wpf-databinding-in-depth-00-course-content', components: {
-            default: WPFDatabindingInDepth00CourseContent
+        path: '/wpf-databinding-in-depth-00-course-contents', components: {
+            default: WPFDatabindingInDepth00CourseContents,
+            'header-top': Header
         }
     },
-
+    {
+        path: '/wpf-databinding-in-depth-01-course-overview', components: {
+            default: WPFDatabindingInDepth01CourseOverview,
+            'header-top': Header
+        }
+    },
+    {
+        path: '/wpf-databinding-in-depth-02-databinding-overview', components: {
+            default: WPFDatabindingInDepth02DataBindingOverview,
+            'header-top': Header
+        }
+    },
+    {
+        path: '/wpf-databinding-in-depth-03-data-sources', components: {
+            default: WPFDatabindingInDepth03DataSources,
+            'header-top': Header
+        }
+    },
 
     {path: '/redirect-me', redirect: {name: 'home'}},
     {path: '*', redirect: '/'}
