@@ -226,8 +226,7 @@ image.Source = imageSource;</code></pre>
                     </figure>
                     <p>Then change the color of the ActivityIndicator to white:</p>
                     <figure>
-                    <pre><code
-                            class="xml">&lt;ActivityIndicator IsRunning=&quot;true&quot; Color=&quot;White&quot;</code></pre>
+                    <pre class="prettyprint"><code>&lt;ActivityIndicator IsRunning=&quot;true&quot; Color=&quot;White&quot;</code></pre>
                         <figcaption>Fig 04-024</figcaption>
                     </figure>
                     <p>Now our application will look like this:</p>
@@ -239,8 +238,7 @@ image.Source = imageSource;</code></pre>
                         IsRunning to true we will use a Binding expression. I want to bind the IsRunning attribute of the
                         ActivityIndicator to the IsLoading attribute of the Image:</p>
                     <figure>
-                    <pre><code
-                            class="xml">IsRunning=&quot;{Binding Source={x:Reference image}, Path=IsLoading }&quot;</code></pre>
+                    <pre class="prettyprint"><code>IsRunning=&quot;{Binding Source={x:Reference image}, Path=IsLoading }&quot;</code></pre>
                         <figcaption>Fig 04-026</figcaption>
                     </figure>
                     <p>So our Binding expression starts with the Binding keyword inside curly braces. We specify the Source
@@ -353,8 +351,7 @@ image.Source = imageSource;</code></pre>
                     </figure>
                     <p>The name used for the LogicalName becomes the resource identifier in your code:</p>
                     <figure>
-                    <pre><code
-                            class="csharp">image.Source = ImageSource.FromResource(&quot;torquay-at-night.jpg&quot;);</code></pre>
+                    <pre class="prettyprint"><code>image.Source = ImageSource.FromResource(&quot;torquay-at-night.jpg&quot;);</code></pre>
                         <figcaption>Fig 04-036</figcaption>
                     </figure>
                     <p>Once this fix was in place the image was displayed and the app worked as desired.</p>
@@ -532,8 +529,7 @@ public class EmbeddedImage : IMarkupExtension
                     <p>If you have a lot of images in your app you may want to organise them into different folders. Let's
                         demonstrate. Firstly add a Name attribute to your button:</p>
                     <figure>
-                    <pre><code
-                            class="xml">&lt;Button Image=&quot;clock.png&quot; x:Name=&quot;btn&quot;/&gt;</code></pre>
+                    <pre class="prettyprint"><code>&lt;Button Image=&quot;clock.png&quot; x:Name=&quot;btn&quot;/&gt;</code></pre>
                         <figcaption>Fig 04-049</figcaption>
                     </figure>
                     <p>Now in the code-behind add the following code:</p>

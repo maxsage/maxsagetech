@@ -83,8 +83,7 @@
                         button:
                     </p>
                     <figure>
-                    <pre><code
-                            class="csharp">await Navigation.PushAsync(new HierarchicalNavigationIntroductionPage());</code></pre>
+                    <pre class="prettyprint"><code>await Navigation.PushAsync(new HierarchicalNavigationIntroductionPage());</code></pre>
                         <figcaption>Fig 06-008</figcaption>
                     </figure>
                     <p>When our use clicks this button we want to navigate to the next page. To do this we use the

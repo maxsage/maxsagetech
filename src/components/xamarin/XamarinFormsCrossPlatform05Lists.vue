@@ -251,8 +251,7 @@
                         on the ListView to true:
                     </p>
                     <figure>
-                    <pre><code
-                            class="xml">&lt;ListView x:Name=&quot;listView&quot; HasUnevenRows=&quot;True&quot;&gt;</code></pre>
+                    <pre class="prettyprint"><code>&lt;ListView x:Name=&quot;listView&quot; HasUnevenRows=&quot;True&quot;&gt;</code></pre>
                         <figcaption>Fig 05-021</figcaption>
                     </figure>
                     <p>With this change the height of each item will be based on it's content. Let's take a look at the
@@ -400,8 +399,7 @@
                     </figure>
                     <p>Next in this method we display an alert with the Name of the selected Contact:</p>
                     <figure>
-                    <pre><code
-                            class="csharp">DisplayAlert(&quot;Selected&quot;, contact.Name, &quot;OK&quot;);</code></pre>
+                    <pre class="prettyprint"><code>DisplayAlert(&quot;Selected&quot;, contact.Name, &quot;OK&quot;);</code></pre>
                         <figcaption>Fig 05-031</figcaption>
                     </figure>
                     <p>For the Tapped event the e argument has a property called Item which gives us access to the item that
@@ -524,21 +522,19 @@
                     </p>
                     <p>Next we assign a new variable called contact to the CommandParameter property:</p>
                     <figure>
-                        <pre><code class="">var contact = menuItem.CommandParameter as Contact;</code></pre>
+                        <pre class="prettyprint"><code>var contact = menuItem.CommandParameter as Contact;</code></pre>
                         <figcaption>Fig 05-040</figcaption>
                     </figure>
                     <p>Then we just display an alert:</p>
                     <figure>
-                    <pre><code
-                            class="csharp"> DisplayAlert(&quot;Call&quot;, contact.Name, &quot;OK&quot;);</code></pre>
+                    <pre class="prettyprint"><code> DisplayAlert(&quot;Call&quot;, contact.Name, &quot;OK&quot;);</code></pre>
                         <figcaption>Fig 05-041</figcaption>
                     </figure>
                     <p>In the delete handler we again use the CommandParameter to get access to the Contact object. This
                         time we will combine the casting into one line:
                     </p>
                     <figure>
-                    <pre><code
-                            class="csharp">var contact = (sender as MenuItem).CommandParameter as Contact;</code></pre>
+                    <pre class="prettyprint"><code>var contact = (sender as MenuItem).CommandParameter as Contact;</code></pre>
                         <figcaption>Fig 05-042</figcaption>
                     </figure>
                     <p>We want to remove the item from the list when the Delete MenuItem is clicked. If we scroll to the
