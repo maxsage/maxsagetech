@@ -36,6 +36,13 @@ import XamarinFormsCrossPlatform08DataAccess from './components/xamarin/XamarinF
 import XamarinFormsCrossPlatform09ModelViewViewModelArchitecturalPattern from './components/xamarin/XamarinFormsCrossPlatform09ModelViewViewModelArchitecturalPattern.vue';
 import XamarinFormsCrossPlatform10BeyondTheBasics from './components/xamarin/XamarinFormsCrossPlatform10BeyondTheBasics.vue';
 
+import SQLite from './components/sqlite/SQLite.vue';
+
+import Editors from './components/editors/Editors.vue';
+import VisualStudio from './components/editors/visual-studio/VisualStudio.vue';
+import VisualStudioCode from './components/editors/Editors.vue';
+import Editors from './components/editors/Editors.vue';
+
 
 // I think this loads the route at application startup
 // const User = resolve => {
@@ -238,9 +245,18 @@ export const routes = [
             'header-top': Header
         }
     },
-
-
-
+    {
+        path: '/sqlite', components: {
+            default: SQLite,
+            'header-top': Header
+        }
+    },
+    {
+        path: '/editors', components: {
+            default: Editors,
+            'header-top': Header
+        }
+    },
 
 
     {path: '/redirect-me', redirect: {name: 'home'}},
