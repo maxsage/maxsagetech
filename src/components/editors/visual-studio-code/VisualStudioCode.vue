@@ -1,18 +1,18 @@
 <template>
+    <div class="container">
+        <div class="panel-group">
     <div class='panel panel-primary'>
         <div class='panel-heading'>
-            {{pageTitle}}
+            <h2>Visual Studio Code</h2>
         </div>
         <div class="panel-body">
-            <div class="row">
-                <div class="col-md-12">
                     <h2>Useful Links</h2>
                     <h3>Visual Studio Code</h3>
                     <a href="https://code.visualstudio.com/Docs/customization">https://code.visualstudio.com/Docs/customization</a><br
                 />
                     <a href="http://www.johnpapa.net/visual-studio-code">http://www.johnpapa.net/visual-studio-code</a>
                     <h3>Gulp</h3>
-                    <img src="./app/assets/images/visualstudiocode/gulp.png" />
+                    <img src="./images/gulp.png" />
                     <p>Gulp is an Automated Task Runner. It can be used for various build time tasks such as:</p>
                     <ul>
                         <li>compressing new or modified images</li>
@@ -25,7 +25,7 @@
                         can be found here: <a href="http://www.pluralsight.com/courses/javascript-build-automation-gulpjs">http://www.pluralsight.com/courses/javascript-build-automation-gulpjs</a>
                     <p>Another guide to gulp can be found here: <a href="http://www.sitepoint.com/introduction-gulp-js/">http://www.sitepoint.com/introduction-gulp-js/</a></p>
                     <h3>Node Package Manager</h3>
-                    <img src="./app/assets/images/visualstudiocode/npm.png" />
+                    <img src="./images/npm.png" />
                     <p>Node Package Manager is a JavaScript package installer that is used to install server side JavaScript
                         libraries such as:</p>
                     <ul>
@@ -36,7 +36,7 @@
                     </ul>
                     <p>The official npm site can be access from: <a href="https://www.npmjs.com/">https://www.npmjs.com/</a></p>
                     <h3>Bower</h3>
-                    <img src="./app/assets/images/visualstudiocode/bower.png" />
+                    <img src="./images/bower.png" />
                     <p>The official <a href="bower.io">Bower site</a> says:</p>
                     <i><strong>"Web sites are made of lots of things — frameworks, libraries, assets, utilities,
                         and rainbows. Bower manages all these things for you."</strong></i>
@@ -45,13 +45,13 @@
                         bower.json. How you use packages is up to you. Bower provides hooks to facilitate using packages
                         in your tools and workflows.</p>
                     <h3>Yeoman</h3>
-                    <img src="./app/assets/images/visualstudiocode/yeoman.png" />
+                    <img src="./images/yeoman.png" />
                     <p>Yeoman helps you to kickstart new projects, prescribing best practices and tools to help you stay productive.</p>
                     <p>To do so, Yeoman provides a generator ecosystem. A generator is basically a plugin that can be run with
                         the `yo` command to scaffold complete projects or useful parts.</p>
                     <p>The official Yeoman site can be accessed from here: <a href="http://yeoman.io/">http://yeoman.io/</a></p>
                     <h3>TypeScript</h3>
-                    <img src="./app/assets/images/visualstudiocode/typescript.png" />
+                    <img src="./images/typescript.png" />
                     <p>TypeScript is a free and open source programming language developed and maintained by Microsoft. It is
                         a strict superset of JavaScript, and adds optional static typing and class-based object-oriented
                         programming to the language. Anders Hejlsberg, lead architect of C# and creator of Delphi and Turbo
@@ -60,7 +60,7 @@
                     </p>
                     <a href="http://www.typescriptlang.org/">http://www.typescriptlang.org/</a>
                     <h3>Emmet</h3>
-                    <img src="./app/assets/images/visualstudiocode/emmet.png" />
+                    <img src="./images/emmet.png" />
                     <p>Emmet is a plugin for many popular text editors which greatly improves HTML & CSS workflow. It provides,
                         amongst other features, shortcut syntax for creating HTML.</p>
                     <a href="http://emmet.io/">http://emmet.io/</a>
@@ -114,7 +114,7 @@
                         </tr>
                         <tr>
                             <td>Ctrl+P then @:</td>
-                            <td>Goto Symbol by category (arrays, booleans, properties strings functions etc.)
+                            <td>Goto Symbol by category (arrays, booleans, properties strings functions etc.)</td>
                         </tr>
 
                         <tr>
@@ -166,7 +166,7 @@
                     <h2>The Viewbar</h2>
                     <p>By default the Viewbar is located on the left hand side of the Visual Studio Code Window:
                     </p>
-                    <img src="./app/assets/images/visualstudiocode/viewbar.png" />
+                    <img src="./images/viewbar.png" />
                     <table class="table">
                         <thead>
                         <tr>
@@ -176,26 +176,26 @@
                         </thead>
                         <tbody>
                         <tr>
-                            <td><img src="./app/assets/images/visualstudiocode/explorer.png" /></td>
+                            <td><img src="./images/explorer.png" /></td>
                             <td>Displays the file explorer sidebar.</td>
                         </tr>
                         <tr>
-                            <td><img src="./app/assets/images/visualstudiocode/search.png" /></td>
+                            <td><img src="./images/search.png" /></td>
                             <td>Displays the search sidebar</td>
                         </tr>
                         <tr>
-                            <td><img src="./app/assets/images/visualstudiocode/git.png" /></td>
+                            <td><img src="./images/git.png" /></td>
                             <td>Displays the Git integration sidebar</td>
                         </tr>
                         <tr>
-                            <td><img src="./app/assets/images/visualstudiocode/debugger.png" /></td>
+                            <td><img src="./images/debugger.png" /></td>
                             <td>Displays the Debugger sidebar</td>
                         </tr>
                         </tbody>
                     </table>
                     <h2>Status Bar</h2>
                     <p>The blue bar at the bottom of the VS Code window is the Status Bar.</p>
-                    <img src="./app/assets/images/visualstudiocode/statusbar.png" />
+                    <img src="./images/statusbar.png" />
                     <p>The Status Bar displays information such as:</p>
                     <ul>
                         <li>The git branch you are currently viewing.</li>
@@ -215,10 +215,10 @@
                     <h2>Previewing Files</h2>
                     <p>Some file types (e.g. markdown) will give you an option to preview within Code. When this option is available
                         you will see the preview icon in the top right hand corner of the window:</p>
-                    <img src="./app/assets/images/visualstudiocode/preview.png" />
+                    <img src="./images/preview.png" />
                     <p>Clicking this icon will change the view to preview mode. At this point the View Source icon will become
                         visible:</p>
-                    <img src="./app/assets/images/visualstudiocode/sourceview.png" />
+                    <img src="./images/sourceview.png" />
                     <p>Clicking this icon will take you back to the source code.</p>
                     <h2>Navigating and editing files</h2>
                     <p>Press Ctrl+P twice to take you back to the previous file.</p>
@@ -321,7 +321,7 @@
                     <ul>
                         <li>Description - a description of the snippet</li>
                         <li>Prefix - the text that the user must type to trigger the snippet</li>
-                        <li>Body - an array representing each line of the Snippet.
+                        <li>Body - an array representing each line of the Snippet.</li>
                     </ul>
                     <p><strong>Tip</strong> You may need to issue the Reload Window command from the Command Palette if you
                         can't access the Snippet you have just created.</p>
@@ -530,7 +530,7 @@
                         <tbody>
                         <tr>
                             <td>-r</td>
-                            <td>Recursive - install any additional typings files that this file relies on.
+                            <td>Recursive - install any additional typings files that this file relies on.</td>
                         </tr>
                         <tr>
                             <td>-o</td>
@@ -549,9 +549,9 @@
                     <p>You can also add references to typings files using code hints by highlighting an unrecognized
                         symbol, clicking on the light bulb icon and selecting the 'Download type definition aaaa.d.ts'
                         where aaa is the name of the typings file that Code will download.</p>
-                    <img src="./app/assets/images/visualstudiocode/codehint.png" />
+                    <img src="./images/codehint.png" />
                     <p>When I do this I get a message as follows:</p>
-                    <img src="./app/assets/images/visualstudiocode/codehintmessage.png" />
+                    <img src="./images/codehintmessage.png" />
                     <p>In order to get the intellisense and the typings file to work I had to add an entry in the jsonconfig.json
                         file as follows:</p>
                     <pre>

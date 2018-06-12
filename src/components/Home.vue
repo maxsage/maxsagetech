@@ -1,10 +1,14 @@
 <template>
-    <div>
-        <h1>The Home Page</h1>
-        <hr>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab asperiores, aut autem, blanditiis consequuntur
-            dolore excepturi laborum maiores minima nihil non nulla obcaecati quas quibusdam quod sed suscipit vero
-            voluptatem.</p>
-
+    <div class="container">
+        <div class="panel-group">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h2>Home</h2>
+                </div>
+                <div class="panel-body">
+                    <p>This is the homepage</p>
+                </div>
+            </div>
+        </div>
     </div>
 </template>

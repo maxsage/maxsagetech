@@ -1,6 +1,13 @@
 import Home from './components/Home.vue';
 import Header from './components/Header.vue';
 
+import Vuejs from './components/vuejs/Vuejs.vue';
+import VuejsEssentials00CourseContents from './components/vuejs/VuejsEssentials00CourseContents.vue';
+import VuejsEssentials01AnIntroductionToVue from './components/vuejs/VuejsEssentials01AnIntroductionToVue.vue';
+import VuejsEssentials02MovingOnWithVueCLI from './components/vuejs/VuejsEssentials02MovingOnWithVueCLI.vue';
+import VuejsEssentials03WritingEffectiveApps from './components/vuejs/VuejsEssentials03WritingEffectiveApps.vue';
+import VuejsEssentials04HandlingStateWithVuex from './components/vuejs/VuejsEssentials04HandlingStateWithVuex.vue'
+
 import WPF from './components/wpf/WPF.vue';
 
 import WPFDatabindingInDepth00CourseContents from './components/wpf/WPFDatabindingInDepth00CourseContents.vue';
@@ -40,8 +47,8 @@ import SQLite from './components/sqlite/SQLite.vue';
 
 import Editors from './components/editors/Editors.vue';
 import VisualStudio from './components/editors/visual-studio/VisualStudio.vue';
-import VisualStudioCode from './components/editors/Editors.vue';
-import Editors from './components/editors/Editors.vue';
+import VisualStudioCode from './components/editors/visual-studio-code/VisualStudioCode.vue';
+import Webstorm from './components/editors/webstorm/Webstorm.vue';
 
 
 // I think this loads the route at application startup
@@ -58,12 +65,44 @@ export const routes = [
             'header-top': Header
         }
     },
+
     {
-        path: '/xamarin', components: {
-            default: Xamarin,
+        path: '/vuejs', components: {
+            default: Vuejs,
             'header-top': Header
         }
     },
+    {
+        path: '/vuejsessentials-00-course-contents', components: {
+            default: VuejsEssentials00CourseContents,
+            'header-top': Header
+        }
+    },
+    {
+        path: '/vuejsessentials-01-an-introduction-to-vue', components: {
+            default: VuejsEssentials01AnIntroductionToVue,
+            'header-top': Header
+        }
+    },
+    {
+        path: '/vuejsessentials-02-moving-on-with-vue-cli', components: {
+            default: VuejsEssentials02MovingOnWithVueCLI,
+            'header-top': Header
+        }
+    },
+    {
+        path: '/vuejsessentials-03-writing-effective-apps', components: {
+            default: VuejsEssentials03WritingEffectiveApps,
+            'header-top': Header
+        }
+    },
+    {
+        path: '/vuejsessentials-04-handling-state-with-vuex', components: {
+            default: VuejsEssentials04HandlingStateWithVuex,
+            'header-top': Header
+        }
+    },
+
     {
         path: '/wpf', components: {
             default: WPF,
@@ -179,6 +218,13 @@ export const routes = [
             'header-top': Header
         }
     },
+
+    {
+        path: '/xamarin', components: {
+            default: Xamarin,
+            'header-top': Header
+        }
+    },
     {
         path: '/xamarin-forms-cross-platform-00-course-contents', components: {
             default: XamarinFormsCrossPlatform00CourseContents,
@@ -245,6 +291,7 @@ export const routes = [
             'header-top': Header
         }
     },
+
     {
         path: '/sqlite', components: {
             default: SQLite,
@@ -257,7 +304,24 @@ export const routes = [
             'header-top': Header
         }
     },
-
+    {
+        path: '/editors/visual-studio', components: {
+            default: VisualStudio,
+            'header-top': Header
+        }
+    },
+    {
+        path: '/editors/visual-studio-code', components: {
+            default: VisualStudioCode,
+            'header-top': Header
+        }
+    },
+    {
+        path: '/editors/webstorm', components: {
+            default: Webstorm,
+            'header-top': Header
+        }
+    },
 
     {path: '/redirect-me', redirect: {name: 'home'}},
     {path: '*', redirect: '/'}
