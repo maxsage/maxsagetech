@@ -336,7 +336,23 @@
                     </p>
                     <p>Let's first begin by implementing the method and then we'll figure out how to call it any time a
                     user enters some text. First the method:</p>
-                    CFig
+                    <figure>
+                    <pre class="prettyprint">new Vue({
+                      el:  '#app',
+                      methods: {
+
+                      }
+                    });</pre>
+                        <figcaption>Fig 01-016</figcaption>
+                    </figure>
+                    <p>Methods is going to have an object tied to it. Right now there's just one method we care about
+                        which is the method that's going to be called anytime a user enters some text into the input
+                        field. But over time if we had a more complicated template with more text inputs or more
+                        buttons of just more ways of interacting with it we might end up having many different
+                        methods defined inside the subject.
+                    </p>
+                    <p>So let's begin by implementing this method that's going to be called anytime a user enters
+                        some text. </p>
 
 
 
