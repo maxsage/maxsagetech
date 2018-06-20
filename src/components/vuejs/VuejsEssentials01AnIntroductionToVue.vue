@@ -328,6 +328,18 @@
                     <p>In the last section we spoke about the four different steps we are going to implement to get our
                     application working. In this section we are going to start off with step number one - detecting
                     when the user enter some new text and responding by running some custom Javascript code.</p>
+                    <p>So we will focus on this first step inside this section. To implement this step we are going
+                    to add a method to the Vue instance. That method will get called anytime the user enters some
+                    new text.</p>
+                    <p>What is a method? A method is a function that is going to be tied to our View instance. That
+                    function can then be called at any point in time to somehow implement or update our user interface.
+                    </p>
+                    <p>Let's first begin by implementing the method and then we'll figure out how to call it any time a
+                    user enters some text. First the method:</p>
+                    CFig
+
+
+
                     <h3>Defining Vue Directives</h3>
                     <h3>Retrieving Event Information</h3>
                     <h3>Imperative vs Declarative Programming</h3>
