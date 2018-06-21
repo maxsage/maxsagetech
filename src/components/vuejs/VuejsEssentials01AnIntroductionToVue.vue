@@ -427,13 +427,13 @@
                     </p>
                     <figure>
                     <pre class="prettyprint">new Vue({
-                      el:  '#app',
-                      methods: {
-                        onInput: function() {
-                          console.log(event.target.value);
-                        }
-                      }
-                    });</pre>
+  el:  '#app',
+  methods: {
+    onInput: function() {
+      console.log(event.target.value);
+    }
+  }
+});</pre>
                         <figcaption>Fig 01-020</figcaption>
                     </figure>
                     <p>event is a reference to the event that just occurred, target is a reference to the Html
@@ -547,10 +547,10 @@
                         extrapolate this example and imagine a more complicated flow where going step by step in
                         code might be a little bit more challenging. </p>
                     <p>Now let's look at a declarative approach:</p>
-                    <!--<figure>-->
-                        <!--<img src="./images/vuejsessentials/Fig01-021.PNG"/>-->
-                        <!--<figcaption>Fig 01-021</figcaption>-->
-                    <!--</figure>-->
+                    <figure>
+                        <img src="./images/vuejsessentials/Fig01-021.png"/>
+                        <figcaption>Fig 01-021</figcaption>
+                    </figure>
                     <p>So with a declarative approach maybe we would say that we've got some initial state or some
                         initial ingredients of sorts of a single variable called something like textInput which
                         maybe starts off as an empty string.</p>
@@ -646,10 +646,10 @@
                         value but, in this example, we are trying to display an identicon so a viewable value would
                         be like taking that text and turning it into an identicon.</p>
                     <p>In the following figure you can see a simplified version of the previous figure:</p>
-                    <!--<figure>-->
-                        <!--<img src="./images/vuejsessentials/Fig01-025.PNG"/>-->
-                        <!--<figcaption>Fig 01-025.PNG</figcaption>-->
-                    <!--</figure>-->
+                    <figure>
+                        <img src="./images/vuejsessentials/Fig01-024.png"/>
+                        <figcaption>Fig 01-025</figcaption>
+                    </figure>
                     <p>So we've now got a good idea of some of these different parts of the Vue API. In the next
                         section we'll start to use the data, methods and computed properties.
                     </p>
@@ -663,31 +663,31 @@
                         comment inside methods object to remind me of it's purpose:</p>
                     <figure>
                     <pre class="prettyprint">new Vue({
-                      el:  '#app',
-                      methods: { // Use these function to change data
-                        onInput: function() {
-                          console.log(event.target.value);
-                        }
-                      }
-                    });</pre>
+  el:  '#app',
+  methods: { // Use these function to change data
+    onInput: function() {
+      console.log(event.target.value);
+    }
+  }
+});</pre>
                         <figcaption>Fig 01-026</figcaption>
                     </figure>
                     <p>Next I will define the data and computed properties with comments to describe their purpose:</p>
                     <figure>
                     <pre class="prettyprint">new Vue({
-                      el:  '#app',
-                      data: { // Initialize our list of 'ingredients'
+  el:  '#app',
+  data: { // Initialize our list of 'ingredients'
 
-                      },
-                      computed: { // Turn data into viewable values
+  },
+  computed: { // Turn data into viewable values
 
-                      },
-                      methods: { // Use these function to change data
-                        onInput: function() {
-                          console.log(event.target.value);
-                        }
-                      }
-                    });</pre>
+  },
+  methods: { // Use these function to change data
+    onInput: function() {
+      console.log(event.target.value);
+    }
+  }
+});</pre>
                         <figcaption>Fig 01-027</figcaption>
                     </figure>
                     <p>Now one thing that might be a little bit misleading here is that with the methods property we
@@ -699,8 +699,8 @@
                     </p>
                     <figure>
                     <pre class="prettyprint">  data: { // Initialize our list of 'ingredients'
-                        textInput: ''
-                      },</pre>
+    textInput: ''
+  },</pre>
                     <figcaption>Fig 01-028</figcaption>
                     </figure>
                     <p>So, again, with data we define simple key value pairs that have say strings or numbers or
