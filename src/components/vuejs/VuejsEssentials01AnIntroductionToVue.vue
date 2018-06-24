@@ -701,7 +701,7 @@
                     <pre class="prettyprint">  data: { // Initialize our list of 'ingredients'
     textInput: ''
   },</pre>
-                    <figcaption>Fig 01-028</figcaption>
+                        <figcaption>Fig 01-028</figcaption>
                     </figure>
                     <p>So, again, with data we define simple key value pairs that have say strings or numbers or
                         arrays or objects. But with the computed and methods properties we define functions on both
@@ -711,9 +711,300 @@
                     <p>Now that we've added in some comments to further guide us we will continue in the next
                         section to start adding code to the data and computed properties.</p>
                     <h3>Updated Data Values</h3>
+                    <p>In the last section we added in our data property and our computed property. We also added in
+                        some comments to describe their purpose inside of this Vue instance. In this section we're going
+                        to go back to our onInput function inside of the methods object.</p>
+                    <p>Remember all of the functions inside of methods are intended to somehow update our data and
+                        anytime we updated our data it's going to cause our Vue instance to update the HTML that is
+                        displayed inside the browser.</p>
+                    <p>At present we're just taking the value that the user types in - which is event.target.value
+                        and logging it to the console. That's not incredibly useful. I think we should probably
+                        remove that console log and replace it with something that's going to update the textInput
+                        property in our data object. Remember text input is supposed to reflect the current value of
+                        the text input form field defined here:
+                    </p>
+                    <figure>
+                    <pre class="prettyprint">&lt;div&gt;
+    Input:
+    &lt;input /&gt;
+
+  &lt;/div&gt;</pre>
+                        <figcaption>Fig 01-029</figcaption>
+                    </figure>
+                    <p>We can kind of imagine this data property of textInput as being like our list of ingredients
+                        and based on what the value of textInput is inside of the data object we will do different
+                        things to render different stuff out onto the page.</p>
+                    <p>So let's remove the consolelog statement and then to update the value of this textInput value
+                        data property we will add the following code:
+                    </p>
+                    <figure>
+                    <pre class="prettyprint">methods: { // Use these function to change data
+    onInput: function() {
+      this.textInput = event.target.value;
+    }
+  }</pre>
+                        <figcaption>Fig 01-030</figcaption>
+                    </figure>
+                    <p>Now one thing that's very important here that I want to point out is that we said simply
+                        <code class="prettyprint">this.texInput</code> we did not say anything like <code
+                                class="prettyprint">this.data.textInput</code>. We only used the word <code
+                                class="prettyprint">data</code> when
+                        we first initialized the data property. After that to refer to any of the properties that are
+                        initialized inside of here we simply write
+                        <code class="prettyprint">this.</code>
+                        and then the property name.</p>
+                    <p>Now, what I want to be really crystal clear about because I mentioned this in passing one or
+                        two videos ago is that anytime we update the value of one of our data properties it causes
+                        our Vue instance to automatically re-render inside of the browser window. At present our
+                        template is not making use of the <code class="prettyprint">textInput</code> property at all
+                        so you won't currently see any changes in the browser. However, as soon as we start updating
+                        or making use of <code class="prettyprint">textInput</code> inside of our actual template
+                        you're going to see that anytime we run this <code class="prettyprint">onInput</code>
+                        function everything inside the browser window is going to automatically update as well which
+                        is a very nice feature. We don't have to forcibly say "Please re-render my application" or
+                        anything like that.
+                    </p>
+                    <p>So just to bring everything full circle now I want to go back to one of the diagrams we were
+                        just looking at and walk through the process of what we've done now with the <code
+                                class="prettyprint">data</code> property
+                        and the <code class="prettyprint">onInput</code> function: </p>
+                    <figure>
+                        <img src="./images/vuejsessentials/Fig01-031.png"/>
+                        <figcaption>Fig 01-031</figcaption>
+                    </figure>
+                    <p>We said that we have some initial starting data of <code class="prettyprint">textInput</code>
+                        equal to empty string. So that's
+                        how our application first starts off. We then sit around and wait and then at some point in time
+                        the <code class="prettyprint">onInput</code> method is executed. So the user enters some text
+                        and inside the method we update the value of <code class="prettyprint">textInput</code>. So
+                        let's imagine that maybe the user enters in text of "abcd". So after they enter that text we're
+                        going to update the <code class="prettyprint">textInput</code> value. So now the <code
+                                class="prettyprint">textInput</code>
+                        property in <code class="prettyprint">data</code> has a value of "abcd". Now because
+                        <code class="prettyprint">textInput</code> has been updated the template is re-rendered
+                        automatically by Vue. Next, as a result of the template being re-rendered we calculate the
+                        identicon by using one of our computed functions. We have not yet defined this function but
+                        we will in just a second.
+                    </p>
+                    <p>We are going to talk about the data, methods and computed properties non-stop throughout this
+                        course so if it seems confusing right now don't sweat it because we're definitely going to get a
+                        lot of practice with it. </p>
+                    <p>Let's continue in the next section where we're going to start working on our computed
+                        properties and hopefully start to bring everything full circle.</p>
                     <h3>Computed Properties</h3>
+                    <p>We've now got our data property being initialized here and we've got some way for our data to
+                        be initialized over time whenever our user does something inside of our application. It's now
+                        time to turn to the last step here which is to take our data and turn it into an actual
+                        viewable value. To be entirely clear our data is already in kind of like a viewable value -
+                        it's a plain text string. Obviously we can show it inside of our template and have our users
+                        kind of view the output.
+                    </p>
+                    <p>However that's not actually what we want our users to view. We don't care about showing them
+                        the text that they just entered. Instead, we want to show them an identicon - so we need to
+                        do some processing of oiur data before it actually gets displayed on the screen. Anytime we
+                        want to do som calculation on a value before it gets displayed on the screen that's where we
+                        make use of a computed function. </p>
+                    <p>So inside of the computed object is where we're going to define a new function which I'm going
+                        to call identicon like so:
+                    </p>
+                    <figure>
+                    <pre class="prettyprint">computed: { // Turn data into viewable values
+    identicon: function() {
+
+    }
+  },</pre>
+                        <figcaption>Fig 01-032</figcaption>
+                    </figure>
+                    <p>So any time the identicon function gets called you and I are going to return something that's
+                        going to get the identicon displayed on the screen.</p>
+                    <p>Now as a quick reminder when we first made use of this CodePen then we already got you access
+                        to this library call jdenticon (you can verify this by clicking the settings button, selecting
+                        the JavaScript tab and viewing the external scripts section. So we're going to write some
+                        code that's going to make use of this library right here to produce the actual identicon
+                        based on the text input that the user has provided to us.
+                    </p>
+                    <p>So inside the identicon function we're going to make use of that jdenticon library:</p>
+                    <figure>
+                    <pre class="prettyprint">computed: { // Turn data into viewable values
+identicon: function() {
+  jdenticon.toSvg();
+}</pre>
+                        <figcaption>Fig 01-033</figcaption>
+                    </figure>
+                    <p>First we'll pass in the value of <code class="prettyprint">textInput</code> because that's kind
+                        of like the seed of sorts from which our identicon gets calculated. Remember that we can
+                        reference any of the properties in the data object by simply writing <code class="prettyprint">this.</code>
+                        and then the property name.
+                    </p>
+                    <p>The second argument is going to be the height or pixel width of the identicon that gets
+                        generated - 200 pixels should be fine for application.
+                    </p>
+                    <p>Now the very last thing we need to do is return this calculated or computed value from the
+                        identicon function so I'm going to make sure I get the return keyword inside there as well:
+                    </p>
+                    <figure>
+                    <pre class="prettyprint">computed: { // Turn data into viewable values
+identicon: function() {
+  return jdenticon.toSvg(this.textInput, 200);
+}</pre>
+                        <figcaption>Fig 01-034</figcaption>
+                    </figure>
+                    <p>Ok so I know that at this point we still don't really see any change in the output rendered
+                        to the browser window. So to actually get this identicon function running and displayed on
+                        the screen we have to actually reference the identicon function from within our template
+                        which is defined in the Html panel in the CodePen. </p>
+                    <p>To call a computed function from within our template or to somehow get that information to
+                        appear on the screen we can use a little bit of advanced Vue syntax. So in the Html where we
+                        have written Output: I am going to reference this computed identicon function by writing the
+                        following:</p>
+                    <figure>
+                    <pre v-pre class="prettyprint">&lt;div&gt;
+    Output:
+    {{ identicon }}
+&lt;/div&gt;</pre>
+                        <figcaption>Fig 01-035</figcaption>
+                    </figure>
+                    <p>So now in the browser output you'll see a bunch of crazy strange text. This might not look
+                        like what we want but it is actually pretty close to what we need. You should see an svg tag
+                        which is a type of image. So, in this case, whenever we make use of the jidenticon toSvg
+                        function it returns an SVG element. But when we try to show that inside of our template we
+                        just see the actual raw Html that represents our Svg.</p>
+                    <p>To actually get this to show up as a real piece of rendered Svg we're going to use another Vue
+                        directive:
+                    </p>
+                    <figure>
+                    <pre class="prettyprint">computed: { // Turn data into viewable values
+identicon: function() {
+  return jdenticon.toSvg(this.textInput, 200);
+}</pre>
+                        <figcaption>Fig 01-036</figcaption>
+                    </figure>
+                    <p>Now you should see the identicon appear on the screen. Now I know that the last step there,
+                        where I said "Ok we don't really want the SVG raw text to appear here - we want to instead
+                        show the Html" might seem a little bit confusing. We'll come back to this in a second but
+                        before we do let's try entering in some text in the input field. As you start to type stuff
+                        in you'll notice that the identicon is changing every single time and we get some new
+                        identicon appearing on the screen.</p>
+                    <p>So in the next section we're going to do a very big review to describe exactly how this
+                        application is working right now.</p>
                     <h3>Review from Start to Finish</h3>
+                    <p>In the last section we got our application working but I think you'll agree with me that
+                        there's still some confusion over how everything works at the moment. So in this section we
+                        are going to work through a big timeline diagram that's going to give you a better idea of
+                        exactly what is occurring inside or our application and it's going to really tie everything
+                        together.</p>
+                    <figure>
+                        <img src="./images/vuejsessentials/Fig01-037.png"/>
+                        <figcaption>Fig 01-037</figcaption>
+                    </figure>
+                    <p>At the very top we first start off by creating our Vue instance. When that instance is
+                        created the data property is evaluated:</p>
+                    <figure>
+                    <pre class="prettyprint">data: { // Initialize our list of 'ingredients'
+ textInput: ''
+},</pre>
+                        <figcaption>Fig 01-038</figcaption>
+                    </figure>
+                    <p>Vue sees that we are providing an object that has a property named <code class="prettyprint">textInput</code>
+                        with a value of
+                        empty string. Because we are initializing this data property right here Vue is going to take
+                        that and it's going to assign it to the value of <code class="prettyprint">this</code> which is
+                        accessible inside of our computed functions and our methods functions. After that value is
+                        initialized our template inside the Dom is then evaluated by Vue and eventually rendered onto
+                        the screen. So that's when we actually see some starting content appear</p>
+                    <p>We then wait for some user to type into our text input. The instant they do our own input
+                        method is executed. Inside of that <code class="prettyprint">onInput</code> method which is
+                        right here we update the value of <code class="prettyprint">textInput</code>. That's when
+                        some interesting stuff starts to happen. So it's when you start to update these data
+                        properties that have been assigned to <code class="prettyprint">this</code> that you start to
+                        see some interesting behaviour in your application. So when that value gets updated our
+                        template gets automatically re-rendered to the screen. So Vue says - "Hey!, someone just
+                        updated that value. I need automatically re-render the template and update content that is
+                        visible on the screen.</p>
+                    <p>
+                        During that process, Vue looks at our template and it sees that our template references a
+                        computed property when we put together the directive right underneath Output:
+                    </p>
+                    <figure>
+                    <pre class="prettyprint">&lt;div&gt;
+    Output:
+    &lt;div v-html=&quot;identicon&quot; /&gt;
+  &lt;/div&gt;</pre>
+                        <figcaption>Fig 01-039</figcaption>
+                    </figure>
+                    <p>So we added in the directive of <code class="prettyprint">v-html</code> which we're going to
+                        expand upon in just a moment and inside there we referenced the identicon computed function.</p>
+                    <p>So identicon in the directive above is a reference to the computed function identicon.</p>
+                    <p>So Vue locates the identicon function and executes it and then whatever is returned from that
+                        function will be provided to this <code class="prettyprint">v-html</code> directive. So in this
+                        case the identicon function returns some raw Html as a string (with an svg tag inside it).
+                        But as you an I very well know we don't want to show raw Html to the user - we want to
+                        display an identicon. So to get Vue to interpret that string as Html and not a plain old
+                        string we used the <code class="prettyprint">v-html</code> directive. This directive says -
+                        "We're going to give you a snippet of Html. It's gonna be a string but it's going to look
+                        like Html. You need to interpret that as Html and render it as Html in the output. Don't try
+                        to just print out the string."
+                    </p>
+                    <p>What we did before where we use the curly braces like so:</p>
+                    <code v-pre class="prettyprint">{{ identicon }}</code>
+                    <p>This is how we just print out a very simple string.</p>
+                    <p>Traditionally we dont use the <code class="prettyprint">v-html</code> tag unless you are
+                        working on an application where you actually need to make use of some pre-generated Html. So
+                        it's much more frequently that we'll use other methods for displaying content on the screen.</p>
+                    <p>So hopefully that's a little bit more of an explanation and makes what's happening inside of
+                        our application a little bit more clear. There's still some side topics I want to address
+                        about this application which we will address in the next section.</p>
                     <h3>Template Placement</h3>
+                    <p>In the last section we reviewed our entire application and got a better idea of how it's
+                        working. In this section I want to start going over a couple of quick odds and ends around
+                        the application we just put together.</p>
+                    <p>So the first ordinance I want to tell you about is the placement of our template. Remember,
+                        that, many videos ago when we spoke about the Vue template being created in Html and the Vue
+                        instance being created in JavaScript and we mentioned that was one way of structuring a Vue
+                        application. In particular, I'd said that our Vue template does not have to be created on
+                        the Html side of our application and that we could instead declare that Vue template in the
+                        JavaScript side.</p>
+                    <p>To demonstrate this alternative configuration go back to our CodePen and take all the Html
+                        that is inside the <code class="prettyprint">div</code> with an id of app and cut and paste
+                        it into a new property called <code class="prettyprint">template:</code> that we add to the
+                        bottom of the JavaScript panel:</p>
+                    <figure>
+                    <pre class="prettyprint">template: `
+&lt;div&gt;
+  &lt;h3&gt;My Identicon Generator&lt;/h3&gt;
+      Input:
+    &lt;div&gt;
+      &lt;input v-on:input=&quot;onInput&quot; /&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+      Output:
+      &lt;div v-html=&quot;identicon&quot; &gt;&lt;/div&gt;
+&lt;/div&gt;`</pre>
+                        <figcaption>Fig 01-031</figcaption>
+                    </figure>
+                    <p>Note the use of back ticks (the character on the keyboard to the left of 1) and additional
+                        enclosing <code class="prettyprint">div</code>.</p>
+                    <p>So when we make use of a template that is attached directly to an instance we provide a
+                        string that contains some amount of Html. Inside that string we have to have exactly one
+                        root element (which is why we added the additional <code class="prettyprint">div</code>)</p>
+                    <p>If I were to remove the root <code class="prettyprint">div</code> you would see the we only
+                        see the <code class="prettyprint">h3</code> element in the browser window (which is now the root
+                        element).
+                    </p>
+                    <p>That's the reason for the root <code class="prettyprint">div</code>. We are expected to only
+                        return 1 root element inside the template string.
+                    </p>
+                    <p>So you'll see very plainly that everything works the exact same way that it did before. This
+                        is just a different way to structure your Vue application. You can either create your
+                        template inside of your Html or you can create the template and attach it directly to your
+                        Vue instance.</p>
+                    <p>Now, in reality, the vast majority of applications that you will be working on are going to
+                        take the approach where you define the Html as a template property in JavaScript.</p>
+                    <p>The reason I demonstrated the approach where the Vue template is created in the Html is
+                        because all the Vue documentation takes that approach.</p>
+                    <p>Ok, that was the first ordinance I wanted to show you. Let's now continue in the next section
+                    to discuss one or two other topics.</p>
+
                     <h3>Referencing Data in the Template</h3>
                     <h3>Expressions in Templates</h3>
                     <h3>Coding Exercise 1 Rendering with String Templates</h3>
