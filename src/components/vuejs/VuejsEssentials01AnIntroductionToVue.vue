@@ -1213,16 +1213,9 @@ identicon: function() {
                         computed functions will also be easier to understand because you can add comments to document
                         their behaviour.
                     </p>
-                    <p>We're going to discuss the </p>
-
-
-
-
-
-
-
-
-
+                    <p>We're going to continue in the next section by discussing the first big application we're
+                        going to create in this course.
+                    </p>
                     <h3>Coding Exercise 1 Rendering with String Templates</h3>
                     <h3>Coding Exercise 2 JS Expressions with String Templates</h3>
                 </div>
