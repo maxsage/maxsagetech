@@ -1,0 +1,14 @@
+var render = function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+        \"div\",
+            { attrs: { id: \"app\" } },
+                [
+                      _c(\"img\", { attrs: { src: __webpack_require__(/*! ./assets/logo.png */ \"./src/assets/logo.png\") } }),\n
+                      _c(\"HelloWorld\", { attrs: { msg: \"Wel to Your Vue.js App\" } })
+                ],
+                1
+            )
+        }

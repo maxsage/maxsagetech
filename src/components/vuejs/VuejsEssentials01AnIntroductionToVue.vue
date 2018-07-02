@@ -1173,7 +1173,7 @@ identicon: function() {
                         can add a very limited amount of Javascript logic inside of these curly braces.</p>
                     <p>So, for example, we could do a little bit of string concatenation:</p>
                     <figure>
-                    <pre class="prettyprint">&lt;div&gt;
+                    <pre v-pre class="prettyprint">&lt;div&gt;
     Output:
     {{ textInput + 'abcd' }}
  &lt;/div&gt;</pre>
@@ -1183,9 +1183,9 @@ identicon: function() {
                         array by every character and then reverse that array and, finally, join the result back
                         together:</p>
                     <figure>
-                    <pre class="prettyprint">&lt;div&gt;
+                    <pre v-pre class="prettyprint">&lt;div&gt;
     Output:
-    {{ textInput.split('').reverse().join('') }}
+
 &lt;/div&gt;</pre>
                     <figcaption>Fig 01-035</figcaption>
                     </figure>

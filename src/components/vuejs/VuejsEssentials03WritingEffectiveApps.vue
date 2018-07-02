@@ -7,6 +7,8 @@
                 </div>
                 <div class="panel-body">
                     <h3>Starting from Scratch</h3>
+                    <p>At this point we've spoken a lot about all the code that's placed inside the src directory
+                        and it's now time to actually start working on our video-browser application.</p>
                     <h3>The App Component</h3>
                     <h3>Another Way of Specifying Content</h3>
                     <h3>Multiple Ways of DOM Attachment</h3>
