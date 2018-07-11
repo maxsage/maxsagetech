@@ -1145,62 +1145,62 @@ export default {
                         optionally make use of that <code class="prettyprint">computed</code> property to somehow twist
                         those values into something that can be displayed on the screen.
                     </p>
-                    <p>So we're going to take that list of videos that are returned and we're going to assign it to
-                        a property on our <code class="prettyprint">data</code> object inside of the App component.
-                        Because we are updating the <code class="prettyprint">data</code> property we are going to
-                        cause the App component to automatically re-render it's template
+                    <p>So we're going to take that list of videos that are returned and we're going to assign it to a
+                        property on our <code class="prettyprint">data</code> object inside of the App component.
+                        Because we are updating the <code class="prettyprint">data</code> property we are going to cause
+                        the App component to automatically re-render it's template
                     </p>
                     <p>Now the important thing to realize here is that when we show one component inside of another, as
-                        we are doing here with the <code class="prettyprint">VideoList</code> inside the <code class="prettyprint">App</code> component,
-                        whenever the
-                        parent component
-                    re-renders it's template with some new data that causes all of the child components to be
-                        re-rendered as well. So whenever we update <code class="prettyprint">data</code> in the <code class="prettyprint">App</code> component
-                        <code class="prettyprint">VideoList</code>  will be updated at the same time - all of which
-                        happens automatically.</p>
-                    <p>So the plan is to take the list of videos and store it on data. When we do that causes
-                        everything to re-render. Then we can get our list of videos inside of VideoList and render
-                        them out in the template.
+                        we are doing here with the <code class="prettyprint">VideoList</code> inside the <code
+                                class="prettyprint">App</code> component, whenever the parent component re-renders it's
+                        template with some new data that causes all of the child components to be re-rendered as well.
+                        So whenever we update <code class="prettyprint">data</code> in the <code
+                                class="prettyprint">App</code> component <code class="prettyprint">VideoList</code> will
+                        be updated at the same time - all of which happens automatically.
                     </p>
-                    <p>So, in the next section, we will take our list of videos that are being retrieved when the
-                        <code class="prettyprint">onTermChange</code> function is executed and store them on the
-                        <code class="prettyprint">data</code> property.
+                    <p>So the plan is to take the list of videos and store it on data. When we do that causes everything
+                        to re-render. Then we can get our list of videos inside of VideoList and render them out in the
+                        template.
+                    </p>
+                    <p>So, in the next section, we will take our list of videos that are being retrieved when the <code
+                            class="prettyprint">onTermChange</code> function is executed and store them on the <code
+                            class="prettyprint">data</code> property.
                     </p>
                     <h3>Data in Components vs Instances</h3>
-                    <p>In the last section we spoke about how we're going to take a our list of videos and store
-                        them on the <code class="prettyprint">data</code> property of our <code class="prettyprint">app</code>
+                    <p>In the last section we spoke about how we're going to take a our list of videos and store them on
+                        the <code class="prettyprint">data</code> property of our <code class="prettyprint">app</code>
                         component. When we store the list of videos on the <code class="prettyprint">data</code>
                         property it will cause the <code class="prettyprint">App</code> component to render and
                         automatically render the <code class="prettyprint">VideoList</code> at the same time.
                     </p>
-                    <p>The <code class="prettyprint">data</code> property is defined in slightly different way
-                        depending on whether we are working with a Vue instance or a Vue component. The following
-                        diagram describes this scenario:
+                    <p>The <code class="prettyprint">data</code> property is defined in slightly different way depending
+                        on whether we are working with a Vue instance or a Vue component. The following diagram
+                        describes this scenario:
                     </p>
                     <figure>
                         <img src="./images/vuejsessentials/Fig03-049.png"/>
                         <figcaption>Fig 03-049</figcaption>
                     </figure>
-                    <p>So if we are working with a Vue instance then we can define the <code class="prettyprint">data</code>
-                        property as an object:</p>
+                    <p>So if we are working with a Vue instance then we can define the <code
+                            class="prettyprint">data</code> property as an object:
+                    </p>
                     <figure>
                     <pre class="prettyprint">data: {
     textInput: ''
 },</pre>
-                    <figcaption>Fig 03-050</figcaption>
+                        <figcaption>Fig 03-050</figcaption>
                     </figure>
                     <p>or a function that returns an object:</p>
-<figure>
+                    <figure>
 <pre class="prettyprint">data: function() {
     return {
         textInput: ''
     }
 },</pre>
-<figcaption>Fig 03-051</figcaption>
-</figure>
+                        <figcaption>Fig 03-051</figcaption>
+                    </figure>
                     <p>Once we start working with Vue components the <code class="prettyprint">data</code> property
-                        <span style="text-decoration: underline">must</span> be a function that
-                        returns an object.
+                        <span style="text-decoration: underline">must</span> be a function that returns an object.
                     </p>
                     <figure>
 <pre class="prettyprint">data: function() {
@@ -1211,69 +1211,79 @@ export default {
                         <figcaption>Fig 03-052</figcaption>
                     </figure>
                     <p>Now, I'm sure, at this point you are curios about why there is a distinction. The following
-                        diagram illustrates why this requirement is in place:</p>
+                        diagram illustrates why this requirement is in place:
+                    </p>
                     <figure>
                         <img src="./images/vuejsessentials/Fig03-053.png"/>
                         <figcaption>Fig 03-053</figcaption>
                     </figure>
-                    <p>Now, just for a moment, I want you to imagine that we break the rules and make an App
-                        component within which we define our data property as an object rather than as a function.
-                        When we define the data property as an object you can imagine that it essentially gets
-                        created inside our Computer's Memory:</p>
+                    <p>Now, just for a moment, I want you to imagine that we break the rules and make an App component
+                        within which we define our data property as an object rather than as a function. When we define
+                        the data property as an object you can imagine that it essentially gets created inside our
+                        Computer's Memory:
+                    </p>
                     <figure>
                         <img src="./images/vuejsessentials/Fig03-054.png"/>
                         <figcaption>Fig 03-054.png-</figcaption>
                     </figure>
                     <p>So inside of the our computers memory we've got that object just sitting around. When we then
-                    make an instance out of this App component - let's say we make three instances:</p>
+                        make an instance out of this App component - let's say we make three instances:
+                    </p>
                     <figure>
                         <img src="./images/vuejsessentials/Fig03-055.png"/>
                         <figcaption>Fig 03-055.png-</figcaption>
                     </figure>
-                    <p>Every instance will be referring to the exact same object inside of memory. So if any of
-                        these instances start to modify the object all the other instances will change as well
-                        because they're all sharing the exact same object.</p>
+                    <p>Every instance will be referring to the exact same object inside of memory. So if any of these
+                        instances start to modify the object all the other instances will change as well because they're
+                        all sharing the exact same object.
+                    </p>
                     <p>The easiest workaround for this is to make a function that returns an object. When we do that
-                    every single time we create a component instance they will each have their own separate copy of
-                        that data object:</p>
+                        every single time we create a component instance they will each have their own separate copy of
+                        that data object:
+                    </p>
                     <figure>
                         <img src="./images/vuejsessentials/Fig03-056.png"/>
                         <figcaption>Fig 03-056</figcaption>
                     </figure>
                     <p>So, essentially, because of this data sharing issue we have to create functions that create
-                        objects when we're working with <code class="prettyprint">data</code> inside of a component.</p>
-                    <p>In the next section we will update our App component so that it has a data property that
-                        returns an object.</p>
+                        objects when we're working with <code class="prettyprint">data</code> inside of a component.
+                    </p>
+                    <p>In the next section we will update our App component so that it has a data property that returns
+                        an object.
+                    </p>
                     <h3>Updating Data</h3>
-                    <p>In the last section we spoke about how data inside of a component has to be defined as a
-                        function that returns an object. So inside of my App component between our list of
-                        <code class="prettyprint">components</code> and our <code class="prettyprint">methods</code>
-                        we'll add a new property that will return an object that represents our <code class="prettyprint">data</code>:</p>
+                    <p>In the last section we spoke about how data inside of a component has to be defined as a function
+                        that returns an object. So inside of my App component between our list of <code
+                                class="prettyprint">components</code> and our <code class="prettyprint">methods</code>
+                        we'll add a new property that will return an object that represents our <code
+                                class="prettyprint">data</code>:
+                    </p>
                     <figure>
                     <pre class="prettyprint">data() {
             return {};
         },</pre>
-                    <figcaption>Fig 03-056</figcaption>
+                        <figcaption>Fig 03-056</figcaption>
                     </figure>
                     <p>So we define the data property and use the shorter ES2015 syntax. Inside the data function we
-                    return an object which will initialize our data. This is going to be like the starting state or
+                        return an object which will initialize our data. This is going to be like the starting state or
                         the initial ingredients for our component. So we have to start thinking about what different
                         properties our data is going to contain.
                     </p>
                     <p>Well we definitely know that we need to have a list of videos because that's what we are
-                        retrieving from our onTermChange function - so let's add a videos property which should be
-                        an array of objects where every object represents one video:</p>
+                        retrieving from our onTermChange function - so let's add a videos property which should be an
+                        array of objects where every object represents one video:
+                    </p>
                     <figure>
                     <pre class="prettyprint">data() {
     return { videos: [] };
 },</pre>
-                    <figcaption>Fig 03-057</figcaption>
+                        <figcaption>Fig 03-057</figcaption>
                     </figure>
-                    <p>Now inside the <code class="prettyprint">onTermChange</code> function where we have the <code class="prettyprint">.then</code>
-                        chained function to wait for a response from the YouTube API we can replace the console log
-                        with some logic that will take the list of videos that are contained inside of the response
-                        and update our <code class="prettyprint">data</code> property - specifically the videos
-                        property:
+                    <p>Now inside the <code class="prettyprint">onTermChange</code> function where we have the <code
+                            class="prettyprint">.then</code> chained function to wait for a response from the YouTube
+                        API we can replace the console log with some logic that will take the list of videos that are
+                        contained inside of the response and update our <code class="prettyprint">data</code> property -
+                        specifically the videos property:
                     </p>
                     <figure>
                     <pre class="prettyprint">methods: {
@@ -1290,36 +1300,39 @@ export default {
         });
     }
 }</pre>
-                    <figcaption>Fig 03-058</figcaption>
+                        <figcaption>Fig 03-058</figcaption>
                     </figure>
                     <p>Remember the data property that is returned in the response is not at all related to the
-                        component instance - this is the data property that is tied to our response object that
-                        comes back from YouTube.</p>
+                        component instance - this is the data property that is tied to our response object that comes
+                        back from YouTube.
+                    </p>
                     <p>Because videos is a data property when the above line is executed this will cause the entire
-                    template inside the App component to automatically re-render.</p>
+                        template inside the App component to automatically re-render.
+                    </p>
                     <p>So, as a quick test, let's add in a counter inside of our template that counts the number of
-                        videos that have been found on the YouTube API:</p>
-<figure>
+                        videos that have been found on the YouTube API:
+                    </p>
+                    <figure>
 <pre v-pre class="prettyprint">&lt;div&gt;
     &lt;SearchBar @termChange=&quot;onTermChange&quot;&gt;&lt;/SearchBar&gt;
     &lt;VideoList&gt;&lt;/VideoList&gt;
     {{ videos.length }}
 &lt;/div&gt;</pre>
-<figcaption>Fig 03-059</figcaption>
-</figure>
-                    <p>Usually we would use a computed function here but because this is just a temporary thing we
-                    won't bother a computed function. So we reference the videos data property and retrieve it's
-                        length.</p>
-                    <p>Remember that when we are referencing a data property or function that is tied to our
-                        component from within our template we do not have to prefix it with <code
-                                class="prettyprint">this</code> we can just write out the name of the property that
-                        we are trying to reference.
+                        <figcaption>Fig 03-059</figcaption>
+                    </figure>
+                    <p>Usually we would use a computed function here but because this is just a temporary thing we won't
+                        bother a computed function. So we reference the videos data property and retrieve it's length.
                     </p>
-                    <p>So let's save this and we'll go back over to our browser and you'll notice that now we've got
-                        the counter appearing on the screen. Type a search term in to see how many videos are
-                        returned.</p>
-                    <p>The next step is to take the list of videos stored on the <code class="prettyprint">data</code> property and pass it down to
-                        the <code class="prettyprint">VideoList</code> component.</p>
+                    <p>Remember that when we are referencing a data property or function that is tied to our component
+                        from within our template we do not have to prefix it with <code class="prettyprint">this</code>
+                        we can just write out the name of the property that we are trying to reference.
+                    </p>
+                    <p>So let's save this and we'll go back over to our browser and you'll notice that now we've got the
+                        counter appearing on the screen. Type a search term in to see how many videos are returned.
+                    </p>
+                    <p>The next step is to take the list of videos stored on the <code class="prettyprint">data</code>
+                        property and pass it down to the <code class="prettyprint">VideoList</code> component.
+                    </p>
                     <h3>Communicating from Parent to Child</h3>
                     <p>In the last section we updated our <code class="prettyprint">data</code> property of <code
                             class="prettyprint">videos</code> whenever we got a reesponse back from the YouTube API.
@@ -1328,60 +1341,73 @@ export default {
                     </p>
                     <p>Now that we have that in place we want to communicate down the list of videos down to the
                         VideoList component because the VideoList is responsible for rendering out information about
-                    each particular video on the screen.</p>
-                    <p>We've spoken a little bit about communicating from a parent to a child component previously -
-                    so instead of emitting events (that happens in the other direction) we pass props. </p>
-                    <p>This is a two step process. The first thing we're going to do is add a little bit of code to
-                        the parent component:</p>
+                        each particular video on the screen.
+                    </p>
+                    <p>We've spoken a little bit about communicating from a parent to a child component previously - so
+                        instead of emitting events (that happens in the other direction) we pass props.
+                    </p>
+                    <p>This is a two step process. The first thing we're going to do is add a little bit of code to the
+                        parent component:
+                    </p>
                     <figure>
-                    <pre class="prettyprint">&lt;VideoList v-bind:videos=&quot;videos&quot;&gt;&lt;/VideoList&gt;</pre>
-                    <figcaption>Fig 03-060</figcaption>
+                        <pre class="prettyprint">&lt;VideoList v-bind:videos=&quot;videos&quot;&gt;&lt;/VideoList&gt;</pre>
+                        <figcaption>Fig 03-060</figcaption>
                     </figure>
-                    <p>The <code class="prettyprint">videos</code> property we specify above (to the left of the = operator) will be available in the
-                        child component - there is no restriction on what you call this property (e.g. myVideoArray).
-                        The value to the right specifies the name of the <code class="prettyprint">data</code> property (so here the name is
-                        important) that we want to share from the App component - the parent. In this case that's
-                        the <code class="prettyprint">videos</code> property.</p>
-                    <p>The purpose of <code class="prettyprint">v-bind</code> directive is to specify that anytime
-                        the <code class="prettyprint">videos</code> property is updated inside of the parent it
-                        should automatically try to re-render the <code class="prettyprint">VideoList</code> and
-                        provide that new list of videos to the <code class="prettyprint">VideoList</code> component.</p>
+                    <p>The <code class="prettyprint">videos</code> property we specify above (to the left of the =
+                        operator) will be available in the child component - there is no restriction on what you call
+                        this property (e.g. myVideoArray). The value to the right specifies the name of the <code
+                                class="prettyprint">data</code> property (so here the name is important) that we want to
+                        share from the App component - the parent. In this case that's the <code class="prettyprint">videos</code>
+                        property.
+                    </p>
+                    <p>The purpose of <code class="prettyprint">v-bind</code> directive is to specify that anytime the
+                        <code class="prettyprint">videos</code> property is updated inside of the parent it should
+                        automatically try to re-render the <code class="prettyprint">VideoList</code> and provide that
+                        new list of videos to the <code class="prettyprint">VideoList</code> component.
+                    </p>
                     <p>We can also use a shorthand form for the v-bind directive as well:</p>
-<figure>
-<pre class="prettyprint">&lt;VideoList :videos=&quot;videos&quot;&gt;&lt;/VideoList&gt;</pre>
-<figcaption>Fig 03-061</figcaption>
-</figure>
+                    <figure>
+                        <pre class="prettyprint">&lt;VideoList :videos=&quot;videos&quot;&gt;&lt;/VideoList&gt;</pre>
+                        <figcaption>Fig 03-061</figcaption>
+                    </figure>
                     <p>Throughout the rest of the course we will use this shorthand syntax.</p>
-                    <p>In the next section we will add some configuration to our child component to tell it about
-                        the props that it should expect to receive from it's parent.</p>
+                    <p>In the next section we will add some configuration to our child component to tell it about the
+                        props that it should expect to receive from it's parent.
+                    </p>
                     <h3>Prop Validation</h3>
-                    <p>In the last section we added some configuration to our App component to take our list of
-                        videos and pass it down to the VideoList.</p>
-                    <p>Step two of passing props  involves adding some configuration to our child component to tell
-                        it about what data it should expect to receive from it's parent.</p>
-                    <p>Open the VideoList.vue file and add the following code to the <code class="prettyprint">script
-                    </code> section: </p>
+                    <p>In the last section we added some configuration to our App component to take our list of videos
+                        and pass it down to the VideoList.
+                    </p>
+                    <p>Step two of passing props involves adding some configuration to our child component to tell it
+                        about what data it should expect to receive from it's parent.
+                    </p>
+                    <p>Open the VideoList.vue file and add the following code to the <code
+                            class="prettyprint">script </code> section:
+                    </p>
                     <figure>
                     <pre class="prettyprint">export default {
   name: 'VideoList',
   props: ['videos']
 };</pre>
-                    <figcaption>Fig 03-062</figcaption>
+                        <figcaption>Fig 03-062</figcaption>
                     </figure>
-                    <p>We assign an array to the <code class="prettyprint">props</code> property that contains a
-                        number of strings which match the exact property names that the component should expect to
-                        receive from the parent - videos in our case.  </p>
-                    <p>So defining our <code class="prettyprint">props</code> list can be as simple as listing out
-                        the names of all the different properties that we expect to receive. We can also add in some
-                        amount of configuration or validation to make sure that the child component is receiving the
-                        correct typeo of property as well.
+                    <p>We assign an array to the <code class="prettyprint">props</code> property that contains a number
+                        of strings which match the exact property names that the component should expect to receive from
+                        the parent - videos in our case.
                     </p>
-                    <p>So we might want to validate to make sure that the parent is passing down an array, or a
-                        string, or an object. This is optional, but recommended. So instead of an array of strings
-                        we can pass in an object where the keys are the name of the properties we expect to receive
-                        and the values are the type of the property that we expect.</p>
+                    <p>So defining our <code class="prettyprint">props</code> list can be as simple as listing out the
+                        names of all the different properties that we expect to receive. We can also add in some amount
+                        of configuration or validation to make sure that the child component is receiving the correct
+                        typeo of property as well.
+                    </p>
+                    <p>So we might want to validate to make sure that the parent is passing down an array, or a string,
+                        or an object. This is optional, but recommended. So instead of an array of strings we can pass
+                        in an object where the keys are the name of the properties we expect to receive and the values
+                        are the type of the property that we expect.
+                    </p>
                     <p>In the case of the videos object we expect it to be an array of objects so we can write the
-                        following:</p>
+                        following:
+                    </p>
                     <figure>
                     <pre class="prettyprint">export default {
   name: 'VideoList',
@@ -1389,15 +1415,18 @@ export default {
       videos: Array
   }
 };</pre>
-                    <figcaption>Fig 03-063</figcaption>
+                        <figcaption>Fig 03-063</figcaption>
                     </figure>
-                    <p>This component will then expect to receive a property called videos that should be an array.
-                        If an array is not passed then the component will throw an error </p>
+                    <p>This component will then expect to receive a property called videos that should be an array. If
+                        an array is not passed then the component will throw an error
+                    </p>
                     <p>So, now that we completed step number 2, we can make use of the prop that has been provided
                         anywhere inside of our component. So we could use it in a computed function, or methods, or we
-                        could access it directly inside our template. We'll do the last one now. </p>
+                        could access it directly inside our template. We'll do the last one now.
+                    </p>
                     <p>So, inside the template, I'm going to try to print out the number of videos that we have been
-                    passed again:</p>
+                        passed again:
+                    </p>
                     <figure>
                     <pre v-pre class="prettyprint">&lt;template&gt;
   &lt;ul&gt;
@@ -1405,28 +1434,387 @@ export default {
       {{ videos.length }}
   &lt;/ul&gt;
 &lt;/template&gt;</pre>
-                    <figcaption>Fig 03-064</figcaption>
+                        <figcaption>Fig 03-064</figcaption>
                     </figure>
-                    <p>This syntax is identical to the earlier example when we accessed the <code class="prettyprint">videos</code> data property in
-                        the <code class="prettyprint">App</code> component.</p>
-                    <p>We do the exact same thing when we are accessing a prop as well - the common theme being we
-                        just use the name.</p>
-                    <p>Let's go back to the browser, refresh and test by entering a search at which point you should
-                    see the counter display the number of results returned.</p>
+                    <p>This syntax is identical to the earlier example when we accessed the <code class="prettyprint">videos</code>
+                        data property in the <code class="prettyprint">App</code> component.
+                    </p>
+                    <p>We do the exact same thing when we are accessing a prop as well - the common theme being we just
+                        use the name.
+                    </p>
+                    <p>Let's go back to the browser, refresh and test by entering a search at which point you should see
+                        the counter display the number of results returned.
+                    </p>
                     <p>Now that we have got some props we can start to add some logic to the VideoList component to
-                        render those out as a list.</p>
-
-
-
+                        render those out as a list.
+                    </p>
                     <h3>Separate List Components</h3>
+                    <p>Our VideoList component now knows about the list of videos that it needs to render to the screen.
+                        As a quick reminder remember that the entire list itself is going to be comprised of two
+                        separate components.
+                    </p>
+                    <p>The first is the VideoList - which is what we are working on now. The purpose of VideoList is to
+                        take the list of videos that we pass down to it and then render one VideoListItem component for
+                        each video that it receives.
+                    </p>
+                    <p>Create a new file called VideoListItem.vue inside the components directory. Add the following
+                        boilerplate code:
+                    </p>
+                    <figure>
+<pre class="prettyprint">&lt;template&gt;
+
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+    name: 'VideoListItem'
+};
+&lt;/script&gt;</pre>
+                        <figcaption>Fig 03-065</figcaption>
+                    </figure>
+                    <p>Now, since we are using a <code class="prettyprint">ul</code> element inside of VideoList we will
+                        make each individual list item an <code class="prettyprint">li</code>.
+                    </p>
+                    <figure>
+<pre class="prettyprint">&lt;template&gt;
+    &lt;li&gt;
+        VideoListItem
+    &lt;/li&gt;
+&lt;/template&gt;</pre>
+                        <figcaption>Fig 03-066</figcaption>
+                    </figure>
+                    <p>We have now created the VideoListItem component. Let's now import it into the VideoList and wire
+                        it up as a component that the VideoList can display.
+                    </p>
+                    <figure>
+<pre class="prettyprint">&lt;script&gt;
+      import VideoListItem from './VideoListItem';</pre>
+                        <figcaption>Fig 03-067</figcaption>
+                    </figure>
+                    <p>Remember that anytime we want to the parent component that it has access to the child we have to
+                        add the components property to that parent component itself. To do this add the following code
+                        inside of the VideoList configuration object:
+                    </p>
+                    <figure>
+<pre class="prettyprint">export default {
+  name: 'VideoList',
+  components: {
+      VideoListItem
+  },
+  props: {
+      videos: Array
+  }
+};</pre>
+                        <figcaption>Fig 03-068</figcaption>
+                    </figure>
+                    <p>So now inside of our VideoList component we access to the VideoListItem component. Now we need to
+                        figure out how to create one VideoListItem component for every video that is contained within
+                        our videos property.
+                    </p>
+                    <figure>
+                        <pre v-pre class="prettyprint">{{ videos.length }}</pre>
+                        <figcaption>Fig 03-068</figcaption>
+                    </figure>
                     <h3>Lists with V-For</h3>
+                    <p>In the last section we created a VideoListItem component and we wired it up to it's parent -
+                        VideoList.
+                    </p>
+                    <p>We now need to add some code to the VideoList to make sure it shows exactly one instance of the
+                        VideoListItem for every video that we have fetched. So far it looks like every single time we
+                        get a response back from the YouTube API we are always getting a list of five videos . So this
+                        is the number of VideoListItem components I would expect to see rendered in the list.
+                    </p>
+                    <p>To render the list we will use another directive inside the template section of our VideoList
+                        component:
+                    </p>
+                    <figure>
+<pre class="prettyprint">&lt;template&gt;
+      &lt;ul&gt;
+          &lt;VideoListItem v-for=&quot;video in videos&quot;&gt;
+          &lt;/VideoListItem&gt;
+      &lt;/ul&gt;
+  &lt;/template&gt;</pre>
+                        <figcaption>Fig 03-069</figcaption>
+                    </figure>
+                    <p>The v-for directive is the directive you will use every time that you want to build a list of
+                        components out. We can interpret this directive as - for every single object or every single
+                        video inside of the list of videos that was provided as a prop to our VideoListComponent make
+                        exactly one VideoListItem component.
+                    </p>
+                    <p>Notice also how we declared <code class="prettyprint">video</code> in the statement <code
+                            class="prettyprint">video in videos</code>. This allows use to access an individual <code
+                            class="prettyprint">video</code> from within the <code
+                            class="prettyprint">VideoListItem</code> component tag.
+                    </p>
+                    <p>Save the file, go back to the browser, refresh the page, enter a search term and you should see
+                        the following output:
+                    </p>
+                    <figure>
+                        <img src="./images/vuejsessentials/Fig03-070.png"/>
+                        <figcaption>Fig 03-070</figcaption>
+                    </figure>
+                    <p>You are seeing this output because, at present, the VideoListItem component is simply outputting
+                        an <code class="prettyprint">li</code> element containing the text VideoListItem for each <code
+                                class="prettyprint">video</code> in the <code class="prettyprint">videos</code> prop.
+                    </p>
+                    <p>In the next section we will customize the VideoListItem component to show some information about
+                        the video that it represents.
+                    </p>
                     <h3>Handling Props with V-For</h3>
+                    <p>In the last section we were able to get a collection of VideoListItem components to print out on
+                        the screen by using the <code class="prettyprint">v-for</code> directive.
+                    </p>
+                    <p>We now need figure out some way to say that for every video in this list of videos we want to
+                        communicate this video in the <code class="prettyprint">v-for</code> directive down to the <code
+                                class="prettyprint">VideoListItem</code> component so the component instance knows what
+                        video it is supposed to be displaying information about on the screen.
+                    </p>
+                    <p>So this is another scenario where we want to communicate some data from the parent component of
+                        VideoList down to the child component of VideoListItem which will achieve by, again, making use
+                        of the Vue props system.
+                    </p>
+                    <p>We just went through this process but as a reminder we first have to add a <code
+                            class="prettyprint"> v-bind</code> expression to the parent components template.
+                    </p>
+                    <p>Now, this time around, that might seem like it's a bit more challenging here. It's definitely not
+                        the same type of setup that we had back inside of our App component:
+                    </p>
+                    <figure>
+<pre class="prettyprint">&lt;div&gt;
+    &lt;SearchBar @termChange=&quot;onTermChange&quot;&gt;&lt;/SearchBar&gt;
+    &lt;VideoList :videos=&quot;videos&quot;&gt;&lt;/VideoList&gt;
+&lt;/div&gt;
+</pre>
+                        <figcaption>Fig 03-070</figcaption>
+                    </figure>
+                    <p>In particular, how do we get access to one individual video to pass down to the VideoListItem?
+                        Well, when we write out <code class="prettyprint">v-for=&quot;video in videos&quot;</code> a
+                        temporary variable of <code class="prettyprint">video</code> is declared that we can use inside
+                        of our template. <code class="prettyprint">video</code> represents one video or one object in
+                        our array.
+                    </p>
+                    <p>Let's add some configuration to the VideoListItem tag underneath the <code class="prettyprint">v-for</code>
+                        directive:
+                    </p>
+                    <figure>
+<pre class="prettyprint">&lt;template&gt;
+      &lt;ul&gt;
+          &lt;VideoListItem
+            v-for=&quot;video in videos&quot;
+            :video=&quot;video&quot;
+          &gt;
+          &lt;/VideoListItem&gt;
+      &lt;/ul&gt;
+  &lt;/template&gt;</pre>
+                        <figcaption>Fig 03-071</figcaption>
+                    </figure>
+                    <p>So we write <code class="prettyprint">v-bind:</code> and then the name of the prop: <code
+                            class="prettyprint">video</code> as we want it to show up inside of the child component. So
+                        now VideoListItem is going to have access to a variable called video. After that we write <code
+                                class="prettyprint">="video"</code> which specifies the piece of data or the variable
+                        from the VideoListComponent that needs to be passed down to the child. <code
+                                class="prettyprint">video</code> is referencing the current video that we are iterating
+                        over inside of our list of videos.
+                    </p>
+                    <p>If we had specified a different name in the <code class="prettyprint">v-for</code> directive we
+                        would need to use that in our <code class="prettyprint">v-bind</code> directive also:
+                    </p>
+                    <figure>
+<pre class="prettyprint">&lt;VideoListItem
+    v-for=&quot;mySingleVideo in videos&quot;
+    :video=&quot;mySingleVideo&quot;
+  &gt;
+  &lt;/VideoListItem&gt;</pre>
+                        <figcaption>Fig 03-072</figcaption>
+                    </figure>
+                    <p>We will stick with video to keep the naming terminology consistent.</p>
+                    <p>So now that we are passing some information, as a prop, from the parent to the child we need to
+                        tell the child component to expect to receive the prop.
+                    </p>
+                    <p>In the VideoListItem component add a <code class="prettyprint">props</code> property and, in this
+                        case, we will supply the <code class="prettyprint">prop</code> names as an array of strings
+                        instead of an object, although either way is valid.
+                    </p>
+                    <figure>
+<pre class="prettyprint">export default {
+    name: 'VideoListItem',
+    props: ['video']
+};</pre>
+                        <figcaption>Fig 03-073</figcaption>
+                    </figure>
+                    <p>Now, in the template section of the VideoListItem component, replace the existing code with a
+                        reference to the <code class="prettyprint">video</code> prop:
+                    </p>
+                    <figure>
+<pre class="prettyprint">&lt;template&gt;
+    &lt;li&gt;
+        {{ video.snippet.title }}
+    &lt;/li&gt;
+&lt;/template&gt;</pre>
+                        <figcaption>Fig 03-074</figcaption>
+                    </figure>
+                    <p>We get the name of the video from the <code v-pre class="prettyprint">{{ video.snippet.title
+                        }} </code>. The video object has a <code class="prettyprint">snippet</code> property which, in
+                        turn, contains <code class="prettyprint">title, description</code> and <code
+                                class="prettyprint">id </code> properties.
+                    </p>
+                    <p>Rerun the app inside of the browser and you should see a list of video titles appearing in our
+                        list.
+                    </p>
+                    <p>Let's continue in the next section where we will talk about one more feature of the <code
+                            class="prettyprint">v-for</code> directive.
+                    </p>
                     <h3>Keys with V-For</h3>
+                    <p>In the last section we made use of the <code class="prettyprint">v-for</code> directive to render
+                        out a list of VideoListItems
+                    </p>
+                    <p>Anytime we use this <code class="prettyprint">v-for</code> directive to build out a list of items
+                        there is one other property that we should (although it is optional) provide to the element or
+                        the component that we are making a list out of - the <code class="prettyprint">key </code>
+                        property.
+                    </p>
+                    <p>We define the <code class="prettyprint">key</code> property on the component that we are making
+                        the list out of by writing:
+                    </p>
+                    <figure>
+<pre class="prettyprint">&lt;VideoListItem
+    v-for=&quot;video in videos&quot;
+    :video=&quot;video&quot;
+    :key=&quot;video.etag&quot;
+  &gt;
+  &lt;/VideoListItem&gt;</pre>
+                        <figcaption>Fig 03-074-</figcaption>
+                    </figure>
+                    <p>The <code class="prettyprint">key</code> property is used whenever our list is updated. In
+                        particular it's used to update our list in a performant fashion. If you look at the console in
+                        the browser for our application you wont see any warnings about a key not being present. This is
+                        because you don't strictly have to provide a key but in general we should do if possible because
+                        it enhances the performance of re-rendering our list of items.
+                    </p>
+                    <p>Inside the double quotes we provide a value that is unique and consistent to the individual
+                        record that we are rendering. In our case this is <code class="prettyprint">video .etag</code>.
+                    </p>
+                    <p>In the next section we'll move on to our VideoListItem component where we're going to work on
+                        some of the styling and rendering out an image in addition to the title.
+                    </p>
                     <h3>Including Bootstrap Styling</h3>
+                    <p>Currently we are just outputting the title of the video in our list. We are going to add styling
+                        (using Bootstrap CSS) to display a thumbnail image with the video title to the right .
+                    </p>
+                    <p>From the Boostrap website browse to the <a
+                            href="https://getbootstrap.com/docs/4.1/getting-started/introduction/" target="_blank">
+                        getting started</a> page and copy the link in the CSS section.
+                    </p>
+                    <p>Paste the link into the index.html tag under the <code class="prettyprint">title</code> element.
+                    </p>
+                    <p>Back in the browser if you refresh the page and perform a search you should notice that some
+                        styling has already been applied.
+                    </p>
+                    <p>In the next section we will take advantage of Bootstrap to style some different elements of our
+                        application.
+                    </p>
                     <h3>Styling the Search Bar</h3>
+                    <p>In the last section we installed the Bootstrap CSS library into our project. We're now going to
+                        use some the CSS that is included in Bootstrap to style our project starting with the search bar
+                        at the top of the page. .
+                    </p>
+                    <p>Anytime we make use of the Bootstrap library Bootstrap always assumes that our root element will
+                        have a class of <code class="prettyprint">container</code> - which is used throughout Bootstrap
+                        to better style and align different items inside of our project.
+                    </p>
+                    <p>The <code class="prettyprint">div</code> element in the template of the App component is one of
+                        the absolute root elements inside of our application so we'll add a <code class="prettyprint">class</code>
+                        of <code class="prettyprint">container</code> to this element.
+                    </p>
+                    <p>Refresh the application and you'll immediately see that all the content on our page is more
+                        aligned towards the center of the screen.
+                    </p>
+                    <p>Next add some styling to the SearchBar component in the empty style tag. We use the scoped
+                        attribute to ensure that the CSS we add here only affects this component:
+                    </p>
+                    <figure>
+<pre class="prettyprint">&lt;style scoped&gt;
+    input {
+        width: 75%;
+    }
+
+    div {
+        text-align: center;
+        margin: 20px;
+    }
+&lt;/style&gt;</pre>
+                        <figcaption>Fig 03-075</figcaption>
+                    </figure>
+                    <p>Refresh the browser and you should see the search bar is more centered on the screen and there is
+                        also a little bit more of a margin between the browser's address bar and the search bar itself.
+                    </p>
+                    <p>In the next section we'll style the VideoList.</p>
                     <h3>Styling the Video List</h3>
+                    <p>Next we will add some styling to the list of videos that gets rendered by the VideoList and
+                        VideoListItem components.</p>
+                    <p>We will apply the <code class="prettyprint">list-group</code> bootstrap style to the <code
+                            class="prettyprint">ul</code> element in the VideoList component:</p>
+<figure>
+<pre class="prettyprint">&lt;template&gt;
+  &lt;ul class=&quot;list-group&quot;&gt;
+      &lt;VideoListItem
+        v-for=&quot;video in videos&quot;
+        :video=&quot;video&quot;
+        :key=&quot;video.etag&quot;
+      &gt;
+      &lt;/VideoListItem&gt;
+  &lt;/ul&gt;
+&lt;/template&gt;</pre>
+<figcaption>Fig 03-076</figcaption>
+</figure>
+                    <p>and the <code class="prettyprint">list-group-item</code>style to the child <code
+                            class="prettyprint">li</code> elements in the VideoListItem component:</p>
+<figure>
+<pre class="prettyprint">&lt;template&gt;
+    &lt;li class=&quot;list-group-item&quot;&gt;
+        {{ video.snippet.title }}
+    &lt;/li&gt;
+&lt;/template&gt;</pre>
+<figcaption>Fig 03-077</figcaption>
+</figure>
+                    <p>It's worth pointing out that we don't try and add styles directly to the
+                        <code class="prettyprint">&lt;VideoListItem&gt;</code> tag in the VideoList component.
+                        Instead we open up the component itself and add the styles to the <code class="prettyprint">
+                            li</code> element located within.</p>
+                    <p>If you refresh the browser you should see the list of videos rendered using the styling we
+                        just specified.</p>
+                    <p>In the next section we add the image thumbnail to appear as well.</p>
                     <h3>Thumbnail Image Reference</h3>
+                    <p>In the last section we added a little bit of styling to the VideoListItem component. Next
+                        we'll display a thumbnail image for each video returned in the list of videos.</p>
+                    <p>We'll begin by taking a look at the response object that comes back from the YouTube API. The
+                        snippet property contains a thumbnail property that itself contains three properties:
+                    </p>
+                    <ul>
+                        <li>default</li>
+                        <li>high</li>
+                        <li>medium</li>
+                    </ul>
+                    <p>These properties refer to the size of the image. If you copy the value of the url property in
+                        the default image.
+                    </p>
+                    <p>In the template for the VideoListItem component add an <code class="prettyprint">img</code> tag:</p>
+<figure>
+<pre class="prettyprint">&lt;template&gt;
+    &lt;li class=&quot;list-group-item&quot;&gt;
+        &lt;img :src=&quot;video.snippet.thumbnails.default.url&quot; /&gt;
+             {{ video.snippet.title }}
+    &lt;/li&gt;
+&lt;/template&gt;</pre>
+<figcaption>Fig 03-078</figcaption>
+</figure>
+                    <p>Here we bind the <code class="prettyprint">src</code> property to the <code
+                            class="prettyprint">url</code> property we discussed above.</p>
+                    <p>If you refresh the browser you should now see the image thumbnails in the list of videos.</p>
+                    <p>In the next section we will look at using a computed property to cut down the amount of
+                        Javascript code have added to our template.</p>
                     <h3>Thumbnail by Computed Property</h3>
+
                     <h3>More List Item Styling</h3>
                     <h3>Handling Nested Clicks</h3>
                     <h3>Event Handling in the VideoList</h3>
