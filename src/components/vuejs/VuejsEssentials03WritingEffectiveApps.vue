@@ -1812,7 +1812,7 @@ export default {
                             class="prettyprint">url</code> property we discussed above.</p>
                     <p>If you refresh the browser you should now see the image thumbnails in the list of videos.</p>
                     <p>In the next section we will look at using a computed property to cut down the amount of
-                        Javascript code have added to our template.</p>
+                        Javascript code we have added to our template.</p>
                     <h3>Thumbnail by Computed Property</h3>
 
                     <h3>More List Item Styling</h3>
