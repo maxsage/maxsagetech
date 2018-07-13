@@ -1835,10 +1835,202 @@ export default {
 };</pre>
 <figcaption>Fig 03-079</figcaption>
 </figure>
-
+                    <p>Back in the <code class="prettyprint">img</code> tag in the <code class="prettyprint">template
+                    </code> we can now use our computed property:</p>
+<figure>
+<pre class="prettyprint">&lt;template&gt;
+    &lt;li class=&quot;list-group-item&quot;&gt;
+        &lt;img :src=&quot;thumbnailUrl&quot; /&gt;
+             {{ video.snippet.title }}
+    &lt;/li&gt;
+&lt;/template&gt;</pre>
+<figcaption>Fig 03-080</figcaption>
+</figure>
+                    <p>In the browser the application should work as before.</p>
+                    <p>So, as a reminder, we can use computed functions to work with or format data before we
+                        reference it inside our template.
+                    </p>
+                    <p>The <code class="prettyprint">this</code> keyword in the code above is present because we are
+                        referencing a <code class="prettyprint">prop</code> called <code class="prettyprint">video</code>
+                        inside of our component.</p>
+                    <p>We then add the properties: <code class="prettyprint">snippet.thumbnails.default.url</code>
+                        and make that the return value of our function.
+                    </p>
+                    <p>We specified a function name of thumbnailUrl inside of the computed object. We can then
+                        reference that function anywhere within our template. Notice that when we referenced the
+                        computed function we do not have to specify any parentheses or prefix the function with <code
+                                class="prettyprint">this.</code> - we just use the computed function's name and Vue
+                        takes over from there.
+                    </p>
+                    <p>There was no mandatory requirement to refactor the code to use a computed property but anytime
+                        we add a very long property reference or any amount of Javascript logic directly into our
+                        template that's a sign that you might want to look at using a computed function to keep the
+                        template as simple and clean as possible.</p>
+                    <p>Ok, that all looks good but we have some text overlap:</p>
+                    <figure>
+                        <img src="./images/vuejsessentials/Fig03-081.png"/>
+                        <figcaption>Fig 03-081</figcaption>
+                    </figure>
+                    <p>In the next section we will add some styling to get the text to wrap to the right hand side of
+                     the thumbnail.</p>
                     <h3>More List Item Styling</h3>
+                    <p>Ok now we've got thumbnails displayed inside of our VideoList item but you'll notice that the
+                        title kind of wraps around underneath the thumbnail image which is not what we want.
+                    </p>
+                    <p>The bootstrap documentation has a section on <a
+                            href="https://getbootstrap.com/docs/4.0/layout/media-object/#media-list">media list</a>
+                        which adds styling to show an image to the left with a bold title to the right.
+                    </p>
+                    <p>To achieve this layout we add a class of media to our <code class="prettyprint">li</code>
+                        element and a class of mr-3 to our <code class="prettyprint">img</code> element. We also
+                        have to use a <code class="prettyprint">div</code> element with a class of media-body which
+                    wraps anything that forms the text to the right hand side of the image:</p>
+<figure>
+<pre class="prettyprint">&lt;template&gt;
+    &lt;li class=&quot;list-group-item media&quot;&gt;
+        &lt;img class=&quot;mr-3&quot; :src=&quot;thumbnailUrl&quot; /&gt;
+        &lt;div class=&quot;media-body&quot;&gt;
+             {{ video.snippet.title }}
+        &lt;/div&gt;
+
+    &lt;/li&gt;
+&lt;/template&gt;</pre>
+<figcaption>Fig 03-081</figcaption>
+</figure>
+                    <p>Ok, so we made a difference but we didn't get our desired result. Now the title just appears
+                        underneath the thumbnail. This is because the
+                        <code class="prettyprint">list-group-item</code> and the <code class="prettyprint">media
+                        </code> class conflict on how the item should be style. To workaround this we will add some
+                        custom CSS.
+                    </p>
+                    <p>We add the CSS to a <code class="prettyprint">scoped style</code> tag in VideoListItem:</p>
+<figure>
+<pre class="prettyprint">&lt;style scoped&gt;
+    li {
+        display: flex;
+    }
+&lt;/style&gt;</pre>
+<figcaption>Fig 03-082</figcaption>
+</figure>
+                    <p>The <code class="prettyprint">display: flex;</code> styling will cause the <code class="prettyprint">img</code> and the <code
+                            class="prettyprint">div</code> to display on the same line.</p>
+                    <p>If I save the file, flip back over to the browser and refresh the page (which is necessary
+                        because we have just added a new block of CSS) you should see we have now achieved the
+                        desired result:</p>
+<figure>
+    <img src="./images/vuejsessentials/Fig03-083.png"/>
+    <figcaption>Fig 03-083</figcaption>
+</figure>
+                    <p>Whilst we are adding CSS we can make a couple of additional improvements here. Remember that
+                        we eventually want these list items to be clickable in order for the user to actually select
+                        a particular video. We can add some CSS to change the pointer and also show a little bit of a
+                        background highlight when we hover over an item in the list:
+                    </p>
+<figure>
+<pre class="prettyprint">&lt;style scoped&gt;
+    li {
+        display: flex;
+        cursor: pointer;
+    }
+
+    li:hover {
+        background-color: #eee;
+    }
+&lt;/style&gt;</pre>
+<figcaption>Fig 03-084</figcaption>
+</figure>
+                    <p>This should give you the following result:</p>
+<figure>
+    <img src="./images/vuejsessentials/Fig03-085.png"/>
+    <figcaption>Fig 03-085</figcaption>
+</figure>
+                    <p>In the next section we will work on click events that will allow us to select a particular
+                        video.</p>
                     <h3>Handling Nested Clicks</h3>
+                    <p>We've pretty much wrapped up on the styling side of our VideoListItem component. We now need
+                        to think about what happens anytime a user clicks on one of the VideoListItems. As a quick
+                        reminder let's revisit our layout diagram: </p>
+<figure>
+    <img src="./images/vuejsessentials/Fig03-086.png"/>
+    <figcaption>Fig 03-086</figcaption>
+</figure>
+                    <p>Anytime someone clicks on a VideoListItem we want to create the VideoDetail component which
+                        will show information such as the video itself and the video title.</p>
+                    <p>So this is going to be a very interesting challenge as we try to communicate a click event
+                        across the entirety of our application. To get a better idea of the challenge ahead let's
+                        revisit the application structure diagram:</p>
+<figure>
+    <img src="./images/vuejsessentials/Fig03-087.png"/>
+    <figcaption>Fig 03-087</figcaption>
+</figure>
+                    <p>At the bottom of the diagram we see our VideoListItem components that are waiting for a user
+                        to click on them at which point we need to communicate the click event over to the
+                        VideoDetail component.</p>
+                    <p>Remember that anytime we want to communicate from a child component up to a parent component
+                        we do so by emitting an event.</p>
+                    <p>It's worth pointing out that we are talking about two slightly different types of events.
+                        We're talking about a click event - which is a native event that a user triggers by clicking
+                    an element in our browser. We are also talking about a Vue specific event that we are going to
+                        programmatically emit from within our VideoListItem component.</p>
+                    <p>So here's the strategy we're going to use to communicate this click over to the app and then
+                        down to the VideoDetail:</p>
+                    <figure>
+                        <img src="./images/vuejsessentials/Fig03-087.png"/>
+                        <figcaption>Fig 03-087</figcaption>
+                    </figure>
+                    <p>Inside of our VideoListItem we are going to add some code to say that anytime someone clicks
+                        on it we are going to emit a custom event through Vue. We are then going to make sure that our
+                        VideoList component listens to all of it's child VideoListItem components so anytime the
+                        VideoListItem emits an event the VideoList will emit an event as well. This will bubble up
+                        to the App component. The App component will then somehow determine whether or not it needs
+                        to update the VideoDetail.</p>
+                    <p>At this point let's focus on how we're going to communicate this click event from the
+                        VideoList item up to the App.</p>
+                    <p>In the VideoListItem component let's add some code to watch for a click event on the <code
+                            class="prettyprint">li</code> element. So anytime someone clicks on the li element we
+                        want to emit a Vue specific event:</p>
+<figure>
+<pre class="prettyprint">&lt;template&gt;
+    &lt;li class=&quot;list-group-item media&quot; @click=&quot;onVideoSelect&quot;&gt;
+        &lt;img class=&quot;mr-3&quot; :src=&quot;thumbnailUrl&quot; /&gt;
+        &lt;div class=&quot;media-body&quot;&gt;
+             {{ video.snippet.title }}
+        &lt;/div&gt;
+
+    &lt;/li&gt;
+&lt;/template&gt;</pre>
+<figcaption>Fig 03-088</figcaption>
+</figure>
+                    <p>Now let's create the <code class="prettyprint">onVideoSelect</code> method by adding it to a new
+                        <code class="prettyprint">methods</code> object in the component definition:</p>
+<figure>
+<pre class="prettyprint">export default {
+    name: 'VideoListItem',
+    props: ['video'],
+    computed: {
+        thumbnailUrl() {
+            return this.video.snippet.thumbnails.default.url;
+        }
+    },
+    methods: {
+        onVideoSelect() {
+
+        }
+    }
+
+};</pre>
+<figcaption>Fig 03-089</figcaption>
+</figure>
+                    <p>In the next section we will write some code to take the native click event and trigger a Vue
+                        specific event.</p>
                     <h3>Event Handling in the VideoList</h3>
+                    <p>In the last section we started adding some code to make sure that anytime someone click on a
+                        VideoListItem it would trigger an event.</p>
+                    <p>Let's add some code to the VideoListItem component to make sure it actually triggers an event
+                    anytime it gets clicked.</p>
+
+
+
                     <h3>Receiving Events in the App</h3>
                     <h3>Passing Props to the Video Detail</h3>
                     <h3>Updating Data</h3>
