@@ -1812,8 +1812,29 @@ export default {
                             class="prettyprint">url</code> property we discussed above.</p>
                     <p>If you refresh the browser you should now see the image thumbnails in the list of videos.</p>
                     <p>In the next section we will look at using a computed property to cut down the amount of
-                        Javascript code we have added to our template.</p>
+                        Javascript code have added to our template.</p>
                     <h3>Thumbnail by Computed Property</h3>
+                    <p>In the last section we displayed our thumbnail image on the screen. However, we did add a
+                        very long property reference: <code class="prettyprint">video.snippet.thumbnails.default
+                            .url</code> directly into our template. This type of practice can make our template look
+                        messy and difficult to read. In this section, as an alternative, we are going to put this
+                        reference into our component as a computed property. </p>
+                    <p>We can use computed property to not only work with component data but also properties that
+                        are coming in through props inside of a component.</p>
+                    <p>Underneath <code class="prettyprint">props</code> add the <code class="prettyprint">computed
+                    </code> object with a thumbnailUrl function:</p>
+<figure>
+<pre class="prettyprint">export default {
+    name: 'VideoListItem',
+    props: ['video'],
+    computed: {
+        thumbnailUrl() {
+            return this.video.snippet.thumbnails.default.url;
+        }
+    }
+};</pre>
+<figcaption>Fig 03-079</figcaption>
+</figure>
 
                     <h3>More List Item Styling</h3>
                     <h3>Handling Nested Clicks</h3>
