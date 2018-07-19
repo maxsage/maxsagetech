@@ -1646,7 +1646,7 @@ export default {
                         reference to the <code class="prettyprint">video</code> prop:
                     </p>
                     <figure>
-<pre class="prettyprint">&lt;template&gt;
+<pre v-pre class="prettyprint">&lt;template&gt;
     &lt;li&gt;
         {{ video.snippet.title }}
     &lt;/li&gt;
@@ -1773,7 +1773,7 @@ export default {
                             class="prettyprint">li</code> elements in the VideoListItem component:
                     </p>
                     <figure>
-<pre class="prettyprint">&lt;template&gt;
+<pre v-pre class="prettyprint">&lt;template&gt;
     &lt;li class=&quot;list-group-item&quot;&gt;
         {{ video.snippet.title }}
     &lt;/li&gt;
@@ -1807,7 +1807,7 @@ export default {
                     <p>In the template for the VideoListItem component add an <code class="prettyprint">img</code> tag:
                     </p>
                     <figure>
-<pre class="prettyprint">&lt;template&gt;
+<pre v-pre class="prettyprint">&lt;template&gt;
     &lt;li class=&quot;list-group-item&quot;&gt;
         &lt;img :src=&quot;video.snippet.thumbnails.default.url&quot; /&gt;
              {{ video.snippet.title }}
@@ -1836,7 +1836,7 @@ export default {
                             class="prettyprint">computed </code> object with a thumbnailUrl function:
                     </p>
                     <figure>
-<pre class="prettyprint">export default {
+<pre v-pre class="prettyprint">export default {
     name: 'VideoListItem',
     props: ['video'],
     computed: {
@@ -1851,7 +1851,7 @@ export default {
                             class="prettyprint">template </code> we can now use our computed property:
                     </p>
                     <figure>
-<pre class="prettyprint">&lt;template&gt;
+<pre v-pre class="prettyprint">&lt;template&gt;
     &lt;li class=&quot;list-group-item&quot;&gt;
         &lt;img :src=&quot;thumbnailUrl&quot; /&gt;
              {{ video.snippet.title }}
@@ -1902,7 +1902,7 @@ export default {
                         that forms the text to the right hand side of the image:
                     </p>
                     <figure>
-<pre class="prettyprint">&lt;template&gt;
+<pre v-pre class="prettyprint">&lt;template&gt;
     &lt;li class=&quot;list-group-item media&quot;&gt;
         &lt;img class=&quot;mr-3&quot; :src=&quot;thumbnailUrl&quot; /&gt;
         &lt;div class=&quot;media-body&quot;&gt;
@@ -2018,7 +2018,7 @@ export default {
                         to emit a Vue specific event:
                     </p>
                     <figure>
-<pre class="prettyprint">&lt;template&gt;
+<pre v-pre class="prettyprint">&lt;template&gt;
     &lt;li class=&quot;list-group-item media&quot; @click=&quot;onVideoSelect&quot;&gt;
         &lt;img class=&quot;mr-3&quot; :src=&quot;thumbnailUrl&quot; /&gt;
         &lt;div class=&quot;media-body&quot;&gt;
@@ -2340,21 +2340,157 @@ export default {
                         <img src="./images/vuejsessentials/Fig03-106.png"/>
                         <figcaption>Fig 03-106</figcaption>
                     </figure>
-                    <p>You will notice an error message:</p>
-                    <code class="prettyprint">Cannot read property 'snippet' of null</code>
+                    <p>You will notice an error message: <code class="prettyprint">Cannot read property 'snippet' of
+                        null</code></p>
                     <p>being emitted by our <code class="prettyprint">VideoDetail</code> component.</p>
                     <p>In the next section we'll figure out why we are seeing this error message and add a fix.</p>
-
-
-
-
-
-
-
-
-                    <h3>The V-If Directive</h3>
+                    <h3>The v-if Directive</h3>
+                    <p>In the last section we added some code to the VideoDetail component to show the title of the
+                        selected video. However we are getting an error message: <code class="prettyprint">Cannot
+                            read property 'snippet' of null</code></p>
+                    <p>When our application first renders our <code class="prettyprint">App</code> component has a
+                        data property for <code class="prettyprint">selectedVideo</code>  which is set to null:</p >
+<figure>
+<pre class="prettyprint">        data() {
+    return { videos: [], selectedVideo: null };
+},</pre>
+<figcaption>Fig 03-106</figcaption>
+</figure>
+                    <p>We take the <code class="prettyprint">selectedVideo</code> property and we pass it down to the
+                        <code class="prettyprint">VideoDetail</code> component:</p>
+<figure>
+<pre class="prettyprint">&lt;VideoDetail :video=&quot;selectedVideo&quot; /&gt;</pre>
+<figcaption>Fig 03-107</figcaption>
+</figure>
+                    <p>Inside <code class="prettyprint">VideoDetail</code> our template tries to read the <code
+                            class="prettyprint">snippet </code>property of the <code class="prettyprint">video</code>
+                        prop:</p>
+<figure>
+<pre v-pre class="prettyprint">&lt;template&gt;
+    &lt;div&gt;
+        {{ video.snippet.title }}
+    &lt;/div&gt;
+&lt;/template&gt;</pre>
+<figcaption>Fig 03-108</figcaption>
+</figure>
+                    <p>At this point it is null which is why we are seeing the error message above.</p>
+                    <p>Add some code to make sure that if the <code class="prettyprint">video</code> prop is null we
+                    do not attempt to read the <code class="prettyprint">snippet</code> property on it: </p>
+<figure>
+<pre class="prettyprint">&lt;template&gt;
+    &lt;div v-if=&quot;video&quot;&gt;
+        {{ video.snippet.title }}
+    &lt;/div&gt;
+&lt;/template&gt;</pre>
+<figcaption>Fig 03-109</figcaption>
+</figure>
+                    <p>The <code class="prettyprint">v-if</code> directive can be thought of as a conditional
+                        rendering statement which will look at the value of the variable or the term we pass in and
+                        evaluate it. If it finds a falsy value, which null is (null is very similar to the false
+                        Boolean value in Javascript) then Vue will not render the <code class="prettyprint">div</code>
+                        or anything inside it.
+                    </p>
+                    <p>Because Vue doesn't render the <code class="prettyprint">div</code> it also skips the line of
+                        code contained within - and therefore the error is not thrown.</p>
+                    <p>You'll most frequently see <code class="prettyprint">v-if</code> around anytime you're loading
+                        up some data from some remote API because it always takes some amount of time to retrieve
+                        that data. So with <code class="prettyprint">v-if</code> we can very easily tell our
+                        application to wait until data is available and only then try and render the relevant content.
+                    </p>
+                    <p>In the next section we will figure out we are going to get this <code class="prettyprint">VideoDetail</code> component, that
+                        will eventually show a video player, to display on the screen.</p>
                     <h3>Referencing Video Title and Description</h3>
+                    <p>You've now communicated the selected video to the VideoDetail component. We're now ready to
+                        get the video player to appear on the screen along with a short title and description for 
+                        that particular video that the user has clicked on.</p>
+                    <p>We will start with the video title and description. Add the following code to the <code 
+                            class="prettyprint">template</code> of the <code class="prettyprint">VideoDetail</code>
+                        component.</p>
+<figure>
+<pre v-pre class="prettyprint">&lt;template&gt;
+    &lt;div v-if=&quot;video&quot;&gt;
+        &lt;div class=&quot;details&quot;&gt;
+            &lt;h4&gt;{{ video.snippet.title }}&lt;/h4&gt;
+            &lt;p&gt;{{ video.snippet.description }}&lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/template&gt;</pre>
+<figcaption>Fig 03-110</figcaption>
+</figure>
+                    <p>The original mock-up shows a box around the title and description. Add the following styling
+                        to achieve this effect:</p>
+<figure>
+<pre class="prettyprint">&lt;style scoped&gt;
+    .details {
+        margin-top: 10px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+&lt;/style&gt;</pre>
+<figcaption>Fig 03-111</figcaption>
+</figure>
+                    <p>This should achieve the effect from the mockup:</p>
+<figure>
+  <img src="./images/vuejsessentials/Fig03-112.png"/>
+  <figcaption>Fig 03-112</figcaption>
+</figure>
+                    <p>In the next section we will look at implementing the actual video player</p>
                     <h3>Crafting the Embed URL</h3>
+                    <p>We've got a lot of information about the video now visible on the screen but we need to make
+                        sure the actual video player displays as well. </p>
+                    <p>If you visit <a href="www.youtube.com">youtube</a> and click on the share button you should
+                        see an embed option:</p>
+<figure>
+  <img src="./images/vuejsessentials/Fig03-113.png"/>
+  <figcaption>Fig 03-113</figcaption>
+</figure>
+                    <p>YouTube provides some <code class="prettyprint">html</code> which includes an <code 
+                            class="prettyprint">iframe</code> with a <code class="prettyprint">src</code> of <code 
+                            class="prettyprint">https://www.youtube.com/embed/</code> followed by the unique  video id: 
+                    </p>
+<figure>
+  <img src="./images/vuejsessentials/Fig03-114.png"/>
+  <figcaption>Fig 03-114</figcaption>
+</figure>
+                    <p>When you embed a YouTube video you can add it directly to another web application. Add the
+                        following code above the <code class="prettyprint">div</code> with a class of <code
+                                class="prettyprint">details</code>:</p>
+<figure>
+<pre class="prettyprint">&lt;div&gt;
+    &lt;iframe :src=&quot;videoUrl&quot;/&gt;
+&lt;/div&gt;</pre>
+<figcaption>Fig 03-115</figcaption>
+</figure>
+                    <p>The <code class="prettyprint">src</code> property is a dynamic value provided by the <code class="prettyprint">videoUrl</code> 
+                        computed function:
+                    </p>
+<figure>
+<pre class="prettyprint">computed: {
+    videoUrl() {
+        const { videoId } = this.video.id;
+        return `https://www.youtube.com/embed/${videoId}`;
+    }
+}</pre>
+<figcaption>Fig 03-115</figcaption>
+</figure>
+                    <p>Because the <code class="prettyprint">videoId</code> <code class="prettyprint">const</code>
+                        that we used and the prop name of <code class="prettyprint">this.video.id.videoId</code> are
+                        identical we use ES2015 destructuring assignment syntax and surround our <code
+                                class="prettyprint">const</code> with curly braces.</p>
+                    <p>We also use template string syntax (with a pair of back ticks) over string concatenation in the
+                        return statement.</p>
+                    <p>So save the file, refresh the browser and you will see the following:</p>
+<figure>
+  <img src="./images/vuejsessentials/Fig03-116.png"/>
+  <figcaption>Fig 03-116</figcaption>
+</figure>
+                    <p>So a box appears but there doesn't look like there is any content inside of it. If I go over
+                        to the console you might notice a couple of warnings and even errors over here such as <code class="prettyprint">Error
+                        parsing header</code> or <code class="prettyprint">ERR_BLOCKED_BY_CLIENT</code>
+                    </p>
+                    <p>These errors are thrown by the YouTube <code class="prettyprint">iframe</code> - we don't have any control over them.</p>
+                    <p>In the next section we will add some styling to the video player.</p>
                     <h3>Responsive Embeds</h3>
                     <h3>Two Column Layout</h3>
                     <h3>App Review</h3>
