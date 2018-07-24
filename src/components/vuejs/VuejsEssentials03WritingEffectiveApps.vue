@@ -2522,8 +2522,83 @@ export default {
                     <p>So the last thing we have to do is to make sure that the <code class="prettyprint">VideoDetail
                     </code> component is displayed to the right of the <code class="prettyprint">VideoList</code>.
                     </p>
-
+                    <p>To accomplish this we will apply some layout CSS provided by Bootstrap. In the App.vue file
+                        add a div that wraps both the VideoDetail and VideoList tags:</p>
+<figure>
+<pre class="prettyprint">&lt;div class=&quot;row&quot;&gt;
+    &lt;VideoDetail :video=&quot;selectedVideo&quot; /&gt;
+    &lt;VideoList @videoSelect=&quot;onVideoSelect&quot; :videos=&quot;videos&quot;&gt;&lt;/VideoList&gt;
+&lt;/div&gt;</pre>
+<figcaption>Fig 03-119</figcaption>
+</figure>
+                    <p>If you viewed this in the browser now you would still see the VideoDetail and the VideoList
+                        being displayed on different lines. That's because currently the VideoDetail is going to try
+                    and take up as much space (width wise) as it possibly can.</p>
+                    <p>We will add a class to the <code class="prettyprint">VideoDetail</code> component to constrain
+                        it's width on the screen:</p>
+<figure>
+<pre class="prettyprint">&lt;div v-if=&quot;video&quot; class=&quot;col-md-8&quot;&gt;</pre>
+<figcaption>Fig 03-120</figcaption>
+</figure>
+                    <p>This will create a column out of the div element that at most can only occupy eight column
+                        spaces. By default Bootstrap has a 12 column layout - so essentially we have 12 column units
+                        to work with. With 8 allocated to the VideoDetail we now have 4 left to allocate to the
+                        VideoList.
+                    </p>
+                    <p>In the <code class="prettyprint">VideoList</code> component add the following class to the
+                        root <code class="prettyprint">ul</code> element:</p>
+<figure>
+<pre class="prettyprint">&lt;ul class=&quot;list-group col-md-4&quot;&gt;</pre>
+<figcaption>Fig 03-121</figcaption>
+</figure>
+                    <p>In the browser you should now see the <code class="prettyprint">VideoDetail</code> appear on
+                        the left-hand side.</p>
+                    <p>In the next section we will discuss some of the highlights of the application we just worked
+                        on.</p>
                     <h3>App Review</h3>
+                    <p>Our application is complete but there are a couple of items we should review that are
+                        important to keep in mind when you work on future Vue applications. </p>
+                    <p>The first thing is how we communicate information between different components that we create.
+                        Anytime that we want to communicate information between components it's always between parent
+                        and child:</p>
+<figure>
+  <img src="./images/vuejsessentials/Fig03-122.png"/>
+  <figcaption>Fig 03-122</figcaption>
+</figure>
+                    <p>In our application we had the <code class="prettyprint">VideoDetail</code>, the <code
+                            class="prettyprint">SearchBar</code> and the <code class="prettyprint">VideoList</code>
+                        as sibling components - in other words they were all being displayed by the
+                        <code class="prettyprint">App</code> component.</p>
+                    <p>Communicating information between the <code class="prettyprint">VideoDetail</code> and
+                        <code class="prettyprint">SearchBar</code> or the <code class="prettyprint">VideoList</code>
+                        would be communication between siblings. Doing so is not the easiest way to pass around
+                        information inside of a Vue app. </p>
+                    <p>Instead we choose to communicate directly from, for example, the <code class="prettyprint">VideoDetail</code>
+                        up to the parent <code class="prettyprint">App</code> or from the <code class="prettyprint">App</code>
+                        down to the <code class="prettyprint">VideoDetail</code>. </p>
+                    <p>The direction we want to communicate information will dictate the technique used:</p>
+                    <figure>
+                      <img src="./images/vuejsessentials/Fig03-123.png"/>
+                      <figcaption>Fig 03-123</figcaption>
+                    </figure>
+                    <p>So if you want to go from a parent down to a child we refer to that as passing props (short
+                        for properties). This is a two step process:</p>
+                    <figure>
+                      <img src="./images/vuejsessentials/Fig03-124.png"/>
+                      <figcaption>Fig 03-124</figcaption>
+                    </figure>
+                    <p>We make sure that the parent components tag  for showing that component has a <code
+                            class="prettyprint">v-bind</code> directive. This makes sure that the parent component
+                        is going to send some information down to the child. Likewise the child also has to be told
+                        about the props that it should expect to receive from the parent.</p>
+                    <p>On the other hand, communication from a child component up to a parent is done with a
+                        completely different system - events. So a child component like our SearchBar or our
+                        VideoListItem has the ability to emit events and then the parent component can listen for
+                        those events.</p>
+                    <p>We only use events to communicate from a child up to a parent and we do not try to modify any
+                        props passed by the parent component.</p>
+                    <p>So the real theme of this application was figuring out how we communicate between components.
+                    I think we did a reasonable job of getting a better handle on that.</p>
                     <h3>Coding Exercise 3 Events and Methods</h3>
                     <h3>Coding Exercise 4 Component Data</h3>
                     <h3>Coding Exercise 5 Events, Data, and Directives</h3>
