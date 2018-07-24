@@ -1202,7 +1202,7 @@ identicon: function() {
                         computed function instead:
                     </p>
                     <figure>
-                    <pre class="prettyprint">&lt;div&gt;
+                    <pre v-pre class="prettyprint">&lt;div&gt;
     Output:
     {{ reverse }}
 &lt;/div&gt;</pre>

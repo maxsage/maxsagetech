@@ -1002,7 +1002,7 @@ export default {
                     </figure>
                     <p>Next add the following code to the onTermChange function:</p>
                     <figure>
-<pre class="prettyprint">methods: {
+<pre v-pre class="prettyprint">methods: {
     onTermChange(searchTerm) {
         axios.get('https://googleapis.com/youtube/v3/search', {
             params: {
@@ -1286,7 +1286,7 @@ export default {
                         specifically the videos property:
                     </p>
                     <figure>
-                    <pre class="prettyprint">methods: {
+                    <pre v-pre class="prettyprint">methods: {
     onTermChange(searchTerm) {
         axios.get('https://www.googleapis.com/youtube/v3/search', {
             params: {
@@ -2033,7 +2033,7 @@ export default {
                         <code class="prettyprint">methods</code> object in the component definition:
                     </p>
                     <figure>
-<pre class="prettyprint">export default {
+<pre v-pre class="prettyprint">export default {
     name: 'VideoListItem',
     props: ['video'],
     computed: {
@@ -2139,7 +2139,7 @@ export default {
                         object of the App component:
                     </p>
                     <figure>
-<pre class="prettyprint">methods: {
+<pre v-pre class="prettyprint">methods: {
     onVideoSelect(video) {
         console.log(video);
     },
@@ -2377,7 +2377,7 @@ export default {
                     <p>Add some code to make sure that if the <code class="prettyprint">video</code> prop is null we
                     do not attempt to read the <code class="prettyprint">snippet</code> property on it: </p>
 <figure>
-<pre class="prettyprint">&lt;template&gt;
+<pre v-pre class="prettyprint">&lt;template&gt;
     &lt;div v-if=&quot;video&quot;&gt;
         {{ video.snippet.title }}
     &lt;/div&gt;
@@ -2492,7 +2492,37 @@ export default {
                     <p>These errors are thrown by the YouTube <code class="prettyprint">iframe</code> - we don't have any control over them.</p>
                     <p>In the next section we will add some styling to the video player.</p>
                     <h3>Responsive Embeds</h3>
+                    <p>We've now got our YouTube embed visible on the screen but it's a little bit small. We will
+                        use the Bootstrap <a href="http://getbootstrap.com/docs/4.0/utilities/embed/">Embeds</a>
+                        class which will cause the <code class="prettyprint">iframe</code> to expand to more suitably
+                        fit the space available to it. The documentation provides an example:</p>
+                    <figure>
+<pre class="prettyprint">&lt;div class=&quot;embed-responsive embed-responsive-16by9&quot;&gt;
+  &lt;iframe class=&quot;embed-responsive-item&quot; src=&quot;https://www.youtube.com/embed/zpOULjyy-n8?rel=0&quot; allowfullscreen&gt;&lt;/iframe&gt;
+&lt;/div&gt;</pre>
+                        <figcaption>Fig 03-117</figcaption>
+                    </figure>
+                    <p>We have to place a <code class="prettyprint">div</code> round our <code class="prettyprint">
+                        iframe</code> with a couple of different classes applied to it. We also add one class on the
+                    <code class="prettyprint">iframe</code> as well.</p>
+                    <p>Let's add this to the VideoDetail component:</p>
+                    <figure>
+<pre class="prettyprint">&lt;div class=&quot;embed-responsive embed-responsive-16by9&quot;&gt;
+    &lt;iframe class=&quot;embed-responsive-item&quot; :src=&quot;videoUrl&quot;/&gt;
+&lt;/div&gt;</pre>
+                        <figcaption>Fig 03-118</figcaption>
+                    </figure>
+                    <p>Back in the browser you should see the VideoDetail now displays a larger video window which
+                        will adjust as we resize the browser window.</p>
+                    <p>In our mockup we showed the VideoDetail next to the VideoList. We will take care of this
+                        detail in the next section.</p>
                     <h3>Two Column Layout</h3>
+                    <p>Our video <code class="prettyprint">iframe</code> is now plainly visible on the screen but
+                        it's still stacked on top of our <code class="prettyprint">VideoList</code>.</p>
+                    <p>So the last thing we have to do is to make sure that the <code class="prettyprint">VideoDetail
+                    </code> component is displayed to the right of the <code class="prettyprint">VideoList</code>.
+                    </p>
+
                     <h3>App Review</h3>
                     <h3>Coding Exercise 3 Events and Methods</h3>
                     <h3>Coding Exercise 4 Component Data</h3>
