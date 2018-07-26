@@ -7,6 +7,7 @@ import VuejsEssentials01AnIntroductionToVue from './components/vuejs/VuejsEssent
 import VuejsEssentials02MovingOnWithVueCLI from './components/vuejs/VuejsEssentials02MovingOnWithVueCLI.vue';
 import VuejsEssentials03WritingEffectiveApps from './components/vuejs/VuejsEssentials03WritingEffectiveApps.vue';
 import VuejsEssentials04HandlingStateWithVuex from './components/vuejs/VuejsEssentials04HandlingStateWithVuex.vue'
+import VuejsEssentials05AuthenticationinVuewithOAuth2 from './components/vuejs/VuejsEssentials05AuthenticationinVuewithOAuth2.vue'
 
 import WPF from './components/wpf/WPF.vue';
 
@@ -102,6 +103,14 @@ export const routes = [
             'header-top': Header
         }
     },
+    {
+        path: '/vuejsessentials-05-authentication-in-vue-with-oauth2', components: {
+            default: VuejsEssentials05AuthenticationinVuewithOAuth2,
+            'header-top': Header
+        }
+    },
+
+
 
     {
         path: '/wpf', components: {

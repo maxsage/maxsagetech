@@ -102,7 +102,8 @@
                             <li>Styling the Header</li>
                             <li>Imgur Overview</li>
                         </ol>
-                        <h3>Authenticating in Vue with OAuth2</h3>
+                        <router-link to="/vuejsessentials-05-authentication-in-vue-with-oauth2" active-class="active"><a>Authenticating in Vue with OAuth2</a></router-link>
+
                         <ol start="83">
                             <li>OAuth Overview</li>
                             <li>Imgur API Signup</li>
