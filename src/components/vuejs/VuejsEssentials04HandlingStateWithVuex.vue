@@ -257,7 +257,7 @@ new Vue ({
                         logs in. The AppHeader component is very tightly coupled with the authentication system of
                         our application. Remember to handle authentication we're going to be making use of the OAuth
                     system through the Imgur API.</p>
-                    <p>If you navigate to <a href="imgur.com">imgur.com</> you will see a lot of images appearing on
+                    <p>If you navigate to <a href="imgur.com">imgur.com</a> you will see a lot of images appearing on
                         screen. These are all images that have been submitted by users of the Imgur application.
                         Imgur has two primary methods of working with these images - creating images, adding images,
                     adding comment or titles, deleting images etc.</p>
