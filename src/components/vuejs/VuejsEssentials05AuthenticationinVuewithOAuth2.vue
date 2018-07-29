@@ -278,14 +278,75 @@
                     <p>However, in general, the idea behind actions is that we're going to take multiple mutations
                         and call them all in some distinct order.</p>
                     <p>Ok so that wraps up our first take on Vuex modules.</p>
-                    
-
-
-
-
-
                     <h3>Connecting Vuex to Vue</h3>
+                    <p>In the last section we had a long discussion about Vuex modules. We are now going to create
+                        the Auth module. We are also going to perform some one-time setup of Vuex within our project
+                        . After that is complete we can add as many modules as we want to.</p>
+                    <p>Create a new folder in the src directory called store. This folder is going to contain all of
+                    our Vue related code. </p>
+                    <p>Create a new file in the store directory called index.js. This is way the initial setup of
+                        Vue is going to take place. Add the following code:</p>
+                    <figure>
+<pre class="prettyprint">import Vuex from 'vuex';
+import Vue from 'vue';
+
+Vue.use(Vuex);
+
+export default new Vuex.Store({
+    modules: {}
+});</pre>
+                        <figcaption>Fig 05-012</figcaption>
+                    </figure>
+                    <p>We import the Vuex library, then we import the Vue library and issue the <code
+                            class="prettyprint">use</code> command to tell Vue that we want to use the Vuex library.
+                        Vuex can be used with other libraries.
+                    </p>
+                    <p>Next we create a new Vuex store and pass an object called modules. As we create more modules
+                        we will register them with Vuex by adding them to the modules object.</p>
+                    <p>As we've been working on Vue we've been creating components and we've said several times
+                        that those components have a relationship to Vue instances. We think of the Vue
+                        instances as being like instances of a class. It is a similar story with the Vuex Store. The
+                        Store is an overarching term for a collection of modules that have been assembled together
+                        and can then be interfaced with from our Vue code.
+                    </p>
+                    <p>We are now going to add code to our main.js and import our newly created Store and hook it up
+                    to the Vue instance:</p>
+                    <figure>
+<pre class="prettyprint">import Vue from 'vue';
+import App from './App';
+import store from './store'
+
+new Vue ({
+    store,
+    render: h =&gt; h(App)
+}).$mount('#app');
+</pre>
+                        <figcaption>Fig 05-013</figcaption>
+                    </figure>
+                    <p>Notice the import statement:</p>
+                    <figure>
+                        <pre class="prettyprint">import store from './store'</pre>
+                        <figcaption>Fig 05-014</figcaption>
+                    </figure>
+                    <p>We don't need to add the <code class="prettyprint">/index</code> because whenever we have a
+                        file called <code class="prettyprint">index.js</code> we can just import the directory that
+                        it is contained in and Webpack will just assume that we are looking for the index.js file
+                        inside. </p>
+                    <p>Next we pass the store into the Vue instance. Again, because the key and the value are
+                        identically named we can use the condensed form of just <code class="prettyprint">store
+                        </code> instead of <code class="prettyprint">store: store,</code>.</p>
+                    <p>So back in the index.js the statement <code class="prettyprint">Vue.use(Vuex)</code> tells Vue
+                        that it needs to use the Vuex library. So it kinds of wires the two together and let's the
+                        two know that they exist. But an additional part to that is providing the store to the Vue
+                        instance which is the purpose of passing in the store when we create the new Vue instance in
+                        main.js.
+                    </p>
                     <h3>Initial Auth Module Design</h3>
+                    <p>We are now going to start working on our Auth module which will contain all the code relate
+                        to Authentication.</p>
+                    <p>Create a new directory called modules in the store directory. Create a new file called auth
+                        .js</p>
+                    <p>Let's briefly discusss the design of this module.</p>
                     <h3>Auth Module Mutations</h3>
                     <h3>Auth Module State and Getters</h3>
                     <h3>Updating State Values</h3>
