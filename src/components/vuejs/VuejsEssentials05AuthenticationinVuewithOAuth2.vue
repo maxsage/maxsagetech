@@ -567,74 +567,186 @@ const mutations = {
                                 class="prettyprint">setToken</code> function can be called from either <code
                                 class="prettyprint">finalizeLogin</code> or <code class="prettyprint">logout:</code>.
                     </p>
-<figure>
+                    <figure>
 <pre class="prettyprint">const mutations = {
     setToken: (state, token) =&gt; {
         state.token = token;
     }
 };</pre>
-<figcaption>Fig 05-031</figcaption>
-</figure>
+                        <figcaption>Fig 05-031</figcaption>
+                    </figure>
                     <p>The <code class="prettyprint">setToken</code> function always called with one initial first
                         argument and then possibly some additional arguments. So you are always guaranteed to get the
-                        argument state as the very first argument. The second argument will depend on the which
-                        function calls the setToken function.
+                        argument state as the very first argument. The second argument will depend on the which function
+                        calls the setToken function.
                     </p>
                     <p>Inside the <code class="prettyprint">setToken</code> function we are going to update our state
-                        object. In reality this doesn't involve any API calls or anything like that, we just
-                        literally update the values stored inside of our state object.
+                        object. In reality this doesn't involve any API calls or anything like that, we just literally
+                        update the values stored inside of our state object.
                     </p>
                     <p>That's pretty much it for mutations.</p>
                     <h3>Logging Out with Actions</h3>
                     <p>We will now look at the Action object which, as you may remember, is going to have three
-                        functions tied to it: login, finalizeLogin, logout.</p>
+                        functions tied to it: login, finalizeLogin, logout.
+                    </p>
                     <p>Let's start with logout:</p>
-<figure>
+                    <figure>
 <pre class="prettyprint">const actions = {
     logout: ({ commit }) =&gt; {
         commit('setToken', null);
 
 }</pre>
-<figcaption>Fig 05-032</figcaption>
-</figure>
-                    <p>The actions we create are going to have a very similar method signature to what we discussed
-                        with mutations. So the first argument to the actions is always going to be guaranteed to be
-                        some particular value (that we will discuss in just a second) and then any additional
-                        arguments will be optionally provided.
+                        <figcaption>Fig 05-032</figcaption>
+                    </figure>
+                    <p>The actions we create are going to have a very similar method signature to what we discussed with
+                        mutations. So the first argument to the actions is always going to be guaranteed to be some
+                        particular value (that we will discuss in just a second) and then any additional arguments will
+                        be optionally provided.
                     </p>
-                    <p>So the first argument inside of every single action is going  be an object that has a
-                        couple of different  properties assigned to it that allow us to work with the Vuex instance
-                        that we are contained in. We are interested in the  <code class="prettyprint">commit</code>
-                        property. The <code class="prettyprint">commit</code> property is a function which is used to
-                        call the mutations we have defined. We do not call mutations in the following way:</p>
-<figure>
-<pre class="prettyprint">mutations.setToken // bad !!</pre>
-<figcaption>Fig 05-033</figcaption>
-</figure>
+                    <p>So the first argument inside of every single action is going be an object that has a couple of
+                        different properties assigned to it that allow us to work with the Vuex instance that we are
+                        contained in. We are interested in the <code class="prettyprint">commit</code> property. The
+                        <code class="prettyprint">commit</code> property is a function which is used to call the
+                        mutations we have defined. We do not call mutations in the following way:
+                    </p>
+                    <figure>
+                        <pre class="prettyprint">mutations.setToken // bad !!</pre>
+                        <figcaption>Fig 05-033</figcaption>
+                    </figure>
                     <p>So, to call a mutation we write <code class="prettyprint">commit('mutationName');</code>.
-                        Remember that in the case of our logout action to logout a user all we need to  do is set our
-                        token in state to null:</p>
-<figure>
-<pre class="prettyprint">commit('setToken', null);</pre>
-<figcaption>Fig 05-034</figcaption>
-</figure>
+                        Remember that in the case of our logout action to logout a user all we need to do is set our
+                        token in state to null:
+                    </p>
+                    <figure>
+                        <pre class="prettyprint">commit('setToken', null);</pre>
+                        <figcaption>Fig 05-034</figcaption>
+                    </figure>
                     <p>The first argument is the mutation name. The second argument - null is going to be the token
-                        argument that get's provided to the mutation.</p>
-                    <p>It may seem unnecessary to have the additional layer of an action here just to call the
-                        mutation - why don't we just call setToken directly ourselves? Remember the idea behind an
-                        action is we might want to call multiple mutations from inside of one action or we might
-                        want to say make an Ajax request where we might want to perform some asynchronous operation.</p>
-                    <p>So even though our logout action is very simple we might eventually have actions that span
-                        many different lines of code and make many different network requests, calling many
-                        different mutations. So the idea is that we try to stuff as much complexity inside our Vuex
-                        store into these actions. We can then leave our mutations, state and getters a little bit
-                        more simple and straightforward.
+                        argument that get's provided to the mutation.
+                    </p>
+                    <p>It may seem unnecessary to have the additional layer of an action here just to call the mutation
+                        - why don't we just call setToken directly ourselves? Remember the idea behind an action is we
+                        might want to call multiple mutations from inside of one action or we might want to say make an
+                        Ajax request where we might want to perform some asynchronous operation.
+                    </p>
+                    <p>So even though our logout action is very simple we might eventually have actions that span many
+                        different lines of code and make many different network requests, calling many different
+                        mutations. So the idea is that we try to stuff as much complexity inside our Vuex store into
+                        these actions. We can then leave our mutations, state and getters a little bit more simple and
+                        straightforward.
                     </p>
                     <p>We can't really test this action yet because we don't even have the ability to login to our
-                        applicaion. We will resolve this shortly.</p>
+                        application. We will resolve this shortly.
+                    </p>
                     <h3>Separate API Helpers</h3>
-                    <p>We are now going to work on the login action. </p>
+                    <p>We are now going to work on the login action. The Imgur documentation contains a section on <a
+                            href="https://apidocs.imgur.com/#authorization-and-oauth">Authorization and OAuth</a>. To
+                        access a user's account we have to get the user to authorize our application so we can get an
+                        access token. To do this we point a browser (pop-up, or full page redirect if needed) to a URL
+                        and include a set of query string parameters.
+                    </p>
+                    <figure>
+                        <pre class="prettyprint">https://api.imgur.com/oauth2/authorize?client_id=YOUR_CLIENT_ID&amp;response_type=REQUESTED_RESPONSE_TYPE&amp;state=APPLICATION_STATE</pre>
+                        <figcaption>Fig 05-035</figcaption>
+                    </figure>
+                    <p>We have the route url with a path of oauth2/authorize. After that we have a couple of parameters
+                        which we need to specify:
+                    </p>
+                    <ul>
+                        <li>client_id: The Id we received when we signed up for the Imgur API</li>
+                        <li>response_type: Now deprecated. There used to be a couple of different ways of getting
+                            information back from Imgur API and then performing actions on the users behalf. Now token
+                            is the only option.
+                        </li>
+                        <li>state: Gives the ability to optionally pass in some information about this particular user
+                            as they are going through the OAuth flow.
+                        </li>
+                    </ul>
+                    <p>Next we will add the code to redirect the user to the above Url. Bear in mind that later we will
+                        create an Images module:
+                    </p>
+                    <figure>
+                        <img src="./images/vuejsessentials/Fig05-036.png"/>
+                        <figcaption>Fig 05-036</figcaption>
+                    </figure>
+                    <p>Chances are that the Images module will also need to work with the Imgur API. If we were to
+                        locate all our logic directly with the API inside these actions then we're probably going to end
+                        up with a lot of duplicated code in the two (or more) modules shown above.
+                    </p>
+                    <p>I suggest we create a new file - so this is not a separate Vuex module or anything - just a
+                        separate file called imgur.js. We will add all the code to make network requests and work with
+                        the Imgur API etc. to this file. The login and fetchImages functions can then call the code in
+                        that file instead:
+                    </p>
+                    <figure>
+                        <img src="./images/vuejsessentials/Fig05-037.png"/>
+                        <figcaption>Fig 05-037</figcaption>
+                    </figure>
+                    <p>This will dramatically reduce the amount of networking related code that we would otherwise be
+                        duplicating.
+                    </p>
                     <h3>Forming the OAuth2 URL</h3>
+                    <p>Create a new folder under the <code class="prettyprint">src</code> directory called <code
+                            class="prettyprint">api</code> and add a new file to this directory called <code
+                            class="prettyprint">imgur.js</code>.
+                    </p>
+                    <p>So the first thing we need to do is setup some function inside of here that will kick off our
+                        login process. To achieve this we will create an object. We will add a couple of properties to
+                        this object over time.
+                    </p>
+                    <figure>
+<pre class="prettyprint">export default {
+    login() {
+
+    }
+};</pre>
+                        <figcaption>Fig 05-037</figcaption>
+                    </figure>
+                    <p>Define the Imgur ClientId that we were allocated when we created our Imgur account as a constant
+                        (hence the capitals) to enable it to be used by several different functions:
+                    </p>
+                    <figure>
+                        <pre class="prettyprint">const CLIENT_ID = 'c3feb8623a2803b';</pre>
+                        <figcaption>Fig 05-038</figcaption>
+                    </figure>
+                    <p>Next we define a helper variable to hold the root Url. This will save us lots of retyping the
+                        same Url over and over again:
+                    </p>
+                    <figure>
+                        <pre class="prettyprint">const ROOT_URL = 'https://api.imgur.com';</pre>
+                        <figcaption>Fig 05-039</figcaption>
+                    </figure>
+                    <p>Inside the login function add the following code:</p>
+                    <figure>
+<pre class="prettyprint">import qs from 'qs';
+
+const CLIENT_ID = 'c3feb8623a2803b';
+const ROOT_URL = 'https://api.imgur.com';
+
+export default {
+    login() {
+        const querystring = {
+            client_id: CLIENT_ID,
+            response_type: 'token'
+        };
+
+        window.location = `${ROOT_URL}/oauth2/authorize?${qs.stringify(querystring )}`;
+    }
+};</pre>
+                        <figcaption>Fig 05-040</figcaption>
+                    </figure>
+                    <p>At the top of the file we import the qs library that we discussed in a (much) earlier section. We
+                        create a template string by using the back tick <code class="prettyprint">`</code> character. We
+                        first add the <code class="prettyprint">ROOT_URL</code> and append the /oauth2/authorize? the
+                        question mark indicates the start
+                        of the query string. We use the <code class="prettyprint">stringify</code> function and pass
+                        in the <code class="prettyprint">querystring</code> constant.
+                    </p>
+                    <p>We assign the expression we just defined to <code class="prettyprint">window.location </code>
+                        which will redirect the user's browser to the location specified.
+                    </p>
+
+
                     <h3>Initiating the Login Flow</h3>
                     <h3>Wiring in the Auth Module</h3>
                     <h3>Initial OAuth Request</h3>
