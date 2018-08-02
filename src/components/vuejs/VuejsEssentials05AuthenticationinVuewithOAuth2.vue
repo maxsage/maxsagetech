@@ -3,7 +3,7 @@
         <div class="panel-group">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h2>Handling State with Vuex</h2>
+                    <h2>Authentication in Vue with OAuth2</h2>
                 </div>
                 <div class="panel-body">
                     <h3>OAuth Overview</h3>
@@ -745,15 +745,344 @@ export default {
                     <p>We assign the expression we just defined to <code class="prettyprint">window.location </code>
                         which will redirect the user's browser to the location specified.
                     </p>
-
-
                     <h3>Initiating the Login Flow</h3>
+                    <p>Now that we've create this login function we need to make sure we have the ability to call it
+                        from within our auth module.
+                    </p>
+                    <p>In auth.js we need to import our helper file:</p>
+                    <figure>
+                        <pre class="prettyprint">import api from '../../api/imgur';</pre>
+                        <figcaption>Fig 05-041</figcaption>
+                    </figure>
+                    <p>So the <code class="prettyprint">api</code> variable we just declared in the <code
+                            class="prettyprint">import</code> statement above is now this entire object:</p>
+                    <figure>
+<pre class="prettyprint">login() {
+        const querystring = {
+            client_id: CLIENT_ID,
+            response_type: 'token'
+        };
+
+        window.location = `${ROOT_URL}/oauth2/authorize?${qs.stringify(querystring )}`;
+    }</pre>
+                        <figcaption>Fig 05-042</figcaption>
+                    </figure>
+                    <p>So one variable or one function on the <code class="prettyprint">api</code> object is the
+                        <code class="prettyprint">login</code> function. Next we will create a new action called
+                        <code class="prettyprint">login</code> in the <code class="prettyprint">auth</code> module to
+                        kick off the actual login attempt. This action will call the api login function:</p>
+                    <figure>
+<pre class="prettyprint">const actions = {
+    login: () =&gt; {
+        api.login();
+    },
+    logout: ({ commit }) =&gt; {
+        commit('setToken', null);
+    }
+};</pre>
+                        <figcaption>Fig 05-043</figcaption>
+                    </figure>
+                    <p>As soon as we call <code class="prettyprint">api.login</code> it's going to cause our browser
+                        to automatically navigate away from our application.</p>
+                    <p>We can't immediately test this because there are one or two last little steps we have to
+                        perform. At this point in time we have created our auth module inside the auth.js file but
+                        we have not actually hooked this file up to anything inside of our application. We have not
+                        connected this module, we've not connected state, getters, actions to anything inside of our
+                        application yet.
+                    </p>
                     <h3>Wiring in the Auth Module</h3>
+                    <p>We are now going to wire up the auth module. Inside the auth module add an export statement to
+                        the bottom of the file to export our state object, getters and mutations:
+                    </p>
+                    <figure>
+<pre class="prettyprint">export default {
+    state,
+    getters,
+    actions,
+    mutations
+};</pre>
+                        <figcaption>Fig 05-044</figcaption>
+                    </figure>
+                    <p>Again because the keys and values are identical we use the ES 2015 shorthand syntax. Now one
+                        thing to keep in mind here is that the names of each of these objects are very important
+                        because we specifically want to have a key called state that contains our state object. </p>
+                    <p>Now that we've exported those four pieces from the auth module we're going to open up our
+                        index.js file inside of our store directory and wire it up: </p>
+                    <figure>
+<pre class="prettyprint">import Vuex from 'vuex';
+import Vue from 'vue';
+import auth from './modules/auth';
+
+Vue.use(Vuex);
+
+export default new Vuex.Store({
+    modules: {
+        auth
+    }
+});</pre>
+                        <figcaption>Fig 05-045</figcaption>
+                    </figure>
+                    <p>Firstly we import the auth module. Nex we add the auth module to the modules object. One thing
+                        that's key to keep in mind here is that whatever name or key that you use inside the modules
+                        object is going to affect how you actually access data from within your Vue components - we
+                        use a key of auth and again because the key and value are identical we condense it down to auth.
+                    </p>
+                    <p>Ok so the above code wires up our auth module to our Vuex instance. Remember that back inside
+                        of our main.js file we then took that instance that we created:</p>
+                    <code class="prettyprint">import store from './store';</code>
+                    <p>and we hooked it up to Vue:</p>
+                    <figure>
+<pre class="prettyprint">new Vue ({
+    store,</pre>
+                        <figcaption>Fig 05-046</figcaption>
+                    </figure>
+                    <p>Also remember that back inside the index.js file we also did that <code class="prettyprint">
+                        Vue.use(Vuex);</code> statement. This was like the initial handshake or the initial
+                        communication and then we followed that up by passing our stoe into a Vue instance and
+                        that's what actually followed up on that communication and said ok here's all the data,
+                        actions, mutations, that you need to be aware of.
+                    </p>
+                    <p>So our Auth module is complete. The last thing that we have to do is make sure that there is some
+                        component inside of our application that actually attempts to call that login action we just
+                        created.</p>
                     <h3>Initial OAuth Request</h3>
+                    <p>To enable us to invoke the login attempt that we've now defined inside of our login action in
+                        the Auth module we have to do one last piece of configuration to tell our Vue application about
+                        these actions we've defined inside of the Vuex module:</p>
+                    <figure>
+                        <img src="./images/vuejsessentials/Fig05-047.png"/>
+                        <figcaption>Fig 05-047.png</figcaption>
+                    </figure>
+                    <p>At the top of the figure we have a diagram of our application. At this point we have only
+                        created the App and the AppHeader. We want the AppHeader to attempt to call the login action
+                        any time a user clicks on the Login button that will eventually exist inside there.</p>
+                    <p>So anytime we want to access a Vuex module and update some data or cause some change inside
+                        of our application we're going to wire up an action to our Vue component:</p>
+                    <figure>
+                        <img src="./images/vuejsessentials/Fig05-048.png"/>
+                        <figcaption>Fig 05-048</figcaption>
+                    </figure>
+                    <p>So we're going to form a connection between the actions that we've defined inside of our auth
+                        module to the AppHeader component.</p>
+                    <p>At some point in time we also want to make sure that the AppHeader has the ability to figure
+                        out what set of buttons it should be showing to the user. In other words make sure that the
+                        AppHeader knows whether or not the user is logged in. That's going to be the purpose of the
+                        getter properties that we defined. So we will eventually wire up that set of getters defined
+                        inside of our auth module to the AppHeader component as well:
+                    </p>
+                    <figure>
+                        <img src="./images/vuejsessentials/Fig05-049.png"/>
+                        <figcaption>Fig 05-049</figcaption>
+                    </figure>
+                    <p>So, to recap, we call actions to change data and we call getters to retrieve data from a Vuex
+                        module.</p>
+                    <p>With that in mind let's now open up our AppHeader component and figure out how we connect an
+                        action to the AppHeader. This process always involves the exact same sequence of actions.
+                        Inside the script tag we will import a Vuex helper:</p>
+                    <figure>
+                        <pre class="prettyprint">import { mapActions } from 'vuex';</pre>
+                        <figcaption>Fig 05-050</figcaption>
+                    </figure>
+                    <p><code class="prettyprint">mapActions</code> is a function that will automatically connect
+                        different actions that we have created inside of our modules to an actual component instance
+                        - like our AppHeader. So to actually take that login action that we defined and wire it up to
+                        our component we are going to connect it as a method.
+                    </p>
+                    <p>Remember what methods are inside of components. We use methods to somehow instigate change or
+                        react to user events. So in the context of actions that makes a lot of sense. Methods change
+                        things inside of our application and as we just discussed we call methods to modify data so the
+                        marriage between a method and a component and an action inside of a module makes a lot of
+                        sense.</p>
+                    <p>In AppHeader.vue add the following code to the component definition:</p>
+                    <figure>
+<pre class="prettyprint">&lt;script&gt;
+    import { mapActions } from 'vuex';
+
+    export default {
+        name: 'AppHeader',
+        methods: mapActions(['login'])
+    };
+&lt;/script&gt;
+</pre>
+                        <figcaption>Fig 05-051</figcaption>
+                    </figure>
+                    <p>We add a <code class="prettyprint">methods</code> property to our default export and call the
+                        <code class="prettyprint">mapActions()</code> function. We to pass in an array of strings to
+                        this function that lists all the different modules that we've hooked up to our Vuex instance
+                        that we want to somehow import into this component. At this point the only action that we want
+                        to hookup is login:<code class="prettyprint"> mapActions('login') </code></p>
+                    <p>That's it, that's how we connect an action to a component. So now anywhere within the
+                        <code class="prettyprint">AppHeader</code> component or it's template we can freely call the
+                        <code class="prettyprint">login</code> action. We wil look at that in just a moment. Before
+                        we do, in the official Vuex documentation you will see a slightly different syntax that
+                        looks like this:</p>
+                    <figure>
+                        <pre class="prettyprint">..mapActions(['login'])</pre>
+                        <figcaption>Fig 05-052</figcaption>
+                    </figure>
+                    <p>So, to be clear, the above code and the code we just wrote is operationally completely
+                        identical. The reason that you see the <code class="prettyprint">...</code> is that it takes
+                        all the different actions that we are trying to pull out of the Vuex module and it adds them to
+                        the method object. Using this syntax allows use to define other methods on this component as
+                        well. So maybe we would want another method called <code class="prettyprint">onLogonClick
+                            ()</code> that could be called whenever someone clicked on our ImageStorage logo:
+                    </p>
+                    <figure>
+                    <pre class="prettyprint">methods: {
+    ...mapActions(['login']),
+    onLogoClick() {
+    }</pre>
+                        <figcaption>Fig 05-053</figcaption>
+                    </figure>
+                    <p>So when you see this alternate ... syntax it is being used just so you can add in other
+                        methods as well. If you do not have any other methods or anything like the <code
+                                class="prettyprint">onLogoClick()</code> method then you don't need to do the ...
+                        syntax or the wrapping object.
+                    </p>
+                    <p>So we've now mapped up this login action to our AppHeader component the last thing we
+                        have to do is actually call it. We can call this action from inside any method that we
+                        define, any lifecycle method (which we've yet to discuss) or we can call it as part of an
+                        event handler placed on a template which is what we're going to do in this case.
+                    </p>
+                    <p>Add the following code to the AppHeader template:</p>
+                    <figure>
+                    <pre class="prettyprint">&lt;template&gt;
+    &lt;div class=&quot;ui secondary pointing menu&quot;&gt;
+        &lt;a href=&quot;/&quot; class=&quot;active item&quot;&gt;
+            Image Storage
+        &lt;/a&gt;
+
+        &lt;div class=&quot;right menu&quot;&gt;
+            &lt;a href=&quot;#&quot; class=&quot;ui item&quot; @click=&quot;login&quot;&gt;
+                Login
+            &lt;/a&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/template&gt;</pre>
+                        <figcaption>Fig 05-054</figcaption>
+                    </figure>
+                    <p>So, again, this is an extremely repeatable process. To make sure a component has access to an
+                        action and can call it we always use the same sequence:</p>
+                    <ul>
+                        <li>Import mapActions</li>
+                        <li>Define the methods object</li>
+                        <li>Setup mapActions by passing in an array with a list of strings that define all the
+                            actions you want to be available to this component.
+                        </li>
+                    </ul>
+                    <p>One quick thing that might be surprising - notice how when we wrote <code class="prettyprint">
+                        mapActions</code> and passed the <code class="prettyprint">login</code> action we did not
+                        have to specify the <code class="prettyprint">Auth</code> module. There is nothing in the
+                        statment that says to look inside the Auth module and find the login function. Vuex just
+                        automatically looks through all the actions on all the different modules to find one called
+                        <code class="prettyprint">login</code>.
+                    </p>
+                    <p>Refresh the browser and you should see the Login button. At this point you should notice
+                        the Url changes to <code class="prettyprint">https://api.imgur.com</code> with the clientId
+                        and response_type specifed in the querystring (thanks to our use of the qs module).
+                    </p>
+                    <p>So now we're being prompted to grant access to the application called Vue Image Storage App.
+                        I logged in with an actual Imgur account and clicked. This willwill take you to stage 2 of our
+                        OAuth flow.</p>
+                    <p>If you break down the url:</p>
+                    <figure>
+                        <pre class="prettyprint">http://localhost:8080/oauth2/callback</pre>
+                        <figcaption>Fig 05-055</figcaption>
+                    </figure>
+                    <p>This is the exact callback Url we specified.</p>
+                    <figure>
+                        <pre class="prettyprint">#access_token=00ed3cd52279d5673ae039d326aea44f42729071</pre>
+                        <figcaption>Fig 05-056</figcaption>
+                    </figure>
+                    <p>The access_token is essentially total power (within reason) over this users account. It
+                        allows us to post information, delete posts, make comments, just about anything you can
+                        imagine on behalf of the user. So the access_token is extremely important and it's the same
+                        token that we've been talking about all along with respect to our module.</p>
+                    <figure>
+                        <pre class="prettyprint">&expires_in=315360000</pre>
+                        <figcaption>Fig 05-057</figcaption>
+                    </figure>
+                    <p>expires_in specifies when the token expires</p>
+                    <figure>
+                        <pre class="prettyprint">&token_type=bearer</pre>
+                        <figcaption>Fig 05-058</figcaption>
+                    </figure>
+                    <p>token_type of bearer dictates how we provide this token back to the imgur API when we want to
+                        make a request on the user's behalf. We'll see an example of this in a short while.</p>
+                    <figure>
+                        <pre class="prettyprint">&amp;refresh_token=27660c25c3430b2ab26dea766a24b71276ed158e</pre>
+                        <figcaption>Fig 05-059</figcaption>
+                    </figure>
+                    <p>refresh_token allows us to request another token after the initial token expires. Now we're
+                        not going to this in our application because it's a little bit out of scope of what we're
+                        trying to do.</p>
+                    <figure>
+                        <pre class="prettyprint">&amp;account_username=maxsage</pre>
+                        <figcaption>Fig 05-060</figcaption>
+                    </figure>
+                    <p>account_username specifies the account username</p>
+                    <figure>
+                        <pre class="prettyprint">&amp;account_id=91444873</pre>
+                        <figcaption>Fig 05-061</figcaption>
+                    </figure>
+                    <p>account_id specifies the account id</p>
+                    <p>Ok so we now have access to the access_token which allows us to perform actions on behalf of
+                        the user. There's just one issue.</p>
+                    <p>Notice how the Url contains all this very important information that we want to get access to
+                        and remember we also said that during our initial Auth module design that whenever a user
+                        gets redirected back to our application we want to call the <code class="prettyprint">
+                            finalizeLogin</code> action which takes the token out of the Url and calls the setToken
+                        mutation with it. We will cover this in the next section.</p>
                     <h3>Extracting the Access Token</h3>
-
+                    <p>We've now been successfully redirected back to our application from the OAuth flow on the
+                        Imgur API with the access_token present in the Url. We need to somehow extract the token out
+                        of the Url and send it back over to our <code class="prettyprint">finalizeLogin</code> action
+                        inside of our Auth module. We have not yet created the <code
+                                class="prettyprint">finalizeLogin</code>
+                        action but it was the one that we said we were going to create to take the token and update
+                        the <code class="prettyprint">token</code> in our <code class="prettyprint">state</code>
+                        object in <code class="prettyprint">auth.js</code>. That's the next big challenge we're going
+                        to have. Getting the token out of the Url is not a big challenge
+                    </p>
+                    <p>Inside the browser we can write out <code class="prettyprint">window.location</code> which
+                        will print out some information about the current Url we are visiting. So inside that
+                        <code class="prettyprint">window.location</code> object is a hash property which contains the
+                        entire string that appears after the <code class="prettyprint">#</code> character in the Url
+                        including the access_token. So we could definitely write a little bit of logic to somehow
+                        extract the required string out of the hash. The challenge is where to place the code and
+                        ensuring that the code only runs when we get redirected back to our application from the
+                        Imgur OAuth flow. I don't want the code to run when a user is visiting, for example,
+                        http://localhost:8080.</p>
+                    <p>To achieve this we will be making use of the Vue router library that
+                        we installed much earlier inside of our project. The Vue router library is intended to do
+                        different thinks inside of our application based on the Url that the user is visiting in our
+                        application. So we're going to use that Vue library to look at the Url and if the Url has a
+                        path of /oauth2/callback then at that point we will run the code to try to get the
+                        access_token and call the appropriate action inside of our auth module.
+                    </p>
+                    <p>The following diagram illustrates how navigation is going to work inside of our project:</p>
+                    <figure>
+                        <img src="./images/vuejsessentials/Fig05-062.png"/>
+                        <figcaption>Fig 05-062.png</figcaption>
+                    </figure>
+                    <p>So inside our project we are going to have a couple of different routes. These routes are
+                        going to be defined as logic pointing at the Vue router library. We're going to create the
+                        Vue router library inside of our project and then we're going to instruct it about what
+                        components it should show on the screen based on the current route we are visiting. On the
+                        right hand side of the above diagram notice that we have not yet created the
+                        ImageList or UploadForm component but you can imagine what the purpose of each of those is.</p>
+                    <p>So if a user is visiting the root route of our application we probably want to show them a
+                        list of all the images they have uploaded which means displaying the ImageList component. If
+                        they visit a route of something like <code class="prettyprint">/upload</code> we will show them
+                        and UploadForm component that will allow them to upload new images. Finally, the bit that's
+                        relevant to us right now, if a user visits /oauth2/callback/ route (which we arrive at when
+                        we come back from Imgur) then we will show the AuthHandler component.
+                    </p>
+                    <p>The AuthHandler component that you and I are going to create is not going to have a lot of
+                        template logic in it. It wont display anything on the screen as such. Instead, it's purpose
+                        will be to extract the token from the Url and call the <code class="prettyprint">
+                            finalizeLogin</code> action.</p>
                 </div>
-
             </div>
         </div>
     </div>

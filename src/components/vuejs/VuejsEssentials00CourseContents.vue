@@ -123,7 +123,7 @@
                             <li>Initial OAuth Request</li>
                             <li>Extracting the Access Token</li>
                         </ol>
-                        <h3>Navigation with Vue Router</h3>
+                        <router-link to="/vuejsessentials-06-navigation-with-vue-router" active-class="active"><a>Navigation with Vue Router</a></router-link>
                         <ol start="100">
                             <li>Wiring up Vue Router</li>
                             <li>Browser vs Hash Routers</li>
@@ -142,7 +142,7 @@
                             <li>Additional Route Config</li>
                             <li>Navigation with Router-Link</li>
                         </ol>
-                        <h3>Design of Vuex Modules</h3>
+                        <router-link to="/vuejsessentials-07-design-of-vuex-modules" active-class="active"><a>Design of Vuex Modules</a></router-link>
                         <ol start="116">
                             <li>Image Module Design</li>
                             <li>Module Implementation</li>
@@ -155,7 +155,8 @@
                             <li>Mapping the Images Getter</li>
                             <li>Listing Images</li>
                         </ol>
-                        <h3>Handling Image Upload</h3>
+                        <router-link to="/vuejsessentials-08-handling-image-upload"
+                                     active-class="active"><a>Handling Image Upload</a></router-link>
                         <ol start="126">
                             <li>Image Upload Overview</li>
                             <li>Upload Form HTML</li>

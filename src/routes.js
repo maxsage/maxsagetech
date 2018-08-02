@@ -8,6 +8,9 @@ import VuejsEssentials02MovingOnWithVueCLI from './components/vuejs/VuejsEssenti
 import VuejsEssentials03WritingEffectiveApps from './components/vuejs/VuejsEssentials03WritingEffectiveApps.vue';
 import VuejsEssentials04HandlingStateWithVuex from './components/vuejs/VuejsEssentials04HandlingStateWithVuex.vue'
 import VuejsEssentials05AuthenticationinVuewithOAuth2 from './components/vuejs/VuejsEssentials05AuthenticationinVuewithOAuth2.vue'
+import VuejsEssentials06NavigationwithVueRouter from './components/vuejs/VuejsEssentials06NavigationwithVueRouter.vue'
+import VuejsEssentials07DesignOfVuexModules from './components/vuejs/VuejsEssentials07DesignOfVuexModules.vue'
+import VuejsEssentials08HandlingImageUpload from './components/vuejs/VuejsEssentials08HandlingImageUpload.vue'
 
 import WPF from './components/wpf/WPF.vue';
 
@@ -109,8 +112,24 @@ export const routes = [
             'header-top': Header
         }
     },
-
-
+    {
+        path: '/vuejsessentials-06-navigation-with-vue-router', components: {
+            default: VuejsEssentials06NavigationwithVueRouter,
+            'header-top': Header
+        }
+    },
+    {
+        path: '/vuejsessentials-07-design-of-vuex-modules', components: {
+            default: VuejsEssentials07DesignOfVuexModules,
+            'header-top': Header
+        }
+    },
+    {
+        path: '/vuejsessentials-08-handling-image-upload', components: {
+            default: VuejsEssentials08HandlingImageUpload,
+            'header-top': Header
+        }
+    },
 
     {
         path: '/wpf', components: {
