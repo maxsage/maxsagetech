@@ -534,6 +534,45 @@
                     </figure>
 
                     <h3>The V-Else Directive</h3>
+                    <p>Our AppHeader component is now aware of whether or not the user is actually signed into our
+                        application. We will now use the <code class="prettyprint">v-else</code> directive to show
+                        different buttons and layout depending on the status of the user.
+                    </p>
+                    <p>First of all delete the <code class="prettyprint v-pre">{{ isLoggedIn }}</code> that we just
+                        added to the AppHeader component.</p>
+                    <p>Add the following Html inside the existing right menu div:</p>
+                    <figure>
+<pre class="prettyprint">&lt;template&gt;
+    &lt;div class=&quot;ui secondary pointing menu&quot;&gt;
+        &lt;a href=&quot;/&quot; class=&quot;active item&quot;&gt;
+            Image Storage
+        &lt;/a&gt;
+        &lt;div class=&quot;right menu&quot;&gt;
+            &lt;div v-if=&quot;isLoggedIn&quot;&gt;
+                Galleries button
+                Upload button
+                Logout button
+            &lt;/div&gt;
+            &lt;a v-else href=&quot;#&quot; class=&quot;ui item&quot; @click=&quot;login&quot;&gt;
+                Login
+            &lt;/a&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+</pre>
+                        <figcaption>Fig 06-038</figcaption>
+                    </figure>
+                    <p>So we use the <code class="prettyprint">v-if</code> directive to say if <code
+                            class="prettyprint">isLoggedIn</code> is equal to <code class="prettyprint">>true</code> then
+                        display the buttons (or placeholders at the moment) inside of the div. We then use the <code
+                                class="prettyprint">v-else</code> directive to handle the opposite case of when a
+                        user is not logged in. We could have used another <code class="prettyprint">v-if</code>
+                        directive here with <code class="prettyprint">!isLoggedIn</code> but instead we us <code class="prettyprint">v-else</code>
+                        which is a slightly shorter syntax. The <code class="prettyprint">v-else</code> directive
+                        must occur on the element directly after an element using the <code class="prettyprint">v-if
+                        </code> directive.</p>
+                    <p>If we test this in the browser we should now see the placeholder text when we are logged in
+                        and the Login button when we are not.</p>
                     <h3>Persisting Login State</h3>
                     <h3>Button Styling</h3>
                     <h3>Logging Out Users</h3>
