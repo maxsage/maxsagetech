@@ -366,7 +366,7 @@
                     <pre class="prettyprint">created() {
     this.finalizeLogin(window.location.hash);
 }</pre>
-                    <figcaption>Fig 06-020a</figcaption>
+                        <figcaption>Fig 06-020a</figcaption>
                     </figure>
 
                     <h3>Parsing the Access Token</h3>
@@ -403,14 +403,13 @@
                         pass in <code class="prettyprint">window.location.hash</code>:
                     </p>
                     <figure>
-                    <pre class="prettyprint">this.finalizeLogin(window.location.hash);</pre>
-                    <figcaption>Fig 06-024</figcaption>
+                        <pre class="prettyprint">this.finalizeLogin(window.location.hash);</pre>
+                        <figcaption>Fig 06-024</figcaption>
                     </figure>
                     <p>So this argument is going to show up as the second argument to the <code class="prettyprint">finalizeLogin</code>
                         action. Remember the first argument that gets passed to any action is an object that has a bunch
-                        of helper methods tied to it that allow us to modify our Vuex module - for example it
-                        might contain the <code class="prettyprint">commit</code> function that allows us to call
-                        mutations:
+                        of helper methods tied to it that allow us to modify our Vuex module - for example it might
+                        contain the <code class="prettyprint">commit</code> function that allows us to call mutations:
                     </p>
                     <figure>
                     <pre class="prettyprint">finalizeLogin({ commit }, hash) {
@@ -418,8 +417,8 @@
                         <figcaption>Fig 06-025</figcaption>
                     </figure>
                     <p>So we supply the <code class="prettyprint">commit</code> function again in the first argument.
-                        Remember we supplied the  <code class="prettyprint">window.location.hash</code> property to
-                        the call to <code  class="prettyprint">finalizeLogin</code> in the <code class="prettyprint">
+                        Remember we supplied the <code class="prettyprint">window.location.hash</code> property to the
+                        call to <code class="prettyprint">finalizeLogin</code> in the <code class="prettyprint">
                             created</code> lifecycle method hook so that hash will be the second argument to this
                         action. We simply call it hash.
                     </p>
@@ -431,95 +430,105 @@
     commit('setToken', queryString.access_token);
 },
                     </pre>
-                    <figcaption>Fig 06-026</figcaption>
+                        <figcaption>Fig 06-026</figcaption>
                     </figure>
-                    <p><code class="prettyprint">hash.replace('#', '')</code> removes the <code class="prettyprint">#
-                    </code> character from the start of the string.</p>
-                    <p>We pass the remaining string into the qs module which is used to manipulate, parse and
-                        generate query strings. Firstly, import the qs module:</p>
+                    <p><code class="prettyprint">hash.replace('#', '')</code> removes the <code
+                            class="prettyprint"># </code> character from the start of the string.
+                    </p>
+                    <p>We pass the remaining string into the qs module which is used to manipulate, parse and generate
+                        query strings. Firstly, import the qs module:
+                    </p>
                     <figure>
-                    <pre class="prettyprint">import qs from 'qs';</pre>
-                    <figcaption>Fig 06-027</figcaption>
+                        <pre class="prettyprint">import qs from 'qs';</pre>
+                        <figcaption>Fig 06-027</figcaption>
                     </figure>
-                    <p>Then pass our string into the <code class="prettyprint">qs.parse</code> function and assign
-                        it to a variable called <code class="prettyprint">queryString</code>:</p>
+                    <p>Then pass our string into the <code class="prettyprint">qs.parse</code> function and assign it to
+                        a variable called <code class="prettyprint">queryString</code>:
+                    </p>
                     <figure>
-                    <pre class="prettyprint">const queryString = qs.parse(hash.replace('#', ''));</pre>
-                    <figcaption>Fig 06-028</figcaption>
+                        <pre class="prettyprint">const queryString = qs.parse(hash.replace('#', ''));</pre>
+                        <figcaption>Fig 06-028</figcaption>
                     </figure>
-                    <p><code class="prettyprint">qs.parse</code> will return an object that contains the properties
-                        and values from the string we pass. So in this case there will be keys like access_token,
-                        refresh_token etc. and the corresponding values.</p>
-                    <p>Next we call the <code class="prettyprint">setToken</code> mutation and pass in the
-                        access_token from our queryString:</p>
+                    <p><code class="prettyprint">qs.parse</code> will return an object that contains the properties and
+                        values from the string we pass. So in this case there will be keys like access_token,
+                        refresh_token etc. and the corresponding values.
+                    </p>
+                    <p>Next we call the <code class="prettyprint">setToken</code> mutation and pass in the access_token
+                        from our queryString:
+                    </p>
                     <figure>
-                    <pre class="prettyprint">commit('setToken', queryString.access_token);</pre>
-                    <figcaption>Fig 06-029</figcaption>
+                        <pre class="prettyprint">commit('setToken', queryString.access_token);</pre>
+                        <figcaption>Fig 06-029</figcaption>
                     </figure>
                     <p>That's going to update our state object with that new token.</p>
-                    <p>Even though we are not making use of the token from our state let's test this in the browser
-                        just to make sure we don't get any errors.</p>
+                    <p>Even though we are not making use of the token from our state let's test this in the browser just
+                        to make sure we don't get any errors.
+                    </p>
                     <p>Click login, that sends us to Imgur, which sends us straight back, check for errors in the
-                        console and hopefully you will see there aren't any.</p>
+                        console and hopefully you will see there aren't any.
+                    </p>
                     <h3>Data in Components with MapGetters</h3>
-                    <p>In the last section we finished up or finalizeLogin action and we assumed that the code we
-                        wrote would update the state inside the Auth although we have not yet proved this. We will
-                        add some code to verify this. Remember when we were first discussing Vuex:</p>
+                    <p>In the last section we finished up or finalizeLogin action and we assumed that the code we wrote
+                        would update the state inside the Auth although we have not yet proved this. We will add some
+                        code to verify this. Remember when we were first discussing Vuex:
+                    </p>
                     <figure>
                         <img src="./images/vuejsessentials/Fig06-030.png"/>
                         <figcaption>Fig 06-030.png-</figcaption>
                     </figure>
-                    <p>In our Auth module there are actions that we can call modify data and at some point in time
-                        we're going to want to also read data - that was the purpose of the getters which we defined:
+                    <p>In our Auth module there are actions that we can call modify data and at some point in time we're
+                        going to want to also read data - that was the purpose of the getters which we defined:
                     </p>
                     <figure>
                     <pre class="prettyprint">const getters = {
     isLoggedIn: state =&gt; !!state.token
 };</pre>
-                    <figcaption>Fig 06-031</figcaption>
+                        <figcaption>Fig 06-031</figcaption>
                     </figure>
                     <p>We have defined one getter called <code class="prettyprint">isLoggedIn</code> which returns a
                         boolean value indicating if our user is authenticated with our application.
                     </p>
-                    <p>We will use the <code class="prettyprint">isLoggedIn</code> getter to supply that information
-                        to our AppHeader component allowing us to customize it's template depending on the value we
+                    <p>We will use the <code class="prettyprint">isLoggedIn</code> getter to supply that information to
+                        our AppHeader component allowing us to customize it's template depending on the value we
                         receive.
                     </p>
                     <p>In the AppHeader component's script section import the mapGetters function from Vuex:</p>
-<figure>
-<pre class="prettyprint">import { mapActions, mapGetters } from 'vuex';</pre>
-<figcaption>Fig 06-032</figcaption>
-</figure>
-                    <p>So we're going to use this mapGetters function to pull some information out of the Auth
-                        module and add it directly to the AppHeader. We use a similar syntax to what we just did
-                        with the mapActions:</p>
-<figure>
-<pre class="prettyprint">methods: mapActions(['login'])</pre>
-<figcaption>Fig 06-033</figcaption>
-</figure>
-                    <p>However instead of using methods which we use to modify data or react to events inside of our
-                        application we are going to use a computed property. Remember computed is how we read our
-                        data and get access to it inside our template:
+                    <figure>
+                        <pre class="prettyprint">import { mapActions, mapGetters } from 'vuex';</pre>
+                        <figcaption>Fig 06-032</figcaption>
+                    </figure>
+                    <p>So we're going to use this mapGetters function to pull some information out of the Auth module
+                        and add it directly to the AppHeader. We use a similar syntax to what we just did with the
+                        mapActions:
                     </p>
-<figure>
+                    <figure>
+                        <pre class="prettyprint">methods: mapActions(['login'])</pre>
+                        <figcaption>Fig 06-033</figcaption>
+                    </figure>
+                    <p>However instead of using methods which we use to modify data or react to events inside of our
+                        application we are going to use a computed property. Remember computed is how we read our data
+                        and get access to it inside our template:
+                    </p>
+                    <figure>
 <pre class="prettyprint">export default {
     name: 'AppHeader',
     computed: mapGetters(['isLoggedIn']),
     methods:
         mapActions(['login'])
 };</pre>
-<figcaption>Fig 06-034</figcaption>
-</figure>
+                        <figcaption>Fig 06-034</figcaption>
+                    </figure>
                     <p>Now that we've defined this getter of isLoggedIn and assigned it to the component we can
-                        reference it in our template:</p>
-<figure>
-<pre v-pre  class="prettyprint">{{ isLoggedIn }}</pre>
-<figcaption>Fig 06-035</figcaption>
-</figure>
+                        reference it in our template:
+                    </p>
+                    <figure>
+                        <pre v-pre class="prettyprint">{{ isLoggedIn }}</pre>
+                        <figcaption>Fig 06-035</figcaption>
+                    </figure>
                     <p>Remember whenever we are working with our templates we dont have to write out this. or this
-                        .computed or anything like that we just supply the name of the computed property - in
-                        this case isLoggedIn
-                        .</p>
+                        .computed or anything like that we just supply the name of the computed property - in this case
+                        isLoggedIn .
+                    </p>
                     <p>Refresh the browser and you should see true indicating that the user is logged in:</p>
                     <figure>
                         <img src="./images/vuejsessentials/Fig06-036.png"/>
@@ -527,7 +536,8 @@
                     </figure>
                     <p>If you browse to the application root instead <code class="prettyprint">http://localhost
                         :8080</code> the access_token will no longer be available inside the Url. This means the
-                    AuthHandler component can't get the token which will result in the AppHeader displaying false:</p>
+                        AuthHandler component can't get the token which will result in the AppHeader displaying false:
+                    </p>
                     <figure>
                         <img src="./images/vuejsessentials/Fig06-037.png"/>
                         <figcaption>Fig 06-037</figcaption>
@@ -539,7 +549,8 @@
                         different buttons and layout depending on the status of the user.
                     </p>
                     <p>First of all delete the <code class="prettyprint v-pre">{{ isLoggedIn }}</code> that we just
-                        added to the AppHeader component.</p>
+                        added to the AppHeader component.
+                    </p>
                     <p>Add the following Html inside the existing right menu div:</p>
                     <figure>
 <pre class="prettyprint">&lt;template&gt;
@@ -563,24 +574,454 @@
                         <figcaption>Fig 06-038</figcaption>
                     </figure>
                     <p>So we use the <code class="prettyprint">v-if</code> directive to say if <code
-                            class="prettyprint">isLoggedIn</code> is equal to <code class="prettyprint">>true</code> then
-                        display the buttons (or placeholders at the moment) inside of the div. We then use the <code
-                                class="prettyprint">v-else</code> directive to handle the opposite case of when a
-                        user is not logged in. We could have used another <code class="prettyprint">v-if</code>
-                        directive here with <code class="prettyprint">!isLoggedIn</code> but instead we us <code class="prettyprint">v-else</code>
-                        which is a slightly shorter syntax. The <code class="prettyprint">v-else</code> directive
-                        must occur on the element directly after an element using the <code class="prettyprint">v-if
-                        </code> directive.</p>
-                    <p>If we test this in the browser we should now see the placeholder text when we are logged in
-                        and the Login button when we are not.</p>
+                            class="prettyprint">isLoggedIn</code> is equal to <code class="prettyprint">>true</code>
+                        then display the buttons (or placeholders at the moment) inside of the div. We then use the
+                        <code class="prettyprint">v-else</code> directive to handle the opposite case of when a user is
+                        not logged in. We could have used another <code class="prettyprint">v-if</code> directive here
+                        with <code class="prettyprint">!isLoggedIn</code> but instead we us <code class="prettyprint">v-else</code>
+                        which is a slightly shorter syntax. The <code class="prettyprint">v-else</code> directive must
+                        occur on the element directly after an element using the <code class="prettyprint">v-if </code>
+                        directive.
+                    </p>
+                    <p>If we test this in the browser we should now see the placeholder text when we are logged in and
+                        the Login button when we are not.
+                    </p>
                     <h3>Persisting Login State</h3>
+                    <p>In the last section we added in a v-if directive to our AppHeader to conditionally change the
+                        content displayed inside of it. Now one thing you might have noticed is that when we manually
+                        navigate to <code class="prettyprint">localhost:8080</code> the AppHeader reverts to saying that
+                        we are logged out. So let's try and clear up how Vuex works in this respect because there are
+                        some misconceptions. So inside of our auth.js Vuex module we have the initial state of token set
+                        to null:
+                    </p>
+                    <figure>
+<pre class="prettyprint">const state = {
+    token: null
+};</pre>
+                        <figcaption>Fig 06-039</figcaption>
+                    </figure>
+                    <p>So this means that anytime our application is loaded up from scratch inside the browser, for
+                        example when we do a full refresh, all of the state contained in the auth Vuex module gets
+                        dumped and the token reverts to the initial state of null. So this is why I was able to log in
+                        and refresh the page and see that I was suddenly not logged in. Every time my application
+                        restarts in the browser all this state gets completely wiped away and starts over again from
+                        scratch.
+                    </p>
+                    <p>So that kind of sequence is not really what you would expect when it comes to authentication. If
+                        you sign in to an application you probably expect to stay signed in even if you navigate away
+                        from the page and come back to it later.
+                    </p>
+                    <p>There's any easy fix which we can add to the auth module to make sure that we persist the
+                        authentication status of our user even if they close this page and come back to it again
+                        tomorrow. To do this we are going to use a native storage feature that is available on all major
+                        browsers called local storage.
+                    </p>
+                    <p>You can access local storage by writing <code class="prettyprint">localStorage</code> in the
+                        browser console. localStorage allows us to store variables that will be persisted specifically
+                        for the current domain we are on (in our case <code class="prettyprint"> localhost:8080</code>.
+                        We can use this as a little spot to store a tiny bit of information customized for this
+                        particular user on their browser on specifically this domain of <code class="prettyprint">
+                            localhost:8080</code>. If we were to browse to another domain like for example google.com
+                        that same localStorage would no longer be available - localhost:8080 has it's own little bucket
+                        of storage.
+                    </p>
+                    <p>So you and I can take this access_token and put it into this localStorage object whenever a user
+                        signs into the application. Then when they come back to our application at some point in the
+                        future we can look inside that localStorage and see if that access token is available . If it is
+                        then we'll assume that the user is still logged in.
+                    </p>
+                    <p>The code for this is quite easy to put together. First inside the auth module locate the initial
+                        state object:
+                    </p>
+                    <figure>
+<pre class="prettyprint">const state = {
+    token: null
+};</pre>
+                        <figcaption>Fig 06-040</figcaption>
+                    </figure>
+                    <p>So by default the token is set to null which equates to not logged in. So rather than starting
+                        off with null in every single case we're going to replace this and say that we're going to look
+                        inside that localStorage object and check to see if we have saved an access token:
+                    </p>
+                    <figure>
+<pre class="prettyprint">const state = {
+    token: window.localStorage.getItem('imgur_token');
+};</pre>
+                        <figcaption>Fig 06-041</figcaption>
+                    </figure>
+                    <p>So now every time our application starts up we're going to look to see is there's been a token
+                        stored and if there is we are going to assign it to the token property and then our application
+                        is going to appear to say "OK user you're still logged in".
+                    </p>
+                    <p>Now just adding the piece of code above is'nt enough. We need to make sure that whenever the user
+                        signs in we add the actual access token to local storage as well. We can do this in the
+                        finalizeLogin action after we commit the token to the setToken mutation - we can also take that
+                        token and add it to our localStorage:
+                    </p>
+                    <figure>
+<pre class="prettyprint">    finalizeLogin({ commit }, hash) {
+        const queryString = qs.parse(hash.replace('#', ''));
+
+        commit('setToken', queryString.access_token);
+        window.localStorage.setItem('imgure_token', queryString.access_token);
+    },</pre>
+                        <figcaption>Fig 06-042</figcaption>
+                    </figure>
+                    <p>So now, anytime a user signs in for the first time, we're going to take that token and store it
+                        on localStorage and then any time a user comes back to our application we'll check to see if the
+                        tokens there and if it is we will assign it to our initial token state.
+                    </p>
+                    <p>So I'm going to save this, flip back over to the browser and test our authentication flow again.
+                        If we refresh, then click the Login button. Once we return to our application our finalizeLogin
+                        action is going to take that token store it in localStorage. We can confirm this by writing
+                        <code class="prettyprint">localStorage.getItem('imgur_token')</code> I will see my token stored
+                        inside there. So the token displayed will exactly match the access_token in the Url:
+                    </p>
+                    <figure>
+                        <img src="./images/vuejsessentials/Fig06-043.png"/>
+                        <figcaption>Fig 06-043</figcaption>
+                    </figure>
+                    <p>So now I should be able to navigate back to <code class="prettyprint">localhost:8080</code> do a
+                        complete refresh and still see that I am logged into the application.
+                    </p>
                     <h3>Button Styling</h3>
+                    <p>In this section we're going to style and add logic to our buttons in the AppHeader. So,
+                        initially, we will add some temporary anchor tags:
+                    </p>
+                    <figure>
+<pre class="prettyprint">&lt;div class=&quot;right menu&quot;&gt;
+    &lt;div v-if=&quot;isLoggedIn&quot;&gt;
+        &lt;a class=&quot;item&quot;&gt;Galleries&lt;/a&gt;
+        &lt;a class=&quot;item&quot;&gt;Upload&lt;/a&gt;
+        &lt;a class=&quot;item&quot;&gt;Logout&lt;/a&gt;
+    &lt;/div&gt;
+    &lt;a v-else href=&quot;#&quot; class=&quot;ui item&quot; @click=&quot;login&quot;&gt;
+        Login
+    &lt;/a&gt;
+&lt;/div&gt;</pre>
+                        <figcaption>Fig 06-044</figcaption>
+                    </figure>
+                    <p>If we view the application in the browser the styling looks good as far as the size of the
+                        buttons and the text they contain but you'll notice that they're all stacking up:
+                    </p>
+                    <figure>
+                        <img src="./images/vuejsessentials/Fig06-045.png"/>
+                        <figcaption>Fig 06-045</figcaption>
+                    </figure>
+                    <p>So the reason they're stacking up like this is because we added this extra div:</p>
+                    <figure>
+                    <pre class="prettyprint">&lt;div class=&quot;right menu&quot;&gt;
+&lt;div v-if=&quot;isLoggedIn&quot;&gt;</pre>
+                        <figcaption>Fig 06-045</figcaption>
+                    </figure>
+                    <p>We want to keep this <code class="prettyprint">div</code> because we need to use the <code
+                            class="prettyprint">v-if</code> directive to make sure that we either show the set of
+                        buttons or the anchor tag that contains the Login functionality.
+                    </p>
+                    <p>However, the <a href="https://semantic-ui.com/">SemanticUI</a> library that we are using does not
+                        expect there to be a bunch of anchor tags inside of this <code class="prettyprint">right
+                            menu</code> class. We're basically breaking the rules of what SemanticUI expects to see but
+                        for a very good reason - so we can use that <code class="prettyprint">v-if</code> directive.
+                        We're going to add in a little bit of custom styling using CSS to make sue that the buttons
+                        appear horizontally.
+                    </p>
+                    <p>Add a style tag to the bottom of the AppHeader component:</p>
+                    <figure>
+<pre class="prettyprint">&lt;style scoped&gt;
+    .horizontal {
+        display: flex;
+        flex-direction: row;
+    }
+&lt;/style&gt;</pre>
+                        <figcaption>Fig 06-046</figcaption>
+                    </figure>
+                    <p>Apply this style to the div with the v-if directive:</p>
+                    <figure>
+                        <pre class="prettyprint">&lt;div v-if=&quot;isLoggedIn&quot; class=&quot;horizontal&quot;&gt;</pre>
+                        <figcaption>Fig 06-046a</figcaption>
+                    </figure>
+                    <p>Back in the browser, perform a refresh - because we added a new chunk of CSS that did not exist
+                        before, and you will see those buttons now appear side by side:
+                    </p>
+                    <figure>
+                        <img src="./images/vuejsessentials/Fig06-047.png"/>
+                        <figcaption>Fig 06-047</figcaption>
+                    </figure>
+                    <p>Ok, so that looks.</p>
                     <h3>Logging Out Users</h3>
+                    <p>Next we will work on the logout functionality to make sure that when a user clicks the Logout
+                        button the <code class="prettyprint">logout</code> action is executed which will call the <code
+                                class="prettyprint">setToken</code> mutation which in turn sets the token in state to
+                        null. If token is null that indicates our user is not logged in.
+                    </p>
+                    <p>In your code editor navigate to the AppHeader component's definition. You'll recall that to get
+                        an action wired up to a component we make use of the mapActions function. So we currently have
+                        one action mapped up. To add further actions we add them as a string to the array:
+                    </p>
+                    <figure>
+<pre class="prettyprint">export default {
+    name: 'AppHeader',
+    computed: mapGetters(['isLoggedIn']),
+    methods:
+        mapActions(['login', 'logout'])
+};</pre>
+                        <figcaption>Fig 06-048</figcaption>
+                    </figure>
+                    <p>So now we can make use of this <code class="prettyprint">logout</code> action that's been added
+                        to the <code class="prettyprint">methods</code> object by going up to the <code
+                                class="prettyprint">logout</code> anchor tag and adding a click event handler to it:
+                    </p>
+                    <figure>
+                        <pre class="prettyprint"> &lt;a class=&quot;item&quot; @click=&quot;logout&quot;&gt;Logout&lt;/a&gt;</pre>
+                        <figcaption>Fig 06-049</figcaption>
+                    </figure>
+                    <p>In the browser, perform a refresh, and click the Logout button. You should see the header revert
+                        back to the not logged in state and the Login button should appear which is the behaviour we
+                        want.
+                    </p>
                     <h3>Automatic Component Updates</h3>
+                    <p>In the last section we added in our Logout functionality. Anytime the user clicks on the Logout
+                        button the header instantly updates to indicate the user has been logged out. Behind the scenes
+                        when a user clicks on the button it calls the logout action defined inside of our Auth module.
+                        That action updates the state of our Auth module. Anytime we call an action that updates our
+                        state it causes every single component that is using one of that modules getters to update as
+                        well. So, in other words, when we call the logout action to update isLoggedIn in the Auth module
+                        the getter of isLoggedIn automatically got rerun as well and caused AppHeader component to
+                        update.
+                    </p>
+                    <p>So what that means is that you and I do not have to call any manual update functions. There's no
+                        need for you and I to say - "Oh, some data that the AppHeader relies upon just changed - we need
+                        to somehow forcibly re-render the AppHeader component". We don't need to do that. All you and I
+                        have to do is call an action to update our state and then our component is going to just
+                        magically update for us.
+                    </p>
                     <h3>Clearing LocalStorage Tokens</h3>
+                    <p>Ok, our application is looking pretty good, but there's still some rough edges around our
+                        authentication process.
+                    </p>
+                    <p>Firstly, you might notice, that if I click the logout button and then do a navigation attempt
+                        back to localhost:8080 the application thinks that I am still logged in. The reason that the app
+                        thinks we're still logged in is that even though we are updating our piece of state - token when
+                        we call that logout action inside of our Auth module we are not emptying ouf the localStorage
+                        record of that access token.
+                    </p>
+                    <p>So we need to make sure that anytime the logout action is called we also clear out that
+                        imgur_token localStorage item so that when a user refreshes the page that tokens not inside of
+                        localStorage:
+                    </p>
+                    <figure>
+<pre class="prettyprint">logout: ({ commit }) =&gt; {
+    commit('setToken', null);
+    window.localStorage.removeItem('imgur_token');
+}</pre>
+                        <figcaption>Fig 06-050</figcaption>
+                    </figure>
+                    <p>To clear out an item that has been defined inside of localStorage we use a function called
+                        removeItem passing the name/key of the property - 'imgur_token'.
+                    </p>
+                    <p>So if we now test this inside the browser perform a refresh. Now click on logout which will log
+                        you out. Refresh the page again and you should see you are still logged out - this is now the
+                        desired behaviour.
+                    </p>
                     <h3>Programmatic Navigation</h3>
+                    <p>Another issue we have is when a user comes back to our application from the Oauth2 flow we always
+                        see the text "Please wait..." on the screen. In reality we probably want to make sure that
+                        anytime someone comes back to the <code class="prettyprint">/oauth2/callback</code> route that
+                        we get access to their token, we do some work on it, then what we need to do is redirect them to
+                        a suitable location in our application - in our case our root route - <code class="prettyprint">localhost:8080</code>.
+                    </p>
+                    <p>You have already seen an example of us manipulating the user's browser by setting the <code
+                            class="prettyprint">window.location</code> property to the Url that we wanted the browser to
+                        navigate to. However, an important distinction to remember here, anytime we use this function or
+                        this way of changing the user's address it causes a hard refresh of the entire page - in Single
+                        Page Application we do not want to accidentally reload the page unless we really have to.
+                    </p>
+                    <p>Instead we're going to be making use of some built-in functionality directly inside of Vue router
+                        which allows us to change the route without causing a full refresh of the entire page.
+                    </p>
+                    <p>You'll remember in our main.js file we imported VueRouter:</p>
+                    <figure>
+                        <pre class="prettyprint">import VueRouter from 'vue-router';</pre>
+                        <figcaption>Fig 06-051</figcaption>
+                    </figure>
+                    <p>Then we created a new router instance</p>
+                    <figure>
+<pre class="prettyprint">const router = new VueRouter({
+    mode: 'history',
+    routes: [{ path: '/oauth2/callback', component
+});</pre>
+                        <figcaption>Fig 06-052</figcaption>
+                    </figure>
+                    <p>This router object allows us to programmatically navigate our users around our application. So
+                        really what we want to do is get access to this router object at the point we need to redirect
+                        our user (the finalizeLogin action in this application).
+                    </p>
+                    <p>To achieve that we export the router object from the main.js file.</p>
+                    <figure>
+<pre class="prettyprint">export const router = new VueRouter ({
+    mode: 'history',
+    routes: [
+        { path: '/oauth2/callback', component: AuthHandler }
+  ]
+});</pre>
+                        <figcaption>Fig 06-053</figcaption>
+                    </figure>
+                    <p>Now in the Auth module we can import the router object:</p>
+                    <figure>
+                        <pre class="prettyprint">import { router }  from '../../main';</pre>
+                        <figcaption>Fig 06-054</figcaption>
+                    </figure>
+                    <p>Notice the use of the curly braces. That's because this export of router we setup above in
+                        main.js is referred to as a named export. We did not use the default keyword for the router
+                        which is why we need the curly braces on the import statement.
+                    </p>
+                    <p>Now we can use the router object to navigate in the finalizeLogin action:</p>
+                    <figure>
+<pre class="prettyprint">finalizeLogin({ commit }, hash) {
+    const queryString = qs.parse(hash.replace('#', ''));
+
+    commit('setToken', queryString.access_token);
+    window.localStorage.setItem('imgur_token', queryString.access_token);
+    router.push('/');
+},</pre>
+                        <figcaption>Fig 06-055</figcaption>
+                    </figure>
+                    <p>In the browser, Login to the application and you should see that after <code class="prettyprint">/oauth2/callback/</code>
+                        the browser is redirected to <code class="prettyprint">localhost:8080</code>. So that's the
+                        automatic refresh in action.
+                    </p>
                     <h3>Additional Route Config</h3>
+                    <p>Our authentication system is in a pretty good spot at this point in time. So we're now going to
+                        start thinking about the galleries page and the upload page as well. Before we start working on
+                        either of those components we probably will want to make sure that our user has the ability to
+                        navigate over to the Gallery and Upload screens.
+                    </p>
+                    <p>Let's get started by adding some boilerplate to get the Gallery and Upload buttons to navigate to
+                        an actual page.
+                    </p>
+                    <p>Create two new files inside the components directory:</p>
+                    <ul>
+                        <li>ImageList.vue</li>
+                        <li>UploadForm.vue</li>
+                    </ul>
+                    <p>Add the following boilerplate code to the UploadForm component:</p>
+                    <figure>
+<pre class="prettyprint">&lt;template&gt;
+    &lt;div&gt;
+        Upload form
+    &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+    export default {
+        name: 'UploadForm'
+    }
+&lt;/script&gt;</pre>
+                        <figcaption>Fig 06-056</figcaption>
+                    </figure>
+                    <p>Add the following boilerplate code to the ImageList component:</p>
+                    <figure>
+<pre class="prettyprint">&lt;template&gt;
+    &lt;div&gt;
+        Image List
+    &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+    export default {
+        name: 'ImageList'
+    }
+&lt;/script&gt;</pre>
+                        <figcaption>Fig 06-057</figcaption>
+                    </figure>
+                    <p>Next we will create some routing rules inside our router instance which is located in main.js.
+                        Remember our routing diagram:
+                    </p>
+                    <figure>
+                        <img src="./images/vuejsessentials/Fig06-058.png"/>
+                        <figcaption>Fig 06-058</figcaption>
+                    </figure>
+                    <p>In main.js firstly, import the two components we just created:</p>
+                    <figure>
+<pre class="prettyprint">import ImageList from './components/ImageList';
+import UploadForm from './components/UploadForm';</pre>
+                        <figcaption>Fig 06-058</figcaption>
+                    </figure>
+                    <p>Next add two new objects to the routes array:</p>
+                    <figure>
+<pre class="prettyprint">export const router = new VueRouter ({
+    mode: 'history',
+    routes: [
+        { path :'/', component: ImageList },
+        { path : '/upload', component: UploadForm },
+        { path: '/oauth2/callback', component: AuthHandler },
+
+  ]
+});</pre>
+                        <figcaption>Fig 06-059</figcaption>
+                    </figure>
+                    <p>Back in the browser and reload the page and make sure the address is set to <code
+                            class="prettyprint">localhost:8080</code>. You should see the ImageList component on the
+                        screen:
+                    </p>
+                    <figure>
+                        <img src="./images/vuejsessentials/Fig06-060.png"/>
+                        <figcaption>Fig 06-060</figcaption>
+                    </figure>
+                    <p>Now if you browse to <code class="prettyprint">localhost:8080/upload</code> you should see the
+                        UploadForm component appear:
+                    </p>
+                    <figure>
+                        <img src="./images/vuejsessentials/Fig06-061.png"/>
+                        <figcaption>Fig 06-061</figcaption>
+                    </figure>
                     <h3>Navigation with Router-Link</h3>
+                    <p>Now that we've created the UploadForm and ImageList components we need to make sure that the user
+                        has the ability to navigate to those anytime they click on the relevant button in the AppHeader.
+                        Using anchor tags results in a full page refresh which, as we said earlier, is not a good thing
+                        in a SPA.
+                    </p>
+                    <p>To resolve this Vue router provides the <code class="prettyprint">router-link</code> tag which
+                        still renders an anchor tag but if the user clicks on it a full page reload will not occur.
+                        Instead it will just very quickly update the Url at the top of the screen and, without reloading
+                        the entire page, Vue router will automatically update the content on the screen.
+                    </p>
+                    <p>Update the Galleries, Upload and Image Storage links in the AppHeader to use router-link tags
+                        instead of anchor tags:
+                    </p>
+                    <figure>
+<pre class="prettyprint">&lt;template&gt;
+    &lt;div class=&quot;ui secondary pointing menu&quot;&gt;
+        &lt;router-link to=&quot;/&quot; class=&quot;active item&quot;&gt;
+            Image Storage
+        &lt;/router-link&gt;
+        &lt;div class=&quot;right menu&quot;&gt;
+            &lt;div v-if=&quot;isLoggedIn&quot; class=&quot;horizontal&quot;&gt;
+                &lt;router-link to=&quot;/&quot; class=&quot;item&quot;&gt;Galleries&lt;/router-link&gt;
+                &lt;router-link to=&quot;/upload&quot; class=&quot;item&quot;&gt;Upload&lt;/router-link&gt;
+                &lt;a class=&quot;item&quot; @click=&quot;logout&quot;&gt;Logout&lt;/a&gt;
+            &lt;/div&gt;
+            &lt;a v-else href=&quot;#&quot; class=&quot;ui item&quot; @click=&quot;login&quot;&gt;
+                Login
+            &lt;/a&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/template&gt;</pre>
+                        <figcaption>Fig 06-062</figcaption>
+                    </figure>
+                    <p>Note that we do not change all the anchor tags to <code class="prettyprint">router-link</code>
+                        tags - only those links that are used to navigate around inside our application. The logout
+                        anchor tag is a good example of where we are not trying to perform any actual navigation -
+                        clicking on this button is just going execute the logout action. The same is true for the Login
+                        tag.
+                    </p>
+                    <p>In the browser if you click on one of the <code class="prettyprint">router-link</code> tags
+                        and then inspect it in Chrome you will see that an anchor tag is still being rendered in the
+                        background. However this anchor tag has some special click event handlers tied to it to make
+                        sure that it does not cause a full page reload. Instead it's just going to update the Url
+                        which is going to tell Vue router to change the components visible on the page without doing
+                        a full reload.
+                    </p>
                 </div>
             </div>
         </div>
