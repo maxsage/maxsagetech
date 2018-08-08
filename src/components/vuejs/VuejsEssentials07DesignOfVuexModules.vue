@@ -501,8 +501,76 @@ export default {
                     <p>We are now getting back our list of image(s) and storing them inside our ImageList modules
                         state object.</p>
                     <h3>Mapping the Images Getter</h3>
+                    <p>Our Images module is now taking our list of images back from the Imgur API and storing them
+                        on our Images module state. We are now going to move over to our ImageList component and
+                        make sure that the component is aware of all the images that are being fetched by our api.</p>
+                    <p>At present we are only calling the action to fetch the images. Now remember these actions
+                        attempt to modify our state in some fashion. To actually get information out of our state
+                        object we have to make use of getters. Remember inside of our Images module we made that getter
+                        called allImages which returns all the images that are stored inside of our state object. So
+                        we want to take the allImages getter and map it to our ImageList component.</p>
+                    <p>To do so we are going to import our mapGetters function:</p>
 
+                    <p>and add it to our component definitions computed property. We use a computed property to read
+                        information into our component and make it accessible from our actual template:</p>
+                    <figure>
+                        <pre class="prettyprint">import { mapActions, mapGetters } from 'vuex';</pre>
+                        <figcaption>Fig 07-033</figcaption>
+                    </figure>
+                    <p>Ok so now that we've got the list of images inside of here we can reference that list of
+                        images inside of our template as we please. So for now, I'll just print out the number of
+                        images that are being fetched from the API:
+                    </p>
+                    <figure>
+                    <pre v-pre class="prettyprint">&lt;template&gt;
+    &lt;div&gt;
+        Image List
+
+        {{ allImages.length }}
+    &lt;/div&gt;
+&lt;/template&gt;</pre>
+                        <figcaption>Fig 07-034</figcaption>
+                    </figure>
+                    <p>If you now view the application now you should see the number of images returned from the
+                        API:</p>
+                    <figure>
+                        <img src="./images/vuejsessentials/Fig07-035.png"/>
+                        <figcaption>Fig 07-035.png</figcaption>
+                    </figure>
                     <h3>Listing Images</h3>
+                    <p>We've now got a list of all of our images inside our ImageList component. Inside this section
+                        we are going to put in a little bit of temporary code here just to loop over all the images
+                        that we fetched and print them out to the screen. Now the first take that we're going to do
+                        is going to be a little bit ugly but we just want to get some temporary solution in here.
+                        We'll then go and take care of the UploadForm and then we're going to come back to this once
+                        we have the ability to upload a lot of images and we'll do something way more interesting to
+                        display our images on the screen.
+                    </p>
+                    <p>Firstly, clear out the contents of the div in the ImageList component and replace it with the
+                        following code:</p>
+<figure>
+<pre class="prettyprint">&lt;template&gt;
+    &lt;div&gt;
+        &lt;img v-for=&quot;image in allImages&quot; :src=&quot;image.link&quot; /&gt;
+    &lt;/div&gt;
+&lt;/template&gt;</pre>
+<figcaption>Fig 07-036</figcaption>
+</figure>
+                    <p>We use the <code class="prettyprint">v-for</code> directive to loop over all the different
+                        images that we fetch and display one <code class="prettyprint">img</code> tag for each image.
+                        Remember how we use the <code class="prettyprint">v-for</code> directive - we write out <code
+                                class="prettyprint">v-for</code>
+                        and then a temporary variable name (in this case image), then the <code class="prettyprint">
+                            in</code> keyword, then the name
+                        of the collection of records that we want to iterate over which in this case is <code
+                                class="prettyprint">allImages</code> Then inside the tag that contains the <code class="prettyprint">v-for</code>
+                        directive we can use the temporary variable (<code class="prettyprint">image</code>) for any
+                        other purpose we might want. So in the context of an <code class="prettyprint">img</code> tag
+                        we probably want to define the <code class="prettyprint">src</code> property. Remember that
+                        anytime we want to pass in a <code class="prettyprint">src</code> property or any Html
+                        property to an element and we want to ensure that the property comes from a variable we have
+                        to make use of the <code class="prettyprint">v-bind</code> syntax.</p>
+                    <p>If we now view this in the browser we should see the image is displaying as expected.</p>
                 </div>
             </div>
         </div>
