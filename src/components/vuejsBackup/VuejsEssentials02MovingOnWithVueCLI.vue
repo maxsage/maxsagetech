@@ -30,7 +30,8 @@
                         of working with Vue inside an application.
                     </p>
                     <h3>App Challenges</h3>
-                    <p>We'll now continue by talking about some of the problems which we're
+                    <p>In the last section we took a look at a mock up that describes the next application that we're
+                        going to be working on. We'll now continue by talking about some of the problems which we're
                         going to have to address as we start working on this app. And we'll also of course talk about
                         some possible solutions as well. So I think there are at least four big issues that we are going
                         to run into over time:
@@ -88,16 +89,20 @@
                     </p>
                     <p>Back in our terminal we can now use this tool to generate a new project so I'm going to make sure
                         I am inside of a directory where I want to create a workspace folder of sorts. For this
-                        application I created a directory at <span class="terminal">C:\DevelopmentTutorials\video-browser</span>.
-                        Inside of this directory I'm going to run the following command: <span
+                        application I created a directory at <span class="terminal">C:\DevelopmentTutorials\video
+                    -browser</span>. Inside of this directory I'm going to run the following command: <span
                                 class="terminal">vue create video-browser</span>. When you run this command you might
                         be prompted to answer several questions about the new project you are configuring. If you do
                         just select any of the default options that are presented.</p>
+                    <p>In the next section we will discuss what is being configured when we install this default project
+                        here.
                     </p>
                     <h3>Why Use Vue CLI?</h3>
                     <p>In the previous section we made use of Vue CLI to generate a new project. It looks like my
                         installation is now complete and I'm given the directions to change directories to video-browser
-                        and run the following command <span class="terminal">npm run serve</span>
+                        and run the following command:
+                    </p>
+                    <pre class="prettyprint">npm run serve</pre>
                     <p>Let's have a quick discussion about why we are making use of the Vue CLI project generator - why
                         do we need all this infrastructure and preconfigured stuff anyway?
                     </p>
@@ -106,12 +111,16 @@
                         <img src="./images/vuejsessentials/Fig02-002.png"/>
                         <figcaption>Fig 02-002</figcaption>
                     </figure>
-                    <p>So above is an illustration of how we were running when we used CodePen in the previous
-                        couple of examples. We automatically loaded up the Vue JS file by adding it as a dependency
-                        to the project. We also then added a little bit of code directly on CodePen. The two together
-                        formed a usable application. The key thing there to keep in mind is that all the code that
-                        you and I wrote - like the Javascript code and the Html markup were all inside of essentially
-                        a single file authored directly on CodePen.
+                    <p>So this is an illustration of how we were running when we used CodePen in the previous couple of
+                        examples.
+                    </p>
+                    <p>We automatically loaded up the Vue JS file by adding it as a dependency to the project.</p>
+                    <p>We also then added a little bit of code directly on CodePen. The two together formed a usable
+                        application.
+                    </p>
+                    <p>The key thing there to keep in mind is that all the code that you and I wrote - like the
+                        Javascript code and the Html markup were all inside of essentially a single file authored
+                        directly on CodePen.
                     </p>
                     <p>When we start working on real projects we don't have the luxury of only having to create one
                         single file like we did in the previous examples. With real Vue project we much more frequently
@@ -134,14 +143,12 @@
                         all these different files, combine them down to one single file, send that file to the user's
                         browser and have our application start up and be executed.
                     </p>
-
-                    <p>So to take all these different files and combine them together we make use of a tool called
-                        webpack.</p>
                     <figure>
-                        <a href="https://webpack.js.org/"><img src="./images/vuejsessentials/Fig02-004.png"/></a>
+                        <img src="./images/vuejsessentials/Fig02-004.png"/>
                         <figcaption>Fig 02-004</figcaption>
                     </figure>
-                    <p>Essentially webpack's purpose is to look at a big collection of files and possibly
+                    <p>So to take all these different files and combine them together we make use of a tool called
+                        webpack. Essentially webpack's purpose is to look at a big collection of files and possibly
                         dependencies as well (like Vue JS) and combine them all down to one single file which can then
                         be sent down to your users browser when they try to make use of your application.
                     </p>
@@ -150,7 +157,7 @@
                         automatically sets up webpack for us and chooses a lot of very sensible configuration defaults.
                     </p>
                     <figure>
-                        <a href="https://babeljs.io/"><img src="./images/vuejsessentials/Fig02-005.png"/></a>
+                        <img src="./images/vuejsessentials/Fig02-005.png"/>
                         <figcaption>Fig 02-005</figcaption>
                     </figure>
                     <p>Along with Vue CLI we also get access to Babel preconfigured for us right of the box. You may
