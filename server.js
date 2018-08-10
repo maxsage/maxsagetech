@@ -5,7 +5,7 @@ var server = express();
 //server.use(express.static(__dirname + '/public'));
 
 var port = 10001;
-.listen(process.env.PORT || 5000)
+server.listen(process.env.PORT || 5000)
 //server.listen(port, function() {
 //    console.log('server listening on port ' + port);
 });
