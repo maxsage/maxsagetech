@@ -2,6 +2,9 @@ import Home from './components/Home.vue'
 import Header from './components/Header.vue'
 
 import Vuejs from './components/vuejs/Vuejs.vue'
+
+import VuejsDeployingToHeroku from './components/vuejs/VuejsDeployingToHeroku.vue'
+
 import VuejsEssentials00CourseContents from './components/vuejs/VuejsEssentials00CourseContents.vue'
 import VuejsEssentials01AnIntroductionToVue from './components/vuejs/VuejsEssentials01AnIntroductionToVue.vue'
 import VuejsEssentials02MovingOnWithVueCLI from './components/vuejs/VuejsEssentials02MovingOnWithVueCLI.vue'
@@ -75,6 +78,13 @@ export const routes = [
     path: '/vuejs',
     components: {
       default: Vuejs,
+      'header-top': Header
+    }
+  },
+  {
+    path: '/vuejsdeployingtoheroku',
+    components: {
+      default: VuejsDeployingToHeroku,
       'header-top': Header
     }
   },
