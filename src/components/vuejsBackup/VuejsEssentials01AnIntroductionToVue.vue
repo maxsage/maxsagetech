@@ -56,7 +56,7 @@
                     <figure>
                     <pre class="prettyprint">new Vue({
 
-});</code></pre>
+});</pre>
                         <figcaption>Fig 01-003</figcaption>
                     </figure>
                     <p>Next we will add in some configuration to the object.</p>
@@ -1225,9 +1225,9 @@ identicon: function() {
 </template>
 
 <script>
-    export default {
-        name: "VuejsEssentials01AnIntroductionToVue"
-    };
+export default {
+  name: 'VuejsEssentials01AnIntroductionToVue'
+}
 </script>
 
 <style scoped></style>

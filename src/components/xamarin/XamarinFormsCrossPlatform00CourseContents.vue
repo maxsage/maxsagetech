@@ -34,9 +34,9 @@
 </template>
 
 <script>
-    export default {
-        name: "XamarinFormsCrossPlatform00CourseContents"
-    }
+export default {
+  name: 'XamarinFormsCrossPlatform00CourseContents'
+}
 </script>
 
 <style scoped>

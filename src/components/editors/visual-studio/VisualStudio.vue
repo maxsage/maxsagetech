@@ -54,9 +54,9 @@
 </template>
 
 <script>
-    export default {
-        name: "VisualStudio"
-    }
+export default {
+  name: 'VisualStudio'
+}
 </script>
 
 <style scoped>

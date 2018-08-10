@@ -654,9 +654,9 @@ export default {
 </template>
 
 <script>
-    export default {
-        name: "VuejsEssentials02MovingOnWithVueCLI.vue"
-    }
+export default {
+  name: 'VuejsEssentials02MovingOnWithVueCLI.vue'
+}
 </script>
 
 <style scoped>
@@ -695,6 +695,5 @@ export default {
     table.table-bordered > tbody > tr > td {
         border: 1px solid black;
     }
-
 
 </style>

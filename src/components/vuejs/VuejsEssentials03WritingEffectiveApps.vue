@@ -553,7 +553,7 @@ export default {
                     <pre class="prettyprint">vue.runtime.esm.js?2b0e:587 [Vue warn]: Unknown custom element: &lt;SearchBar&gt; - did you register the component correctly? For recursive components, make sure to provide the &quot;name&quot; option.
 
                     found in
-                    
+
                     ---&gt; &lt;App&gt; at src\App.vue
                            &lt;Root&gt;</pre>
                         <figcaption>Fig 03-031</figcaption>
@@ -2401,9 +2401,9 @@ export default {
                         will eventually show a video player, to display on the screen.</p>
                     <h3>Referencing Video Title and Description</h3>
                     <p>You've now communicated the selected video to the VideoDetail component. We're now ready to
-                        get the video player to appear on the screen along with a short title and description for 
+                        get the video player to appear on the screen along with a short title and description for
                         that particular video that the user has clicked on.</p>
-                    <p>We will start with the video title and description. Add the following code to the <code 
+                    <p>We will start with the video title and description. Add the following code to the <code
                             class="prettyprint">template</code> of the <code class="prettyprint">VideoDetail</code>
                         component.</p>
 <figure>
@@ -2445,9 +2445,9 @@ export default {
   <img src="./images/vuejsessentials/Fig03-113.png"/>
   <figcaption>Fig 03-113</figcaption>
 </figure>
-                    <p>YouTube provides some <code class="prettyprint">html</code> which includes an <code 
-                            class="prettyprint">iframe</code> with a <code class="prettyprint">src</code> of <code 
-                            class="prettyprint">https://www.youtube.com/embed/</code> followed by the unique  video id: 
+                    <p>YouTube provides some <code class="prettyprint">html</code> which includes an <code
+                            class="prettyprint">iframe</code> with a <code class="prettyprint">src</code> of <code
+                            class="prettyprint">https://www.youtube.com/embed/</code> followed by the unique  video id:
                     </p>
 <figure>
   <img src="./images/vuejsessentials/Fig03-114.png"/>
@@ -2462,7 +2462,7 @@ export default {
 &lt;/div&gt;</pre>
 <figcaption>Fig 03-115</figcaption>
 </figure>
-                    <p>The <code class="prettyprint">src</code> property is a dynamic value provided by the <code class="prettyprint">videoUrl</code> 
+                    <p>The <code class="prettyprint">src</code> property is a dynamic value provided by the <code class="prettyprint">videoUrl</code>
                         computed function:
                     </p>
 <figure>
@@ -2609,9 +2609,9 @@ export default {
 </template>
 
 <script>
-    export default {
-        name: "VuejsEssentialsWritingEffectiveApps.vue"
-    }
+export default {
+  name: 'VuejsEssentialsWritingEffectiveApps.vue'
+}
 </script>
 
 <style scoped>

@@ -32,9 +32,9 @@
 </template>
 
 <script>
-    export default {
-        name: "sqlite"
-    }
+export default {
+  name: 'sqlite'
+}
 </script>
 
 <style scoped>

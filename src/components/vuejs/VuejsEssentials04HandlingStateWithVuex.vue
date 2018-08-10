@@ -88,7 +88,6 @@ new Vue ({
                         <figcaption>Fig 04-005</figcaption>
                     </figure>
 
-
                     <p>We start by importing the Vue library. Next we add an import statement for the App component.
                         The App component does not yet exist but we will create it in just a moment. We create a new Vue
                         instance and supply an object with a <code class="prettyprint">render</code> property (remember
@@ -273,9 +272,9 @@ new Vue ({
 </template>
 
 <script>
-    export default {
-        name: "VuejsEssentialsHandlingStateWithVuex.vue"
-    }
+export default {
+  name: 'VuejsEssentialsHandlingStateWithVuex.vue'
+}
 </script>
 
 <style scoped>

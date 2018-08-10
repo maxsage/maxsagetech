@@ -93,7 +93,6 @@
                                 class="terminal">vue create video-browser</span>. When you run this command you might
                         be prompted to answer several questions about the new project you are configuring. If you do
                         just select any of the default options that are presented.</p>
-                    </p>
                     <h3>Why Use Vue CLI?</h3>
                     <p>In the previous section we made use of Vue CLI to generate a new project. It looks like my
                         installation is now complete and I'm given the directions to change directories to video-browser
@@ -637,7 +636,7 @@ export default {
                         this component stuff still seems a bit strange this is another one of those topics where
                         we're going to be doing the kind of breakdown of talking about components throughout the
                         course. So this is another topic that we're just going to come back to again and again. So
-                        we'll get a lot of practice in understanding how components are really working. </p>
+                        we'll get a lot of practice in understanding how components are really working.</p>
                     <p>So with that in mind let's continue in the next section and we're going to start working on
                         our app.</p>
                 </div>
@@ -647,9 +646,9 @@ export default {
 </template>
 
 <script>
-    export default {
-        name: "VuejsEssentials02MovingOnWithVueCLI.vue"
-    }
+export default {
+  name: 'VuejsEssentials02MovingOnWithVueCLI.vue'
+}
 </script>
 
 <style scoped>
@@ -688,6 +687,5 @@ export default {
     table.table-bordered > tbody > tr > td {
         border: 1px solid black;
     }
-
 
 </style>

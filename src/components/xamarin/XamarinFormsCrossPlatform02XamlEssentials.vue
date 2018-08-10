@@ -13,17 +13,17 @@
                     <p>You can create UI elements in XAML or in code-behind. For example to create a Label in XAML we
                         would enter something like this:</p>
                     <figure>
-                        <pre class="prettyprint"><code>&lt;Label HorizontalOptions=&quot;Center&quot; VerticalOptions=&quot;Center&quot; Text=&quot;Hello World&quot; /&gt;</code></pre>
+                        <pre class="prettyprint">&lt;Label HorizontalOptions=&quot;Center&quot; VerticalOptions=&quot;Center&quot; Text=&quot;Hello World&quot; /&gt;</pre>
                         <figcaption>Fig 02-001</figcaption>
                     </figure>
                     <p>The same label in code-behind would be created in the constructor like this:</p>
                     <figure>
-                <pre class="prettyprint"><code>Content = new Label
+                <pre class="prettyprint">Content = new Label
 {
     HorizonalOptions = LayoutOptions.Center,
     VerticalOptions = LayoutOptions.Cener,
     Text = "Hello World"
-};</code></pre>
+};</pre>
                         <figcaption>Fig 02-002</figcaption>
                     </figure>
                     <p>The Content property shown above is derived from ContentPage which is the base class for our GreetPage</p>
@@ -37,14 +37,14 @@
                     <p>This generated class is a partial class (the other part of it is the code-behind). In the constructor
                         in the code-behind file you will see a call to:</p>
                     <figure>
-                        <pre class="prettyprint"><code>InitializeComponent();</code></pre>
+                        <pre class="prettyprint">InitializeComponent();</pre>
                         <figcaption>Fig 02-003</figcaption>
                     </figure>
                     <p>You may think this method is inherited from ContentPage but it is actually defined in the generated
                         code:</p>
                     <figure>
-                <pre class="prettyprint"><code>private void InitializeComponent() {
-    this.LoadFromXaml(typeof(PageName));</code></pre>
+                <pre class="prettyprint">private void InitializeComponent() {
+    this.LoadFromXaml(typeof(PageName));</pre>
                         <figcaption>Fig 02-004</figcaption>
                     </figure>
                     <p>Inside this method we have a call to LoadFromXaml. When we compile our application file our XAML
@@ -52,23 +52,23 @@
                         is extracted from the assembly and passed to the XAML parser which takes the XAML and generates a
                         user interface like this:</p>
                     <figure>
-                <pre class="prettyprint"><code>Content = new Label
+                <pre class="prettyprint">Content = new Label
 {
     HorizonalOptions = LayoutOptions.Center,
     VerticalOptions = LayoutOptions.Cener,
     Text = "Hello World"
-};</code></pre>
+};</pre>
                         <figcaption>Fig 02-003</figcaption>
                     </figure>
                     <h3>Content Property</h3>
                     <p>Ponder the following XAML:</p>
                     <figure>
-                <pre class="prettyprint"><code>&lt;ContentPage xmlns=&quot;http://xamarin.com/schemas/2014/forms&quot;
+                <pre class="prettyprint">&lt;ContentPage xmlns=&quot;http://xamarin.com/schemas/2014/forms&quot;
              xmlns:x=&quot;http://schemas.microsoft.com/winfx/2009/xaml&quot;
              x:Class=&quot;XamarinFormExample1.ContactMethodsPage&quot;&gt;
     &lt;Label HorizontalOptions=&quot;Center&quot; VerticalOptions=&quot;Center&quot; Text=&quot;Hello World&quot; /&gt;
     &lt;Slider /&gt;
-&lt;/ContentPage&gt;</code></pre>
+&lt;/ContentPage&gt;</pre>
                         <figcaption>Fig 02-004</figcaption>
                     </figure>
                     <p>If you were to run this application the page would only display a label:</p>
@@ -79,15 +79,15 @@
                     <p>and not the slider. To find out why let's search the Xamarin Documentation for the ContentPage class.
                         This ContentPage class is decorated with an attribute called ContentProperty:</p>
                     <figure>
-                <pre class="prettyprint"><code>[Xamarin.Forms.ContentProperty(&quot;Content&quot;)]
-public class ContentPage : TemplatedPage</code></pre>
+                <pre class="prettyprint">[Xamarin.Forms.ContentProperty(&quot;Content&quot;)]
+public class ContentPage : TemplatedPage</pre>
                         <figcaption>Fig 02-005</figcaption>
                     </figure>
                     <p>In this attribute we have a string which specifies one of the properties of ContentPage. In this case
                         the name of that property is Content. We used that in a previous lecture when we set the Content property
                         to Label.</p>
                     <p>If we look at the declaration of the Content property we will see it's type is View:</p>
-                    <pre><code>Content         View. Gets or set the view that contains the content of the page</code></pre>
+                    <pre>Content         View. Gets or set the view that contains the content of the page</pre>
                     <p>View is the base class for all our visual elements like Button, Label, Slider and so on. So because
                         the type of Content is View we can set it to an instance of a single view - not multiple views. That is
                         why we cannot have multiple elements in a ContentPage directly which is why only the Label was displayed
@@ -95,10 +95,10 @@ public class ContentPage : TemplatedPage</code></pre>
                     <h4>StackLayout</h4>
                     <p>The StackLayout allows you to stack multiple UI elements horizontally or vertically like this:</p>
                     <figure>
-                <pre class="prettyprint"><code>&lt;StackLayout HorizontalOptions=&quot;Center&quot; VerticalOptions=&quot;Center&quot;&gt;
+                <pre class="prettyprint">&lt;StackLayout HorizontalOptions=&quot;Center&quot; VerticalOptions=&quot;Center&quot;&gt;
     &lt;Label Text=&quot;Hello World&quot; /&gt;
     &lt;Slider /&gt;
-&lt;/StackLayout&gt;</code></pre>
+&lt;/StackLayout&gt;</pre>
                         <figcaption>Fig 02-006</figcaption>
                     </figure>
                     <p>Now if you run the application again both the Label and Slider will be displayed:</p>
@@ -109,14 +109,14 @@ public class ContentPage : TemplatedPage</code></pre>
                     <p>Now let's examine the StackLayout class by search for Xamarin StackLayout Class. This class derives
                         from Layout of View:</p>
                     <figure>
-                        <pre class="prettyprint"><code>public class StackLayout : Layout&lt;View&gt;</code></pre>
+                        <pre class="prettyprint">public class StackLayout : Layout&lt;View&gt;</pre>
                         <figcaption>Fig 02-007</figcaption>
                     </figure>
                     <p>If you look at the declaration of Layout class you can see the ContentProperty attribute again:</p>
                     <figure>
-                <pre class="prettyprint"><code>[Xamarin.Forms.ContentProperty(&quot;Children&quot;)]
+                <pre class="prettyprint">[Xamarin.Forms.ContentProperty(&quot;Children&quot;)]
 public abstract class Layout&lt;T&gt; : Layout, IViewContainer&lt;T&gt;
-where T : View</code></pre>
+where T : View</pre>
                         <figcaption>Fig 02-008</figcaption>
                     </figure>
                     <p>In this case the name of the Content Property for the Layout is Children. We can view the Children
@@ -130,34 +130,34 @@ where T : View</code></pre>
                     <p>To implement this we need to handle the ValueChanged event of the Slider and then in our event
                         handler we can get the current value and set the Label.</p>
                     <figure>
-                        <pre class="prettyprint"><code>&lt;Slider ValueChanged=&quot;&quot; /&gt;</code></pre>
+                        <pre class="prettyprint">&lt;Slider ValueChanged=&quot;&quot; /&gt;</pre>
                         <figcaption>Fig 02-009</figcaption>
                     </figure>
                     <p>Inside the event handler in the code-behind we can use the e argument that gets passed to get the new
                         value of the slider:</p>
                     <figure>
-                <pre class="prettyprint"><code>void Handle_ValueChanged(object sender, Xamarin.Forms.ValueChangedEventArgs e)
+                <pre class="prettyprint">void Handle_ValueChanged(object sender, Xamarin.Forms.ValueChangedEventArgs e)
 {
     e.NewValue;
-}</code></pre>
+}</pre>
                         <figcaption>Fig 02-010</figcaption>
                     </figure>
                     <p>In order to update the Label from code-behind we need to assign it a name:</p>
                     <figure>
-                        <pre class="prettyprint"><code>&lt;Label Text=&quot;Hello World&quot; x:Name=&quot;label&quot; /&gt;</code></pre>
+                        <pre class="prettyprint">&lt;Label Text=&quot;Hello World&quot; x:Name=&quot;label&quot; /&gt;</pre>
                         <figcaption>Fig 02-011</figcaption>
                     </figure>
                     <p>You can see from the x: prefix that the Name attribute belongs the standard XAML that Microsoft
                         introduced in 2009 which is defined in the Microsoft namespace we discussed earlier.</p>
                     <p>Now if we go back to the code-behind we can reference the Label in the following manner:</p>
                     <figure>
-                        <pre class="prettyprint"><code>label.Text = String.Format(&quot;Value is {0}&quot;, e.NewValue);</code></pre>
+                        <pre class="prettyprint">label.Text = String.Format(&quot;Value is {0}&quot;, e.NewValue);</pre>
                         <figcaption>Fig 02-012</figcaption>
                     </figure>
                     <p>The NewValue property returns a floating point number between 0 and 1. So we can add an additional
                         argument to the Format property to constrain the result to 2 decimal places:</p>
                     <figure>
-                        <pre class="prettyprint"><code>label.Text = String.Format(&quot;Value is {0:F2}&quot;, e.NewValue);</code></pre>
+                        <pre class="prettyprint">label.Text = String.Format(&quot;Value is {0:F2}&quot;, e.NewValue);</pre>
                         <figcaption>Fig 02-012</figcaption>
                     </figure>
                     <p>Now if we run the application and move the slider the value is updated:</p>
@@ -169,17 +169,17 @@ where T : View</code></pre>
                         show the value of the slider instead we need to get a reference to the Slider in code-behind. We do this
                         by adding a Name attribute (like we did before with the label):</p>
                     <figure>
-                        <pre class="prettyprint"><code>&lt;Slider ValueChanged=&quot;Handle_ValueChanged&quot; x:Name=&quot;slider&quot; /&gt;</code></pre>
+                        <pre class="prettyprint">&lt;Slider ValueChanged=&quot;Handle_ValueChanged&quot; x:Name=&quot;slider&quot; /&gt;</pre>
                         <figcaption>Fig 02-014</figcaption>
                     </figure>
                     <p>Back in the code-behind in the constructor we can set an initial value for the Slider:</p>
                     <figure>
-                <pre class="prettyprint"><code>public GreetPage()
+                <pre class="prettyprint">public GreetPage()
 {
     InitializeComponent();
 
     slider.Value = 0.5;
-}</code></pre>
+}</pre>
                         <figcaption>Fig 02-015</figcaption>
                     </figure>
                     <p>If you were to move the code that sets the slider value above the call to InitializeComponent() you
@@ -187,22 +187,22 @@ where T : View</code></pre>
                         generated file located in the obj>Debug folder. There are two private fields defined - one for the
                         label and one for the slider.</p>
                     <figure>
-                <pre class="prettyprint"><code>[global::System.CodeDom.Compiler.GeneratedCodeAttribute(&quot;Xamarin.Forms.Build.Tasks.XamlG&quot;, &quot;0.0.0.0&quot;)]
+                <pre class="prettyprint">[global::System.CodeDom.Compiler.GeneratedCodeAttribute(&quot;Xamarin.Forms.Build.Tasks.XamlG&quot;, &quot;0.0.0.0&quot;)]
 private global::Xamarin.Forms.Label label;
 
 [global::System.CodeDom.Compiler.GeneratedCodeAttribute(&quot;Xamarin.Forms.Build.Tasks.XamlG&quot;, &quot;0.0.0.0&quot;)]
-private global::Xamarin.Forms.Slider slider;</code></pre>
+private global::Xamarin.Forms.Slider slider;</pre>
                         <figcaption>Fig 02-016</figcaption>
                     </figure>
                     <p>Without adding the x:Name attribute these fields wouldn't be generated.</p>
                     <p>In the InitializeComponent method after the call to LoadFromXaml the two fields are initialized:</p>
                     <figure>
-                <pre class="prettyprint"><code>[global::System.CodeDom.Compiler.GeneratedCodeAttribute(&quot;Xamarin.Forms.Build.Tasks.XamlG&quot;, &quot;0.0.0.0&quot;)]
+                <pre class="prettyprint">[global::System.CodeDom.Compiler.GeneratedCodeAttribute(&quot;Xamarin.Forms.Build.Tasks.XamlG&quot;, &quot;0.0.0.0&quot;)]
 private void InitializeComponent() {
     global::Xamarin.Forms.Xaml.Extensions.LoadFromXaml(this, typeof(ContactMethodsPage));
     label = global::Xamarin.Forms.NameScopeExtensions.FindByName&lt;global::Xamarin.Forms.Label&gt;(this, &quot;label&quot;);
     slider = global::Xamarin.Forms.NameScopeExtensions.FindByName&lt;global::Xamarin.Forms.Slider&gt;(this, &quot;slider&quot;);
-}</code></pre>
+}</pre>
                         <figcaption>Fig 02-017</figcaption>
                     </figure>
                     <p>The FindByName method is inherited from the base class ContentPage. We give the FindByName method an
@@ -238,7 +238,7 @@ private void InitializeComponent() {
                     <p>There are many different markup extensions in XAML and in this lecture you will learn two of them.</p>
                     <p>The first one is Binding:</p>
                     <figure>
-                        <pre class="prettyprint"><code>&lt;Label Text=&quot;{Binding Source={x:Reference slider}, Path=value}&quot; x:Name=&quot;label&quot;/&gt;</code></pre>
+                        <pre class="prettyprint">&lt;Label Text=&quot;{Binding Source={x:Reference slider}, Path=value}&quot; x:Name=&quot;label&quot;/&gt;</pre>
                         <figcaption>Fig 02-019</figcaption>
                     </figure>
                     <p>To setup Binding we need to specify what object we want to set the Text
@@ -260,10 +260,10 @@ private void InitializeComponent() {
                         this. In the Binding expression along with the Source and Path add a third property - StringFormat and
                         set it using a standard C# format:</p>
                     <figure>
-                    <pre class="prettyprint"><code>&lt;Label Text=&quot;{Binding
+                    <pre class="prettyprint">&lt;Label Text=&quot;{Binding
     Source={x:Reference slider},
     Path=value,
-    StringFormat='Value is {0:F2}'}&quot; x:Name=&quot;label&quot;/&gt;</code></pre>
+    StringFormat='Value is {0:F2}'}&quot; x:Name=&quot;label&quot;/&gt;</pre>
                         <figcaption>Fig 02-021</figcaption>
                     </figure>
                     <p>Now if we run the application again we will see the Label only shows two decimal places as desired:</p>
@@ -275,8 +275,7 @@ private void InitializeComponent() {
                     <p>Now, what if we also want to bind the opacity value of the Label to the value of the slider. To do
                         this we add another Binding Expression to the Label</p>
                     <figure>
-                    <pre><code
-                            class="csharp">Opacity=&quot;{Binding Source={x:Reference slider}, Path=Value}&quot;</code></pre>
+                    <pre class="prettyprint">Opacity=&quot;{Binding Source={x:Reference slider}, Path=Value}&quot;</pre>
                         <figcaption>Fig 02-023</figcaption>
                     </figure>
                     <p>Now if we run the application we will see that moving the slider to the left makes the Label more
@@ -289,32 +288,32 @@ private void InitializeComponent() {
                         as the source object. So let's try and make the code a little bit cleaner.</p>
                     <p>First let's set the BindingContext of our Label to the slider:</p>
                     <figure>
-                        <pre class="prettyprint"><code>BindingContext=&quot;{x: Reference slider}&quot;</code></pre>
+                        <pre class="prettyprint">BindingContext=&quot;{x: Reference slider}&quot;</pre>
                         <figcaption>Fig 02-025</figcaption>
                     </figure>
                     <p>Now slider will be the source object for any properties of the Label. Which means in our Binding
                         Expressions for the Text and Opacity Properties we can remove the Source attribute:</p>
                     <figure>
-<pre class="prettyprint"><code>&lt;Label BindingContext=&quot;{x:Reference slider}&quot;
+<pre class="prettyprint">&lt;Label BindingContext=&quot;{x:Reference slider}&quot;
     Text=&quot;{Binding
         Path=Value,
         StringFormat='Value is {0:F2}' }&quot;
     Opacity=&quot;{Binding
         Path=Value }&quot;
-    x:Name=&quot;label&quot;/&gt;</code></pre>
+    x:Name=&quot;label&quot;/&gt;</pre>
                         <figcaption>Fig 02-026</figcaption>
                     </figure>
                     <p>In addition we can now remove the Path attribute and just keep Value:</p>
                     <figure>
-                <pre class="prettyprint"><code>&lt;Label BindingContext=&quot;{x:Reference slider}&quot;
+                <pre class="prettyprint">&lt;Label BindingContext=&quot;{x:Reference slider}&quot;
     Text=&quot;{Binding Value, StringFormat='Value is {0:F2}' }&quot;
     Opacity=&quot;{Binding Value}&quot;
-    x:Name=&quot;label&quot;/&gt;</code></pre>
+    x:Name=&quot;label&quot;/&gt;</pre>
                         <figcaption>Fig 02-027</figcaption>
                     </figure>
                     <p>Now let's add a BoxView above the label. A BoxView is just a box filled with a colour.</p>
                     <figure>
-                        <pre class="prettyprint"><code>&lt;BoxView Color=&quot;Green&quot; Opacity=&quot;{Binding Source={x:Reference, slider}, Path=Value&quot; /&gt;</code></pre>
+                        <pre class="prettyprint">&lt;BoxView Color=&quot;Green&quot; Opacity=&quot;{Binding Source={x:Reference, slider}, Path=Value&quot; /&gt;</pre>
                         <figcaption>Fig 02-028</figcaption>
                     </figure>
                     <p>If we run the application - here is the result:</p>
@@ -326,14 +325,14 @@ private void InitializeComponent() {
                         the Slider as their Binding context. So we can basically move the BindingContext setup from the Label to
                         our StackLayout which is the container for both the BoxView and the Label:</p>
                     <figure>
-                    <pre class="prettyprint"><code>&lt;StackLayout BindingContext=&quot;{x:Reference slider}&quot; HorizontalOptions=&quot;Center&quot;
-                                                        VerticalOptions=&quot;Center&quot;&gt;</code></pre>
+                    <pre class="prettyprint">&lt;StackLayout BindingContext=&quot;{x:Reference slider}&quot; HorizontalOptions=&quot;Center&quot;
+                                                        VerticalOptions=&quot;Center&quot;&gt;</pre>
                         <figcaption>Fig 02-030</figcaption>
                     </figure>
                     <p>And this will be inherited by all the elements inside StackLayout which means we simplify the Binding
                         expression for the Opacity of the BoxView, remove the Source and the Path:</p>
                     <figure>
-                        <pre class="prettyprint"><code>&lt;BoxView Color=&quot;Green&quot; Opacity=&quot;{Binding Value}&quot;/&gt;</code></pre>
+                        <pre class="prettyprint">&lt;BoxView Color=&quot;Green&quot; Opacity=&quot;{Binding Value}&quot;/&gt;</pre>
                         <figcaption>Fig 02-031</figcaption>
                     </figure>
                     <p>So this is how we setup DataBinding. Finally we can remove the Label's x:Name as it is no longer being
@@ -342,7 +341,7 @@ private void InitializeComponent() {
                     <p>To illustrate the differences you can encounter between various devices use the code from the previous
                         lecture:</p>
                     <figure>
-                <pre class="prettyprint"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+                <pre class="prettyprint">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
                     &lt;ContentPage xmlns=&quot;http://xamarin.com/schemas/2014/forms&quot;
                                  xmlns:x=&quot;http://schemas.microsoft.com/winfx/2009/xaml&quot;
                                  x:Class=&quot;UdemyXamarinForms.DeviceDifferences&quot;&gt;
@@ -357,7 +356,7 @@ private void InitializeComponent() {
                 Opacity=&quot;{Binding Value}&quot;/&gt;
         &lt;Slider x:Name=&quot;slider&quot;/&gt;
     &lt;/StackLayout&gt;
-&lt;/ContentPage&gt;</code></pre>
+&lt;/ContentPage&gt;</pre>
                         <figcaption>Fig 02-032</figcaption>
                     </figure>
                     <p>remove the VerticalOptions attribute from the StackLayout and run the application in Android:</p>
@@ -376,8 +375,8 @@ private void InitializeComponent() {
                     <p>We will add some padding to the top of the page that will only take effect in iOS. In the
                         code-behind add the following code:</p>
                     <figure>
-                <pre class="prettyprint"><code>if (Device.OS == TargetPlatform.iOS)
-    Padding = new Thickness(0, 20, 0, 0);</code></pre>
+                <pre class="prettyprint">if (Device.OS == TargetPlatform.iOS)
+    Padding = new Thickness(0, 20, 0, 0);</pre>
                         <figcaption>Fig 02-035</figcaption>
                     </figure>
                     <p>The Device class has a static property called OS which is an enumeration of type TargetPlatform. So
@@ -392,11 +391,11 @@ private void InitializeComponent() {
                     <p>The Device class has a method called OnPlatform. This method has two overloads, one that is generic and
                         another that takes Actions. Starting with the generic overload:
                         <figure>
-<pre class="prettyprint"><code>Device.OnPlatform&lt;Thickness&gt;(
+<pre class="prettyprint">Device.OnPlatform&lt;Thickness&gt;(
     iOS: new Thickness(0, 20, 0, 0),
     Android: new Thickness(10, 20, 0, 0),
     WinPhone: new Thickness(30, 20, 0, 0)
-);</code></pre>
+);</pre>
                             <figcaption>Fig 02-036</figcaption>
                         </figure>
                     <p>The generic parameter in this instance is Thickness because we want different thicknesses
@@ -404,11 +403,11 @@ private void InitializeComponent() {
                         named parameters. As you can see this is a cleaner approach than using multiple else if statements.</p>
                     <p>We can assign the result we get from this method to Padding:</p>
                     <figure>
-<pre class="prettyprint"><code>Device.OnPlatform(
+<pre class="prettyprint">Device.OnPlatform(
     iOS: new Thickness(0, 20, 0, 0),
     Android: new Thickness(10, 20, 0, 0),
     WinPhone: new Thickness(30, 20, 0, 0)
-);</code></pre>
+);</pre>
                         <figcaption>Fig 02-037</figcaption>
                     </figure>
                     <p>Obviously the OnPlatform method is not limited to Thickness objects. We can use OnPlatform with
@@ -418,10 +417,10 @@ private void InitializeComponent() {
                     <p>The OnPlatform method also has a non-generic overload. Let's say we want to execute code only on Android:
                     </p>
                     <figure>
-<pre class="prettyprint"><code>Device.OnPlatform(
+<pre class="prettyprint">Device.OnPlatform(
     Android: () =&gt; {
         Padding = new Thickness(0, 20, 0, 0);
-});</code></pre>
+});</pre>
                         <figcaption>Fig 02-038</figcaption>
                     </figure>
                     <p>Firstly we supply the OnPlatform with the Android named parameter. Next I need to supply an Action.
@@ -429,7 +428,7 @@ private void InitializeComponent() {
                     <p><strong>Please note - </strong>OnPlatform is now deprecated and has been replaced with
                         switch(RuntimePlatform):</p>
                     <figure>
-<pre class="prettyprint"><code>switch (Device.RuntimePlatform)
+<pre class="prettyprint">switch (Device.RuntimePlatform)
 {
     case Device.iOS:
         Padding = new Thickness(0, 20, 0, 0);
@@ -440,32 +439,32 @@ private void InitializeComponent() {
     case Device.WinPhone:
         Padding = new Thickness(0, 10, 0, 0);
         break;
-}</code></pre>
+}</pre>
                         <figcaption>Fig 02-039</figcaption>
                     </figure>
                     <h3>Property Element Syntax</h3>
                     <p>In the last lecture we learned that Padding is a property of the Page and we can set it to a
                         Thickness object like this:</p>
                     <figure>
-                        <pre class="prettyprint"><code>Padding = new Thickness(0, 20, 0, 0);</code></pre>
+                        <pre class="prettyprint">Padding = new Thickness(0, 20, 0, 0);</pre>
                         <figcaption>Fig 02-040</figcaption>
                     </figure>
                     <p>If you wanted to apply this padding in XAML instead you could add it to the ContentPage element using
                         a string literal like this:</p>
                     <figure>
-<pre class="prettyprint"><code>&lt;ContentPage xmlns=&quot;http://xamarin.com/schemas/2014/forms&quot;
+<pre class="prettyprint">&lt;ContentPage xmlns=&quot;http://xamarin.com/schemas/2014/forms&quot;
              xmlns:x=&quot;http://schemas.microsoft.com/winfx/2009/xaml&quot;
              x:Class=&quot;UdemyXamarinForms.PropertyElementSyntax&quot;
-             Padding=&quot;0, 20, 0, 0&quot;&gt;</code></pre>
+             Padding=&quot;0, 20, 0, 0&quot;&gt;</pre>
                         <figcaption>Fig 02-040</figcaption>
                     </figure>
                     <p>Now at runtime the XAML parser will get this string and give it to a Type Converter that will parse
                         it into a Thickness object. This will apply to all platforms. What if you want to apply this only in
                         iOS. Then we need to use an element called OnPlatform:</p>
                     <figure>
-                <pre class="prettyprint"><code>&lt;OnPlatform
+                <pre class="prettyprint">&lt;OnPlatform
     iOS=&quot;...&quot;&gt;
-&lt;/OnPlatform&gt;</code></pre>
+&lt;/OnPlatform&gt;</pre>
                         <figcaption>Fig 02-041</figcaption>
                     </figure>
                     <p>The OnPlatform element has attributes for iOS, Android. The problem is we can't use this element
@@ -475,8 +474,8 @@ private void InitializeComponent() {
                     <p>To demonstrate first of all remove the Padding attribute from the ContentPage element. Then inside
                         the ContentPage element add another element:</p>
                     <figure>
-                <pre class="prettyprint"><code>&lt;ContentPage.Padding&gt;
-&lt;/ContentPage.Padding&gt;</code></pre>
+                <pre class="prettyprint">&lt;ContentPage.Padding&gt;
+&lt;/ContentPage.Padding&gt;</pre>
                         <figcaption>Fig 02-042</figcaption>
                     </figure>
                     <p>So we are using an XML element instead of an XML attribute to set the Padding property. That's
@@ -484,30 +483,30 @@ private void InitializeComponent() {
                         XML elements not attributes.</p>
                     <p>Inside this element we can either add a simple string:</p>
                     <figure>
-<pre class="prettyprint"><code>&lt;ContentPage.Padding&gt;
+<pre class="prettyprint">&lt;ContentPage.Padding&gt;
     0, 20, 0, 0
-&lt;/ContentPage.Padding&gt;</code></pre>
+&lt;/ContentPage.Padding&gt;</pre>
                         <figcaption>Fig 02-043</figcaption>
                     </figure>
                     <p>Or I can use another element to represent a complex object. In this case I want to use the OnPlatform
                         element:</p>
                     <figure>
-<pre class="prettyprint"><code>&lt;ContentPage.Padding&gt;
+<pre class="prettyprint">&lt;ContentPage.Padding&gt;
     &lt;OnPlatform
         iOS=&quot;...&quot;&gt;
 
     &lt;/OnPlatform&gt;
-&lt;/ContentPage.Padding&gt;</code></pre>
+&lt;/ContentPage.Padding&gt;</pre>
                         <figcaption>Fig 02-044</figcaption>
                     </figure>
                     <p>This OnPlatform element maps to a C# class. To illustrate this go back to the code-behind and
                         declare a temporary variable:</p>
                     <figure>
-<pre class="prettyprint"><code>var x = new OnPlatform&lt;Thickness&gt;
+<pre class="prettyprint">var x = new OnPlatform&lt;Thickness&gt;
 {
     Android = new Thickness(0),
     iOS = new Thickness(0, 20, 0, 0)
-};</code></pre>
+};</pre>
                         <figcaption>Fig 02-045</figcaption>
                     </figure>
 
@@ -515,41 +514,41 @@ private void InitializeComponent() {
                         Thickness. The OnPlatform class has properties such as Android, iOS etc. </p>
                     <p>Now we can assign this Thickness object to Padding:</p>
                     <figure>
-                        <pre class="prettyprint"><code>Padding = x;</code></pre>
+                        <pre class="prettyprint">Padding = x;</pre>
                         <figcaption>Fig 02-046</figcaption>
                     </figure>
                     <p>There will be an implicit conversion between OnPlatform object and Thickness object. Now we want
                         to achieve the same thing in XAML. When creating this OnPlatform object we need to specify a generic
                         argument. So we use another attribute here - x:TypeArguments:</p>
                     <figure>
-                <pre class="prettyprint"><code>&lt;ContentPage.Padding&gt;
+                <pre class="prettyprint">&lt;ContentPage.Padding&gt;
     &lt;OnPlatform x:TypeArguments=&quot;Thickness&quot;
                 iOS=&quot;...&quot;&gt;
     &lt;/OnPlatform&gt;
-&lt;/ContentPage.Padding&gt;</code></pre>
+&lt;/ContentPage.Padding&gt;</pre>
                         <figcaption>Fig 02-047</figcaption>
                     </figure>
                     <p>Again to emphasize here because this attribute is prefixed with x: it belongs to the Microsoft
                         namespace.</p>
                     <p>So this line in XAML:</p>
                     <figure>
-                        <pre class="prettyprint"><code>&lt;OnPlatform x:TypeArguments=&quot;Thickness&quot;&gt;</code></pre>
+                        <pre class="prettyprint">&lt;OnPlatform x:TypeArguments=&quot;Thickness&quot;&gt;</pre>
                         <figcaption>Fig 02-048</figcaption>
                     </figure>
                     <p>is exactly like this line in C#:</p>
                     <figure>
-                        <pre class="prettyprint"><code>new OnPlatform&lt;Thickness&gt;</code></pre>
+                        <pre class="prettyprint">new OnPlatform&lt;Thickness&gt;</pre>
                         <figcaption>Fig 02-049</figcaption>
                     </figure>
                     <p>Ok, now we need to set values for our OnPlatform properties:</p>
                     <figure>
-                <pre class="prettyprint"><code>&lt;ContentPage.Padding&gt;
+                <pre class="prettyprint">&lt;ContentPage.Padding&gt;
     &lt;OnPlatform x:TypeArguments=&quot;Thickness&quot;
                 iOS=&quot;0, 20, 0, 0&quot;
                 Android=&quot;0, 40, 0, 0&quot;&gt;
 
     &lt;/OnPlatform&gt;
-&lt;/ContentPage.Padding&gt;</code></pre>
+&lt;/ContentPage.Padding&gt;</pre>
                         <figcaption>Fig 02-050</figcaption>
                     </figure>
 
@@ -560,7 +559,7 @@ private void InitializeComponent() {
                     <p>In this lecture we will demonstrate how to catch and prevent errors in XAML. So, for example, if we
                         introduce an error into the XAML by for example removing the s from Arguments in the following line:</p>
                     <figure>
-                        <pre class="prettyprint"><code>&lt;OnPlatform x:Argument=&quot;Thickness&quot;</code></pre>
+                        <pre class="prettyprint">&lt;OnPlatform x:Argument=&quot;Thickness&quot;</pre>
                         <figcaption>Fig 02-051</figcaption>
                     </figure>
                     <p>Now if we run the application, it launces ok but then terminates immediately wihtout any indication
@@ -592,7 +591,7 @@ private void InitializeComponent() {
                         attributes that apply to the assembly as a whole like the title, version, copyright information etc.</p>
                     <p>We can include another attribute here: </p>
                     <figure>
-                        <pre class="prettyprint"><code>[assembly: XamlCompliation(XamlComplationOptions.Compile)]</code></pre>
+                        <pre class="prettyprint">[assembly: XamlCompliation(XamlComplationOptions.Compile)]</pre>
                         <figcaption>Fig 02-054</figcaption>
                     </figure>
                     <p>Don't forget to add the XamarinForms.Xaml namespace. The colon indicates this attribute is applied
@@ -602,9 +601,9 @@ private void InitializeComponent() {
                     <p>The attribute can be applied at class or assembly level. This means that if you want to disable or
                         enable it on a specific class you can apply the attribute on that class:</p>
                     <figure>
-                <pre class="prettyprint"><code>[XamlCompilation(XamlCompilationOptions.Skip)]
+                <pre class="prettyprint">[XamlCompilation(XamlCompilationOptions.Skip)]
 public partial class PropertyElementSyntax : ContentPage
-{</code></pre>
+{</pre>
                         <figcaption>Fig 02-055</figcaption>
                     </figure>
                     <h3>Cheat Sheet</h3>
@@ -616,9 +615,9 @@ public partial class PropertyElementSyntax : ContentPage
 </template>
 
 <script>
-    export default {
-        name: "XamarinFormsCrossPlatform02XamlEssentials"
-    }
+export default {
+  name: 'XamarinFormsCrossPlatform02XamlEssentials'
+}
 </script>
 
 <style scoped>

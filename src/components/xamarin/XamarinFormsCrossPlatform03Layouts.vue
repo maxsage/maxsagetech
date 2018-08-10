@@ -17,12 +17,12 @@
                     </p>
                     <p>In the App.cs class file change the MainPage to StackPage:</p>
                     <figure>
-                        <pre class="prettyprint"><code>MainPage = new StackPage();</code></pre>
+                        <pre class="prettyprint">MainPage = new StackPage();</pre>
                         <figcaption>Fig 03-001</figcaption>
                     </figure>
                     <p>In our new StackPage we apply some padding:</p>
                     <figure>
-                        <pre class="prettyprint"><code>Padding=&quot;0, 20, 0, 0&quot;</code></pre>
+                        <pre class="prettyprint">Padding=&quot;0, 20, 0, 0&quot;</pre>
                         <figcaption>Fig 03-002</figcaption>
                     </figure>
                     <p>This padding will apply to all platforms. I could use the OnPlatform element to apply this padding just
@@ -30,9 +30,9 @@
                     </p>
                     <p>Next remove the ContentPage.Content element and add three labels:</p>
                     <figure>
-                    <pre class="prettyprint"><code>&lt;Label Text=&quot;Label 1&quot; /&gt;
+                    <pre class="prettyprint">&lt;Label Text=&quot;Label 1&quot; /&gt;
     &lt;Label Text=&quot;Label 2&quot; /&gt;
-    &lt;Label Text=&quot;Label 3&quot; /&gt;</code></pre>
+    &lt;Label Text=&quot;Label 3&quot; /&gt;</pre>
                         <figcaption>Fig 03-003</figcaption>
                     </figure>
                     <p>If we run the application we will only see Label 3:</p>
@@ -46,11 +46,11 @@
                     </p>
                     <p>Wrap the three Labels inside a StackLayout:</p>
                     <figure>
-                    <pre class="prettyprint"><code>&lt;StackLayout&gt;
+                    <pre class="prettyprint">&lt;StackLayout&gt;
         &lt;Label Text=&quot;Label 1&quot; /&gt;
         &lt;Label Text=&quot;Label 2&quot; /&gt;
         &lt;Label Text=&quot;Label 3&quot; /&gt;
-    &lt;/StackLayout&gt;</code></pre>
+    &lt;/StackLayout&gt;</pre>
                         <figcaption>Fig 03-005</figcaption>
                     </figure>
                     <p>With a StackLayout we can position multiple layouts in a line - vertically or horizontally. If we run the
@@ -62,11 +62,11 @@
                     </figure>
                     <p>Now let's apply a background colour to our StackLayout:</p>
                     <figure>
-                    <pre class="prettyprint"><code>&lt;StackLayout BackgroundColor=&quot;Yellow&quot;&gt;
+                    <pre class="prettyprint">&lt;StackLayout BackgroundColor=&quot;Yellow&quot;&gt;
         &lt;Label Text=&quot;Label 1&quot; /&gt;
         &lt;Label Text=&quot;Label 2&quot; /&gt;
         &lt;Label Text=&quot;Label 3&quot; /&gt;
-    &lt;/StackLayout&gt;</code></pre>
+    &lt;/StackLayout&gt;</pre>
                         <figcaption>Fig 03-006</figcaption>
                     </figure>
                     <p>If we run our application now we will see that the StackLayout is taking up the whole page even though
@@ -81,7 +81,7 @@
                         example Center:
                     </p>
                     <figure>
-                        <pre class="prettyprint"><code>&lt;StackLayout BackgroundColor=&quot;Yellow&quot; VerticalOptions=&quot;Center&quot;&gt;</code></pre>
+                        <pre class="prettyprint">&lt;StackLayout BackgroundColor=&quot;Yellow&quot; VerticalOptions=&quot;Center&quot;&gt;</pre>
                         <figcaption>Fig 03-008</figcaption>
                     </figure>
 
@@ -95,21 +95,21 @@
                         Xaml and enter HorizontalOptions:
                     </p>
                     <figure>
-                    <pre class="prettyprint"><code>&lt;StackLayout BackgroundColor=&quot;Yellow&quot; VerticalOptions=&quot;Center&quot; HorizontalOptions=&quot;Center&quot;&gt;
+                    <pre class="prettyprint">&lt;StackLayout BackgroundColor=&quot;Yellow&quot; VerticalOptions=&quot;Center&quot; HorizontalOptions=&quot;Center&quot;&gt;
             &lt;Label Text=&quot;Label 1&quot; /&gt;
             &lt;Label Text=&quot;Label 2&quot; /&gt;
             &lt;Label Text=&quot;Label 3&quot; /&gt;
-        &lt;/StackLayout&gt;</code></pre>
+        &lt;/StackLayout&gt;</pre>
                         <figcaption>Fig 03-009</figcaption>
                     </figure>
                     <p>Now the StackLayout will be in the middle of the devices screen.</p>
                     <p>Next let's apply a background colour to each of the labels:</p>
                     <figure>
-                    <pre class="prettyprint"><code>&lt;StackLayout BackgroundColor=&quot;Yellow&quot; VerticalOptions=&quot;Center&quot; HorizontalOptions=&quot;Center&quot;&gt;
+                    <pre class="prettyprint">&lt;StackLayout BackgroundColor=&quot;Yellow&quot; VerticalOptions=&quot;Center&quot; HorizontalOptions=&quot;Center&quot;&gt;
             &lt;Label Text=&quot;Label 1&quot; BackgroundColor=&quot;Silver&quot; /&gt;
             &lt;Label Text=&quot;Label 2&quot; BackgroundColor=&quot;Silver&quot; /&gt;
             &lt;Label Text=&quot;Label 3&quot; BackgroundColor=&quot;Silver&quot; /&gt;
-        &lt;/StackLayout&gt;</code></pre>
+        &lt;/StackLayout&gt;</pre>
                         <figcaption>Fig 03-010</figcaption>
                     </figure>
                     <p>If we run the application now you will notice a small gap between each label:</p>
@@ -119,17 +119,17 @@
                     </figure>
                     <p>We can change this using the StackLayout Spacing property:</p>
                     <figure>
-                    <pre class="prettyprint"><code>&lt;StackLayout Spacing=&quot;20&quot; BackgroundColor=&quot;Yellow&quot; VerticalOptions=&quot;Center&quot; HorizontalOptions=&quot;Center&quot;&gt;
+                    <pre class="prettyprint">&lt;StackLayout Spacing=&quot;20&quot; BackgroundColor=&quot;Yellow&quot; VerticalOptions=&quot;Center&quot; HorizontalOptions=&quot;Center&quot;&gt;
             &lt;Label Text=&quot;Label 1&quot; BackgroundColor=&quot;Silver&quot; /&gt;
             &lt;Label Text=&quot;Label 2&quot; BackgroundColor=&quot;Silver&quot; /&gt;
             &lt;Label Text=&quot;Label 3&quot; BackgroundColor=&quot;Silver&quot; /&gt;
-        &lt;/StackLayout&gt;</code></pre>
+        &lt;/StackLayout&gt;</pre>
                         <figcaption>Fig 03-012</figcaption>
                     </figure>
                     <p>The default Spacing value is 6 units.</p>
                     <p>There is a similar property called padding:</p>
                     <figure>
-                    <pre class="prettyprint"><code> &lt;StackLayout Padding=&quot;40&quot;
+                    <pre class="prettyprint"> &lt;StackLayout Padding=&quot;40&quot;
                 Spacing=&quot;20&quot;
                 BackgroundColor=&quot;Yellow&quot;
                 VerticalOptions=&quot;Center&quot;
@@ -137,7 +137,7 @@
             &lt;Label Text=&quot;Label 1&quot; BackgroundColor=&quot;Silver&quot; /&gt;
             &lt;Label Text=&quot;Label 2&quot; BackgroundColor=&quot;Silver&quot; /&gt;
             &lt;Label Text=&quot;Label 3&quot; BackgroundColor=&quot;Silver&quot; /&gt;
-        &lt;/StackLayout&gt;</code></pre>
+        &lt;/StackLayout&gt;</pre>
                         <figcaption>Fig 03-013</figcaption>
                     </figure>
                     <p>Padding is the amount of space between a Layout and it's children:</p>
@@ -149,14 +149,14 @@
                         Bottom):
                     </p>
                     <figure>
-                        <pre class="prettyprint"><code>Padding=&quot;0, 40, 0, 0&quot;</code></pre>
+                        <pre class="prettyprint">Padding=&quot;0, 40, 0, 0&quot;</pre>
                         <figcaption>Fig 03-015</figcaption>
                     </figure>
                     <p>Another property of StackLayout is Orientation. The default value is Vertical. If we set this property to
                         horizontal:
                     </p>
                     <figure>
-                    <pre class="prettyprint"><code>&lt;StackLayout Padding=&quot;40&quot;
+                    <pre class="prettyprint">&lt;StackLayout Padding=&quot;40&quot;
                 Spacing=&quot;20&quot;
                 VerticalOptions=&quot;Center&quot;
                 HorizontalOptions=&quot;Center&quot;
@@ -164,7 +164,7 @@
             &lt;Label Text=&quot;Label 1&quot; /&gt;
             &lt;Label Text=&quot;Label 2&quot; /&gt;
             &lt;Label Text=&quot;Label 3&quot; /&gt;
-        &lt;/StackLayout&gt;</code></pre>
+        &lt;/StackLayout&gt;</pre>
                         <figcaption>Fig 03-016</figcaption>
                     </figure>
                     <p>it results in a Layout like this:</p>
@@ -176,7 +176,7 @@
                         an Icon right above Label 1:
                     </p>
                     <figure>
-    <pre class="prettyprint"><code>&lt;StackLayout Padding=&quot;40&quot;
+    <pre class="prettyprint">&lt;StackLayout Padding=&quot;40&quot;
             Spacing=&quot;20&quot;
             BackgroundColor=&quot;Yellow&quot;
             VerticalOptions=&quot;Center&quot;
@@ -189,7 +189,7 @@
         &lt;Label Text=&quot;Label 1&quot; BackgroundColor=&quot;Silver&quot; /&gt;
         &lt;Label Text=&quot;Label 2&quot; BackgroundColor=&quot;Silver&quot; /&gt;
         &lt;Label Text=&quot;Label 3&quot; BackgroundColor=&quot;Silver&quot; /&gt;
-    &lt;/StackLayout&gt;</code></pre>
+    &lt;/StackLayout&gt;</pre>
                         <figcaption>Fig 03-018</figcaption>
                     </figure>
                     <p>We have a main StackLayout which has a Horizontal orientation and inside that we have another StackLayout
@@ -213,24 +213,24 @@
                         Spacing, Padding and Orientation:
                     </p>
                     <figure>
-    <pre class="prettyprint"><code>var layout = new StackLayout
+    <pre class="prettyprint">var layout = new StackLayout
     {
         Spacing = 40,
         Padding = new Thickness(0, 20, 0, 0),
         Orientation = StackOrientation.Horizontal
-    };</code></pre>
+    };</pre>
                         <figcaption>Fig 03-019</figcaption>
                     </figure>
                     <p>StackLayout has a property called Children. You can add multiple elements inside children (e.g. Label or
                         even another StackLayout):
                     </p>
                     <figure>
-                        <pre class="prettyprint"><code>layout.Children.Add(new Label { Text = &quot;Label 1&quot; });</code></pre>
+                        <pre class="prettyprint">layout.Children.Add(new Label { Text = &quot;Label 1&quot; });</pre>
                         <figcaption>Fig 03-020</figcaption>
                     </figure>
                     <p>Finally, once we have initialized our layout we set the Content property to the layout object:</p>
                     <figure>
-                        <pre class="prettyprint"><code>Content = layout;</code></pre>
+                        <pre class="prettyprint">Content = layout;</pre>
                         <figcaption>Fig 03-021</figcaption>
                     </figure>
                     <p>If you compare the code-behind with the Xaml we created in the previous lecture we can see that creating
@@ -256,38 +256,38 @@
                         add a Grid element:
                     </p>
                     <figure>
-    <pre class="prettyprint"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+    <pre class="prettyprint">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
     &lt;ContentPage xmlns=&quot;http://xamarin.com/schemas/2014/forms&quot;
                  xmlns:x=&quot;http://schemas.microsoft.com/winfx/2009/xaml&quot;
                  x:Class=&quot;UdemyXamarinForms.GridPage&quot;
                  Padding=&quot;0, 20, 0, 0&quot;&gt;
         &lt;Grid&gt;
         &lt;/Grid&gt;
-    &lt;/ContentPage&gt;</code></pre>
+    &lt;/ContentPage&gt;</pre>
                         <figcaption>Fig 03-022</figcaption>
                     </figure>
                     <p>Inside the Grid we layout four labels in two rows and two columns:</p>
                     <figure>
-    <pre class="prettyprint"><code>&lt;Grid&gt;
+    <pre class="prettyprint">&lt;Grid&gt;
         &lt;Label Text=&quot;Label 1&quot; BackgroundColor=&quot;Silver&quot; /&gt;
         &lt;Label Text=&quot;Label 2&quot; BackgroundColor=&quot;Silver&quot; /&gt;
         &lt;Label Text=&quot;Label 3&quot; BackgroundColor=&quot;Silver&quot; /&gt;
         &lt;Label Text=&quot;Label 4&quot; BackgroundColor=&quot;Silver&quot; /&gt;
-    &lt;/Grid&gt;</code></pre>
+    &lt;/Grid&gt;</pre>
                         <figcaption>Fig 03-023</figcaption>
                     </figure>
                     <p>Now we need to put each label in a particular row and column in the Grid. For this we use a special
                         syntax:
                     </p>
                     <figure>
-                        <pre class="prettyprint"><code>&lt;Label Grid.Row=&quot;0&quot; Grid.Column=&quot;0&quot; Text=&quot;Label 1&quot; BackgroundColor=&quot;Silver&quot; /&gt;</code></pre>
+                        <pre class="prettyprint">&lt;Label Grid.Row=&quot;0&quot; Grid.Column=&quot;0&quot; Text=&quot;Label 1&quot; BackgroundColor=&quot;Silver&quot; /&gt;</pre>
                         <figcaption>Fig 03-024</figcaption>
                     </figure>
                     <p>It's important to note that the Column and Row properties do not belong to the Label class. To illustrate
                         if you go to the code-behind and declare a Label:
                     </p>
                     <figure>
-                        <pre class="prettyprint"><code>Label l;</code></pre>
+                        <pre class="prettyprint">Label l;</pre>
                         <figcaption>Fig 03-025</figcaption>
                     </figure>
                     <p>And then type l.Row or l.Column. You will see the Label doesn't have those properties. These properties
@@ -297,12 +297,12 @@
                     </p>
                     <p>Next assign the other Labels to different rows and columns and add a background color of the Grid:</p>
                     <figure>
-    <pre class="prettyprint"><code>&lt;Grid BackgroundColor=&quot;Yellow&quot;&gt;
+    <pre class="prettyprint">&lt;Grid BackgroundColor=&quot;Yellow&quot;&gt;
         &lt;Label Grid.Row=&quot;0&quot; Grid.Column=&quot;0&quot; Text=&quot;Label 1&quot; BackgroundColor=&quot;Silver&quot; /&gt;
         &lt;Label Grid.Row=&quot;0&quot; Grid.Column=&quot;1&quot; Text=&quot;Label 2&quot; BackgroundColor=&quot;Silver&quot; /&gt;
         &lt;Label Grid.Row=&quot;1&quot; Grid.Column=&quot;0&quot; Text=&quot;Label 3&quot; BackgroundColor=&quot;Silver&quot; /&gt;
         &lt;Label Grid.Row=&quot;1&quot; Grid.Column=&quot;1&quot; Text=&quot;Label 4&quot; BackgroundColor=&quot;Silver&quot; /&gt;
-    &lt;/Grid&gt;</code></pre>
+    &lt;/Grid&gt;</pre>
                         <figcaption>Fig 03-026</figcaption>
                     </figure>
                     <p>You will notice that, similar to the StackLayout, the Grid expands to fill it's container - so it takes
@@ -312,9 +312,9 @@
                         like this:
                     </p>
                     <figure>
-    <pre class="prettyprint"><code>&lt;Grid BackgroundColor=&quot;Yellow&quot;
+    <pre class="prettyprint">&lt;Grid BackgroundColor=&quot;Yellow&quot;
         RowSpacing=&quot;40&quot;
-        ColumnSpacing=&quot;40&quot;&gt;</code></pre>
+        ColumnSpacing=&quot;40&quot;&gt;</pre>
                         <figcaption>Fig 03-027</figcaption>
                     </figure>
                     <p>The result looks like this:</p>
@@ -326,7 +326,7 @@
                         take up three columns. We achieve this using the ColumnSpan property:
                     </p>
                     <figure>
-    <pre class="prettyprint"><code>    &lt;Grid BackgroundColor=&quot;Yellow&quot;
+    <pre class="prettyprint">    &lt;Grid BackgroundColor=&quot;Yellow&quot;
           RowSpacing=&quot;40&quot;
           ColumnSpacing=&quot;40&quot;&gt;
         &lt;Label Grid.Row=&quot;0&quot; Grid.Column=&quot;0&quot; Text=&quot;Label 1&quot; BackgroundColor=&quot;Silver&quot; /&gt;
@@ -334,7 +334,7 @@
         &lt;Label Grid.Row=&quot;1&quot; Grid.Column=&quot;0&quot; Text=&quot;Label 3&quot; BackgroundColor=&quot;Silver&quot; /&gt;
         &lt;Label Grid.Row=&quot;1&quot; Grid.Column=&quot;1&quot; Text=&quot;Label 4&quot; BackgroundColor=&quot;Silver&quot; /&gt;
         &lt;Label Grid.Row=&quot;3&quot; Grid.ColumnSpan=&quot;3&quot; Text=&quot;Columnspan&quot; BackgroundColor=&quot;Silver&quot; /&gt;
-    &lt;/Grid&gt;  </code></pre>
+    &lt;/Grid&gt;  </pre>
                         <figcaption>Fig 03-029</figcaption>
                     </figure>
                     <p>You might see this type of layout in a photo gallery app where you have a bunch of thumbnails one of
@@ -342,7 +342,7 @@
                     </p>
                     <p>Next let's add a label to the third columns that takes three rows:</p>
                     <figure>
-    <pre class="prettyprint"><code>&lt;Grid BackgroundColor=&quot;Yellow&quot;
+    <pre class="prettyprint">&lt;Grid BackgroundColor=&quot;Yellow&quot;
           RowSpacing=&quot;40&quot;
           ColumnSpacing=&quot;40&quot;&gt;
         &lt;Label Grid.Row=&quot;0&quot; Grid.Column=&quot;0&quot; Text=&quot;Label 1&quot; BackgroundColor=&quot;Silver&quot; /&gt;
@@ -351,7 +351,7 @@
         &lt;Label Grid.Row=&quot;1&quot; Grid.Column=&quot;1&quot; Text=&quot;Label 4&quot; BackgroundColor=&quot;Silver&quot; /&gt;
         &lt;Label Grid.Row=&quot;3&quot; Grid.ColumnSpan=&quot;3&quot; Text=&quot;Columnspan&quot; BackgroundColor=&quot;Silver&quot; /&gt;
         &lt;Label Grid.Column=&quot;2&quot; Grid.RowSpan=&quot;3&quot; Text=&quot;Rowspan&quot; BackgroundColor=&quot;Silver&quot; /&gt;
-    &lt;/Grid&gt;  </code></pre>
+    &lt;/Grid&gt;  </pre>
                         <figcaption>Fig 03-030</figcaption>
                     </figure>
                     <p>The result looks like this:</p>
@@ -364,8 +364,8 @@
                         Grid element you can set Grid.RowDefinitions (using Property Element Syntax).
                     </p>
                     <figure>
-    <pre class="prettyprint"><code>&lt;Grid.RowDefinitions&gt;
-    &lt;/Grid.RowDefinitions&gt;</code></pre>
+    <pre class="prettyprint">&lt;Grid.RowDefinitions&gt;
+    &lt;/Grid.RowDefinitions&gt;</pre>
                         <figcaption>Fig 03-032</figcaption>
                     </figure>
                     <p>RowDefinitions is a collection type, it's a complex type so we cannot set it using an attribute - that's
@@ -373,11 +373,11 @@
                         elements. For each row we specify a Height. The Height value can be absolute or proportional:
                     </p>
                     <figure>
-    <pre class="prettyprint"><code>&lt;Grid.RowDefinitions&gt;
+    <pre class="prettyprint">&lt;Grid.RowDefinitions&gt;
         &lt;RowDefinition Height=&quot;100&quot; /&gt;
         &lt;RowDefinition Height=&quot;2*&quot; /&gt;
         &lt;RowDefinition Height=&quot;*&quot; /&gt;
-    &lt;/Grid.RowDefinitions&gt;</code></pre>
+    &lt;/Grid.RowDefinitions&gt;</pre>
                         <figcaption>Fig 03-033</figcaption>
                     </figure>
                     <p>The first row will be 100 units tall, and the remainder of the space will be divided between the second
@@ -388,11 +388,11 @@
                         ColumnDefinition elements (depending on the number of columns) on which we set the Width property:
                     </p>
                     <figure>
-    <pre class="prettyprint"><code>&lt;Grid.ColumnDefinitions&gt;
-        &lt;ColumnDefinition Width=&quot;100&quot; /&gt;
-        &lt;ColumnDefinition Width=&quot;2*&quot; /&gt;
-        &lt;ColumnDefinition Width=&quot;*&quot; /&gt;
-    &lt;/Grid.ColumnDefinitions&gt;</code></pre>
+    <pre class="prettyprint">&amp;lt;Grid.ColumnDefinitions&amp;gt;
+        &amp;lt;ColumnDefinition Width=&amp;quot;100&amp;quot; /&amp;gt;
+        &amp;lt;ColumnDefinition Width=&amp;quot;2*&amp;quot; /&amp;gt;
+        &amp;lt;ColumnDefinition Width=&amp;quot;*&amp;quot; /&amp;gt;
+    &amp;lt;/Grid.ColumnDefinitions&amp;gt;</pre>
                         <figcaption>Fig 03-034</figcaption>
                     </figure>
                     <p>We set the first column to be 100 units wide and the second column to be twice the width of the the third
@@ -413,11 +413,11 @@
                         label. Setting the Width of the first column to Auto:
                     </p>
                     <figure>
-    <pre class="prettyprint"><code>&lt;Grid.ColumnDefinitions&gt;
+    <pre class="prettyprint">&lt;Grid.ColumnDefinitions&gt;
         &lt;ColumnDefinition Width=&quot;Auto&quot; /&gt;
         &lt;ColumnDefinition Width=&quot;2*&quot; /&gt;
         &lt;ColumnDefinition Width=&quot;*&quot; /&gt;
-    &lt;/Grid.ColumnDefinitions&gt;</code></pre>
+    &lt;/Grid.ColumnDefinitions&gt;</pre>
                         <figcaption>Fig 03-037</figcaption>
                     </figure>
                     <p>This means the column will be wide enough to fit all it's children. Look at the result:</p>
@@ -438,17 +438,16 @@
                     <h3>Grid in Code</h3>
                     <p>To create a Grid in code we first create a Grid object specifying Row and Column Spacing:</p>
                     <figure>
-    <pre class="prettyprint"><code>var grid = new Grid
+    <pre class="prettyprint">var grid = new Grid
     {
         RowSpacing = 20,
         ColumnSpacing = 40
-    };</code></pre>
+    };</pre>
                         <figcaption>Fig 03-039</figcaption>
                     </figure>
                     <p>To add elements to this Grid we use the Children property:</p>
                     <figure>
-                    <pre><code
-                            class="csharp">grid.Children.Add(new Label { Text = &quot;Label 1&quot; }, 0, 0);</code></pre>
+                    <pre class="prettyprint">grid.Children.Add(new Label { Text = &quot;Label 1&quot; }, 0, 0);</pre>
                         <figcaption>Fig 03-040</figcaption>
                     </figure>
                     <p>The first argument in the Add method is View which is the base class for all visual elements like Labels,
@@ -462,12 +461,12 @@
                         property and finally pass it to the SetRowSpan method:
                     </p>
                     <figure>
-                        <pre class="prettyprint"><code>Grid.SetRowSpan(label, 2);</code></pre>
+                        <pre class="prettyprint">Grid.SetRowSpan(label, 2);</pre>
                         <figcaption>Fig 03-041</figcaption>
                     </figure>
                     <p>We have another static method on the Grid class called SetColumnSpan:</p>
                     <figure>
-                        <pre class="prettyprint"><code>Grid.SetRowSpan(label, 2);</code></pre>
+                        <pre class="prettyprint">Grid.SetRowSpan(label, 2);</pre>
                         <figcaption>Fig 03-042</figcaption>
                     </figure>
                     <p>Again we supply our element here and then specify the number of columns we want it to take.</p>
@@ -484,15 +483,15 @@
                         Grid class:
                     </p>
                     <figure>
-    <pre class="prettyprint"><code>Grid.SetRowSpan(label, 2);
+    <pre class="prettyprint">Grid.SetRowSpan(label, 2);
     Grid.SetColumnSpan(label, 2);
     Grid.SetRow(label, 0);
-    Grid.SetColumn(label, 0);</code></pre>
+    Grid.SetColumn(label, 0);</pre>
                         <figcaption>Fig 03-043</figcaption>
                     </figure>
                     <p>Finally, if you want to work with row or column definitions you would use the following syntax:</p>
                     <figure>
-    <pre class="prettyprint"><code>grid.RowDefinitions.Add(new RowDefinition
+    <pre class="prettyprint">grid.RowDefinitions.Add(new RowDefinition
     {
         Height = new GridLength(100, GridUnitType.Absolute)
     });
@@ -505,7 +504,7 @@
     grid.RowDefinitions.Add(new RowDefinition
     {
         Height = new GridLength(1, GridUnitType.Star)
-    });</code></pre>
+    });</pre>
                         <figcaption>Fig 03-044</figcaption>
                     </figure>
                     <p>The GridUnitType enumeration contains another member - Auto which means the height of this row should be
@@ -547,13 +546,13 @@
                         AbsolutePage. Again, in the App.cs file change the MainPage to AbsolutePage.xaml.</p>
                     <p>In our Xaml file add a Padding to the ContentPage as before:</p>
                     <figure>
-                        <pre class="prettyprint"><code>Padding=&quot;0, 20, 0, 0&quot;</code></pre>
+                        <pre class="prettyprint">Padding=&quot;0, 20, 0, 0&quot;</pre>
                         <figcaption>Fig 03-047</figcaption>
                     </figure>
                     <p>Next, delete the ContentPage.Content element. Start with an AbsoluteLayout element adding a
                         BackgroundColor of Yellow:</p>
                     <figure>
-    <pre class="prettyprint"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+    <pre class="prettyprint">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
         &lt;ContentPage
                 Padding=&quot;0, 20, 0, 0&quot;
                 xmlns=&quot;http://xamarin.com/schemas/2014/forms&quot;
@@ -562,7 +561,7 @@
         &lt;AbsoluteLayout BackgroundColor=&quot;Yellow&quot;&gt;
 
         &lt;/AbsoluteLayout&gt;
-    &lt;/ContentPage&gt;</code></pre>
+    &lt;/ContentPage&gt;</pre>
                         <figcaption>Fig 03-048</figcaption>
                     </figure>
                     <p>Now if we run the application:</p>
@@ -576,11 +575,11 @@
                     <p>Now similar to Grids we two Attached Bindable Properties that we use to set the position and size of
                         each element inside AbsoluteLayout:</p>
                     <figure>
-    <pre class="prettyprint"><code>&lt;AbsoluteLayout&gt;
+    <pre class="prettyprint">&lt;AbsoluteLayout&gt;
         &lt;BoxView Color=&quot;Aqua&quot;
                  AbsoluteLayout.LayoutBounds=&quot;0, 0, 100, 100&quot;&gt;
         &lt;/BoxView&gt;
-    &lt;/AbsoluteLayout&gt;</code></pre>
+    &lt;/AbsoluteLayout&gt;</pre>
                         <figcaption>Fig 03-050</figcaption>
                     </figure>
                     <p>LayoutBounds is a rectangle that determines the layout and size of this element. It accepts four numbers
@@ -597,11 +596,11 @@
                         proportional values. Proportional values are expressed as doubles between 0 and 1.</p>
                     <p>So we can modify the LayoutBounds attached properties as follows:</p>
                     <figure>
-    <pre class="prettyprint"><code>&lt;AbsoluteLayout&gt;
+    <pre class="prettyprint">&lt;AbsoluteLayout&gt;
         &lt;BoxView Color=&quot;Aqua&quot;
                  AbsoluteLayout.LayoutBounds=&quot;0, 0, 1, 1&quot;&gt;
         &lt;/BoxView&gt;
-    &lt;/AbsoluteLayout&gt;</code></pre>
+    &lt;/AbsoluteLayout&gt;</pre>
                         <figcaption>Fig 03-052</figcaption>
                     </figure>
                     <p>Now we need to indicate to the Xamarin forms that these are proportional values because as I said by
@@ -620,11 +619,11 @@
                     <p>So in the LayoutBounds property I want all the numbers to be proportional so I set LayoutFlags to
                         all:</p>
                     <figure>
-                <pre class="prettyprint"><code>&lt;AbsoluteLayout&gt;
+                <pre class="prettyprint">&lt;AbsoluteLayout&gt;
             &lt;BoxView Color=&quot;Aqua&quot;
                      AbsoluteLayout.LayoutBounds=&quot;0, 0, 1, 1&quot; AbsoluteLayout.LayoutFlags=&quot;All&quot;&gt;
             &lt;/BoxView&gt;
-        &lt;/AbsoluteLayout&gt;</code></pre>
+        &lt;/AbsoluteLayout&gt;</pre>
                         <figcaption>Fig 03-053</figcaption>
                     </figure>
                     <p>Now if we run the application this is what we get:</p>
@@ -634,13 +633,13 @@
                     </figure>
                     <p>Now let's put the white BoxView on top of this Aqua BoxView:</p>
                     <figure>
-    <pre class="prettyprint"><code>&lt;AbsoluteLayout&gt;
+    <pre class="prettyprint">&lt;AbsoluteLayout&gt;
             &lt;BoxView Color=&quot;Aqua&quot;
                      AbsoluteLayout.LayoutBounds=&quot;0, 0, 1, 1&quot; AbsoluteLayout.LayoutFlags=&quot;All&quot;&gt;
             &lt;/BoxView&gt;
             &lt;BoxView Color=&quot;White&quot;
                      AbsoluteLayout.LayoutBounds=&quot;0.5, 0.1, 100, 100&quot; AbsoluteLayout.LayoutFlags=&quot;PositionProportional&quot;/&gt;
-        &lt;/AbsoluteLayout&gt;</code></pre>
+        &lt;/AbsoluteLayout&gt;</pre>
                         <figcaption>Fig 03-055</figcaption>
                     </figure>
                     <p>This BoxView is in the middle of the X Axis and on the Y Axis is about 10% from the top of the page. To
@@ -654,7 +653,7 @@
                     <p>So our new BoxView is 100x100 units and the Y Axis its about 10% from the top of the page and on the X
                         Axis it's right in the middle. Finally let's add a Button on the bottom of the screen:</p>
                     <figure>
-                <pre class="prettyprint"><code>&lt;AbsoluteLayout&gt;
+                <pre class="prettyprint">&lt;AbsoluteLayout&gt;
         &lt;BoxView Color=&quot;Aqua&quot;
                  AbsoluteLayout.LayoutBounds=&quot;0, 0, 1, 1&quot; AbsoluteLayout.LayoutFlags=&quot;All&quot;&gt;
         &lt;/BoxView&gt;
@@ -663,7 +662,7 @@
         &lt;Button Text=&quot;Get Started&quot; BackgroundColor=&quot;Silver&quot; TextColor=&quot;White&quot;
                 AbsoluteLayout.LayoutBounds=&quot;0, 1, 1, 50&quot;
                 AbsoluteLayout.LayoutFlags=&quot;PositionProportional, WidthProportional&quot;/&gt;
-    &lt;/AbsoluteLayout&gt;</code></pre>
+    &lt;/AbsoluteLayout&gt;</pre>
                         <figcaption>Fig 03-057</figcaption>
                     </figure>
                     <p>For the position of the Button again we use proportional values. So for X we use 0 and for Y we use 1.
@@ -687,7 +686,7 @@
                     <p>To use absolute layout in code firstly comment out the AbsoluteLayout in XAML. Add the following code to
                         the code-behind file, in the constructor after the call to InitializeComponent():</p>
                     <figure>
-    <pre class="prettyprint"><code>var layout = new AbsoluteLayout();
+    <pre class="prettyprint">var layout = new AbsoluteLayout();
     Content = layout;
 
     var aquaBox = new BoxView { Color = Color.Aqua };
@@ -698,7 +697,7 @@
 
     // Not like the video which results in blank page!
     AbsoluteLayout.SetLayoutBounds(aquaBox, new Rectangle(0, 0, .5, 1));
-    AbsoluteLayout.SetLayoutFlags(aquaBox, AbsoluteLayoutFlags.All);</code></pre>
+    AbsoluteLayout.SetLayoutFlags(aquaBox, AbsoluteLayoutFlags.All);</pre>
                         <figcaption>Fig 03-059</figcaption>
                     </figure>
                     <p>Don't forget to set the Content of this page to the layout you created.</p>
@@ -755,19 +754,19 @@
                         Also in the App.cs file set this new page as the MainPage in the application:
                     </p>
                     <figure>
-                <pre class="prettyprint"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+                <pre class="prettyprint">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
     &lt;ContentPage
             Padding=&quot;0, 20, 0, 0&quot;
             xmlns=&quot;http://xamarin.com/schemas/2014/forms&quot;
             xmlns:x=&quot;http://schemas.microsoft.com/winfx/2009/xaml&quot;
             x:Class=&quot;UdemyXamarinForms.RelativePage&quot;&gt;
 
-    &lt;/ContentPage&gt;</code></pre>
+    &lt;/ContentPage&gt;</pre>
                         <figcaption>Fig 03-063</figcaption>
                     </figure>
                     <p>Add a RelativeLayout element with the following Xaml:</p>
                     <figure>
-                <pre class="prettyprint"><code>&lt;RelativeLayout&gt;
+                <pre class="prettyprint">&lt;RelativeLayout&gt;
         &lt;BoxView Color=&quot;Aqua&quot; x:Name=&quot;banner&quot;
                  RelativeLayout.WidthConstraint=&quot;{ConstraintExpression
                 Type=RelativeToParent,
@@ -786,7 +785,7 @@
                 Property=Height,
                 Factor=1,
                 Constant=20}&quot;/&gt;
-    &lt;/RelativeLayout&gt;</code></pre>
+    &lt;/RelativeLayout&gt;</pre>
                         <figcaption>Fig 03-064</figcaption>
                     </figure>
                     <p>Inside the RelativeLayout we add a BoxView and set the Color to Aqua. We
@@ -848,7 +847,7 @@
                     <p>Firstly, comment out the XAML for the RelativeLayout in the RelativePage.xaml file. Next, in the
                         code-behind after the call to InitializeComponent() in the constructor add the following code:</p>
                     <figure>
-                <pre class="prettyprint"><code>var layout = new RelativeLayout();
+                <pre class="prettyprint">var layout = new RelativeLayout();
     Content = layout;
 
     var aquaBox = new BoxView { Color = Color.Aqua };
@@ -858,25 +857,25 @@
 
     var silverBox = new BoxView { Color = Color.Silver };
     layout.Children.Add(silverBox,
-         yConstraint: Constraint.RelativeToView(aquaBox, (RelativeLayout, element) =&gt; element.Height + 20));</code></pre>
+         yConstraint: Constraint.RelativeToView(aquaBox, (RelativeLayout, element) =&gt; element.Height + 20));</pre>
                         <figcaption>Fig 03-067</figcaption>
                     </figure>
                     <p>First we create a layout of type RelativeLayout and set the Content of this page to the layout:</p>
                     <figure>
-                <pre class="prettyprint"><code>var layout = new RelativeLayout();
-    Content = layout;</code></pre>
+                <pre class="prettyprint">var layout = new RelativeLayout();
+    Content = layout;</pre>
                         <figcaption>Fig 03-068</figcaption>
                     </figure>
                     <p>Next we add a new BoxView called aquaBox with a Color of Aqua:</p>
                     <figure>
-                        <pre class="prettyprint"><code>var aquaBox = new BoxView { Color = Color.Aqua };</code></pre>
+                        <pre class="prettyprint">var aquaBox = new BoxView { Color = Color.Aqua };</pre>
                         <figcaption>Fig 03-069</figcaption>
                     </figure>
                     <p>Next add the aquaBox BoxView to our layout:</p>
                     <figure>
-    <pre class="prettyprint"><code>layout.Children.Add(aquaBox,
+    <pre class="prettyprint">layout.Children.Add(aquaBox,
         widthConstraint: Constraint.RelativeToParent(parent =&gt; parent.Width),
-        heightConstraint: Constraint.RelativeToParent(parent =&gt; parent.Height * 0.3));</code></pre>
+        heightConstraint: Constraint.RelativeToParent(parent =&gt; parent.Height * 0.3));</pre>
                         <figcaption>Fig 03-070</figcaption>
                     </figure>
                     <p>The Add method has several overloads. The one that we use most often has five parameters with the last
@@ -898,37 +897,37 @@
                     <p>The lambda expression takes an object which is a RelativeLayout and returns a double. I am going to
                         call this parameter parent:</p>
                     <figure>
-                        <pre class="prettyprint"><code>parent =&gt;</code></pre>
+                        <pre class="prettyprint">parent =&gt;</pre>
                         <figcaption>Fig 03-072</figcaption>
                     </figure>
                     <p>I want the width of the aquaBox BoxView to be the same as it's parent:</p>
                     <figure>
-                        <pre class="prettyprint"><code>parent.Width</code></pre>
+                        <pre class="prettyprint">parent.Width</pre>
                         <figcaption>Fig 03-073</figcaption>
                     </figure>
                     <p>Now let's apply the heightConstraint:</p>
                     <figure>
-                        <pre class="prettyprint"><code>heightConstraint: Constraint.RelativeToParent(parent =&gt; parent.Height * 0.3));</code></pre>
+                        <pre class="prettyprint">heightConstraint: Constraint.RelativeToParent(parent =&gt; parent.Height * 0.3));</pre>
                         <figcaption>Fig 03-074</figcaption>
                     </figure>
                     <p>This lambda expression takes a parent and returns the height of the parent multiplied by 0.3:</p>
                     <figure>
-                        <pre class="prettyprint"><code>parent =&gt; parent.Height * 0.3)</code></pre>
+                        <pre class="prettyprint">parent =&gt; parent.Height * 0.3)</pre>
                         <figcaption>Fig 03-075</figcaption>
                     </figure>
                     <p>Finally, let's add our Silver BoxView:</p>
                     <figure>
-                        <pre class="prettyprint"><code>var silverBox = new BoxView { Color = Color.Silver };</code></pre>
+                        <pre class="prettyprint">var silverBox = new BoxView { Color = Color.Silver };</pre>
                         <figcaption>Fig 03-076</figcaption>
                     </figure>
                     <p>Next add the silverBox BoxView to our layout:</p>
                     <figure>
-                        <pre class="prettyprint"><code>layout.Children.Add(silverBox,</code></pre>
+                        <pre class="prettyprint">layout.Children.Add(silverBox,</pre>
                         <figcaption>Fig 03-077</figcaption>
                     </figure>
                     <p>This time we apply a yConstraint:</p>
                     <figure>
-                        <pre class="prettyprint"><code>yConstraint: Constraint.RelativeToView(aquaBox, (RelativeLayout, element) =&gt; element.Height + 20));</code></pre>
+                        <pre class="prettyprint">yConstraint: Constraint.RelativeToView(aquaBox, (RelativeLayout, element) =&gt; element.Height + 20));</pre>
                         <figcaption>Fig 03-078</figcaption>
                     </figure>
                     <p>This time round we use RelativeToView and supply aquaBox as the View/Element to use. If we look at the
@@ -942,12 +941,12 @@
                     <p>So again we supply a lambda expression with two arguments - the first is RelativeLayout and the second one
                         is the target View (in this case the aquaBox BoxView) which will call element:</p>
                     <figure>
-                        <pre class="prettyprint"><code>(RelativeLayout, element)</code></pre>
+                        <pre class="prettyprint">(RelativeLayout, element)</pre>
                         <figcaption>Fig 03-080</figcaption>
                     </figure>
                     <p>This goes to element.Height + 20:</p>
                     <figure>
-                        <pre class="prettyprint"><code>(RelativeLayout, element) =&gt; element.Height + 20</code></pre>
+                        <pre class="prettyprint">(RelativeLayout, element) =&gt; element.Height + 20</pre>
                         <figcaption>Fig 03-081</figcaption>
                     </figure>
                     <p>If you run the application you should see Layout identical to the one we achieved using Xaml.</p>
@@ -959,9 +958,9 @@
 </template>
 
 <script>
-    export default {
-        name: "XamarinFormsCrossPlatform03Layouts"
-    }
+export default {
+  name: 'XamarinFormsCrossPlatform03Layouts'
+}
 </script>
 
 <style scoped>

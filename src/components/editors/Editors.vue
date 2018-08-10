@@ -20,9 +20,9 @@
 </template>
 
 <script>
-    export default {
-        name: "Editors"
-    }
+export default {
+  name: 'Editors'
+}
 </script>
 
 <style scoped>

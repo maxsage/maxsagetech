@@ -179,9 +179,9 @@
 </template>
 
 <script>
-    export default {
-        name: "VuejsEssentials00CourseContents.vue"
-    }
+export default {
+  name: 'VuejsEssentials00CourseContents.vue'
+}
 </script>
 
 <style scoped>

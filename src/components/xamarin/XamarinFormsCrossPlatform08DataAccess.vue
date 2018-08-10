@@ -41,9 +41,9 @@
 </template>
 
 <script>
-    export default {
-        name: "XamarinFormsCrossPlatform08DataAccess"
-    }
+export default {
+  name: 'XamarinFormsCrossPlatform08DataAccess'
+}
 </script>
 
 <style scoped>

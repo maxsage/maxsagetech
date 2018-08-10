@@ -607,9 +607,9 @@
 </template>
 
 <script>
-    export default {
-        name: "VisualStudioCode"
-    }
+export default {
+  name: 'VisualStudioCode'
+}
 </script>
 
 <style scoped>

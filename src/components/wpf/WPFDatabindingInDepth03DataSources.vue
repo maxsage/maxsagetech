@@ -1,136 +1,124 @@
 <template>
-    <div class="container">
-        <div class="panel-group">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h2>Data Sources</h2>
-                </div>
-                <div class="panel-body">
-                    <h3>Introduction</h3>
-                    <p>
-                        Hi, this is Brian Noyes, and in this module we're going to focus on data sources for data binding,
-                        where the data comes from to support your UI. Specifically, we're going to talk about the different
-                        kinds of data source objects that you can data bind to and some of the support those data objects
-                        may need to fully participate in data binding.
-                    </p>
-                    <p>
-                        First we're going to talk about Entity Data Sources, and this includes individual objects that you
-                        want to data bind to and their properties for something like a data entry form, as well as
-                        collections of entities for something like a DataGrid or a ComboBox. Next we're going to talk about
-                        Change Notifications. This is support that these entities will need in order to fully participate in
-                        data binding, meaning that if their properties can change behind the scenes, they've got to raise
-                        Change Notifications so that the binding can update the UI and keep it fresh with the real state of
-                        the data behind the scenes.
-                    </p>
-                    <p>
-                        Next we're going to talk about some of the other aspects of the support that entities can have for
-                        data binding, inluding the ability to back out changes when multiple properties have been changed.
-                        Those are called EditableObjects, and CollectionViews, which are things that wrap collections when
-                        you data bind to them to maintain the notion of currency or what is the current object within the
-                        collection. Towards the end of the module, we'll start talking about other kinds of things besides
-                        entities including DataSets and XML Data Sources, and how you can go about data binding to those.
-                    </p>
-                    <figure>
-                        <img src="./images/wpfdatabindingindepth/Fig02-001.png" class="image"/>
-                        <figcaption>Fig 02-001</figcaption>
-                    </figure>
-                </div>
-                <div class="panel-body">
-                    <h3>Binding to Entities and Collections</h3>
-                    <p>
-                        Data binding in XAML technologies including WPF, support binding to Plain Old CLR Objects or POCOs.
-                        These are basic classes that expose properties and those properties can either be primitive values
-                        such as strings, integers, DateTimes, and GUIDs or they can expose a reference to another complex
-                        type object that itself has other properties with values in it. So you can have whole object
-                        hierarchies or graphs that you data bind to in this way.
-                    </p>
-                    <p>
-                        Data binding does not support binding to member variables. You really shouldn't be exposing member
-                        variables publicly, they should be fully encapsulated, so the WPF framework team tried to prevent
-                        you from doing the wrong thing here and won't let you bind to your member variables. Likewise,
-                        bindings can't target methods, so you can't invoke a method through a binding, you can only call a
-                        property to get a value out of that property or to set a value in the case of two-way data binding.
-                    </p>
-                    <p>
-                        A lot of data binding scenarios revolve around binding to collections and presenting that data in
-                        DataGrids, ComboBoxes, ListViews, ListBoxes, and so on. The minimum bar to support data binding to
-                        collections is pretty low in .NET. It basically just has to be a proper collection in .NET, meaning
-                        it implements the IEnumerable interface. So this includes everything down to a simple array of
-                        integers or strings that you could data bind to, but it could be a more sophisticated collection
-                        such as a list&lt;T&gt; or a collection&lt;T&gt;, where you have the generic-type safety, as well as
-                        additional features around the manipulation of that collection.
-                    </p>
-                    <p>
-                        So when it comes to data binding to these entities or entity collections, basically what you're
-                        going to do is set the DataContext to some object that exposes properties that are either entities
-                        or entity collections so that you can start binding to those.
-                    </p>
-                    <p>
-                        Once you've set that DataContext and it flows down to the elements of your view, the bindings on
-                        those elements just need to identify the path they're going to bind to, and that path is generally
-                        the property name on the DataContext object or it could be a complex path because the property
-                        exposed from the top level data object may be a complex object itself, so you may need to dot your
-                        way down to something like Customer.Address.Street to get to a discrete value to put into a property
-                        of an element. So let's take a look at a demo of some basic data binding scenarios with entities and
-                        entity collections.
-                    </p>
-                </div>
-                <div class="panel-body">
-                    <h3>Demo: Binding to Entities and Collections</h3>
-                    <div class="panel-body">
-                        <div class="example">
-                            <div class="input-group">
-                                <input id="Ex03-001" type="text" class="form-control"
-                                       value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\before\EntityDataBinding\EntityDataBinding.sln">
-                                <span class="input-group-btn">
-                	        <button class="btn" data-clipboard-target="#Ex03-001">
-                        	    <img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard">
-                            </button>
-        	            </span>
-                            </div>
-                        </div>
-                        <div class="example">
-                            <div class="input-group">
-                                <input id="Ex03-002" type="text" class="form-control"
-                                       value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\after\EntityDataBinding\EntityDataBinding.sln">
-                                <span class="input-group-btn">
-                	        <button class="btn" data-clipboard-target="#Ex03-002">
-                        	    <img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard">
-                            </button>
-        	            </span>
-                            </div>
-                        </div>
-                        <p>
-                            In this series of demos, I want to cover some of the key concepts when it comes to data binding
-                            to entities. Our starting point for this demo is a window that's laid out like this.
-                        </p>
-                        <figure>
-                            <img src="./images/wpfdatabindingindepth/Fig02-002.png" class="image"/>
-                            <figcaption>Fig 02-002</figcaption>
-                        </figure>
-                        <p>
-                            We're going to have a list of customers at the top in a drop-down ComboBox, we're going to have
-                            individual fields here for FirstName, LastName, and Email on the SelectedCustomer that are
-                            editable so we can see some of the change impacts there. We've got a DataGrid in the middle
-                            that's going to list out recent orders for that customer, and then we've got a data form down
-                            below where we can create a new order and add it to the collection up above. So those are the
-                            scenarios we want to support here and we are going to do it by data binding to entities. The
-                            entities we're going to be working with are already defined in the solution here under this
-                            model folder.
-                        </p>
-                        <figure>
-                            <img src="./images/wpfdatabindingindepth/Fig02-003.png" class="image"/>
-                            <figcaption>Fig 02-003</figcaption>
-                        </figure>
-                        <p>
-                            We've got a customer as a top level object, you can see this is a Plain Old CLR Object, just
-                            simple auto-implemented properties here, for an Id, a FirstName, a LastName, an Email, a
-                            Collection of Orders as a List. And then notice you can also have computed properties here, ones
-                            that are read-only, and in this case computed from the FirstName and LastName property and those
-                            are data bindable as well.
-                        </p>
-                        <figure>
-                    <pre class="prettyprint"><code>public class Customer
+  <div class="container">
+    <div class="panel-group">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h2>Data Sources</h2>
+        </div>
+        <div class="panel-body">
+          <h3>Introduction</h3>
+          <p>
+            Hi, this is Brian Noyes, and in this module we're going to focus on data sources for data binding, where the
+            data comes from to support your UI. Specifically, we're going to talk about the different kinds of data
+            source objects that you can data bind to and some of the support those data objects may need to fully
+            participate in data binding.
+          </p>
+          <p>
+            First we're going to talk about Entity Data Sources, and this includes individual objects that you want to
+            data bind to and their properties for something like a data entry form, as well as collections of entities
+            for something like a DataGrid or a ComboBox. Next we're going to talk about Change Notifications. This is
+            support that these entities will need in order to fully participate in data binding, meaning that if their
+            properties can change behind the scenes, they've got to raise Change Notifications so that the binding can
+            update the UI and keep it fresh with the real state of the data behind the scenes.
+          </p>
+          <p>
+            Next we're going to talk about some of the other aspects of the support that entities can have for data
+            binding, inluding the ability to back out changes when multiple properties have been changed. Those are
+            called EditableObjects, and CollectionViews, which are things that wrap collections when you data bind to
+            them to maintain the notion of currency or what is the current object within the collection. Towards the end
+            of the module, we'll start talking about other kinds of things besides entities including DataSets and XML
+            Data Sources, and how you can go about data binding to those.
+          </p>
+          <figure>
+            <img src="./images/wpfdatabindingindepth/Fig02-001.png" class="image"/>
+            <figcaption>Fig 02-001</figcaption>
+          </figure>
+        </div>
+        <div class="panel-body">
+          <h3>Binding to Entities and Collections</h3>
+          <p>
+            Data binding in XAML technologies including WPF, support binding to Plain Old CLR Objects or POCOs. These
+            are basic classes that expose properties and those properties can either be primitive values such as
+            strings, integers, DateTimes, and GUIDs or they can expose a reference to another complex type object that
+            itself has other properties with values in it. So you can have whole object hierarchies or graphs that you
+            data bind to in this way.
+          </p>
+          <p>
+            Data binding does not support binding to member variables. You really shouldn't be exposing member variables
+            publicly, they should be fully encapsulated, so the WPF framework team tried to prevent you from doing the
+            wrong thing here and won't let you bind to your member variables. Likewise, bindings can't target methods,
+            so you can't invoke a method through a binding, you can only call a property to get a value out of that
+            property or to set a value in the case of two-way data binding.
+          </p>
+          <p>
+            A lot of data binding scenarios revolve around binding to collections and presenting that data in DataGrids,
+            ComboBoxes, ListViews, ListBoxes, and so on. The minimum bar to support data binding to collections is
+            pretty low in .NET. It basically just has to be a proper collection in .NET, meaning it implements the
+            IEnumerable interface. So this includes everything down to a simple array of integers or strings that you
+            could data bind to, but it could be a more sophisticated collection such as a list&lt;T&gt; or a collection&lt;T&gt;,
+            where you have the generic-type safety, as well as additional features around the manipulation of that
+            collection.
+          </p>
+          <p>
+            So when it comes to data binding to these entities or entity collections, basically what you're going to do
+            is set the DataContext to some object that exposes properties that are either entities or entity collections
+            so that you can start binding to those.
+          </p>
+          <p>
+            Once you've set that DataContext and it flows down to the elements of your view, the bindings on those
+            elements just need to identify the path they're going to bind to, and that path is generally the property
+            name on the DataContext object or it could be a complex path because the property exposed from the top level
+            data object may be a complex object itself, so you may need to dot your way down to something like
+            Customer.Address.Street to get to a discrete value to put into a property of an element. So let's take a
+            look at a demo of some basic data binding scenarios with entities and entity collections.
+          </p>
+        </div>
+        <div class="panel-body">
+          <h3>Demo: Binding to Entities and Collections</h3>
+          <div class="panel-body">
+            <div class="example">
+              <div class="input-group">
+                <input id="Ex03-001" type="text" class="form-control"
+                       value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\before\EntityDataBinding\EntityDataBinding.sln">
+<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex03-001"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
+              </div>
+            </div>
+            <div class="example">
+              <div class="input-group">
+                <input id="Ex03-002" type="text" class="form-control"
+                       value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\after\EntityDataBinding\EntityDataBinding.sln">
+<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex03-002"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
+              </div>
+            </div>
+            <p>
+              In this series of demos, I want to cover some of the key concepts when it comes to data binding to
+              entities. Our starting point for this demo is a window that's laid out like this.
+            </p>
+            <figure>
+              <img src="./images/wpfdatabindingindepth/Fig02-002.png" class="image"/>
+              <figcaption>Fig 02-002</figcaption>
+            </figure>
+            <p>
+              We're going to have a list of customers at the top in a drop-down ComboBox, we're going to have individual
+              fields here for FirstName, LastName, and Email on the SelectedCustomer that are editable so we can see
+              some of the change impacts there. We've got a DataGrid in the middle that's going to list out recent
+              orders for that customer, and then we've got a data form down below where we can create a new order and
+              add it to the collection up above. So those are the scenarios we want to support here and we are going to
+              do it by data binding to entities. The entities we're going to be working with are already defined in the
+              solution here under this model folder.
+            </p>
+            <figure>
+              <img src="./images/wpfdatabindingindepth/Fig02-003.png" class="image"/>
+              <figcaption>Fig 02-003</figcaption>
+            </figure>
+            <p>
+              We've got a customer as a top level object, you can see this is a Plain Old CLR Object, just simple
+              auto-implemented properties here, for an Id, a FirstName, a LastName, an Email, a Collection of Orders as
+              a List. And then notice you can also have computed properties here, ones that are read-only, and in this
+              case computed from the FirstName and LastName property and those are data bindable as well.
+            </p>
+            <figure>
+                    <pre class="prettyprint">public class Customer
 {
     public Guid Id { get; set; }
     public string FirstName { get; set; }
@@ -138,42 +126,42 @@
     public string Email { get; set; }
     public List&lt;Order&gt; Orders { get; set; }
     public string FullName { get { return string.Format("{0} {1}",FirstName,LastName); } }
-}</code></pre>
-                            <figcaption>Fig 02-004</figcaption>
-                        </figure>
-                        <p>
-                            We've got an OrderObject that has an Id, a parent CustomerId, an OrderDate, and a related object
-                            and OrderStatusId that will set through a drop-down ComboBox, and then finally an ItemsTotal.
-                        </p>
-                        <figure>
-                    <pre class="prettyprint"><code> public class Order
+}</pre>
+              <figcaption>Fig 02-004</figcaption>
+            </figure>
+            <p>
+              We've got an OrderObject that has an Id, a parent CustomerId, an OrderDate, and a related object and
+              OrderStatusId that will set through a drop-down ComboBox, and then finally an ItemsTotal.
+            </p>
+            <figure>
+                    <pre class="prettyprint"> public class Order
 {
     public long Id { get; set; }
     public Guid CustomerId { get; set; }
     public DateTime OrderDate { get; set; }
     public int OrderStatusId { get; set; }
     public decimal ItemsTotal { get; set; }
-}</code></pre>
-                            <figcaption>Fig 02-005</figcaption>
-                        </figure>
-                        <p>
-                            The OrderStatus object is just a simple lookup list kind of thing with an Id and a Name.
-                        </p>
-                        <figure>
-                    <pre class="prettyprint"><code>public class OrderStatus
+}</pre>
+              <figcaption>Fig 02-005</figcaption>
+            </figure>
+            <p>
+              The OrderStatus object is just a simple lookup list kind of thing with an Id and a Name.
+            </p>
+            <figure>
+                    <pre class="prettyprint">public class OrderStatus
 {
     public int Id { get; set; }
     public string Name { get; set; }
-}</code></pre>
-                            <figcaption>Fig 02-006</figcaption>
-                        </figure>
-                        <p>
-                            And then the way we're populating those entities for these demos is through an Entity Framework
-                            DbContext a Code First DbContext, and you can see we're just exposing DbSets for Customers,
-                            Orders, OrderStatuses, and then we've got some ModelBuilder stuff down here.
-                        </p>
-                        <figure>
-                    <pre class="prettyprint"><code>public class ZzaDbContext : DbContext
+}</pre>
+              <figcaption>Fig 02-006</figcaption>
+            </figure>
+            <p>
+              And then the way we're populating those entities for these demos is through an Entity Framework DbContext
+              a Code First DbContext, and you can see we're just exposing DbSets for Customers, Orders, OrderStatuses,
+              and then we've got some ModelBuilder stuff down here.
+            </p>
+            <figure>
+                    <pre class="prettyprint">public class ZzaDbContext : DbContext
 {
     public DbSet&lt;Customer&gt; Customers { get; set; }
     public DbSet&lt;Order&gt; Orders { get; set; }
@@ -190,17 +178,17 @@
                     .Property(c => c.Id) // Client must set the ID.
                     .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
     }
-}</code></pre>
-                            <figcaption>Fig 02-007</figcaption>
-                        </figure>
-                        <p>
-                            Again, I don't expect you to necessarily know how to do Entity Framework at all to understand
-                            these demos. We're focusing on the data binding, not how we get those objects in the memory. The
-                            code-behind of the MainWindow currently is mostly empty, it's just got stubbed out event
-                            handlers for the drop-down list selection, the Add and Cancel buttons for adding orders.
-                        </p>
-                        <figure>
-                    <pre class="prettyprint"><code> private void OnCustomerSelected(object sender, SelectionChangedEventArgs e)
+}</pre>
+              <figcaption>Fig 02-007</figcaption>
+            </figure>
+            <p>
+              Again, I don't expect you to necessarily know how to do Entity Framework at all to understand these demos.
+              We're focusing on the data binding, not how we get those objects in the memory. The code-behind of the
+              MainWindow currently is mostly empty, it's just got stubbed out event handlers for the drop-down list
+              selection, the Add and Cancel buttons for adding orders.
+            </p>
+            <figure>
+                    <pre class="prettyprint"> private void OnCustomerSelected(object sender, SelectionChangedEventArgs e)
 {
 
 }
@@ -213,34 +201,32 @@ private void OnAdd(object sender, RoutedEventArgs e)
 private void OnCancel(object sender, RoutedEventArgs e)
 {
 
-}</code></pre>
-                            <figcaption>Fig 02-008</figcaption>
-                        </figure>
-                        <p>
-                            So the first thing we might need is to expose some data that we can data bind to. For this demo,
-                            I'm just going to put things as properties exposed from the MainWindow itself, so we're not
-                            doing MVVM, we just want to expose objects from our code-behind so that we can data bind to
-                            them. In simplest form, we could do that by just exposing normal auto-implemented properties on
-                            our Window class here. So I've got a list of customers here that I can put into my ComboBox, and
-                            I've got a SelectedCustomer that I can use to drive those individual input fields for the
-                            SelectedCustomer.
-                        </p>
-                        <figure>
-                    <pre class="prettyprint"><code>public List&lt;Customer&gt; Customers { get; set; }
-public Customer SelectedCustomer { get; set; }</code></pre>
-                            <figcaption>Fig 02-009</figcaption>
-                        </figure>
-                        <p>
-                            I'm going to need an instance of my DbContext to go ahead and populate that data, and then I
-                            could go into my constructor here and go ahead and execute a query through my DbContext to get
-                            back all the customers as a list and push those into my Customers property that I declared down
-                            below. Then I could go to the ComboBox that has an ID of CustomersCombo, set the SelectedItem to
-                            the first customer in the list, and then if I set the DataContext of the Window itself to a
-                            reference to the Window, then any of the properties exposed by the Window are now accessible on
-                            the DataContext for bindings to use.
-                        </p>
-                        <figure>
-                    <pre class="prettyprint"><code>ZzaDbContext _DbContext = new ZzaDbContext();
+}</pre>
+              <figcaption>Fig 02-008</figcaption>
+            </figure>
+            <p>
+              So the first thing we might need is to expose some data that we can data bind to. For this demo, I'm just
+              going to put things as properties exposed from the MainWindow itself, so we're not doing MVVM, we just
+              want to expose objects from our code-behind so that we can data bind to them. In simplest form, we could
+              do that by just exposing normal auto-implemented properties on our Window class here. So I've got a list
+              of customers here that I can put into my ComboBox, and I've got a SelectedCustomer that I can use to drive
+              those individual input fields for the SelectedCustomer.
+            </p>
+            <figure>
+                    <pre class="prettyprint">public List&lt;Customer&gt; Customers { get; set; }
+public Customer SelectedCustomer { get; set; }</pre>
+              <figcaption>Fig 02-009</figcaption>
+            </figure>
+            <p>
+              I'm going to need an instance of my DbContext to go ahead and populate that data, and then I could go into
+              my constructor here and go ahead and execute a query through my DbContext to get back all the customers as
+              a list and push those into my Customers property that I declared down below. Then I could go to the
+              ComboBox that has an ID of CustomersCombo, set the SelectedItem to the first customer in the list, and
+              then if I set the DataContext of the Window itself to a reference to the Window, then any of the
+              properties exposed by the Window are now accessible on the DataContext for bindings to use.
+            </p>
+            <figure>
+                    <pre class="prettyprint">ZzaDbContext _DbContext = new ZzaDbContext();
 
 public MainWindow()
 {
@@ -248,44 +234,41 @@ public MainWindow()
     Customers = _DbContext.Customers.ToList();
     CustomersCombo.SelectedItem = Customers[0];
     DataContext = this;
-}</code></pre>
-                            <figcaption>Fig 02-010</figcaption>
-                        </figure>
+}</pre>
+              <figcaption>Fig 02-010</figcaption>
+            </figure>
 
-
-                        <p>
-                            I need one other thing in the code-behind here before we go to the XAML is in our
-                            CustomerComboBox, when we make a selection, we need to set that SelectedCustomer property, which
-                            is defined right up above, to the customer that was selected. So we can go out to the
-                            CustomersCombo, grab the SelectedItem, cast it to a Customer, and set that as our Customer
-                            property.
-                        </p>
-                        <figure>
-                    <pre class="prettyprint"><code>public List&lt;Customer&gt; Customers { get; set; }
+            <p>
+              I need one other thing in the code-behind here before we go to the XAML is in our CustomerComboBox, when
+              we make a selection, we need to set that SelectedCustomer property, which is defined right up above, to
+              the customer that was selected. So we can go out to the CustomersCombo, grab the SelectedItem, cast it to
+              a Customer, and set that as our Customer property.
+            </p>
+            <figure>
+                    <pre class="prettyprint">public List&lt;Customer&gt; Customers { get; set; }
 public Customer SelectedCustomer { get; set; }
 
 private void OnCustomerSelected(object sender, SelectionChangedEventArgs e)
 {
     SelectedCustomer = CustomersCombo.SelectedItem as Customer;
-}</code></pre>
-                            <figcaption>Fig 02-011</figcaption>
-                        </figure>
+}</pre>
+              <figcaption>Fig 02-011</figcaption>
+            </figure>
 
-                        <p>
-                            Later in the course we'll get to, there's better ways to do this where you can do this through
-                            binding as well, but this will be sufficient for what we're showing now. Now we need to get
-                            things hooked up in the XAML. So I'm going to switch over to XAML, I'm going to go down to our
-                            ComboBox here, and I'm going to add in some data binding properties.
-                        </p>
-                        <p>
-                            First we're going to set the ItemsSource to the Customers property exposed on our DataContext,
-                            which is the Window instance itself. Each item in that collection is a whole Customer object and
-                            we don't want it to ToString that for us, so we'll set the DisplayMemberPath property to
-                            FullName, that computed property on our Entity and we'll set the SelectedValuePath to the Id
-                            property.
-                        </p>
-                        <figure>
-                    <pre class="prettyprint"><code>&lt;Label Content="Customers" /&gt;
+            <p>
+              Later in the course we'll get to, there's better ways to do this where you can do this through binding as
+              well, but this will be sufficient for what we're showing now. Now we need to get things hooked up in the
+              XAML. So I'm going to switch over to XAML, I'm going to go down to our ComboBox here, and I'm going to add
+              in some data binding properties.
+            </p>
+            <p>
+              First we're going to set the ItemsSource to the Customers property exposed on our DataContext, which is
+              the Window instance itself. Each item in that collection is a whole Customer object and we don't want it
+              to ToString that for us, so we'll set the DisplayMemberPath property to FullName, that computed property
+              on our Entity and we'll set the SelectedValuePath to the Id property.
+            </p>
+            <figure>
+                    <pre class="prettyprint">&lt;Label Content="Customers" /&gt;
 &lt;ComboBox x:Name="CustomersCombo"
           Grid.Column="1"
           Width="250"
@@ -293,17 +276,17 @@ private void OnCustomerSelected(object sender, SelectionChangedEventArgs e)
           ItemsSource="{Binding Customers}"
           DisplayMemberPath="FullName"
           SelectedValuePath="Id"
-          SelectionChanged="OnCustomerSelected" /&gt;</code></pre>
-                            <figcaption>Fig 02-012</figcaption>
-                        </figure>
-                        <p>
-                            And then I'll go down to my data form here and I'll add a Binding for the FirstName property,
-                            we'll point that Binding to the SelectedCustomer property that's on our DataContext, which is
-                            the Window, and then we can dot down to the FirstName property on that SelectedCustomer to set
-                            the text there, likewise, for the LastName and for the Email.
-                        </p>
-                        <figure>
-                    <pre class="prettyprint"><code>&lt;TextBox Grid.Column="1"
+          SelectionChanged="OnCustomerSelected" /&gt;</pre>
+              <figcaption>Fig 02-012</figcaption>
+            </figure>
+            <p>
+              And then I'll go down to my data form here and I'll add a Binding for the FirstName property, we'll point
+              that Binding to the SelectedCustomer property that's on our DataContext, which is the Window, and then we
+              can dot down to the FirstName property on that SelectedCustomer to set the text there, likewise, for the
+              LastName and for the Email.
+            </p>
+            <figure>
+                    <pre class="prettyprint">&lt;TextBox Grid.Column="1"
    Text="{Binding SelectedCustomer.LastName}" /&gt;
 &lt;Label Content="Last Name:"
    Grid.Column="2" /&gt;
@@ -312,154 +295,141 @@ private void OnCustomerSelected(object sender, SelectionChangedEventArgs e)
 &lt;Label Content="Email:"
    Grid.Column="4" /&gt;
 &lt;TextBox Grid.Column="5"
-   Text="{Binding SelectedCustomer.Email}" /&gt;</code></pre>
-                            <figcaption>Fig 02-013</figcaption>
-                        </figure>
-                        <p>
-                            So with that code in place, we can fire this thing up and we can see our ComboBox is bound.
-                        </p>
-                        <figure>
-                            <img src="./images/wpfdatabindingindepth/Fig02-014.png" class="image"/>
-                            <figcaption>Fig 02-014</figcaption>
-                        </figure>
-                        <p>
-                            The problem is, as we select things we can see that the TextBoxes (FirstName, LastName and
-                            Email) are not updating. To make matters worse, if I go and edit something like Last Name here
-                            and tab out of the field, which is what causes it to get written
-                        </p>
-                        <figure>
-                            <img src="./images/wpfdatabindingindepth/Fig02-015.png" class="image"/>
-                            <figcaption>Fig 02-015</figcaption>
-                        </figure>
-                        <p>
-                            The Last Name jumps at that point to the actual value of the currently selected customer, but
-                            the First Name and Email are out of sync now.
-                        </p>
-                        <figure>
-                            <img src="./images/wpfdatabindingindepth/Fig02-016.png" class="image"/>
-                            <figcaption>Fig 02-016</figcaption>
-                        </figure>
-                        <p>
-                            And if I go look at the ComboBox list and go back to Derek, his Last Name hasn't been modified
-                            there:
-                        </p>
-                        <figure>
-                            <img src="./images/wpfdatabindingindepth/Fig02-017.png" class="image"/>
-                            <figcaption>Fig 02-017</figcaption>
-                        </figure>
-                        <p>
-                            But if I click on it then the modification shows up.
-                        </p>
-                        <figure>
-                            <img src="./images/wpfdatabindingindepth/Fig02-018.png" class="image"/>
-                            <figcaption>Fig 02-018</figcaption>
-                        </figure>
-                        <p>
-                            So things are wildly out of sync here because our entities are not properly defined to really
-                            support Data Binding. So in the next couple of demos, we'll fix that by supporting Change
-                            Notifications when things are changing.
-                        </p>
-                    </div>
-                    <div class="panel-body">
-                        <h3>Change Notifications</h3>
-                        <p>
-                            Now one of the most important concepts when dealing with Data Binding to Entities and Data
-                            Objects where you're building a rich interactive UI around those Objects, is Property and
-                            Collection Change Notifications. Basically, Change Notifications are going to be necessary if
-                            those Source Object Properties that you're Binding to or the Collections can be modified by any
-                            other code, other than the Binding itself.
-                        </p>
-                        <p>
-                            So this includes things like if you go out and do an Asynchronous service call to load some Data
-                            into your UI's memory space, you're going to end up setting Properties or populating Collections
-                            behind the scenes after the UI has already rendered and the XAML has been parsed. Another
-                            scenario is if you have a Command or Event Handler in code and that reaches out and modifies the
-                            Data Source Object for another control. And certainly if you have any background Threads or
-                            things going on in the background that are modifying your Data Objects, that's another source
-                            where things are going to change behind the scenes, not directly from user input, through the
-                            bound control.
-                        </p>
-                        <p>
-                            In any of these scenarios, you're going to need Property or collection Change Notifications to
-                            make sure that the UI stays fresh, because if there's no notification, the UI is going to
-                            continue to show the value that was in the Source property at the initial Binding, the point
-                            where the XAML was parsed. So to keep that UI fresh and in sync with the Data Source Object, the
-                            Data Source Object has to raise Change Notifications to tell the binding in the UI, hey, come
-                            and read my value again because it's changed.
-                        </p>
-                        <p>
-                            Now when it comes to supporting Property level Change Notifications, you really have two
-                            options. The first is to support the INotifyPropertyChanged interface, which I'll often call
-                            INPC for short based on the capitals in that name. INotifyPropertyChanged is a simple interface
-                            with a single Member on it called PropertyChanged, an event that you're supposed to raise
-                            whenever the properties on your object change.
-                        </p>
-                        <figure>
-                            <img src="./images/wpfdatabindingindepth/Fig02-019.png" class="image"/>
-                            <figcaption>Fig 02-019</figcaption>
-                        </figure>
-                        <p>
-                            Bindings are aware of this interface and when they go to Data Bind to a Source Object, they will
-                            query it to see if it supports this interface. And if it does, then the Binding itself will
-                            subscribe to that PropertyChanged event so it can be notified and refresh the bound Property if
-                            that PropertyChanged event indicates that that Property has changed.
-                        </p>
-                        <p>
-                            The other option you have is to use DependencyProperties. If your Source object inherits from
-                            DependencyObject as a base class and the Properties that it's exposing that you're binding to
-                            are DependencyProperties, there's an internal mechanism that can raise Change Notifications to
-                            bindings so that they know to refresh.
-                        </p>
-                        <p>
-                            So let's look a little deeper at the first of these doing INotifyPropertyChanged. Basically,
-                            what you're going to do is implement that interface on your data object class, so this is going
-                            to be your entity class that you're using as a data source object. In addition to declaring that
-                            interface on the class definition itself, you're going to expose a public event with a signature
-                            of <span class="code">public event PropertyChangedEventHandler</span> and give that event the
-                            name <span class="code">PropertyChanged</span>. Once you've defined that event, you're going to
-                            be responsible for raising that event in each of your property setters on that object, but you
-                            should generally check and see that the value being set is not the value that's already there,
-                            and not raise the event if the setter is being called with the current value. So let's take a
-                            look at a demo of implementing INotifyPropertyChanged and how it syncs up our UI better for the
-                            demo scenarios we've been covering.
-                        </p>
-                    </div>
-                    <div class="panel-body">
-                        <h3>Demo: Implementing INotifyPropertyChanged</h3>
-                        <div class="example">
-                            <div class="input-group">
-                                <input id="Ex03-003" type="text" class="form-control"
-                                       value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\before\EntityDataBinding\EntityDataBinding.sln">
-                                <span class="input-group-btn">
-                	        <button class="btn" data-clipboard-target="#Ex03-003">
-                        	    <img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard">
-                            </button>
-        	            </span>
-                            </div>
-                        </div>
-                        <div class="example">
-                            <div class="input-group">
-                                <input id="Ex03-004" type="text" class="form-control"
-                                       value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\after\EntityDataBinding\EntityDataBinding.sln">
-                                <span class="input-group-btn">
-                	        <button class="btn" data-clipboard-target="#Ex03-004">
-                        	    <img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard">
-                            </button>
-        	            </span>
-                            </div>
-                        </div>
-                        <p>
-                            So in the last demo we saw the synchronization problem because we're using simple Plain Old CLR
-                            Object Entities that when we are making selections they're not reflecting in the fields. If we edit
-                            a field and then tab out, then it jumps to the current object it didn't update in the list here,
-                            but if we select the guy, then the change shows up. Now part of that is caused by the lack of
-                            support for INotifyPropertyChanged, which is what we're going to remedy here.
-                        </p>
-                        <p>
-                            If we go to our Customer object, you can see it's just a simple Plain Old CLR Object.
-                        </p>
-                        <figure>
-                    <pre class="prettyprint"><code>public class Customer
+   Text="{Binding SelectedCustomer.Email}" /&gt;</pre>
+              <figcaption>Fig 02-013</figcaption>
+            </figure>
+            <p>
+              So with that code in place, we can fire this thing up and we can see our ComboBox is bound.
+            </p>
+            <figure>
+              <img src="./images/wpfdatabindingindepth/Fig02-014.png" class="image"/>
+              <figcaption>Fig 02-014</figcaption>
+            </figure>
+            <p>
+              The problem is, as we select things we can see that the TextBoxes (FirstName, LastName and Email) are not
+              updating. To make matters worse, if I go and edit something like Last Name here and tab out of the field,
+              which is what causes it to get written
+            </p>
+            <figure>
+              <img src="./images/wpfdatabindingindepth/Fig02-015.png" class="image"/>
+              <figcaption>Fig 02-015</figcaption>
+            </figure>
+            <p>
+              The Last Name jumps at that point to the actual value of the currently selected customer, but the First
+              Name and Email are out of sync now.
+            </p>
+            <figure>
+              <img src="./images/wpfdatabindingindepth/Fig02-016.png" class="image"/>
+              <figcaption>Fig 02-016</figcaption>
+            </figure>
+            <p>
+              And if I go look at the ComboBox list and go back to Derek, his Last Name hasn't been modified there:
+            </p>
+            <figure>
+              <img src="./images/wpfdatabindingindepth/Fig02-017.png" class="image"/>
+              <figcaption>Fig 02-017</figcaption>
+            </figure>
+            <p>
+              But if I click on it then the modification shows up.
+            </p>
+            <figure>
+              <img src="./images/wpfdatabindingindepth/Fig02-018.png" class="image"/>
+              <figcaption>Fig 02-018</figcaption>
+            </figure>
+            <p>
+              So things are wildly out of sync here because our entities are not properly defined to really support Data
+              Binding. So in the next couple of demos, we'll fix that by supporting Change Notifications when things are
+              changing.
+            </p>
+          </div>
+          <div class="panel-body">
+            <h3>Change Notifications</h3>
+            <p>
+              Now one of the most important concepts when dealing with Data Binding to Entities and Data Objects where
+              you're building a rich interactive UI around those Objects, is Property and Collection Change
+              Notifications. Basically, Change Notifications are going to be necessary if those Source Object Properties
+              that you're Binding to or the Collections can be modified by any other code, other than the Binding
+              itself.
+            </p>
+            <p>
+              So this includes things like if you go out and do an Asynchronous service call to load some Data into your
+              UI's memory space, you're going to end up setting Properties or populating Collections behind the scenes
+              after the UI has already rendered and the XAML has been parsed. Another scenario is if you have a Command
+              or Event Handler in code and that reaches out and modifies the Data Source Object for another control. And
+              certainly if you have any background Threads or things going on in the background that are modifying your
+              Data Objects, that's another source where things are going to change behind the scenes, not directly from
+              user input, through the bound control.
+            </p>
+            <p>
+              In any of these scenarios, you're going to need Property or collection Change Notifications to make sure
+              that the UI stays fresh, because if there's no notification, the UI is going to continue to show the value
+              that was in the Source property at the initial Binding, the point where the XAML was parsed. So to keep
+              that UI fresh and in sync with the Data Source Object, the Data Source Object has to raise Change
+              Notifications to tell the binding in the UI, hey, come and read my value again because it's changed.
+            </p>
+            <p>
+              Now when it comes to supporting Property level Change Notifications, you really have two options. The
+              first is to support the INotifyPropertyChanged interface, which I'll often call INPC for short based on
+              the capitals in that name. INotifyPropertyChanged is a simple interface with a single Member on it called
+              PropertyChanged, an event that you're supposed to raise whenever the properties on your object change.
+            </p>
+            <figure>
+              <img src="./images/wpfdatabindingindepth/Fig02-019.png" class="image"/>
+              <figcaption>Fig 02-019</figcaption>
+            </figure>
+            <p>
+              Bindings are aware of this interface and when they go to Data Bind to a Source Object, they will query it
+              to see if it supports this interface. And if it does, then the Binding itself will subscribe to that
+              PropertyChanged event so it can be notified and refresh the bound Property if that PropertyChanged event
+              indicates that that Property has changed.
+            </p>
+            <p>
+              The other option you have is to use DependencyProperties. If your Source object inherits from
+              DependencyObject as a base class and the Properties that it's exposing that you're binding to are
+              DependencyProperties, there's an internal mechanism that can raise Change Notifications to bindings so
+              that they know to refresh.
+            </p>
+            <p>
+              So let's look a little deeper at the first of these doing INotifyPropertyChanged. Basically, what you're
+              going to do is implement that interface on your data object class, so this is going to be your entity
+              class that you're using as a data source object. In addition to declaring that interface on the class
+              definition itself, you're going to expose a public event with a signature of <span class="code">public event PropertyChangedEventHandler</span>
+              and give that event the name <span class="code">PropertyChanged</span>. Once you've defined that event,
+              you're going to be responsible for raising that event in each of your property setters on that object, but
+              you should generally check and see that the value being set is not the value that's already there, and not
+              raise the event if the setter is being called with the current value. So let's take a look at a demo of
+              implementing INotifyPropertyChanged and how it syncs up our UI better for the demo scenarios we've been
+              covering.
+            </p>
+          </div>
+          <div class="panel-body">
+            <h3>Demo: Implementing INotifyPropertyChanged</h3>
+            <div class="example">
+              <div class="input-group">
+                <input id="Ex03-003" type="text" class="form-control"
+                       value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\before\EntityDataBinding\EntityDataBinding.sln">
+                <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex03-003"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
+              </div>
+            </div>
+            <div class="example">
+              <div class="input-group">
+                <input id="Ex03-004" type="text" class="form-control"
+                       value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\after\EntityDataBinding\EntityDataBinding.sln">
+<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex03-004"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
+              </div>
+            </div>
+            <p>
+              So in the last demo we saw the synchronization problem because we're using simple Plain Old CLR Object
+              Entities that when we are making selections they're not reflecting in the fields. If we edit a field and
+              then tab out, then it jumps to the current object it didn't update in the list here, but if we select the
+              guy, then the change shows up. Now part of that is caused by the lack of support for
+              INotifyPropertyChanged, which is what we're going to remedy here.
+            </p>
+            <p>
+              If we go to our Customer object, you can see it's just a simple Plain Old CLR Object.
+            </p>
+            <figure>
+                    <pre class="prettyprint">public class Customer
 {
     public Guid Id { get; set; }
     public string FirstName { get; set; }
@@ -467,43 +437,41 @@ private void OnCustomerSelected(object sender, SelectionChangedEventArgs e)
     public string Email { get; set; }
     public List&lt;Order&gt; Orders { get; set; }
     public string FullName { get { return string.Format("{0} {1}",FirstName,LastName); } }
-}</code></pre>
-                            <figcaption>Fig 02-020</figcaption>
-                        </figure>
-                        <p>
-                            Anytime you're doing data binding to a complex object like this, you're going to want it to
-                            support the INotifyPropertyChanged interface. To do that, I'm going to modify the Customer class
-                            here and what I did is you can see it got a lot bigger. First off, I'm implementing the
-                            INotifyPropertyChanged interface.
-                        </p>
-                        <figure>
-                            <pre class="prettyprint"><code>public class Customer : INotifyPropertyChanged</code></pre>
-                            <figcaption>Fig 02-021</figcaption>
-                        </figure>
-                        <p>
-                            I'm going to call this INPC for short in a lot of the course here. So the INPC interface here
-                            requires that you expose a public event called PropertyChanged on your type of Type
-                            PropertyChangedEventHandler.
-                        </p>
-                        <figure>
-                            <pre class="prettyprint"><code>public event PropertyChangedEventHandler PropertyChanged = delegate { };</code></pre>
-                            <figcaption>Fig 02-022</figcaption>
-                        </figure>
-                        <p>
-                            Now this syntax at the end of the line above, if you haven't seen it, is kind of a nice trick
-                            called the delegate trick, that if you assign an empty anonymous delegate into that event, then
-                            it's basically a no-op subscriber that's always there and can't be removed, so you no longer
-                            have to check for nulls before firing your events in C#.
-                        </p>
-                        <p>
-                            You can see that our property is expanded to backing member variables and individual properties
-                            with getters and setters on those member variables.
-                        </p>
-                        <figure>
-                    <pre class="prettyprint"><code>public class Customer : INotifyPropertyChanged
+}</pre>
+              <figcaption>Fig 02-020</figcaption>
+            </figure>
+            <p>
+              Anytime you're doing data binding to a complex object like this, you're going to want it to support the
+              INotifyPropertyChanged interface. To do that, I'm going to modify the Customer class here and what I did
+              is you can see it got a lot bigger. First off, I'm implementing the INotifyPropertyChanged interface.
+            </p>
+            <figure>
+              <pre class="prettyprint">public class Customer : INotifyPropertyChanged</pre>
+              <figcaption>Fig 02-021</figcaption>
+            </figure>
+            <p>
+              I'm going to call this INPC for short in a lot of the course here. So the INPC interface here requires
+              that you expose a public event called PropertyChanged on your type of Type PropertyChangedEventHandler.
+            </p>
+            <figure>
+              <pre
+                class="prettyprint">public event PropertyChangedEventHandler PropertyChanged = delegate { };</pre>
+              <figcaption>Fig 02-022</figcaption>
+            </figure>
+            <p>
+              Now this syntax at the end of the line above, if you haven't seen it, is kind of a nice trick called the
+              delegate trick, that if you assign an empty anonymous delegate into that event, then it's basically a
+              no-op subscriber that's always there and can't be removed, so you no longer have to check for nulls before
+              firing your events in C#.
+            </p>
+            <p>
+              You can see that our property is expanded to backing member variables and individual properties with
+              getters and setters on those member variables.
+            </p>
+            <figure>
+                    <pre class="prettyprint">public class Customer : INotifyPropertyChanged
 {
 public event PropertyChangedEventHandler PropertyChanged = delegate { };
-
 
 private Guid _Id;
 private ObservableCollection&lt;Order&gt; _Orders;
@@ -521,18 +489,17 @@ public Guid Id
     {
         _Id = value;
     }
-}</code></pre>
-                            <figcaption>Fig 02-023</figcaption>
-                        </figure>
-                        <p>
-                            Now this Id property you might treat as invariant. In this case it's a GUID so it actually does
-                            have to be set. What you really want to be doing on every Property is what the other ones are
-                            doing, which is raising the PropertyChanged event, passing a reference for the Object Sender of
-                            this, and then a PropertyChangedEventArg that takes the name of the Property that's being
-                            changed.
-                        </p>
-                        <figure>
-                    <pre class="prettyprint"><code>public string FirstName
+}</pre>
+              <figcaption>Fig 02-023</figcaption>
+            </figure>
+            <p>
+              Now this Id property you might treat as invariant. In this case it's a GUID so it actually does have to be
+              set. What you really want to be doing on every Property is what the other ones are doing, which is raising
+              the PropertyChanged event, passing a reference for the Object Sender of this, and then a
+              PropertyChangedEventArg that takes the name of the Property that's being changed.
+            </p>
+            <figure>
+                    <pre class="prettyprint">public string FirstName
 {
     get
     {
@@ -543,32 +510,30 @@ public Guid Id
         _FirstName = value;
         PropertyChanged(this, new PropertyChangedEventArgs("FirstName"));
     }
-}</code></pre>
-                            <figcaption>Fig 02-024</figcaption>
-                        </figure>
-                        <p>
-                            So I should really add this PropertyChanged to the Id as well and make sure the name of the
-                            Property is Id. So on any object that implements INotifyPropertyChanged, the way to think about
-                            it is any of the public properties you expose that have a set block should raise
-                            PropertyChanged. Now if we slide down to the bottom, we've still got our FullName property that
-                            we're actually binding to in the ComboBox, and it's computed based off the FirstName and
-                            LastName.
-                        </p>
-                        <figure>
-                            <pre class="prettyprint"><code>public string FullName { get { return string.Format("{0} {1}", FirstName, LastName); } }</code></pre>
-                            <figcaption>Fig 02-025</figcaption>
-                        </figure>
-                        <p>
-                            It doesn't have a set block that we can put a PropertyChangedEvent in, but we basically need the
-                            PropertyChanged to fire on that whenever FirstName or LastName changes. So a little trick for
-                            dealing with that is if we go up here to the two DependentProperties, FirstName and LastName, we
-                            can raise other PropertyChanged events in their set block. The first PropertyChanged says yes,
-                            in fact the FirstName PropertyChanged, but it also pretends that the FullName property has
-                            changed because effectively it has.
-                        </p>
+}</pre>
+              <figcaption>Fig 02-024</figcaption>
+            </figure>
+            <p>
+              So I should really add this PropertyChanged to the Id as well and make sure the name of the Property is
+              Id. So on any object that implements INotifyPropertyChanged, the way to think about it is any of the
+              public properties you expose that have a set block should raise PropertyChanged. Now if we slide down to
+              the bottom, we've still got our FullName property that we're actually binding to in the ComboBox, and it's
+              computed based off the FirstName and LastName.
+            </p>
+            <figure>
+              <pre class="prettyprint">public string FullName { get { return string.Format("{0} {1}", FirstName, LastName); } }</pre>
+              <figcaption>Fig 02-025</figcaption>
+            </figure>
+            <p>
+              It doesn't have a set block that we can put a PropertyChangedEvent in, but we basically need the
+              PropertyChanged to fire on that whenever FirstName or LastName changes. So a little trick for dealing with
+              that is if we go up here to the two DependentProperties, FirstName and LastName, we can raise other
+              PropertyChanged events in their set block. The first PropertyChanged says yes, in fact the FirstName
+              PropertyChanged, but it also pretends that the FullName property has changed because effectively it has.
+            </p>
 
-                        <figure>
-                    <pre class="prettyprint"><code>public string FirstName
+            <figure>
+                    <pre class="prettyprint">public string FirstName
 {
     get
     {
@@ -593,156 +558,145 @@ public string LastName
         PropertyChanged(this, new PropertyChangedEventArgs("LastName"));
         PropertyChanged(this, new PropertyChangedEventArgs("FullName"));
     }
-}</code></pre>
-                            <figcaption>Fig 02-026</figcaption>
-                        </figure>
-                        <p>
-                            So if we raise PropertyChanged for FullName on both the DependentProperties, then the right
-                            thing will happen there. So if we go ahead and run, now we modify Pucket's Last Name here and
-                            tab out of the field, and we see that it immediately updates in the ComboBox, both there and in
-                            the drop-down list, because the object is raising the appropriate Change Notifications. Now our
-                            selection problem is not yet fixed, we'll have to fix that in the next demo.
-                        </p>
-                    </div>
-                    <div class="panel-body">
-                        <h3>DependencyProperties</h3>
-                        <p>
-                            Now the other option that you have for raising Change Notifications at the property level, that
-                            we discussed, is to data bind to DependencyProperties as your source properties.
-                        </p>
-                        <p>
-                            DependencyProperties can be implemented on any <span class="code">class</span> that derives from
-                            DependencyObject, either directly or indirectly through an inheritance chain. Now it turns out
-                            there is another kind of DependencyProperty called an Attached Property, and these are actually
-                            implemented on a <span class="code">static class</span> that doesn't have to have any
-                            inheritance requirement there, but these are not directly relevant to the discussion of data
-                            source objects and binding. They can tie in with data binding in other ways, but we're not going
-                            to go into that in this module.
-                        </p>
-                        <p>
-                            So the reason DependencyProperties will work here is that when you set a DependencyProperty
-                            there's an internal notification the bindings are able to monitor directly, so they satisfy the
-                            same purpose as an INotifyPropertyChanged object that they can make sure that that binding knows
-                            when to refresh itself, if the underlying source object property is changed.
-                        </p>
-                        <p>
-                            Now you're typically only going to use DependencyProperties for properties exposed on UI
-                            elements, controls, and views, and those are the things that are typically the target, not the
-                            source of a binding. But as we'll see later in the module, you can bind from one element to
-                            another, for example, in which case one element can be the source and a different element the
-                            target. So in those cases, you're going to leverage the fact that those Source properties are
-                            probably DependencyProperties if it's a framework element, but we'll also see in demos that you
-                            can expose your own DependencyProperties as your Source objects or your DataContext properties
-                            so that you get the appropriate Change Notifications when those are set.
-                        </p>
-                        <p>
-                            Another important thing to re-emphasize about bindings is that the target of a binding does have
-                            to be a DependencyProperty itself. So this doesn't really tie into the Change Notifications,
-                            it's just a requirement of a binding, the target has to be a DependencyProperty. Now when it
-                            comes to implementing your own DependencyProperties, what you're going to do is declare<span
-                                class="code"> a public static readonly</span> member variable on your class of type
-                            DependencyProperty. And there's a particular signature to this you're going to have to follow,
-                            as well as naming conventions for the property itself. The easiest way to follow these
-                            conventions is to use a built-in code snippet in Visual Studio called <span
-                                class="code">propdp</span> and you'll see that in the demos.
-                        </p>
-                        <p>
-                            When you declare a DependencyProperty in addition to the <span class="code">public static readonly</span>
-                            member variable that's the real DependencyProperty, you're also going to declare what's called a
-                            "wrapper property". This is a normal .NET property that's <span class="code">get</span> and
-                            <span class="code">set</span> blocks just delegate down to the base class <span class="code">GetValue</span>
-                            and <span class="code">SetValue</span> methods that are the way you really read and write from a
-                            DependencyProperty. It's important to understand that the wrapper property is really just there
-                            for programmatic access from your own code, even though based on the naming convention, as
-                            you'll see in the code, it's going to look like your binding is pointing at the wrapper
-                            property, not the DependencyProperty, but the way it really works out is the binding is pointing
-                            to the DependencyProperty and it's actually going to be calling <span
-                                class="code">GetValue</span> and <span class="code">SetValue</span> on the DependencyObject
-                            base class and completely ignoring that wrapper property. So the important impact to that is it
-                            means you should not put side effects such as validation and things like that in your Set block
-                            of your wrapper property because those are not going to be called in the binding process, but
-                            we'll get into more details on validation in a later module.
-                        </p>
-                        <p>
-                            However, this wrapper property is part of the overall signature of declaring a
-                            DependencyProperty, so you're really always going to be defining two things, the actual
-                            DependencyProperty itself that's the <span class="code">public static readonly</span> member,
-                            and then the wrapper property that matches the naming conventions to expose that for
-                            programmatic access.
-                        </p>
-                        <p>
-                            When you define the DependencyProperty, you do have an option to pass a metadata object to the
-                            factory method you used to create it, and that metadata can contain several things.
-                        </p>
-                        <p>
-                            First is, it contains a default value that's going to be used if the property is never
-                            explicitly set, and it can also be used to define the default data binding directionality. We'll
-                            get into more on directionality in a later module, but that has to do with whether it's a
-                            one-way binding, two-way binding or some of the other variants supported there. There's also
-                            some other things you can do through that metadata object we won't go into in this course, that
-                            have to do with more advanced framework aspects. So let's take a look at declaring custom
-                            DependencyProperties on our view when we're using our view as our DataContext to get the Change
-                            Notifications we need so we can set those at any time and have the UI stay fresh.
-                        </p>
-                    </div>
-                    <div class="panel-body">
-                        <h3>Demo: DependencyProperties</h3>
-                        <div class="example">
-                            <div class="input-group">
-                                <input id="Ex03-005" type="text" class="form-control"
-                                       value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\before\EntityDataBinding\EntityDataBinding.sln">
-                                <span class="input-group-btn">
-                	        <button class="btn" data-clipboard-target="#Ex03-005">
-                        	    <img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard">
-                            </button>
-        	            </span>
-                            </div>
-                        </div>
-                        <div class="example">
-                            <div class="input-group">
-                                <input id="Ex03-006" type="text" class="form-control"
-                                       value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\after\EntityDataBinding\EntityDataBinding.sln">
-                                <span class="input-group-btn">
-                	        <button class="btn" data-clipboard-target="#Ex03-006">
-                        	    <img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard">
-                            </button>
-        	            </span>
-                            </div>
-                        </div>
-                        <p>
-                            Okay, so we saw that implementing INotifyPropertyChanged fixed part of the problem for us, that
-                            when the individual properties change, such as FirstName and LastName, they can raise Change
-                            Notifications and even raise Change Notifications for other properties such as the computed
-                            FullName property that depends on them, and get the UI to update.
-                        </p>
-                        <p>
-                            But we still have that selection problem that when we selected things in the ComboBox, it wasn't
-                            updating on the UI. Now the reason for that is this right here.
-                        </p>
-                        <figure>
-                    <pre class="prettyprint"><code>public List&lt;Customer&gt; Customers { get; set; }
-public Customer SelectedCustomer { get; set; }</code></pre>
-                            <figcaption>Fig 02-027</figcaption>
-                        </figure>
-                        <p>
-                            We're setting this SelectedCustomer property, but it's just a plain C# property itself, and
-                            raises no Change Notifications. So we have a couple options to fix that. One is, we could go up
-                            there to the Window class and we could implement INotifyPropertyChanged up here:
-                        </p>
-                        <figure>
-                        <pre class="prettyprint"><code>public partial class MainWindow : Window, INotifyPropertyChanged</code></pre>
-                            <figcaption>Fig 02-028</figcaption>
-                        </figure>
-                        <p>
-                            and then expand the Customers and SelectedCustomer properties to raise PropertyChanged events as
-                            well. And if these properties were on something like a ViewModel, that would be the right thing
-                            to do. However, since we're in a Window class, which is also a DependencyObject, another option
-                            you have is to use DependencyProperties. So I can delete off the existing Customers and
-                            SelectedCustomer properties and add them back in using a code snippet that's built in to Visual
-                            Studio called propdp. I can hit tab, tab, and then I start filling in the blanks,
-                        </p>
-                        <figure>
-                    <pre class="prettyprint"><code> public int MyProperty
+}</pre>
+              <figcaption>Fig 02-026</figcaption>
+            </figure>
+            <p>
+              So if we raise PropertyChanged for FullName on both the DependentProperties, then the right thing will
+              happen there. So if we go ahead and run, now we modify Pucket's Last Name here and tab out of the field,
+              and we see that it immediately updates in the ComboBox, both there and in the drop-down list, because the
+              object is raising the appropriate Change Notifications. Now our selection problem is not yet fixed, we'll
+              have to fix that in the next demo.
+            </p>
+          </div>
+          <div class="panel-body">
+            <h3>DependencyProperties</h3>
+            <p>
+              Now the other option that you have for raising Change Notifications at the property level, that we
+              discussed, is to data bind to DependencyProperties as your source properties.
+            </p>
+            <p>
+              DependencyProperties can be implemented on any <span class="code">class</span> that derives from
+              DependencyObject, either directly or indirectly through an inheritance chain. Now it turns out there is
+              another kind of DependencyProperty called an Attached Property, and these are actually implemented on a
+              <span class="code">static class</span> that doesn't have to have any inheritance requirement there, but
+              these are not directly relevant to the discussion of data source objects and binding. They can tie in with
+              data binding in other ways, but we're not going to go into that in this module.
+            </p>
+            <p>
+              So the reason DependencyProperties will work here is that when you set a DependencyProperty there's an
+              internal notification the bindings are able to monitor directly, so they satisfy the same purpose as an
+              INotifyPropertyChanged object that they can make sure that that binding knows when to refresh itself, if
+              the underlying source object property is changed.
+            </p>
+            <p>
+              Now you're typically only going to use DependencyProperties for properties exposed on UI elements,
+              controls, and views, and those are the things that are typically the target, not the source of a binding.
+              But as we'll see later in the module, you can bind from one element to another, for example, in which case
+              one element can be the source and a different element the target. So in those cases, you're going to
+              leverage the fact that those Source properties are probably DependencyProperties if it's a framework
+              element, but we'll also see in demos that you can expose your own DependencyProperties as your Source
+              objects or your DataContext properties so that you get the appropriate Change Notifications when those are
+              set.
+            </p>
+            <p>
+              Another important thing to re-emphasize about bindings is that the target of a binding does have to be a
+              DependencyProperty itself. So this doesn't really tie into the Change Notifications, it's just a
+              requirement of a binding, the target has to be a DependencyProperty. Now when it comes to implementing
+              your own DependencyProperties, what you're going to do is declare<span class="code"> a public static readonly</span>
+              member variable on your class of type DependencyProperty. And there's a particular signature to this
+              you're going to have to follow, as well as naming conventions for the property itself. The easiest way to
+              follow these conventions is to use a built-in code snippet in Visual Studio called <span class="code">propdp</span>
+              and you'll see that in the demos.
+            </p>
+            <p>
+              When you declare a DependencyProperty in addition to the <span class="code">public static readonly</span>
+              member variable that's the real DependencyProperty, you're also going to declare what's called a "wrapper
+              property". This is a normal .NET property that's <span class="code">get</span> and <span
+              class="code">set</span> blocks just delegate down to the base class <span class="code">GetValue</span> and
+              <span class="code">SetValue</span> methods that are the way you really read and write from a
+              DependencyProperty. It's important to understand that the wrapper property is really just there for
+              programmatic access from your own code, even though based on the naming convention, as you'll see in the
+              code, it's going to look like your binding is pointing at the wrapper property, not the
+              DependencyProperty, but the way it really works out is the binding is pointing to the DependencyProperty
+              and it's actually going to be calling <span class="code">GetValue</span> and <span
+              class="code">SetValue</span> on the DependencyObject base class and completely ignoring that wrapper
+              property. So the important impact to that is it means you should not put side effects such as validation
+              and things like that in your Set block of your wrapper property because those are not going to be called
+              in the binding process, but we'll get into more details on validation in a later module.
+            </p>
+            <p>
+              However, this wrapper property is part of the overall signature of declaring a DependencyProperty, so
+              you're really always going to be defining two things, the actual DependencyProperty itself that's the
+              <span class="code">public static readonly</span> member, and then the wrapper property that matches the
+              naming conventions to expose that for programmatic access.
+            </p>
+            <p>
+              When you define the DependencyProperty, you do have an option to pass a metadata object to the factory
+              method you used to create it, and that metadata can contain several things.
+            </p>
+            <p>
+              First is, it contains a default value that's going to be used if the property is never explicitly set, and
+              it can also be used to define the default data binding directionality. We'll get into more on
+              directionality in a later module, but that has to do with whether it's a one-way binding, two-way binding
+              or some of the other variants supported there. There's also some other things you can do through that
+              metadata object we won't go into in this course, that have to do with more advanced framework aspects. So
+              let's take a look at declaring custom DependencyProperties on our view when we're using our view as our
+              DataContext to get the Change Notifications we need so we can set those at any time and have the UI stay
+              fresh.
+            </p>
+          </div>
+          <div class="panel-body">
+            <h3>Demo: DependencyProperties</h3>
+            <div class="example">
+              <div class="input-group">
+                <input id="Ex03-005" type="text" class="form-control"
+                       value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\before\EntityDataBinding\EntityDataBinding.sln">
+<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex03-005"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
+              </div>
+            </div>
+            <div class="example">
+              <div class="input-group">
+                <input id="Ex03-006" type="text" class="form-control"
+                       value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\after\EntityDataBinding\EntityDataBinding.sln">
+<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex03-006"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
+              </div>
+            </div>
+            <p>
+              Okay, so we saw that implementing INotifyPropertyChanged fixed part of the problem for us, that when the
+              individual properties change, such as FirstName and LastName, they can raise Change Notifications and even
+              raise Change Notifications for other properties such as the computed FullName property that depends on
+              them, and get the UI to update.
+            </p>
+            <p>
+              But we still have that selection problem that when we selected things in the ComboBox, it wasn't updating
+              on the UI. Now the reason for that is this right here.
+            </p>
+            <figure>
+                    <pre class="prettyprint">public List&lt;Customer&gt; Customers { get; set; }
+public Customer SelectedCustomer { get; set; }</pre>
+              <figcaption>Fig 02-027</figcaption>
+            </figure>
+            <p>
+              We're setting this SelectedCustomer property, but it's just a plain C# property itself, and raises no
+              Change Notifications. So we have a couple options to fix that. One is, we could go up there to the Window
+              class and we could implement INotifyPropertyChanged up here:
+            </p>
+            <figure>
+              <pre
+                class="prettyprint">public partial class MainWindow : Window, INotifyPropertyChanged</pre>
+              <figcaption>Fig 02-028</figcaption>
+            </figure>
+            <p>
+              and then expand the Customers and SelectedCustomer properties to raise PropertyChanged events as well. And
+              if these properties were on something like a ViewModel, that would be the right thing to do. However,
+              since we're in a Window class, which is also a DependencyObject, another option you have is to use
+              DependencyProperties. So I can delete off the existing Customers and SelectedCustomer properties and add
+              them back in using a code snippet that's built in to Visual Studio called propdp. I can hit tab, tab, and
+              then I start filling in the blanks,
+            </p>
+            <figure>
+                    <pre class="prettyprint"> public int MyProperty
 {
     get { return (int)GetValue(MyPropertyProperty); }
     set { SetValue(MyPropertyProperty, value); }
@@ -750,34 +704,33 @@ public Customer SelectedCustomer { get; set; }</code></pre>
 
 // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
 public static readonly DependencyProperty MyPropertyProperty =
-    DependencyProperty.Register("MyProperty", typeof(int), typeof(ownerclass), new PropertyMetadata(0));</code></pre>
-                            <figcaption>Fig 02-029</figcaption>
-                        </figure>
-                        <p>
-                            The first one was my List of Customers called Customers:
-                        </p>
-                        <figure>
-                            <pre class="prettyprint"><code>public List&lt;Customer&gt; Customers { get; set; }</code></pre>
-                            <figcaption>Fig 02-030</figcaption>
-                        </figure>
-                        <p>
-                            And then I tab down to the bottom right here and you can see it wants an Owner class that's
-                            going to be the main window, and then I'll tab right one more time and there's a default value
-                            which I'll set to null.
-                        </p>
-                        <figure>
-                    <pre class="prettyprint"><code>public static readonly DependencyProperty CustomersProperty =
+    DependencyProperty.Register("MyProperty", typeof(int), typeof(ownerclass), new PropertyMetadata(0));</pre>
+              <figcaption>Fig 02-029</figcaption>
+            </figure>
+            <p>
+              The first one was my List of Customers called Customers:
+            </p>
+            <figure>
+              <pre class="prettyprint">public List&lt;Customer&gt; Customers { get; set; }</pre>
+              <figcaption>Fig 02-030</figcaption>
+            </figure>
+            <p>
+              And then I tab down to the bottom right here and you can see it wants an Owner class that's going to be
+              the main window, and then I'll tab right one more time and there's a default value which I'll set to null.
+            </p>
+            <figure>
+                    <pre class="prettyprint">public static readonly DependencyProperty CustomersProperty =
     DependencyProperty.Register(&quot;Customers&quot;,
     typeof(List&lt;Customer&gt;),
     typeof(MainWindow),
-    new PropertyMetadata(null));</code></pre>
-                            <figcaption>Fig 02-031</figcaption>
-                        </figure>
-                        <p>
-                            So let me just clean that up a little bit:
-                        </p>
-                        <figure>
-                    <pre class="prettyprint"><code>public List&lt;Customer&gt; Customers
+    new PropertyMetadata(null));</pre>
+              <figcaption>Fig 02-031</figcaption>
+            </figure>
+            <p>
+              So let me just clean that up a little bit:
+            </p>
+            <figure>
+                    <pre class="prettyprint">public List&lt;Customer&gt; Customers
 {
     get { return (List&lt;Customer&gt;)GetValue(CustomersProperty); }
     set { SetValue(CustomersProperty, value); }
@@ -787,183 +740,170 @@ public static readonly DependencyProperty CustomersProperty =
     DependencyProperty.Register(&quot;Customers&quot;,
     typeof(List&lt;Customer&gt;),
     typeof(MainWindow),
-    new PropertyMetadata(null));</code></pre>
-                            <figcaption>Fig 02-032</figcaption>
-                        </figure>
-                        <p>
-                            So here you can see the cleaned up Customers DependencyProperty, and just to review these, if
-                            you haven't had a lot of exposure, a DependencyProperty is a <span
-                                class="code">public static readonly</span> member variable on the class that declares it.
-                            That class will have to derive directly or indirectly from DependencyObject. The
-                            DependencyProperty itself always has a suffix of property with the name of the property that's
-                            being exposed as part of the registration, declares what the type of that property is, what the
-                            type of the containing type is, and then optionally it can provide a default value through
-                            metadata.
-                        </p>
-                        <p>
-                            Then paired with your DependencyProperty, you'll always have what's called a wrapper property:
-                        </p>
-                        <figure>
-                    <pre class="prettyprint"><code>public List&lt;Customer&gt; Customers
+    new PropertyMetadata(null));</pre>
+              <figcaption>Fig 02-032</figcaption>
+            </figure>
+            <p>
+              So here you can see the cleaned up Customers DependencyProperty, and just to review these, if you haven't
+              had a lot of exposure, a DependencyProperty is a <span class="code">public static readonly</span> member
+              variable on the class that declares it. That class will have to derive directly or indirectly from
+              DependencyObject. The DependencyProperty itself always has a suffix of property with the name of the
+              property that's being exposed as part of the registration, declares what the type of that property is,
+              what the type of the containing type is, and then optionally it can provide a default value through
+              metadata.
+            </p>
+            <p>
+              Then paired with your DependencyProperty, you'll always have what's called a wrapper property:
+            </p>
+            <figure>
+                    <pre class="prettyprint">public List&lt;Customer&gt; Customers
 {
     get { return (List&lt;Customer&gt;)GetValue(CustomersProperty); }
     set { SetValue(CustomersProperty, value); }
-}</code></pre>
-                            <figcaption>Fig 02-033</figcaption>
-                        </figure>
-                        <p>
-                            Which is always just a .NET property with the same name, Customers, and you can see it uses the
-                            DependencyObject base class to call <span class="code">GetValue</span> and <span class="code">SetValue</span>
-                            to read and write the underlying value of that DependencyProperty.
-                        </p>
-                        <p>
-                            This normal property is just there to make it easier to get and set the value from programmatic
-                            code. The thing that's important to understand is the XAML when you bind to Customers, it's
-                            actually only going to be using the DependencyProperty, and the binding itself is going to call
-                            <span class="code">GetValue</span> and <span class="code">SetValue</span> just like you see up
-                            above, it's not going to be calling the getters and setters of this .NET property.
-                        </p>
-                        <p>
-                            So we define one DependencyProperty for Customers, and I'll define another one for the
-                            SelectedCustomer. So now we have a DependencyProperty for the SelectedCustomer as well. Now why
-                            did I do all this, it's a lot of syntax. The reason is that DependencyProperties raise their own
-                            Change Notifications and bindings are aware of those, so if the properties are bound to our
-                            DependencyProperties, you don't have to worry about raising any kind of change notification,
-                            that'll happen under the covers automatically.
-                        </p>
-                        <p>
-                            Our code that goes and sets properties doesn't have to change because they're actually using the
-                            wrapper property here, and it's when the <span class="code">SetValue</span> on the
-                            DependencyProperty gets called that the change notification actually gets raised under the
-                            covers that the binding is listening for. So with that in place, if we go and run, now we make
-                            our selections and you can see the boxes below are updating with those selections because when
-                            SelectedCustomer changes, each of these is bound to select Customer and some property on that
-                            and it knows to re-render based on that property change.
-                        </p>
-                        <figure>
-                            <img src="./images/wpfdatabindingindepth/Fig02-034.png" class="image"/>
-                            <figcaption>Fig 02-034</figcaption>
-                        </figure>
-                    </div>
-                    <div class="panel-body">
-                        <h3>ObservableCollections</h3>
-                        <p>
-                            Now when it comes to Collections that we're going to Data Bind to, we have a change notification
-                            challenge there as well. If we're just using something like a simple array or even the <span
-                                class="code">List&lt;T&gt;</span> and we're adding and removing items from that collection,
-                            the binding is not going to know anything about that and we're not going to see the changes
-                            reflected on the screen. This is where <span
-                                class="code">ObservableCollection&lt;T&gt;</span> and the <span class="code">INotifyCollectionChanged</span>
-                            interface come into play. The base level support you need to ensure that the UI stays fresh is
-                            that your collection type needs to implement an interface called <span class="code">INotifyCollectionChanged</span>
-                            and you should see the similarity here to <span class="code">INotifyPropertyChanged</span>.
-                        </p>
-                        <figure>
-                            <img src="./images/wpfdatabindingindepth/Fig02-035.png" class="image"/>
-                            <figcaption>Fig 02-035</figcaption>
-                        </figure>
-                        <p>
-                            <span class="code">INotifyCollectionChanged</span> raises a <span
-                                class="code">CollectionChanged</span> event, so it's the conceptual dual or parallel to the
-                            INPC interface. And this one covers changes to the collection meaning additions and removals
-                            changes of what objects are currently in the collection. If you've come from previous
-                            technologies such as Windows Forms, it's important to realize that the <span class="code">CollectionChanged</span>
-                            event is only going to fire for these add, remove, replace, and clear type operations, things
-                            that change the overall set of objects in the collection. You won't get a <span class="code">CollectionChanged</span>
-                            event fired if a property on one of the objects within the collection has been modified.
-                        </p>
-                        <p>
-                            If you want to know about those, then the objects that are in the collection will need to
-                            implement <span class="code">INotifyPropertyChanged</span> or be DependencyObjects with
-                            DependencyProperties to get those property level notifications for the objects in the
-                            collection. Now the best way to go about this, as the title of the slide suggests, is to not
-                            implement anything yourself. There's a built-in collection type called <span class="code">ObservableCollection&lt;T&gt;</span>
-                            that already implements the INCC interface or <span class="code">INotifyCollectionChanged</span>,
-                            and will raise those <span
-                                class="code">CollectionChanged</span> events for adds, removes, and so on.
-                        </p>
-                        <p>
-                            So, in general, the easiest way to think of things is anytime you're going to expose a property
-                            that is a collection and you want to data bind directly to that collection, make sure that that
-                            property is defined as an <span class="code">ObservableCollection&lt;T&gt;</span>. This means
-                            that if your objects are coming in, say, from a service call or you've read them in from a
-                            database, they're not necessarily already going to be an <span class="code">ObservableCollection&lt;T&gt;</span>.
-                            The good news is that type has a constructor that takes an <span class="code">IEnumerable</span>
-                            so you can pass in any other collection type and it'll basically just iterate through that
-                            collection and add references to those same objects into your new <span class="code">ObservableCollection&lt;T&gt;</span>,
-                            and that's what you can expose for data binding. So let's take a look at the demo and see how
-                            using <span class="code">ObservableCollections</span> instead of other collection types solves
-                            our UI synchronization problems for collections.
-                        </p>
-                    </div>
-                    <div class="panel-body">
-                        <h3>Demo: ObservableCollections</h3>
-                        <div class="example">
-                            <div class="input-group">
-                                <input id="Ex03-007" type="text" class="form-control"
-                                       value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\before\EntityDataBinding\EntityDataBinding.sln">
-                                <span class="input-group-btn">
-                	        <button class="btn" data-clipboard-target="#Ex03-007">
-                        	    <img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard">
-                            </button>
-        	            </span>
-                            </div>
-                        </div>
-                        <div class="example">
-                            <div class="input-group">
-                                <input id="Ex03-008" type="text" class="form-control"
-                                       value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\after\EntityDataBinding\EntityDataBinding.sln">
-                                <span class="input-group-btn">
-                	        <button class="btn" data-clipboard-target="#Ex03-008">
-                        	    <img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard">
-                            </button>
-        	            </span>
-                            </div>
-                        </div>
-                        <p>
-                            So in this demo I'm going to hook up the rest of this form with this List of Orders for the
-                            <span class="code">SelectedCustomer</span> and then the ability to add new orders to that list
-                            from the form at the bottom. To do that, we're going to drop into the code-behind here and we're
-                            going to need a couple more properties, which I'll go ahead and define as DependencyProperties
-                            so that they can have Change Notifications as we discussed in the last demo.
-                        </p>
-                        <p>
-                            So first off, for the new order form at the bottom we're going to have an <span class="code">Order</span>
-                            object that those fields can bind to called <span class="code">NewOrder</span>:
-                        </p>
-                        <figure>
-                    <pre class="prettyprint"><code>public Order NewOrder
+}</pre>
+              <figcaption>Fig 02-033</figcaption>
+            </figure>
+            <p>
+              Which is always just a .NET property with the same name, Customers, and you can see it uses the
+              DependencyObject base class to call <span class="code">GetValue</span> and <span
+              class="code">SetValue</span> to read and write the underlying value of that DependencyProperty.
+            </p>
+            <p>
+              This normal property is just there to make it easier to get and set the value from programmatic code. The
+              thing that's important to understand is the XAML when you bind to Customers, it's actually only going to
+              be using the DependencyProperty, and the binding itself is going to call <span
+              class="code">GetValue</span> and <span class="code">SetValue</span> just like you see up above, it's not
+              going to be calling the getters and setters of this .NET property.
+            </p>
+            <p>
+              So we define one DependencyProperty for Customers, and I'll define another one for the SelectedCustomer.
+              So now we have a DependencyProperty for the SelectedCustomer as well. Now why did I do all this, it's a
+              lot of syntax. The reason is that DependencyProperties raise their own Change Notifications and bindings
+              are aware of those, so if the properties are bound to our DependencyProperties, you don't have to worry
+              about raising any kind of change notification, that'll happen under the covers automatically.
+            </p>
+            <p>
+              Our code that goes and sets properties doesn't have to change because they're actually using the wrapper
+              property here, and it's when the <span class="code">SetValue</span> on the DependencyProperty gets called
+              that the change notification actually gets raised under the covers that the binding is listening for. So
+              with that in place, if we go and run, now we make our selections and you can see the boxes below are
+              updating with those selections because when SelectedCustomer changes, each of these is bound to select
+              Customer and some property on that and it knows to re-render based on that property change.
+            </p>
+            <figure>
+              <img src="./images/wpfdatabindingindepth/Fig02-034.png" class="image"/>
+              <figcaption>Fig 02-034</figcaption>
+            </figure>
+          </div>
+          <div class="panel-body">
+            <h3>ObservableCollections</h3>
+            <p>
+              Now when it comes to Collections that we're going to Data Bind to, we have a change notification challenge
+              there as well. If we're just using something like a simple array or even the <span class="code">List&lt;T&gt;</span>
+              and we're adding and removing items from that collection, the binding is not going to know anything about
+              that and we're not going to see the changes reflected on the screen. This is where <span class="code">ObservableCollection&lt;T&gt;</span>
+              and the <span class="code">INotifyCollectionChanged</span> interface come into play. The base level
+              support you need to ensure that the UI stays fresh is that your collection type needs to implement an
+              interface called <span class="code">INotifyCollectionChanged</span> and you should see the similarity here
+              to <span class="code">INotifyPropertyChanged</span>.
+            </p>
+            <figure>
+              <img src="./images/wpfdatabindingindepth/Fig02-035.png" class="image"/>
+              <figcaption>Fig 02-035</figcaption>
+            </figure>
+            <p>
+              <span class="code">INotifyCollectionChanged</span> raises a <span class="code">CollectionChanged</span>
+              event, so it's the conceptual dual or parallel to the INPC interface. And this one covers changes to the
+              collection meaning additions and removals changes of what objects are currently in the collection. If
+              you've come from previous technologies such as Windows Forms, it's important to realize that the <span
+              class="code">CollectionChanged</span> event is only going to fire for these add, remove, replace, and
+              clear type operations, things that change the overall set of objects in the collection. You won't get a
+              <span class="code">CollectionChanged</span> event fired if a property on one of the objects within the
+              collection has been modified.
+            </p>
+            <p>
+              If you want to know about those, then the objects that are in the collection will need to implement <span
+              class="code">INotifyPropertyChanged</span> or be DependencyObjects with DependencyProperties to get those
+              property level notifications for the objects in the collection. Now the best way to go about this, as the
+              title of the slide suggests, is to not implement anything yourself. There's a built-in collection type
+              called <span class="code">ObservableCollection&lt;T&gt;</span> that already implements the INCC interface
+              or <span class="code">INotifyCollectionChanged</span>, and will raise those <span class="code">CollectionChanged</span>
+              events for adds, removes, and so on.
+            </p>
+            <p>
+              So, in general, the easiest way to think of things is anytime you're going to expose a property that is a
+              collection and you want to data bind directly to that collection, make sure that that property is defined
+              as an <span class="code">ObservableCollection&lt;T&gt;</span>. This means that if your objects are coming
+              in, say, from a service call or you've read them in from a database, they're not necessarily already going
+              to be an <span class="code">ObservableCollection&lt;T&gt;</span>. The good news is that type has a
+              constructor that takes an <span class="code">IEnumerable</span> so you can pass in any other collection
+              type and it'll basically just iterate through that collection and add references to those same objects
+              into your new <span class="code">ObservableCollection&lt;T&gt;</span>, and that's what you can expose for
+              data binding. So let's take a look at the demo and see how using <span
+              class="code">ObservableCollections</span> instead of other collection types solves our UI synchronization
+              problems for collections.
+            </p>
+          </div>
+          <div class="panel-body">
+            <h3>Demo: ObservableCollections</h3>
+            <div class="example">
+              <div class="input-group">
+                <input id="Ex03-007" type="text" class="form-control"
+                       value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\before\EntityDataBinding\EntityDataBinding.sln">
+<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex03-007"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
+              </div>
+            </div>
+            <div class="example">
+              <div class="input-group">
+                <input id="Ex03-008" type="text" class="form-control"
+                       value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\after\EntityDataBinding\EntityDataBinding.sln">
+<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex03-008"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
+              </div>
+            </div>
+            <p>
+              So in this demo I'm going to hook up the rest of this form with this List of Orders for the <span
+              class="code">SelectedCustomer</span> and then the ability to add new orders to that list from the form at
+              the bottom. To do that, we're going to drop into the code-behind here and we're going to need a couple
+              more properties, which I'll go ahead and define as DependencyProperties so that they can have Change
+              Notifications as we discussed in the last demo.
+            </p>
+            <p>
+              So first off, for the new order form at the bottom we're going to have an <span class="code">Order</span>
+              object that those fields can bind to called <span class="code">NewOrder</span>:
+            </p>
+            <figure>
+                    <pre class="prettyprint">public Order NewOrder
 {
     get { return (Order)GetValue(NewOrderProperty); }
     set { SetValue(NewOrderProperty, value); }
 }
 
 public static readonly DependencyProperty NewOrderProperty =
-    DependencyProperty.Register("NewOrder", typeof(Order), typeof(MainWindow), new PropertyMetadata(null));</code></pre>
-                            <figcaption>Fig 02-036</figcaption>
-                        </figure>
-                        <p>
-                            Then for the <span class="code">ComboBox</span> in the form we're going to have one called <span
-                                class="code">OrderStatuses</span> that's going to be populated with the choices for <span
-                                class="code">OrderStatus</span> from the database.
-                        </p>
-                        <figure>
-                    <pre class="prettyprint"><code>public List&lt;OrderStatus&gt; OrderStatuses
+    DependencyProperty.Register("NewOrder", typeof(Order), typeof(MainWindow), new PropertyMetadata(null));</pre>
+              <figcaption>Fig 02-036</figcaption>
+            </figure>
+            <p>
+              Then for the <span class="code">ComboBox</span> in the form we're going to have one called <span
+              class="code">OrderStatuses</span> that's going to be populated with the choices for <span class="code">OrderStatus</span>
+              from the database.
+            </p>
+            <figure>
+                    <pre class="prettyprint">public List&lt;OrderStatus&gt; OrderStatuses
 {
     get { return (List&lt;OrderStatus&gt;>)GetValue(OrderStatusesProperty); }
     set { SetValue(OrderStatusesProperty, value); }
 }
 
 public static readonly DependencyProperty OrderStatusesProperty =
-    DependencyProperty.Register(&quot;OrderStatuses&quot;, typeof(List&lt;OrderStatus&gt;), typeof(MainWindow), new PropertyMetadata(null));</code></pre>
-                            <figcaption>Fig 02-037</figcaption>
-                        </figure>
-                        <p>
-                            Next we're going to need to populate the Orders, so I'm going to go up here to where we are
-                            initializing our Customer information in our DataContext and add a few more things.
-                        </p>
-                        <figure>
-                    <pre class="prettyprint"><code>public MainWindow()
+    DependencyProperty.Register(&quot;OrderStatuses&quot;, typeof(List&lt;OrderStatus&gt;), typeof(MainWindow), new PropertyMetadata(null));</pre>
+              <figcaption>Fig 02-037</figcaption>
+            </figure>
+            <p>
+              Next we're going to need to populate the Orders, so I'm going to go up here to where we are initializing
+              our Customer information in our DataContext and add a few more things.
+            </p>
+            <figure>
+                    <pre class="prettyprint">public MainWindow()
 {
     InitializeComponent();
     DataContext = this;
@@ -972,22 +912,21 @@ public static readonly DependencyProperty OrderStatusesProperty =
     OrderStatuses = _DbContext.OrderStatuses.ToList();
     CustomersCombo.SelectedItem = Customers[0];
     OrderStatusCombo.SelectedIndex = 0;
-}</code></pre>
-                            <figcaption>Fig 02-038</figcaption>
-                        </figure>
-                        <p>
-                            First off, we're going to populate that <span class="code">OrderStatuses</span> collection with
-                            the list of <span class="code">OrderStatuses</span> from the database. We're still selecting the
-                            first <span class="code">Customer</span> like we were doing before and we're setting the
-                            DataContext still to the window as a whole.
-                        </p>
-                        <p>
-                            Just to emphasize from the previous demo, I could actually move the line where the <span
-                                class="code">DataContext</span> is set now to some point before we start populating the
-                            properties on whatever that DataContext is:
-                        </p>
-                        <figure>
-                    <pre class="prettyprint"><code>public MainWindow()
+}</pre>
+              <figcaption>Fig 02-038</figcaption>
+            </figure>
+            <p>
+              First off, we're going to populate that <span class="code">OrderStatuses</span> collection with the list
+              of <span class="code">OrderStatuses</span> from the database. We're still selecting the first <span
+              class="code">Customer</span> like we were doing before and we're setting the DataContext still to the
+              window as a whole.
+            </p>
+            <p>
+              Just to emphasize from the previous demo, I could actually move the line where the <span class="code">DataContext</span>
+              is set now to some point before we start populating the properties on whatever that DataContext is:
+            </p>
+            <figure>
+                    <pre class="prettyprint">public MainWindow()
 {
     InitializeComponent();
     DataContext = this;
@@ -996,57 +935,54 @@ public static readonly DependencyProperty OrderStatusesProperty =
     OrderStatuses = _DbContext.OrderStatuses.ToList();
     CustomersCombo.SelectedItem = Customers[0];
     OrderStatusCombo.SelectedIndex = 0;
-}</code></pre>
-                            <figcaption>Fig 02-039</figcaption>
-                        </figure>
-                        <p>
-                            As long as those properties raise appropriate Change Notifications, which the
-                            DependencyProperties do, then it's okay to change these after the fact of setting the
-                            DataContext.
-                        </p>
-                        <p>
-                            Now we also need to populate that <span class="code">NewOrder</span> object, so if I go down to
-                            my <span class="code">CustomerSelected</span> handler, and then add in some code:
-                        </p>
-                        <figure>
-                    <pre class="prettyprint"><code>private void OnCustomerSelected(object sender, SelectionChangedEventArgs e)
+}</pre>
+              <figcaption>Fig 02-039</figcaption>
+            </figure>
+            <p>
+              As long as those properties raise appropriate Change Notifications, which the DependencyProperties do,
+              then it's okay to change these after the fact of setting the DataContext.
+            </p>
+            <p>
+              Now we also need to populate that <span class="code">NewOrder</span> object, so if I go down to my <span
+              class="code">CustomerSelected</span> handler, and then add in some code:
+            </p>
+            <figure>
+                    <pre class="prettyprint">private void OnCustomerSelected(object sender, SelectionChangedEventArgs e)
 {
     SelectedCustomer = CustomersCombo.SelectedItem as Customer;
     NewOrder = new Order();
     NewOrder.BeginEdit();
     NewOrder.CustomerId = SelectedCustomer.Id;
     SelectedCustomer.Orders = new ObservableCollection&lt;Order&gt;(_DbContext.Orders.Where(o => o.CustomerId == SelectedCustomer.Id));
-}</code></pre>
-                            <figcaption>Fig 02-040</figcaption>
-                        </figure>
-                        <p>
-                            That code is going to new up an <span class="code">Order</span> object and set it as the <span
-                                class="code">NewOrder</span>, and set the <span class="code">CustomerId</span> of that <span
-                                class="code">NewOrder</span> to the <span class="code">SelectedCustomer</span> in the
-                            ComboBox. Then we're going to go execute a query to get the orders for that corresponding
-                            customer and push it in the <span class="code">Orders</span> collection of the <span
-                                class="code">SelectedCustomer</span> object.
-                        </p>
-                        <p>
-                            Now we just need to update our bindings a little bit in the UI. So first I can go into the XAML
-                            and I can come find my DataGrid that the Orders are supposed to show up in. I can add a binding
-                            here for the ItemsSource property pointing to that <span class="code">SelectedCustomer</span>
-                            object and the <span class="code">Orders</span> collection that hangs off of it.
-                        </p>
-                        <figure>
-                            <pre class="prettyprint"><code>&lt;DataGrid ItemsSource="{Binding SelectedCustomer.Orders}"</code></pre>
-                            <figcaption>Fig 02-041</figcaption>
-                        </figure>
-                        <p>
-                            Now we don't have any columns to find here, so it's going to auto-generate the columns based on
-                            the properties on that object.
-                        </p>
-                        <p>
-                            And then I'm going to slide down and update the fields in our Order form to include appropriate
-                            bindings.
-                        </p>
-                        <figure>
-                    <pre class="prettyprint"><code>&lt;Label Content=&quot;Order ID:&quot; /&gt;
+}</pre>
+              <figcaption>Fig 02-040</figcaption>
+            </figure>
+            <p>
+              That code is going to new up an <span class="code">Order</span> object and set it as the <span
+              class="code">NewOrder</span>, and set the <span class="code">CustomerId</span> of that <span class="code">NewOrder</span>
+              to the <span class="code">SelectedCustomer</span> in the ComboBox. Then we're going to go execute a query
+              to get the orders for that corresponding customer and push it in the <span class="code">Orders</span>
+              collection of the <span class="code">SelectedCustomer</span> object.
+            </p>
+            <p>
+              Now we just need to update our bindings a little bit in the UI. So first I can go into the XAML and I can
+              come find my DataGrid that the Orders are supposed to show up in. I can add a binding here for the
+              ItemsSource property pointing to that <span class="code">SelectedCustomer</span> object and the <span
+              class="code">Orders</span> collection that hangs off of it.
+            </p>
+            <figure>
+              <pre class="prettyprint">&lt;DataGrid ItemsSource="{Binding SelectedCustomer.Orders}"</pre>
+              <figcaption>Fig 02-041</figcaption>
+            </figure>
+            <p>
+              Now we don't have any columns to find here, so it's going to auto-generate the columns based on the
+              properties on that object.
+            </p>
+            <p>
+              And then I'm going to slide down and update the fields in our Order form to include appropriate bindings.
+            </p>
+            <figure>
+                    <pre class="prettyprint">&lt;Label Content=&quot;Order ID:&quot; /&gt;
 &lt;Label Content=&quot;{Binding Id}&quot;
     Grid.Column=&quot;1&quot; /&gt;
 &lt;Label Content=&quot;Order Date:&quot;
@@ -1065,79 +1001,76 @@ public static readonly DependencyProperty OrderStatusesProperty =
     ItemsSource=&quot;{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.OrderStatuses}&quot;
     DisplayMemberPath=&quot;Name&quot;
     SelectedValuePath=&quot;Id&quot;
-    SelectedValue=&quot;{Binding Path=NewOrder.OrderStatusId, Mode=TwoWay}"</code></pre>
-                            <figcaption>Fig 02-042</figcaption>
-                        </figure>
-                        <p>
-                            So you can see we're binding the <span class="code">OrderId</span> to the <span class="code">NewOrder</span>
-                            object's <span class="code">Id</span>, <span class="code">NewOrder.OrderDate</span>, <span
-                                class="code">NewOrder.ItemsTotal</span>, and then for the <span
-                                class="code">OrderStatuses</span> ComboBox we bind that to our <span class="code">OrderStatuses</span>
-                            collection on the window.
-                        </p>
-                        <p>
-                            So that we can push the <span class="code">SelectedValue</span> from that <span class="code">ComboBox</span>
-                            into the underlying object, we have a binding on the <span class="code">SelectedValue</span>
-                            that points to the <span class="code">NewOrder.OrderStatusId</span>, but <span class="code">SelectedValue</span>
-                            is not a two-way binding property by default, so we have to set the <span
-                                class="code">Mode</span> property here of the binding to <span class="code">TwoWay</span>.
-                            We'll get into more details on directionality of bindings in a later module.
-                        </p>
-                        <p>
-                            One other thing we're going to want to modify in the code-behind here is our <span class="code">Add</span>
-                            handler:
-                        </p>
-                        <figure>
-<pre class="prettyprint"><code>private void OnAdd(object sender, RoutedEventArgs e)
+    SelectedValue=&quot;{Binding Path=NewOrder.OrderStatusId, Mode=TwoWay}"</pre>
+              <figcaption>Fig 02-042</figcaption>
+            </figure>
+            <p>
+              So you can see we're binding the <span class="code">OrderId</span> to the <span
+              class="code">NewOrder</span> object's <span class="code">Id</span>, <span
+              class="code">NewOrder.OrderDate</span>, <span class="code">NewOrder.ItemsTotal</span>, and then for the
+              <span class="code">OrderStatuses</span> ComboBox we bind that to our <span
+              class="code">OrderStatuses</span> collection on the window.
+            </p>
+            <p>
+              So that we can push the <span class="code">SelectedValue</span> from that <span
+              class="code">ComboBox</span> into the underlying object, we have a binding on the <span class="code">SelectedValue</span>
+              that points to the <span class="code">NewOrder.OrderStatusId</span>, but <span
+              class="code">SelectedValue</span> is not a two-way binding property by default, so we have to set the
+              <span class="code">Mode</span> property here of the binding to <span class="code">TwoWay</span>. We'll get
+              into more details on directionality of bindings in a later module.
+            </p>
+            <p>
+              One other thing we're going to want to modify in the code-behind here is our <span class="code">Add</span>
+              handler:
+            </p>
+            <figure>
+<pre class="prettyprint">private void OnAdd(object sender, RoutedEventArgs e)
 {
     SelectedCustomer.Orders.Add(NewOrder);
     _DbContext.Orders.Add(NewOrder);
     _DbContext.SaveChanges();
     NewOrder = new Order { CustomerId = SelectedCustomer.Id };
-}</code></pre>
-                            <figcaption>Fig 02-043</figcaption>
-                        </figure>
-                        <p>
-                            So I'm going to add some code to that basically takes that <span
-                                class="code">NewOrder</span> object at the point where the <span class="code">Add</span>
-                            button is pressed and adds that object into the <span class="code">Orders</span> collection on
-                            the <span class="code">SelectedCustomer</span>. We're also going to persist that change so you
-                            can see that we're taking that <span
-                                class="code">NewOrder</span>, adding it to our <span class="code">DbContext</span> <span
-                                class="code">Orders</span> collection, and calling <span class="code">SaveChanges</span>.
-                            And then you can see we're setting the <span
-                                class="code">NewOrder</span> to a new <span class="code">Order</span> object, clearing it
-                            out basically, but setting the <span class="code">CustomerId</span> in case we're going to have
-                            multiple orders.
-                        </p>
-                        <p>
-                            If I go ahead and run here, we've got the orders populated for the <span class="code">SelectedCustomer</span>.
-                        </p>
-                        <figure>
-                            <img src="./images/wpfdatabindingindepth/Fig02-044.png" class="image"/>
-                            <figcaption>Fig 02-044</figcaption>
-                        </figure>
-                        <p>
-                            If we pick another customer, you can see it's updating to show just the orders for that current
-                            customer. Now if I go to one that's only got a couple showing here, and I go to enter a new
-                            order, I'll pick Halloween here as a date, we'll go with 99.90 as an Order Total, and an Order
-                            Status of PickedUp, and I click on Add.
-                        </p>
-                        <p>
-                            Now you can see the order cleared out at the bottom, but nothing happened up in the grid. If we
-                            go ahead and close, startup again, pick that same customer, we can see that new order was
-                            actually placed and it was even added to the data bound collection, it just didn't show up. And
-                            this is, again, because we need Change Notifications now at a collection level instead of a
-                            property level when you're adding and removing things from a data bound collection.
-                        </p>
-                        <p>
-                            So if we go look at our <span class="code">Customer</span> object, we can see the root problem
-                            here is that that <span class="code">Orders</span> collection on the <span
-                                class="code">SelectedCustomer</span> is just declared as a <span class="code">List</span> of
-                            <span class="code">Order</span>.
-                        </p>
-                        <figure>
-                    <pre class="prettyprint"><code>public List&lt;Order&gt; Orders
+}</pre>
+              <figcaption>Fig 02-043</figcaption>
+            </figure>
+            <p>
+              So I'm going to add some code to that basically takes that <span class="code">NewOrder</span> object at
+              the point where the <span class="code">Add</span> button is pressed and adds that object into the <span
+              class="code">Orders</span> collection on the <span class="code">SelectedCustomer</span>. We're also going
+              to persist that change so you can see that we're taking that <span class="code">NewOrder</span>, adding it
+              to our <span class="code">DbContext</span> <span class="code">Orders</span> collection, and calling <span
+              class="code">SaveChanges</span>. And then you can see we're setting the <span class="code">NewOrder</span>
+              to a new <span class="code">Order</span> object, clearing it out basically, but setting the <span
+              class="code">CustomerId</span> in case we're going to have multiple orders.
+            </p>
+            <p>
+              If I go ahead and run here, we've got the orders populated for the <span
+              class="code">SelectedCustomer</span>.
+            </p>
+            <figure>
+              <img src="./images/wpfdatabindingindepth/Fig02-044.png" class="image"/>
+              <figcaption>Fig 02-044</figcaption>
+            </figure>
+            <p>
+              If we pick another customer, you can see it's updating to show just the orders for that current customer.
+              Now if I go to one that's only got a couple showing here, and I go to enter a new order, I'll pick
+              Halloween here as a date, we'll go with 99.90 as an Order Total, and an Order Status of PickedUp, and I
+              click on Add.
+            </p>
+            <p>
+              Now you can see the order cleared out at the bottom, but nothing happened up in the grid. If we go ahead
+              and close, startup again, pick that same customer, we can see that new order was actually placed and it
+              was even added to the data bound collection, it just didn't show up. And this is, again, because we need
+              Change Notifications now at a collection level instead of a property level when you're adding and removing
+              things from a data bound collection.
+            </p>
+            <p>
+              So if we go look at our <span class="code">Customer</span> object, we can see the root problem here is
+              that that <span class="code">Orders</span> collection on the <span class="code">SelectedCustomer</span> is
+              just declared as a <span class="code">List</span> of <span class="code">Order</span>.
+            </p>
+            <figure>
+                    <pre class="prettyprint">public List&lt;Order&gt; Orders
 {
     get
     {
@@ -1148,86 +1081,85 @@ public static readonly DependencyProperty OrderStatusesProperty =
         _Orders = value;
         PropertyChanged(this, new PropertyChangedEventArs("Orders"));
     }
-}</code></pre>
-                            <figcaption>Fig 02-045</figcaption>
-                        </figure>
-                        <p>
-                            If we set the <span class="code">Orders</span> property as a whole, changed out the whole
-                            collection, we would have been fine because a PropertyChanged would have been raised and the
-                            binding would have re-bound to that new collection. But in this case we're not swapping out the
-                            whole collection, we're just reaching into that collection and adding a new item. <span
-                                class="code">List&lt;T&gt;</span> has no Change Notifications associated with that. So what
-                            we're going to want to do is change our property here to be an <span class="code">ObservableCollection&lt;T&gt;,</span>:
-                        </p>
-                        <figure>
-                            <pre class="prettyprint"><code>public ObservableCollection&lt;Order&gt; Orders</code></pre>
-                            <figcaption>Fig 02-046</figcaption>
-                        </figure>
-                        <p>
-                            We will also have to go change the member variable, as well, to be an <span class="code">ObservableCollection</span>:
-                        </p>
-                        <figure>
-                            <pre class="prettyprint"><code>private ObservableCollection&lt;Order&gt; _Orders;</code></pre>
-                            <figcaption>Fig 02-047</figcaption>
-                        </figure>
-                        <p>
-                            And there's one other place in the code-behind where we first populate that <span class="code">Orders</span>
-                            collection, so we're now newing up an <span class="code">ObservableCollection</span> and passing
-                            in the <span class="code">IEnumerable</span> that comes out of this LINQ expression to populate
-                            that collection.
-                        </p>
-                        <figure>
-                            <pre class="prettyprint"><code>SelectedCustomer.Orders = new ObservableCollection&lt;Order&gt;(_DbContext.Orders.Where(o =&gt; o.CustomerId == SelectedCustomer.Id));</code></pre>
-                            <figcaption>Fig 02-048</figcaption>
-                        </figure>
-                        <p>
-                            With that code in place, we can go ahead and run, we can make our selection, let's add a new
-                            order, this one for January 1, 33.30, and Delivered, and watch the grid up above when we click Add.
-                        </p>
-                        <figure>
-                            <img src="./images/wpfdatabindingindepth/Fig02-049.png" class="image"/>
-                            <figcaption>Fig 02-049</figcaption>
-                        </figure>
-                        <p>
-                            It shows up immediately because that <span class="code">ObservableCollection</span> class raises
-                            a <span class="code">CollectionChanged</span> event the bindings are watching for, and the
-                            binding will re-render the content based on that.
-                        </p>
-                        <p>
-                            Now in a similar fashion, I really should go up here in the code-behind:
-                        </p>
-                        <figure>
-                    <pre class="prettyprint"><code>public List&lt;Customer&gt; Customers
+}</pre>
+              <figcaption>Fig 02-045</figcaption>
+            </figure>
+            <p>
+              If we set the <span class="code">Orders</span> property as a whole, changed out the whole collection, we
+              would have been fine because a PropertyChanged would have been raised and the binding would have re-bound
+              to that new collection. But in this case we're not swapping out the whole collection, we're just reaching
+              into that collection and adding a new item. <span class="code">List&lt;T&gt;</span> has no Change
+              Notifications associated with that. So what we're going to want to do is change our property here to be an
+              <span class="code">ObservableCollection&lt;T&gt;,</span>:
+            </p>
+            <figure>
+              <pre class="prettyprint">public ObservableCollection&lt;Order&gt; Orders</pre>
+              <figcaption>Fig 02-046</figcaption>
+            </figure>
+            <p>
+              We will also have to go change the member variable, as well, to be an <span class="code">ObservableCollection</span>:
+            </p>
+            <figure>
+              <pre class="prettyprint">private ObservableCollection&lt;Order&gt; _Orders;</pre>
+              <figcaption>Fig 02-047</figcaption>
+            </figure>
+            <p>
+              And there's one other place in the code-behind where we first populate that <span
+              class="code">Orders</span> collection, so we're now newing up an <span
+              class="code">ObservableCollection</span> and passing in the <span class="code">IEnumerable</span> that
+              comes out of this LINQ expression to populate that collection.
+            </p>
+            <figure>
+              <pre class="prettyprint">SelectedCustomer.Orders = new ObservableCollection&lt;Order&gt;(_DbContext.Orders.Where(o =&gt; o.CustomerId == SelectedCustomer.Id));</pre>
+              <figcaption>Fig 02-048</figcaption>
+            </figure>
+            <p>
+              With that code in place, we can go ahead and run, we can make our selection, let's add a new order, this
+              one for January 1, 33.30, and Delivered, and watch the grid up above when we click Add.
+            </p>
+            <figure>
+              <img src="./images/wpfdatabindingindepth/Fig02-049.png" class="image"/>
+              <figcaption>Fig 02-049</figcaption>
+            </figure>
+            <p>
+              It shows up immediately because that <span class="code">ObservableCollection</span> class raises a <span
+              class="code">CollectionChanged</span> event the bindings are watching for, and the binding will re-render
+              the content based on that.
+            </p>
+            <p>
+              Now in a similar fashion, I really should go up here in the code-behind:
+            </p>
+            <figure>
+                    <pre class="prettyprint">public List&lt;Customer&gt; Customers
 {
     get { return (List&lt;Customer&gt;)GetValue(CustomersProperty); }
     set { SetValue(CustomersProperty, value); }
-}</code></pre>
-                            <figcaption>Fig 02-050</figcaption>
-                        </figure>
-                        <p>
-                            If you remember from previous demo, we had defined this list of customers that we were binding
-                            to. I'm going to replace that with <span class="code">ObservableCollection</span> as the type of
-                            that collection:
-                        </p>
-                        <figure>
-                    <pre class="prettyprint"><code>public ObservableCollection&lt;Customer&gt; Customers
+}</pre>
+              <figcaption>Fig 02-050</figcaption>
+            </figure>
+            <p>
+              If you remember from previous demo, we had defined this list of customers that we were binding to. I'm
+              going to replace that with <span class="code">ObservableCollection</span> as the type of that collection:
+            </p>
+            <figure>
+                    <pre class="prettyprint">public ObservableCollection&lt;Customer&gt; Customers
 {
     get { return (ObservableCollection&lt;Customer&gt;)GetValue(CustomersProperty); }
     set { SetValue(CustomersProperty, value); }
-}</code></pre>
-                            <figcaption>Fig 02-051</figcaption>
-                        </figure>
-                        <p>
-                            Basically, anytime you're exposing a collection for data binding purposes, if there is any
-                            chance whatsoever that items will be added and removed to it, then that collection should be an
-                            <span class="code">ObservableCollection</span>, not something like a List.
-                        </p>
-                        <p>
-                            And because of that change, we have to change the initialization code for the <span
-                                class="code">Customers</span> collection in the constructor:
-                        </p>
-                        <figure>
-                    <pre class="prettyprint"><code>public MainWindow()
+}</pre>
+              <figcaption>Fig 02-051</figcaption>
+            </figure>
+            <p>
+              Basically, anytime you're exposing a collection for data binding purposes, if there is any chance
+              whatsoever that items will be added and removed to it, then that collection should be an <span
+              class="code">ObservableCollection</span>, not something like a List.
+            </p>
+            <p>
+              And because of that change, we have to change the initialization code for the <span
+              class="code">Customers</span> collection in the constructor:
+            </p>
+            <figure>
+                    <pre class="prettyprint">public MainWindow()
 {
     DataContext = this;
 
@@ -1236,151 +1168,138 @@ public static readonly DependencyProperty OrderStatusesProperty =
     OrderStatuses = _DbContext.OrderStatuses.ToList();
     CustomersCombo.SelectedItem = Customers[0];
     OrderStatusCombo.SelectedItem = SelectedCustomer;
-}</code></pre>
-                            <figcaption>Fig 02-052</figcaption>
-                        </figure>
-                        <p>
-                            We just do a similar thing. We call the constructor of <span class="code">ObservableCollection&lt;T&gt;</span>,
-                            passing in an Enumerable to populate it, and assigning that into our property.
-                        </p>
-                    </div>
-                    <div class="panel-body">
-                        <h3>Editable Objects</h3>
-                        <p>
-                            Now another thing you can support on your entities, that honestly is not often used, but I
-                            wanted to get you exposed to it anyway here since it does relate to entities as data source
-                            objects, is <span class="code">EditableObject</span> support based on the <span
-                                class="code">IEditableObject</span> interface. What this is all about is that you may want
-                            your objects to be able to back out changes that have been made on multiple properties.
-                        </p>
-                        <p>
-                            The canonical scenario here is that your object is data bound in a DataGrid, the user goes and
-                            changes one field, tabs to the next, makes a change, tabs to the next, makes a change, and then
-                            decides, I want to back that out. DataGrids support this inherently and allow you to hit the
-                            escape key and they will actually back out those changes in memory separate from the data object
-                            itself that it's data bound to.
-                        </p>
-                        <p>
-                            But you may want to support this in something like a data entry form, as well, that you want the
-                            user to be able to tab from field to field and then maybe hit a Cancel button and back all those
-                            changes out as well. Additionally, you may have custom logic that needs to execute even in the
-                            DataGrid scenario, that when the changes are backed out you may need to do other things to
-                            related objects, for example.
-                        </p>
-                        <p>
-                            So the way you go about doing this is to simply implement the <span
-                                class="code">IEditableObject</span> interface on your data source object entity. When you do
-                            that, you're going to implement its API, which includes three members.
-                        </p>
-                        <p>One is a method called <span class="code">BeginEdit</span>, and this will be called implicitly
-                            for you by a DataGrid, but you can call it explicitly in the case of a data form. And the
-                            concept behind <span class="code">BeginEdit</span> is that you're going to save off your
-                            original values for the current entity somewhere. It can just be in some temporary member
-                            variables within the entity itself, or you could push it out to a cache somewhere that you could
-                            retrieve it from.
-                        </p>
-                        <p>
-                            If the <span class="code">EndEdit</span> method is called, then the idea is you can just discard
-                            those original values. Think of that as a commit in a transactional type of system. You're
-                            basically saying that I have successfully ended the Edit operation and so I should go ahead and
-                            keep those values around that have been modified. But if you want to back things out, the member
-                            you're going to implement there is called <span class="code">CancelEdit</span>, and this is
-                            where you would basically get those original values and override the current values of all the
-                            properties with those to restore the state of the entity back to what it was when the <span
-                                class="code">BeginEdit</span> method was called.
-                        </p>
-                        <p>
-                            Again, these are going to be called implicitly for you by a <span class="code">DataGrid</span>
-                            if your object supports it, but you can call them explicitly in other editing scenarios as well
-                            to give this kind of transactional back out of changes at an entity level. And we haven't
-                            covered DataSets yet, we will later in this module, but I should point out that DataSets
-                            implement <span class="code">IEditableObject</span> for all the Row objects, so they inherently
-                            support this API as well. So let's take a look at a demo of how you can implement <span
-                                class="code">IEditableObject</span> on your entities and the scenarios where it can help you
-                            out.
-                        </p>
-                    </div>
-                    <div class="panel-body">
-                        <h3>Demo: Editable Objects</h3>
-                        <div class="example">
-                            <div class="input-group">
-                                <input id="Ex03-009" type="text" class="form-control"
-                                       value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\before\EntityDataBinding\EntityDataBinding.sln">
-                                <span class="input-group-btn">
-                	        <button class="btn" data-clipboard-target="#Ex03-009">
-                        	    <img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard">
-                            </button>
-        	            </span>
-                            </div>
-                        </div>
-                        <div class="example">
-                            <div class="input-group">
-                                <input id="Ex03-010" type="text" class="form-control"
-                                       value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\after\EntityDataBinding\EntityDataBinding.sln">
-                                <span class="input-group-btn">
-                	        <button class="btn" data-clipboard-target="#Ex03-010">
-                        	    <img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard">
-                            </button>
-        	            </span>
-                            </div>
-                        </div>
-                        <p>
-                            In this demo, I want to show you how, where, and why you might want to implement <span
-                                class="code">IEditableObject</span> for transactional changes on entities that you're data
-                            binding to. The starting point for this one is the ending point of previous demos in the module,
-                            and what we're going to be focusing on here is the Order objects.
-                        </p>
-                        <figure>
-                    <pre class="prettyprint"><code>public class Order
+}</pre>
+              <figcaption>Fig 02-052</figcaption>
+            </figure>
+            <p>
+              We just do a similar thing. We call the constructor of <span
+              class="code">ObservableCollection&lt;T&gt;</span>, passing in an Enumerable to populate it, and assigning
+              that into our property.
+            </p>
+          </div>
+          <div class="panel-body">
+            <h3>Editable Objects</h3>
+            <p>
+              Now another thing you can support on your entities, that honestly is not often used, but I wanted to get
+              you exposed to it anyway here since it does relate to entities as data source objects, is <span
+              class="code">EditableObject</span> support based on the <span class="code">IEditableObject</span>
+              interface. What this is all about is that you may want your objects to be able to back out changes that
+              have been made on multiple properties.
+            </p>
+            <p>
+              The canonical scenario here is that your object is data bound in a DataGrid, the user goes and changes one
+              field, tabs to the next, makes a change, tabs to the next, makes a change, and then decides, I want to
+              back that out. DataGrids support this inherently and allow you to hit the escape key and they will
+              actually back out those changes in memory separate from the data object itself that it's data bound to.
+            </p>
+            <p>
+              But you may want to support this in something like a data entry form, as well, that you want the user to
+              be able to tab from field to field and then maybe hit a Cancel button and back all those changes out as
+              well. Additionally, you may have custom logic that needs to execute even in the DataGrid scenario, that
+              when the changes are backed out you may need to do other things to related objects, for example.
+            </p>
+            <p>
+              So the way you go about doing this is to simply implement the <span class="code">IEditableObject</span>
+              interface on your data source object entity. When you do that, you're going to implement its API, which
+              includes three members.
+            </p>
+            <p>One is a method called <span class="code">BeginEdit</span>, and this will be called implicitly for you by
+              a DataGrid, but you can call it explicitly in the case of a data form. And the concept behind <span
+                class="code">BeginEdit</span> is that you're going to save off your original values for the current
+              entity somewhere. It can just be in some temporary member variables within the entity itself, or you could
+              push it out to a cache somewhere that you could retrieve it from.
+            </p>
+            <p>
+              If the <span class="code">EndEdit</span> method is called, then the idea is you can just discard those
+              original values. Think of that as a commit in a transactional type of system. You're basically saying that
+              I have successfully ended the Edit operation and so I should go ahead and keep those values around that
+              have been modified. But if you want to back things out, the member you're going to implement there is
+              called <span class="code">CancelEdit</span>, and this is where you would basically get those original
+              values and override the current values of all the properties with those to restore the state of the entity
+              back to what it was when the <span class="code">BeginEdit</span> method was called.
+            </p>
+            <p>
+              Again, these are going to be called implicitly for you by a <span class="code">DataGrid</span> if your
+              object supports it, but you can call them explicitly in other editing scenarios as well to give this kind
+              of transactional back out of changes at an entity level. And we haven't covered DataSets yet, we will
+              later in this module, but I should point out that DataSets implement <span
+              class="code">IEditableObject</span> for all the Row objects, so they inherently support this API as well.
+              So let's take a look at a demo of how you can implement <span class="code">IEditableObject</span> on your
+              entities and the scenarios where it can help you out.
+            </p>
+          </div>
+          <div class="panel-body">
+            <h3>Demo: Editable Objects</h3>
+            <div class="example">
+              <div class="input-group">
+                <input id="Ex03-009" type="text" class="form-control"
+                       value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\before\EntityDataBinding\EntityDataBinding.sln">
+<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex03-009"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
+              </div>
+            </div>
+            <div class="example">
+              <div class="input-group">
+                <input id="Ex03-010" type="text" class="form-control"
+                       value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\after\EntityDataBinding\EntityDataBinding.sln">
+<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex03-010"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
+              </div>
+            </div>
+            <p>
+              In this demo, I want to show you how, where, and why you might want to implement <span class="code">IEditableObject</span>
+              for transactional changes on entities that you're data binding to. The starting point for this one is the
+              ending point of previous demos in the module, and what we're going to be focusing on here is the Order
+              objects.
+            </p>
+            <figure>
+                    <pre class="prettyprint">public class Order
 {
     public long Id { get; set; }
     public Guid CustomerId { get; set; }
     public DateTime OrderDate { get; set; }
     public int OrderStatusId { get; set; }
     public decimal ItemsTotal { get; set; }
-}</code></pre>
-                            <figcaption>Fig 02-053</figcaption>
-                        </figure>
-                        <p>
-                            If we go ahead and run the app, the first thing to notice is that the DataGrid in WPF already
-                            has support for backing out changes or rolling back changes as you edit an object. As soon as
-                            you put a row into Edit mode, like I've just done by clicking into a cell, and start modifying
-                            the values there, as long as my focus stays on that row I can hit escape and you can see it
-                            backed out the changes.
-                        </p>
-                        <figure>
-                            <img src="./images/wpfdatabindingindepth/Fig02-054.png" class="image"/>
-                            <figcaption>Fig 02-054</figcaption>
-                        </figure>
-                        <p>
-                            So, really, while a row is in Edit mode it's creating a temporary object in memory and modifying
-                            the values on that. Now there's a data binding Update mode we'll get to in a later module where
-                            it might be pushing those changes as you tab out of the field. So I could make this change, tab
-                            out of the field, and you can get it to write it to the underlying object immediately, but by
-                            default it's not doing that.
-                        </p>
-                        <p>
-                            If we hit escape, then it backs those things out.
-                        </p>
-                        <figure>
-                            <img src="./images/wpfdatabindingindepth/Fig02-055.png" class="image"/>
-                            <figcaption>Fig 02-055</figcaption>
-                        </figure>
-                        <p>
-                            Now whether you support the immediate update mode or not, you might want to have your object
-                            notified, because it might need to refresh its values from the database, for example, instead of
-                            just directly from memory. So that's one place where <span class="code">IEditableObject</span>
-                            comes in. The other would be if we were editing our order down at the bottom and wanted to back
-                            out changes here when we click Cancel, then one way to go about it would be to support <span
-                                class="code">IEditableObject</span> on that order object.
-                        </p>
-                        <p>
-                            So how do we go about doing that? Well, first off, if we're data binding to these order
-                            entities, as we covered in a previous demo, we really should be supporting <span class="code">INotifyPropertyChanged</span>
-                            on this object. So the first change I'm going to make is to do that.
-                        </p>
-                        <figure>
-                    <pre class="prettyprint"><code>namespace EntityDataBinding
+}</pre>
+              <figcaption>Fig 02-053</figcaption>
+            </figure>
+            <p>
+              If we go ahead and run the app, the first thing to notice is that the DataGrid in WPF already has support
+              for backing out changes or rolling back changes as you edit an object. As soon as you put a row into Edit
+              mode, like I've just done by clicking into a cell, and start modifying the values there, as long as my
+              focus stays on that row I can hit escape and you can see it backed out the changes.
+            </p>
+            <figure>
+              <img src="./images/wpfdatabindingindepth/Fig02-054.png" class="image"/>
+              <figcaption>Fig 02-054</figcaption>
+            </figure>
+            <p>
+              So, really, while a row is in Edit mode it's creating a temporary object in memory and modifying the
+              values on that. Now there's a data binding Update mode we'll get to in a later module where it might be
+              pushing those changes as you tab out of the field. So I could make this change, tab out of the field, and
+              you can get it to write it to the underlying object immediately, but by default it's not doing that.
+            </p>
+            <p>
+              If we hit escape, then it backs those things out.
+            </p>
+            <figure>
+              <img src="./images/wpfdatabindingindepth/Fig02-055.png" class="image"/>
+              <figcaption>Fig 02-055</figcaption>
+            </figure>
+            <p>
+              Now whether you support the immediate update mode or not, you might want to have your object notified,
+              because it might need to refresh its values from the database, for example, instead of just directly from
+              memory. So that's one place where <span class="code">IEditableObject</span> comes in. The other would be
+              if we were editing our order down at the bottom and wanted to back out changes here when we click Cancel,
+              then one way to go about it would be to support <span class="code">IEditableObject</span> on that order
+              object.
+            </p>
+            <p>
+              So how do we go about doing that? Well, first off, if we're data binding to these order entities, as we
+              covered in a previous demo, we really should be supporting <span
+              class="code">INotifyPropertyChanged</span> on this object. So the first change I'm going to make is to do
+              that.
+            </p>
+            <figure>
+                    <pre class="prettyprint">namespace EntityDataBinding
 {
     public class Order : INotifyPropertyChanged
     {
@@ -1401,30 +1320,29 @@ public static readonly DependencyProperty OrderStatusesProperty =
             }
             set
             {
-                _Id = value;</code></pre>
-                            <figcaption>Fig 02-056</figcaption>
-                        </figure>
-                        <p>
-                            So you can see I've added the <span class="code">INotifyPropertyChanged</span> interface and the
-                            corresponding event onto my Order object, I've expanded all the properties to have backing
-                            member variables and to raise the <span class="code">PropertyChanged</span> event when those
-                            change. So that's the starting point is make it a good object for data binding. The second part
-                            is to implement the <span class="code">IEditableObject</span> interface, so I declare that I
-                            want to implement that interface:
-                        </p>
-                        <figure>
-                    <pre class="prettyprint"><code>namespace EntityDataBinding
+                _Id = value;</pre>
+              <figcaption>Fig 02-056</figcaption>
+            </figure>
+            <p>
+              So you can see I've added the <span class="code">INotifyPropertyChanged</span> interface and the
+              corresponding event onto my Order object, I've expanded all the properties to have backing member
+              variables and to raise the <span class="code">PropertyChanged</span> event when those change. So that's
+              the starting point is make it a good object for data binding. The second part is to implement the <span
+              class="code">IEditableObject</span> interface, so I declare that I want to implement that interface:
+            </p>
+            <figure>
+                    <pre class="prettyprint">namespace EntityDataBinding
 {
-    public class Order : INotifyPropertyChanged, IEditableObject</code></pre>
-                            <figcaption>Fig 02-057</figcaption>
-                        </figure>
-                        <p>
-                            I can stub out the implementation using Visual Studio. So you can see the interface defines
-                            three methods, <span class="code">BeginEdit</span>, <span class="code">CancelEdit</span>, and
-                            <span class="code">EndEdit</span>:
-                        </p>
-                        <figure>
-                    <pre class="prettyprint"><code>public void BeginEdit()
+    public class Order : INotifyPropertyChanged, IEditableObject</pre>
+              <figcaption>Fig 02-057</figcaption>
+            </figure>
+            <p>
+              I can stub out the implementation using Visual Studio. So you can see the interface defines three methods,
+              <span class="code">BeginEdit</span>, <span class="code">CancelEdit</span>, and <span
+              class="code">EndEdit</span>:
+            </p>
+            <figure>
+                    <pre class="prettyprint">public void BeginEdit()
 {
     throw new NotImplementedException();
 }
@@ -1437,21 +1355,21 @@ public void CancelEdit()
 public void EndEdit()
 {
     throw new NotImplementedException();
-}</code></pre>
-                            <figcaption>Fig 02-058</figcaption>
-                        </figure>
-                        <p>
-                            The idea here is that when you go into an Edit mode, such as in the DataGrid row, you can call
-                            the <span class="code">BeginEdit</span> method. If the user escapes and cancels those changes,
-                            it can call <span class="code">CancelEdit</span>, and if they complete the changes normally then
-                            it'll call <span class="code">EndEdit</span>.
-                        </p>
-                        <p>
-                            In the case of the DataGrid, that would happen when the row focus changes to a different row. So
-                            what do we really need to do on these methods? Well let me add some implementation:
-                        </p>
-                        <figure>
-                    <pre class="prettyprint"><code>public void BeginEdit()
+}</pre>
+              <figcaption>Fig 02-058</figcaption>
+            </figure>
+            <p>
+              The idea here is that when you go into an Edit mode, such as in the DataGrid row, you can call the <span
+              class="code">BeginEdit</span> method. If the user escapes and cancels those changes, it can call <span
+              class="code">CancelEdit</span>, and if they complete the changes normally then it'll call <span
+              class="code">EndEdit</span>.
+            </p>
+            <p>
+              In the case of the DataGrid, that would happen when the row focus changes to a different row. So what do
+              we really need to do on these methods? Well let me add some implementation:
+            </p>
+            <figure>
+                    <pre class="prettyprint">public void BeginEdit()
 {
     _TempValues = new Order()
     {
@@ -1461,261 +1379,245 @@ public void EndEdit()
         OrderStatusId = OrderStatusId,
         ItemsTotal = ItemsTotal
     };
-}</code></pre>
-                            <figcaption>Fig 02-059</figcaption>
-                        </figure>
-                        <p>
-                            And you can see what I'm doing here is I've got a <span class="code">TempValues</span> object
-                            that's declared as a member variable on the class that is an <span class="code">Order</span>
-                            itself:
-                        </p>
-                        <figure>
-                            <pre class="prettyprint"><code>private Order _TempValues;</code></pre>
-                            <figcaption>Fig 02-060</figcaption>
-                        </figure>
-                        <p>
-                            So it's just a place to stash the temporary values for each of our properties. And you can see I
-                            new up an <span class="code">Order</span> object when we go into the <span class="code">BeginEdit</span>
-                            mode and stash off all the values of my properties into the properties of that temporary object.
-                        </p>
-                        <p>
-                            If <span class="code">CancelEdit</span> is called, we just restore the property values to those
-                            original values:
-                        </p>
-                        <figure>
-                    <pre class="prettyprint"><code>public void CancelEdit()
+}</pre>
+              <figcaption>Fig 02-059</figcaption>
+            </figure>
+            <p>
+              And you can see what I'm doing here is I've got a <span class="code">TempValues</span> object that's
+              declared as a member variable on the class that is an <span class="code">Order</span> itself:
+            </p>
+            <figure>
+              <pre class="prettyprint">private Order _TempValues;</pre>
+              <figcaption>Fig 02-060</figcaption>
+            </figure>
+            <p>
+              So it's just a place to stash the temporary values for each of our properties. And you can see I new up an
+              <span class="code">Order</span> object when we go into the <span class="code">BeginEdit</span> mode and
+              stash off all the values of my properties into the properties of that temporary object.
+            </p>
+            <p>
+              If <span class="code">CancelEdit</span> is called, we just restore the property values to those original
+              values:
+            </p>
+            <figure>
+                    <pre class="prettyprint">public void CancelEdit()
 {
     Id = _TempValues.Id;
     CustomerId = _TempValues.CustomerId;
     OrderDate = _TempValues.OrderDate;
     OrderStatusId = _TempValues.OrderStatusId;
     ItemsTotal = _TempValues.ItemsTotal;
-}</code></pre>
-                            <figcaption>Fig 02-061</figcaption>
-                        </figure>
-                        <p>
-                            If <span class="code">EndEdit</span> is called we throw away our temporary values because
-                            they're no longer needed
-                        </p>
-                        <figure>
-                    <pre class="prettyprint"><code>public void EndEdit()
+}</pre>
+              <figcaption>Fig 02-061</figcaption>
+            </figure>
+            <p>
+              If <span class="code">EndEdit</span> is called we throw away our temporary values because they're no
+              longer needed
+            </p>
+            <figure>
+                    <pre class="prettyprint">public void EndEdit()
 {
     _TempValues = null;
-}</code></pre>
-                            <figcaption>Fig 02-062</figcaption>
-                        </figure>
-                        <p>
-                            So just a simple, straightforward, brute-force kind of approach to implementing <span
-                                class="code">IEditableObject</span>.
-                        </p>
-                        <p>
-                            With that in place, I can set some breakpoints here (on the first lines of the BeginEdit and
-                            CancelEdit methods) and go ahead and run:
-                        </p>
-                        <p>
-                            Now we'll see as I click into a cell, <span class="code">BeginEdit</span> is called.
-                        </p>
-                        <p>
-                            So we have a chance to stash off our values and we can go ahead and start editing that. I can
-                            tab off the fields and it's holding onto those values, I can change the OrderStatusId to 3,
-                            maybe change the ItemsTotal to 99, and as long as I don't tab out, which will take me to the
-                            next row, I can hit escape and now our <span class="code">CancelEdit</span> is being called.
-                        </p>
-                        <p>
-                            So it just gives your code a chance to be involved in that <span class="code">EditCancel</span>
-                            process and to do whatever is necessary to restore the state of your object on Cancel.
-                        </p>
-                        <p>
-                            Now what if we wanted to leverage this for our entry form down below for creating a new order
-                            for when the Cancel button is hit? If we wanted to back out the changes to the <span
-                                class="code">NewOrder</span> object that's being held in the window?
-                        </p>
-                        <figure>
-                            <img src="./images/wpfdatabindingindepth/Fig02-066.png" class="image"/>
-                            <figcaption>Fig 02-066</figcaption>
-                        </figure>
-                        <p>
-                            To do that, we'd want to go to the place where the <span class="code">NewOrder</span> is
-                            initiated and that editing can begin.
-                        </p>
-                        <figure>
-                    <pre class="prettyprint"><code>private void OnCustomerSelected(object sender, SelectionChangedEventArgs e)
+}</pre>
+              <figcaption>Fig 02-062</figcaption>
+            </figure>
+            <p>
+              So just a simple, straightforward, brute-force kind of approach to implementing <span class="code">IEditableObject</span>.
+            </p>
+            <p>
+              With that in place, I can set some breakpoints here (on the first lines of the BeginEdit and CancelEdit
+              methods) and go ahead and run:
+            </p>
+            <p>
+              Now we'll see as I click into a cell, <span class="code">BeginEdit</span> is called.
+            </p>
+            <p>
+              So we have a chance to stash off our values and we can go ahead and start editing that. I can tab off the
+              fields and it's holding onto those values, I can change the OrderStatusId to 3, maybe change the
+              ItemsTotal to 99, and as long as I don't tab out, which will take me to the next row, I can hit escape and
+              now our <span class="code">CancelEdit</span> is being called.
+            </p>
+            <p>
+              So it just gives your code a chance to be involved in that <span class="code">EditCancel</span> process
+              and to do whatever is necessary to restore the state of your object on Cancel.
+            </p>
+            <p>
+              Now what if we wanted to leverage this for our entry form down below for creating a new order for when the
+              Cancel button is hit? If we wanted to back out the changes to the <span class="code">NewOrder</span>
+              object that's being held in the window?
+            </p>
+            <figure>
+              <img src="./images/wpfdatabindingindepth/Fig02-066.png" class="image"/>
+              <figcaption>Fig 02-066</figcaption>
+            </figure>
+            <p>
+              To do that, we'd want to go to the place where the <span class="code">NewOrder</span> is initiated and
+              that editing can begin.
+            </p>
+            <figure>
+                    <pre class="prettyprint">private void OnCustomerSelected(object sender, SelectionChangedEventArgs e)
 {
     SelectedCustomer = CustomersCombo.SelectedItem as Customer;
     NewOrder = new Order();
     NewOrder.BeginEdit();
     NewOrder.CustomerId = SelectedCustomer.Id;
     SelectedCustomer.Orders = new ObservableCollection&lt;Order&gt;(_DbContext.Orders.Where(o =&gt; o.CustomerId == SelectedCustomer.Id));
-}</code></pre>
-                            <figcaption>Fig 02-067</figcaption>
-                        </figure>
-                        <p>
-                            So in our case, that's as soon as the <span class="code">Customer</span> is selected we could
-                            call <span class="code">BeginEdit</span> on the <span class="code">NewOrder</span> object. Then
-                            when the Add button is pressed, that's basically the success case, we would call <span
-                                class="code">EndEdit</span>:
-                        </p>
-                        <figure>
-                    <pre class="prettyprint"><code>private void OnAdd(object sender, RoutedEventArgs e)
+}</pre>
+              <figcaption>Fig 02-067</figcaption>
+            </figure>
+            <p>
+              So in our case, that's as soon as the <span class="code">Customer</span> is selected we could call <span
+              class="code">BeginEdit</span> on the <span class="code">NewOrder</span> object. Then when the Add button
+              is pressed, that's basically the success case, we would call <span class="code">EndEdit</span>:
+            </p>
+            <figure>
+                    <pre class="prettyprint">private void OnAdd(object sender, RoutedEventArgs e)
 {
     SelectedCustomer.Orders.Add(NewOrder);
     _DbContext.Orders.Add(NewOrder);
     _DbContext.SaveChanges();
     NewOrder = new Order { CustomerId = SelectedCustomer.Id };
-}</code></pre>
-                            <figcaption>Fig 02-068</figcaption>
-                        </figure>
-                        <p>
-                            and then in <span class="code">Cancel</span>, naturally we would call <span class="code">CancelEdit</span>.
-                        </p>
-                        <figure>
-<pre class="prettyprint"><code>
+}</pre>
+              <figcaption>Fig 02-068</figcaption>
+            </figure>
+            <p>
+              and then in <span class="code">Cancel</span>, naturally we would call <span class="code">CancelEdit</span>.
+            </p>
+            <figure>
+<pre class="prettyprint">
         private void OnCancel(object sender, RoutedEventArgs e)
         {
             NewOrder.CancelEdit();
-        }</code></pre>
-                            <figcaption>Fig 02-069</figcaption>
-                        </figure>
-                        <p>
-                            With those changes in place, we can run, we could go down here and start editing our Order
-                            object (Order Date, Order Total and Order Status):
-                        </p>
-                        <figure>
-                            <img src="./images/wpfdatabindingindepth/Fig02-070.png" class="image"/>
-                            <figcaption>Fig 02-070</figcaption>
-                        </figure>
-                        <p>
-                            Then if I click the Cancel button, watch the fields revert back to their defaults.
-                        </p>
-                        <figure>
-                            <img src="./images/wpfdatabindingindepth/Fig02-071.png" class="image"/>
-                            <figcaption>Fig 02-071</figcaption>
-                        </figure>
-                        <p>
-                            So that's all there is to <span class="code">IEditableObject</span>, implement the interface,
-                            define the <span class="code">Begin</span>, <span class="code">Cancel</span>, and <span
-                                class="code">End Edit</span> methods, stashing off the values somewhere appropriate, and
-                            being able to restore those values on <span class="code">CancelEdit</span>. And then if you have
-                            explicit Start and End processes for editing and forms, you can call <span class="code">BeginEdit</span>
-                            and then call <span class="code">EndEdit</span> at the appropriate point or <span class="code">Cancel</span>
-                            if you need to back out changes.
-                        </p>
-                    </div>
-                    <div class="panel-body">
-                        <h3>Collection Views</h3>
-                        <p>
-                            Now another common concept in data binding and collections is the concept of the "Current"
-                            object in the collection. If you came from a Windows Forms background, there was a thing called
-                            the Currency Manager under the covers of a form that managed this aspect of data binding. WPF
-                            has something equivalent.
-                        </p>
-                        <p>
-                            Basically what happens is when you data bind to a collection in WPF, WPF is always going to wrap
-                            that collection in an implementation of the <span class="code">ICollectionView</span> interface.
-                            This <span class="code">ICollectionView</span> interface does a number of things, but one of the
-                            main things it does that we'll talk about in this module is the concept of keeping track of what
-                            is the "current" object in that bound collection.
-                        </p>
-                        <p>
-                            Because, when data binding in WPF, you can have your data source or your <span class="code">DataContext</span>
-                            be an entire collection of objects, but you can have bindings within the elements that expect a
-                            single object, and the single object they're going to pick is the current object. So, for
-                            example, if you set the overall <span class="code">DataContext</span> for the entire form to be
-                            a collection of customers, but then you have a <span class="code">TextBox.Text</span> property
-                            that's bound to <span class="code">Customer Name</span>, it's just going to get the name off of
-                            the current customer, and it does that because of this <span class="code">ICollectionView</span>
-                            support.
-                        </p>
-                        <p>
-                            So through the <span class="code">ICollectionView</span>, you can obtain a reference to the
-                            current object. There's also APIs on that interface to be able to control the current index to
-                            move to next, move to previous, and things like that to support paging type operations. So the
-                            <span class="code">ICollectionView</span> exposes other capabilities as well, including sorting,
-                            filtering, and paging, and we'll take a look at those in a later module. Here we're just going
-                            to focus on this currency aspect of the <span
-                                class="code">ICollectionView</span>, so let's take a look at a demo of how this affects us
-                            and how you can use it.
-                        </p>
-                    </div>
-                    <div class="panel-body">
-                        <h3>Demo: Collection Views</h3>
-                        <div class="example">
-                            <div class="input-group">
-                                <input id="Ex03-011" type="text" class="form-control"
-                                       value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\before\EntityDataBinding\EntityDataBinding.sln">
-                                <span class="input-group-btn">
-                	        <button class="btn" data-clipboard-target="#Ex03-011">
-                        	    <img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard">
-                            </button>
-        	            </span>
-                            </div>
-                        </div>
-                        <div class="example">
-                            <div class="input-group">
-                                <input id="Ex03-012" type="text" class="form-control"
-                                       value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\after\EntityDataBinding\EntityDataBinding.sln">
-                                <span class="input-group-btn">
-                	        <button class="btn" data-clipboard-target="#Ex03-012">
-                        	    <img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard">
-                            </button>
-        	            </span>
-                            </div>
-                        </div>
-                        <p>
-                            In this demo, I want to show you some of the basics of <span class="code">CollectionViews</span>
-                            and working with those to control the current object within a data bound collection. And then
-                            we'll change the way our form works slightly so that when an order is selected in the <span
-                                class="code">DataGrid</span> in the middle here:
-                        </p>
-                        <figure>
-                            <img src="./images/wpfdatabindingindepth/Fig02-072.png" class="image"/>
-                            <figcaption>Fig 02-072</figcaption>
-                        </figure>
-                        <p>
-                            Its details show up in the fields down below:
-                        </p>
-                        <figure>
-                            <img src="./images/wpfdatabindingindepth/Fig02-073.png" class="image"/>
-                            <figcaption>Fig 02-073</figcaption>
-                        </figure>
-                        <p>
-                            To do that implies some currency between the form at the bottom and the <span class="code">DataGrid</span>
-                            in the middle.
-                        </p>
-                        <p>
-                            So the first thing I'm going to do is I'm going to go into the XAML and go find my <span
-                                class="code">DataGrid</span> and add another property on it called <span class="code">IsSynchronizedWithCurrentItem</span>:
-                        </p>
-                        <figure>
-                    <pre class="prettyprint"><code>&lt;DataGrid ItemsSource=&quot;{Binding SelectedCustomer.Orders}&quot;
-                      IsSynchronizedWithCurrentItem=&quot;True&quot;&gt;</code></pre>
-                            <figcaption>Fig 02-074</figcaption>
-                        </figure>
-                        <p>
-                            Now the key thing to understand here is, anytime you data bind to a collection, such as <span
-                                class="code">Orders</span> here:
-                        </p>
-                        <figure>
-                        <pre class="prettyprint"><code>&lt;DataGrid ItemsSource=&quot;{Binding SelectedCustomer.Orders}&quot;
-                      IsSynchronizedWithCurrentItem=&quot;True&quot;&gt;</code></pre>
-                            <figcaption>Fig 02-075</figcaption>
-                        </figure>
-                        <p>
-                            <span class="code">Customers</span> here,
-                        </p>
-                        <figure>
-                    <pre class="prettyprint"><code>&lt;ComboBox x:Name=&quot;CustomersCombo&quot;
+        }</pre>
+              <figcaption>Fig 02-069</figcaption>
+            </figure>
+            <p>
+              With those changes in place, we can run, we could go down here and start editing our Order object (Order
+              Date, Order Total and Order Status):
+            </p>
+            <figure>
+              <img src="./images/wpfdatabindingindepth/Fig02-070.png" class="image"/>
+              <figcaption>Fig 02-070</figcaption>
+            </figure>
+            <p>
+              Then if I click the Cancel button, watch the fields revert back to their defaults.
+            </p>
+            <figure>
+              <img src="./images/wpfdatabindingindepth/Fig02-071.png" class="image"/>
+              <figcaption>Fig 02-071</figcaption>
+            </figure>
+            <p>
+              So that's all there is to <span class="code">IEditableObject</span>, implement the interface, define the
+              <span class="code">Begin</span>, <span class="code">Cancel</span>, and <span class="code">End Edit</span>
+              methods, stashing off the values somewhere appropriate, and being able to restore those values on <span
+              class="code">CancelEdit</span>. And then if you have explicit Start and End processes for editing and
+              forms, you can call <span class="code">BeginEdit</span> and then call <span class="code">EndEdit</span> at
+              the appropriate point or <span class="code">Cancel</span> if you need to back out changes.
+            </p>
+          </div>
+          <div class="panel-body">
+            <h3>Collection Views</h3>
+            <p>
+              Now another common concept in data binding and collections is the concept of the "Current" object in the
+              collection. If you came from a Windows Forms background, there was a thing called the Currency Manager
+              under the covers of a form that managed this aspect of data binding. WPF has something equivalent.
+            </p>
+            <p>
+              Basically what happens is when you data bind to a collection in WPF, WPF is always going to wrap that
+              collection in an implementation of the <span class="code">ICollectionView</span> interface. This <span
+              class="code">ICollectionView</span> interface does a number of things, but one of the main things it does
+              that we'll talk about in this module is the concept of keeping track of what is the "current" object in
+              that bound collection.
+            </p>
+            <p>
+              Because, when data binding in WPF, you can have your data source or your <span
+              class="code">DataContext</span> be an entire collection of objects, but you can have bindings within the
+              elements that expect a single object, and the single object they're going to pick is the current object.
+              So, for example, if you set the overall <span class="code">DataContext</span> for the entire form to be a
+              collection of customers, but then you have a <span class="code">TextBox.Text</span> property that's bound
+              to <span class="code">Customer Name</span>, it's just going to get the name off of the current customer,
+              and it does that because of this <span class="code">ICollectionView</span> support.
+            </p>
+            <p>
+              So through the <span class="code">ICollectionView</span>, you can obtain a reference to the current
+              object. There's also APIs on that interface to be able to control the current index to move to next, move
+              to previous, and things like that to support paging type operations. So the <span class="code">ICollectionView</span>
+              exposes other capabilities as well, including sorting, filtering, and paging, and we'll take a look at
+              those in a later module. Here we're just going to focus on this currency aspect of the <span class="code">ICollectionView</span>,
+              so let's take a look at a demo of how this affects us and how you can use it.
+            </p>
+          </div>
+          <div class="panel-body">
+            <h3>Demo: Collection Views</h3>
+            <div class="example">
+              <div class="input-group">
+                <input id="Ex03-011" type="text" class="form-control"
+                       value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\before\EntityDataBinding\EntityDataBinding.sln">
+<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex03-011"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
+              </div>
+            </div>
+            <div class="example">
+              <div class="input-group">
+                <input id="Ex03-012" type="text" class="form-control"
+                       value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\after\EntityDataBinding\EntityDataBinding.sln">
+<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex03-012"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
+              </div>
+            </div>
+            <p>
+              In this demo, I want to show you some of the basics of <span class="code">CollectionViews</span> and
+              working with those to control the current object within a data bound collection. And then we'll change the
+              way our form works slightly so that when an order is selected in the <span class="code">DataGrid</span> in
+              the middle here:
+            </p>
+            <figure>
+              <img src="./images/wpfdatabindingindepth/Fig02-072.png" class="image"/>
+              <figcaption>Fig 02-072</figcaption>
+            </figure>
+            <p>
+              Its details show up in the fields down below:
+            </p>
+            <figure>
+              <img src="./images/wpfdatabindingindepth/Fig02-073.png" class="image"/>
+              <figcaption>Fig 02-073</figcaption>
+            </figure>
+            <p>
+              To do that implies some currency between the form at the bottom and the <span class="code">DataGrid</span>
+              in the middle.
+            </p>
+            <p>
+              So the first thing I'm going to do is I'm going to go into the XAML and go find my <span class="code">DataGrid</span>
+              and add another property on it called <span class="code">IsSynchronizedWithCurrentItem</span>:
+            </p>
+            <figure>
+                    <pre class="prettyprint">&lt;DataGrid ItemsSource=&quot;{Binding SelectedCustomer.Orders}&quot;
+                      IsSynchronizedWithCurrentItem=&quot;True&quot;&gt;</pre>
+              <figcaption>Fig 02-074</figcaption>
+            </figure>
+            <p>
+              Now the key thing to understand here is, anytime you data bind to a collection, such as <span
+              class="code">Orders</span> here:
+            </p>
+            <figure>
+                        <pre class="prettyprint">&lt;DataGrid ItemsSource=&quot;{Binding SelectedCustomer.Orders}&quot;
+                      IsSynchronizedWithCurrentItem=&quot;True&quot;&gt;</pre>
+              <figcaption>Fig 02-075</figcaption>
+            </figure>
+            <p>
+              <span class="code">Customers</span> here,
+            </p>
+            <figure>
+                    <pre class="prettyprint">&lt;ComboBox x:Name=&quot;CustomersCombo&quot;
     ItemsSource=&quot;{Binding Customers}&quot;
     DisplayMemberPath=&quot;FullName&quot;
     SelectedValuePath=&quot;Id&quot;
-    SelectionChanged=&quot;OnCustomerSelected&quot; /&gt;</code></pre>
-                            <figcaption>Fig 02-076</figcaption>
-                        </figure>
-                        <p>
-                            or <span class="code">OrderStatuses</span> here:
-                        </p>
-                        <figure>
-                    <pre class="prettyprint"><code>&lt;ComboBox x:Name=&quot;OrderStatusCombo&quot;
+    SelectionChanged=&quot;OnCustomerSelected&quot; /&gt;</pre>
+              <figcaption>Fig 02-076</figcaption>
+            </figure>
+            <p>
+              or <span class="code">OrderStatuses</span> here:
+            </p>
+            <figure>
+                    <pre class="prettyprint">&lt;ComboBox x:Name=&quot;OrderStatusCombo&quot;
     ItemsSource=&quot;{Binding OrderStatuses}&quot;
     DisplayMemberPath=&quot;Name&quot;
     SelectedValuePath=&quot;Id&quot;
@@ -1723,57 +1625,54 @@ public void EndEdit()
     Grid.Column=&quot;1&quot;
     Grid.Row=&quot;3&quot;
     Width=&quot;200&quot;
-    HorizontalAlignment=&quot;Left&quot; /&gt;</code></pre>
-                            <figcaption>Fig 02-077</figcaption>
-                        </figure>
-                        <p>
-                            WPF is always going to be wrapping your collection in a <span class="code">CollectionView</span>
-                            and <span class="code">CollectionViews</span> are something that support a number of things,
-                            we'll look at more details in a later module on binding collection-oriented controls, but one of
-                            the most important things a <span class="code">CollectionView</span> does is keeps track of a
-                            current item within a data bound collection. That current item in our case can correspond to a
-                            selected item in something like a <span class="code">DataGrid</span>, <span class="code">ComboBox</span>
-                            or <span class="code">ListBox</span>. And the <span
-                                class="code">IsSynchronizedWithCurrentItem</span> is basically a signal to WPF that says, I
-                            already know you're going to wrap this collection in the <span
-                                class="code">CollectionView</span>, so anytime I select something on this, make sure it is
-                            marked as the <span class="code">CurrentItem</span> in the corresponding <span
-                                class="code">CollectionView</span> for this collection.
-                        </p>
-                        <p>
-                            Next, I'm going to drop in here and replace the <span class="code">Grid</span> that has our
-                            <span class="code">AddOrder</span> form in it. All I did here is I put some minor changes. One
-                            is that at a <span class="code">Grid</span> level, notice that I'm setting the <span
-                                class="code">DataContext</span> for the grid as a whole to the exact same collection that my
-                            <span class="code">DataGrid</span> is bound to:
-                        </p>
-                        <figure>
-                    <pre class="prettyprint"><code>&lt;DataGrid ItemsSource=&quot;{Binding SelectedCustomer.Orders}&quot;
-                      IsSynchronizedWithCurrentItem=&quot;True&quot;&gt;</code></pre>
-                            <figcaption>Fig 02-078</figcaption>
-                        </figure>
-                        <p>
-                            When WPF wraps a collection in the <span class="code">CollectionView</span>, it'll create one
-                            <span class="code">CollectionView</span> for all references to that same collection. So even
-                            though this <span class="code">DataContext</span> is pointing through this binding and this
-                            <span
-                                    class="code">ItemsSource</span> is pointing through this binding, they end up pointing
-                            to the same <span class="code">CollectionView</span> instance.
-                        </p>
-                        <p>
-                            So if I select an item in the DataGrid and it sets the <span class="code">CurrentItem</span>,
-                            it's also implicitly setting the <span class="code">CurrentItem</span> for the <span
-                                class="code">CollectionView</span> that's going to be used for the <span
-                                class="code">Grid</span> below it.
-                        </p>
-                        <p>
-                            Down inside of the <span class="code">Grid</span> now, instead of saying <span class="code">NewOrder.Id</span>,
-                            and <span class="code">NewOrder.OrderDate</span>, and <span
-                                class="code">NewOrder.ItemsTotal</span>, we're just saying <span class="code">Id</span>,
-                            <span class="code">OrderDate</span>, and <span class="code">ItemsTotal</span>:
-                        </p>
-                        <figure>
-                    <pre class="prettyprint"><code>&lt;Label Content=&quot;Order ID:&quot; /&gt;
+    HorizontalAlignment=&quot;Left&quot; /&gt;</pre>
+              <figcaption>Fig 02-077</figcaption>
+            </figure>
+            <p>
+              WPF is always going to be wrapping your collection in a <span class="code">CollectionView</span> and <span
+              class="code">CollectionViews</span> are something that support a number of things, we'll look at more
+              details in a later module on binding collection-oriented controls, but one of the most important things a
+              <span class="code">CollectionView</span> does is keeps track of a current item within a data bound
+              collection. That current item in our case can correspond to a selected item in something like a <span
+              class="code">DataGrid</span>, <span class="code">ComboBox</span> or <span class="code">ListBox</span>. And
+              the <span class="code">IsSynchronizedWithCurrentItem</span> is basically a signal to WPF that says, I
+              already know you're going to wrap this collection in the <span class="code">CollectionView</span>, so
+              anytime I select something on this, make sure it is marked as the <span class="code">CurrentItem</span> in
+              the corresponding <span class="code">CollectionView</span> for this collection.
+            </p>
+            <p>
+              Next, I'm going to drop in here and replace the <span class="code">Grid</span> that has our <span
+              class="code">AddOrder</span> form in it. All I did here is I put some minor changes. One is that at a
+              <span class="code">Grid</span> level, notice that I'm setting the <span class="code">DataContext</span>
+              for the grid as a whole to the exact same collection that my <span class="code">DataGrid</span> is bound
+              to:
+            </p>
+            <figure>
+                    <pre class="prettyprint">&lt;DataGrid ItemsSource=&quot;{Binding SelectedCustomer.Orders}&quot;
+                      IsSynchronizedWithCurrentItem=&quot;True&quot;&gt;</pre>
+              <figcaption>Fig 02-078</figcaption>
+            </figure>
+            <p>
+              When WPF wraps a collection in the <span class="code">CollectionView</span>, it'll create one <span
+              class="code">CollectionView</span> for all references to that same collection. So even though this <span
+              class="code">DataContext</span> is pointing through this binding and this <span
+              class="code">ItemsSource</span> is pointing through this binding, they end up pointing to the same <span
+              class="code">CollectionView</span> instance.
+            </p>
+            <p>
+              So if I select an item in the DataGrid and it sets the <span class="code">CurrentItem</span>, it's also
+              implicitly setting the <span class="code">CurrentItem</span> for the <span
+              class="code">CollectionView</span> that's going to be used for the <span class="code">Grid</span> below
+              it.
+            </p>
+            <p>
+              Down inside of the <span class="code">Grid</span> now, instead of saying <span
+              class="code">NewOrder.Id</span>, and <span class="code">NewOrder.OrderDate</span>, and <span class="code">NewOrder.ItemsTotal</span>,
+              we're just saying <span class="code">Id</span>, <span class="code">OrderDate</span>, and <span
+              class="code">ItemsTotal</span>:
+            </p>
+            <figure>
+                    <pre class="prettyprint">&lt;Label Content=&quot;Order ID:&quot; /&gt;
 &lt;Label Content=&quot;{Binding Id}&quot;
     Grid.Column=&quot;1&quot; /&gt;
 &lt;Label Content=&quot;Order Date:&quot;
@@ -1781,63 +1680,59 @@ public void EndEdit()
 &lt;TextBox Grid.Column=&quot;1&quot;
     Grid.Row=&quot;1&quot;
     Text=&quot;{Binding OrderDate}&quot; /&gt;
-            </code></pre>
-                            <figcaption>Fig 02-079</figcaption>
-                        </figure>
-                        <p>
-                            Because the <span class="code">DataContext</span> has already been restricted down implicitly to
-                            a single order, even though the <span class="code">DataContext</span> is pointing to an entire
-                            collection here when you have a binding that results in a single value like this, it knows
-                            enough to use the value off of the <span class="code">CurrentItem</span> in that collection. If
-                            it sees that the <span
-                                class="code">DataContext</span> is a collection, it will grab the <span class="code">CurrentItem</span>
-                            in that collection through the <span class="code">CollectionView</span> and then this path will
-                            resolve against that <span
-                                class="code">CurrentItem</span>.
-                        </p>
-                        <p>
-                            Now because of restricting the <span class="code">DataContext</span> for this entire <span
-                                class="code">Grid</span> to that collection, I have to do some additional gymnastics here
-                            for binding this <span
-                                class="code">ComboBox</span>, which really wants to get to the <span class="code">OrderStatuses</span>
-                            collection that's on the window itself:
-                        </p>
-                        <figure>
-                    <pre class="prettyprint"><code>&lt;ComboBox x:Name=&quot;OrderStatusCombo&quot;
+            </pre>
+              <figcaption>Fig 02-079</figcaption>
+            </figure>
+            <p>
+              Because the <span class="code">DataContext</span> has already been restricted down implicitly to a single
+              order, even though the <span class="code">DataContext</span> is pointing to an entire collection here when
+              you have a binding that results in a single value like this, it knows enough to use the value off of the
+              <span class="code">CurrentItem</span> in that collection. If it sees that the <span class="code">DataContext</span>
+              is a collection, it will grab the <span class="code">CurrentItem</span> in that collection through the
+              <span class="code">CollectionView</span> and then this path will resolve against that <span class="code">CurrentItem</span>.
+            </p>
+            <p>
+              Now because of restricting the <span class="code">DataContext</span> for this entire <span class="code">Grid</span>
+              to that collection, I have to do some additional gymnastics here for binding this <span class="code">ComboBox</span>,
+              which really wants to get to the <span class="code">OrderStatuses</span> collection that's on the window
+              itself:
+            </p>
+            <figure>
+                    <pre class="prettyprint">&lt;ComboBox x:Name=&quot;OrderStatusCombo&quot;
     ItemsSource=&quot;{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.OrderStatuses}&quot;
     DisplayMemberPath=&quot;Name&quot;
     SelectedValuePath=&quot;Id&quot;
-    SelectedValue=&quot;{Binding Path=NewOrder.OrderStatusId, Mode=TwoWay}&quot; /&gt;</code></pre>
-                            <figcaption>Fig02-080</figcaption>
-                        </figure>
-                        <p>
-                            I'll get into more details on <span class="code">RelativeSource</span> bindings in the next
-                            module, but conceptually, what this binding is doing is reaching up to the window level, dotting
-                            down to its <span class="code">DataContext</span>, which happens to be a reference to the window
-                            itself, and then going to the <span class="code">OrderStatuses</span> property that's on that.
-                        </p>
-                        <p>
-                            So with those bindings in place, I can now go ahead and run, and notice that when I select in
-                            the <span class="code">DataGrid</span>, the order that the form is bound to at the bottom is
-                            changing along with my selections:
-                        </p>
-                        <figure>
-                            <img src="./images/wpfdatabindingindepth/Fig02-081.png" class="image"/>
-                            <figcaption>Fig 02-081</figcaption>
-                        </figure>
-                        <p>
-                            And that's happening even though the <span class="code">DataContext</span> for those individual
-                            elements is really a collection the bindings themselves are smart enough to go to that
-                            collection, see it's a <span class="code">CollectionView</span>, ask for the <span class="code">Current</span>
-                            object, and then apply their path to the <span class="code">Current</span> object.
-                        </p>
-                        <p>
-                            Now what if we wanted to programmatically control what the <span class="code">CurrentItem</span>
-                            is, I'm going to go up here and replace my <span class="code">DataGrid</span> with a <span
-                                class="code">StackPanel</span> that contains the <span class="code">DataGrid</span>:
-                        </p>
-                        <figure>
-                    <pre class="prettyprint"><code> &lt;StackPanel Grid.Row=&quot;2&quot;&gt;
+    SelectedValue=&quot;{Binding Path=NewOrder.OrderStatusId, Mode=TwoWay}&quot; /&gt;</pre>
+              <figcaption>Fig02-080</figcaption>
+            </figure>
+            <p>
+              I'll get into more details on <span class="code">RelativeSource</span> bindings in the next module, but
+              conceptually, what this binding is doing is reaching up to the window level, dotting down to its <span
+              class="code">DataContext</span>, which happens to be a reference to the window itself, and then going to
+              the <span class="code">OrderStatuses</span> property that's on that.
+            </p>
+            <p>
+              So with those bindings in place, I can now go ahead and run, and notice that when I select in the <span
+              class="code">DataGrid</span>, the order that the form is bound to at the bottom is changing along with my
+              selections:
+            </p>
+            <figure>
+              <img src="./images/wpfdatabindingindepth/Fig02-081.png" class="image"/>
+              <figcaption>Fig 02-081</figcaption>
+            </figure>
+            <p>
+              And that's happening even though the <span class="code">DataContext</span> for those individual elements
+              is really a collection the bindings themselves are smart enough to go to that collection, see it's a <span
+              class="code">CollectionView</span>, ask for the <span class="code">Current</span> object, and then apply
+              their path to the <span class="code">Current</span> object.
+            </p>
+            <p>
+              Now what if we wanted to programmatically control what the <span class="code">CurrentItem</span> is, I'm
+              going to go up here and replace my <span class="code">DataGrid</span> with a <span
+              class="code">StackPanel</span> that contains the <span class="code">DataGrid</span>:
+            </p>
+            <figure>
+                    <pre class="prettyprint"> &lt;StackPanel Grid.Row=&quot;2&quot;&gt;
     &lt;StackPanel Orientation=&quot;Horizontal&quot;&gt;
         &lt;Button Click=&quot;OnMoveDown&quot;&gt;
             &lt;Image Source=&quot;Resources/arrow-down.jpg&quot;
@@ -1849,21 +1744,21 @@ public void EndEdit()
         &lt;/Button&gt;
     &lt;/StackPanel&gt;
     &lt;DataGrid ItemsSource=&quot;{Binding SelectedCustomer.Orders}&quot;
-              IsSynchronizedWithCurrentItem=&quot;True&quot;&gt;</code></pre>
-                            <figcaption>Fig 02-082</figcaption>
-                        </figure>
-                        <p>
-                            Inside that <span class="code">StackPanel</span> I have two buttons sitting right atop the <span
-                                class="code">DataGrid</span> that allow me to move the focus, if you will, or the selection
-                            within the <span class="code">DataGrid</span> up and down, and then I still have the <span
-                                class="code">IsSynchronizedWithCurrentItem</span> on my DataGrid.
-                        </p>
-                        <p>
-                            The additional stuff here is just some styling to make it very apparent what the selected row is
-                            by drawing a blue box around it:
-                        </p>
-                        <figure>
-                    <pre class="prettyprint"><code>&lt;DataGrid ItemsSource=&quot;{Binding SelectedCustomer.Orders}&quot;
+              IsSynchronizedWithCurrentItem=&quot;True&quot;&gt;</pre>
+              <figcaption>Fig 02-082</figcaption>
+            </figure>
+            <p>
+              Inside that <span class="code">StackPanel</span> I have two buttons sitting right atop the <span
+              class="code">DataGrid</span> that allow me to move the focus, if you will, or the selection within the
+              <span class="code">DataGrid</span> up and down, and then I still have the <span class="code">IsSynchronizedWithCurrentItem</span>
+              on my DataGrid.
+            </p>
+            <p>
+              The additional stuff here is just some styling to make it very apparent what the selected row is by
+              drawing a blue box around it:
+            </p>
+            <figure>
+                    <pre class="prettyprint">&lt;DataGrid ItemsSource=&quot;{Binding SelectedCustomer.Orders}&quot;
         IsSynchronizedWithCurrentItem=&quot;True&quot;&gt;
     &lt;DataGrid.RowStyle&gt;
         &lt;Style TargetType=&quot;DataGridRow&quot;&gt;
@@ -1878,16 +1773,15 @@ public void EndEdit()
             &lt;/Style.Triggers&gt;
         &lt;/Style&gt;
     &lt;/DataGrid.RowStyle&gt;
-&lt;/DataGrid&gt;</code></pre>
-                            <figcaption>Fig 02-083</figcaption>
-                        </figure>
-                        <p>
-                            Now I need some <span class="code">Click</span> event handlers for those buttons so I'll drop
-                            into the code-behind. So I'm just going to go to the bottom of the code-behind here and add the
-                            event handlers.
-                        </p>
-                        <figure>
-                    <pre class="prettyprint"><code>private void OnMoveDown(object sender, RoutedEventArgs e)
+&lt;/DataGrid&gt;</pre>
+              <figcaption>Fig 02-083</figcaption>
+            </figure>
+            <p>
+              Now I need some <span class="code">Click</span> event handlers for those buttons so I'll drop into the
+              code-behind. So I'm just going to go to the bottom of the code-behind here and add the event handlers.
+            </p>
+            <figure>
+                    <pre class="prettyprint">private void OnMoveDown(object sender, RoutedEventArgs e)
 {
     ICollectionView collView = CollectionViewSource.GetDefaultView(SelectedCustomer.Orders);
     if (collView.CurrentPosition &gt; 0)
@@ -1899,179 +1793,163 @@ private void OnMoveUp(object sender, RoutedEventArgs e)
     ICollectionView collView = CollectionViewSource.GetDefaultView(SelectedCustomer.Orders);
     if (collView.CurrentPosition &lt; SelectedCustomer.Orders.Count - 1)
         collView.MoveCurrentToNext();
-}</code></pre>
-                            <figcaption>Fig 02-084</figcaption>
-                        </figure>
-                        <p>
-                            In the <span class="code">MoveDown</span> one you can see what we're doing is we're going to a
-                            class called <span class="code">CollectionViewSource</span>, and we call <span class="code">GetDefaultView</span>,
-                            and we pass it a reference to the same collection that was being data bound to by both the <span
-                                class="code">DataGrid</span> and the grid for the order form. Calling this basically gives
-                            you a reference to that <span class="code">CollectionView</span> that's wrapping that collection
-                            that both bindings are using.
-                        </p>
-                        <p>
-                            Once we have that reference, we can use the exposed API on <span
-                                class="code">CollectionView</span> to do a number of things. One thing is we can check the
-                            <span class="code">CurrentPosition</span> and get an index back of where it is in the
-                            collection, and then we can command it to move to different positions. So in this case, to move
-                            down, we're making sure we're not already at the last item with this comparison
-                        </p>
-                        <p>
-                            For moving up we're making sure we're not already on the first item. To move down we say <span
-                                class="code">MoveCurrentToNext</span>, to move up we say <span class="code">MoveCurrentToPrevious</span>.
-                        </p>
-                        <p>
-                            So with that code in place, I can run, I can click the down arrow, and you can see the highlight
-                            moving, click the up arrow and it moves back up:
-                        </p>
-                        <figure>
-                            <img src="./images/wpfdatabindingindepth/Fig02-085.png" class="image"/>
-                            <figcaption>Fig 02-085</figcaption>
-                        </figure>
-                        <p>
-                            So we're able to control the <span class="code">currentPosition</span> programmatically using
-                            the <span class="code">ICollectionView</span> interface. And, again, we'll see other things we
-                            can do <span class="code">CollectionViews</span> more in a later module.
-                        </p>
-                    </div>
-                    <div class="panel-body">
-                        <h3>Binding to DataSets</h3>
-                        <p>
-                            Now let's talk about data binding to DataSets. The venerable DataSet has been around a long time
-                            in the .NET space. Back in Windows Forms 1.0 and 2.0 days there was a lot of guidance from
-                            Microsoft and others saying DataSets are the way to go, you put all of your data in the DataSet
-                            and life is good.
-                        </p>
-                        <p>
-                            Well the truth is, DataSets are kind of fading in popularity. Most of the modern capabilities
-                            coming out in the .NET framework and in other technologies are really focused on entities,
-                            simple objects with properties to contain data instead of treating everything as a relational
-                            set of data. And part of the reason for this is that with lots of flexibility comes complexity.
-                            When you use untyped DataSets, you typically ended up with a lot of fragile, untyped code, lots
-                            of casting indexing into columns with indexes or column names, and it tended to be very
-                            unmaintainable code.
-                        </p>
-                        <p>
-                            Once Typed DataSets came out in .NET 2.0, you could at least get away from the untyped aspects
-                            of that. And you could have objects with properties and dot into those properties as if they
-                            were entities, but they were really a poor-man's entity because you couldn't really leverage
-                            inheritance and polymorphism, and the concept of encapsulation that they had was a bit clunky.
-                        </p>
-                        <p>
-                            To have a single-entity object, you always had to have a table with a single row in it, so you
-                            always had this extra layer of everything as a collection, even if it's not, which was a little
-                            weird to deal with. And the way that you would write code that was logically encapsulated by the
-                            DataSet, just didn't match up well with object-oriented concepts.
-                        </p>
-                        <p>
-                            However, all that being said, DataSets are still out there and they're still useful at times.
-                            Untyped DataSets, in particular, can still be useful in this modern day if you have places where
-                            you allow end users to formulate ad hoc queries where you don't know what the columns are going
-                            to be in the resulting record set. And the reality is, none of us can start from scratch on
-                            every single application we build, we often need to maintain an existing application, maybe move
-                            it forward to a new UI technology like WPF, but we have to carry along some legacy code, and
-                            that legacy code itself may be dependent on DataSets.
-                        </p>
-                        <p>
-                            So the good news is you can still use those in WPF. WPF data binding works just fine with
-                            DataSets, both untyped DataSets and typed DataSets. However, it is worth pointing out that the
-                            later XAML stacks, Silverlight, Windows Phone, and WinRT, do not support data binding to
-                            DataSets. So that's something to take into consideration if you're going to be writing code that
-                            supports your views, that pulls in your data sources, and you might be trying to move that
-                            forward to one of these other technologies in the future, then you would definitely want to
-                            avoid DataSets.
-                        </p>
-                        <p>
-                            But with all that being said, let's dive into a demo and show you how you can easily work with
-                            DataSets. And you'll see that the XAML really doesn't care, it treats those as objects and
-                            doesn't care whether it's working with columns or properties, the syntax is the same.
-                        </p>
-                    </div>
-                    <div class="panel-body">
-                        <h3>Demo: Binding to DataSets</h3>
-                        <div class="example">
-                            <div class="input-group">
-                                <input id="Ex03-013" type="text" class="form-control"
-                                       value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\before\DataSetDataBinding\DataSetDataBinding.sln">
-                                <span class="input-group-btn">
-                	        <button class="btn" data-clipboard-target="#Ex03-013">
-                        	    <img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard">
-                            </button>
-        	            </span>
-                            </div>
-                        </div>
-                        <div class="example">
-                            <div class="input-group">
-                                <input id="Ex03-014" type="text" class="form-control"
-                                       value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\after\DataSetDataBinding\DataSetDataBinding.sln">
-                                <span class="input-group-btn">
-                	        <button class="btn" data-clipboard-target="#Ex03-014">
-                        	    <img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard">
-                            </button>
-        	            </span>
-                            </div>
-                        </div>
-                        <p>
-                            In this demo, I want to show you how you can data bind to DataSets. Now DataSets are kind of
-                            falling out of vogue. I generally wouldn't use DataSets in any new projects I was working on, I
-                            would favor using entities. But if you're stuck moving some legacy code over or migrating an
-                            application maybe from Windows Forms, they use DataSets extensively and you can't afford to
-                            rewrite all that code, I want you to see how you can easily still data bind to those DataSets in
-                            WPF.
-                        </p>
-                        <p>
-                            The DataSet we're going to be using here is a typed DataSet, but I'll show you, you can also use
-                            untyped DataSets. The schema is the same Zza database that we've been using and it's got
-                            Customer, Order, and OrderStatus as a minimal part of that schema.
-                        </p>
-                        <figure>
-                            <img src="./images/wpfdatabindingindepth/Fig02-086.png" class="image"/>
-                            <figcaption>Fig 02-086</figcaption>
-                        </figure>
-                        <p>
-                            The UI we'll be using for this demo is just the top portion of a demo that we've been using
-                            before that has the drop-down list of customers, and when you select one it fills out the fields
-                            for First Name, Last Name, and Email for the SelectedCustomer:
-                        </p>
-                        <figure>
-                            <img src="./images/wpfdatabindingindepth/Fig02-087.png" class="image"/>
-                            <figcaption>Fig 02-087</figcaption>
-                        </figure>
-                        <p>
-                            If we go to the XAML, you can see here's our <span class="code">ComboBox</span> and the binding
-                            is not really going to look any different here. It's going to say, I'm expecting my DataContext
-                            to provide me a property called Customers, and in that Customers I'm expecting a bindable
-                            collection of something:
-                        </p>
-                        <figure>
-                    <pre class="prettyprint"><code>&lt;ComboBox x:Name=&quot;CustomersCombo&quot;
+}</pre>
+              <figcaption>Fig 02-084</figcaption>
+            </figure>
+            <p>
+              In the <span class="code">MoveDown</span> one you can see what we're doing is we're going to a class
+              called <span class="code">CollectionViewSource</span>, and we call <span
+              class="code">GetDefaultView</span>, and we pass it a reference to the same collection that was being data
+              bound to by both the <span class="code">DataGrid</span> and the grid for the order form. Calling this
+              basically gives you a reference to that <span class="code">CollectionView</span> that's wrapping that
+              collection that both bindings are using.
+            </p>
+            <p>
+              Once we have that reference, we can use the exposed API on <span class="code">CollectionView</span> to do
+              a number of things. One thing is we can check the <span class="code">CurrentPosition</span> and get an
+              index back of where it is in the collection, and then we can command it to move to different positions. So
+              in this case, to move down, we're making sure we're not already at the last item with this comparison
+            </p>
+            <p>
+              For moving up we're making sure we're not already on the first item. To move down we say <span
+              class="code">MoveCurrentToNext</span>, to move up we say <span class="code">MoveCurrentToPrevious</span>.
+            </p>
+            <p>
+              So with that code in place, I can run, I can click the down arrow, and you can see the highlight moving,
+              click the up arrow and it moves back up:
+            </p>
+            <figure>
+              <img src="./images/wpfdatabindingindepth/Fig02-085.png" class="image"/>
+              <figcaption>Fig 02-085</figcaption>
+            </figure>
+            <p>
+              So we're able to control the <span class="code">currentPosition</span> programmatically using the <span
+              class="code">ICollectionView</span> interface. And, again, we'll see other things we can do <span
+              class="code">CollectionViews</span> more in a later module.
+            </p>
+          </div>
+          <div class="panel-body">
+            <h3>Binding to DataSets</h3>
+            <p>
+              Now let's talk about data binding to DataSets. The venerable DataSet has been around a long time in the
+              .NET space. Back in Windows Forms 1.0 and 2.0 days there was a lot of guidance from Microsoft and others
+              saying DataSets are the way to go, you put all of your data in the DataSet and life is good.
+            </p>
+            <p>
+              Well the truth is, DataSets are kind of fading in popularity. Most of the modern capabilities coming out
+              in the .NET framework and in other technologies are really focused on entities, simple objects with
+              properties to contain data instead of treating everything as a relational set of data. And part of the
+              reason for this is that with lots of flexibility comes complexity. When you use untyped DataSets, you
+              typically ended up with a lot of fragile, untyped code, lots of casting indexing into columns with indexes
+              or column names, and it tended to be very unmaintainable code.
+            </p>
+            <p>
+              Once Typed DataSets came out in .NET 2.0, you could at least get away from the untyped aspects of that.
+              And you could have objects with properties and dot into those properties as if they were entities, but
+              they were really a poor-man's entity because you couldn't really leverage inheritance and polymorphism,
+              and the concept of encapsulation that they had was a bit clunky.
+            </p>
+            <p>
+              To have a single-entity object, you always had to have a table with a single row in it, so you always had
+              this extra layer of everything as a collection, even if it's not, which was a little weird to deal with.
+              And the way that you would write code that was logically encapsulated by the DataSet, just didn't match up
+              well with object-oriented concepts.
+            </p>
+            <p>
+              However, all that being said, DataSets are still out there and they're still useful at times. Untyped
+              DataSets, in particular, can still be useful in this modern day if you have places where you allow end
+              users to formulate ad hoc queries where you don't know what the columns are going to be in the resulting
+              record set. And the reality is, none of us can start from scratch on every single application we build, we
+              often need to maintain an existing application, maybe move it forward to a new UI technology like WPF, but
+              we have to carry along some legacy code, and that legacy code itself may be dependent on DataSets.
+            </p>
+            <p>
+              So the good news is you can still use those in WPF. WPF data binding works just fine with DataSets, both
+              untyped DataSets and typed DataSets. However, it is worth pointing out that the later XAML stacks,
+              Silverlight, Windows Phone, and WinRT, do not support data binding to DataSets. So that's something to
+              take into consideration if you're going to be writing code that supports your views, that pulls in your
+              data sources, and you might be trying to move that forward to one of these other technologies in the
+              future, then you would definitely want to avoid DataSets.
+            </p>
+            <p>
+              But with all that being said, let's dive into a demo and show you how you can easily work with DataSets.
+              And you'll see that the XAML really doesn't care, it treats those as objects and doesn't care whether it's
+              working with columns or properties, the syntax is the same.
+            </p>
+          </div>
+          <div class="panel-body">
+            <h3>Demo: Binding to DataSets</h3>
+            <div class="example">
+              <div class="input-group">
+                <input id="Ex03-013" type="text" class="form-control"
+                       value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\before\DataSetDataBinding\DataSetDataBinding.sln">
+<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex03-013"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
+              </div>
+            </div>
+            <div class="example">
+              <div class="input-group">
+                <input id="Ex03-014" type="text" class="form-control"
+                       value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\after\DataSetDataBinding\DataSetDataBinding.sln">
+<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex03-014"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
+              </div>
+            </div>
+            <p>
+              In this demo, I want to show you how you can data bind to DataSets. Now DataSets are kind of falling out
+              of vogue. I generally wouldn't use DataSets in any new projects I was working on, I would favor using
+              entities. But if you're stuck moving some legacy code over or migrating an application maybe from Windows
+              Forms, they use DataSets extensively and you can't afford to rewrite all that code, I want you to see how
+              you can easily still data bind to those DataSets in WPF.
+            </p>
+            <p>
+              The DataSet we're going to be using here is a typed DataSet, but I'll show you, you can also use untyped
+              DataSets. The schema is the same Zza database that we've been using and it's got Customer, Order, and
+              OrderStatus as a minimal part of that schema.
+            </p>
+            <figure>
+              <img src="./images/wpfdatabindingindepth/Fig02-086.png" class="image"/>
+              <figcaption>Fig 02-086</figcaption>
+            </figure>
+            <p>
+              The UI we'll be using for this demo is just the top portion of a demo that we've been using before that
+              has the drop-down list of customers, and when you select one it fills out the fields for First Name, Last
+              Name, and Email for the SelectedCustomer:
+            </p>
+            <figure>
+              <img src="./images/wpfdatabindingindepth/Fig02-087.png" class="image"/>
+              <figcaption>Fig 02-087</figcaption>
+            </figure>
+            <p>
+              If we go to the XAML, you can see here's our <span class="code">ComboBox</span> and the binding is not
+              really going to look any different here. It's going to say, I'm expecting my DataContext to provide me a
+              property called Customers, and in that Customers I'm expecting a bindable collection of something:
+            </p>
+            <figure>
+                    <pre class="prettyprint">&lt;ComboBox x:Name=&quot;CustomersCombo&quot;
     Grid.Column=&quot;1&quot;
     Width=&quot;250&quot;
     HorizontalAlignment=&quot;Left&quot;
     ItemsSource=&quot;{Binding Customers}&quot;
     DisplayMemberPath=&quot;FullName&quot;
     SelectedValuePath=&quot;Id&quot;
-    SelectionChanged=&quot;OnCustomerSelected&quot; /&gt;</code></pre>
-                            <figcaption>Fig 02-088</figcaption>
-                        </figure>
-                        <p>
-                            When working with DataSets, the bindable something is going to be what's called a DataRowView.
-                            It's a view on top of a data row similar to the ICollectionView we talked about earlier, but one
-                            that's built in to the overall schema of DataSets, and bindings are aware of those.
-                        </p>
-                        <p>
-                            Then when it comes to specifying binding Paths, such as the DisplayMemberPath, and the
-                            SelectedValuePath shown above, these become column names. Now they could be strongly-typed
-                            property names if you're working with a strongly-typed DataSet, but if you have untyped DataSets
-                            they can just be the column name
-                        </p>
-                        <p>
-                            Down below you can see we have SelectedCustomer.LastName, .FirstName, .Email, just like we had
-                            in earlier demos with entities:
-                        </p>
-                        <figure>
-                    <pre class="prettyprint"><code>&lt;Label Content=&quot;First Name:&quot; /&gt;
+    SelectionChanged=&quot;OnCustomerSelected&quot; /&gt;</pre>
+              <figcaption>Fig 02-088</figcaption>
+            </figure>
+            <p>
+              When working with DataSets, the bindable something is going to be what's called a DataRowView. It's a view
+              on top of a data row similar to the ICollectionView we talked about earlier, but one that's built in to
+              the overall schema of DataSets, and bindings are aware of those.
+            </p>
+            <p>
+              Then when it comes to specifying binding Paths, such as the DisplayMemberPath, and the SelectedValuePath
+              shown above, these become column names. Now they could be strongly-typed property names if you're working
+              with a strongly-typed DataSet, but if you have untyped DataSets they can just be the column name
+            </p>
+            <p>
+              Down below you can see we have SelectedCustomer.LastName, .FirstName, .Email, just like we had in earlier
+              demos with entities:
+            </p>
+            <figure>
+                    <pre class="prettyprint">&lt;Label Content=&quot;First Name:&quot; /&gt;
 &lt;TextBox Grid.Column=&quot;1&quot;
          Text=&quot;{Binding SelectedCustomer.LastName}&quot; /&gt;
 &lt;Label Content=&quot;Last Name:&quot;
@@ -2081,16 +1959,15 @@ private void OnMoveUp(object sender, RoutedEventArgs e)
 &lt;Label Content=&quot;Email:&quot;
        Grid.Column=&quot;4&quot; /&gt;
 &lt;TextBox Grid.Column=&quot;5&quot;
-         Text=&quot;{Binding SelectedCustomer.Email}&quot; /&gt;</code></pre>
-                            <figcaption>Fig 02-089</figcaption>
-                        </figure>
-                        <p>
-                            So the syntax at a binding level is no different if you're working with DataSets or with
-                            entities. The only thing that's going to be a little different is the way you do the data
-                            access.
-                        </p>
-                        <figure>
-                    <pre class="prettyprint"><code>public CustomersDataSet.CustomerDataTable Customers
+         Text=&quot;{Binding SelectedCustomer.Email}&quot; /&gt;</pre>
+              <figcaption>Fig 02-089</figcaption>
+            </figure>
+            <p>
+              So the syntax at a binding level is no different if you're working with DataSets or with entities. The
+              only thing that's going to be a little different is the way you do the data access.
+            </p>
+            <figure>
+                    <pre class="prettyprint">public CustomersDataSet.CustomerDataTable Customers
 {
     get { return (CustomersDataSet.CustomerDataTable)GetValue(CustomersProperty); }
     set { SetValue(CustomersProperty, value); }
@@ -2112,86 +1989,85 @@ public static readonly DependencyProperty SelectedCustomerProperty =
     DependencyProperty.Register(&quot;SelectedCustomer&quot;,
     typeof(DataRowView),
     typeof(MainWindow),
-    new PropertyMetadata(null));</code></pre>
-                            <figcaption>Fig 02-090</figcaption>
-                        </figure>
-                        <p>
-                            So, the first thing I need to do is declare a couple of properties that the bindings were
-                            expecting in the XAML. Those are a Customers collection and a SelectedCustomer. The types of
-                            those properties, if I'm starting with the typed DataSets are going to be a CustomersDataTable
-                            for the Customers collection and a DataRowView for the SelectedCustomer.
-                        </p>
-                        <p>
-                            The individual objects in the data table are actually data rows, but once you bind to them, it's
-                            actually going to be a DataRowView object that the binding is expecting to see. Otherwise, these
-                            are just DependencyProperties as we've seen in previous demos that will raise Change
-                            Notifications if their values are set.
-                        </p>
-                        <p>
-                            Next, we just need to load data using DataSets. So the first thing I'll do is I need to set my
-                            DataContext to the Window as I did in previous demos. I use a CustomerTableAdapter here and I go
-                            out and I call <span id="code">GetData</span> on that <span id="code">tableAdapter</span>.
-                            That's going to return me with a strongly-typed DataSet, it returns me one of those <span
-                                id="code">CustomerDataTables</span>, which I can just write directly into my wrapper
-                            property for my <span id="">DependencyProperty</span> Customers:
-                        </p>
-                        <figure>
-                    <pre class="prettyprint"><code>public MainWindow()
+    new PropertyMetadata(null));</pre>
+              <figcaption>Fig 02-090</figcaption>
+            </figure>
+            <p>
+              So, the first thing I need to do is declare a couple of properties that the bindings were expecting in the
+              XAML. Those are a Customers collection and a SelectedCustomer. The types of those properties, if I'm
+              starting with the typed DataSets are going to be a CustomersDataTable for the Customers collection and a
+              DataRowView for the SelectedCustomer.
+            </p>
+            <p>
+              The individual objects in the data table are actually data rows, but once you bind to them, it's actually
+              going to be a DataRowView object that the binding is expecting to see. Otherwise, these are just
+              DependencyProperties as we've seen in previous demos that will raise Change Notifications if their values
+              are set.
+            </p>
+            <p>
+              Next, we just need to load data using DataSets. So the first thing I'll do is I need to set my DataContext
+              to the Window as I did in previous demos. I use a CustomerTableAdapter here and I go out and I call <span
+              id="code">GetData</span> on that <span id="code">tableAdapter</span>. That's going to return me with a
+              strongly-typed DataSet, it returns me one of those <span id="code">CustomerDataTables</span>, which I can
+              just write directly into my wrapper property for my <span id="">DependencyProperty</span> Customers:
+            </p>
+            <figure>
+                    <pre class="prettyprint">public MainWindow()
 {
     InitializeComponent();
     DataContext = this;
     CustomerTableAdapter tableAdapter = new CustomerTableAdapter();
     Customers = tableAdapter.GetData();
-}</code></pre>
-                            <figcaption>Fig 02-091</figcaption>
-                        </figure>
-                        <p>
-                            Next, I need to handle the Selection, so I'll set the <span class="code">SelectedCustomer</span>
-                            property to a <span class="code">DataRowView</span>, which I can do by going to the <span
-                                class="code">CustomersCombo</span> and getting the <span class="code">SelectedItem</span>:
-                        </p>
-                        <figure>
-                    <pre class="prettyprint"><code>private void OnCustomerSelected(object sender, SelectionChangedEventArgs e)
+}</pre>
+              <figcaption>Fig 02-091</figcaption>
+            </figure>
+            <p>
+              Next, I need to handle the Selection, so I'll set the <span class="code">SelectedCustomer</span> property
+              to a <span class="code">DataRowView</span>, which I can do by going to the <span class="code">CustomersCombo</span>
+              and getting the <span class="code">SelectedItem</span>:
+            </p>
+            <figure>
+                    <pre class="prettyprint">private void OnCustomerSelected(object sender, SelectionChangedEventArgs e)
 {
     SelectedCustomer = CustomersCombo.SelectedItem as DataRowView;
-}</code></pre>
-                            <figcaption>Fig 02-092</figcaption>
-                        </figure>
-                        <p>
-                            If you try to cast that to <span class="code">DataRow</span> it's going to fail because it's
-                            wrapped it in one of these <span class="code">DataRowViews</span> at the point where you data
-                            bind to the <span class="code">Customers</span> collection.
-                        </p>
-                        <p>
-                            With that in place, I can go ahead and run, I can select a customer, and we can see the fields
-                            are filling in and it's really getting values out of the fields in the <span class="code">DataRow</span>
-                            from a <span class="code">DataTable</span> as opposed to working with entities and properties.
-                        </p>
-                        <figure>
-                            <img src="./images/wpfdatabindingindepth/Fig02-093.png" class="image"/>
-                            <figcaption>Fig 02-093</figcaption>
-                        </figure>
-                        <p>
-                            Now just to show that this can also work with untyped DataSets, I'm going to replace my <span
-                                class="code">Customers</span> property here with a <span class="code">DataTable</span> one,
-                            a non-strongly-typed <span class="code">DataTable</span>:
-                        </p>
-                        <figure>
-                    <pre class="prettyprint"><code>public DataTable Customers
+}</pre>
+              <figcaption>Fig 02-092</figcaption>
+            </figure>
+            <p>
+              If you try to cast that to <span class="code">DataRow</span> it's going to fail because it's wrapped it in
+              one of these <span class="code">DataRowViews</span> at the point where you data bind to the <span
+              class="code">Customers</span> collection.
+            </p>
+            <p>
+              With that in place, I can go ahead and run, I can select a customer, and we can see the fields are filling
+              in and it's really getting values out of the fields in the <span class="code">DataRow</span> from a <span
+              class="code">DataTable</span> as opposed to working with entities and properties.
+            </p>
+            <figure>
+              <img src="./images/wpfdatabindingindepth/Fig02-093.png" class="image"/>
+              <figcaption>Fig 02-093</figcaption>
+            </figure>
+            <p>
+              Now just to show that this can also work with untyped DataSets, I'm going to replace my <span
+              class="code">Customers</span> property here with a <span class="code">DataTable</span> one, a
+              non-strongly-typed <span class="code">DataTable</span>:
+            </p>
+            <figure>
+                    <pre class="prettyprint">public DataTable Customers
 {
     get { return (DataTable)GetValue(CustomersProperty); }
     set { SetValue(CustomersProperty, value); }
-}</code></pre>
-                            <figcaption>Fig 02-094</figcaption>
-                        </figure>
-                        <p>
-                            Then I'll go up to the top and replace my data loading by declaring a DataSet, an untyped
-                            DataSet, and then I create an instance of a <span class="code">SqlDataAdapter</span>, do a <span
-                                class="code">"SELECT * FROM Customer"</span>, pass an appropriate connection to it, and then
-                            do a <span class="code">Fill</span> on the adapter passing in the DataSet.
-                        </p>
-                        <figure>
-                    <pre class="prettyprint"><code>public MainWindow()
+}</pre>
+              <figcaption>Fig 02-094</figcaption>
+            </figure>
+            <p>
+              Then I'll go up to the top and replace my data loading by declaring a DataSet, an untyped DataSet, and
+              then I create an instance of a <span class="code">SqlDataAdapter</span>, do a <span class="code">"SELECT * FROM Customer"</span>,
+              pass an appropriate connection to it, and then do a <span class="code">Fill</span> on the adapter passing
+              in the DataSet.
+            </p>
+            <figure>
+                    <pre class="prettyprint">public MainWindow()
 {
     InitializeComponent();
     DataContext = this;
@@ -2200,106 +2076,93 @@ public static readonly DependencyProperty SelectedCustomerProperty =
                 new SqlConnection("server=.;database=Zza;trusted_Connection=true"));
     adapter.Fill(_DataSet);
     Customers = _DataSet.Tables["Table"];
-}</code></pre>
-                            <figcaption>Fig02-095</figcaption>
-                        </figure>
-                        <p>
-                            Then to populate my <span class="code">Customers</span> <span class="code">DataTable</span>
-                            property, I can just go to the <span class="code">DataSet.Tables</span> collection and when you
-                            do a fill like this it names the Tables <span class="code">Table</span>, <span class="code">Table1</span>,
-                            <span
-                                    class="code">Table2</span>, so that first fill actually populated a Table named <span
-                                class="code">Table</span>. I could go rename that, but since I'm just grabbing its value
-                            here and passing it into my property, it doesn't matter. I don't need any changes to the XAML
-                            itself.
-                        </p>
-                        <p>
-                            I could go ahead and run again and we can see things are populating just fine even though we
-                            have no type information now, it's just an untyped DataSet with columns and rows.
-                        </p>
-                        <figure>
-                            <img src="./images/wpfdatabindingindepth/Fig02-096.png" class="image"/>
-                            <figcaption>Fig 02-096</figcaption>
-                        </figure>
-                    </div>
-                    <div class="panel-body">
-                        <h3>Binding to XML</h3>
-                        <p>
-                            Finally, let's talk about binding to XML directly. WPF does support allowing you to point to an
-                            XML document and set up your bindings to point to the values that are contained within the XML
-                            elements or attributes within that document.
-                        </p>
-                        <p>
-                            In general, I would recommend you avoid using this capability of WPF from a architecture
-                            perspective, you don't really want to couple your UI code to how you're doing data persistence,
-                            and XML is really a low-level data persistence mechanism, leaking that all the way up into the
-                            bindings of your view, locks you into a persistence mechanism you may not want to stick to in
-                            the future.
-                        </p>
-                        <p>
-                            This is kind of the moral equivalent to putting SQL statements in your views, which you also
-                            shouldn't be doing, because that locks you into using SQL as your persistence mechanism and
-                            that's something you don't want to do, you want to have logical layers and you probably want to
-                            have a data layer behind the scenes that encapsulates how data persistence is done and just
-                            brings it in as entities.
-                        </p>
-                        <p>
-                            But all that being said, you may have some XML documents around that perfectly fit what you want
-                            to show on the screen, so the good news is you can do that. What you do is, there's an object
-                            called an XML data provider and you can put that in your XAML, point it to a document as a
-                            source, and then you use <span class="code">XPath</span> on your data bindings to refine what
-                            part of the DataContext that you set up as the XML data provider that you want to use for
-                            display purposes.
-                        </p>
-                        <p>
-                            So you're basically using <span class="code">XPath</span> to reach down into that document, pull
-                            out portions of it, you can set those as child DataContext, for example, you could reach down in
-                            and find a collection of elements within the document and set that as the for something like a
-                            DataGrid. So let's look at a demo that shows us how to do this.
-                        </p>
-                    </div>
-                    <div class="panel-body">
-                        <h3>Demo: Binding to XML</h3>
-                        <div class="example">
-                            <div class="input-group">
-                                <input id="Ex03-015" type="text" class="form-control"
-                                       value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\before\XmlDataBinding\XmlDataBinding.sln">
-                                <span class="input-group-btn">
-                                    <button class="btn" data-clipboard-target="#Ex03-015">
-                                        <img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard">
-                                    </button>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="example">
-                            <div class="input-group">
-                                <input id="Ex03-016" type="text" class="form-control"
-                                       value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\after\XmlDataBinding\XmlDataBinding.sln">
-                                <span class="input-group-btn">
-                                <button class="btn" data-clipboard-target="#Ex03-016">
-                                    <img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard">
-                                </button>
-                            </span>
-                            </div>
-                        </div>
-                    <p>
-                        In this demo, I want to show you how you can easily bind to XML data sources to pull in hierarchal
-                        data and display that in the UI. Now just like I said for DataSets, I generally stay away from XML
-                        data binding because you're too tightly coupling the UI to the particular way the data is getting
-                        into your application. If you want to build a nice loosely coupled application that can evolve over
-                        time and be easily maintained, you don't want to assume that now and for all time your data is
-                        coming in as a chunk of XML.
-                    </p>
-                    <p>
-                        You want to separate that out into a data layer that produces objects for binding instead of raw
-                        XML. But with that caution in mind, let's show you how you can do it if you really need to.
-                    </p>
-                    <p>
-                        So down here you can see we've got a Zza xml file that's really a dump of some of the customers and
-                        their orders from the Zza database:
-                    </p>
-                    <figure>
-                <pre class="prettyprint"><code>&lt;?xml version=&quot;1.0&quot;?&gt;
+}</pre>
+              <figcaption>Fig02-095</figcaption>
+            </figure>
+            <p>
+              Then to populate my <span class="code">Customers</span> <span class="code">DataTable</span> property, I
+              can just go to the <span class="code">DataSet.Tables</span> collection and when you do a fill like this it
+              names the Tables <span class="code">Table</span>, <span class="code">Table1</span>, <span class="code">Table2</span>,
+              so that first fill actually populated a Table named <span class="code">Table</span>. I could go rename
+              that, but since I'm just grabbing its value here and passing it into my property, it doesn't matter. I
+              don't need any changes to the XAML itself.
+            </p>
+            <p>
+              I could go ahead and run again and we can see things are populating just fine even though we have no type
+              information now, it's just an untyped DataSet with columns and rows.
+            </p>
+            <figure>
+              <img src="./images/wpfdatabindingindepth/Fig02-096.png" class="image"/>
+              <figcaption>Fig 02-096</figcaption>
+            </figure>
+          </div>
+          <div class="panel-body">
+            <h3>Binding to XML</h3>
+            <p>
+              Finally, let's talk about binding to XML directly. WPF does support allowing you to point to an XML
+              document and set up your bindings to point to the values that are contained within the XML elements or
+              attributes within that document.
+            </p>
+            <p>
+              In general, I would recommend you avoid using this capability of WPF from a architecture perspective, you
+              don't really want to couple your UI code to how you're doing data persistence, and XML is really a
+              low-level data persistence mechanism, leaking that all the way up into the bindings of your view, locks
+              you into a persistence mechanism you may not want to stick to in the future.
+            </p>
+            <p>
+              This is kind of the moral equivalent to putting SQL statements in your views, which you also shouldn't be
+              doing, because that locks you into using SQL as your persistence mechanism and that's something you don't
+              want to do, you want to have logical layers and you probably want to have a data layer behind the scenes
+              that encapsulates how data persistence is done and just brings it in as entities.
+            </p>
+            <p>
+              But all that being said, you may have some XML documents around that perfectly fit what you want to show
+              on the screen, so the good news is you can do that. What you do is, there's an object called an XML data
+              provider and you can put that in your XAML, point it to a document as a source, and then you use <span
+              class="code">XPath</span> on your data bindings to refine what part of the DataContext that you set up as
+              the XML data provider that you want to use for display purposes.
+            </p>
+            <p>
+              So you're basically using <span class="code">XPath</span> to reach down into that document, pull out
+              portions of it, you can set those as child DataContext, for example, you could reach down in and find a
+              collection of elements within the document and set that as the for something like a DataGrid. So let's
+              look at a demo that shows us how to do this.
+            </p>
+          </div>
+          <div class="panel-body">
+            <h3>Demo: Binding to XML</h3>
+            <div class="example">
+              <div class="input-group">
+                <input id="Ex03-015" type="text" class="form-control"
+                       value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\before\XmlDataBinding\XmlDataBinding.sln">
+<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex03-015"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
+              </div>
+            </div>
+            <div class="example">
+              <div class="input-group">
+                <input id="Ex03-016" type="text" class="form-control"
+                       value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\after\XmlDataBinding\XmlDataBinding.sln">
+<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex03-016"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
+              </div>
+            </div>
+            <p>
+              In this demo, I want to show you how you can easily bind to XML data sources to pull in hierarchal data
+              and display that in the UI. Now just like I said for DataSets, I generally stay away from XML data binding
+              because you're too tightly coupling the UI to the particular way the data is getting into your
+              application. If you want to build a nice loosely coupled application that can evolve over time and be
+              easily maintained, you don't want to assume that now and for all time your data is coming in as a chunk of
+              XML.
+            </p>
+            <p>
+              You want to separate that out into a data layer that produces objects for binding instead of raw XML. But
+              with that caution in mind, let's show you how you can do it if you really need to.
+            </p>
+            <p>
+              So down here you can see we've got a Zza xml file that's really a dump of some of the customers and their
+              orders from the Zza database:
+            </p>
+            <figure>
+                <pre class="prettyprint">&lt;?xml version=&quot;1.0&quot;?&gt;
 &lt;Customers xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;
   &lt;Customer&gt;
     &lt;Id&gt;7462c7c8-e24c-484a-8f93-013f1c479615&lt;/Id&gt;
@@ -2337,25 +2200,24 @@ public static readonly DependencyProperty SelectedCustomerProperty =
         &lt;Phone&gt;(954) 594-9355&lt;/Phone&gt;
         &lt;OrderItems /&gt;
       &lt;/Order&gt;
-                </code></pre>
-                        <figcaption>Fig 02-097</figcaption>
-                    </figure>
-                    <p>
-                        That's going to be our data source for this. The window we're going to deal with is similar to the
-                        last demo, that we have a Customers drop-down and we have some data bound fields on the current
-                        customer selected in that drop-down, and we want to support that same scenario, put data binding
-                        directly to a collection of customers in XML.
-                    </p>
-                    <figure>
-                        <img src="./images/wpfdatabindingindepth/Fig02-098.png" class="image"/>
-                        <figcaption>Fig 02-098</figcaption>
-                    </figure>
-                    <p>
-                        Code-behind for this has absolutely nothing in it, and you'll see that we're going to keep it that
-                        way:
-                    </p>
-                    <figure>
-                <pre class="prettyprint"><code>namespace XmlDataBinding
+                </pre>
+              <figcaption>Fig 02-097</figcaption>
+            </figure>
+            <p>
+              That's going to be our data source for this. The window we're going to deal with is similar to the last
+              demo, that we have a Customers drop-down and we have some data bound fields on the current customer
+              selected in that drop-down, and we want to support that same scenario, put data binding directly to a
+              collection of customers in XML.
+            </p>
+            <figure>
+              <img src="./images/wpfdatabindingindepth/Fig02-098.png" class="image"/>
+              <figcaption>Fig 02-098</figcaption>
+            </figure>
+            <p>
+              Code-behind for this has absolutely nothing in it, and you'll see that we're going to keep it that way:
+            </p>
+            <figure>
+                <pre class="prettyprint">namespace XmlDataBinding
 {
     /// &lt;summary&gt;
     /// Interaction logic for MainWindow.xaml
@@ -2367,79 +2229,78 @@ public static readonly DependencyProperty SelectedCustomerProperty =
             InitializeComponent();
         }
     }
-}</code></pre>
-                        <figcaption>Fig 02-099</figcaption>
-                    </figure>
+}</pre>
+              <figcaption>Fig 02-099</figcaption>
+            </figure>
 
-                    <p>
-                        We're just going to load the XML directly into our XAML, which is definitely a point of coupling,
-                        but it's the most expeditious way to work with XML in data binding.
-                    </p>
-                    <p>
-                        So I'm going to drop into the XAML here and I'm going to declaratively hook up the <span
-                            class="code">DataContext</span> for the window to an object called an <span class="code">XmlDataProvider</span>:
-                    </p>
-                    <figure>
-                <pre class="prettyprint"><code>&lt;Window.DataContext&gt;
+            <p>
+              We're just going to load the XML directly into our XAML, which is definitely a point of coupling, but it's
+              the most expeditious way to work with XML in data binding.
+            </p>
+            <p>
+              So I'm going to drop into the XAML here and I'm going to declaratively hook up the <span class="code">DataContext</span>
+              for the window to an object called an <span class="code">XmlDataProvider</span>:
+            </p>
+            <figure>
+                <pre class="prettyprint">&lt;Window.DataContext&gt;
     &lt;XmlDataProvider Source=&quot;Zza.xml&quot;
                      XPath=&quot;&quot;Customers/Customer&quot; /&gt;
-&lt;/Window.DataContext&gt;</code></pre>
-                        <figcaption>Fig 02-100</figcaption>
-                    </figure>
-                    <p>
-                        This is an object that you can point to an XML file with its source property, so this is really just
-                        a relative path within the project is how it's resolving that.
-                    </p>
-                    <p>
-                        And then from there you can refine what part of the XML file this provider points to using <span
-                            class="code">XPath</span> statements. So you do have to be comfortable with <span class="code">XPath</span>
-                        to be able to use this to any large degree, but here you can see we're pointing to the <span
-                            class="code">Customers</span> root element and then saying, get me all of the <span
-                            class="code">Customer</span> elements that sit within that <span class="code">Customers</span>
-                        root element.
-                    </p>
-                    <p>
-                        And it's basically going to form a collection of XML elements within this <span class="code">DataProvider</span>
-                        as a source. Then I'm going to go down here to our <span
-                            class="code">ComboBox</span> and add some data binding properties to it:
-                    </p>
-                    <figure>
-                <pre class="prettyprint"><code>&lt;ComboBox x:Name=&quot;CustomersCombo&quot;
+&lt;/Window.DataContext&gt;</pre>
+              <figcaption>Fig 02-100</figcaption>
+            </figure>
+            <p>
+              This is an object that you can point to an XML file with its source property, so this is really just a
+              relative path within the project is how it's resolving that.
+            </p>
+            <p>
+              And then from there you can refine what part of the XML file this provider points to using <span
+              class="code">XPath</span> statements. So you do have to be comfortable with <span
+              class="code">XPath</span> to be able to use this to any large degree, but here you can see we're pointing
+              to the <span class="code">Customers</span> root element and then saying, get me all of the <span
+              class="code">Customer</span> elements that sit within that <span class="code">Customers</span> root
+              element.
+            </p>
+            <p>
+              And it's basically going to form a collection of XML elements within this <span
+              class="code">DataProvider</span> as a source. Then I'm going to go down here to our <span class="code">ComboBox</span>
+              and add some data binding properties to it:
+            </p>
+            <figure>
+                <pre class="prettyprint">&lt;ComboBox x:Name=&quot;CustomersCombo&quot;
     ItemsSource=&quot;{Binding}&quot;
     DisplayMemberPath=&quot;LastName&quot;
     SelectedValuePath=&quot;Id&quot;
     Grid.Column=&quot;1&quot;
     Width=&quot;250&quot;
     HorizontalAlignment=&quot;Left&quot;
-    IsSynchronizedWithCurrentItem=&quot;True&quot; /&gt;</code></pre>
-                        <figcaption>Fig 02-101</figcaption>
-                    </figure>
-                    <p>
-                        First off is an <span class="code">ItemsSource</span> that says I'm going to bind to the entire
-                        <span class="code">DataContext</span>. And that <span class="code">DataContext</span>, again, was
-                        being set to a collection of <span class="code">Customer</span> objects through this <span
-                            class="code">XPath</span> statement.
-                    </p>
-                    <p>
-                        Then we're able to say, <span class="code">DisplayMemberPath</span> and <span class="code">SelectedValuePath</span>
-                        like we did before, but now as opposed to these representing property names on an entity or column
-                        names within a DataSet, they represent either element names or attribute names on the current
-                        object, so it's going to look for an element or attribute called <span
-                            class="code">LastName</span> and grab its value, and it's going to look for one called <span
-                            class="code">Id</span>.
-                    </p>
-                    <p>
-                        Notice we also use the <span class="code">IsSynchronizedWithCurrentItem</span>, because just like we
-                        talked about with entities and with DataSets, there's a view that wraps all this that maintains the
-                        concept of a current item within that collection.
-                    </p>
-                    <p>
-                        Next, we can drop down to the form fields of our little data form and add bindings to those, and
-                        here you can see we have a Text Binding, but the way we specify the path in this case is we specify
-                        it as <span class="code">XPath</span>.
-                    </p>
-                    <figure>
-                <pre class="prettyprint"><code>&lt;Grid Grid.Row=&quot;1&quot;&gt;
+    IsSynchronizedWithCurrentItem=&quot;True&quot; /&gt;</pre>
+              <figcaption>Fig 02-101</figcaption>
+            </figure>
+            <p>
+              First off is an <span class="code">ItemsSource</span> that says I'm going to bind to the entire <span
+              class="code">DataContext</span>. And that <span class="code">DataContext</span>, again, was being set to a
+              collection of <span class="code">Customer</span> objects through this <span class="code">XPath</span>
+              statement.
+            </p>
+            <p>
+              Then we're able to say, <span class="code">DisplayMemberPath</span> and <span class="code">SelectedValuePath</span>
+              like we did before, but now as opposed to these representing property names on an entity or column names
+              within a DataSet, they represent either element names or attribute names on the current object, so it's
+              going to look for an element or attribute called <span class="code">LastName</span> and grab its value,
+              and it's going to look for one called <span class="code">Id</span>.
+            </p>
+            <p>
+              Notice we also use the <span class="code">IsSynchronizedWithCurrentItem</span>, because just like we
+              talked about with entities and with DataSets, there's a view that wraps all this that maintains the
+              concept of a current item within that collection.
+            </p>
+            <p>
+              Next, we can drop down to the form fields of our little data form and add bindings to those, and here you
+              can see we have a Text Binding, but the way we specify the path in this case is we specify it as <span
+              class="code">XPath</span>.
+            </p>
+            <figure>
+                <pre class="prettyprint">&lt;Grid Grid.Row=&quot;1&quot;&gt;
     &lt;Grid.ColumnDefinitions&gt;
         &lt;ColumnDefinition Width=&quot;Auto&quot; /&gt;
         &lt;ColumnDefinition Width=&quot;*&quot; /&gt;
@@ -2458,40 +2319,39 @@ public static readonly DependencyProperty SelectedCustomerProperty =
     &lt;Label Content=&quot;Email:&quot;
            Grid.Column=&quot;4&quot; /&gt;
     &lt;TextBox Grid.Column=&quot;5&quot;
-             Text=&quot;{Binding XPath=Email}&quot; /&gt;</code></pre>
-                        <figcaption>Fig 02-102</figcaption>
-                    </figure>
-                    <p>
-                        So in this case, because they are child elements with values in them, we can just say <span
-                            class="code">XPath</span> <span class="code">FirstName</span>, <span
-                            class="code">LastName</span>, and <span class="code">Email</span>, and it's able to locate those
-                        and grab the value of those.
-                    </p>
-                    <p>
-                        With that in place, we can go ahead and run:
-                    </p>
-                    <figure>
-                        <img src="./images/wpfdatabindingindepth/Fig02-103.png" class="image"/>
-                        <figcaption>Fig 02-103</figcaption>
-                    </figure>
-                    <p>
-                        And you can see our form already works just like it did before, even though we have no code-behind
-                        driving anything, it's just sucking XML into the root, setting that as the <span
-                            class="code">DataContext</span> through this Provider:
-                    </p>
-                    <figure>
-                <pre class="prettyprint"><code>&lt;Window.DataContext&gt;
+             Text=&quot;{Binding XPath=Email}&quot; /&gt;</pre>
+              <figcaption>Fig 02-102</figcaption>
+            </figure>
+            <p>
+              So in this case, because they are child elements with values in them, we can just say <span class="code">XPath</span>
+              <span class="code">FirstName</span>, <span class="code">LastName</span>, and <span
+              class="code">Email</span>, and it's able to locate those and grab the value of those.
+            </p>
+            <p>
+              With that in place, we can go ahead and run:
+            </p>
+            <figure>
+              <img src="./images/wpfdatabindingindepth/Fig02-103.png" class="image"/>
+              <figcaption>Fig 02-103</figcaption>
+            </figure>
+            <p>
+              And you can see our form already works just like it did before, even though we have no code-behind driving
+              anything, it's just sucking XML into the root, setting that as the <span class="code">DataContext</span>
+              through this Provider:
+            </p>
+            <figure>
+                <pre class="prettyprint">&lt;Window.DataContext&gt;
     &lt;XmlDataProvider Source=&quot;Zza.xml&quot;
         XPath=&quot;Customers/Customer&quot; /&gt;
-&lt;/Window.DataContext&gt;</code></pre>
-                        <figcaption>Fig 02-104</figcaption>
-                    </figure>
-                    <p>
-                        To the collection of the <span class="code">Customer</span> elements within that XML binding to that
-                        as a collection:
-                    </p>
-                    <figure>
-                <pre class="prettyprint"><code>&lt;Label Content=&quot;Customers&quot; /&gt;
+&lt;/Window.DataContext&gt;</pre>
+              <figcaption>Fig 02-104</figcaption>
+            </figure>
+            <p>
+              To the collection of the <span class="code">Customer</span> elements within that XML binding to that as a
+              collection:
+            </p>
+            <figure>
+                <pre class="prettyprint">&lt;Label Content=&quot;Customers&quot; /&gt;
 &lt;ComboBox x:Name=&quot;CustomersCombo&quot;
     ItemsSource=&quot;{Binding}&quot;
     DisplayMemberPath=&quot;LastName&quot;
@@ -2499,14 +2359,14 @@ public static readonly DependencyProperty SelectedCustomerProperty =
     Grid.Column=&quot;1&quot;
     Width=&quot;250&quot;
     HorizontalAlignment=&quot;Left&quot;
-    IsSynchronizedWithCurrentItem=&quot;True&quot; /&gt;</code></pre>
-                        <figcaption>Fig 02-105</figcaption>
-                    </figure>
-                    <p>
-                        and also binding to the current item, Fields through the concurrency of the underlying view.
-                    </p>
-                    <figure>
-                <pre class="prettyprint"><code>&lt;TextBox Grid.Column=&quot;1&quot;
+    IsSynchronizedWithCurrentItem=&quot;True&quot; /&gt;</pre>
+              <figcaption>Fig 02-105</figcaption>
+            </figure>
+            <p>
+              and also binding to the current item, Fields through the concurrency of the underlying view.
+            </p>
+            <figure>
+                <pre class="prettyprint">&lt;TextBox Grid.Column=&quot;1&quot;
     Text=&quot;{Binding XPath=LastName}&quot; /&gt;
 &lt;Label Content=&quot;Last Name:&quot;
     Grid.Column=&quot;2&quot; /&gt;
@@ -2515,53 +2375,50 @@ public static readonly DependencyProperty SelectedCustomerProperty =
 &lt;Label Content=&quot;Email:&quot;
     Grid.Column=&quot;4&quot; /&gt;
 &lt;TextBox Grid.Column=&quot;5&quot;
-    Text=&quot;{Binding XPath=Email}&quot; /&gt;</code></pre>
-                        <figcaption>Fig 02-106</figcaption>
-                    </figure>
-                    <p>
-                        So this might work great if you have a flat data file that's provided to you in XML that you just
-                        want to data bind to, and it is even possible to do two-way data binding and push the values back in
-                        and then go and save that document off, but if you're really doing all that, you should consider
-                        putting some layers of abstraction there and not doing it directly against an XML file.
-                    </p>
-                </div>
-                <div class="panel-body">
-                    <h3>Summary</h3>
-                    <p>
-                        Okay, so to wrap up this module on data sources, we saw a lot of different ways of providing data to
-                        your bindings. We started with entities and collections and you saw that it's a simple matter to use
-                        Plain Old CLR Objects or any type of <span class="code">IEnumerable</span> in .NET, and you can data
-                        bind to that and show its data on the screen.
-                    </p>
-                    <p>
-                        But if that data is going to be changing behind the scenes, then you saw the Change Notifications
-                        both in an object and collection level become vital to keeping the screen in sync with the true
-                        state of the data in memory.
-                    </p>
-                    <p>
-                        You saw a few additional things that you can do on your entities such as implementing <span
-                            class="code">IEditableObject</span> for transactional changes and backing out those changes or
-                        working with <span class="code">CollectionViews</span> that automatically wrap your collections when
-                        you're bound to them to manage the current object, and how that current object is displayed on the
-                        screen for things like paging.
-                    </p>
-                    <p>
-                        Finally, we talked about DataSets and XML and you saw that you can easily bind to those as well,
-                        even though I generally recommend if you are writing a new application from scratch you would stay
-                        away from binding directly to those kinds of sources and stick to entities.
-                    </p>
-                </div>
-            </div>
+    Text=&quot;{Binding XPath=Email}&quot; /&gt;</pre>
+              <figcaption>Fig 02-106</figcaption>
+            </figure>
+            <p>
+              So this might work great if you have a flat data file that's provided to you in XML that you just want to
+              data bind to, and it is even possible to do two-way data binding and push the values back in and then go
+              and save that document off, but if you're really doing all that, you should consider putting some layers
+              of abstraction there and not doing it directly against an XML file.
+            </p>
+          </div>
+          <div class="panel-body">
+            <h3>Summary</h3>
+            <p>
+              Okay, so to wrap up this module on data sources, we saw a lot of different ways of providing data to your
+              bindings. We started with entities and collections and you saw that it's a simple matter to use Plain Old
+              CLR Objects or any type of <span class="code">IEnumerable</span> in .NET, and you can data bind to that
+              and show its data on the screen.
+            </p>
+            <p>
+              But if that data is going to be changing behind the scenes, then you saw the Change Notifications both in
+              an object and collection level become vital to keeping the screen in sync with the true state of the data
+              in memory.
+            </p>
+            <p>
+              You saw a few additional things that you can do on your entities such as implementing IEditableObject
+              for transactional changes and backing out those changes or working with CollectionViews that automatically wrap your collections when you're bound to them to
+              manage the current object, and how that current object is displayed on the screen for things like paging.
+            </p>
+            <p>
+              Finally, we talked about DataSets and XML and you saw that you can easily bind to those as well, even
+              though I generally recommend if you are writing a new application from scratch you would stay away from
+              binding directly to those kinds of sources and stick to entities.
+            </p>
+          </div>
         </div>
+      </div>
     </div>
-    </div>
+  </div>
 </template>
 
 <script>
-    export default {
-        name: "WPFDatabindingInDepth03DataSources.vue",
-    };
-
+export default {
+  name: 'WPFDatabindingInDepth03DataSources.vue'
+}
 </script>
 
 <style scoped>

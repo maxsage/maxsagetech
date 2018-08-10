@@ -1,11 +1,9 @@
+// server.js
 var express = require('express');
-
-// Server static files with express
-var server = express();
-//server.use(express.static(__dirname + '/public'));
-
-var port = 10001;
-server.listen(process.env.PORT || 5000);
-//server.listen(port, function() {
-//    console.log('server listening on port ' + port);
-//});
+var path = require('path');
+var serveStatic = require('serve-static');
+app = express();
+app.use(serveStatic(__dirname + "/dist"));
+var port = process.env.PORT || 5000;
+app.listen(port);
+console.log('server started '+ port);

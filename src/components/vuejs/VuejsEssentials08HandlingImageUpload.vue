@@ -294,7 +294,6 @@
 &lt;/template&gt;</pre>
                         <figcaption>Fig 08-019</figcaption>
                     </figure>
-                    <
                     <p>Now in the file select Shift+click should allow you to select multiple files. Also you should
                         only see image files in the file selector.
                     </p>

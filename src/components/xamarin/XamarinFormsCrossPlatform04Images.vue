@@ -35,18 +35,18 @@
                     <p>Add a new Content Page called ImagePage.xaml and delete the ContentPage.Content element, add padding
                         if required and set the MainPage property to this new page in the App.cs:</p>
                     <figure>
-                        <pre class="prettyprint"><code>MainPage = new UdemyXamarinForms.ImagePage();</code></pre>
+                        <pre class="prettyprint">MainPage = new UdemyXamarinForms.ImagePage();</pre>
                         <figcaption>Fig 04-001</figcaption>
                     </figure>
                     <p>In the ImagePage.xaml file add an Image element:</p>
                     <figure>
-                        <pre class="prettyprint"><code>&lt;Image Source=&quot;https://www.creativetorbay.com/media/creative-torbay/images/torquay-at-night.jpg&quot;  x:Name="image" /&gt;</code></pre>
+                        <pre class="prettyprint">&lt;Image Source=&quot;https://www.creativetorbay.com/media/creative-torbay/images/torquay-at-night.jpg&quot;  x:Name="image" /&gt;</pre>
                         <figcaption>Fig 04-002</figcaption>
                     </figure>
                     <p>Now let's look at what happens behind the scenes when you set the Source property to a Uri. In the
                         code-behind after the call to InitializeComponent() add the following code:</p>
                     <figure>
-                        <pre class="prettyprint"><code>image.Source</code></pre>
+                        <pre class="prettyprint">image.Source</pre>
                         <figcaption>Fig 04-003</figcaption>
                     </figure>
                     <p>If we look at the type of the Source property we will see it is of type ImageSource:</p>
@@ -59,7 +59,7 @@
                         like this:
                     </p>
                     <figure>
-                        <pre class="prettyprint"><code>new ImageSource()</code></pre>
+                        <pre class="prettyprint">new ImageSource()</pre>
                         <figcaption>Fig 04-005</figcaption>
                     </figure>
                     <p>Instead we need to use one of it's derivatives. When working with Uris we have two options:</p>
@@ -75,7 +75,7 @@
                     </ul>
                     <p>In this instance we can use FromUri:</p>
                     <figure>
-                        <pre class="prettyprint"><code>var imageSource = ImageSource.FromUri(new Uri(&quot;https://www.creativetorbay.com/media/creative-torbay/images/torquay-at-night.jpg&quot;));</code></pre>
+                        <pre class="prettyprint">var imageSource = ImageSource.FromUri(new Uri(&quot;https://www.creativetorbay.com/media/creative-torbay/images/torquay-at-night.jpg&quot;));</pre>
                         <figcaption>Fig 04-006</figcaption>
                     </figure>
                     <p>Note that this method return an ImageSource (the abstract base class for all image sources) so we
@@ -83,7 +83,7 @@
                     <p>As an alternative to the FromUri method we could create a UriImageSource by creating a new
                         UriImageSource directly, set the Uri and store the result in an imageSource object:</p>
                     <figure>
-                        <pre class="prettyprint"><code>var imageSource = new UriImageSource { Uri = new Uri(&quot;https://www.creativetorbay.com/media/creative-torbay/images/torquay-at-night.jpg&quot;) };</code></pre>
+                        <pre class="prettyprint">var imageSource = new UriImageSource { Uri = new Uri(&quot;https://www.creativetorbay.com/media/creative-torbay/images/torquay-at-night.jpg&quot;) };</pre>
                         <figcaption>Fig 04-007</figcaption>
                     </figure>
                     <p>The UriImageSource object has a couple of interesting properties:</p>
@@ -99,23 +99,23 @@
                         disable caching. In those cases you cannot use Xaml. You need to go to code-behind, directly create
                         a UriImageSource object and set CachingEnabled to false:</p>
                     <figure>
-                        <pre class="prettyprint"><code>imageSource.CachingEnabled = false;</code></pre>
+                        <pre class="prettyprint">imageSource.CachingEnabled = false;</pre>
                         <figcaption>Fig 04-008</figcaption>
                     </figure>
                     <p>You can also specify how long the Cache is valid for by using the CacheVadility property:</p>
                     <figure>
-                        <pre class="prettyprint"><code>imageSource.CacheValidity = TimeSpan.FromHours(1);</code></pre>
+                        <pre class="prettyprint">imageSource.CacheValidity = TimeSpan.FromHours(1);</pre>
                         <figcaption>Fig 04-008</figcaption>
                     </figure>
                     <p>Now that we have an ImageSource we can set the image object's Source property:</p>
                     <figure>
-                        <pre class="prettyprint"><code>image.Source = imageSource;</code></pre>
+                        <pre class="prettyprint">image.Source = imageSource;</pre>
                         <figcaption>Fig 04-009</figcaption>
                     </figure>
                     <p>By the way, there is an implicit conversion from a string to UriImageSource. So if I set the
                         image.Source to Uri like this:</p>
                     <figure>
-                        <pre class="prettyprint"><code>image.Source = &quot;https://www.creativetorbay.com/media/creative-torbay/images/torquay-at-night.jpg&quot;;</code></pre>
+                        <pre class="prettyprint">image.Source = &quot;https://www.creativetorbay.com/media/creative-torbay/images/torquay-at-night.jpg&quot;;</pre>
                         <figcaption>Fig 04-010</figcaption>
                     </figure>
                     <p>This string will be implicitly converted to a UriImageSource and that's the reason we can set the
@@ -125,14 +125,14 @@
                     <h3>Aspects</h3>
                     <p>Edit the ImagePage.xaml code-behind to look like this:</p>
                     <figure>
-                    <pre class="prettyprint"><code>var imageSource = new UriImageSource { Uri = new Uri(&quot;https://www.creativetorbay.com/media/creative-torbay/images/torquay-at-night.jpg&quot;) };
+                    <pre class="prettyprint">var imageSource = new UriImageSource { Uri = new Uri(&quot;https://www.creativetorbay.com/media/creative-torbay/images/torquay-at-night.jpg&quot;) };
 imageSource.CachingEnabled = false;
-image.Source = imageSource;</code></pre>
+image.Source = imageSource;</pre>
                         <figcaption>Fig 04-011</figcaption>
                     </figure>
                     <p>Edit the Image element in Xaml to look like this:</p>
                     <figure>
-                        <pre class="prettyprint"><code>&lt;Image x:Name=&quot;image&quot; /&gt;</code></pre>
+                        <pre class="prettyprint">&lt;Image x:Name=&quot;image&quot; /&gt;</pre>
                         <figcaption>Fig 04-012</figcaption>
                     </figure>
                     <p>If I run the application now this is what we get:</p>
@@ -149,7 +149,7 @@ image.Source = imageSource;</code></pre>
                     </ul>
                     <p>This property can be set in code-behind or in Xaml. So in Xaml it would look like this:</p>
                     <figure>
-                        <pre class="prettyprint"><code>&lt;Image x:Name=&quot;image&quot; Aspect=&quot;Fill&quot; /&gt;</code></pre>
+                        <pre class="prettyprint">&lt;Image x:Name=&quot;image&quot; Aspect=&quot;Fill&quot; /&gt;</pre>
                         <figcaption>Fig 04-014</figcaption>
                     </figure>
                     <p>Which would result in the image being displayed like this:</p>
@@ -176,40 +176,39 @@ image.Source = imageSource;</code></pre>
                         we are going to use the AbsoluteLayout because we want to position the activity indicator right in
                         the middle of the page:</p>
                     <figure>
-                    <pre class="prettyprint"><code>&lt;AbsoluteLayout&gt;
+                    <pre class="prettyprint">&lt;AbsoluteLayout&gt;
     &lt;Image x:Name=&quot;image&quot; Aspect=&quot;Fill&quot; /&gt;
-&lt;/AbsoluteLayout&gt;</code></pre>
+&lt;/AbsoluteLayout&gt;</pre>
                         <figcaption>Fig 04-017</figcaption>
                     </figure>
-
 
                     <p>First of all we added an ActivityIndicator with the IsRunning element set to true (by default this is
                         false):</p>
                     <figure>
-                        <pre class="prettyprint"><code>&lt;ActivityIndicator IsRunning=&quot;true&quot;/&gt;</code></pre>
+                        <pre class="prettyprint">&lt;ActivityIndicator IsRunning=&quot;true&quot;/&gt;</pre>
                         <figcaption>Fig 04-018</figcaption>
                     </figure>
                     <p>Now let's set the Attached Bindable Properties. For the X and Y coordinates we use proportional
                         values but for the width and height we specify absolute values :</p>
                     <figure>
-                        <pre class="prettyprint"><code>AbsoluteLayout.LayoutBounds=&quot;0.5, 0.5, 100, 100&quot;</code></pre>
+                        <pre class="prettyprint">AbsoluteLayout.LayoutBounds=&quot;0.5, 0.5, 100, 100&quot;</pre>
                         <figcaption>Fig 04-019</figcaption>
                     </figure>
                     <p>Next we add the LayoutFlags Attached Bindable Property:</p>
                     <figure>
-                        <pre class="prettyprint"><code>AbsoluteLayout.LayoutFlags=&quot;PositionProportional&quot;</code></pre>
+                        <pre class="prettyprint">AbsoluteLayout.LayoutFlags=&quot;PositionProportional&quot;</pre>
                         <figcaption>Fig 04-020</figcaption>
                     </figure>
                     <p>If we were to run the app now you wouldn't see the ActivityIndicator because the image would be
                         rendered on top of the ActivityIndicator. We can resolve this temporarily by setting the IsVisible
                         attribute of the Image attribute to false. So the XAML so far looks like this:</p>
                     <figure>
-                    <pre class="prettyprint"><code>    &lt;AbsoluteLayout&gt;
+                    <pre class="prettyprint">    &lt;AbsoluteLayout&gt;
     &lt;ActivityIndicator
             IsRunning=&quot;true&quot;
             AbsoluteLayout.LayoutBounds=&quot;0.5, 0.5, 100, 100&quot; AbsoluteLayout.LayoutFlags=&quot;PositionProportional&quot;/&gt;
     &lt;Image x:Name=&quot;image&quot; Aspect=&quot;AspectFill&quot;/&gt;
-&lt;/AbsoluteLayout&gt;</code></pre>
+&lt;/AbsoluteLayout&gt;</pre>
                         <figcaption>Fig 04-021</figcaption>
                     </figure>
                     <p>If we run the application now we will see the ActivityIndicator in the center of the screen:</p>
@@ -221,12 +220,12 @@ image.Source = imageSource;</code></pre>
                         black:
                     </p>
                     <figure>
-                        <pre class="prettyprint"><code>&lt;ContentPage BackgroundColor=&quot;Black&quot;</code></pre>
+                        <pre class="prettyprint">&lt;ContentPage BackgroundColor=&quot;Black&quot;</pre>
                         <figcaption>Fig 04-023</figcaption>
                     </figure>
                     <p>Then change the color of the ActivityIndicator to white:</p>
                     <figure>
-                    <pre class="prettyprint"><code>&lt;ActivityIndicator IsRunning=&quot;true&quot; Color=&quot;White&quot;</code></pre>
+                    <pre class="prettyprint">&lt;ActivityIndicator IsRunning=&quot;true&quot; Color=&quot;White&quot;</pre>
                         <figcaption>Fig 04-024</figcaption>
                     </figure>
                     <p>Now our application will look like this:</p>
@@ -238,7 +237,7 @@ image.Source = imageSource;</code></pre>
                         IsRunning to true we will use a Binding expression. I want to bind the IsRunning attribute of the
                         ActivityIndicator to the IsLoading attribute of the Image:</p>
                     <figure>
-                    <pre class="prettyprint"><code>IsRunning=&quot;{Binding Source={x:Reference image}, Path=IsLoading }&quot;</code></pre>
+                    <pre class="prettyprint">IsRunning=&quot;{Binding Source={x:Reference image}, Path=IsLoading }&quot;</pre>
                         <figcaption>Fig 04-026</figcaption>
                     </figure>
                     <p>So our Binding expression starts with the Binding keyword inside curly braces. We specify the Source
@@ -256,15 +255,15 @@ image.Source = imageSource;</code></pre>
                         However the Image is not filling the entire page. This is because we put it inside an AbsoluteLayout
                         and we have not set it's size. So we need to set the LayoutBounds Attached Bindable Property: </p>
                     <figure>
-                        <pre class="prettyprint"><code>AbsoluteLayout.LayoutBounds=&quot;0, 0, 1, 1&quot;</code></pre>
+                        <pre class="prettyprint">AbsoluteLayout.LayoutBounds=&quot;0, 0, 1, 1&quot;</pre>
                         <figcaption>Fig 04-028</figcaption>
                     </figure>
                     <p>The numbers specified in the LayoutBounds (X, Y, Width, Height) are all proportional so we also
                         specify AbsoluteLayout.LayoutFlags="All":</p>
                     <figure>
-                    <pre class="prettyprint"><code>&lt;Image x:Name=&quot;image&quot; Aspect=&quot;AspectFill&quot;
+                    <pre class="prettyprint">&lt;Image x:Name=&quot;image&quot; Aspect=&quot;AspectFill&quot;
     AbsoluteLayout.LayoutBounds=&quot;0, 0, 1, 1&quot;
-    AbsoluteLayout.LayoutFlags=&quot;All&quot;/&gt;</code></pre>
+    AbsoluteLayout.LayoutFlags=&quot;All&quot;/&gt;</pre>
                         <figcaption>Fig 04-029</figcaption>
                     </figure>
                     <p>Now if we check the result the ActiviyIndicator is displayed and when the image is loaded it fits as
@@ -275,7 +274,7 @@ image.Source = imageSource;</code></pre>
                     </figure>
                     <p>The finished Xaml Looks like this:</p>
                     <figure>
-                    <pre class="prettyprint"><code>&lt;AbsoluteLayout&gt;
+                    <pre class="prettyprint">&lt;AbsoluteLayout&gt;
     &lt;ActivityIndicator
             IsRunning=&quot;{Binding Source={x:Reference image}, Path=IsLoading }&quot;
             Color=&quot;White&quot;
@@ -284,7 +283,7 @@ image.Source = imageSource;</code></pre>
            AbsoluteLayout.LayoutBounds=&quot;0, 0, 1, 1&quot;
            AbsoluteLayout.LayoutFlags=&quot;All&quot;
     /&gt;
-&lt;/AbsoluteLayout&gt;</code></pre>
+&lt;/AbsoluteLayout&gt;</pre>
                         <figcaption>Fig 04-031</figcaption>
                     </figure>
                     <p>Now downloading images is one way to add platform-independent images in your applications. It's
@@ -297,12 +296,12 @@ image.Source = imageSource;</code></pre>
                     <p>First of all add another Content Page called EmbeddedImagesPage.xaml to your solution, remove the
                         ContentPage.Content element and add an Image element:</p>
                     <figure>
-                    <pre class="prettyprint"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+                    <pre class="prettyprint">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
 &lt;ContentPage xmlns=&quot;http://xamarin.com/schemas/2014/forms&quot;
              xmlns:x=&quot;http://schemas.microsoft.com/winfx/2009/xaml&quot;
              x:Class=&quot;UdemyXamarinForms.EmbeddedImagesPage&quot;&gt;
     &lt;Image x:Name=&quot;image&quot; Aspect=&quot;AspectFill&quot;/&gt;
-&lt;/ContentPage&gt;</code></pre>
+&lt;/ContentPage&gt;</pre>
                         <figcaption>Fig 04-032</figcaption>
                     </figure>
                     <p>Now let's look at how to embed an image in your application. Add a new folder called Images to the
@@ -314,7 +313,7 @@ image.Source = imageSource;</code></pre>
                         for that which is a topic for the next lecture. So go to the code-behind and add the following
                         code:</p>
                     <figure>
-                        <pre class="prettyprint"><code>image.Source = ImageSource.FromResource(&quot;UdemyXamarinForms.Images.torquay=at-night.jpg&quot;);</code></pre>
+                        <pre class="prettyprint">image.Source = ImageSource.FromResource(&quot;UdemyXamarinForms.Images.torquay=at-night.jpg&quot;);</pre>
                         <figcaption>Fig 04-033</figcaption>
                     </figure>
                     <p>The resource id (allegedly consists of: </p>
@@ -341,40 +340,42 @@ image.Source = imageSource;</code></pre>
                     <p>You have to edit the .projitems file by hand. You simply ensure your embedded resource includes the
                         "LogicalName" child element. The name provided there is what you would use in your code-behind:</p>
                     <figure>
-                    <pre class="prettyprint"><code>&lt;ItemGroup&gt;
-    &lt;EmbeddedResource Include=&quot;$(MSBuildThisFileDirectory)Images\torquay-at-night.jpg&quot;&gt;
-      &lt;CopyToOutputDirectory&gt;Always&lt;/CopyToOutputDirectory&gt;
-	  &lt;LogicalName&gt;torquay-at-night.jpg&lt;/LogicalName&gt;
-    &lt;/EmbeddedResource&gt;
-  &lt;/ItemGroup&gt;</code></pre>
+                      /* eslint-disable no-alert, no-console */
+                    <pre class="prettyprint">&amp;lt;ItemGroup&amp;gt;
+    &amp;lt;EmbeddedResource Include=&amp;quot;$(MSBuildThisFileDirectory)Images\torquay-at-night.jpg&amp;quot;&amp;gt;
+      &amp;lt;CopyToOutputDirectory&amp;gt;Always&amp;lt;/CopyToOutputDirectory&amp;gt;
+      &amp;lt;LogicalName&amp;gt;torquay-at-night.jpg&amp;lt;/LogicalName&amp;gt;
+    &amp;lt;/EmbeddedResource&amp;gt;
+  &amp;lt;/ItemGroup&amp;gt;</pre>
                         <figcaption>Fig 04-035</figcaption>
                     </figure>
+                  /* eslint-enable */
                     <p>The name used for the LogicalName becomes the resource identifier in your code:</p>
                     <figure>
-                    <pre class="prettyprint"><code>image.Source = ImageSource.FromResource(&quot;torquay-at-night.jpg&quot;);</code></pre>
+                    <pre class="prettyprint">image.Source = ImageSource.FromResource(&quot;torquay-at-night.jpg&quot;);</pre>
                         <figcaption>Fig 04-036</figcaption>
                     </figure>
                     <p>Once this fix was in place the image was displayed and the app worked as desired.</p>
                     <p>Oddly the the following diagnostic code still failed to list the resource as found even though the
                         image now displays successfully:</p>
                     <figure>
-                    <pre class="prettyprint"><code>var assembly = typeof(EmbeddedImagesPage).GetType().Assembly;
+                    <pre class="prettyprint">var assembly = typeof(EmbeddedImagesPage).GetType().Assembly;
     foreach (var res in assembly.GetManifestResourceNames())
-        System.Diagnostics.Debug.WriteLine("found resource: " + res);</code></pre>
+        System.Diagnostics.Debug.WriteLine("found resource: " + res);</pre>
                         <figcaption>Fig 04-037</figcaption>
                     </figure>
                     <h3>Embedded Images in XAML</h3>
                     <p>Earlier I told you that if we set a Source here:</p>
                     <figure>
-                        <pre class="prettyprint"><code>&lt;Image Source=&quot;http://&quot; x:Name=&quot;image&quot; Aspect=&quot;AspectFill&quot;/&gt;</code></pre>
+                        <pre class="prettyprint">&lt;Image Source=&quot;http://&quot; x:Name=&quot;image&quot; Aspect=&quot;AspectFill&quot;/&gt;</pre>
                         <figcaption>Fig 04-038</figcaption>
                     </figure>
                     <p>It will be interpreted as a Uri. This is why we can't use embedded images in Xaml. For that we need a
                         markup extension. Something like this:</p>
                     <figure>
-                    <pre class="prettyprint"><code>&lt;Image
+                    <pre class="prettyprint">&lt;Image
     Source=&quot;{EmbeddedImage Source=torquay-at-night.jpg}&quot; x:Name=&quot;image2&quot;
-    Aspect=&quot;AspectFill&quot;/&gt;</code></pre>
+    Aspect=&quot;AspectFill&quot;/&gt;</pre>
                         <figcaption>Fig 04-039</figcaption>
                     </figure>
                     <p>Above we named our Markup Extension EmbeddedImage and we also have an attribute called Source which
@@ -387,35 +388,35 @@ image.Source = imageSource;</code></pre>
                         be stubbed out. The method should return an ImageSource so we could implement the method like this:
                     </p>
                     <figure>
-                    <pre class="prettyprint"><code>public object ProvideValue(IServiceProvider serviceProvider)
+                    <pre class="prettyprint">public object ProvideValue(IServiceProvider serviceProvider)
 {
     return ImageSource.FromResource(&quot;torquay-at-night.jpg&quot;);
-}</code></pre>
+}</pre>
                         <figcaption>Fig 04-040</figcaption>
                     </figure>
                     <p>You might need to resolve the namespace for ImageSource (Xamarin.Forms).</p>
                     <p>Next, instead of hard coding the Resource Id we will make it a parameter. First of all in the Xaml
                         change the attribute name from Source to ResourceId:</p>
                     <figure>
-                    <pre class="prettyprint"><code>&lt;Image Source=&quot;{local:EmbeddedImage ResourceId=torquay-at-night.jpg}&quot;
-    x:Name=&quot;image2&quot;/&gt;</code></pre>
+                    <pre class="prettyprint">&lt;Image Source=&quot;{local:EmbeddedImage ResourceId=torquay-at-night.jpg}&quot;
+    x:Name=&quot;image2&quot;/&gt;</pre>
                         <figcaption>Fig 04-041</figcaption>
                     </figure>
                     <p>Now in the EmbeddedImage class define a public property called ResourceId and use it in the
                         FromResource method instead of the hard coded string:</p>
                     <figure>
-                    <pre class="prettyprint"><code>public string ResourceId { get; set; }
+                    <pre class="prettyprint">public string ResourceId { get; set; }
 
 public object ProvideValue(IServiceProvider serviceProvider)
 {
     return ImageSource.FromResource(ResourceId);
-}</code></pre>
+}</pre>
                         <figcaption>Fig 04-042</figcaption>
                     </figure>
                     <p>We should also add logic to handle the scenario where the ResourceId supplied is a null or empty
                         string:</p>
                     <figure>
-                    <pre class="prettyprint"><code>public string ResourceId { get; set; }
+                    <pre class="prettyprint">public string ResourceId { get; set; }
 
 public object ProvideValue(IServiceProvider serviceProvider)
 {
@@ -423,36 +424,36 @@ public object ProvideValue(IServiceProvider serviceProvider)
         return null;
 
     return ImageSource.FromResource(ResourceId);
-}</code></pre>
+}</pre>
                         <figcaption>Fig 04-043</figcaption>
                     </figure>
                     <p>The markup extension is now complete. To use it in Xaml we must add a reference to the EmbeddedImage
                         markup extension. The convention is to use the local namespace. So we add local: in front of our
                         EmbeddedImage Markup Extension and we add the namespace declaration to the ContentPage element:</p>
                     <figure>
-                    <pre class="prettyprint"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+                    <pre class="prettyprint">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
     &lt;ContentPage xmlns=&quot;http://xamarin.com/schemas/2014/forms&quot;
                  xmlns:x=&quot;http://schemas.microsoft.com/winfx/2009/xaml&quot;
                  x:Class=&quot;UdemyXamarinForms.EmbeddedImagesPage&quot;
                  xmlns:local=&quot;clr-namespace:UdemyXamarinForms&quot;&gt;
     &lt;!--&lt;Image x:Name=&quot;image1&quot; Aspect=&quot;AspectFill&quot; /&gt;--&gt;
     &lt;Image Source=&quot;{local:EmbeddedImage ResourceId=torquay-at-night.jpg}&quot; x:Name=&quot;image2&quot; Aspect=&quot;AspectFill&quot;/&gt;
-&lt;/ContentPage&gt;</code></pre>
+&lt;/ContentPage&gt;</pre>
                         <figcaption>Fig 04-044</figcaption>
                     </figure>
                     <p>Let's add one more feature to make the Xaml a little bit cleaner. We can make the ResourceId what we
                         call the ContentProperty for Embedded Image. That means we can remove the ResourceId attribute from
                         the Xaml expression and the Xaml parser will still treat the string as a ResourceId by default:</p>
                     <figure>
-                        <pre class="prettyprint"><code>Image Source=&quot;{local:EmbeddedImage torquay-at-night.jpg}&quot; x:Name=&quot;image2&quot; Aspect=&quot;AspectFill&quot;/&gt;</code></pre>
+                        <pre class="prettyprint">Image Source=&quot;{local:EmbeddedImage torquay-at-night.jpg}&quot; x:Name=&quot;image2&quot; Aspect=&quot;AspectFill&quot;/&gt;</pre>
                         <figcaption>Fig 04-045</figcaption>
                     </figure>
                     <p>For this to work we need to add an attribute in our EmbeddedImage class just above the class
                         definition itself:</p>
                     <figure>
-                    <pre class="prettyprint"><code>[ContentProperty(&quot;ResourceId&quot;)]
+                    <pre class="prettyprint">[ContentProperty(&quot;ResourceId&quot;)]
 public class EmbeddedImage : IMarkupExtension
-{</code></pre>
+{</pre>
                         <figcaption>Fig 04-046</figcaption>
                     </figure>
                     <p>Next we will discuss Platform-specific images.</p>
@@ -517,8 +518,8 @@ public class EmbeddedImage : IMarkupExtension
                         ButtonPage.xaml with the Image set to clock.png:
                     </p>
                     <figure>
-                <pre class="prettyprint"><code>&lt;Button Image=&quot;clock.png&quot; /&gt;
-                </code></pre>
+                <pre class="prettyprint">&lt;Button Image=&quot;clock.png&quot; /&gt;
+                </pre>
                         <figcaption>Fig 04-047</figcaption>
                     </figure>
                     <p>If we run the application</p>
@@ -529,42 +530,42 @@ public class EmbeddedImage : IMarkupExtension
                     <p>If you have a lot of images in your app you may want to organise them into different folders. Let's
                         demonstrate. Firstly add a Name attribute to your button:</p>
                     <figure>
-                    <pre class="prettyprint"><code>&lt;Button Image=&quot;clock.png&quot; x:Name=&quot;btn&quot;/&gt;</code></pre>
+                    <pre class="prettyprint">&lt;Button Image=&quot;clock.png&quot; x:Name=&quot;btn&quot;/&gt;</pre>
                         <figcaption>Fig 04-049</figcaption>
                     </figure>
                     <p>Now in the code-behind add the following code:</p>
                     <figure>
-                        <pre class="prettyprint"><code>btn.Image</code></pre>
+                        <pre class="prettyprint">btn.Image</pre>
                         <figcaption>Fig 04-050</figcaption>
                     </figure>
                     <p>If you look at the Type of the Image property it is FileImageSource. This is one of the derivatives
                         of ImageSource that we have seen earlier. If you wanted to create an FileImageSource you would use:</p>
                     <figure>
-                        <pre class="prettyprint"><code>btn.Image = (FileImageSource) ImageSource.FromFile(&quot;clock.png&quot;);</code></pre>
+                        <pre class="prettyprint">btn.Image = (FileImageSource) ImageSource.FromFile(&quot;clock.png&quot;);</pre>
                         <figcaption>Fig 04-051</figcaption>
                     </figure>
                     <p>The FromFile is another static factory method on the ImageSource class.</p>
                     <p>Let's say that in our Windows Project we want to put our image files in a sub folder called images.</p>
                     <p>We can use the Device.OnPlatform method:</p>
                     <figure>
-                <pre class="prettyprint"><code>btn.Image = (FileImageSource) ImageSource.FromFile(
+                <pre class="prettyprint">btn.Image = (FileImageSource) ImageSource.FromFile(
     Device.OnPlatform(
         iOS: &quot;clock.png&quot;,
         Android: &quot;clock.png&quot;,
         WinPhone: &quot;Images/clock.png&quot;
-        ));</code></pre>
+        ));</pre>
                         <figcaption>Fig 04-052</figcaption>
                     </figure>
                     <p>In this case I am overriding the path in the Windows project but you can use the same technique
                         to override the filename or it's path in iOS or Android Projects as well.</p>
                     <p>You can apply the same technique in Xaml:</p>
                     <figure>
-<pre class="prettyprint"><code>&lt;Button.Image&gt;
+<pre class="prettyprint">&lt;Button.Image&gt;
     &lt;OnPlatform x:TypeArguments=&quot;FileImageSource&quot;
                 iOS=&quot;clock.png&quot;
                 Android=&quot;clock.png&quot;
                 WinPhone=&quot;Images/clock.png&quot;/&gt;
-&lt;/Button.Image&gt;</code></pre>
+&lt;/Button.Image&gt;</pre>
                         <figcaption>Fig 04-053</figcaption>
                     </figure>
                     <p>We deleted the Source attribute and used Property Element Syntax to specify different images for
@@ -577,12 +578,12 @@ public class EmbeddedImage : IMarkupExtension
                     <p>Before we finish I would like to clarify something. Earlier I mentioned that there was an implicit
                         conversion between a string and a UriImageSource:</p>
                     <figure>
-                        <pre class="prettyprint"><code>&lt;Image Source=&quot;http://..&quot;/&gt;</code></pre>
+                        <pre class="prettyprint">&lt;Image Source=&quot;http://..&quot;/&gt;</pre>
                         <figcaption>Fig 04-054</figcaption>
                     </figure>
                     <p>and then later said there was an implicit conversion between a string and a FileImageSource:</p>
                     <figure>
-                        <pre class="prettyprint"><code>&lt;Image Source=&quot;clock.png&quot;/&gt;</code></pre>
+                        <pre class="prettyprint">&lt;Image Source=&quot;clock.png&quot;/&gt;</pre>
                         <figcaption>Fig 04-055</figcaption>
                     </figure>
                     <p>How does XamarinForms know which way to parse the string. If the string starts with http:// it
@@ -605,13 +606,13 @@ public class EmbeddedImage : IMarkupExtension
                     <p>Now in each application project we have a class that bootstraps our application. In iOS it's
                         AppDelegate.cs. In this class there is a method called FinishedLaunching:</p>
                     <figure>
-                <pre class="prettyprint"><code>public override bool FinishedLaunching(UIApplication app, NSDictionary options)
+                <pre class="prettyprint">public override bool FinishedLaunching(UIApplication app, NSDictionary options)
 {
     global::Xamarin.Forms.Forms.Init ();
     LoadApplication (new UdemyXamarinForms.App ());
 
     return base.FinishedLaunching (app, options);
-}</code></pre>
+}</pre>
                         <figcaption>Fig 04-056</figcaption>
                     </figure>
                     <p>The first line of this method which calls Forms.Init() basically kickstarts Xamarin Forms. Next
@@ -620,13 +621,13 @@ public class EmbeddedImage : IMarkupExtension
                         to the base.FinishedLaunching method.</p>
                     <p>After the call to the Init method we need to add the following code:</p>
                     <figure>
-                        <pre class="prettyprint"><code>ImageCircleRenderer.Init();</code></pre>
+                        <pre class="prettyprint">ImageCircleRenderer.Init();</pre>
                         <figcaption>Fig 04-057</figcaption>
                     </figure>
                     <p>The ImageCircleRenderer is defined in ImageCircle.Forms.Plugin.iOS.</p>
                     <p>For Android we select MainActivity.cs in the OnCreate method there is a call to Forms.Init:</p>
                     <figure>
-                <pre class="prettyprint"><code>protected override void OnCreate (Bundle bundle)
+                <pre class="prettyprint">protected override void OnCreate (Bundle bundle)
 {
     TabLayoutResource = Resource.Layout.Tabbar;
     ToolbarResource = Resource.Layout.Toolbar;
@@ -635,12 +636,12 @@ public class EmbeddedImage : IMarkupExtension
 
     global::Xamarin.Forms.Forms.Init (this, bundle);
     LoadApplication (new UdemyXamarinForms.App ());
-}</code></pre>
+}</pre>
                         <figcaption>Fig 04-058</figcaption>
                     </figure>
                     <p>So add the call to ImageCircleRenderer (dont forget to add the namespace):</p>
                     <figure>
-<pre class="prettyprint"><code>		protected override void OnCreate (Bundle bundle)
+<pre class="prettyprint">protected override void OnCreate (Bundle bundle)
 {
     TabLayoutResource = Resource.Layout.Tabbar;
     ToolbarResource = Resource.Layout.Toolbar;
@@ -650,7 +651,7 @@ public class EmbeddedImage : IMarkupExtension
     global::Xamarin.Forms.Forms.Init (this, bundle);
     ImageCircleRenderer.Init();
     LoadApplication (new UdemyXamarinForms.App ());
-}</code></pre>
+}</pre>
                         <figcaption>Fig 04-059</figcaption>
                     </figure>
                     <p>You will need to add the ImageCircle.Forms.Plugin.Droid namespace.</p>
@@ -659,7 +660,7 @@ public class EmbeddedImage : IMarkupExtension
                     <p>Now let's add a new Content Page to the app called ImageCirclePage.xaml and add the following Xaml
                         (don't forget the XML namespace declaration - you can copy this from the github documentation):</p>
                     <figure>
-                <pre class="prettyprint"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+                <pre class="prettyprint">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
                     &lt;ContentPage xmlns=&quot;http://xamarin.com/schemas/2014/forms&quot;
                                  xmlns:x=&quot;http://schemas.microsoft.com/winfx/2009/xaml&quot;
                                  x:Class=&quot;UdemyXamarinForms.ImageCirclePage&quot;
@@ -673,7 +674,7 @@ public class EmbeddedImage : IMarkupExtension
             HorizontalOptions=&quot;Center&quot;
             VerticalOptions=&quot;Center&quot;
     /&gt;
-&lt;/ContentPage&gt;</code></pre>
+&lt;/ContentPage&gt;</pre>
                         <figcaption>Fig 04-060</figcaption>
                     </figure>
 
@@ -681,7 +682,7 @@ public class EmbeddedImage : IMarkupExtension
                     <p>Let's wrap up this section with a lecture on sizes. So earlier when you worked with Padding I told
                         you these numbers were not in pixels:</p>
                     <figure>
-                        <pre class="prettyprint"><code>Padding=&quot;0, 20, 0, 0&quot;</code></pre>
+                        <pre class="prettyprint">Padding=&quot;0, 20, 0, 0&quot;</pre>
                         <figcaption>Fig 04-061</figcaption>
                     </figure>
                     <p>I referred to them as units which is short for Device Independent Units. So let's see what this
@@ -732,9 +733,9 @@ public class EmbeddedImage : IMarkupExtension
 </template>
 
 <script>
-    export default {
-        name: "XamarinFormsCrossPlatform04Images"
-    }
+export default {
+  name: 'XamarinFormsCrossPlatform04Images'
+}
 </script>
 
 <style scoped>

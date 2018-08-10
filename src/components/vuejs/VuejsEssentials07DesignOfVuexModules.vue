@@ -390,7 +390,7 @@ export default {
                         of the action that we want merge into our ImageList component - fetchImages:
                     </p>
                     <figure>
-<pre class="prettyprint">    export default {
+<pre class="prettyprint">export default {
     name: 'ImageList',
     methods: mapActions(['fetchImages']),
 }</pre>

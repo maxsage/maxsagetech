@@ -3,9 +3,9 @@
 </template>
 
 <script>
-    export default {
-        name: "Webstorm.vue"
-    }
+export default {
+  name: 'Webstorm.vue'
+}
 </script>
 
 <style scoped>

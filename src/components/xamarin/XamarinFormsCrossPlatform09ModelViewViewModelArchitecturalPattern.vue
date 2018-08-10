@@ -37,9 +37,9 @@
 </template>
 
 <script>
-    export default {
-        name: "XamarinFormsCrossPlatform09ModelViewViewModelArchitecturalPattern"
-    }
+export default {
+  name: 'XamarinFormsCrossPlatform09ModelViewViewModelArchitecturalPattern'
+}
 </script>
 
 <style scoped>

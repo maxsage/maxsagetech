@@ -24,7 +24,7 @@
 </template>
 
 <script>
-    export default {
-        name: "wpf"
-    }
+export default {
+  name: 'wpf'
+}
 </script>

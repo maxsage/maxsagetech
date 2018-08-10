@@ -16,19 +16,19 @@
                         add a ListView element:
                     </p>
                     <figure>
-                <pre class="prettyprint"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
-&lt;ContentPage xmlns=&quot;http://xamarin.com/schemas/2014/forms&quot;
-             xmlns:x=&quot;http://schemas.microsoft.com/winfx/2009/xaml&quot;
-             x:Class=&quot;UdemyXamarinForms.BasicListPage&quot;&gt;
-    &lt;ListView x:Name=&quot;listView&quot;/&gt;
-&lt;/ContentPage&gt;</code></pre>
+                <pre class="prettyprint">&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot; ?&amp;gt;
+&amp;lt;ContentPage xmlns=&amp;quot;http://xamarin.com/schemas/2014/forms&amp;quot;
+             xmlns:x=&amp;quot;http://schemas.microsoft.com/winfx/2009/xaml&amp;quot;
+             x:Class=&amp;quot;UdemyXamarinForms.BasicListPage&amp;quot;&amp;gt;
+    &amp;lt;ListView x:Name=&amp;quot;listView&amp;quot;/&amp;gt;
+&amp;lt;/ContentPage&amp;gt;</pre>
                         <figcaption>Fig 05-001</figcaption>
                     </figure>
                     <p>To populate this list with data we are going to go in the code-behind and create a list of names then
                         set the ItemsSource of the listView:
                     </p>
                     <figure>
-<pre class="prettyprint"><code>public BasicListPage ()
+<pre class="prettyprint">public BasicListPage ()
 {
     InitializeComponent ();
 
@@ -40,7 +40,7 @@
     };
 
     listView.ItemsSource = names;
-}</code></pre>
+}</pre>
                         <figcaption>Fig 05-002</figcaption>
                     </figure>
                     <p>If we run the app we can see our list populated with three names:</p>
@@ -52,12 +52,12 @@
                         hide this:
                     </p>
                     <figure>
-                        <pre class="prettyprint"><code>&lt;ListView x:Name=&quot;listView&quot; SeparatorVisibility=&quot;None&quot; /&gt;</code></pre>
+                        <pre class="prettyprint">&lt;ListView x:Name=&quot;listView&quot; SeparatorVisibility=&quot;None&quot; /&gt;</pre>
                         <figcaption>Fig 05-003</figcaption>
                     </figure>
                     <p>or change it's colour:</p>
                     <figure>
-                        <pre class="prettyprint"><code>&lt;ListView x:Name=&quot;listView&quot; SeparatorColor=&quot;Blue&quot; /&gt;</code></pre>
+                        <pre class="prettyprint">&lt;ListView x:Name=&quot;listView&quot; SeparatorColor=&quot;Blue&quot; /&gt;</pre>
                         <figcaption>Fig 05-004</figcaption>
                     </figure>
                     <p>This is a pretty basic list but in most real world applications you want to display complex objects.
@@ -68,12 +68,12 @@
                     </p>
                     <p>First create a new Content Page called ContactListPage.xaml and add a ListView element:</p>
                     <figure>
-                <pre class="prettyprint"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+                <pre class="prettyprint">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
 &lt;ContentPage xmlns=&quot;http://xamarin.com/schemas/2014/forms&quot;
              xmlns:x=&quot;http://schemas.microsoft.com/winfx/2009/xaml&quot;
              x:Class=&quot;UdemyXamarinForms.ContactListPage&quot;&gt;
     &lt;ListView x:Name=&quot;listView&quot; SeparatorColor=&quot;Blue&quot; /&gt;
-&lt;/ContentPage&gt;</code></pre>
+&lt;/ContentPage&gt;</pre>
                         <figcaption>Fig 05-005</figcaption>
                     </figure>
                     <p>Next create a new folder in our shared project called Models - this is where we will store all our
@@ -83,17 +83,17 @@
                         and ImageUrl:
                     </p>
                     <figure>
-                <pre class="prettyprint"><code>public class Contact
+                <pre class="prettyprint">public class Contact
 {
     public string Name { get; set; }
     public string Status { get; set; }
     public string ImageUrl { get; set; }
-}</code></pre>
+}</pre>
                         <figcaption>Fig 05-006</figcaption>
                     </figure>
                     <p>Let's go to the code-behind for ContactListPage.xaml and initialize the listView:</p>
                     <figure>
-                <pre class="prettyprint"><code>public ContactListPage ()
+                <pre class="prettyprint">public ContactListPage ()
 {
     InitializeComponent ();
 
@@ -102,7 +102,7 @@
         new Contact { Name = &quot;Mosh&quot;, ImageUrl = &quot;http://lorempixel.com/100/100/people/1&quot; },
         new Contact { Name = &quot;John&quot;, ImageUrl = &quot;http://lorempixel.com/100/100/people/2&quot;, Status=&quot;Hey let's talk!&quot; }
     };
-}</code></pre>
+}</pre>
                         <figcaption>Fig 05-007</figcaption>
                     </figure>
                     <p>If we run the application now we see the following:</p>
@@ -117,13 +117,13 @@
                     </p>
                     <p>Back in the Xaml edit the ListView to add an ItemTemplate:</p>
                     <figure>
-                <pre class="prettyprint"><code>&lt;ListView x:Name=&quot;listView&quot;&gt;
+                <pre class="prettyprint">&lt;ListView x:Name=&quot;listView&quot;&gt;
     &lt;ListView.ItemTemplate&gt;
         &lt;DataTemplate&gt;
             &lt;TextCell Text=&quot;{Binding Name}&quot; Detail=&quot;{Binding Status}&quot; /&gt;
         &lt;/DataTemplate&gt;
     &lt;/ListView.ItemTemplate&gt;
-&lt;/ListView&gt;</code></pre>
+&lt;/ListView&gt;</pre>
                         <figcaption>Fig 05-009</figcaption>
                     </figure>
                     <p>ListView has a property called ItemTemplate. Just like we have ItemsSource we have ItemTemplate -
@@ -156,7 +156,7 @@
                     <p>You can see each item has text and detail (where available).</p>
                     <p>Now if you want to add an image here we can use the other built-in template called ImageCell:</p>
                     <figure>
-                        <pre class="prettyprint"><code>&lt;ImageCell Text=&quot;{Binding Name}&quot; Detail=&quot;{Binding Status}&quot; ImageSource=&quot;{Binding ImageUrl}&quot;  /&gt;</code></pre>
+                        <pre class="prettyprint">&lt;ImageCell Text=&quot;{Binding Name}&quot; Detail=&quot;{Binding Status}&quot; ImageSource=&quot;{Binding ImageUrl}&quot;  /&gt;</pre>
                         <figcaption>Fig 05-011</figcaption>
                     </figure>
                     <p>Let's look at the result:</p>
@@ -177,7 +177,7 @@
                         CustomTemplateContactListPage.xaml and add the following Xaml:
                     </p>
                     <figure>
-                <pre class="prettyprint"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+                <pre class="prettyprint">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
 &lt;ContentPage xmlns=&quot;http://xamarin.com/schemas/2014/forms&quot;
              xmlns:x=&quot;http://schemas.microsoft.com/winfx/2009/xaml&quot;
              x:Class=&quot;UdemyXamarinForms.CustomTemplateContactListPage&quot;&gt;
@@ -197,7 +197,7 @@
             &lt;/DataTemplate&gt;
         &lt;/ListView.ItemTemplate&gt;
     &lt;/ListView&gt;
-&lt;/ContentPage&gt;</code></pre>
+&lt;/ContentPage&gt;</pre>
                         <figcaption>Fig 05-014</figcaption>
                     </figure>
                     <p>Now let's run the application and see what happens:</p>
@@ -225,7 +225,7 @@
                         horizontally on the left):
                     </p>
                     <figure>
-                        <pre class="prettyprint"><code>&lt;StackLayout HorizontalOptions=&quot;StartAndExpand&quot;&gt;</code></pre>
+                        <pre class="prettyprint">&lt;StackLayout HorizontalOptions=&quot;StartAndExpand&quot;&gt;</pre>
                         <figcaption>Fig 05-018</figcaption>
                     </figure>
                     <p>Any option that ends with AndExpand means that any available space should be allocated to this
@@ -251,7 +251,7 @@
                         on the ListView to true:
                     </p>
                     <figure>
-                    <pre class="prettyprint"><code>&lt;ListView x:Name=&quot;listView&quot; HasUnevenRows=&quot;True&quot;&gt;</code></pre>
+                    <pre class="prettyprint">&lt;ListView x:Name=&quot;listView&quot; HasUnevenRows=&quot;True&quot;&gt;</pre>
                         <figcaption>Fig 05-021</figcaption>
                     </figure>
                     <p>With this change the height of each item will be based on it's content. Let's take a look at the
@@ -278,7 +278,7 @@
                     <p>Add a Content Page called GroupingItemsPage.xaml</p>
                     <p>Add another class to the Models folders called ContactGroup.cs</p>
                     <figure>
-                <pre class="prettyprint"><code>public class ContactGroup : List&lt;Contact&gt;
+                <pre class="prettyprint">public class ContactGroup : List&lt;Contact&gt;
 {
     public string Title { get; set; }
     public string ShortTitle { get; set; }
@@ -288,7 +288,7 @@
         Title = title;
         ShortTitle = shortTitle;
     }
-}</code></pre>
+}</pre>
                         <figcaption>Fig 05-025</figcaption>
                     </figure>
                     <p>We derived the class from List of Contact so it's a List by nature. Next I'm going to define a couple
@@ -299,7 +299,7 @@
                         List of Contacts I want to set it to a list of ContactGroups:
                     </p>
                     <figure>
-                <pre class="prettyprint"><code>public GroupingItemsPage ()
+                <pre class="prettyprint">public GroupingItemsPage ()
 {
     InitializeComponent ();
 
@@ -315,7 +315,7 @@
             new Contact { Name = &quot;John&quot;, ImageUrl = &quot;http://lorempixel.com/100/100/people/2&quot;, Status=&quot;Hey let's talk!&quot; }
         }
     };
-}</code></pre>
+}</pre>
                         <figcaption>Fig 05-026</figcaption>
                     </figure>
                     <p>We initialize the ContactGroup List with two new ContactGroups - one for M and one for J. Now because
@@ -327,7 +327,7 @@
                     </p>
                     <p>In the Xaml file we need to set a couple properites in our ListView:</p>
                     <figure>
-                <pre class="prettyprint"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+                <pre class="prettyprint">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
 &lt;ContentPage xmlns=&quot;http://xamarin.com/schemas/2014/forms&quot;
              xmlns:x=&quot;http://schemas.microsoft.com/winfx/2009/xaml&quot;
              x:Class=&quot;UdemyXamarinForms.GroupingItemsPage&quot;&gt;
@@ -341,7 +341,7 @@
             &lt;/DataTemplate&gt;
         &lt;/ListView.ItemTemplate&gt;
     &lt;/ListView&gt;
-&lt;/ContentPage&gt;</code></pre>
+&lt;/ContentPage&gt;</pre>
                         <figcaption>Fig 05-027</figcaption>
                     </figure>
                     <p>For the ListView we add a property called IsGroupingEnabled and set it to true. The other property we
@@ -360,7 +360,7 @@
                         HandlingSelectionsPage.xaml and add the following Xaml:
                     </p>
                     <figure>
-                <pre class="prettyprint"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+                <pre class="prettyprint">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
 &lt;ContentPage xmlns=&quot;http://xamarin.com/schemas/2014/forms&quot;
              xmlns:x=&quot;http://schemas.microsoft.com/winfx/2009/xaml&quot;
              x:Class=&quot;UdemyXamarinForms.HandlingSelectionsPage&quot;&gt;
@@ -376,7 +376,7 @@
             &lt;/DataTemplate&gt;
         &lt;/ListView.ItemTemplate&gt;
     &lt;/ListView&gt;
-&lt;/ContentPage&gt;</code></pre>
+&lt;/ContentPage&gt;</pre>
                         <figcaption>Fig 05-029</figcaption>
                     </figure>
                     <p>The Udemy video lecture shows a Xaml file withouth the Grouping attributes but if you miss these out
@@ -394,24 +394,24 @@
                         variable called contact:
                     </p>
                     <figure>
-                        <pre class="prettyprint"><code>var contact = e.SelectedItem as Contact;</code></pre>
+                        <pre class="prettyprint">var contact = e.SelectedItem as Contact;</pre>
                         <figcaption>Fig 05-030</figcaption>
                     </figure>
                     <p>Next in this method we display an alert with the Name of the selected Contact:</p>
                     <figure>
-                    <pre class="prettyprint"><code>DisplayAlert(&quot;Selected&quot;, contact.Name, &quot;OK&quot;);</code></pre>
+                    <pre class="prettyprint">DisplayAlert(&quot;Selected&quot;, contact.Name, &quot;OK&quot;);</pre>
                         <figcaption>Fig 05-031</figcaption>
                     </figure>
                     <p>For the Tapped event the e argument has a property called Item which gives us access to the item that
                         has been tapped. So first we cast to a Contact and store the result in a variable called contact:
                     </p>
                     <figure>
-                        <pre class="prettyprint"><code>var contact = e.Item as Contact;</code></pre>
+                        <pre class="prettyprint">var contact = e.Item as Contact;</pre>
                         <figcaption>Fig 05-032</figcaption>
                     </figure>
                     <p>Then we call DisplayAlert with the Name of the tapped Contact:</p>
                     <figure>
-                        <pre class="prettyprint"><code>var contact = e.Item as Contact;</code></pre>
+                        <pre class="prettyprint">var contact = e.Item as Contact;</pre>
                         <figcaption>Fig 05-033</figcaption>
                     </figure>
                     <p>Now if you run the application and tap a Contact you will get the Tapped alert then when you click ok
@@ -429,11 +429,11 @@
                         null:
                     </p>
                     <figure>
-                <pre class="prettyprint"><code>private void listView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+                <pre class="prettyprint">private void listView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
 {
     var contact = e.SelectedItem as Contact;
     DisplayAlert(&quot;Selected&quot;, contact.Name, &quot;OK&quot;);
-}</code></pre>
+}</pre>
                         <figcaption>Fig 05-034</figcaption>
                     </figure>
                     <p>Now you will only see the Tapped event and the item will not be Selected (no grey background).</p>
@@ -441,11 +441,11 @@
                         ItemTapped event handler:
                     </p>
                     <figure>
-                <pre class="prettyprint"><code>private void listView_ItemTapped(object sender, ItemTappedEventArgs e)
+                <pre class="prettyprint">private void listView_ItemTapped(object sender, ItemTappedEventArgs e)
 {
     //var contact = e.Item as Contact;
     //DisplayAlert(&quot;Tapped&quot;, contact.Name, &quot;OK&quot;);
-}</code></pre>
+}</pre>
                         <figcaption>Fig 05-035</figcaption>
                     </figure>
                     <p>The list wouldn't respond to the Tap or Selected events at all.</p>
@@ -462,7 +462,7 @@
                         Content Page called ContextActionsPage.xaml:
                     </p>
                     <figure>
-<pre class="prettyprint"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+<pre class="prettyprint">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
 &lt;ContentPage
         Padding=&quot;0, 20, 0, 0&quot;
         xmlns=&quot;http://xamarin.com/schemas/2014/forms&quot;
@@ -480,7 +480,7 @@
             &lt;/DataTemplate&gt;
         &lt;/ListView.ItemTemplate&gt;
     &lt;/ListView&gt;
-&lt;/ContentPage&gt;</code></pre>
+&lt;/ContentPage&gt;</pre>
                         <figcaption>Fig 05-037</figcaption>
                     </figure>
                     <p>We use Property Element Syntax to initialize the ContextAction property of TextCell. Inside the
@@ -495,14 +495,14 @@
                     </p>
                     <p>Next we implement the event handlers in the code-behind First of all Call_Clicked:</p>
                     <figure>
-                <pre class="prettyprint"><code>private void Call_Clicked(object sender, EventArgs e)
+                <pre class="prettyprint">private void Call_Clicked(object sender, EventArgs e)
         {
             var menuItem = sender as MenuItem;
             var contact = menuItem.CommandParameter as Contact;
 
             DisplayAlert(&quot;Call&quot;, contact.Name, &quot;OK&quot;);
 
-        }</code></pre>
+        }</pre>
                         <figcaption>Fig 05-038</figcaption>
                     </figure>
                     <p>If we look at the signature of the method we will see that unlike the Selected event our EventArgs
@@ -513,7 +513,7 @@
                         contact object:
                     </p>
                     <figure>
-                        <pre class="prettyprint"><code>CommandParameter=&quot;{Binding .}&quot;</code></pre>
+                        <pre class="prettyprint">CommandParameter=&quot;{Binding .}&quot;</pre>
                         <figcaption>Fig 05-039</figcaption>
                     </figure>
                     <p>We bind the CommandParameter to any property of the Contact (Name, Id etc.) but in this example we
@@ -522,19 +522,19 @@
                     </p>
                     <p>Next we assign a new variable called contact to the CommandParameter property:</p>
                     <figure>
-                        <pre class="prettyprint"><code>var contact = menuItem.CommandParameter as Contact;</code></pre>
+                        <pre class="prettyprint">var contact = menuItem.CommandParameter as Contact;</pre>
                         <figcaption>Fig 05-040</figcaption>
                     </figure>
                     <p>Then we just display an alert:</p>
                     <figure>
-                    <pre class="prettyprint"><code> DisplayAlert(&quot;Call&quot;, contact.Name, &quot;OK&quot;);</code></pre>
+                    <pre class="prettyprint"> DisplayAlert(&quot;Call&quot;, contact.Name, &quot;OK&quot;);</pre>
                         <figcaption>Fig 05-041</figcaption>
                     </figure>
                     <p>In the delete handler we again use the CommandParameter to get access to the Contact object. This
                         time we will combine the casting into one line:
                     </p>
                     <figure>
-                    <pre class="prettyprint"><code>var contact = (sender as MenuItem).CommandParameter as Contact;</code></pre>
+                    <pre class="prettyprint">var contact = (sender as MenuItem).CommandParameter as Contact;</pre>
                         <figcaption>Fig 05-042</figcaption>
                     </figure>
                     <p>We want to remove the item from the list when the Delete MenuItem is clicked. If we scroll to the
@@ -550,7 +550,7 @@
                         our List? Well if we declare a private field:
                     </p>
                     <figure>
-                        <pre class="prettyprint"><code>private List&lt;Contact&gt; _contacts;</code></pre>
+                        <pre class="prettyprint">private List&lt;Contact&gt; _contacts;</pre>
                         <figcaption>Fig 05-044</figcaption>
                     </figure>
                     <p>Back in the constructor instead of directly setting the ItemsSource we assign our list to the
@@ -558,7 +558,7 @@
                         type List&lt;Contact&gt;):
                     </p>
                     <figure>
-                <pre class="prettyprint"><code>public ContextActionsPage ()
+                <pre class="prettyprint">public ContextActionsPage ()
 {
     InitializeComponent ();
 
@@ -569,14 +569,14 @@
     };
 
     listView.ItemsSource = _contacts;
-}</code></pre>
+}</pre>
                         <figcaption>Fig 05-045</figcaption>
                     </figure>
                     <p>We also have access to the _contacts field from our Delete handler. So we can now use the Remove
                         method of the List type to remove the Contact:
                     </p>
                     <figure>
-                        <pre class="prettyprint"><code>_contacts.Remove(contact);</code></pre>
+                        <pre class="prettyprint">_contacts.Remove(contact);</pre>
                         <figcaption>Fig 05-046</figcaption>
                     </figure>
                     <p>If we run the application and click delete on a Contact the contact still remains in the List. If we
@@ -588,7 +588,7 @@
                         List&lt;Contact&gt; to ObservableCollection&lt;Contact&gt;:
                     </p>
                     <figure>
-                        <pre class="prettyprint"><code>private ObservableCollection&lt;Contact&gt; _contacts;</code></pre>
+                        <pre class="prettyprint">private ObservableCollection&lt;Contact&gt; _contacts;</pre>
                         <figcaption>Fig 05-047</figcaption>
                     </figure>
                     <p>Also, you will need to change the list initialization in the Constructor from List to
@@ -608,7 +608,7 @@
                         Content Page called PullToRefreshPage.xaml:
                     </p>
                     <figure>
-                <pre class="prettyprint"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+                <pre class="prettyprint">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
     &lt;ContentPage xmlns=&quot;http://xamarin.com/schemas/2014/forms&quot;
                  xmlns:x=&quot;http://schemas.microsoft.com/winfx/2009/xaml&quot;
                  x:Class=&quot;UdemyXamarinForms.PullToRefreshPage&quot;&gt;
@@ -619,12 +619,12 @@
             &lt;/DataTemplate&gt;
         &lt;/ListView.ItemTemplate&gt;
     &lt;/ListView&gt;
-&lt;/ContentPage&gt;</code></pre>
+&lt;/ContentPage&gt;</pre>
                         <figcaption>Fig 05-048</figcaption>
                     </figure>
                     <p>With the following code-behind:</p>
                     <figure>
-                <pre class="prettyprint"><code>public partial class PullToRefreshPage : ContentPage
+                <pre class="prettyprint">public partial class PullToRefreshPage : ContentPage
 {
     public PullToRefreshPage ()
     {
@@ -645,7 +645,7 @@
             new Contact { Name = &quot;John&quot;, ImageUrl = &quot;http://lorempixel.com/100/100/people/2&quot;, Status = &quot;Hey let's talk!&quot; }
         };
     }
-}</code></pre>
+}</pre>
                         <figcaption>Fig 05-049</figcaption>
                     </figure>
                     <p>The first thing we do in the Xaml is set the IsPullToRefresh attribute to true. Next we add the
@@ -666,7 +666,7 @@
                         based on the search criteria we add.</p>
                     <p>Add a new Content Page called SearchBarPage:</p>
                     <figure>
-                <pre class="prettyprint"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+                <pre class="prettyprint">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
 &lt;ContentPage
     Padding=&quot;0, 20, 0, 0&quot;
     xmlns=&quot;http://xamarin.com/schemas/2014/forms&quot;
@@ -682,12 +682,12 @@
             &lt;/ListView.ItemTemplate&gt;
         &lt;/ListView&gt;
     &lt;/StackLayout&gt;
-&lt;/ContentPage&gt;</code></pre>
+&lt;/ContentPage&gt;</pre>
                         <figcaption>Fig 05-050</figcaption>
                     </figure>
                     <p>With the following code-behind:</p>
                     <figure>
-                <pre class="prettyprint"><code>	public partial class SearchBarPage : ContentPage
+                <pre class="prettyprint">public partial class SearchBarPage : ContentPage
 {
     public SearchBarPage ()
     {
@@ -697,11 +697,11 @@
         searchBar.HeightRequest = 25;
     }
 
-    IEnumerable&lt;Contact&gt; GetContacts(string searchText = null)
+    IEnumerable&amp;lt;Contact&amp;gt; GetContacts(string searchText = null)
     {
-        var contacts = new List&lt;Contact&gt; {
-            new Contact { Name = &quot;Mosh&quot;, ImageUrl = &quot;http://lorempixel.com/100/100/people/1&quot; },
-            new Contact { Name = &quot;John&quot;, ImageUrl = &quot;http://lorempixel.com/100/100/people/2&quot;, Status = &quot;Hey let's talk!&quot; }
+        var contacts = new List&amp;lt;Contact&amp;gt; {
+            new Contact { Name = &amp;quot;Mosh&amp;quot;, ImageUrl = &amp;quot;http://lorempixel.com/100/100/people/1&amp;quot; },
+            new Contact { Name = &amp;quot;John&amp;quot;, ImageUrl = &amp;quot;http://lorempixel.com/100/100/people/2&amp;quot;, Status = &amp;quot;Hey let's talk!&amp;quot; }
         };
 
         if (String.IsNullOrWhiteSpace(searchText))
@@ -710,7 +710,7 @@
         }
         else
         {
-            return contacts.Where(c =&gt; c.Name.StartsWith(searchText));
+            return contacts.Where(c =&amp;gt; c.Name.StartsWith(searchText));
         }
     }
 
@@ -718,7 +718,7 @@
     {
         listView.ItemsSource = GetContacts(e.NewTextValue);
     }
-}</code></pre>
+}</pre>
                         <figcaption>Fig 05-051</figcaption>
                     </figure>
                     <p>Firstly, in the Xaml, we added a SearchBar element. Now because we have multiple elements on this
@@ -772,9 +772,9 @@
 </template>
 
 <script>
-    export default {
-        name: "XamarinFormsCrossPlatform05Lists"
-    }
+export default {
+  name: 'XamarinFormsCrossPlatform05Lists'
+}
 </script>
 
 <style scoped>
