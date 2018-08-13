@@ -205,8 +205,8 @@ git push heroku master</pre>
           <p>Specify this in the package.json like so:</p>
           <figure>
 <pre class="prettyprint">&quot;engines&quot;: {
-            &quot;node&quot;: &quot;8.11.2&quot;
-          },</pre>
+  &quot;node&quot;: &quot;8.11.2&quot;
+},</pre>
             <figcaption>Fig 01-017</figcaption>
           </figure>
           <h3>Fixing the "cannot GET /URL" error on refresh with Client Side Routers</h3>
@@ -239,7 +239,7 @@ git push heroku master</pre>
             href="https://forum.vuejs.org/t/how-do-i-implement-connect-history-api-fallback-so-that-url-paths-redirect-to-index-html/10938/2">
             How do I implement `connect-history-api-fallback` so that URL paths redirect to index.html?
           </a>
-          <p>It involves installing <code class="prettyprint">connect-history-api-fallback</code> and configuring you
+          <p>It involves installing <code class="prettyprint">connect-history-api-fallback</code> and configuring your
             server.js express configuration file to use it.
           </p>
         </div>
