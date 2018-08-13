@@ -209,6 +209,39 @@ git push heroku master</pre>
           },</pre>
             <figcaption>Fig 01-017</figcaption>
           </figure>
+          <h3>Fixing the "cannot GET /URL" error on refresh with Client Side Routers</h3>
+          <p>Vue Router and react-router are examples of Client Side Routers CSR. I encountered a problem using Vue
+            Router in conjunction with a basic express configuration when deploying to heroku. If you browse to a route
+            e.g. <a href="https://maxsagetech.herokuapp.com/vuejsessentials-01-an-introduction-to-vue">https://maxsagetech.herokuapp.com/vuejsdeployingtoheroku</a>
+            using the links in the application (behind the scenes these use <code class="prettyprint">&lt;router-link&gt;</code>)
+            and then hit refresh you will see get an error message:
+          </p>
+          <figure>
+            <pre class="prettyprint">Cannot GET /vuejsdeployingtoheroku</pre>
+            <figcaption>Fig 01-018</figcaption>
+          </figure>
+          <p>This is an error that can occur with all CSR - not just Vue Router. Let's use React as an example. The
+            first time a user loads your app (i.e. visits your website), they don’t have any JavaScript loaded. That
+            means no React and no React Router - so the first request will always be to your server. Then, assuming
+            there was a successful GET request, all your JavaScript loads and React Router confidently hijacks your
+            routing. From here on out, any other route changes in your app will be handled by React Router.
+          </p>
+          <p>Notice the issue yet? React Router can only load after the first successful GET request to your server (or
+            /). The reason for the dreaded Cannot GET /* error is because, if you’re at /dashboard and then hit refresh,
+            the browser will make a GET request to /dashboard which will fail since you have no logic on your server for
+            handling that request (since React Router is supposed to do it).
+          </p>
+          <p>More in depth explanation of this issue can be found on the following link:</p>
+          <a href="https://tylermcginnis.com/react-router-cannot-get-url-refresh/">Fixing the "cannot GET /URL" error on refresh with React Router (or how client side
+            routers work)</a><br />
+          <p>A description of the resolution when using Vue Router can be found here:</p>
+          <a
+            href="https://forum.vuejs.org/t/how-do-i-implement-connect-history-api-fallback-so-that-url-paths-redirect-to-index-html/10938/2">
+            How do I implement `connect-history-api-fallback` so that URL paths redirect to index.html?
+          </a>
+          <p>It involves installing <code class="prettyprint">connect-history-api-fallback</code> and configuring you
+            server.js express configuration file to use it.
+          </p>
         </div>
       </div>
     </div>
