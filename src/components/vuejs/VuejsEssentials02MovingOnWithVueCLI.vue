@@ -174,9 +174,9 @@
                         make use of Vue CLI.
                     </p>
                     <p>Back in the terminal change directory into the newly created video browser directory and start
-                        the project by running the command:
+                        the project by running the  <span class="terminal">npm run serve</span> command.
                     </p>
-                    <pre class="prettyprint">npm run serve</pre>
+                    
                     <p>Throughout the rest of this course we're going to be using this command to start our project up.
                         Now when you run that command you'll see some information about starting up the development
                         server. The <code class="prettyprint">npm run serve</code> command starts up a local server that
@@ -655,40 +655,5 @@ export default {
 </script>
 
 <style scoped>
-    .filename {
-        font-family: Consolas;
-        font-weight: bold;
-    }
-
-    .terminal {
-        font-size: small;
-        color: white;
-        font-family: Consolas;
-        background-color: black;
-        padding: 2px 5px 4px 5px;
-        border-radius: 4px;
-
-    }
-
-    .table-striped > tbody > tr:nth-child(2n+0) > td, .table-striped > tbody > tr:nth-child(2n+0) > th {
-        background-color: #AEAEAE;
-    }
-
-    .thead-dark {
-        background-color: #88888F;
-    }
-
-    table.table-bordered {
-        border: 1px solid black;
-        margin-top: 20px;
-    }
-
-    table.table-bordered > thead > tr > th {
-        border: 1px solid black;
-    }
-
-    table.table-bordered > tbody > tr > td {
-        border: 1px solid black;
-    }
 
 </style>
