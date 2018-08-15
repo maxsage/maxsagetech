@@ -8,9 +8,11 @@
         <div class="panel-body">
                     <h2>Useful Links</h2>
                     <h3>Visual Studio Code</h3>
-                    <a href="https://code.visualstudio.com/Docs/customization">https://code.visualstudio.com/Docs/customization</a><br
+                    <a target="_blank" href="https://code.visualstudio.com/Docs/customization">https://code.visualstudio
+                      .com/Docs/customization</a><br
                 />
-                    <a href="http://www.johnpapa.net/visual-studio-code">http://www.johnpapa.net/visual-studio-code</a>
+                    <a target="_blank" href="http://www.johnpapa.net/visual-studio-code">http://www.johnpapa
+                      .net/visual-studio-code</a>
                     <h3>Gulp</h3>
                     <img src="./images/gulp.png" />
                     <p>Gulp is an Automated Task Runner. It can be used for various build time tasks such as:</p>
@@ -20,10 +22,15 @@
                         <li>concatenating and minifying CSS and JavaScript files</li>
                         <li>deploying updates to a production server</li>
                     </ul>
-                    <p>The official gulp site can be accessed from: <a href="http://gulpjs.com/">http://gulpjs.com/</a></p>
+                    <p>The official gulp site can be accessed from: <a target=_blank "http://gulpjs.com/">http://gulpjs
+                      .com/</a></p>
                     <p>John Pappa has created a course that covers JavaScript Build Automation With Gulp.js on Pluralsight that
-                        can be found here: <a href="http://www.pluralsight.com/courses/javascript-build-automation-gulpjs">http://www.pluralsight.com/courses/javascript-build-automation-gulpjs</a>
-                    <p>Another guide to gulp can be found here: <a href="http://www.sitepoint.com/introduction-gulp-js/">http://www.sitepoint.com/introduction-gulp-js/</a></p>
+                        can be found here: <a
+                        target="_blank"
+                        href="http://www.pluralsight.com/courses/javascript-build-automation-gulpjs">http://www
+                        .pluralsight.com/courses/javascript-build-automation-gulpjs</a>
+                    <p>Another guide to gulp can be found here: <a target="_blank"
+          href="http://www.sitepoint.com/introduction-gulp-js/">http://www.sitepoint.com/introduction-gulp-js/</a></p>
                     <h3>Node Package Manager</h3>
                     <img src="./images/npm.png" />
                     <p>Node Package Manager is a JavaScript package installer that is used to install server side JavaScript
@@ -34,10 +41,12 @@
                         <li>typescript</li>
                         <li>generator-aspnet</li>
                     </ul>
-                    <p>The official npm site can be access from: <a href="https://www.npmjs.com/">https://www.npmjs.com/</a></p>
+                    <p>The official npm site can be access from: <a target="blank"
+                                                                    href="https://www.npmjs.com/">https://www.npmjs
+                      .com/</a></p>
                     <h3>Bower</h3>
                     <img src="./images/bower.png" />
-                    <p>The official <a href="bower.io">Bower site</a> says:</p>
+                    <p>The official <a target="_blank" href="bower.io">Bower site</a> says:</p>
                     <i><strong>"Web sites are made of lots of things — frameworks, libraries, assets, utilities,
                         and rainbows. Bower manages all these things for you."</strong></i>
                     <p>Bower works by fetching and installing packages from all over, taking care of hunting, finding, downloading,
@@ -49,7 +58,9 @@
                     <p>Yeoman helps you to kickstart new projects, prescribing best practices and tools to help you stay productive.</p>
                     <p>To do so, Yeoman provides a generator ecosystem. A generator is basically a plugin that can be run with
                         the `yo` command to scaffold complete projects or useful parts.</p>
-                    <p>The official Yeoman site can be accessed from here: <a href="http://yeoman.io/">http://yeoman.io/</a></p>
+                    <p>The official Yeoman site can be accessed from here: <a target="_blank"
+                                                                              href="http://yeoman.io/">http://yeoman
+                      .io/</a></p>
                     <h3>TypeScript</h3>
                     <img src="./images/typescript.png" />
                     <p>TypeScript is a free and open source programming language developed and maintained by Microsoft. It is
@@ -58,12 +69,12 @@
                         Pascal, has worked on the development of TypeScript. TypeScript may be used to develop JavaScript
                         applications for client-side or server-side execution.
                     </p>
-                    <a href="http://www.typescriptlang.org/">http://www.typescriptlang.org/</a>
+                    <a target="_blank" href="http://www.typescriptlang.org/">http://www.typescriptlang.org/</a>
                     <h3>Emmet</h3>
                     <img src="./images/emmet.png" />
                     <p>Emmet is a plugin for many popular text editors which greatly improves HTML & CSS workflow. It provides,
                         amongst other features, shortcut syntax for creating HTML.</p>
-                    <a href="http://emmet.io/">http://emmet.io/</a>
+                    <a target="_blank" href="http://emmet.io/">http://emmet.io/</a>
                     <h3>Markdown</h3>
                     <p>Format md files etc.</p>
                     <h3>Less</h3>
@@ -80,7 +91,8 @@
                     <h3>Mac</h3>
                     <p>To setup Visual Studio Code on a Mac visit the following link for instructions on configuring your bash
                         profile</p>
-                    <a href="https://code.visualstudio.com/Docs/setup">https://code.visualstudio.com/Docs/setup</a>
+                    <a target="_blank" href="https://code.visualstudio.com/Docs/setup">https://code.visualstudio
+                      .com/Docs/setup</a>
                     <h2>Basic Editing</h2>
                     <p>The following table describes some of the basic editing commands available in Visual Studio Code.
                     </p>
@@ -227,7 +239,8 @@
                     <h2>Supported Languages</h2>
                     <p>Code supports a number of languages and provides features such as Syntax coloring, bracket matching,
                         intellisense, linting and outline. In addition Code provides Refactoring features for C# and TypeScript.</p>
-                    <p>Visit <a href="https://code.visualstudio.com/Docs/languages">https://code.visualstudio.com/Docs/languages</a>                        for a full list of the languages that Code supports.</p>
+                    <p>Visit <a target="_blank" href="https://code.visualstudio.com/Docs/languages">https://code.visualstudio
+                      .com/Docs/languages</a>                        for a full list of the languages that Code supports.</p>
                     <h2>Refactoring</h2>
                     <p>Visual Studio Code really shines when it comes to refactoring code. It provides functionality to perform
                         the following:</p>
@@ -249,7 +262,10 @@
                         <li>Quick Line Movement and Editing</li>
                         <li>Refactoring Recap</li>
                     </ul>
-                    <p>There is a detailed explanation of all these features in the John Pappa Pluralsight course: <a href="www.pluralsight.com/courses/visual-studio-code">Visual Studio Code</a>                        under section 4 - Refactoring</p>
+                    <p>There is a detailed explanation of all these features in the John Pappa Pluralsight course: <a
+                     target="_blank" href="www.pluralsight.com/courses/visual-studio-code">Visual Studio Code</a>
+
+                      under section 4 - Refactoring</p>
                     <p>I will document these features at some point but in the meantime refer to the Pluralsight Course for
                         further information</p>
                     <h3>Selecting Code</h3>
@@ -316,7 +332,7 @@
                         under a filename that corresponds to the Language they written in (e.g. javascript.json).</p>
                     <p>John Pappa has written some angular specific snippets for JavaScript and TypeScript that are located
                         here:
-                        <a href="http://jpapa.me/ngstyles">http://jpapa.me/ngstyles</a></p>
+                        <a target="_blank" href="http://jpapa.me/ngstyles">http://jpapa.me/ngstyles</a></p>
                     <p>In order to create a User snippet you have to provide:</p>
                     <ul>
                         <li>Description - a description of the snippet</li>
@@ -423,7 +439,9 @@
                         </tbody>
                     </table>
                     <p>A comprehensive list of the default key bindings can be found here:
-                        <a href="https://code.visualstudio.com/Docs/editor/keybindings">https://code.visualstudio.com/Docs/editor/keybindings</a></p>
+                        <a target="_blank"
+                           href="https://code.visualstudio.com/Docs/editor/keybindings">https://code.visualstudio
+                          .com/Docs/editor/keybindings</a></p>
                     <h2>Defining Keybindings</h2>
                     <p>In addition to the default key bindings you can define your own keybindings. These are stored in a file
                         called keybindings.json located in C:\Users\{username}\AppData\Roaming\Code\User
@@ -587,7 +605,8 @@
                         project's root. You can have several tsconfig.json files within a project.</p>
                     <p>There is a good article on setting up the TypeScript compiler and configuring the tasks.json
                         file to run tsc here:
-                        <a href="http://blogs.msdn.com/b/typescript/archive/2015/04/30/using-typescript-in-visual-studio-code.aspx">
+                        <a target="_blank"
+                          href="http://blogs.msdn.com/b/typescript/archive/2015/04/30/using-typescript-in-visual-studio-code.aspx">
                             http://blogs.msdn.com/b/typescript/archive/2015/04/30/using-typescript-in-visual-studio-code.aspx</a></p>
                     <h1>Version Control and Git</h1>
                     <strong>Document this section from the Pluralsight course</strong>

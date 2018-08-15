@@ -952,7 +952,8 @@ export default {
                         server and then respond to us with a list of videos that match that search term. In order to
                         make use of the YouTube API we first have to sign up to it and get an API key.
                     </p>
-                    <p>Browse to <a href="console.developers.google.com">console.developers.google.com</a>, sign in if
+                    <p>Browse to <a target="_blank" href="console.developers.google.com">console.developers.google.com</a>,
+                      sign in if
                         required, and create a new project (I did this by clicking the drop down next to the Google APIs
                         logo and clicking the new project button).
                     </p>
@@ -1035,7 +1036,8 @@ export default {
                     <h3>Investigating Video Responses</h3>
                     <p>In the last section we got a nasty error message that complained with a status of 404 for this.
                         This is because of a typo in the Url that we specified to the <code class="prettyprint">axios.get</code>
-                        method. It should have been <a href="https://www.googleapis.com/youtube/v3/search">https
+                        method. It should have been <a target="blank"
+                                                       href="https://www.googleapis.com/youtube/v3/search">https
                             ://www.googleapis.com/youtube/v3/search</a>. If we now save the file, refresh the browser
                         and search again you should see a collection of console logs. This is because everytime the user
                         enters some text an event is triggered. That event instantly triggers an Ajax request over to
@@ -2439,7 +2441,8 @@ export default {
                     <h3>Crafting the Embed URL</h3>
                     <p>We've got a lot of information about the video now visible on the screen but we need to make
                         sure the actual video player displays as well. </p>
-                    <p>If you visit <a href="www.youtube.com">youtube</a> and click on the share button you should
+                    <p>If you visit <a target="_blank" href="www.youtube.com">youtube</a> and click on the share button
+                      you should
                         see an embed option:</p>
 <figure>
   <img src="./images/vuejsessentials/Fig03-113.png"/>
@@ -2493,7 +2496,8 @@ export default {
                     <p>In the next section we will add some styling to the video player.</p>
                     <h3>Responsive Embeds</h3>
                     <p>We've now got our YouTube embed visible on the screen but it's a little bit small. We will
-                        use the Bootstrap <a href="http://getbootstrap.com/docs/4.0/utilities/embed/">Embeds</a>
+                        use the Bootstrap <a target="blank" href="http://getbootstrap.com/docs/4.0/utilities/embed/">
+                        Embeds</a>
                         class which will cause the <code class="prettyprint">iframe</code> to expand to more suitably
                         fit the space available to it. The documentation provides an example:</p>
                     <figure>

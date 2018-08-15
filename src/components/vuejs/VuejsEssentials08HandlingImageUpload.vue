@@ -19,7 +19,7 @@
                     <p>A user should either be able to drag and drop an image onto the element in the center of the page
                         to upload it or click the element to display a file select screen.
                     </p>
-                    <p>The Imgur API <a href="https://apidocs.imgur.com/">documentation</a> provides details on
+                    <p>The Imgur API <a target="_blank" href="https://apidocs.imgur.com/">documentation</a> provides details on
                         uploading images. To upload an image we are going to make a POST request to https://api
                         .imgur.com/3/image that contains an image property. Image is going to be a key in the body of
                         the request that we make. The value for that property is going to be an actual image file. This

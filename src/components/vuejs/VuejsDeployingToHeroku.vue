@@ -212,7 +212,8 @@ git push heroku master</pre>
           <h3>Fixing the "cannot GET /URL" error on refresh with Client Side Routers</h3>
           <p>Vue Router and react-router are examples of Client Side Routers CSR. I encountered a problem using Vue
             Router in conjunction with a basic express configuration when deploying to heroku. If you browse to a route
-            e.g. <a href="https://maxsagetech.herokuapp.com/vuejsessentials-01-an-introduction-to-vue">https://maxsagetech.herokuapp.com/vuejsdeployingtoheroku</a>
+            e.g. <a target="_blank" href="https://maxsagetech.herokuapp.com/vuejsessentials-01-an-introduction-to-vue">https
+              ://maxsagetech.herokuapp.com/vuejsdeployingtoheroku</a>
             using the links in the application (behind the scenes these use <code class="prettyprint">&lt;router-link&gt;</code>)
             and then hit refresh you will see get an error message:
           </p>
@@ -232,7 +233,9 @@ git push heroku master</pre>
             handling that request (since React Router is supposed to do it).
           </p>
           <p>More in depth explanation of this issue can be found on the following link:</p>
-          <a href="https://tylermcginnis.com/react-router-cannot-get-url-refresh/">Fixing the "cannot GET /URL" error on refresh with React Router (or how client side
+          <a target="_blank" href="https://tylermcginnis.com/react-router-cannot-get-url-refresh/">Fixing the "cannot GET
+            /URL"
+            error on refresh with React Router (or how client side
             routers work)</a><br />
           <p>A description of the resolution when using Vue Router can be found here:</p>
           <a

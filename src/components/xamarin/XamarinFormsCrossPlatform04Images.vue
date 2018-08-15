@@ -465,7 +465,7 @@ public class EmbeddedImage : IMarkupExtension
                     </p>
                     <p>Add a new Content Page called ButtonPage.xaml for this lecture.</p>
                     <p>Now in this lecture we will look at how to add an icon to a button. I got the icon in question from
-                        <a href="http://icons8.com">icons8</a></p>
+                        <a target="_blank" href="http://icons8.com">icons8</a></p>
                     <p>The resources for this lecture are separated into folders for each platform:</p>
                     <ul>
                         <li>iOS</li>

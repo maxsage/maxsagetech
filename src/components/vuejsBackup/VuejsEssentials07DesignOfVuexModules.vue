@@ -129,7 +129,7 @@ const mutations = {
                         images that this user has ever uploaded. There are a couple of different considerations here
                         . First off we have to think about where we are going to locate the code to make this actual
                         API request. Secondly we have to think about how we actually fetch the images at all.</p>
-                    <p>The Imgur API <a href="apidocs.imgur.com">documentation</a> has a section on Account which
+                    <p>The Imgur API <a target="_blank" href="apidocs.imgur.com">documentation</a> has a section on Account which
                         lists all the different API endpoints that are tied to a users account. We are looking for
                         Account Images which returns all the images that have been uploaded by the current user. To
                         get the list of images we perform a GET request to https://api.imgur.com/3/account/me/images

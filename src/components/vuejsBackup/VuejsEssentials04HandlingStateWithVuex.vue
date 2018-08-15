@@ -188,15 +188,16 @@ new Vue ({
                         styling library called Semantic UI.</p>
                     <p>This is going to take care of all the styling of our application and we're just going to have
                         to add a couple of CSS rules here and there.</p>
-                    <p>The documentation for Semantic UI can be found <a href="https://semantic-ui.com/">here</a>. It
+                    <p>The documentation for Semantic UI can be found <a target="_blank" href="https://semantic-ui.com/">here</a>. It
                         describes a couple of different methods for installing Semantic UI into your project.
                     </p>
                     <p>We are not going to use an NPM package to install Semantic UI. Instead we will get a single
                         CSS file and include that in the Html of our application.</p>
                     <p>The link to the CSS file that we need is available on a CDN or Content Delivery Network which
                         is used to very quickly serve up resources like CSS files to users of our application. </p>
-                    <p>Browse to <a href="cdnjs.com">cdnjs.com</a> and perform a search for semantic-ui and locate
-                        the <a href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.css">
+                    <p>Browse to <a target="_blank" href="cdnjs.com">cdnjs.com</a> and perform a search for semantic-ui
+                      and locate
+                        the <a target="_blank" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.css">
                             semantic.min.css</a> CSS file - this is the complete package (the other results are
                         individual components).
                     </p>
@@ -222,7 +223,7 @@ new Vue ({
                         little bit of styling out of the box for free.</p>
                     <p>Locate the Menu button on the left hand side and you will see a list of all the different
                         styled components you will get when you install Semantic UI.</p>
-                    <p>We can use the <a href="https://semantic-ui.com/collections/menu.html">Menu</a> component of
+                    <p>We can use the <a target="_blank" href="https://semantic-ui.com/collections/menu.html">Menu</a> component of
                         the Collections section to style our AppHeader. The documentation give a couple of different
                         examples of menu components. The Pointing menu is close to the styling we require for the
                         AppHeader menu bar. Clicking on the code snippet icon we can see from the example Html that
@@ -256,7 +257,7 @@ new Vue ({
                         logs in. The AppHeader component is very tightly coupled with the authentication system of
                         our application. Remember to handle authentication we're going to be making use of the OAuth
                     system through the Imgur API.</p>
-                    <p>If you navigate to <a href="imgur.com">imgur.com</a> you will see a lot of images appearing on
+                    <p>If you navigate to <a target="_blank" href="imgur.com">imgur.com</a> you will see a lot of images appearing on
                         screen. These are all images that have been submitted by users of the Imgur application.
                         Imgur has two primary methods of working with these images - creating images, adding images,
                     adding comment or titles, deleting images etc.</p>

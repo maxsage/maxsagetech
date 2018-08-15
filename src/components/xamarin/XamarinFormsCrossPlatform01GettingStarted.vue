@@ -65,7 +65,8 @@
                     <h4>Windows Setup</h4>
                     <p>If your a Windows user you probably have Visual Studio. When you install Xamarin it will install all
                         the required SDK's as well as project templates in Visual Studio. To do this go to
-                        <a href="xamarin.com/download">xamarin.com/download</a> fill out the form and make sure you set the
+                        <a target="_blank" href="xamarin.com/download">xamarin.com/download</a> fill out the form and make sure you
+                      set the
                         following question to yes:</p>
                     <figure>
                         <img src="./images/01/Fig01-003.png"/>

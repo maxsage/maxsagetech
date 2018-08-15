@@ -718,7 +718,8 @@
                             class="prettyprint">v-if</code> directive to make sure that we either show the set of
                         buttons or the anchor tag that contains the Login functionality.
                     </p>
-                    <p>However, the <a href="https://semantic-ui.com/">SemanticUI</a> library that we are using does not
+                    <p>However, the <a target="_blank" href="https://semantic-ui.com/">SemanticUI</a> library that we are using does
+                      not
                         expect there to be a bunch of anchor tags inside of this <code class="prettyprint">right
                             menu</code> class. We're basically breaking the rules of what SemanticUI expects to see but
                         for a very good reason - so we can use that <code class="prettyprint">v-if</code> directive.

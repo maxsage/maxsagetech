@@ -80,7 +80,7 @@
                         project. To install Vue CLI enter <span class="terminal">npm install -g @vue/cli</span> in
                         a terminal window.</p>
                     <p>Now while that's being installed I want to show you the documentation for Vue CLI very quickly.
-                        It can be found on <a href="https://github.com/vuejs/vue-cli">GitHub</a>. There's not a
+                        It can be found on <a target="_blank" href="https://github.com/vuejs/vue-cli">GitHub</a>. There's not a
                         tremendous amount of documentation on here because Vue CLI is still in active
                         development right now. Towards the bottom of the page you will find a link to the full
                         documentation. Following this link will take you to some information on how to do further

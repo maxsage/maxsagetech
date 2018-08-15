@@ -7,7 +7,7 @@
                 </div>
                 <div class="panel-body">
                     <h3>Xamarin Forms: Build Native Cross-platform Apps with C#</h3>
-                    <a href="https://www.udemy.com/xamarin-forms-course/learn/v4/overview">Xamarin Forms: Build Native
+                    <a target="_blank" href="https://www.udemy.com/xamarin-forms-course/learn/v4/overview">Xamarin Forms: Build Native
                         Cross-platform Apps with C# On Udemy</a><br/>
                     <router-link to="/xamarin-forms-cross-platform-00-course-contents" active-class="active"><a>Xamarin Forms: Build Native Cross-platform Apps with C#</a></router-link>
                     <p>
