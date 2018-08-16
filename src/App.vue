@@ -35,7 +35,6 @@ export default {
     background-color: black;
     padding: 2px 5px 4px 5px;
     border-radius: 4px;
-
   }
 
   .table-striped > tbody > tr:nth-child(2n+0) > td, .table-striped > tbody > tr:nth-child(2n+0) > th {
