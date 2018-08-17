@@ -1400,9 +1400,10 @@ export default {
   &lt;/template&gt;</pre>
             <figcaption>Fig 03-069</figcaption>
           </figure>
-          <p>The v-for directive is the directive you will use every time that you want to build a list of components
-            out. We can interpret this directive as - for every single object or every single video inside of the list
-            of videos that was provided as a prop to our VideoListComponent make exactly one VideoListItem component.
+          <p>The <code class="prettyprint">v-for</code> directive is the directive you will use every time that you want
+            to build a list of components out. We can interpret this directive as - for every single object or every
+            single video inside of the list of videos that was provided as a <code class="prettyprint">prop</code> to
+            our VideoList component make exactly one VideoListItem component.
           </p>
           <p>Notice also how we declared <code class="prettyprint">video</code> in the statement <code
             class="prettyprint">video in videos</code>. This allows use to access an individual <code
@@ -1423,24 +1424,21 @@ export default {
           <p>In the next section we will customize the VideoListItem component to show some information about the video
             that it represents.
           </p>
-          <h3>Handling Props with V-For</h3>
+          <h3>Handling Props with v-for</h3>
           <p>In the last section we were able to get a collection of VideoListItem components to print out on the screen
             by using the <code class="prettyprint">v-for</code> directive.
           </p>
           <p>We now need figure out some way to say that for every video in this list of videos we want to communicate
             this video in the <code class="prettyprint">v-for</code> directive down to the <code class="prettyprint">VideoListItem</code>
             component so the component instance knows what video it is supposed to be displaying information about on
-            the screen.
-          </p>
-          <p>So this is another scenario where we want to communicate some data from the parent component of VideoList
-            down to the child component of VideoListItem which will achieve by, again, making use of the Vue props
-            system.
+            the screen. This is another scenario where we want to communicate some data from the parent component of
+            VideoList down to the child component of VideoListItem which will achieve by, again, making use of the Vue
+            props system.
           </p>
           <p>We just went through this process but as a reminder we first have to add a <code class="prettyprint">
-            v-bind</code> expression to the parent components template.
-          </p>
-          <p>Now, this time around, that might seem like it's a bit more challenging here. It's definitely not the same
-            type of setup that we had back inside of our App component:
+            v-bind</code> expression to the parent components template. This time around, that might seem like it's a
+            bit more challenging here. It's definitely not the same type of setup that we had back inside of our App
+            component:
           </p>
           <figure>
 <pre class="prettyprint">&lt;div&gt;
@@ -1470,15 +1468,15 @@ export default {
   &lt;/template&gt;</pre>
             <figcaption>Fig 03-071</figcaption>
           </figure>
-          <p>So we write <code class="prettyprint">v-bind:</code> and then the name of the prop: <code
+          <p>So we write <code class="prettyprint">v-bind:</code> and then the name of the prop <code
             class="prettyprint">video</code> as we want it to show up inside of the child component. So now
-            VideoListItem is going to have access to a variable called video. After that we write <code
-              class="prettyprint">="video"</code> which specifies the piece of data or the variable from the
-            VideoListComponent that needs to be passed down to the child. <code class="prettyprint">video</code> is
-            referencing the current video that we are iterating over inside of our list of videos.
-          </p>
-          <p>If we had specified a different name in the <code class="prettyprint">v-for</code> directive we would need
-            to use that in our <code class="prettyprint">v-bind</code> directive also:
+            VideoListItem is going to have access to a variable called <code class="prettyprint">video</code> . After
+            that we write <code
+              class="prettyprint">="video"</code> which specifies the piece of data or the variable from the VideoList
+            component that needs to be passed down to the child. <code class="prettyprint">video</code> is referencing
+            the current video that we are iterating over inside of our list of videos. If we had specified a different
+            name in the <code class="prettyprint">v-for</code> directive we would need to use that in our <code
+              class="prettyprint">v-bind</code> directive also:
           </p>
           <figure>
 <pre class="prettyprint">&lt;VideoListItem
@@ -1488,9 +1486,9 @@ export default {
   &lt;/VideoListItem&gt;</pre>
             <figcaption>Fig 03-072</figcaption>
           </figure>
-          <p>We will stick with video to keep the naming terminology consistent.</p>
-          <p>So now that we are passing some information, as a prop, from the parent to the child we need to tell the
-            child component to expect to receive the prop.
+          <p>We will stick with <code class="prettyprint">video</code> to keep the naming terminology consistent. So now
+            that we are passing some information, as a <code class="prettyprint">prop</code> , from the parent to the
+            child we need to tell the child component to expect to receive the <code class="prettyprint">prop</code> .
           </p>
           <p>In the VideoListItem component add a <code class="prettyprint">props</code> property and, in this case, we
             will supply the <code class="prettyprint">prop</code> names as an array of strings instead of an object,
@@ -1516,23 +1514,14 @@ export default {
           </figure>
           <p>We get the name of the video from the <code v-pre class="prettyprint">{{ video.snippet.title }} </code>.
             The video object has a <code class="prettyprint">snippet</code> property which, in turn, contains <code
-              class="prettyprint">title, description</code> and <code class="prettyprint">id </code> properties.
+              class="prettyprint">title, description</code> and <code class="prettyprint">id</code> properties. Re-run
+            the app inside of the browser and you should see a list of video titles appearing in our list.
           </p>
-          <p>Rerun the app inside of the browser and you should see a list of video titles appearing in our list.
-          </p>
-          <p>Let's continue in the next section where we will talk about one more feature of the <code
-            class="prettyprint">v-for</code> directive.
-          </p>
-          <h3>Keys with V-For</h3>
+          <h3>Keys with v-for</h3>
           <p>In the last section we made use of the <code class="prettyprint">v-for</code> directive to render out a
-            list of VideoListItems
-          </p>
-          <p>Anytime we use this <code class="prettyprint">v-for</code> directive to build out a list of items there is
-            one other property that we should (although it is optional) provide to the element or the component that we
-            are making a list out of - the <code class="prettyprint">key </code> property.
-          </p>
-          <p>We define the <code class="prettyprint">key</code> property on the component that we are making the list
-            out of by writing:
+            list of VideoListItems. Anytime we use this <code class="prettyprint">v-for</code> directive to build out a
+            list of items there is one other property that we should (although it is optional) provide to the element or
+            the component that we are making a list out of - the <code class="prettyprint">key</code> property:
           </p>
           <figure>
 <pre class="prettyprint">&lt;VideoListItem
@@ -1547,48 +1536,31 @@ export default {
             used to update our list in a performant fashion. If you look at the console in the browser for our
             application you wont see any warnings about a key not being present. This is because you don't strictly have
             to provide a key but in general we should do if possible because it enhances the performance of re-rendering
-            our list of items.
-          </p>
-          <p>Inside the double quotes we provide a value that is unique and consistent to the individual record that we
-            are rendering. In our case this is <code class="prettyprint">video .etag</code>.
-          </p>
-          <p>In the next section we'll move on to our VideoListItem component where we're going to work on some of the
-            styling and rendering out an image in addition to the title.
+            our list of items. Inside the double quotes we provide a value that is unique and consistent to the
+            individual record that we are rendering. In our case this is <code class="prettyprint">video .etag</code>.
           </p>
           <h3>Including Bootstrap Styling</h3>
           <p>Currently we are just outputting the title of the video in our list. We are going to add styling (using
-            Bootstrap CSS) to display a thumbnail image with the video title to the right .
-          </p>
-          <p>From the Boostrap website browse to the <a
-            href="https://getbootstrap.com/docs/4.1/getting-started/introduction/" target="_blank"> getting started</a>
-            page and copy the link in the CSS section.
-          </p>
-          <p>Paste the link into the index.html tag under the <code class="prettyprint">title</code> element.
-          </p>
-          <p>Back in the browser if you refresh the page and perform a search you should notice that some styling has
-            already been applied.
-          </p>
-          <p>In the next section we will take advantage of Bootstrap to style some different elements of our
-            application.
+            Bootstrap CSS) to display a thumbnail image with the video title to the right. From the Boostrap website
+            browse to the <a
+              href="https://getbootstrap.com/docs/4.1/getting-started/introduction/" target="_blank"> getting
+              started</a> page and copy the link in the CSS section. Paste the link into the <span class="filename">index.html</span>
+            tag under the <code class="prettyprint">title</code> element. Back in the browser if you refresh the page
+            and perform a search you should notice that some styling has already been applied.
           </p>
           <h3>Styling the Search Bar</h3>
           <p>In the last section we installed the Bootstrap CSS library into our project. We're now going to use some
             the CSS that is included in Bootstrap to style our project starting with the search bar at the top of the
-            page. .
-          </p>
-          <p>Anytime we make use of the Bootstrap library Bootstrap always assumes that our root element will have a
-            class of <code class="prettyprint">container</code> - which is used throughout Bootstrap to better style and
-            align different items inside of our project.
-          </p>
-          <p>The <code class="prettyprint">div</code> element in the template of the App component is one of the
-            absolute root elements inside of our application so we'll add a <code class="prettyprint">class</code> of
-            <code class="prettyprint">container</code> to this element.
-          </p>
-          <p>Refresh the application and you'll immediately see that all the content on our page is more aligned towards
+            page. Anytime we make use of the Bootstrap library Bootstrap always assumes that our root element will have
+            a class of <code class="prettyprint">container</code> - which is used throughout Bootstrap to better style
+            and align different items inside of our project. The <code class="prettyprint">div</code> element in the
+            template of the App component is one of the absolute root elements inside of our application so we'll add a
+            <code class="prettyprint">class</code> of <code class="prettyprint">container</code> to this element.
+            Refresh the application and you'll immediately see that all the content on our page is more aligned towards
             the center of the screen.
           </p>
-          <p>Next add some styling to the SearchBar component in the empty style tag. We use the scoped attribute to
-            ensure that the CSS we add here only affects this component:
+          <p>Next add some styling to the SearchBar component in the empty style tag. We use the <code
+            class="prettyprint">scoped</code> attribute to ensure that the CSS we add here only affects this component:
           </p>
           <figure>
 <pre class="prettyprint">&lt;style scoped&gt;
@@ -1606,7 +1578,6 @@ export default {
           <p>Refresh the browser and you should see the search bar is more centered on the screen and there is also a
             little bit more of a margin between the browser's address bar and the search bar itself.
           </p>
-          <p>In the next section we'll style the VideoList.</p>
           <h3>Styling the Video List</h3>
           <p>Next we will add some styling to the list of videos that gets rendered by the VideoList and VideoListItem
             components.
@@ -1640,27 +1611,21 @@ export default {
           </figure>
           <p>It's worth pointing out that we don't try and add styles directly to the <code class="prettyprint">&lt;VideoListItem&gt;</code>
             tag in the VideoList component. Instead we open up the component itself and add the styles to the <code
-              class="prettyprint"> li</code> element located within.
+              class="prettyprint"> li</code> element located within. If you refresh the browser you should see the list
+            of videos rendered using the styling we just specified.
           </p>
-          <p>If you refresh the browser you should see the list of videos rendered using the styling we just specified.
-          </p>
-          <p>In the next section we add the image thumbnail to appear as well.</p>
           <h3>Thumbnail Image Reference</h3>
-          <p>In the last section we added a little bit of styling to the VideoListItem component. Next we'll display a
-            thumbnail image for each video returned in the list of videos.
-          </p>
-          <p>We'll begin by taking a look at the response object that comes back from the YouTube API. The snippet
-            property contains a thumbnail property that itself contains three properties:
+          <p>Next we'll display a thumbnail image for each video returned in the list of videos. We'll begin by taking a
+            look at the response object that comes back from the YouTube API. The snippet property contains a thumbnail
+            property that itself contains three properties:
           </p>
           <ul>
             <li>default</li>
             <li>high</li>
             <li>medium</li>
           </ul>
-          <p>These properties refer to the size of the image. If you copy the value of the url property in the default
-            image.
-          </p>
-          <p>In the template for the VideoListItem component add an <code class="prettyprint">img</code> tag:
+          <p>These properties refer to the size of the image. Copy the value of the url property in the default image.
+            In the template for the VideoListItem component add an <code class="prettyprint">img</code> tag:
           </p>
           <figure>
 <pre v-pre class="prettyprint">&lt;template&gt;
@@ -1672,23 +1637,16 @@ export default {
             <figcaption>Fig 03-078</figcaption>
           </figure>
           <p>Here we bind the <code class="prettyprint">src</code> property to the <code class="prettyprint">url</code>
-            property we discussed above.
-          </p>
-          <p>If you refresh the browser you should now see the image thumbnails in the list of videos.</p>
-          <p>In the next section we will look at using a computed property to cut down the amount of Javascript code
-            have added to our template.
-          </p>
+            property we discussed above. If you refresh the browser you should now see the image thumbnails in the list
+            of videos.</p>
           <h3>Thumbnail by Computed Property</h3>
           <p>In the last section we displayed our thumbnail image on the screen. However, we did add a very long
-            property reference: <code class="prettyprint">video.snippet.thumbnails.default .url</code> directly into our
+            property reference: <code class="prettyprint">video.snippet.thumbnails.default.url</code> directly into our
             template. This type of practice can make our template look messy and difficult to read. In this section, as
-            an alternative, we are going to put this reference into our component as a computed property.
-          </p>
-          <p>We can use computed property to not only work with component data but also properties that are coming in
-            through props inside of a component.
-          </p>
-          <p>Underneath <code class="prettyprint">props</code> add the <code class="prettyprint">computed </code> object
-            with a thumbnailUrl function:
+            an alternative, we are going to put this reference into our component as a computed property. We can use
+            computed property to not only work with component data but also properties that are coming in through props
+            inside of a component. Underneath <code class="prettyprint">props</code> add the <code
+              class="prettyprint">computed</code> object with a <code class="prettyprint">thumbnailUrl</code> function:
           </p>
           <figure>
 <pre v-pre class="prettyprint">export default {
@@ -1702,7 +1660,7 @@ export default {
 };</pre>
             <figcaption>Fig 03-079</figcaption>
           </figure>
-          <p>Back in the <code class="prettyprint">img</code> tag in the <code class="prettyprint">template </code> we
+          <p>Back in the <code class="prettyprint">img</code> tag in the <code class="prettyprint">template</code> we
             can now use our computed property:
           </p>
           <figure>
@@ -1714,45 +1672,38 @@ export default {
 &lt;/template&gt;</pre>
             <figcaption>Fig 03-080</figcaption>
           </figure>
-          <p>In the browser the application should work as before.</p>
-          <p>So, as a reminder, we can use computed functions to work with or format data before we reference it inside
-            our template.
-          </p>
-          <p>The <code class="prettyprint">this</code> keyword in the code above is present because we are referencing a
-            <code class="prettyprint">prop</code> called <code class="prettyprint">video</code> inside of our component.
-          </p>
-          <p>We then add the properties: <code class="prettyprint">snippet.thumbnails.default.url</code> and make that
-            the return value of our function.
-          </p>
-          <p>We specified a function name of thumbnailUrl inside of the computed object. We can then reference that
-            function anywhere within our template. Notice that when we referenced the computed function we do not have
-            to specify any parentheses or prefix the function with <code class="prettyprint">this.</code> - we just use
-            the computed function's name and Vue takes over from there.
+          <p>In the browser the application should work as before. To recap, we can use computed functions to work with
+            or format data before we reference it inside our template. The <code class="prettyprint">this</code> keyword
+            in the computed function above is present because we are referencing a <code class="prettyprint">prop</code>
+            called <code class="prettyprint">video</code> inside of our component. We then add the properties: <code
+              class="prettyprint">snippet.thumbnails.default.url</code> and make that the return value of our function.
+            We specified a function name of <code class="prettyprint">thumbnailUrl</code> inside of the computed object.
+            We can then reference that function anywhere within our template. Notice that when we referenced the
+            computed function we do not have to specify any parentheses or prefix the function with <code
+              class="prettyprint">this.</code> - we just use the computed function's name and Vue takes over from there.
           </p>
           <p>There was no mandatory requirement to refactor the code to use a computed property but anytime we add a
             very long property reference or any amount of Javascript logic directly into our template that's a sign that
             you might want to look at using a computed function to keep the template as simple and clean as possible.
           </p>
-          <p>Ok, that all looks good but we have some text overlap:</p>
-          <figure>
-            <img src="./images/vuejsessentials/Fig03-081.png"/>
-            <figcaption>Fig 03-081</figcaption>
-          </figure>
-          <p>In the next section we will add some styling to get the text to wrap to the right hand side of the
-            thumbnail.
-          </p>
           <h3>More List Item Styling</h3>
           <p>Ok now we've got thumbnails displayed inside of our VideoList item but you'll notice that the title kind of
             wraps around underneath the thumbnail image which is not what we want.
           </p>
+          <figure>
+            <img src="./images/vuejsessentials/Fig03-081.png"/>
+            <figcaption>Fig 03-081</figcaption>
+          </figure>
+
           <p>The bootstrap documentation has a section on <a
             href="https://getbootstrap.com/docs/4.0/layout/media-object/#media-list">media list</a> which adds styling
             to show an image to the left with a bold title to the right.
           </p>
-          <p>To achieve this layout we add a class of media to our <code class="prettyprint">li</code> element and a
-            class of mr-3 to our <code class="prettyprint">img</code> element. We also have to use a <code
-              class="prettyprint">div</code> element with a class of media-body which wraps anything that forms the text
-            to the right hand side of the image:
+          <p>To achieve this layout we add a class of <code class="prettyprint">media</code> to our <code
+            class="prettyprint">li</code> element and a class of <code class="prettyprint">mr-3</code> to our <code
+            class="prettyprint">img</code> element. We also have to use a <code
+            class="prettyprint">div</code> element with a class of <code class="prettyprint">media-body</code> which
+            wraps anything that forms the text to the right hand side of the image:
           </p>
           <figure>
 <pre v-pre class="prettyprint">&lt;template&gt;
@@ -1768,10 +1719,9 @@ export default {
           </figure>
           <p>Ok, so we made a difference but we didn't get our desired result. Now the title just appears underneath the
             thumbnail. This is because the <code class="prettyprint">list-group-item</code> and the <code
-              class="prettyprint">media </code> class conflict on how the item should be style. To workaround this we
-            will add some custom CSS.
-          </p>
-          <p>We add the CSS to a <code class="prettyprint">scoped style</code> tag in VideoListItem:</p>
+              class="prettyprint">media</code> class conflict on how the item should be style. To workaround this we
+            will add some custom CSS. We add the CSS to a <code class="prettyprint">scoped style</code> tag in
+            VideoListItem:</p>
           <figure>
 <pre class="prettyprint">&lt;style scoped&gt;
     li {
@@ -1781,10 +1731,9 @@ export default {
             <figcaption>Fig 03-082</figcaption>
           </figure>
           <p>The <code class="prettyprint">display: flex;</code> styling will cause the <code
-            class="prettyprint">img</code> and the <code class="prettyprint">div</code> to display on the same line.
-          </p>
-          <p>If I save the file, flip back over to the browser and refresh the page (which is necessary because we have
-            just added a new block of CSS) you should see we have now achieved the desired result:
+            class="prettyprint">img</code> and the <code class="prettyprint">div</code> to display on the same line. If
+            I save the file, flip back over to the browser and refresh the page (which is necessary because we have just
+            added a new block of CSS) you should see we have now achieved the desired result:
           </p>
           <figure>
             <img src="./images/vuejsessentials/Fig03-083.png"/>
@@ -1813,8 +1762,6 @@ export default {
             <img src="./images/vuejsessentials/Fig03-085.png"/>
             <figcaption>Fig 03-085</figcaption>
           </figure>
-          <p>In the next section we will work on click events that will allow us to select a particular video.
-          </p>
           <h3>Handling Nested Clicks</h3>
           <p>We've pretty much wrapped up on the styling side of our VideoListItem component. We now need to think about
             what happens anytime a user clicks on one of the VideoListItems. As a quick reminder let's revisit our
@@ -1825,29 +1772,24 @@ export default {
             <figcaption>Fig 03-086</figcaption>
           </figure>
           <p>Anytime someone clicks on a VideoListItem we want to create the VideoDetail component which will show
-            information such as the video itself and the video title.
-          </p>
-          <p>So this is going to be a very interesting challenge as we try to communicate a click event across the
-            entirety of our application. To get a better idea of the challenge ahead let's revisit the application
-            structure diagram:
+            information such as the video itself and the video title. So this is going to be a very interesting
+            challenge as we try to communicate a click event across the entirety of our application. To get a better
+            idea of the challenge ahead let's revisit the application structure diagram:
           </p>
           <figure>
             <img src="./images/vuejsessentials/Fig03-087.png"/>
             <figcaption>Fig 03-087</figcaption>
           </figure>
           <p>At the bottom of the diagram we see our VideoListItem components that are waiting for a user to click on
-            them at which point we need to communicate the click event over to the VideoDetail component.
-          </p>
-          <p>Remember that anytime we want to communicate from a child component up to a parent component we do so by
-            emitting an event.
+            them at which point we need to communicate the click event over to the VideoDetail component. Remember that
+            anytime we want to communicate from a child component up to a parent component we do so by emitting an
+            event.
           </p>
           <p>It's worth pointing out that we are talking about two slightly different types of events. We're talking
             about a click event - which is a native event that a user triggers by clicking an element in our browser. We
             are also talking about a Vue specific event that we are going to programmatically emit from within our
-            VideoListItem component.
-          </p>
-          <p>So here's the strategy we're going to use to communicate this click over to the app and then down to the
-            VideoDetail:
+            VideoListItem component. So here's the strategy we're going to use to communicate this click over to the app
+            and then down to the VideoDetail:
           </p>
           <figure>
             <img src="./images/vuejsessentials/Fig03-087.png"/>
@@ -1857,10 +1799,8 @@ export default {
             going to emit a custom event through Vue. We are then going to make sure that our VideoList component
             listens to all of it's child VideoListItem components so anytime the VideoListItem emits an event the
             VideoList will emit an event as well. This will bubble up to the App component. The App component will then
-            somehow determine whether or not it needs to update the VideoDetail.
-          </p>
-          <p>At this point let's focus on how we're going to communicate this click event from the VideoList item up to
-            the App.
+            somehow determine whether or not it needs to update the VideoDetail. At this point let's focus on how we're
+            going to communicate this click event from the VideoListItem up to the App.
           </p>
           <p>In the VideoListItem component let's add some code to watch for a click event on the <code
             class="prettyprint">li</code> element. So anytime someone clicks on the li element we want to emit a Vue
@@ -1903,21 +1843,18 @@ export default {
             event.
           </p>
           <h3>Event Handling in the VideoList</h3>
-          <p>In the last section we started adding some code to make sure that anytime someone click on a VideoListItem
+          <p>In the last section we started adding some code to make sure that anytime someone clicks on a VideoListItem
             it would trigger an event. Let's continue to achieve this by adding some code to our new method in the
-            VideoListItem component.
-          </p>
-          <p>Remember this event is a Vue specific event - it's not the standard click event. We've already triggered an
-            event like this in our SearchBar component:
+            VideoListItem component. Remember this event is a Vue specific event - it's not the standard click event.
+            We've already triggered an event like this in our SearchBar component:
           </p>
           <figure>
             <pre class="prettyprint">this.$emit('termChange', event.target.value);</pre>
             <figcaption>Fig 03-090</figcaption>
           </figure>
-          <p>The first argument is the event name we want to emit and the second argument is an optional argument that,
-            in this case, specifies the search term that was typed.
-          </p>
-          <p>Add the following code inside the onVideoSelect method:</p>
+          <p>The first argument is the event name we want to emit and the second argument is a the video that has been
+            clicked on that belongs to this particular VideoListItem component. Add the following code inside the <code
+              class="prettyprint">onVideoSelect</code> method:</p>
           <figure>
 <pre class="prettyprint">methods: {
     onVideoSelect() {
@@ -1927,13 +1864,10 @@ export default {
             <figcaption>Fig 03-091</figcaption>
           </figure>
           <p>Remember <code class="prettyprint">this.video</code> is the prop that was passed in from the parent
-            component.
-          </p>
-          <p>Now that we are emitting this event inside the child we can add some code to our VideoList to listen for
-            that child event. Anytime that child event occurs the VideoList in turn will emit an event of it's own that
-            the app can then listen to.
-          </p>
-          <p>In the template for the VideoList component add the following code:</p>
+            component. Now that we are emitting this event inside the child we can add some code to our VideoList to
+            listen for that child event. Anytime that child event occurs the VideoList in turn will emit an event of
+            it's own that the App component can then listen to. In the template for the VideoList component add the
+            following code:</p>
           <figure>
 <pre class="prettyprint"> &lt;template&gt;
   &lt;ul class=&quot;list-group&quot;&gt;
@@ -1953,10 +1887,8 @@ export default {
             <code class="prettyprint">=</code> assignment operator we specify what we want to do when the event is
             triggered. We will again create a new method which we will call <code
               class="prettyprint">onVideoSelect</code>. We are using the same name for this method that we used in the
-            <code class="prettyprint">VideoListItem</code> component but remember this is going to be a completely
-            different function in it's own <code class="prettyprint">methods</code> object.
-          </p>
-          <p>Add the following code to the VideoList component:</p>
+            VideoListItem component but remember this is going to be a completely different function in it's own <code
+              class="prettyprint">methods</code> object. Add the following code to the VideoList component:</p>
           <figure>
 <pre class="prettyprint">methods: {
   onVideoSelect(video) {
@@ -1965,14 +1897,13 @@ export default {
 }</pre>
             <figcaption>Fig 03-093</figcaption>
           </figure>
-          <p>We use the same event name of videoSelect and pass along the video object. Next we need to perform the last
-            step which is to add our listener to the App component.
+          <p>We use the same event name of <code class="prettyprint">videoSelect</code> and pass along the video object.
+            Next we need to perform the last step which is to add our listener to the App component.
           </p>
           <h3>Receiving Events in the App</h3>
           <p>In the last section we got our VideoList component to emit the event that it was passed by VideoListItem.
-            Now we need to get the App component to listen for the event from VideoList.
-          </p>
-          <p>In the App component let's start by adding an event handler to the VideoList tag:</p>
+            Now we need to get the App component to listen for the event from VideoList. In the App component let's
+            start by adding an event handler to the VideoList tag:</p>
           <figure>
 <pre class="prettyprint">&lt;template&gt;
     &lt;div class=&quot;container&quot;&gt;
@@ -1982,8 +1913,8 @@ export default {
 &lt;/template&gt;</pre>
             <figcaption>Fig 03-094</figcaption>
           </figure>
-          <p>We use the same onVideoSelect method name which means we need to add this method to the methods object of
-            the App component:
+          <p>We use the same <code class="prettyprint">onVideoSelect</code> method name which means we need to add this
+            method to the <code class="prettyprint">methods</code> object of the App component:
           </p>
           <figure>
 <pre v-pre class="prettyprint">methods: {
@@ -2008,11 +1939,10 @@ export default {
           <p>So, just for the moment, we are writing the video object to the console. The <code class="prettyprint">onVideoSelect</code>
             method has access to the <code class="prettyprint">video</code> object because in the <code
               class="prettyprint"> VideoList</code> component when we emitted our <code
-              class="prettyprint">videoSelect</code> event we passed along the video object.
-          </p>
-          <p>Back in the browser, refresh, select a video and then check the console. As the video object gets written
-            to the console you should see an observer object being written out that contains <code class="prettyprint">etag,
-              id, kind and snippet</code> properties.
+              class="prettyprint">videoSelect</code> event we passed along the video object. Back in the browser,
+            refresh, select a video and then check the console. As the video object gets written to the console you
+            should see an observer object being written out that contains <code class="prettyprint">etag, id, kind and
+              snippet</code> properties.
           </p>
           <p>This means that we are successfully communicating the video that was selected all the way up to the top of
             the hierarchy. So now we can look at creating the VideoDetail component and having the App communicate that
@@ -2020,13 +1950,11 @@ export default {
           </p>
           <h3>Passing Props to the Video Detail</h3>
           <p>In the last section we were able to confirm that anytime the user clicks on a VideoListItem we eventually
-            notify the App component about that selection.
-          </p>
-          <p>Now we need to start working on our VideoDetail component. Once the VideoDetail is completed we can have
-            our App component communicate to the VideoDetail anytime a new Video has been selected.
-          </p>
-          <p>So let's first begin by putting together some boilerplate for the VideoDetail component. Add a new file to
-            the components directory called VideoDetail.vue with the following code:
+            notify the App component about that selection. Now we need to start working on our VideoDetail component.
+            Once the VideoDetail is completed we can have our App component communicate to the VideoDetail anytime a new
+            Video has been selected. Let's first begin by putting together some boilerplate for the VideoDetail
+            component. Add a new file to the components directory called <span class="filename">VideoDetail.vue</span>
+            with the following code:
           </p>
           <figure>
 <pre class="prettyprint">&lt;template&gt;
@@ -2043,16 +1971,11 @@ export default {
             <figcaption>Fig 03-096</figcaption>
           </figure>
           <p>So, at this point, the VideoList component has communicated the selected video up to the App component. Now
-            the App is going to pass that selected video down into the VideoDetail component.
-          </p>
-          <p>Remember, anytime a parent communicates with a child we do that using the props system which involves two
-            separate steps. First we setup the parent component to make sure that it uses a <code class="prettyprint">v-bind</code>
-            expression inside of it's template.
-          </p>
-          <p>We also need to get our child component to understand what props it should expect to receive - in this case
-            the selected video.
-          </p>
-          <p>In VideoDetail add a props object:</p>
+            the App is going to pass that selected video down into the VideoDetail component. Remember, anytime a parent
+            communicates with a child we do that using the props system which involves two separate steps. First we
+            setup the parent component to make sure that it uses a <code class="prettyprint">v-bind</code> expression
+            inside of it's template. We also need to get our child component to understand what props it should expect
+            to receive - in this case the selected video. In VideoDetail add a props object:</p>
           <figure>
 <pre class="prettyprint">&lt;script&gt;
     export default {
@@ -2063,16 +1986,15 @@ export default {
             <figcaption>Fig 03-097</figcaption>
           </figure>
           <p>So we will use the <code class="prettyprint">video prop</code> to store the selected <code
-            class="prettyprint">video</code> that the user just clicked on.
-          </p>
-          <p>To verify this is working modify the template to display the name of the selected video:</p>
+            class="prettyprint">video</code> that the user just clicked on. To verify this is working modify the
+            template to display the <code class="prettyprint">name</code> of the selected <code class="prettyprint">video</code>
+            :</p>
           <figure>
-<pre class="prettyprint">&lt;script&gt;
-    export default {
-        name: 'VideoDetail',
-        props: ['video']
-    }
-&lt;/script&gt;</pre>
+<pre v-pre class="prettyprint">&lt;template&gt;
+  &lt;div&gt;
+    {{ video.snippet.title }}
+  &lt;/div&gt;
+&lt;/template&gt;</pre>
             <figcaption>Fig 03-098</figcaption>
           </figure>
           <p>So now in the App component we can import the VideoDetail component and make sure that the app communicates
@@ -2098,55 +2020,44 @@ export default {
 <pre class="prettyprint">&lt;template&gt;
     &lt;div class=&quot;container&quot;&gt;
         &lt;SearchBar @termChange=&quot;onTermChange&quot;&gt;&lt;/SearchBar&gt;
-        &lt;VideoDetail :video=&quot;&quot; /&gt;
+        &lt;VideoDetail :video=&quot;selectedVideo&quot; /&gt;
         &lt;VideoList @videoSelect=&quot;onVideoSelect&quot; :videos=&quot;videos&quot;&gt;&lt;/VideoList&gt;
     &lt;/div&gt;
 &lt;/template&gt;</pre>
             <figcaption>Fig 03-101</figcaption>
           </figure>
-          <p>We add a (shorthand) v-bind expression to pass down the selected video.</p>
-          <p>In the next section we will make sure that anytime the onVideoSelect function get's clicked we take it's
-            video and we communicate it over to the video prop.
+          <p>We add a (shorthand) v-bind expression to pass down the <code class="prettyprint">selectedVideo</code> .
           </p>
           <h3>Updating Data</h3>
-          <p>In the last section we said that the App component needed to somehow communicate the selected video from
-            the <code class="prettyprint">onVideoSelect</code> method to our <code
-              class="prettyprint">VideoDetail</code> component up inside the template.
-          </p>
-          <p>Let's take a look at a quick diagram that is going to help us understand exactly how that process is going
-            to work:
+          <p>In the last section we said that the App component needed to somehow communicate the selected <code
+            class="prettyprint">video</code> from the <code class="prettyprint">onVideoSelect</code> method to our <code
+            class="prettyprint">VideoDetail</code> component. Let's take a look at a quick diagram that is going to help
+            us understand exactly how that process is going to work:
           </p>
           <figure>
             <img src="./images/vuejsessentials/Fig03-102.png"/>
             <figcaption>Fig 03-102</figcaption>
           </figure>
-          <p>So here we can see the entire video selection process in diagram format. So you can see the chain of
-            listening for and emitting events all the way up to the App.
-          </p>
-          <p>At present, inside the <code class="prettyprint">App</code> component, whenever that event finally comes up
-            and triggers our <code class="prettyprint">onVideoSelect</code> function we are currently only logging
-            details about the <code class="prettyprint">video</code> object out to the console.
-          </p>
-          <p>We need to add a new property to the <code class="prettyprint">data</code> object in the <code
-            class="prettyprint">App</code> component to get the <code class="prettyprint">video</code> object
-            communicated over to the <code class="prettyprint">VideoDetail</code> object. We will call the new property
-            <code class="prettyprint">selectedVideo</code> and it will reflect the current video that the user has
-            selected.
+          <p>Here we can see the entire video selection process in diagram format. You can see the chain of listening
+            for and emitting events all the way up to the App. At present, inside the <code
+              class="prettyprint">App</code> component, whenever that event finally comes up and triggers our <code
+              class="prettyprint">onVideoSelect</code> function we are currently only logging details about the <code
+              class="prettyprint">video</code> object out to the console. We need to add a new property to the <code
+              class="prettyprint">data</code> object in the <code
+              class="prettyprint">App</code> component to get the <code class="prettyprint">video</code> object
+            communicated over to the <code class="prettyprint">VideoDetail</code> component. We will call the new
+            property <code class="prettyprint">selectedVideo</code> and it will reflect the current video that the user
+            has selected.
           </p>
           <p>So inside of the <code class="prettyprint">App</code> components handler for listening for that click event
             of <code class="prettyprint">onVideoSelect</code> we will place some code to update the <code
-              class="prettyprint">selectedVideo</code> prop.
-          </p>
-          <p>Anytime that data property is updated it will cause our component to re-render and we'll use that re-render
-            as an opportunity to communicate this newly selected video down to the <code
-              class="prettyprint">VideoDetail</code> component as a prop.
-          </p>
-          <p>So that's the idea, we're going to make use of the data system of the <code class="prettyprint">App</code>
-            component to communicate the newly clicked video over to the <code class="prettyprint">VideoDetail</code>
-            component.
-          </p>
-          <p>Add the <code class="prettyprint">selectedVideo</code> prop to the <code class="prettyprint"> data</code>
-            object:
+              class="prettyprint">selectedVideo</code> prop. Anytime that data property is updated it will cause our
+            component to re-render and we'll use that re-render as an opportunity to communicate this newly selected
+            video down to the <code
+              class="prettyprint">VideoDetail</code> component as a prop. So that's the idea, we're going to make use of
+            the data system of the <code class="prettyprint">App</code> component to communicate the newly clicked video
+            over to the <code class="prettyprint">VideoDetail</code> component. Add the <code class="prettyprint">selectedVideo</code>
+            prop to the <code class="prettyprint"> data</code> object:
           </p>
           <figure>
 <pre class="prettyprint">data() {
@@ -2156,8 +2067,7 @@ export default {
           </figure>
           <p>The default value of <code class="prettyprint">selectedVideo</code> is <code
             class="prettyprint">null</code> because when our application first starts there will be no video selected.
-          </p>
-          <p>Inside of <code class="prettyprint">onVideoSelect</code> we will add some code to update this property:</p>
+            Inside of <code class="prettyprint">onVideoSelect</code> we will add some code to update this property:</p>
           <figure>
 <pre class="prettyprint">onVideoSelect(video) {
     this.selectedVideo = video;
@@ -2165,21 +2075,18 @@ export default {
             <figcaption>Fig 03-104</figcaption>
           </figure>
           <p>Recall, that anytime we update a data property it causes our component to instantly re-render with that new
-            piece of data.
-          </p>
-          <p>Now inside the <code class="prettyprint">template</code> of the <code class="prettyprint">App </code>
-            component we can modify the <code class="prettyprint">VideoDetail</code> tag:
+            piece of data. Now inside the <code class="prettyprint">template</code> of the <code
+              class="prettyprint">App</code> component we can modify the <code class="prettyprint">VideoDetail</code>
+            tag:
           </p>
           <figure>
             <pre class="prettyprint">&lt;VideoDetail :video=&quot;selectedVideo&quot; /&gt;</pre>
             <figcaption>Fig 03-105</figcaption>
           </figure>
           <p>This will assign the <code class="prettyprint">selectedVideo</code> to the <code
-            class="prettyprint">video</code> prop.
-          </p>
-          <p>Again remember that, inside of a template, to reference a data property we do not have to append the data
-            property name with <code class="prettyprint">this.</code> or anything of that nature - we just put the data
-            properties name, in our case <code class="prettyprint">selectedVideo</code>
+            class="prettyprint">video</code> prop. Again remember that, inside of a template, to reference a data
+            property we do not have to append the data property name with <code class="prettyprint">this.</code> or
+            anything of that nature - we just put the data properties name, in our case <code class="prettyprint">selectedVideo</code>
           </p>
           <p>Go to the browser, refresh the application, select a video and you should see it's title appear above the
             VideoList component:
@@ -2189,18 +2096,16 @@ export default {
             <figcaption>Fig 03-106</figcaption>
           </figure>
           <p>You will notice an error message: <code class="prettyprint">Cannot read property 'snippet' of null</code>
-          </p>
-          <p>being emitted by our <code class="prettyprint">VideoDetail</code> component.</p>
-          <p>In the next section we'll figure out why we are seeing this error message and add a fix.</p>
+            being emitted by our <code class="prettyprint">VideoDetail</code> component. In the next section we'll
+            figure out why we are seeing this error message and add a fix.</p>
           <h3>The v-if Directive</h3>
           <p>In the last section we added some code to the VideoDetail component to show the title of the selected
             video. However we are getting an error message: <code class="prettyprint">Cannot read property 'snippet' of
-              null</code></p>
-          <p>When our application first renders our <code class="prettyprint">App</code> component has a data property
-            for <code class="prettyprint">selectedVideo</code> which is set to null:
+              null</code> When our application first renders our <code class="prettyprint">App</code> component has a
+            data property for <code class="prettyprint">selectedVideo</code> which is set to null:
           </p>
           <figure>
-<pre class="prettyprint">        data() {
+<pre class="prettyprint">data() {
     return { videos: [], selectedVideo: null };
 },</pre>
             <figcaption>Fig 03-106</figcaption>
@@ -2213,7 +2118,7 @@ export default {
             <figcaption>Fig 03-107</figcaption>
           </figure>
           <p>Inside <code class="prettyprint">VideoDetail</code> our template tries to read the <code
-            class="prettyprint">snippet </code>property of the <code class="prettyprint">video</code> prop:
+            class="prettyprint">snippet</code> property of the <code class="prettyprint">video</code> prop:
           </p>
           <figure>
 <pre v-pre class="prettyprint">&lt;template&gt;
@@ -2223,9 +2128,9 @@ export default {
 &lt;/template&gt;</pre>
             <figcaption>Fig 03-108</figcaption>
           </figure>
-          <p>At this point it is null which is why we are seeing the error message above.</p>
-          <p>Add some code to make sure that if the <code class="prettyprint">video</code> prop is null we do not
-            attempt to read the <code class="prettyprint">snippet</code> property on it:
+          <p>At this point it is null which is why we are seeing the error message above. Add some code to make sure
+            that if the <code class="prettyprint">video</code> prop is null we do not attempt to read the <code
+              class="prettyprint">snippet</code> property on it:
           </p>
           <figure>
 <pre v-pre class="prettyprint">&lt;template&gt;
@@ -2238,18 +2143,16 @@ export default {
           <p>The <code class="prettyprint">v-if</code> directive can be thought of as a conditional rendering statement
             which will look at the value of the variable or the term we pass in and evaluate it. If it finds a falsy
             value, which null is (null is very similar to the false Boolean value in Javascript) then Vue will not
-            render the <code class="prettyprint">div</code> or anything inside it.
-          </p>
-          <p>Because Vue doesn't render the <code class="prettyprint">div</code> it also skips the line of code
-            contained within - and therefore the error is not thrown.
+            render the <code class="prettyprint">div</code> or anything inside it. Because Vue doesn't render the <code
+              class="prettyprint">div</code> it also skips the line of code contained within - and therefore the error
+            is not thrown.
           </p>
           <p>You'll most frequently see <code class="prettyprint">v-if</code> around anytime you're loading up some data
             from some remote API because it always takes some amount of time to retrieve that data. So with <code
               class="prettyprint">v-if</code> we can very easily tell our application to wait until data is available
-            and only then try and render the relevant content.
-          </p>
-          <p>In the next section we will figure out we are going to get this <code
-            class="prettyprint">VideoDetail</code> component, that will eventually show a video player, to display on
+            and only then try and render the relevant content. In the next section we will figure out we are going to
+            get this <code
+              class="prettyprint">VideoDetail</code> component, that will eventually show a video player, to display on
             the screen.
           </p>
           <h3>Referencing Video Title and Description</h3>
@@ -2293,10 +2196,8 @@ export default {
           <p>In the next section we will look at implementing the actual video player</p>
           <h3>Crafting the Embed URL</h3>
           <p>We've got a lot of information about the video now visible on the screen but we need to make sure the
-            actual video player displays as well.
-          </p>
-          <p>If you visit <a target="_blank" href="www.youtube.com">youtube</a> and click on the share button you should
-            see an embed option:
+            actual video player displays as well. If you visit <a target="_blank" href="www.youtube.com">youtube</a> and
+            click on the share button you should see an embed option:
           </p>
           <figure>
             <img src="./images/vuejsessentials/Fig03-113.png"/>
@@ -2334,23 +2235,17 @@ export default {
           <p>Because the <code class="prettyprint">videoId</code> <code class="prettyprint">const</code> that we used
             and the prop name of <code class="prettyprint">this.video.id.videoId</code> are identical we use ES2015
             destructuring assignment syntax and surround our <code class="prettyprint">const</code> with curly braces.
-          </p>
-          <p>We also use template string syntax (with a pair of back ticks) over string concatenation in the return
-            statement.
-          </p>
-          <p>So save the file, refresh the browser and you will see the following:</p>
+            We also use template string syntax (with a pair of back ticks) over string concatenation in the return
+            statement. So save the file, refresh the browser and you will see the following:</p>
           <figure>
             <img src="./images/vuejsessentials/Fig03-116.png"/>
             <figcaption>Fig 03-116</figcaption>
           </figure>
           <p>So a box appears but there doesn't look like there is any content inside of it. If I go over to the console
             you might notice a couple of warnings and even errors over here such as <code class="prettyprint">Error
-              parsing header</code> or <code class="prettyprint">ERR_BLOCKED_BY_CLIENT</code>
-          </p>
-          <p>These errors are thrown by the YouTube <code class="prettyprint">iframe</code> - we don't have any control
-            over them.
-          </p>
-          <p>In the next section we will add some styling to the video player.</p>
+              parsing header</code> or <code class="prettyprint">ERR_BLOCKED_BY_CLIENT</code> These errors are thrown by
+            the YouTube <code class="prettyprint">iframe</code> - we don't have any control over them. In the next
+            section we will add some styling to the video player.</p>
           <h3>Responsive Embeds</h3>
           <p>We've now got our YouTube embed visible on the screen but it's a little bit small. We will use the
             Bootstrap <a target="blank" href="http://getbootstrap.com/docs/4.0/utilities/embed/"> Embeds</a> class which
@@ -2365,9 +2260,7 @@ export default {
           </figure>
           <p>We have to place a <code class="prettyprint">div</code> round our <code class="prettyprint"> iframe</code>
             with a couple of different classes applied to it. We also add one class on the <code class="prettyprint">iframe</code>
-            as well.
-          </p>
-          <p>Let's add this to the VideoDetail component:</p>
+            as well. Let's add this to the VideoDetail component:</p>
           <figure>
 <pre class="prettyprint">&lt;div class=&quot;embed-responsive embed-responsive-16by9&quot;&gt;
     &lt;iframe class=&quot;embed-responsive-item&quot; :src=&quot;videoUrl&quot;/&gt;
@@ -2375,20 +2268,15 @@ export default {
             <figcaption>Fig 03-118</figcaption>
           </figure>
           <p>Back in the browser you should see the VideoDetail now displays a larger video window which will adjust as
-            we resize the browser window.
-          </p>
-          <p>In our mockup we showed the VideoDetail next to the VideoList. We will take care of this detail in the next
-            section.
+            we resize the browser window. In our mockup we showed the VideoDetail next to the VideoList. We will take
+            care of this detail in the next section.
           </p>
           <h3>Two Column Layout</h3>
           <p>Our video <code class="prettyprint">iframe</code> is now plainly visible on the screen but it's still
-            stacked on top of our <code class="prettyprint">VideoList</code>.
-          </p>
-          <p>So the last thing we have to do is to make sure that the <code class="prettyprint">VideoDetail </code>
-            component is displayed to the right of the <code class="prettyprint">VideoList</code>.
-          </p>
-          <p>To accomplish this we will apply some layout CSS provided by Bootstrap. In the App.vue file add a div that
-            wraps both the VideoDetail and VideoList tags:
+            stacked on top of our VideoList. So the last thing we have to do is to make sure that the VideoDetail
+            component is displayed to the right of the VideoList. To accomplish this we will apply some layout CSS
+            provided by Bootstrap. In the <span class="filename">App.vue</span> file add a div that wraps both the
+            VideoDetail and VideoList tags:
           </p>
           <figure>
 <pre class="prettyprint">&lt;div class=&quot;row&quot;&gt;
@@ -2399,61 +2287,46 @@ export default {
           </figure>
           <p>If you viewed this in the browser now you would still see the VideoDetail and the VideoList being displayed
             on different lines. That's because currently the VideoDetail is going to try and take up as much space
-            (width wise) as it possibly can.
-          </p>
-          <p>We will add a class to the <code class="prettyprint">VideoDetail</code> component to constrain it's width
-            on the screen:
+            (width wise) as it possibly can. We will add a class to the VideoDetail component to constrain it's width on
+            the screen:
           </p>
           <figure>
             <pre class="prettyprint">&lt;div v-if=&quot;video&quot; class=&quot;col-md-8&quot;&gt;</pre>
             <figcaption>Fig 03-120</figcaption>
           </figure>
-          <p>This will create a column out of the div element that at most can only occupy eight column spaces. By
-            default Bootstrap has a 12 column layout - so essentially we have 12 column units to work with. With 8
-            allocated to the VideoDetail we now have 4 left to allocate to the VideoList.
-          </p>
-          <p>In the <code class="prettyprint">VideoList</code> component add the following class to the root <code
-            class="prettyprint">ul</code> element:
+          <p>This will create a column out of the <code class="prettyprint">div</code> element that at most can only
+            occupy eight column spaces. By default Bootstrap has a 12 column layout - so essentially we have 12 column
+            units to work with. With 8 allocated to the VideoDetail we now have 4 left to allocate to the VideoList. In
+            the VideoList component add the following class to the root <code
+              class="prettyprint">ul</code> element:
           </p>
           <figure>
             <pre class="prettyprint">&lt;ul class=&quot;list-group col-md-4&quot;&gt;</pre>
             <figcaption>Fig 03-121</figcaption>
           </figure>
-          <p>In the browser you should now see the <code class="prettyprint">VideoDetail</code> appear on the left-hand
-            side.
-          </p>
-          <p>In the next section we will discuss some of the highlights of the application we just worked on.</p>
+          <p>In the browser you should now see the VideoDetail appear on the left-hand side.
           <h3>App Review</h3>
           <p>Our application is complete but there are a couple of items we should review that are important to keep in
-            mind when you work on future Vue applications.
-          </p>
-          <p>The first thing is how we communicate information between different components that we create. Anytime that
-            we want to communicate information between components it's always between parent and child:
+            mind when you work on future Vue applications. The first thing is how we communicate information between
+            different components that we create. Anytime that we want to communicate information between components it's
+            always between parent and child:
           </p>
           <figure>
             <img src="./images/vuejsessentials/Fig03-122.png"/>
             <figcaption>Fig 03-122</figcaption>
           </figure>
-          <p>In our application we had the <code class="prettyprint">VideoDetail</code>, the <code class="prettyprint">SearchBar</code>
-            and the <code class="prettyprint">VideoList</code> as sibling components - in other words they were all
-            being displayed by the <code class="prettyprint">App</code> component.
-          </p>
-          <p>Communicating information between the <code class="prettyprint">VideoDetail</code> and <code
-            class="prettyprint">SearchBar</code> or the <code class="prettyprint">VideoList</code> would be
-            communication between siblings. Doing so is not the easiest way to pass around information inside of a Vue
-            app.
-          </p>
-          <p>Instead we choose to communicate directly from, for example, the <code
-            class="prettyprint">VideoDetail</code> up to the parent <code class="prettyprint">App</code> or from the
-            <code class="prettyprint">App</code> down to the <code class="prettyprint">VideoDetail</code>.
-          </p>
-          <p>The direction we want to communicate information will dictate the technique used:</p>
+          <p>In our application we had the VideoDetail, the SearchBar and the VideoList as sibling components - in other
+            words they were all being displayed by the App component. Communicating information between the VideoDetail
+            and SearchBar or theVideoList would be communication between siblings. Doing so is not the easiest way to
+            pass around information inside of a Vue app. Instead we choose to communicate directly from, for example,
+            the VideoDetail up to the parent App or from the App down to the VideoDetail. The direction we want to
+            communicate information will dictate the technique used:</p>
           <figure>
             <img src="./images/vuejsessentials/Fig03-123.png"/>
             <figcaption>Fig 03-123</figcaption>
           </figure>
-          <p>So if you want to go from a parent down to a child we refer to that as passing props (short for
-            properties). This is a two step process:
+          <p>If you want to go from a parent down to a child we refer to that as passing props (short for properties).
+            This is a two step process:
           </p>
           <figure>
             <img src="./images/vuejsessentials/Fig03-124.png"/>
@@ -2465,10 +2338,8 @@ export default {
           </p>
           <p>On the other hand, communication from a child component up to a parent is done with a completely different
             system - events. So a child component like our SearchBar or our VideoListItem has the ability to emit events
-            and then the parent component can listen for those events.
-          </p>
-          <p>We only use events to communicate from a child up to a parent and we do not try to modify any props passed
-            by the parent component.
+            and then the parent component can listen for those events. We only use events to communicate from a child up
+            to a parent and we do not try to modify any props passed by the parent component.
           </p>
           <p>So the real theme of this application was figuring out how we communicate between components. I think we
             did a reasonable job of getting a better handle on that.
