@@ -30,7 +30,7 @@ export default {
 
   .terminal {
     font-size: small;
-    color: white;
+    color: deepskyblue;
     font-family: Consolas;
     background-color: black;
     padding: 2px 5px 4px 5px;
