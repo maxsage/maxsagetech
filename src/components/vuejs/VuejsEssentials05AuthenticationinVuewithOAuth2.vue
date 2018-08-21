@@ -171,7 +171,7 @@
             <img src="./images/vuejsessentials/Fig05-006.png"/>
             <figcaption>Fig 05-006</figcaption>
           </figure>
-          <p>State is probably the easiest part to picture in your head and get a sense of what it's really doing for
+          <p>state is probably the easiest part to picture in your head and get a sense of what it's really doing for
             us. The state section of a module holds all of the raw data related to this particular module. So in the
             case of a Car Inventory the raw record or most core unit would probably be a Car - probably an object with
             key value pairs describing the year that the car was built, it's make/model, price and other Car related
@@ -181,18 +181,18 @@
             them into the big bucket of data we call state. At some point a customer will come into our car dealership
             and say to a salesperson "Hey, I'm looking for budget cars" or "Hey, I'm looking for a sports car". The Car
             salesperson won't want to look at a big list of cars and examine each record for the relevant information.
-            To handle the functionality of automatically sorting through records we use Getters:
+            To handle the functionality of automatically sorting through records we use getters:
           </p>
           <figure>
             <img src="./images/vuejsessentials/Fig05-007.png"/>
             <figcaption>Fig 05-007</figcaption>
           </figure>
-          <p>Getters are functions that take the entire state object and do some filtering or computation on those
+          <p>getters are functions that take the entire state object and do some filtering or computation on those
             records. So inside of our Car Inventory module you and I might decide to define some getters to retrieve all
             the cars that are defined as "budget vehicles" or all the cars that are defined as "off road". These are all
             functions that will take all of our records stored in state and return some subset.
           </p>
-          <p>Getters don't necessarily have to do just a filtering operation - they can be used for any type of
+          <p>getters don't necessarily have to do just a filtering operation - they can be used for any type of
             operation you can possibly imagine. Anything that is going to take our list of records in state and perform
             any type of operation. We could, instead, have some getter defined inside of here called numberOfCars:
           </p>
@@ -202,14 +202,14 @@
           </figure>
           <p>Which, because we have six cars currently in state, might just return the number six. As we said, the
             getters do not have to be used for just filtering operations. They can be used for any type of operation we
-            might want to do on our records stored inside of state. Getters can be used to simply say return all the
+            might want to do on our records stored inside of state. getters can be used to simply say return all the
             cars or all the records we have stored inside state. So we could define a getter called allCars and when we
             call that function it would simply return all the records we have stored inside of our state object. It is
-            worth pointing out that State and Getters are closely related - so we've got the state defined and we've got
+            worth pointing out that state and getters are closely related - so we've got the state defined and we've got
             the set of getters that somehow operate on that state.
           </p>
-          <p>Now, the next two parts of a Vuex module - Mutations and Actions have a somewhat similar relationship to
-            the one that is shared by State and Getters. With Mutations, we think of very explicit individual single
+          <p>Now, the next two parts of a Vuex module - mutations and actions have a somewhat similar relationship to
+            the one that is shared by state and getters. With Mutations, we think of very explicit individual single
             step ways in which you and I would want to change the data stored inside of the state. In the context of a
             car dealership, some ways that we might operate on the state are:
           </p>
@@ -225,7 +225,7 @@
             that takes one individual car and adds it into our state object. We obviously attempt to name the mutations
             so they indicate what their purpose is.
           </p>
-          <p>As we discussed, our last part, Actions have a very close relationship to mutations. Actions allow us to
+          <p>As we discussed, our last part, actions have a very close relationship to mutations. actions allow us to
             define functions that assemble together multiple mutations to make some intelligent change to the list of
             records that are stored inside our state. For example, we might define an action as a function called
             SellCar:
@@ -236,7 +236,7 @@
           </figure>
           <p>Anytime we sell a car chances are we are going to perform several different Mutations to our list of
             records stored inside of the state object. So an action is a function that assembles together multiple
-            mutations and it calls them all in some sequence. It isn't mandatory for an Action to call multiple
+            mutations and it calls them all in some sequence. It isn't mandatory for an action to call multiple
             mutations - we could define an action that does just one single mutation:
           </p>
           <figure>
@@ -302,19 +302,16 @@ new Vue ({
               store,</code>.
           </p>
           <p>Back in <span class="filename">index.js</span> the statement <code class="prettyprint">Vue.use
-            (Vuex)</code> tells Vue that it needs to use the Vuex library, it kinds of wires the two together and
-            let's the two know that they exist. But an additional part to that is providing the store to the Vue
-            instance which is the purpose of passing in the store when we create the new Vue instance in <span
+            (Vuex)</code> tells Vue that it needs to use the Vuex library, it kinds of wires the two together and let's
+            the two know that they exist. But an additional part to that is providing the store to the Vue instance
+            which is the purpose of passing in the store when we create the new Vue instance in <span
               class="filename">main.js</span>.
           </p>
           <h3>Initial Auth Module Design</h3>
-          <p>We are now going to start working on our Auth module which will contain all the code relate to
-            Authentication.
-          </p>
-          <p>Create a new directory called <code class="prettyprint">modules</code> in the <code class="prettyprint">store</code>
-            directory. Create a new file called auth.js.
-          </p>
-          <p>Let's briefly discuss the design of this module.</p>
+          <p>We are now going to start working on our Auth module which will contain all the code related to
+            Authentication. Create a new directory called <span class="filename">modules</span> in the <span
+              class="filename">store</span> directory. Create a new file called <span class="filename">auth.js</span>.
+            Let's briefly discuss the design of this module.</p>
           <figure>
             <img src="./images/vuejsessentials/Fig05-015.png"/>
             <figcaption>Fig 05-015</figcaption>
@@ -328,57 +325,54 @@ new Vue ({
           </figure>
           <p>We then navigate the user to the Imgur OAuth flow, the user gives our app permission to access their Imgur
             account, the user comes back to our application with a token generated by Imgur (the token contains the
-            information required to access the users account).
-          </p>
-          <p>The token is a very critical piece of information to our application - it's related to our actual
-            authentication process. For this reason we will add it directly to our State object:
+            information required to access the users account). The token is a very critical piece of information to our
+            application - it's related to our actual authentication process. For this reason we will add it directly to
+            our state object:
           </p>
           <figure>
             <img src="./images/vuejsessentials/Fig05-017.png"/>
             <figcaption>Fig 05-017</figcaption>
           </figure>
           <p>Now the chances are that when our application first starts up and the user has not logged in we will almost
-            definitely not have a token when we get started. Initially we will set the token to null.
+            definitely not have a token when we get started. Initially we will set the token to <code
+              class="prettyprint">null</code> .
           </p>
-          <p>So that takes care of our initial design of State. You might be surprised but there's really not a lot of
+          <p>So that takes care of our initial design of state. You might be surprised but there's really not a lot of
             other very root core variables in here tied to our core authentication process. You might be thinking that
             the API key or Client Id that we got when we signed up to Imgur might be classed as a piece of state.
             However the Client Id is actually a constant inside of our application which will never change.
           </p>
-          <p>So the next thing to think about is Getters. Remember Getters allow us to do some type of computation on
+          <p>So the next thing to think about is getters. Remember getters allow us to do some type of computation on
             our state object. That saves us the time of having to rerun the computation inside of some individual
             component. So as we look at the application design we can start to think about where we want to make use of
-            the information stored inside of the Auth module.
-          </p>
-          <p>In order to determine whether the user is logged in or not we will create a Getter function called
-            isLoggedIn:
+            the information stored inside of the Auth module. In order to determine whether the user is logged in or not
+            we will create a getter function called isLoggedIn:
           </p>
           <figure>
             <img src="./images/vuejsessentials/Fig05-018.png"/>
             <figcaption>Fig 05-018</figcaption>
           </figure>
           <p>This function will look at our state object and check for the presence of a token. This will indicate if
-            the user has successfully gone through our authentication process - null means the user has not performed
-            the authentication process and is not logged in.
-          </p>
-          <p>Ok I can't think of any other getter that we might want to define around our authentication module.
+            the user has successfully gone through our authentication process - <code class="prettyprint">null</code>
+            means the user has not performed the authentication process and is not logged in. Ok I can't think of any
+            other getter that we might want to define around our authentication module.
           </p>
           <h3>Auth Module Mutations</h3>
-          <p>Next we will discuss the Mutations and Actions that we might want to add into our Auth module. We will
+          <p>Next we will discuss the mutations and actions that we might want to add into our Auth module. We will
             begin with the mutations section - remember mutations are functions that modify our state in some very
             particular fashion. They're intended to one very exact singular job and nothing else related to our state
-            object.
-          </p>
-          <p>So in our case we have only one value inside of our state and it's going to only ever be null or an actual
-            token. So as far as changing this very singular value I think that we really only need exactly one mutation.
-            Let's call this mutation setToken - which will be a small function that is intended to only update the value
-            of our token object inside the state object:
+            object. In our case we have only one value inside of our state and it's going to only ever be <code
+              class="prettyprint">null</code> or an actual <code
+              class="prettyprint">token</code> . As far as changing this very singular value I think that we really only
+            need exactly one mutation. Let's call this mutation <code class="prettyprint">setToken</code> - which will
+            be a small function that is intended to only update the value of our <code class="prettyprint">token</code>
+            object inside the <code class="prettyprint">state</code> object:
           </p>
           <figure>
             <img src="./images/vuejsessentials/Fig05-019.png"/>
             <figcaption>Fig 05-019</figcaption>
           </figure>
-          <p>In the case of Actions we are going to have a little bit more stuff going on. So let's visit our OAuth flow
+          <p>In the case of actions we are going to have a little bit more stuff going on. So let's visit our OAuth flow
             and think through the actual process:
           </p>
           <figure>
@@ -386,45 +380,47 @@ new Vue ({
             <figcaption>Fig 05-020.png-</figcaption>
           </figure>
           <p>Remember the purpose of actions is to call a mutation at a very particular time or call multiple mutations
-            in a very particular order. So the only times I can think of where we would want to call that mutation at
-            all is when we come back from the Imgur API to our application with the token inside the Url. At that point
-            in time we're going to want to take that token out of the Url and call the setToken mutation.
-          </p>
-          <p>So we will call our Action finalizeLogin:</p>
+            in a very particular order. The only times I can think of where we would want to call that mutation at all
+            is when we come back from the Imgur API to our application with the <code
+              class="prettyprint">token</code> inside the Url. At that point in time we're going to want to take that
+            <code class="prettyprint">token</code> out of the Url and call the <code class="prettyprint">setToken</code>
+            mutation. So we will call our action <code class="prettyprint">finalizeLogin</code> :</p>
           <figure>
             <img src="./images/vuejsessentials/Fig05-021.png"/>
             <figcaption>Fig 05-021</figcaption>
           </figure>
-          <p>We use finalize because this is really the last step in our authentication process. So the finalizeLogin
-            Action will get the token that was provided to us by Imgur and call the setToken mutation.
-          </p>
-          <p>I think there will be one more action that we will want in our application - logout:</p>
+          <p>We use finalize because this is really the last step in our authentication process. So the <code
+            class="prettyprint">finalizeLogin</code>
+
+            action will get the <code class="prettyprint">token</code> that was provided to us by Imgur and call the
+            <code class="prettyprint">setToken</code> mutation. I think there will be one more action that we will want
+            in our application - <code class="prettyprint">logout</code> :</p>
           <figure>
             <img src="./images/vuejsessentials/Fig05-022.png"/>
             <figcaption>Fig 05-022</figcaption>
           </figure>
-          <p>So if the presence of a token inside of our state object indicates whether or not the user is logged in we
-            can log a user out by setting the token to be <code class="prettyprint">null</code>. So the <code
+          <p>So if the presence of a <code class="prettyprint">token</code> inside of our <code class="prettyprint">state</code>
+            object indicates whether or not the user is logged in we can log a user out by setting the <code
+              class="prettyprint">token</code> to be <code class="prettyprint">null</code>. So the <code
               class="prettyprint">logout</code> function also needs to call <code class="prettyprint">setToken</code>
-            and make sure that it attempts to update the token value in state to be <code
-              class="prettyprint">null</code> - hence the arrow in the diagram.
-          </p>
-          <p>We will add one more additional action called login which will be responsible for kicking off the initial
+            and make sure that it attempts to update the <code class="prettyprint">token</code> value in <code
+              class="prettyprint">state</code> to be <code
+              class="prettyprint">null</code> - hence the arrow in the diagram. We will add one more additional action
+            called <code class="prettyprint">login</code> which will be responsible for kicking off the initial
             authentication flow:
           </p>
           <figure>
             <img src="./images/vuejsessentials/Fig05-023.png"/>
             <figcaption>Fig 05-023</figcaption>
           </figure>
-          <p>The login Action is not going to call a mutation or anything like that. We are just putting the login
-            function in the Actions section of our module because it makes a lot of sense to group all the
-            authentication stuff together.
-          </p>
-          <p>That concludes our initial Auth module design</p>
-          <h3>Auth Module State and Getters</h3>
-          <p>We are now going to work on adding code to the auth.js file we created earlier. Inside this file we are
-            going to define four separate objects which will map to one the different pieces of our module that we've
-            been discussing in the last couple of sections:
+          <p>The <code class="prettyprint">login</code> action is not going to call a mutation or anything like that. We
+            are just putting the <code class="prettyprint">login</code> function in the actions section of our module
+            because it makes a lot of sense to group all the authentication stuff together. That concludes our initial
+            Auth module design</p>
+          <h3>Auth Module state and getters</h3>
+          <p>We are now going to work on adding code to the <span class="filename">auth.js</span> file we created
+            earlier. Inside this file we are going to define four separate objects which will map to one of the
+            different pieces of our module that we've been discussing in the last couple of sections:
           </p>
           <figure>
 <pre class="prettyprint">const state = {
@@ -445,8 +441,9 @@ const mutations = {
             <figcaption>Fig 05-024</figcaption>
           </figure>
           <p>We will now add a couple of properties to each of these four objects to map up against the design that we
-            just created in the last section. We'll get started by working on State with the token property with an
-            initial value of null:
+            just created in the last section. We'll get started by working on <code class="prettyprint">state</code>
+            with the <code class="prettyprint">token</code> property with an initial value of <code class="prettyprint">null</code>
+            :
           </p>
           <figure>
 <pre class="prettyprint">const state = {
@@ -454,9 +451,10 @@ const mutations = {
 };</pre>
             <figcaption>Fig 05-025</figcaption>
           </figure>
-          <p>Next we will look at the Getters section. The only getter that we're going to have for this module is <code
+          <p>Next we will look at the getters section. The only getter that we're going to have for this module is <code
             class="prettyprint">isLoggedIn</code>. Remember that, in this case, these are functions which are going to
-            take our entire state object do some computation on it and then return if from the function:
+            take our entire <code class="prettyprint">state</code> object do some computation on it and then return if
+            from the function:
           </p>
           <figure>
 <pre class="prettyprint">const getters = {
@@ -465,11 +463,13 @@ const mutations = {
 };</pre>
             <figcaption>Fig 05-026</figcaption>
           </figure>
-          <p>This function is going to be automatically called with the entire state object. One thing I want to clarify
-            is that when I write state in the isLoggedIn function it is an argument to the function. It is not the same
-            variable as state object we created earlier.
-          </p>
-          <p>So, as we said, to determine whether a user is logged in we are going to look at the value of the token
+          <p>This function is going to be automatically called with the entire <code class="prettyprint">state</code>
+            object. One thing I want to clarify is that when I write <code class="prettyprint">state</code> in the <code
+              class="prettyprint">isLoggedIn</code> function it is an argument to the function. It is not the same
+            variable as <code class="prettyprint">state</code> object we created earlier. As we said, to determine
+            whether a user is logged in we are going to look at the value of the <code
+              class="prettyprint">token</code>
+
             property in the state object:
           </p>
           <figure>
@@ -483,9 +483,11 @@ const mutations = {
 
           <p>The <code class="prettyprint">!!</code> syntax is an easy way to turn a variable into a boolean. The two
             possible values of <code class="prettyprint">token</code> are going to be either <code class="prettyprint">null</code>
-            or a string that has a random series of numbers and letters in it (the actual token)
+            or a string that has a random series of numbers and letters in it (the actual <code class="prettyprint">token</code>
+            )
           </p>
-          <p>The boolean equivalent of null is <code class="prettyprint">false</code> so:</p>
+          <p>The boolean equivalent of <code class="prettyprint">null</code> is <code class="prettyprint">false</code>
+            so:</p>
           <figure>
             <pre class="prettyprint">!!null</pre>
             <figcaption>Fig 05-028</figcaption>
@@ -495,23 +497,29 @@ const mutations = {
             <pre class="prettyprint">!!'jaij3i2o235o2i3j5io2oa'</pre>
             <figcaption>Fig 05-029</figcaption>
           </figure>
-          <p>Will return <code class="prettyprint">true</code>.</p>
-          <p>We an make the function more concise by using the ES2015 arrow function syntax:</p>
+          <p>Will return <code class="prettyprint">true</code>. We an make the function more concise by using the ES2015
+            arrow function syntax:</p>
           <figure>
 <pre class="prettyprint">const getters = {
     isLoggedIn: state =&gt; !!state.token
 };</pre>
             <figcaption>Fig 05-030</figcaption>
           </figure>
-          <p>So we have the function name of isLoggedIn, the argument that we are passing (our state object), our arrow
-            <code class="prettyprint">=&gt;</code>, and then the flip of the state token to return a boolean.
+          <p>We have the function name of <code class="prettyprint">isLoggedIn</code> , the argument that we are passing
+            (our <code
+              class="prettyprint">state</code> object), our arrow <code class="prettyprint">=&gt;</code>, and then the
+            flip of the <code class="prettyprint">state</code> <code
+              class="prettyprint">token</code> to return a boolean.
           </p>
-          <h3>Updating State Values</h3>
-          <p>We've put together our state and getters objects. We're now going to look at the mutations object. Remember
-            our mutations object has exactly one mutation assigned to it - this is going to be a function called <code
+          <h3>Updating state Values</h3>
+          <p>We've put together our <code class="prettyprint">state</code> and <code class="prettyprint">getters</code>
+            objects. We're now going to look at the <code class="prettyprint">mutations</code> object. Remember our
+            <code class="prettyprint">mutations</code> object has exactly one mutation assigned to it - this is going to
+            be a function called <code
               class="prettyprint">setToken</code> which will try to update the value of <code
-              class="prettyprint">token</code> inside of our State object. The <code class="prettyprint">setToken</code>
-            function can be called from either <code class="prettyprint">finalizeLogin</code> or <code
+              class="prettyprint">token</code> inside of our <code class="prettyprint">state</code> object. The <code
+              class="prettyprint">setToken</code> function can be called from either <code class="prettyprint">finalizeLogin</code>
+            or <code
               class="prettyprint">logout:</code>.
           </p>
           <figure>
@@ -522,20 +530,20 @@ const mutations = {
 };</pre>
             <figcaption>Fig 05-031</figcaption>
           </figure>
-          <p>The <code class="prettyprint">setToken</code> function always called with one initial first argument and
-            then possibly some additional arguments. So you are always guaranteed to get the argument state as the very
-            first argument. The second argument will depend on the which function calls the setToken function.
+          <p>The <code class="prettyprint">setToken</code> function is always called with one initial first argument and
+            then possibly some additional arguments. So you are always guaranteed to get the argument <code
+              class="prettyprint">state</code> as the very first argument. The second argument will depend on the which
+            function calls the <code class="prettyprint">setToken</code> function.
           </p>
-          <p>Inside the <code class="prettyprint">setToken</code> function we are going to update our state object. In
-            reality this doesn't involve any API calls or anything like that, we just literally update the values stored
-            inside of our state object.
-          </p>
-          <p>That's pretty much it for mutations.</p>
+          <p>Inside the <code class="prettyprint">setToken</code> function we are going to update our <code
+            class="prettyprint">state</code> object. In reality this doesn't involve any API calls or anything like
+            that, we just literally update the values stored inside of our <code class="prettyprint">state</code>
+            object. That's pretty much it for mutations.</p>
           <h3>Logging Out with Actions</h3>
-          <p>We will now look at the Action object which, as you may remember, is going to have three functions tied to
-            it: login, finalizeLogin, logout.
-          </p>
-          <p>Let's start with logout:</p>
+          <p>We will now look at the <code class="prettyprint">actions</code> object which, as you may remember, is
+            going to have three functions tied to it: <code class="prettyprint">login</code> , <code
+              class="prettyprint">finalizeLogin</code> , <code
+              class="prettyprint">logout</code> . Let's start with <code class="prettyprint">logout</code> :</p>
           <figure>
 <pre class="prettyprint">const actions = {
     logout: ({ commit }) =&gt; {
@@ -558,50 +566,53 @@ const mutations = {
             <pre class="prettyprint">mutations.setToken // bad !!</pre>
             <figcaption>Fig 05-033</figcaption>
           </figure>
-          <p>So, to call a mutation we write <code class="prettyprint">commit('mutationName');</code>. Remember that in
-            the case of our logout action to logout a user all we need to do is set our token in state to null:
+          <p>To call a mutation we write <code class="prettyprint">commit('mutationName');</code>. Remember that in the
+            case of our <code class="prettyprint">logout</code> action to logout a user all we need to do is set our
+            <code
+              class="prettyprint">token</code> in <code class="prettyprint">state</code> to <code
+              class="prettyprint">null</code> :
           </p>
           <figure>
             <pre class="prettyprint">commit('setToken', null);</pre>
             <figcaption>Fig 05-034</figcaption>
           </figure>
-          <p>The first argument is the mutation name. The second argument - null is going to be the token argument that
-            get's provided to the mutation.
-          </p>
-          <p>It may seem unnecessary to have the additional layer of an action here just to call the mutation - why
-            don't we just call setToken directly ourselves? Remember the idea behind an action is we might want to call
-            multiple mutations from inside of one action or we might want to say make an Ajax request where we might
-            want to perform some asynchronous operation.
-          </p>
-          <p>So even though our logout action is very simple we might eventually have actions that span many different
-            lines of code and make many different network requests, calling many different mutations. So the idea is
-            that we try to stuff as much complexity inside our Vuex store into these actions. We can then leave our
-            mutations, state and getters a little bit more simple and straightforward.
-          </p>
-          <p>We can't really test this action yet because we don't even have the ability to login to our application. We
-            will resolve this shortly.
+          <p>The first argument is the mutation name. The second argument - <code class="prettyprint">null</code> is
+            going to be the <code class="prettyprint">token</code> argument that get's provided to the mutation. It may
+            seem unnecessary to have the additional layer of an action here just to call the mutation - why don't we
+            just call <code class="prettyprint">setToken</code> directly ourselves? Remember the idea behind an action
+            is we might want to call multiple mutations from inside of one action or we might want to say make an Ajax
+            request where we might want to perform some asynchronous operation. Even though our <code
+              class="prettyprint">logout</code> action is very simple we might eventually have actions that span many
+            different lines of code and make many different network requests, calling many different mutations. So the
+            idea is that we try to stuff as much complexity inside our Vuex store into these <code class="prettyprint">actions</code>
+            . We can then leave our <code class="prettyprint">mutations</code> , <code
+              class="prettyprint">state</code> and <code class="prettyprint">getters</code> a little bit more simple and
+            straightforward. We can't really test this action yet because we don't even have the ability to login to our
+            application. We will resolve this shortly.
           </p>
           <h3>Separate API Helpers</h3>
-          <p>We are now going to work on the login action. The Imgur documentation contains a section on <a
-            href="https://apidocs.imgur.com/#authorization-and-oauth">Authorization and OAuth</a>. To access a user's
-            account we have to get the user to authorize our application so we can get an access token. To do this we
-            point a browser (pop-up, or full page redirect if needed) to a URL and include a set of query string
-            parameters.
+          <p>We are now going to work on the <code class="prettyprint">login</code> action. The Imgur documentation
+            contains a section on <a
+              href="https://apidocs.imgur.com/#authorization-and-oauth">Authorization and OAuth</a>. To access a user's
+            account we have to get the user to authorize our application so we can get an access <code
+              class="prettyprint">token</code> . To do this we point a browser (pop-up, or full page redirect if needed)
+            to a URL and include a set of query string parameters.
           </p>
           <figure>
             <pre class="prettyprint">https://api.imgur.com/oauth2/authorize?client_id=YOUR_CLIENT_ID&amp;response_type=REQUESTED_RESPONSE_TYPE&amp;state=APPLICATION_STATE</pre>
             <figcaption>Fig 05-035</figcaption>
           </figure>
-          <p>We have the route url with a path of oauth2/authorize. After that we have a couple of parameters which we
-            need to specify:
+          <p>We have the route url with a path of <code class="prettyprint">oauth2/authorize</code> . After that we have
+            a couple of parameters which we need to specify:
           </p>
           <ul>
-            <li>client_id: The Id we received when we signed up for the Imgur API</li>
-            <li>response_type: Now deprecated. There used to be a couple of different ways of getting information back
-              from Imgur API and then performing actions on the users behalf. Now token is the only option.
+            <li><code class="prettyprint">client_id</code> : The Id we received when we signed up for the Imgur API</li>
+            <li><code class="prettyprint">response_type</code> : Now deprecated. There used to be a couple of different
+              ways of getting information back from Imgur API and then performing actions on the users behalf. Now <code
+                class="prettyprint">token</code> is the only option.
             </li>
-            <li>state: Gives the ability to optionally pass in some information about this particular user as they are
-              going through the OAuth flow.
+            <li><code class="prettyprint">state</code> : Gives the ability to optionally pass in some information about
+              this particular user as they are going through the OAuth flow.
             </li>
           </ul>
           <p>Next we will add the code to redirect the user to the above Url. Bear in mind that later we will create an
@@ -613,11 +624,11 @@ const mutations = {
           </figure>
           <p>Chances are that the Images module will also need to work with the Imgur API. If we were to locate all our
             logic directly with the API inside these actions then we're probably going to end up with a lot of
-            duplicated code in the two (or more) modules shown above.
-          </p>
-          <p>I suggest we create a new file - so this is not a separate Vuex module or anything - just a separate file
-            called imgur.js. We will add all the code to make network requests and work with the Imgur API etc. to this
-            file. The login and fetchImages functions can then call the code in that file instead:
+            duplicated code in the two (or more) modules shown above. I suggest we create a new file - so this is not a
+            separate Vuex module or anything - just a separate file called <code class="prettyprint">imgur.js</code> .
+            We will add all the code to make network requests and work with the Imgur API etc. to this file. The <code
+              class="prettyprint">login</code> and <code class="prettyprint">fetchImages</code> functions can then call
+            the code in that file instead:
           </p>
           <figure>
             <img src="./images/vuejsessentials/Fig05-037.png"/>
@@ -655,7 +666,7 @@ const mutations = {
             <pre class="prettyprint">const ROOT_URL = 'https://api.imgur.com';</pre>
             <figcaption>Fig 05-039</figcaption>
           </figure>
-          <p>Inside the login function add the following code:</p>
+          <p>Inside the <code class="prettyprint">login</code> function add the following code:</p>
           <figure>
 <pre class="prettyprint">import qs from 'qs';
 
@@ -676,18 +687,17 @@ export default {
           </figure>
           <p>At the top of the file we import the qs library that we discussed in a (much) earlier section. We create a
             template string by using the back tick <code class="prettyprint">`</code> character. We first add the <code
-              class="prettyprint">ROOT_URL</code> and append the /oauth2/authorize? the question mark indicates the
-            start of the query string. We use the <code class="prettyprint">stringify</code> function and pass in the
-            <code class="prettyprint">querystring</code> constant.
-          </p>
-          <p>We assign the expression we just defined to <code class="prettyprint">window.location </code> which will
-            redirect the user's browser to the location specified.
+              class="prettyprint">ROOT_URL</code> and append the <code class="prettyprint">/oauth2/authorize?</code> the
+            question mark indicates the start of the query string. We use the <code class="prettyprint">stringify</code>
+            function and pass in the <code class="prettyprint">querystring</code> constant. We assign the expression we
+            just defined to <code
+              class="prettyprint">window.location</code> which will redirect the user's browser to the location
+            specified.
           </p>
           <h3>Initiating the Login Flow</h3>
-          <p>Now that we've create this login function we need to make sure we have the ability to call it from within
-            our auth module.
-          </p>
-          <p>In auth.js we need to import our helper file:</p>
+          <p>Now that we've created this <code class="prettyprint">login</code> function we need to make sure we have
+            the ability to call it from within our Auth module. In <span class="filename">auth.js</span> we need to
+            import our helper file:</p>
           <figure>
             <pre class="prettyprint">import api from '../../api/imgur';</pre>
             <figcaption>Fig 05-041</figcaption>
@@ -709,7 +719,7 @@ export default {
           <p>So one variable or one function on the <code class="prettyprint">api</code> object is the <code
             class="prettyprint">login</code> function. Next we will create a new action called <code
             class="prettyprint">login</code> in the <code class="prettyprint">auth</code> module to kick off the actual
-            login attempt. This action will call the api login function:
+            login attempt. This action will call the api <code class="prettyprint">login</code> function:
           </p>
           <figure>
 <pre class="prettyprint">const actions = {
@@ -723,16 +733,20 @@ export default {
             <figcaption>Fig 05-043</figcaption>
           </figure>
           <p>As soon as we call <code class="prettyprint">api.login</code> it's going to cause our browser to
-            automatically navigate away from our application.
-          </p>
-          <p>We can't immediately test this because there are one or two last little steps we have to perform. At this
-            point in time we have created our auth module inside the auth.js file but we have not actually hooked this
-            file up to anything inside of our application. We have not connected this module, we've not connected state,
-            getters, actions to anything inside of our application yet.
+            automatically navigate away from our application. We can't immediately test this because there are one or
+            two last little steps we have to perform. At this point in time we have created our Auth module inside the
+            <span class="filename">auth.js</span> file but we have not actually hooked this file up to anything inside
+            of our application. We have not connected this module, we've not connected <code
+              class="prettyprint">state</code> , <code
+              class="prettyprint">getters</code> , <code class="prettyprint">actions</code> to anything inside of our
+            application yet.
           </p>
           <h3>Wiring in the Auth Module</h3>
-          <p>We are now going to wire up the auth module. Inside the auth module add an export statement to the bottom
-            of the file to export our state object, getters and mutations:
+          <p>We are now going to wire up the auth module. Inside the auth module add an <code
+            class="prettyprint">export</code> statement to the bottom of the file to export our <code
+            class="prettyprint">state</code> object, <code
+            class="prettyprint">getters</code>, <code class="prettyprint">actions</code> and <code class="prettyprint">mutations</code>
+            :
           </p>
           <figure>
 <pre class="prettyprint">export default {
@@ -743,12 +757,14 @@ export default {
 };</pre>
             <figcaption>Fig 05-044</figcaption>
           </figure>
-          <p>Again because the keys and values are identical we use the ES 2015 shorthand syntax. Now one thing to keep
-            in mind here is that the names of each of these objects are very important because we specifically want to
-            have a key called state that contains our state object.
+          <p>Again because the keys and values are identical we use the ES 2015 shorthand syntax. One thing to keep in
+            mind here is that the names of each of these objects are very important because we specifically want to have
+            a key called <code class="prettyprint">state</code> that contains our <code
+              class="prettyprint">state</code> object.
           </p>
-          <p>Now that we've exported those four pieces from the auth module we're going to open up our index.js file
-            inside of our store directory and wire it up:
+          <p>Now that we've exported those four pieces from the auth module we're going to open up our <span
+            class="filename">index.js</span> file inside of our <span class="filename">store</span> directory and wire
+            it up:
           </p>
           <figure>
 <pre class="prettyprint">import Vuex from 'vuex';
@@ -764,13 +780,15 @@ export default new Vuex.Store({
 });</pre>
             <figcaption>Fig 05-045</figcaption>
           </figure>
-          <p>Firstly we import the auth module. Nex we add the auth module to the modules object. One thing that's key
-            to keep in mind here is that whatever name or key that you use inside the modules object is going to affect
-            how you actually access data from within your Vue components - we use a key of auth and again because the
-            key and value are identical we condense it down to auth.
+          <p>Firstly we import the auth module. Next we add the auth module to the <code
+            class="prettyprint">modules</code> object. One thing that's key to keep in mind here is that whatever name
+            or key that you use inside the <code class="prettyprint">modules</code> object is going to affect how you
+            actually access data from within your Vue components - we use a key of <code class="prettyprint">auth</code>
+            and again because the key and value are identical we condense it down to <code
+              class="prettyprint">auth</code> .
           </p>
-          <p>Ok so the above code wires up our auth module to our Vuex instance. Remember that back inside of our
-            main.js file we then took that instance that we created:
+          <p>The above code wires up our auth module to our Vuex instance. Remember that back inside of our <span
+            class="filename">main.js</span> file we then took that instance that we created:
           </p>
           <code class="prettyprint">import store from './store';</code>
           <p>and we hooked it up to Vue:</p>
@@ -779,51 +797,52 @@ export default new Vuex.Store({
     store,</pre>
             <figcaption>Fig 05-046</figcaption>
           </figure>
-          <p>Also remember that back inside the index.js file we also did that <code class="prettyprint">
-            Vue.use(Vuex);</code> statement. This was like the initial handshake or the initial communication and then
-            we followed that up by passing our stoe into a Vue instance and that's what actually followed up on that
-            communication and said ok here's all the data, actions, mutations, that you need to be aware of.
+          <p>Also remember that back inside the <span class="filename">index.js</span> file we also did that <code
+            class="prettyprint"> Vue.use(Vuex);</code> statement. This was like the initial handshake or the initial
+            communication and then we followed that up by passing our store into a Vue instance and that's what actually
+            followed up on that communication and said ok here's all the <code class="prettyprint">data</code>, <code
+              class="prettyprint">actions</code>, <code class="prettyprint">mutations</code> that you need to be aware
+            of.
           </p>
-          <p>So our Auth module is complete. The last thing that we have to do is make sure that there is some component
-            inside of our application that actually attempts to call that login action we just created.
+          <p>The auth module is complete. The last thing that we have to do is make sure that there is some component
+            inside of our application that actually attempts to call that <code class="prettyprint">login</code> action
+            we just created.
           </p>
           <h3>Initial OAuth Request</h3>
-          <p>To enable us to invoke the login attempt that we've now defined inside of our login action in the Auth
-            module we have to do one last piece of configuration to tell our Vue application about these actions we've
-            defined inside of the Vuex module:
+          <p>To enable us to invoke the login attempt that we've now defined inside of our <code class="prettyprint">login</code>
+            action in the Auth module we have to do one last piece of configuration to tell our Vue application about
+            these actions we've defined inside of the Vuex module:
           </p>
           <figure>
             <img src="./images/vuejsessentials/Fig05-047.png"/>
             <figcaption>Fig 05-047.png</figcaption>
           </figure>
           <p>At the top of the figure we have a diagram of our application. At this point we have only created the App
-            and the AppHeader. We want the AppHeader to attempt to call the login action any time a user clicks on the
-            Login button that will eventually exist inside there.
-          </p>
-          <p>So anytime we want to access a Vuex module and update some data or cause some change inside of our
-            application we're going to wire up an action to our Vue component:
+            and the AppHeader. We want the AppHeader to attempt to call the <code class="prettyprint">login</code>
+            action any time a user clicks on the Login button that will eventually exist inside there. Anytime we want
+            to access a Vuex module and update some data or cause some change inside of our application we're going to
+            wire up an action to our Vue component:
           </p>
           <figure>
             <img src="./images/vuejsessentials/Fig05-048.png"/>
             <figcaption>Fig 05-048</figcaption>
           </figure>
           <p>So we're going to form a connection between the actions that we've defined inside of our auth module to the
-            AppHeader component.
-          </p>
-          <p>At some point in time we also want to make sure that the AppHeader has the ability to figure out what set
-            of buttons it should be showing to the user. In other words make sure that the AppHeader knows whether or
-            not the user is logged in. That's going to be the purpose of the getter properties that we defined. So we
-            will eventually wire up that set of getters defined inside of our auth module to the AppHeader component as
-            well:
+            AppHeader component. At some point in time we also want to make sure that the AppHeader has the ability to
+            figure out what set of buttons it should be showing to the user. In other words make sure that the AppHeader
+            knows whether or not the user is logged in. That's going to be the purpose of the getter properties that we
+            defined. So we will eventually wire up that set of getters defined inside of our auth module to the
+            AppHeader component as well:
           </p>
           <figure>
             <img src="./images/vuejsessentials/Fig05-049.png"/>
             <figcaption>Fig 05-049</figcaption>
           </figure>
-          <p>So, to recap, we call actions to change data and we call getters to retrieve data from a Vuex module.</p>
-          <p>With that in mind let's now open up our AppHeader component and figure out how we connect an action to the
-            AppHeader. This process always involves the exact same sequence of actions. Inside the script tag we will
-            import a Vuex helper:
+          <p>To recap, we call actions to change data and we call getters to retrieve data from a Vuex module. With that
+            in mind let's now open up our AppHeader component and figure out how we connect an <code
+              class="prettyprint">action</code> to the AppHeader. This process always involves the exact same sequence
+            of actions. Inside the <code
+              class="prettyprint">script</code> tag we will import a Vuex helper:
           </p>
           <figure>
             <pre class="prettyprint">import { mapActions } from 'vuex';</pre>
@@ -831,15 +850,15 @@ export default new Vuex.Store({
           </figure>
           <p><code class="prettyprint">mapActions</code> is a function that will automatically connect different actions
             that we have created inside of our modules to an actual component instance - like our AppHeader. So to
-            actually take that login action that we defined and wire it up to our component we are going to connect it
-            as a method.
+            actually take that <code class="prettyprint">login</code> action that we defined and wire it up to our
+            component we are going to connect it as a method.
           </p>
-          <p>Remember what methods are inside of components. We use methods to somehow instigate change or react to user
-            events. So in the context of actions that makes a lot of sense. Methods change things inside of our
+          <p>Remember that <code class="prettyprint">methods</code> are inside of components. We use <code
+            class="prettyprint">methods</code> to somehow instigate change or react to user events. So in the context of
+            <code class="prettyprint">actions</code> that makes a lot of sense. Methods change things inside of our
             application and as we just discussed we call methods to modify data so the marriage between a method and a
-            component and an action inside of a module makes a lot of sense.
-          </p>
-          <p>In AppHeader.vue add the following code to the component definition:</p>
+            component and an action inside of a module makes a lot of sense. In <code
+              class="prettyprint">AppHeader.vue</code> add the following code to the component definition:</p>
           <figure>
 <pre class="prettyprint">&lt;script&gt;
     import { mapActions } from 'vuex';
@@ -853,10 +872,14 @@ export default new Vuex.Store({
             <figcaption>Fig 05-051</figcaption>
           </figure>
           <p>We add a <code class="prettyprint">methods</code> property to our default export and call the <code
-            class="prettyprint">mapActions()</code> function. We to pass in an array of strings to this function that
+            class="prettyprint">mapActions</code> function. We to pass in an array of strings to this function that
             lists all the different modules that we've hooked up to our Vuex instance that we want to somehow import
-            into this component. At this point the only action that we want to hookup is login:<code
-              class="prettyprint"> mapActions('login') </code></p>
+            into this component. At this point the only action that we want to hookup is <code
+              class="prettyprint">login</code>
+            <figure>
+              <pre class="prettyprint">mapActions('login')</pre>
+              <figcaption>Fig 05-051A</figcaption>
+            </figure>
           <p>That's it, that's how we connect an action to a component. So now anywhere within the <code
             class="prettyprint">AppHeader</code> component or it's template we can freely call the <code
             class="prettyprint">login</code> action. We wil look at that in just a moment. Before we do, in the official
@@ -866,10 +889,10 @@ export default new Vuex.Store({
             <pre class="prettyprint">..mapActions(['login'])</pre>
             <figcaption>Fig 05-052</figcaption>
           </figure>
-          <p>So, to be clear, the above code and the code we just wrote is operationally completely identical. The
-            reason that you see the <code class="prettyprint">...</code> is that it takes all the different actions that
-            we are trying to pull out of the Vuex module and it adds them to the method object. Using this syntax allows
-            use to define other methods on this component as well. So maybe we would want another method called <code
+          <p>To be clear, the above code and the code we just wrote is operationally completely identical. The reason
+            that you see the <code class="prettyprint">...</code> is that it takes all the different actions that we are
+            trying to pull out of the Vuex module and it adds them to the method object. Using this syntax allows use to
+            define other methods on this component as well. So maybe we would want another method called <code
               class="prettyprint">onLogonClick ()</code> that could be called whenever someone clicked on our
             ImageStorage logo:
           </p>
@@ -880,14 +903,15 @@ export default new Vuex.Store({
     }</pre>
             <figcaption>Fig 05-053</figcaption>
           </figure>
-          <p>So when you see this alternate ... syntax it is being used just so you can add in other methods as well. If
-            you do not have any other methods or anything like the <code class="prettyprint">onLogoClick()</code> method
-            then you don't need to do the ... syntax or the wrapping object.
+          <p>When you see this alternate <code class="prettyprint">...</code> syntax it is being used just so you can
+            add in other methods as well. If you do not have any other methods or anything like the <code
+              class="prettyprint">onLogoClick()</code> method then you don't need to do the <code class="prettyprint">...</code>
+            syntax or the wrapping object.
           </p>
-          <p>So we've now mapped up this login action to our AppHeader component the last thing we have to do is
-            actually call it. We can call this action from inside any method that we define, any lifecycle method (which
-            we've yet to discuss) or we can call it as part of an event handler placed on a template which is what we're
-            going to do in this case.
+          <p>We've now mapped up this <code class="prettyprint">login</code> action to our AppHeader component the last
+            thing we have to do is actually call it. We can call this action from inside any method that we define, any
+            lifecycle method (which we've yet to discuss) or we can call it as part of an event handler placed on a
+            template which is what we're going to do in this case.
           </p>
           <p>Add the following code to the AppHeader template:</p>
           <figure>
@@ -910,10 +934,11 @@ export default new Vuex.Store({
             can call it we always use the same sequence:
           </p>
           <ul>
-            <li>Import mapActions</li>
-            <li>Define the methods object</li>
-            <li>Setup mapActions by passing in an array with a list of strings that define all the actions you want to
-              be available to this component.
+            <li>Import <code class="prettyprint">mapActions</code>
+            </li>
+            <li>Define the <code class="prettyprint">methods</code> object</li>
+            <li>Setup <code class="prettyprint">mapActions</code> by passing in an array with a list of strings that
+              define all the actions you want to be available to this component.
             </li>
           </ul>
           <p>One quick thing that might be surprising - notice how when we wrote <code class="prettyprint">
@@ -922,14 +947,13 @@ export default new Vuex.Store({
             the Auth module and find the login function. Vuex just automatically looks through all the actions on all
             the different modules to find one called <code class="prettyprint">login</code>.
           </p>
-          <p>Refresh the browser and you should see the Login button. At this point you should notice the Url changes to
+          <p>Refresh the browser and and click the Login button. At this point you should notice the Url changes to
             <code class="prettyprint">https://api.imgur.com</code> with the clientId and response_type specifed in the
             querystring (thanks to our use of the qs module).
           </p>
           <p>So now we're being prompted to grant access to the application called Vue Image Storage App. I logged in
-            with an actual Imgur account and clicked. This willwill take you to stage 2 of our OAuth flow.
-          </p>
-          <p>If you break down the url:</p>
+            with an actual Imgur account and clicked. This will take you to stage 2 of our OAuth flow. If you break down
+            the url:</p>
           <figure>
             <pre class="prettyprint">http://localhost:8080/oauth2/callback</pre>
             <figcaption>Fig 05-055</figcaption>
@@ -941,8 +965,8 @@ export default new Vuex.Store({
           </figure>
           <p>The access_token is essentially total power (within reason) over this users account. It allows us to post
             information, delete posts, make comments, just about anything you can imagine on behalf of the user. So the
-            access_token is extremely important and it's the same token that we've been talking about all along with
-            respect to our module.
+            access_token is extremely important and it's the same <code class="prettyprint">token</code> that we've been
+            talking about all along with respect to our module.
           </p>
           <figure>
             <pre class="prettyprint">&expires_in=315360000</pre>
@@ -973,13 +997,12 @@ export default new Vuex.Store({
             <figcaption>Fig 05-061</figcaption>
           </figure>
           <p>account_id specifies the account id</p>
-          <p>Ok so we now have access to the access_token which allows us to perform actions on behalf of the user.
-            There's just one issue.
-          </p>
-          <p>Notice how the Url contains all this very important information that we want to get access to and remember
-            we also said that during our initial Auth module design that whenever a user gets redirected back to our
-            application we want to call the <code class="prettyprint"> finalizeLogin</code> action which takes the token
-            out of the Url and calls the setToken mutation with it. We will cover this in the next section.
+          <p>We now have access to the access_token which allows us to perform actions on behalf of the user. There's
+            just one issue. Notice how the Url contains all this very important information that we want to get access
+            to and remember we also said that during our initial Auth module design that whenever a user gets redirected
+            back to our application we want to call the <code class="prettyprint"> finalizeLogin</code> <code
+              class="prettyprint">action</code> which takes the token out of the Url and calls the <code
+              class="prettyprint">setToken</code> mutation with it. We will cover this in the next section.
           </p>
           <h3>Extracting the Access Token</h3>
           <p>We've now been successfully redirected back to our application from the OAuth flow on the Imgur API with
@@ -993,18 +1016,17 @@ export default new Vuex.Store({
           <p>Inside the browser we can write out <code class="prettyprint">window.location</code> which will print out
             some information about the current Url we are visiting. So inside that <code class="prettyprint">window.location</code>
             object is a hash property which contains the entire string that appears after the <code class="prettyprint">#</code>
-            character in the Url including the access_token. So we could definitely write a little bit of logic to
-            somehow extract the required string out of the hash. The challenge is where to place the code and ensuring
-            that the code only runs when we get redirected back to our application from the Imgur OAuth flow. I don't
-            want the code to run when a user is visiting, for example, http://localhost:8080.
+            character in the Url including the access_token. We could definitely write a little bit of logic to somehow
+            extract the required string out of the hash. The challenge is where to place the code and ensuring that the
+            code only runs when we get redirected back to our application from the Imgur OAuth flow. I don't want the
+            code to run when a user is visiting, for example, http://localhost:8080.
           </p>
           <p>To achieve this we will be making use of the Vue router library that we installed much earlier inside of
             our project. The Vue router library is intended to do different thinks inside of our application based on
             the Url that the user is visiting in our application. So we're going to use that Vue library to look at the
-            Url and if the Url has a path of /oauth2/callback then at that point we will run the code to try to get the
-            access_token and call the appropriate action inside of our auth module.
-          </p>
-          <p>The following diagram illustrates how navigation is going to work inside of our project:</p>
+            Url and if the Url has a path of <code class="prettyprint">/oauth2/callback</code> then at that point we
+            will run the code to try to get the access_token and call the appropriate action inside of our auth module.
+            The following diagram illustrates how navigation is going to work inside of our project:</p>
           <figure>
             <img src="./images/vuejsessentials/Fig05-062.png"/>
             <figcaption>Fig 05-062.png</figcaption>
@@ -1017,10 +1039,10 @@ export default new Vuex.Store({
           </p>
           <p>So if a user is visiting the root route of our application we probably want to show them a list of all the
             images they have uploaded which means displaying the ImageList component. If they visit a route of something
-            like <code class="prettyprint">/upload</code> we will show them and UploadForm component that will allow
-            them to upload new images. Finally, the bit that's relevant to us right now, if a user visits
-            /oauth2/callback/ route (which we arrive at when we come back from Imgur) then we will show the AuthHandler
-            component.
+            like <code class="prettyprint">/upload</code> we will show them an UploadForm component that will allow them
+            to upload new images. Finally, the bit that's relevant to us right now, if a user visits <code
+              class="prettyprint">/oauth2/callback/</code> route (which we arrive at when we come back from Imgur) then
+            we will show the AuthHandler component.
           </p>
           <p>The AuthHandler component that you and I are going to create is not going to have a lot of template logic
             in it. It wont display anything on the screen as such. Instead, it's purpose will be to extract the token
