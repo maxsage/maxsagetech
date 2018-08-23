@@ -1019,10 +1019,10 @@ export default new Vuex.Store({
             character in the Url including the access_token. We could definitely write a little bit of logic to somehow
             extract the required string out of the hash. The challenge is where to place the code and ensuring that the
             code only runs when we get redirected back to our application from the Imgur OAuth flow. I don't want the
-            code to run when a user is visiting, for example, http://localhost:8080.
+            code to run when a user is visiting, for example, <code class="prettyprint">http://localhost:8080</code> .
           </p>
           <p>To achieve this we will be making use of the Vue router library that we installed much earlier inside of
-            our project. The Vue router library is intended to do different thinks inside of our application based on
+            our project. The Vue router library is intended to do different things inside of our application based on
             the Url that the user is visiting in our application. So we're going to use that Vue library to look at the
             Url and if the Url has a path of <code class="prettyprint">/oauth2/callback</code> then at that point we
             will run the code to try to get the access_token and call the appropriate action inside of our auth module.
@@ -1031,10 +1031,10 @@ export default new Vuex.Store({
             <img src="./images/vuejsessentials/Fig05-062.png"/>
             <figcaption>Fig 05-062.png</figcaption>
           </figure>
-          <p>So inside our project we are going to have a couple of different routes. These routes are going to be
-            defined as logic pointing at the Vue router library. We're going to create the Vue router library inside of
-            our project and then we're going to instruct it about what components it should show on the screen based on
-            the current route we are visiting. On the right hand side of the above diagram notice that we have not yet
+          <p>Inside our project we are going to have a couple of different routes. These routes are going to be defined
+            as logic pointing at the Vue router library. We're going to create the Vue router library inside of our
+            project and then we're going to instruct it about what components it should show on the screen based on the
+            current route we are visiting. On the right hand side of the above diagram notice that we have not yet
             created the ImageList or UploadForm component but you can imagine what the purpose of each of those is.
           </p>
           <p>So if a user is visiting the root route of our application we probably want to show them a list of all the
@@ -1042,11 +1042,10 @@ export default new Vuex.Store({
             like <code class="prettyprint">/upload</code> we will show them an UploadForm component that will allow them
             to upload new images. Finally, the bit that's relevant to us right now, if a user visits <code
               class="prettyprint">/oauth2/callback/</code> route (which we arrive at when we come back from Imgur) then
-            we will show the AuthHandler component.
-          </p>
-          <p>The AuthHandler component that you and I are going to create is not going to have a lot of template logic
-            in it. It wont display anything on the screen as such. Instead, it's purpose will be to extract the token
-            from the Url and call the <code class="prettyprint"> finalizeLogin</code> action.
+            we will show the AuthHandler component. The AuthHandler component that you and I are going to create is not
+            going to have a lot of template logic in it. It wont display anything on the screen as such. Instead, it's
+            purpose will be to extract the token from the Url and call the <code class="prettyprint">
+              finalizeLogin</code> action.
           </p>
         </div>
       </div>
