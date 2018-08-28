@@ -14,9 +14,11 @@
                       Essentials
                       with Vuex and Vue Router on Udemy</a><br />
                     <router-link to="/vuejsessentials-00-course-contents/" active-class="active"><a>Vue JS Essentials with Vuex and Vue Router</a></router-link>
-                    <p>Date Completed: n/a</p>
-                    <p>Rating: n/a</p>
-                    <p>Review not available at this time.</p>
+                    <p>Date Completed: 28/08/2018</p>
+                    <p>Rating: 7/10</p>
+                    <p>A good course covering the Vue, Vuex and Vue Router. When writing notes on the course I found
+                    that the author tended to repeat himself very often which made the sections longer than they
+                      needed to be.</p>
                 </div>
             </div>
         </div>

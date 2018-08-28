@@ -1,6 +1,8 @@
 import Home from './components/Home.vue'
 import Header from './components/Header.vue'
 
+import Javascript from './components/javascript/Javascript.vue'
+
 import Vuejs from './components/vuejs/Vuejs.vue'
 
 import VuejsDeployingToHeroku from './components/vuejs/VuejsDeployingToHeroku.vue'
@@ -70,6 +72,14 @@ export const routes = [
     name: 'home',
     components: {
       default: Home,
+      'header-top': Header
+    }
+  },
+
+  {
+    path: '/javascript',
+    components: {
+      default: Javascript,
       'header-top': Header
     }
   },
