@@ -2,6 +2,7 @@ import Home from './components/Home.vue'
 import Header from './components/Header.vue'
 
 import Javascript from './components/javascript/Javascript.vue'
+import TheCompleteJavascriptCourse from './components/javascript/TheCompleteJavascriptCourse.vue'
 
 import Vuejs from './components/vuejs/Vuejs.vue'
 
@@ -80,6 +81,13 @@ export const routes = [
     path: '/javascript',
     components: {
       default: Javascript,
+      'header-top': Header
+    }
+  },
+  {
+    path: '/thecompletejavascriptcourse',
+    components: {
+      default: TheCompleteJavascriptCourse,
       'header-top': Header
     }
   },
