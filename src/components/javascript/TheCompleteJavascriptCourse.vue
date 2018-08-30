@@ -49,7 +49,7 @@
           </ol>
 
           <h3>How JavaScript Works Behind the Scenes</h3>
-          <ol  start="34">
+          <ol start="34">
             <li>Section Intro</li>
             <li>Download the Code</li>
             <li>How Our Code Is Executed: JavaScript Parsers and Engines</li>
@@ -166,7 +166,7 @@
             <li>Making AJAX Calls with Fetch and Async/Await</li>
           </ol>
 
-        <h3>Modern JavaScript: Using ES6, NPM, Babel and Webpack</h3>
+          <h3>Modern JavaScript: Using ES6, NPM, Babel and Webpack</h3>
           <ol start="128">
             <li>Section Intro</li>
             <li>Project Overview</li>
@@ -213,6 +213,217 @@
             <li>Where to Go from Here</li>
             <li>Be the First to Know About New Course Launches!</li>
           </ol>
+
+          <h3>Course Introduction</h3>
+          <h4>Welcome to the Course!</h4>
+          <h4>READ BEFORE YOU START!</h4>
+          <h4>Setting up Our Tools</h4>
+
+          <h3>JavaScript Language Basics</h3>
+          <h4>Section Intro</h4>
+          <h4>Download the Code</h4>
+          <h4>Let's start coding!</h4>
+          <h4>A Brief Introduction to JavaScript</h4>
+          <p>Javascript is a lightweight, cross-platform, object-oriented computer programming language. Together with
+            Html and CSS Javascript is one of the three core technologies of web development. Traditionally Javascript
+            was only used in the browser meaning that it was just a client-side language. Now, thanks to Node.js, we can
+            use Javascript on the server as well.
+          </p>
+          <p>There are lots of Javascript libraries and frameworks (React, Angular, jQuery etc) today that implement
+            different architectures and help developers build complex apps more easily and faster than ever. </p>
+          <h4>Variables and Data Types</h4>
+          <p>There are five different primitive data types in Javascript:</p>
+          <ul>
+            <li>Number: Floating point numbers, for decimals and integers</li>
+            <li>String: Sequence of characters, used for text</li>
+            <li>Boolean: Logical data type that can only be <code class="prettyprint">true</code> or <code
+              class="prettyprint">false</code>
+            </li>
+            <li>Undefined: Data type of a variable that does not have a value yet</li>
+            <li>Null: Also means 'non-existent'</li>
+          </ul>
+          <p>Primitive data types just means that the type cannot be used for objects - they are just simple primitive
+            non-object data types.
+          </p>
+          <p>It is important to note that Javascript has a feature called dynamic typing which means that data types are
+            automatically assigned to variables. So Javascript automatically figures out if a variable is a string,
+            number, undefined etc. and then assigns that data type to the variable without us having to do anything. If
+            we then later assign another value to the same variable but with another data type Javascript will
+            automatically change the data type of the variable as well. So this can be very useful in saving us some
+            coding time but it can also be the source of some difficult to find bugs.
+          </p>
+          <p>Variables cannot start with numbers or symbols except for $ or _. The following are all illegal variable
+            declarations:
+          </p>
+          <figure>
+          <pre class="prettyprint">var _3years = 3;
+var john/mark = 'John and MArk';
+var if = 23;</pre>
+            <figcaption>Fig 01-001</figcaption>
+          </figure>
+          <p>In the second example the symbol appears in the middle of the variable name but this still throws an
+            'unexpected token' error. The third example illustrates that we can't use reserved Javascript keywords as
+            variable names.</p>
+          <h4>Variable Mutation and Type Coercion</h4>
+          <p>Comments exist in all programming languages. In Javascript there are single and multi-line comments:</p>
+          <figure>
+          <pre class="prettyprint">// Single line comment
+
+/* A comment
+ that extends over multiple
+lines
+*/</pre>
+            <figcaption>Fig 01-002</figcaption>
+          </figure>
+          <p>Consider the following code:</p>
+          <figure>
+<pre class="prettyprint">/************************************
+* Variable mutation and type coercion
+*************************************/
+
+var firstName = 'John';
+var age = 28;
+
+// Type coercion
+console.log(firstName + ' ' + age);</pre>
+            <figcaption>Fig 01-003</figcaption>
+          </figure>
+          <p>Will output the following to the console:</p>
+          <figure>
+            <pre class="terminal">John 28</pre>
+            <figcaption>Fig 01-004</figcaption>
+          </figure>
+          <p>The <code class="prettyprint">age</code> variable is a number but is output as a string thanks to a
+            Javascript feature called type coercion - which means Javascript automatically converts types from one to
+            another as required. Other programming languages (e.g. C#) are not like this, we would need to explicitly
+            convert the variables to a different type (e.g. ToString()). This is just one example of type coercion - we
+            will see many more as we continue through the course.
+          </p>
+          <p>Consider the following code:</p>
+          <figure>
+          <pre class="prettyprint">/************************************
+* Variable mutation and type coercion
+*************************************/
+
+var firstName = 'John';
+var age = 28;
+
+// Type coercion
+console.log(firstName + ' ' + age);
+
+var job, isMarried;
+job = 'teacher';
+isMarried = false;
+
+console.log(firstName + ' is a ' + age + ' year old ' + job + '. Is he married? ' + isMarried);</pre>
+            <figcaption>Fig 01-005</figcaption>
+          </figure>
+          <p>Will output the following:</p>
+          <figure>
+<pre class="terminal">John 28
+John is a 28 year old teacher. Is he married? false</pre>
+            <figcaption>Fig 01-006</figcaption>
+          </figure>
+          <p>We can define multiple variables on one line and then define them later on. Notice in the <code
+            class="prettyprint">console.log</code> command the boolean <code class="prettyprint">isMarried</code> also
+            get's converted to a string. Comment out the isMarried declaration:</p>
+          <figure>
+          <pre class="prettyprint">//isMarried = false;
+
+console.log(firstName + ' is a ' + age + ' year old ' + job + '. Is he married? ' + isMarried);</pre>
+            <figcaption>Fig 01-007</figcaption>
+          </figure>
+          <p>Will output the following:</p>
+          <figure>
+<pre class="terminal">John 28
+John is a 28 year old teacher. Is he married? undefined</pre>
+            <figcaption>Fig 01-008</figcaption>
+          </figure>
+          <p>This illustrates that event the <code class="prettyprint">undefined</code> data type get's coerced to a
+            string.</p>
+          <p>Let's look at variable mutation. Consider the following code:</p>
+          <figure>
+<pre class="prettyprint">// Variable mutation
+var firstName = 'John';
+var age = 28;
+var isMarried = false;
+age = 'twenty eight';
+job = 'driver';
+
+alert(firstName + ' is a ' + age + ' year old ' + job + '. Is he married? ' + isMarried);
+
+var lastName = prompt('What is his last Name?');
+console.log(firstName + ' ' + lastName);</pre>
+            <figcaption>Fig 01-009</figcaption>
+          </figure>
+          <p>Variable mutation means to change the value of a variable. In this example we redefine the <code
+            class="prettyprint">age</code> variable from a number to a string. We also introduced the <code
+            class="prettyprint">alert</code> command which displays a popup window over the top of the browser window
+            and the <code class="prettyprint">prompt</code> command which prompts the user for some input which we
+            assign to the <code class="prettyprint">lastName</code> variable.
+          </p>
+          <h4>Basic Operators</h4>
+          <p>Let's now learn about a couple of basic Javascript operators. Consider the following code:</p>
+          <figure>
+          <pre class="prettyprint">/*****************************
+* Basic operators
+*/
+var now, yearJohn, yearMark;
+now = 2018;
+ageJohn = 28;
+ageMark = 33;
+
+// Math operators
+yearJohn = now - ageJohn;
+yeahMark = now - ageMark;
+
+console.log(yearJohn);
+
+console.log(now + 2);
+console.log(now * 2);
+console.log(now / 10);
+
+
+// Logical operators
+var johnOlder = ageJohn &lt; ageMark;
+console.log(johnOlder);
+
+
+// typeof operator
+console.log(typeof johnOlder);
+console.log(typeof ageJohn);
+console.log(typeof 'Mark is older tha John');
+var x;
+console.log(typeof x);</pre>
+          <figcaption>Fig 01-010</figcaption>
+          </figure>
+          <p>The code above illustrates some Javascript basic operators (-, +, *, / etc.) and logical operators (&gt;,
+            &lt; etc). The <code class="prettyprint">typeof</code> operator, as it's name suggests, returns the type of
+            the variable that you supply as an operand. </p>
+
+          <h4>Operator Precedence</h4>
+          <h4>Coding Challenge 1</h4>
+          <h4>Coding Challenge 1: Solution</h4>
+          <h4>If / else Statements</h4>
+          <h4>Boolean Logic</h4>
+          <h4>The Ternary Operator and Switch Statements</h4>
+          <h4>Truthy and Falsy Values and Equality Operators</h4>
+          <h4>Coding Challenge 2</h4>
+          <h4>Coding Challenge 2: Solution</h4>
+          <h4>Functions</h4>
+          <h4>Function Statements and Expressions</h4>
+          <h4>Arrays</h4>
+          <h4>Coding Challenge 3</h4>
+          <h4>Coding Challenge 3: Solution</h4>
+          <h4>Objects and Properties</h4>
+          <h4>Objects and Methods</h4>
+          <h4>Coding Challenge 4</h4>
+          <h4>Coding Challenge 4: Solution</h4>
+          <h4>Loops and Iteration</h4>
+          <h4>Coding Challenge 5</h4>
+          <h4>Coding Challenge 5: Solution, Part 1</h4>
+          <h4>Coding Challenge 5: Solution, Part 2</h4>
+          <h4>JavaScript Versions: ES5, ES6 / ES2015</h4>
         </div>
       </div>
     </div>
