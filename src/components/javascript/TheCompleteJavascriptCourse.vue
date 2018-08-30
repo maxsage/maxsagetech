@@ -48,156 +48,171 @@
             <li>JavaScript Versions: ES5, ES6 / ES2015</li>
           </ol>
 
-
-
-
           <h3>How JavaScript Works Behind the Scenes</h3>
-          34. Section Intro
-          35. Download the Code
-          36. How Our Code Is Executed: JavaScript Parsers and Engines
-          37. Execution Contexts and the Execution Stack
-          38. Execution Contexts in Detail: Creation and Execution Phases and Hoisting
-          39. Hoisting in Practice
-          40. Scoping and the Scope Chain
-          41. The 'this' Keyword
-          42. The 'this' Keyword in Practice
+          <ol  start="34">
+            <li>Section Intro</li>
+            <li>Download the Code</li>
+            <li>How Our Code Is Executed: JavaScript Parsers and Engines</li>
+            <li>Execution Contexts and the Execution Stack</li>
+            <li>Execution Contexts in Detail: Creation and Execution Phases and Hoisting</li>
+            <li>Hoisting in Practice</li>
+            <li>Scoping and the Scope Chain</li>
+            <li>The 'this' Keyword</li>
+            <li>The 'this' Keyword in Practice</li>
+          </ol>
 
           <h3>JavaScript in the Browser: DOM Manipulation and Events</h3>
-          43. Section Intro
-          44. Download the Code
-          45. The DOM and DOM Manipulation
-          46. 5-Minute HTML and CSS Crash Course
-          47. Project Setup and Details
-          48. First DOM Access and Manipulation
-          49. Events and Event Handling: Rolling the Dice
-          50. Updating Scores and Changing the Active Player
-          51. Implementing Our 'Hold' Function and the DRY Principle
-          52. Creating a Game Initialization Function
-          53. Finishing Touches: State Variables
-          54. Coding Challenge 6
-          55. Coding Challenge 6: Solution, Part 1
-          56. Coding Challenge 6: Solution, Part 2
-          57. Coding Challenge 6: Solution, Part 3
+          <ol start="43">
+            <li>Section Intro</li>
+            <li>Download the Code</li>
+            <li>The DOM and DOM Manipulation</li>
+            <li>5-Minute HTML and CSS Crash Course</li>
+            <li>Project Setup and Details</li>
+            <li>First DOM Access and Manipulation</li>
+            <li>Events and Event Handling: Rolling the Dice</li>
+            <li>Updating Scores and Changing the Active Player</li>
+            <li>Implementing Our 'Hold' Function and the DRY Principle</li>
+            <li>Creating a Game Initialization Function</li>
+            <li>Finishing Touches: State Variables</li>
+            <li>Coding Challenge 6</li>
+            <li>Coding Challenge 6: Solution, Part 1</li>
+            <li>Coding Challenge 6: Solution, Part 2</li>
+            <li>Coding Challenge 6: Solution, Part 3</li>
+          </ol>
 
           <h3>Advanced JavaScript: Objects and Functions</h3>
-          58. Section Intro
-          59. Download the Code
-          60. Everything Is an Object: Inheritance and the Prototype Chain
-          61. Creating Objects: Function Constructors
-          62. The Prototype Chain in the Console
-          63. Creating Objects: Object.create
-          64. Primitives vs. Objects
-          65. First Class Functions: Passing Functions as Arguments
-          66. First Class Functions: Functions Returning Functions
-          67. Immediately Invoked Function Expressions (IIFE)
-          68. Closures
-          69. Bind, Call and Apply
-          70. Coding Challenge 7
-          71. Coding Challenge 7: Solution, Part 1
-          72. Coding Challenge 7: Solution, Part 2
+          <ol start="58">
+            <li>Section Intro</li>
+            <li>Download the Code</li>
+            <li>Everything Is an Object: Inheritance and the Prototype Chain</li>
+            <li>Creating Objects: Function Constructors</li>
+            <li>The Prototype Chain in the Console</li>
+            <li>Creating Objects: Object.create</li>
+            <li>Primitives vs. Objects</li>
+            <li>First Class Functions: Passing Functions as Arguments</li>
+            <li>First Class Functions: Functions Returning Functions</li>
+            <li>Immediately Invoked Function Expressions (IIFE)</li>
+            <li>Closures</li>
+            <li>Bind, Call and Apply</li>
+            <li>Coding Challenge 7</li>
+            <li>Coding Challenge 7: Solution, Part 1</li>
+            <li>Coding Challenge 7: Solution, Part 2</li>
+          </ol>
 
           <h3>Putting It All Together: The Budget App Project</h3>
-          73. Section Intro
-          74. Download the Code
-          75. Project Setup and Details
-          76. Project Planning and Architecture: Step 1
-          77. Implementing the Module Pattern
-          78. Setting up the First Event Listeners
-          79. Reading Input Data
-          80. Creating an Initialization Function
-          81. Creating Income and Expense Function Constructors
-          82. Adding a New Item to Our Budget Controller
-          83. Adding a New Item to the UI
-          84. Clearing Our Input Fields
-          85. Updating the Budget: Controller
-          86. Updating the Budget: Budget Controller
-          87. Updating the Budget: UI Controller
-          88. Project Planning and Architecture: Step 2
-          89. Event Delegation
-          90. Setting up the Delete Event Listener Using Event Delegation
-          91. Deleting an Item from Our Budget Controller
-          92. Deleting an Item from the UI
-          93. Project Planning and Architecture: Step 3
-          94. Updating the Percentages: Controller
-          95. Updating the Percentages: Budget Controller
-          96. Updating the Percentages: UI Controller
-          97. Formatting Our Budget Numbers: String Manipulation
-          98. Displaying the Current Month and Year
-          99. Finishing Touches: Improving the UX
-          100. We’ve Made It! Final Considerations
+          <ol start="73">
+            <li>Section Intro</li>
+            <li>Download the Code</li>
+            <li>Project Setup and Details</li>
+            <li>Project Planning and Architecture: Step 1</li>
+            <li>Implementing the Module Pattern</li>
+            <li>Setting up the First Event Listeners</li>
+            <li>Reading Input Data</li>
+            <li>Creating an Initialization Function</li>
+            <li>Creating Income and Expense Function Constructors</li>
+            <li>Adding a New Item to Our Budget Controller</li>
+            <li>Adding a New Item to the UI</li>
+            <li>Clearing Our Input Fields</li>
+            <li>Updating the Budget: Controller</li>
+            <li>Updating the Budget: Budget Controller</li>
+            <li>Updating the Budget: UI Controller</li>
+            <li>Project Planning and Architecture: Step 2</li>
+            <li>Event Delegation</li>
+            <li>Setting up the Delete Event Listener Using Event Delegation</li>
+            <li>Deleting an Item from Our Budget Controller</li>
+            <li>Deleting an Item from the UI</li>
+            <li>Project Planning and Architecture: Step 3</li>
+            <li>Updating the Percentages: Controller</li>
+            <li>Updating the Percentages: Budget Controller</li>
+            <li>Updating the Percentages: UI Controller</li>
+            <li>Formatting Our Budget Numbers: String Manipulation</li>
+            <li>Displaying the Current Month and Year</li>
+            <li>Finishing Touches: Improving the UX</li>
+            <li>We’ve Made It! Final Considerations</li>
+          </ol>
 
           <h3>Next Generation JavaScript: Intro to ES6 / ES2015</h3>
-          101. Section Intro
-          102. Download the Code
-          103. What's new in ES6 / ES2015
-          104. Variable Declarations with let and const
-          105. Blocks and IIFEs
-          106. Strings in ES6 / ES2015
-          107. Arrow Functions: Basics
-          108. Arrow Functions: Lexical 'this' Keyword
-          109. Destructuring
-          110. Arrays in ES6 / ES2015
-          111. The Spread Operator
-          112. Rest Parameters
-          113. Default Parameters
-          114. Maps
-          115. Classes
-          116. Classes with Subclasses
-          117. Coding Challenge 8
-          118. Coding Challenge 8: Solution
+          <ol start="101">
+            <li>Section Intro</li>
+            <li>Download the Code</li>
+            <li>What's new in ES6 / ES2015</li>
+            <li>Variable Declarations with let and const</li>
+            <li>Blocks and IIFEs</li>
+            <li>Strings in ES6 / ES2015</li>
+            <li>Arrow Functions: Basics</li>
+            <li>Arrow Functions: Lexical 'this' Keyword</li>
+            <li>Destructuring</li>
+            <li>Arrays in ES6 / ES2015</li>
+            <li>The Spread Operator</li>
+            <li>Rest Parameters</li>
+            <li>Default Parameters</li>
+            <li>Maps</li>
+            <li>Classes</li>
+            <li>Classes with Subclasses</li>
+            <li>Coding Challenge 8</li>
+            <li>Coding Challenge 8: Solution</li>
+          </ol>
 
           <h3>Asynchronous JavaScript: Promises, Async/Await and AJAX</h3>
-          119. Section Intro
-          120. An Example of Asynchronous JavaScript
-          121. Understanding Asynchronous JavaScript: The Event Loop
-          122. The Old Way: Asynchronous JavaScript with Callbacks
-          123. From Callback Hell to Promises
-          124. From Promises to Async/Await
-          125. AJAX and APIs
-          126. Making AJAX Calls with Fetch and Promises
-          127. Making AJAX Calls with Fetch and Async/Await
+          <ol start="119">
+            <li>Section Intro</li>
+            <li>An Example of Asynchronous JavaScript</li>
+            <li>Understanding Asynchronous JavaScript: The Event Loop</li>
+            <li>The Old Way: Asynchronous JavaScript with Callbacks</li>
+            <li>From Callback Hell to Promises</li>
+            <li>From Promises to Async/Await</li>
+            <li>AJAX and APIs</li>
+            <li>Making AJAX Calls with Fetch and Promises</li>
+            <li>Making AJAX Calls with Fetch and Async/Await</li>
+          </ol>
 
-          <h3>Modern JavaScript: Using ES6, NPM, Babel and Webpack</h3>
-          128. Section Intro
-          129. Project Overview
-          130. An Overview of Modern JavaScript
-          131. A Brief Introduction to the Command Line
-          132. A Modern Setup: Installing Node.js and NPM
-          133. A Modern Setup: Configuring Webpack
-          134. A Modern Setup: The Webpack Dev Server
-          135. A Modern Setup: Babel
-          136. Planning our Project Architecture with MVC
-          137. How ES6 Modules Work
-          138. Making our First API Calls
-          139. Building the Search Model
-          140. Building the Search Controller
-          141. Building the Search View - Part 1
-          142. Building the Search View - Part 2
-          143. Rendering an AJAX Loading Spinner
-          144. Implementing Search Results Pagination
-          145. Building the Recipe Model - Part 1
-          146. Building the Recipe Controller
-          147. Building the Recipe Model - Part 2
-          148. Building the Recipe View - Part 1
-          149. Building the Recipe View - Part 2
-          150. Updating Recipe Servings
-          151. Building the Shopping List Model
-          152. Building the Shopping List View
-          153. Building the Shopping List Controller
-          154. Building the Likes Model
-          155. Building the Likes Controller
-          156. Building the Likes View
-          157. Implementing Persistent Data with localStorage
-          158. Wrapping up: Final Considerations
+        <h3>Modern JavaScript: Using ES6, NPM, Babel and Webpack</h3>
+          <ol start="128">
+            <li>Section Intro</li>
+            <li>Project Overview</li>
+            <li>An Overview of Modern JavaScript</li>
+            <li>A Brief Introduction to the Command Line</li>
+            <li>A Modern Setup: Installing Node.js and NPM</li>
+            <li>A Modern Setup: Configuring Webpack</li>
+            <li>A Modern Setup: The Webpack Dev Server</li>
+            <li>A Modern Setup: Babel</li>
+            <li>Planning our Project Architecture with MVC</li>
+            <li>How ES6 Modules Work</li>
+            <li>Making our First API Calls</li>
+            <li>Building the Search Model</li>
+            <li>Building the Search Controller</li>
+            <li>Building the Search View - Part 1</li>
+            <li>Building the Search View - Part 2</li>
+            <li>Rendering an AJAX Loading Spinner</li>
+            <li>Implementing Search Results Pagination</li>
+            <li>Building the Recipe Model - Part 1</li>
+            <li>Building the Recipe Controller</li>
+            <li>Building the Recipe Model - Part 2</li>
+            <li>Building the Recipe View - Part 1</li>
+            <li>Building the Recipe View - Part 2</li>
+            <li>Updating Recipe Servings</li>
+            <li>Building the Shopping List Model</li>
+            <li>Building the Shopping List View</li>
+            <li>Building the Shopping List Controller</li>
+            <li>Building the Likes Model</li>
+            <li>Building the Likes Controller</li>
+            <li>Building the Likes View</li>
+            <li>Implementing Persistent Data with localStorage</li>
+            <li>Wrapping up: Final Considerations</li>
+          </ol>
 
           <h3>Final Course Exam: 30 Questions to Test Your JavaScript Knowledge</h3>
-          159. Some Considerations Before You Start
-          Quiz 1: 30 Questions to Test Your JavaScript Knowledge
+          <ol start="159">
+            <li>Some Considerations Before You Start</li>
+          </ol>
+
+          <p>Quiz 1: 30 Questions to Test Your JavaScript Knowledge</p>
 
           <h3>Conclusion</h3>
-          160. Where to Go from Here
-          161. Be the First to Know About New Course Launches!
-
+          <ol start="160">
+            <li>Where to Go from Here</li>
+            <li>Be the First to Know About New Course Launches!</li>
+          </ol>
         </div>
       </div>
     </div>
