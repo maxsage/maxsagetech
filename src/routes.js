@@ -4,6 +4,8 @@ import Header from './components/Header.vue'
 import Javascript from './components/javascript/Javascript.vue'
 import TheCompleteJavascriptCourse from './components/javascript/TheCompleteJavascriptCourse.vue'
 
+import Nodejs from './components/nodejs/TheCompleteNodejsCourse01GettingStarted.vue'
+
 import Vuejs from './components/vuejs/Vuejs.vue'
 
 import VuejsDeployingToHeroku from './components/vuejs/VuejsDeployingToHeroku.vue'
@@ -88,6 +90,14 @@ export const routes = [
     path: '/thecompletejavascriptcourse',
     components: {
       default: TheCompleteJavascriptCourse,
+      'header-top': Header
+    }
+  },
+
+  {
+    path: '/nodejs',
+    components: {
+      default: Nodejs,
       'header-top': Header
     }
   },
