@@ -4,7 +4,9 @@ import Header from './components/Header.vue'
 import Javascript from './components/javascript/Javascript.vue'
 import TheCompleteJavascriptCourse from './components/javascript/TheCompleteJavascriptCourse.vue'
 
-import Nodejs from './components/nodejs/TheCompleteNodejsCourse01GettingStarted.vue'
+import Nodejs from './components/nodejs/Nodejs.vue'
+import TheCompleteNodejsCourse01GettingStarted from './components/nodejs/TheCompleteNodejsCourse01GettingStarted.vue'
+import TheCompleteNodejsCourse02NodeModuleSystem from './components/nodejs/TheCompleteNodejsCourse02NodeModuleSystem.vue'
 
 import Vuejs from './components/vuejs/Vuejs.vue'
 
@@ -101,7 +103,20 @@ export const routes = [
       'header-top': Header
     }
   },
-
+  {
+    path: '/thecompletenodejscourse-01-getting-started',
+    components: {
+      default: TheCompleteNodejsCourse01GettingStarted,
+      'header-top': Header
+    }
+  },
+  {
+    path: '/thecompletenodejscourse-02-node-module-system',
+    components: {
+      default: TheCompleteNodejsCourse02NodeModuleSystem,
+      'header-top': Header
+    }
+  },
   {
     path: '/vuejs',
     components: {

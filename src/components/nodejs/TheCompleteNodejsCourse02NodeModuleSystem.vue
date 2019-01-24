@@ -80,8 +80,8 @@
           which we will learn about in the next section.</p>
 
           <h2>Modules</h2>
-          <p>In the last section we learned that in client side Javascript that we run in
-          a browser when we declare a variable or a function it is added to the global
+          <p>In the last section we learned that in client side Javascript, which runs in
+            the browser, when we declare a variable or a function it is added to the global
           scope:</p>
 
           <figure>
@@ -93,7 +93,7 @@ window.sayHello();</pre>
             <figcaption>Fig 02-005</figcaption>
           </figure>
 
-          <p>The problem with this behaviour that is in a real world application we often
+          <p>The problem with this behaviour is that in a real world application we often
           split our Javascript code into multiple files. This means that it is possible
           to define the same sayHello function. Because the function is added to the
           global scope one definition will overwrite the other.</p>
@@ -393,7 +393,7 @@ __dirname returns a path to the directory that contains that module.</pre>
             <li>userInfo([options])</li>
             <li>uptime</li>
           </ul>
-          
+
           <p>If you run 17-os-module.js you will get the following information:</p>
 
           <figure>
@@ -413,125 +413,143 @@ __dirname returns a path to the directory that contains that module.</pre>
           using Node to build the backend for your application you may have hundreds or thousands of
           clients connecting to that back-end.</p>
 
-          If you keep that client busy you wont be able serve many clients.
+          <p>If you keep that client busy you wont be able serve many clients.</p>
 
-          All the asynchronous methods take a function as their last argument. This function is known as
-          a callback.
+          <p>All the asynchronous methods take a function as their last argument. This function is known as
+          a callback.</p>
 
-          19 Events Module
-          ----------------
-          One of the core concepts in Node is events. An event is basically a signal that indicates that
-          something has happened in our application.
+          <h2>19 Events Module</h2>
+          <p>One of the core concepts in Node is events. An event is basically a signal that indicates that
+          something has happened in our application.</p>
 
-          In the Events module we have a class called EventEmitter. When we call require events the require
-          function returns an EventEmitter class (hence the casing):
+          <p>In the Events module we have a class called EventEmitter. When we call require events the require
+          function returns an EventEmitter class (hence the casing):</p>
 
-          const EventEmitter = require('events');
+          <figure>
+            <pre class="prettyprint">const EventEmitter = require('events');</pre>
+            <figcaption>Fig 02-031</figcaption>
+          </figure>
 
-          We then create an instance of the EventEmitter class:
+          <p>We then create an instance of the EventEmitter class:</p>
 
-          const emitter = new EventEmitter();
+          <figure>
+            <pre class="prettyprint">const emitter = new EventEmitter();</pre>
+            <figcaption>Fig 02-032</figcaption>
+          </figure>
 
-          The emit method raises an event:
+          <p>The emit method raises an event:</p>
 
-          emitter.emit('messageLogged');
+          <figure>
+            <pre class="prettyprint">emitter.emit('messageLogged');</pre>
+            <figcaption>Fig 02-033</figcaption>
+          </figure>
 
-          In order to respond to the event being raised we need to register a listener:
+          <p>In order to respond to the event being raised we need to register a listener:</p>
 
-          emitter.on('messageLogged', function() {
-          console.log('Listener called');
-          });
+          <figure>
+          <pre class="prettyprint">emitter.on('messageLogged', function() {
+                      console.log('Listener called');
+                    });</pre>
+            <figcaption>Fig 02-034</figcaption>
+          </figure>
 
-          the on method takes two arguments - the name of the event to listen for and a callback function.
+          <p>the on method takes two arguments - the name of the event to listen for and a callback function.</p>
 
-          The order in which you define the emitter and the listener is important. If you register the
+          <p>The order in which you define the emitter and the listener is important. If you register the
           listener after calling the emit method it will not pick up the event. This is because when we call
-          the emit method it iterates over all the registered listeners and calls them synchronously.
+          the emit method it iterates over all the registered listeners and calls them synchronously.</p>
 
-          20 Event Arguments
-          ------------------
+          <h2>20 Event Arguments</h2>
 
-          Often when you raise an event you also want to send some information about that event. As an example,
+          <p>Often when you raise an event you also want to send some information about that event. As an example,
           let's assume that when we log a message our remote login service might generate an id for that message.
           Perhaps we want to return that id to the client or it may give us a Url to access that log message
-          directly. When raising an event, we can add additional arguments, referred to as event arguments:
+          directly. When raising an event, we can add additional arguments, referred to as event arguments:</p>
 
-          emitter.emit('messageLogged', 1, 'url');
+          <figure>
+            <pre class="prettyprint">emitter.emit('messageLogged', 1, 'url');</pre>
+            <figcaption>Fig 02-035</figcaption>
+          </figure>
 
-          The magic values that we supply above are a bit confusing. A better practice is to encapsulate the
-          values inside an object:
+          <p>The magic values that we supply above are a bit confusing. A better practice is to encapsulate the
+          values inside an object:</p>
 
-          emitter.emit('messageLogged', {id: 1, url: 'http://' });
+          <figure>
+            <pre class="prettyprint">emitter.emit('messageLogged', {id: 1, url: 'http://' });</pre>
+            <figcaption>Fig 02-036</figcaption>
+          </figure>
 
-          When registering the listener the callback function can also recieve the event argument:
+          <p>When registering the listener the callback function can also recieve the event argument:</p>
 
-          emitter.on('messageLogged', function(arg) {
-          console.log('Listener called');
-          });
+          <figure>
+          <pre class="prettyprint">emitter.on('messageLogged', function(arg) {
+                      console.log('Listener called');
+                    });</pre>
+            <figcaption>Fig 02-037</figcaption>
+          </figure>
 
-          One last way to simplify the code is to use the ECMAScript 6 arrow function. An arrow functon allows
-          you to remove the function keyword and add an arrow =>:
+          <p>One last way to simplify the code is to use the ECMAScript 6 arrow function. An arrow functon allows
+          you to remove the function keyword and add an arrow =&gt;:</p>
 
+          <h2>21 Extending Event Emitter</h2>
 
-          21 Extending Event Emitter
-          --------------------------
-
-          In the real world it is quite rare that you would work with the EventEmitter directly. Instead you
+          <p>In the real world it is quite rare that you would work with the EventEmitter directly. Instead you
           normally create a class that has all the abilities of the EventEmitter and then you would use
-          that class in your code.
+          that class in your code.</p>
 
-          To explain open the 21-logger.js module where we are exporting a simple logger function called log
+          <p>To explain open the 21-logger.js module where we are exporting a simple logger function called log
           which writes the message to the console. After this we want to raise an event. Later in the app module
-          we will respond to that event.
+          we will respond to that event.</p>
 
-          We create a class in 21-logger.js called Logger that extends the EventEmitter class:
+          <p>We create a class in 21-logger.js called Logger that extends the EventEmitter class:</p>
 
-          class Logger extends EventEmitter {
+          <figure>
+            <pre class="prettyprint">class Logger extends EventEmitter {</pre>
+            <figcaption>Fig 02-038</figcaption>
+          </figure>
 
-          This gives the Logger class all the functionality that is defined in EventEmitter but we can also
+          <p>This gives the Logger class all the functionality that is defined in EventEmitter but we can also
           add additional functionality. When a function is defined in a class it is known as a method. Also,
-          the function keyword is not required.
+          the function keyword is not required.</p>
 
-          Instead of using the EventEmitter class in 21-logger.js we use an instance of the logger class
+          <p>Instead of using the EventEmitter class in 21-logger.js we use an instance of the logger class</p>
 
-          22 HTTP Module
-          --------------
-          One of the powerful building blocks of Node is the Http module that we use for creating networking
+          <h2>22 HTTP Module</h2>
+          <p>One of the powerful building blocks of Node is the Http module that we use for creating networking
           applications. For example, we can create a web server that listens for Http requests on a given
           port. With this we can easily create a backend service for our client applications - like a web
-          application that we build with React or Angular or a mobile application running on a mobile device.
+          application that we build with React or Angular or a mobile application running on a mobile device.</p>
 
-          In the real world we are not going to use the Http module to build a backend service for our
+          <p>In the real world we are not going to use the Http module to build a backend service for our
           application. The reason is that as we add more routes our code becomes complicated. Instead we
           use a framework called express which gives our application a clean structure to handle various
-          routes. Internally the express framework is built on top of the Http module in Node.
+          routes. Internally the express framework is built on top of the Http module in Node.</p>
 
-          23 Recap
-          --------
+          <h2>23 Recap</h2>
 
-          Node Core
-          So, in this section, you learned that:
-          - We don’t have the window object in Node.
-          - The global object in Node is “global”.
-          - Unlike browser applications, variables we define are not added to the “global”
-          object.
-          - Every file in a Node application is a module. Node automatically wraps the code
-          in each file with an IIFE (Immediately-invoked Function Expression) to create
-          scope. So, variables and functions defined in one file are only scoped to that file
-          and not visible to other files unless explicitly exported.
-          - To export a variable or function from a module, you need to add them to
-          module.exports:
-          module.exports.sayHello = sayHello;
-          - To load a module, use the require function. This function returns the
-          module.exports object exported from the target module:
-          const logger = require(‘./logger’);
-          - Node has a few built-in modules that enable us to work with the file system, path
-          objects, network, operating system, etc.
-          - EventEmitter is one of the core classes in Node that allows us to raise (emit) and
-          handle events. Several built-in classes in Node derive from EventEmitter.
-          - To create a class with the ability to raise events, we should extend EventEmitter:
-          class Logger extends EventEmitter {
-          }
+          <h3>Node Core</h3>
+          <p>So, in this section, you learned that:</p>
+          <ul>
+            <li>We don’t have the window object in Node.</li>
+            <li>The global object in Node is “global”.</li>
+            <li>Unlike browser applications, variables we define are not added to the “global”
+              object.</li>
+            <li>Every file in a Node application is a module. Node automatically wraps the code
+              in each file with an IIFE (Immediately-invoked Function Expression) to create
+              scope. So, variables and functions defined in one file are only scoped to that file
+              and not visible to other files unless explicitly exported.</li>
+            <li>To export a variable or function from a module, you need to add them to
+              module.exports: <pre class="prettyprint">module.exports.sayHello = sayHello;</pre></li>
+            <li>To load a module, use the require function. This function returns the
+              module.exports object exported from the target module:
+              <pre class="prettyprint">const logger = require(‘./logger’);</pre></li>
+            <li>Node has a few built-in modules that enable us to work with the file system, path
+              objects, network, operating system, etc.</li>
+            <li>EventEmitter is one of the core classes in Node that allows us to raise (emit) and
+              handle events. Several built-in classes in Node derive from EventEmitter.</li>
+            <li>To create a class with the ability to raise events, we should extend EventEmitter:
+              <pre class="prettyprint">class Logger extends EventEmitter { }</pre></li>
+          </ul>
         </div>
       </div>
     </div>
@@ -539,9 +557,9 @@ __dirname returns a path to the directory that contains that module.</pre>
 </template>
 
 <script>
-  export default {
-    name: 'TheCompleteNodejsCourse02NodeModuleSystem.vue'
-  }</script>
+export default {
+  name: 'TheCompleteNodejsCourse02NodeModuleSystem.vue'
+}</script>
 
 <style scoped>
 

@@ -100,11 +100,17 @@
 }
 
 sayHello('Mosh');
+          </pre>
             <figcaption>Fig 01-002</figcaption>
           </figure>
 
-          <p>Run the application by passing it to Node using the following terminal command:
-          node 06-your-first-node-program.js</p>
+          <p>Run the application by passing it to Node using the following terminal command:</p>
+
+
+          <figure>
+            <pre class="prettyprint">node 06-your-first-node-program.js</pre>
+            <figcaption>Fig 01-002a</figcaption>
+          </figure>
 
           <p>Node will give the file we specified to v8 for execution.</p>
 
