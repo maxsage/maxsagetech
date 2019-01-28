@@ -389,7 +389,7 @@ export default {
           <figure>
                     <pre class="prettyprint">new Vue({
     render: h =&gt; h(App)
-}).mount('#app');</pre>
+}).$mount('#app');</pre>
             <figcaption>Fig 03-023</figcaption>
           </figure>
           <p>The line of code, containing a the <code class="prettyprint">mount</code> chained function, tells Vue where

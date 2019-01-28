@@ -109,7 +109,8 @@
             like we did in the previous examples. With real Vue project we much more frequently make a collection of
             files - so many different files form one single application. Vue CLI aids us in this process.
           </p>
-          <p>So, with Vue CLI, we get the ability to instead make many different files each of which might have one
+          <p>So, with Vue CLI, we get the ability to instead make many different files each of which might
+            have one
             individual or distinct purpose inside of our application:
           </p>
           <figure>
