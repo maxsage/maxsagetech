@@ -106,7 +106,6 @@ sayHello('Mosh');
 
           <p>Run the application by passing it to Node using the following terminal command:</p>
 
-
           <figure>
             <pre class="prettyprint">node 06-your-first-node-program.js</pre>
             <figcaption>Fig 01-002a</figcaption>
