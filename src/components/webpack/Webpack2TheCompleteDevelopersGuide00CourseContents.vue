@@ -51,6 +51,32 @@
             of years. SST is still very popular and forms the vast majority of websites online. However
           as far as very dynamic web pages go we are definitely seeing a trend towards Single Page
           Applications.</p>
+          <p>We use Webpack because in Single Page Application world we are relying upon Javascript
+          code that is being executed on our user's browser to assemble the entire web application:
+          </p>
+          <figure>
+            <img src="./images/webpack2thecompletedevelopersguide/Fig01-004.png"/>
+            <figcaption>Fig 01-004</figcaption>
+          </figure>
+          <p>This results in a huge pile of Javascript that is being shipped down to our user's
+            browser - tens of thousands of lines of code. In the Server Side Templating
+            world there used to be very little Javascript code that we would send down to a
+            client because the only Javascript code we would need was, for example, would be
+            stuff to handle fancy events like button clicks, or animations etc.
+          </p>
+          <p>This change in the amount of Javascript in Single Page Applications starts to answer
+          the question as to why we need Webpack. In the next section we will look at what
+          Webpack does to make dealing with this tremendous amount of Javascript code easier.</p>
+          <h3>Javascript Modules</h3>
+          <p>In this section we will look at the type of problems that arise when we have a lot
+          of Javascript tied to a single page application and what Webpack does to solve these
+          problems. Imagine for a second that you have just got a job as an engineer to work on
+          a really large Javascript application. When you look at the code base you find that
+          they have tens of thousands of lines of code split between three different files:</p>
+          <figure>
+            <img src="./images/webpack2thecompletedevelopersguide/Fig02-001.png"/>
+            <figcaption>Fig 02-001</figcaption>
+          </figure>
         </div>
       </div>
     </div>
