@@ -22,6 +22,12 @@ import VuejsEssentials06NavigationwithVueRouter from './components/vuejs/VuejsEs
 import VuejsEssentials07DesignOfVuexModules from './components/vuejs/VuejsEssentials07DesignOfVuexModules.vue'
 import VuejsEssentials08HandlingImageUpload from './components/vuejs/VuejsEssentials08HandlingImageUpload.vue'
 
+import Webpack from './components/webpack/Webpack.vue'
+
+import WebpackRemoveAutomaticLoaderModuleNameExtension from './components/webpack/WebpackRemoveAutomaticLoaderModuleNameExtension.vue'
+
+import Webpack2TheCompleteDevelopersGuide00CourseContents from './components/webpack/Webpack2TheCompleteDevelopersGuide00CourseContents.vue'
+
 import WPF from './components/wpf/WPF.vue'
 
 import WPFDatabindingInDepth00CourseContents from './components/wpf/WPFDatabindingInDepth00CourseContents.vue'
@@ -194,7 +200,27 @@ export const routes = [
       'header-top': Header
     }
   },
-
+  {
+    path: '/webpack',
+    components: {
+      default: Webpack,
+      'header-top': Header
+    }
+  },
+  {
+    path: '/webpackremoveautomaticloadermodulenameextension',
+    components: {
+      default: WebpackRemoveAutomaticLoaderModuleNameExtension,
+      'header-top': Header
+    }
+  },
+  {
+    path: '/webpack2thecompletedevelopersguide-00-course-contents',
+    components: {
+      default: Webpack2TheCompleteDevelopersGuide00CourseContents,
+      'header-top': Header
+    }
+  },
   {
     path: '/wpf',
     components: {
