@@ -1,8 +1,8 @@
 <template>
   <div class="container">
+
     <router-view name="header-top"></router-view>
     <router-view>
-
     </router-view>
 
   </div>
@@ -13,8 +13,9 @@ import Header from './components/Header.vue'
 export default {
   components: {
     appHeader: Header
-  }
+  },
 }
+
 </script>
 
 <style>
@@ -30,7 +31,7 @@ export default {
 
   .terminal {
     font-size: small;
-    color: deepskyblue;
+    color: white;
     font-family: Consolas;
     background-color: black;
     padding: 2px 5px 4px 5px;

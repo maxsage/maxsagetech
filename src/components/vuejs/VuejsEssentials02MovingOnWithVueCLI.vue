@@ -67,12 +67,12 @@
           </p>
           <h3>Generating a New Project</h3>
           <p>In the last section we talked about how we're going to make use of a tool called <a
-            href="https://cli.vuejs.org/" class="prettyprint">Vue CLI</a> to generate a new project boilerplate. We're
+            href="https://cli.vuejs.org/">Vue CLI</a> to generate a new project boilerplate. We're
             using this tool because setting up your own Vue project from scratch takes a little bit of time and it's not
             the best thing to deal with when you're first trying to start learning Vue.
           </p>
           <p>So we're going to install Vue CLI at our terminal and then we'll use it to generate a new project. To
-            install Vue CLI enter <span class="terminal">npm install -g @vue/cli</span> in a terminal window.</p>
+            install Vue CLI enter <code class="language-">npm install -g @vue/cli</code> in a terminal window.</p>
           <p>Now while that's being installed I want to show you the documentation for Vue CLI very quickly. It can be
             found on <a target="_blank" href="https://github.com/vuejs/vue-cli">GitHub</a>. There's not a tremendous
             amount of documentation on here because Vue CLI is still in active development right now. Towards the bottom
@@ -82,15 +82,16 @@
           </p>
           <p>Back in our terminal we can now use this tool to generate a new project so I'm going to make sure I am
             inside of a directory where I want to create a workspace folder of sorts. For this application I created a
-            directory at <span class="terminal">C:\DevelopmentTutorials\video-browser</span>. Inside of this directory
-            I'm going to run the following command: <span
-              class="terminal">vue create video-browser</span>. When you run this command you might be prompted to
+            directory at <code class="language-">C:\DevelopmentTutorials\video-browser</code>. Inside of this
+            directory
+            I'm going to run the following command: <code
+              class="language-">vue create video-browser</code>. When you run this command you might be prompted to
             answer several questions about the new project you are configuring. If you do just select any of the default
             options that are presented.</p>
           <h3>Why Use Vue CLI?</h3>
           <p>In the previous section we made use of Vue CLI to generate a new project. It looks like my installation is
             now complete and I'm given the directions to change directories to video-browser and run the following
-            command <span class="terminal">npm run serve</span>
+            command <code class="language-">npm run serve</code>
           <p>Let's have a quick discussion about why we are making use of the Vue CLI project generator - why do we need
             all this infrastructure and preconfigured stuff anyway?
           </p>
@@ -164,16 +165,16 @@
             of Vue CLI.
           </p>
           <p>Back in the terminal change directory into the newly created video browser directory and start the project
-            by running the <span class="terminal">npm run serve</span> command.
+            by running the <code class="language-">npm run serve</code> command.
           </p>
           <p>Throughout the rest of this course we're going to be using this command to start our project up. Now when
             you run that command you'll see some information about starting up the development server. The <code
-              class="prettyprint">npm run serve</code> command starts up a local server that starts up Babel and
+              class="language-">npm run serve</code> command starts up a local server that starts up Babel and
             webpack, takes all of our project files and bundles them together into one single Javascript file where it
             can then be served up into the browser. The command will also open a browser window pointing to the
             following address:
           </p>
-          <pre class="prettyprint">localhost:8080</pre>
+          <pre><code class="language-">localhost:8080</code></pre>
           <p>This is where our project is hosted.</p>
           <p>You'll also notice that there is a little bit of default content already visible on the screen here.
           </p>
@@ -197,7 +198,7 @@
           <p>Underneath that you'll find the <span class="filename">public</span> directory inside which is a very
             important file - index.html:</p>
           <figure>
-                    <pre class="prettyprint">&lt;!DOCTYPE html&gt;
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
   &lt;head&gt;
     &lt;meta charset=&quot;utf-8&quot;&gt;
@@ -213,15 +214,14 @@
     &lt;div id=&quot;app&quot;&gt;&lt;/div&gt;
     &lt;!-- built files will be auto injected --&gt;
   &lt;/body&gt;
-&lt;/html&gt;</pre>
+&lt;/html&gt;</code></pre>
             <figcaption>Fig 02-008A</figcaption>
           </figure>
           <p>Anytime someone tries to visit our application by coming to our server in their web browser the <span
             class="filename">index.html</span> file is going to be loaded up automatically. In the Html you should see a
-            <code
-              class="prettyprint">div</code> with an <code class="prettyprint">id</code> of <code
-              class="prettyprint">app</code> just like the code we wrote back in CodePen. This <code
-              class="prettyprint">div</code> represents the root location of where our app is going to be booted up.
+            <code class="language-html">div</code> with an <code class="language-html">id</code> of <code
+              class="language-">app</code> just like the code we wrote back in CodePen. This <code
+              class="language-">div</code> represents the root location of where our app is going to be booted up.
           </p>
           <p>Then inside the <span class="filename">src</span> directory you will find a bunch of different files and
             folders that are related to the actual implementation of our Vue app. We're gong to be spending the vast
@@ -229,10 +229,11 @@
           </p>
           <p>Let's start off by looking at the <span class="filename">main.js</span> file. Inside of this file you'll
             find some very plain Javascript code and towards the bottom you'll find a function call to create a new Vue
-            instance. You'll notice that there's also a <code class="prettyprint">render</code> option and a <code
-              class="prettyprint">$mount</code> function call as well:</p>
+            instance. You'll notice that there's also a <code class="language-javascript">render</code> option and a
+            <code
+              class="language-javascript">$mount</code> function call as well:</p>
           <figure>
-<pre class="prettyprint">import Vue from 'vue';
+<pre><code class="language-javascript">import Vue from 'vue';
 import App from './App';
 
 Vue.config.productionTip = false
@@ -241,7 +242,7 @@ new Vue({
     el: '#app',
     render: h =&gt; h(App)
 }).$mount('#app')
-</pre>
+</code></pre>
             <figcaption>Fig 02-008B</figcaption>
           </figure>
           <p>We'll just ignore those two little pieces of code for right now but we'll definitely come back to those
@@ -253,7 +254,7 @@ new Vue({
             have a look:
           </p>
           <figure>
-<pre class="prettyprint">&lt;template&gt;
+<pre><code class="language-html">&lt;template&gt;
   &lt;div id=&quot;app&quot;&gt;
     &lt;img src=&quot;./assets/logo.png&quot;&gt;
     &lt;HelloWorld msg=&quot;Welcome to Your Vue.js App&quot;/&gt;
@@ -280,11 +281,11 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
-&lt;/style&gt;</pre>
+&lt;/style&gt;</code></pre>
             <figcaption>Fig 02-009</figcaption>
           </figure>
-          <p>All this Html is nested inside of a <code class="prettyprint">template</code> tag and then below all that
-            Html you'll find what looks like another piece of Html - a <code class="prettyprint">script</code> tag
+          <p>All this Html is nested inside of a <code class="language-html">template</code> tag and then below all that
+            Html you'll find what looks like another piece of Html - a <code class="language-html">script</code> tag
             inside which there is some Javascript code. So I don't know about you but this definitely looks like one
             weird little file - let's talk about what's going on here.</p>
           <h3>Vue Files</h3>
@@ -292,8 +293,8 @@ export default {
             us automatically when we made our new project. In particular we opened up the <span
               class="filename">App.vue</span> file and inside of there we saw some very interesting looking syntax.
           </p>
-          <p>So at the top we see a <code class="prettyprint">template</code> tag and a the bottom we see a <code
-            class="prettyprint">script</code> tag. So let's talk about what's going here.
+          <p>So at the top we see a <code class="language-html">template</code> tag and a the bottom we see a <code
+            class="class=language-html">script</code> tag. So let's talk about what's going here.
           </p>
           <p>First off, a quick reminder of what we were doing previously over inside of CodePen:</p>
           <figure>
@@ -316,7 +317,7 @@ export default {
           <p>However, what you're seeing inside of the App.vue file is yet another way of structuring your Vue code:
           </p>
           <figure>
-                    <pre class="prettyprint">&lt;template&gt;
+<pre><code class="language-html">&lt;template&gt;
   &lt;div id=&quot;app&quot;&gt;
     &lt;img src=&quot;./assets/logo.png&quot;&gt;
     &lt;HelloWorld msg=&quot;Welcome to Your Vue.js App&quot;/&gt;
@@ -343,8 +344,7 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
-&lt;/style&gt;
-                    </pre>
+&lt;/style&gt;</code></pre>
             <figcaption>Fig 02-012</figcaption>
           </figure>
 
@@ -431,57 +431,59 @@ export default {
             characters in here very quickly and then I'm just going to delete a tiny little bit of code leaving me with:
           </p>
           <figure>
-                    <pre class="prettyprint">var render = function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-        \&quot;div\&quot;,
-            { attrs: { id: \&quot;app\&quot; } },
-                [
-                      _c(\&quot;img\&quot;, { attrs: { src: __webpack_require__(/*! ./assets/logo.png */ \&quot;./src/assets/logo.png\&quot;) } }),\n
-                      _c(\&quot;HelloWorld\&quot;, { attrs: { msg: \&quot;Wel to Your Vue.js App\&quot; } })
-                ],
-                1
-            )
-        }</pre>
+<pre><code class="language-javascript">var render = function() {
+var _vm = this
+var _h = _vm.$createElement
+var _c = _vm._self._c || _h
+return _c(
+    \&quot;div\&quot;,
+        { attrs: { id: \&quot;app\&quot; } },
+            [
+                  _c(\&quot;img\&quot;, { attrs: { src: __webpack_require__(/*! ./assets/logo.png */ \&quot;./src/assets/logo.png\&quot;) } }),\n
+                  _c(\&quot;HelloWorld\&quot;, { attrs: { msg: \&quot;Wel to Your Vue.js App\&quot; } })
+            ],
+            1
+        )
+}</code></pre>
             <figcaption>Fig 02-016</figcaption>
           </figure>
           <p>So, like I said, I just wanted to very quickly go through that change so we can see what that file gets
             turned into.
           </p>
-          <p>The <code class="prettyprint">render</code> function in Fig 02-016 is what our <span class="filename">App
+          <p>The <code class="language-javascript">render</code> function in Fig 02-016 is what our <span
+            class="filename">App
             .vue</span> file was converted into before it got sent down to our browser. Fig 02-016 shows the actual code
             that is running inside of your browser that represents that Vue file.
           </p>
           <p>Now, before we walk through the code inside of here too deeply let's go back over to the <span
-            class="filename">App.vue</span> file. Inside the <code class="prettyprint">template</code> you'll notice
+            class="filename">App.vue</span> file. Inside the <code class="language-html">template</code> you'll
+            notice
             that we are creating a <code
-              class="prettyprint">div</code> with an <code class="prettyprint">id</code> of <code
-              class="prettyprint">app</code> and then inside there we've got an <code
-              class="prettyprint">image</code> tag with a <code class="prettyprint">src</code> of <span
-              class="filename">logo.png</span>. Then we have a <code class="prettyprint"> HelloWorld</code> tag that has
-            a message of "Welcome to your Vue.js App":
+              class="language-html">div</code> with an <code class="language-html">id</code> of <code
+              class="language-javascript">app</code> and then inside there we've got an <code
+              class="html">image</code> tag with a <code class="language-html">src</code> of <span
+              class="filename">logo.png</span>. Then we have a <code class="language-html"> HelloWorld</code> tag that
+            has a message of "Welcome to your Vue.js App":
           </p>
           <figure>
-                    <pre class="prettyprint">&lt;div id=&quot;app&quot;&gt;
-    &lt;img src=&quot;./assets/logo.png&quot;&gt;
-    &lt;HelloWorld msg=&quot;Wel to Your Vue.js App&quot;/&gt;
-  &lt;/div&gt;</pre>
+<pre><code class="language-html">&lt;div id=&quot;app&quot;&gt;
+  &lt;img src=&quot;./assets/logo.png&quot;&gt;
+  &lt;HelloWorld msg=&quot;Wel to Your Vue.js App&quot;/&gt;
+&lt;/div&gt;</code></pre>
             <figcaption>Fig 02-017</figcaption>
           </figure>
           <p>Now that we have a better understanding of the template let's go back over to the file we just created.
             Inside this file you'll notice a couple of strange variable declarations at the top:
           </p>
           <figure>
-                    <pre class="prettyprint">var _vm = this
+<pre><code class="language-javascript">var _vm = this
 var _h = _vm.$createElement
-var _c = _vm._self._c || _h</pre>
+var _c = _vm._self._c || _h</code></pre>
             <figcaption>Fig 02-018</figcaption>
           </figure>
           <p>Ignore those for a second and checkout the function call to _c:</p>
           <figure>
-                    <pre class="prettyprint">return _c(
+<pre><code class="language-javascript">return _c(
 \&quot;div\&quot;,
     { attrs: { id: \&quot;app\&quot; } },
         [
@@ -490,20 +492,22 @@ var _c = _vm._self._c || _h</pre>
         ],
         1
     )
-}</pre>
+}</code></pre>
             <figcaption>Fig 02-019</figcaption>
           </figure>
-          <p>Inside this we have a first argument of <code class="prettyprint">div</code> which represents our top level
-            <code class="prettyprint">div</code> tag inside of our template. Then the second argument is an object that
-            says that <code class="prettyprint">div</code> should have an <code
-              class="prettyprint">id</code> of <code class="prettyprint">app</code>. The third argument is a list of
-            other elements that are contained within that <code class="prettyprint">div</code>.
+          <p>Inside this we have a first argument of <code class="language-html">div</code> which represents our top
+            level
+            <code class="language-html">div</code> tag inside of our template. Then the second argument is an object
+            that
+            says that <code class="language-html">div</code> should have an <code
+              class="language-html">id</code> of <code class="language-html">app</code>. The third argument is a list of
+            other elements that are contained within that <code class="language-html">div</code>.
           </p>
-          <p>The first element that exists inside the <code class="prettyprint">div</code> is an <code
-            class="prettyprint">img</code> tag that has a <code class="prettyprint">src</code> of <span
+          <p>The first element that exists inside the <code class="language-html">div</code> is an <code
+            class="language-html">img</code> tag that has a <code class="language-html">src</code> of <span
             class="filename">logo.png</span>
           </p>
-          <p>The second element is that <code class="prettyprint">HelloWorld</code> tag that has a message property of
+          <p>The second element is that <code class="language-html">HelloWorld</code> tag that has a message property of
             "Welcome to your Vue .js App".
           </p>
           <p>So even though this syntax still might look very strange - it might not look like any Vue code we've
@@ -513,8 +517,9 @@ var _c = _vm._self._c || _h</pre>
             translated into this other form and then executed.
           </p>
           <p>So really the idea of making use of these Vue files that have the <code
-            class="prettyprint">template</code> tag, the <code class="prettyprint">script</code> tag and the <code
-            class="prettyprint">style</code> tag is really just to make your life and my life as developers a little bit
+            class="language-html">template</code> tag, the <code class="language-html">script</code> tag and the <code
+            class="language-html">style</code> tag is really just to make your life and my life as developers a little
+            bit
             more easy and straightforward. That's the only purpose of it - it's just to help us organize our code inside
             of these Vue files.
           </p>
@@ -578,7 +583,7 @@ var _c = _vm._self._c || _h</pre>
             these different components and controls how data flows between them.
           </p>
           <p>It's extremely common to always have a single component called <code
-            class="prettyprint">app</code> in a Vue application and it's always going to serve that same purpose of
+            class="language-html">app</code> in a Vue application and it's always going to serve that same purpose of
             being the brains of your app.
           </p>
           <p>The last thing I want to show you, with all these component names in mind, is a quick diagram of how they
@@ -612,11 +617,18 @@ var _c = _vm._self._c || _h</pre>
 </template>
 
 <script>
+import Prism from 'vue-prism-component';
 export default {
-  name: 'VuejsEssentials02MovingOnWithVueCLI.vue'
+  name: 'VuejsEssentials02MovingOnWithVueCLI.vue',
+  components: {
+    Prism
+  }
 }
 </script>
 
 <style scoped>
+  img {
+    max-width: 100%;
+  }
 
 </style>

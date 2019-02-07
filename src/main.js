@@ -1,7 +1,12 @@
 import Vue from 'vue'
+import VuePrism from 'vue-prism'
 import VueRouter from 'vue-router'
 import App from './App.vue'
 import { routes } from './routes'
+
+Vue.use(VuePrism)
+
+//import './prism.css'
 
 Vue.use(VueRouter)
 

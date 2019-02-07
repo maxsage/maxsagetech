@@ -14,7 +14,10 @@
   "dependencies": {
     "connect-history-api-fallback": "^1.5.0",
     "express": "^4.16.3",
+    "prismjs": "^1.15.0",
     "vue": "^2.5.2",
+    "vue-prism": "^1.0.5",
+    "vue-prism-component": "^1.1.1",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {

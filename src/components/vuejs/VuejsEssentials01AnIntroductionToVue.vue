@@ -33,8 +33,8 @@
           </p>
           <p>Add the following code to the HTML tab:</p>
           <figure>
-                    <pre class="prettyprint">&lt;div id=&quot;root&quot; @mousemove=&quot;onMouseMove&quot;&gt;
-&lt;/div&gt;</pre>
+<pre><code class="language-html">&lt;div id=&quot;root&quot; @mousemove=&quot;onMouseMove&quot;&gt;
+&lt;/div&gt;</code></pre>
             <figcaption>Fig 01-001</figcaption>
           </figure>
           <p>Note the @ symbol prefixing the mousemove attribute, the fact that the mousemove attribute is not
@@ -44,18 +44,18 @@
             same for the second div but specify a style of styleTwo instead:
           </p>
           <figure>
-                    <pre class="prettyprint">&lt;div id=&quot;root&quot; @mousemove=&quot;onMouseMove&quot;&gt;
+                    <pre><code class="language-html">&lt;div id=&quot;root&quot; @mousemove=&quot;onMouseMove&quot;&gt;
   &lt;div :style=&quot;styleOne&quot;&gt;&lt;/div&gt;
   &lt;div :style=&quot;styleTwo&quot;&gt;&lt;/div&gt;
-&lt;/div&gt;</pre>
+&lt;/div&gt;</code></pre>
             <figcaption>Fig 01-002</figcaption>
           </figure>
           <p>That's all the HTML we will need. Open the JS tab and declare a brand new Vue application passing it an
             empty object:
           </p>
           <figure>
-                    <pre class="prettyprint">new Vue({
-});</pre>
+<pre><code class="language-javascript">new Vue({
+});</code></pre>
             <figcaption>Fig 01-003</figcaption>
           </figure>
           <p>Next we will add in some configuration to the object.</p>
@@ -63,34 +63,32 @@
             inside of our HTML structure:
           </p>
           <figure>
-                    <pre class="prettyprint">new Vue({
+<pre><code class="language-javascript">new Vue({
   el: '#root',
-
-});</pre>
+});</code></pre>
             <figcaption>Fig 01-004</figcaption>
           </figure>
           <p>Next we will initialize the data property of our application (we will talk a lot about data in future
             modules):
           </p>
           <figure>
-                    <pre class="prettyprint">new Vue({
+<pre><code class="language-javascript">new Vue({
   el: '#root',
   data: { styleOne: {}, styleTwo: {} },
-});</pre>
+});</code></pre>
             <figcaption>Fig 01-005</figcaption>
           </figure>
           <p>data is an object that contains two empty objects - styleOne and styleTwo.</p>
           <p>Next add the methods option:</p>
           <figure>
-                    <pre class="prettyprint">new Vue({
+<pre><code class="language-javascript">new Vue({
   el: '#root',
   data: { styleOne: {}, styleTwo: {} },
   methods: {
     onMouseMove(event) {
-
     }
   }
-});</pre>
+});</code></pre>
             <figcaption>Fig 01-005</figcaption>
           </figure>
           <p>methods is also an empty object that is going to have one function tied to it called onMouseMove which will
@@ -98,7 +96,7 @@
           </p>
           <p>Inside the function body add the following code:</p>
           <figure>
-                    <pre class="prettyprint">new Vue({
+<pre><code class="language-javascript">new Vue({
   el: '#root',
   data: { styleOne: {}, styleTwo: {} },
   methods: {
@@ -107,13 +105,13 @@
       this.styleTwo = transform(event.clientX / event.clientY);
     }
   }
-});</pre>
+});</code></pre>
             <figcaption>Fig 01-006</figcaption>
           </figure>
           <p>Make sure you have the X and Y capitalized inside these statements.</p>
           <p>In the CSS tab add the following styling:</p>
           <figure>
-                    <pre class="prettyprint">#root {
+<pre><code class="language-css">#root {
   height: 100vh;
   width: 100vw;
 }
@@ -123,15 +121,14 @@
   height: 100%;
   width: 100%;
   box-shadow: 0 0 50px grey;
-}</pre>
+}</code></pre>
             <figcaption>Fig 01-007</figcaption>
           </figure>
-
           <p>Finally in Codepen click the Assets button and from the Patterns tab select a the wavy lines pattern (which
             will copy it to the clipboard). Back in the CSS tab paste the clipboard in after the box-shadow declaration:
           </p>
           <figure>
-                    <pre class="prettyprint">#root {
+<pre><code class="language-css">#root {
   height: 100vh;
   width: 100vw;
 }
@@ -142,7 +139,7 @@
   width: 100%;
   box-shadow: 0 0 50px grey;
   background-image: url('data:image/svg+xml,%3Csvg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;100&quot; height=&quot;18&quot; viewBox=&quot;0 0 100 18&quot;%3E%3Cpath fill=&quot;%239C92AC&quot; fill-opacity=&quot;0.4&quot; d=&quot;M61.82 18c3.47-1.45 6.86-3.78 11.3-7.34C78 6.76 80.34 5.1 83.87 3.42 88.56 1.16 93.75 0 100 0v6.16C98.76 6.05 97.43 6 96 6c-9.59 0-14.23 2.23-23.13 9.34-1.28 1.03-2.39 1.9-3.4 2.66h-7.65zm-23.64 0H22.52c-1-.76-2.1-1.63-3.4-2.66C11.57 9.3 7.08 6.78 0 6.16V0c6.25 0 11.44 1.16 16.14 3.42 3.53 1.7 5.87 3.35 10.73 7.24 4.45 3.56 7.84 5.9 11.31 7.34zM61.82 0h7.66a39.57 39.57 0 0 1-7.34 4.58C57.44 6.84 52.25 8 46 8S34.56 6.84 29.86 4.58A39.57 39.57 0 0 1 22.52 0h15.66C41.65 1.44 45.21 2 50 2c4.8 0 8.35-.56 11.82-2z&quot;%3E%3C/path%3E%3C/svg%3E');
-}</pre>
+}</code></pre>
             <figcaption>Fig 01-008</figcaption>
           </figure>
           <p>Now run the application and you will see an interesting visualization. This demonstrates the power of Vue -
@@ -221,7 +218,7 @@
           </p>
           <p>In Codepen add the following Html:</p>
           <figure>
-                    <pre class="prettyprint">&lt;div&gt;
+<pre><code class="language-html">&lt;div&gt;
   &lt;h3&gt;My Identicon Generator&lt;/h3&gt;
   &lt;div&gt;
     Input:
@@ -231,7 +228,7 @@
   &lt;div&gt;
     Output:
   &lt;/div&gt;
-&lt;/div&gt;</pre>
+&lt;/div&gt;</code></pre>
             <figcaption>Fig 01-011</figcaption>
           </figure>
           <p>This is our first Vue template (we will re-visit this Html later and add some more additional syntax that
@@ -243,9 +240,9 @@
             following code:
           </p>
           <figure>
-                    <pre class="prettyprint">new Vue({
+<pre><code class="language-javascript">new Vue({
 
-});</pre>
+});</code></pre>
             <figcaption>Fig 01-012</figcaption>
           </figure>
           <p>Inside of the object defined by the curly braces we are going to add in a bunch of different properties
@@ -254,20 +251,20 @@
             play. Understanding these properties and using them correctly is what will make you a professional Vue
             engineer.
           </p>
-          <p>The first property that we are going to make use of is the <code class="prettyprint">el</code> property
+          <p>The first property that we are going to make use of is the <code class="language-html">el</code> property
             which is short for the word element. :</p>
           <figure>
-                    <pre class="prettyprint">new Vue({
+<pre><code class="language-javascript">new Vue({
   el:
-});</pre>
+});</code></pre>
             <figcaption>Fig 01-013</figcaption>
           </figure>
-          <p>The <code class="prettyprint">el</code> property ties one Vue instance to one Vue template that has been
-            defined in our application. To achieve this add an <code class="prettyprint">id</code> attribute to the root
-            <code class="prettyprint">div</code> in your Vue template:
+          <p>The <code class="language-">el</code> property ties one Vue instance to one Vue template that has been
+            defined in our application. To achieve this add an <code class="language-">id</code> attribute to the root
+            <code class="language-">div</code> in your Vue template:
           </p>
           <figure>
-                    <pre class="prettyprint">&lt;div id=&quot;app&quot;&gt;
+<pre><code class="language-html">&lt;div id=&quot;app&quot;&gt;
   &lt;h3&gt;My Identicon Generator&lt;/h3&gt;
   &lt;div&gt;
     Input:
@@ -277,14 +274,14 @@
   &lt;div&gt;
     Output:
   &lt;/div&gt;
-&lt;/div&gt;</pre>
+&lt;/div&gt;</code></pre>
             <figcaption>Fig 01-014</figcaption>
           </figure>
           <p>Now update the Vue instance's el: property to point to this div using the id:</p>
           <figure>
-                    <pre class="prettyprint">new Vue({
+<pre><code class="language-javascript">new Vue({
   el:  '#app'
-});</pre>
+});</code></pre>
             <figcaption>Fig 01-015</figcaption>
           </figure>
           <p>The #app we supplied provides a DOM Query selector to our Vue instance that tell's it exactly where it's
@@ -292,7 +289,7 @@
             application.
           </p>
           <h3>Step by Step Implementation</h3>
-          <p>In the last section we defined our Vue instance and then provided an <code class="prettyprint">el</code>
+          <p>In the last section we defined our Vue instance and then provided an <code class="language-">el</code>
             property that told our Vue instance what area of the DOM it was responsible for.
           </p>
           <p>We will see change inside of our Html template only as we start to add code to our Vue instance.
@@ -328,12 +325,12 @@
             enters some text. First the method:
           </p>
           <figure>
-                    <pre class="prettyprint">new Vue({
+<pre><code class="language-javascript">new Vue({
   el:  '#app',
   methods: {
 
   }
-});</pre>
+});</code></pre>
             <figcaption>Fig 01-016</figcaption>
           </figure>
           <p>Methods is going to have an object tied to it. Right now there's just one method we care about which is the
@@ -344,64 +341,64 @@
           <p>So let's begin by implementing this method that's going to be called anytime a user enters some text.
           </p>
           <figure>
-                    <pre class="prettyprint">new Vue({
+<pre><code class="language-javascript">new Vue({
   el:  &apos;#app&apos;,
   methods: {
     onInput: function() {
       console.log(&apos;Someone typed something&apos;);
     }
   }
-});</pre>
+});</code></pre>
             <figcaption>Fig 01-017</figcaption>
           </figure>
-          <p>It is not mandatory for the function name to be <code class="prettyprint">onInput</code>, it just makes it
+          <p>It is not mandatory for the function name to be <code class="language-">onInput</code>, it just makes it
             clear that this function will be called anytime the user enters some text. Inside the function we write a
             message to the console. View the console in Chrome. When you type in the input text field you will note that
             you don't see anything written to the console.
           </p>
-          <p>This is because even though we've defined a method called <code class="prettyprint">onInput</code> we have
+          <p>This is because even though we've defined a method called <code class="language-">onInput</code> we have
             not instructed our Vue instance or our Vue template that we want our method to be called when a user enters
             text into the input.
           </p>
           <h3>Defining Vue Directives</h3>
           <p>In the last section we defined our first method inside the methods object inside our Vue instance. We
-            defined a function called <code class="prettyprint">onInput</code> that hopefully will be executed anytime a
+            defined a function called <code class="language-">onInput</code> that hopefully will be executed anytime a
             user enters some text into the input.
           </p>
           <p>We will add a Vue directive to the input field to hook it up to our <code
-            class="prettyprint">onInput</code> method:</p>
+            class="language-">onInput</code> method:</p>
           <figure>
-            <pre class="prettyprint">&lt;input v-on:input=&quot;onInput&quot; /&gt;</pre>
+<pre><code class="language-html">&lt;input v-on:input=&quot;onInput&quot; /&gt;</code></pre>
             <figcaption>Fig 01-018</figcaption>
           </figure>
           <p>If we now enter some text into the input we see messages in the console.</p>
           <p>The above code is an example of a Vue directive. A directive is a piece of template syntax inside a view
             that somehow enhances the behavior of otherwise normal HTML code.
           </p>
-          <p>So behind the scenes when our instance first boots up it looks at the <code class="prettyprint">el:</code>
+          <p>So behind the scenes when our instance first boots up it looks at the <code class="language-">el:</code>
             property and, as we said previously, it tries to find some element inside the DOM with an <code
-              class="prettyprint">id</code> of <code class="prettyprint">app</code> - in this example it finds the root
-            div has this <code class="prettyprint">id</code>, so it scans over all of the Html contained in the <code
-              class="prettyprint">div</code> looking for any directives like the one we just added.</p>
+              class="language-">id</code> of <code class="language-">app</code> - in this example it finds the root
+            div has this <code class="language-">id</code>, so it scans over all of the Html contained in the <code
+              class="language-">div</code> looking for any directives like the one we just added.</p>
           <p>When it finds a directive it performs a couple of additional steps to parse the directive and figure out
             how to correctly process it. In our case we have to find a directive that sets up an event handler.
           </p>
           <p>On the left hand-side of the Vue directive in this statement:</p>
           <figure>
-            <pre class="prettyprint"> &lt;input v-on:input=&quot;onInput&quot; /&gt;</pre>
+<pre><code class="language-"> &lt;input v-on:input=&quot;onInput&quot; /&gt;</code></pre>
             <figcaption>Fig 01-019</figcaption>
           </figure>
-          <p><code class="prettyprint">v-on</code> means we are trying to define an event handler. We then place a colon
-            and then the name of the event that we want to watch for - in this case <code class="prettyprint">
+          <p><code class="language-">v-on</code> means we are trying to define an event handler. We then place a colon
+            and then the name of the event that we want to watch for - in this case <code class="language-">
               input</code>. So any time a user enters input into this input tag Vue is going to attempt to do something
             for us. The thing that it actually does is defined to the right of the equals sign - in our case we call the
-            <code class="prettyprint">onInput</code> method.</p>
+            <code class="language-">onInput</code> method.</p>
           <p>The event handler directive is one of the more straightforward Vue directives but over time we will start
             to see some more complicated directives.
           </p>
           <h3>Retrieving Event Information</h3>
           <p>In the last section we used a Vue directive to tie an event that occurred to our text input to the <code
-            class="prettyprint">onInput</code> method that we defined inside of our Vue instance.
+            class="language-">onInput</code> method that we defined inside of our Vue instance.
           </p>
           <p>Like I said previously Vue directives are one of the more complicated parts of Vue - which is why, many
             times throughout this course, we are going to review how they work.
@@ -409,7 +406,7 @@
           <p>Now we have the ability to run a function anytime the user types in this input we need to move to our next
             step which is to somehow get the text that the user entered.
           </p>
-          <p>To do this we are going to use our <code class="prettyprint">onInput</code> function which gets called with
+          <p>To do this we are going to use our <code class="language-">onInput</code> function which gets called with
             a single argument that we usually refer to as the event object. This is an object that contains a bunch of
             different information about the event that just occurred - in our case an input event. The event object has
             the actual text that the user entered so we can make use of that argument to figure out exactly what text
@@ -417,23 +414,23 @@
           </p>
           <p>Inside the methods object in the Vue instance find the onInput function and reference the single argument
             that is provided to it - like I just said we usually refer to this as the event object. The event object has
-            a property called <code class="prettyprint">target.value</code> and that will be a reference to the text
+            a property called <code class="language-">target.value</code> and that will be a reference to the text
             that the user entered. For the moment let's just write that value to the console:
           </p>
           <figure>
-                    <pre class="prettyprint">new Vue({
+<pre><code class="language-javascript">new Vue({
   el:  '#app',
   methods: {
     onInput: function() {
       console.log(event.target.value);
     }
   }
-});</pre>
+});</code></pre>
             <figcaption>Fig 01-020</figcaption>
           </figure>
-          <p><code class="prettyprint">event</code> is a reference to the event that just occurred, <code
-            class="prettyprint">target</code> is a reference to the Html element that just had the event applied to it
-            and then <code class="prettyprint">value</code> is a reference to the current value of that text input.
+          <p><code class="language-">event</code> is a reference to the event that just occurred, <code
+            class="language-">target</code> is a reference to the Html element that just had the event applied to it
+            and then <code class="language-">value</code> is a reference to the current value of that text input.
           </p>
           <p>So if you now enter some text into the input field you should see it appearing over in the console.
           </p>
@@ -577,7 +574,7 @@
             1 - "If user enters text, update textInput". So we update textInput:
           </p>
           <figure>
-            <pre class="prettyprint">textInput = &quot;abcd&quot;</pre>
+<pre><code class="language-javascript">textInput = &quot;abcd&quot;</code></pre>
             <figcaption>Fig 01-022</figcaption>
           </figure>
           <p>And then we look at the other rules that are listed. Rule number 2 - "If template is rendered, calculate
@@ -641,7 +638,7 @@
             starting ingredients, of sorts, are inside our application.
           </p>
           <p>Next, you and I are going to define a couple of different methods. So far we only defined one method - the
-            <code class="prettyprint">onInput</code> method - but the purpose of the method's property is to define a
+            <code class="language-">onInput</code> method - but the purpose of the method's property is to define a
             bunch of functions that are supposed to somehow update our data. So all the functions you're going to see on
             methods are going to describe how we might update the data inside of our application. Looking at our current
             application that definitely matches up.
@@ -685,19 +682,19 @@
             methods object to remind me of it's purpose:
           </p>
           <figure>
-                    <pre class="prettyprint">new Vue({
+<pre><code class="language-javascript">new Vue({
   el:  '#app',
   methods: { // Use these function to change data
     onInput: function() {
       console.log(event.target.value);
     }
   }
-});</pre>
+});</code></pre>
             <figcaption>Fig 01-026</figcaption>
           </figure>
           <p>Next I will define the data and computed properties with comments to describe their purpose:</p>
           <figure>
-                    <pre class="prettyprint">new Vue({
+<pre><code class="language-javascript">new Vue({
   el:  '#app',
   data: { // Initialize our list of 'ingredients'
 
@@ -710,7 +707,7 @@
       console.log(event.target.value);
     }
   }
-});</pre>
+});</code></pre>
             <figcaption>Fig 01-027</figcaption>
           </figure>
           <p>Now one thing that might be a little bit misleading here is that with the methods property we have clearly
@@ -720,9 +717,9 @@
             property values. As an example we could initialize a textInput property like so:
           </p>
           <figure>
-                    <pre class="prettyprint">  data: { // Initialize our list of 'ingredients'
+<pre><code class="language-javascript">  data: { // Initialize our list of 'ingredients'
     textInput: ''
-  },</pre>
+},</code></pre>
             <figcaption>Fig 01-028</figcaption>
           </figure>
           <p>So, again, with data we define simple key value pairs that have say strings or numbers or arrays or
@@ -736,76 +733,76 @@
           <h3>Updated Data Values</h3>
           <p>In the last section we added in our data property and our computed property. We also added in some comments
             to describe their purpose inside of this Vue instance. In this section we're going to go back to our <code
-              class="prettyprint">onInput</code> function inside of the methods object.
+              class="language-">onInput</code> function inside of the methods object.
           </p>
           <p>Remember all of the functions inside of methods are intended to somehow update our data and anytime we
             updated our data it's going to cause our Vue instance to update the HTML that is displayed inside the
             browser.
           </p>
-          <p>At present we're just taking the value that the user types in - which is <code class="prettyprint">event
+          <p>At present we're just taking the value that the user types in - which is <code class="language-">event
             .target.value</code> and logging it to the console. That's not incredibly useful. I think we should probably
             remove that console log and replace it with something that's going to update the <code
-              class="prettyprint">textInput</code> property in our data object. Remember <code class="prettyprint">
+              class="language-">textInput</code> property in our data object. Remember <code class="language-">
               textInput</code> is supposed to reflect the current value of the text input form field defined here:
           </p>
           <figure>
-<pre class="prettyprint">&lt;div&gt;
+<pre><code class="language-html">&lt;div&gt;
   Input:
   &lt;input /&gt;
-&lt;/div&gt;</pre>
+&lt;/div&gt;</code></pre>
             <figcaption>Fig 01-029</figcaption>
           </figure>
-          <p>We can kind of imagine this <code class="prettyprint">data</code> property of <code class="prettyprint">
+          <p>We can kind of imagine this <code class="language-">data</code> property of <code class="language-">
             textInput</code> as being like our list of ingredients and based on what the value of <code
-            class="prettyprint">textInput</code> is inside of the data object we will do different things to render
+            class="language-">textInput</code> is inside of the data object we will do different things to render
             different stuff out onto the page.
           </p>
-          <p>So let's remove the consolelog statement and then to update the value of this <code class="prettyprint">
+          <p>So let's remove the consolelog statement and then to update the value of this <code class="language-">
             textInput</code> value data property we will add the following code:
           </p>
           <figure>
-                    <pre class="prettyprint">methods: { // Use these function to change data
-    onInput: function() {
+<pre><code class="language-javascript">methods: { // Use these function to change data
+  onInput: function() {
       this.textInput = event.target.value;
-    }
-  }</pre>
+  }
+}</code></pre>
             <figcaption>Fig 01-030</figcaption>
           </figure>
           <p>Now one thing that's very important here that I want to point out is that we said simply <code
-            class="prettyprint">this.texInput</code> we did not say anything like <code
-            class="prettyprint">this.data.textInput</code>. We only used the word <code
-            class="prettyprint">data</code> when we first initialized the data property. After that to refer to any of
+            class="language-">this.texInput</code> we did not say anything like <code
+            class="language-">this.data.textInput</code>. We only used the word <code
+            class="language-">data</code> when we first initialized the data property. After that to refer to any of
             the properties that are initialized inside of here we simply write <code
-              class="prettyprint">this.</code> and then the property name.
+              class="language-">this.</code> and then the property name.
           </p>
           <p>Now, what I want to be really crystal clear about because I mentioned this in passing one or two videos ago
-            is that anytime we update the value of one of our <code class="prettyprint">data</code> properties it causes
+            is that anytime we update the value of one of our <code class="language-">data</code> properties it causes
             our Vue instance to automatically re-render inside of the browser window. At present our template is not
-            making use of the <code class="prettyprint">textInput</code> property at all so you won't currently see any
-            changes in the browser. However, as soon as we start updating or making use of <code class="prettyprint">textInput</code>
+            making use of the <code class="language-">textInput</code> property at all so you won't currently see any
+            changes in the browser. However, as soon as we start updating or making use of <code class="language-">textInput</code>
             inside of our actual template you're going to see that anytime we run this <code
-              class="prettyprint">onInput</code> function everything inside the browser window is going to automatically
+              class="language-">onInput</code> function everything inside the browser window is going to automatically
             update as well which is a very nice feature. We don't have to forcibly say "Please re-render my application"
             or anything like that.
           </p>
           <p>So just to bring everything full circle now I want to go back to one of the diagrams we were just looking
             at and walk through the process of what we've done now with the <code
-              class="prettyprint">data</code> property and the <code
-              class="prettyprint">onInput</code> function:
+              class="language-">data</code> property and the <code
+              class="language-">onInput</code> function:
           </p>
           <figure>
             <img src="./images/vuejsessentials/Fig01-031.png"/>
             <figcaption>Fig 01-031</figcaption>
           </figure>
-          <p>We said that we have some initial starting data of <code class="prettyprint">textInput</code> equal to
+          <p>We said that we have some initial starting data of <code class="language-">textInput</code> equal to
             empty string. So that's how our application first starts off. We then sit around and wait and then at some
-            point in time the <code class="prettyprint">onInput</code> method is executed. So the user enters some text
+            point in time the <code class="language-">onInput</code> method is executed. So the user enters some text
             and inside the method we update the value of <code
-              class="prettyprint">textInput</code>. So let's imagine that maybe the user enters in text of "abcd". So
+              class="language-">textInput</code>. So let's imagine that maybe the user enters in text of "abcd". So
             after they enter that text we're going to update the <code
-              class="prettyprint">textInput</code> value. So now the <code class="prettyprint">textInput</code> property
-            in <code class="prettyprint">data</code> has a value of "abcd". Now because <code
-              class="prettyprint">textInput</code> has been updated the template is re-rendered automatically by Vue.
+              class="language-">textInput</code> value. So now the <code class="language-">textInput</code> property
+            in <code class="language-">data</code> has a value of "abcd". Now because <code
+              class="language-">textInput</code> has been updated the template is re-rendered automatically by Vue.
             Next, as a result of the template being re-rendered we calculate the identicon by using one of our computed
             functions. We have not yet defined this function but we will in just a second.
           </p>
@@ -816,7 +813,7 @@
             hopefully start to bring everything full circle.
           </p>
           <h3>Computed Properties</h3>
-          <p>We've now got our <code class="prettyprint">data</code> property being initialized here and we've got some
+          <p>We've now got our <code class="language-">data</code> property being initialized here and we've got some
             way for our data to be initialized over time whenever our user does something inside of our application.
             It's now time to turn to the last step here which is to take our data and turn it into an actual viewable
             value. To be entirely clear our data is already in kind of like a viewable value - it's a plain text string.
@@ -831,11 +828,10 @@
             identicon like so:
           </p>
           <figure>
-                    <pre class="prettyprint">computed: { // Turn data into viewable values
-    identicon: function() {
-
-    }
-  },</pre>
+<pre><code class="language-javascript">computed: { // Turn data into viewable values
+  identicon: function() {
+  }
+},</code></pre>
             <figcaption>Fig 01-032</figcaption>
           </figure>
           <p>So any time the identicon function gets called you and I are going to return something that's going to get
@@ -849,15 +845,15 @@
           </p>
           <p>So inside the identicon function we're going to make use of that jdenticon library:</p>
           <figure>
-                    <pre class="prettyprint">computed: { // Turn data into viewable values
+<pre><code class="language-javascript">computed: { // Turn data into viewable values
 identicon: function() {
   jdenticon.toSvg();
-}</pre>
+}</code></pre>
             <figcaption>Fig 01-033</figcaption>
           </figure>
-          <p>First we'll pass in the value of <code class="prettyprint">textInput</code> because that's kind of like the
+          <p>First we'll pass in the value of <code class="language-">textInput</code> because that's kind of like the
             seed of sorts from which our identicon gets calculated. Remember that we can reference any of the properties
-            in the data object by simply writing <code class="prettyprint">this.</code> and then the property name.
+            in the data object by simply writing <code class="language-">this.</code> and then the property name.
           </p>
           <p>The second argument is going to be the height or pixel width of the identicon that gets generated - 200
             pixels should be fine for application.
@@ -866,10 +862,10 @@ identicon: function() {
             function so I'm going to make sure I get the return keyword inside there as well:
           </p>
           <figure>
-                    <pre class="prettyprint">computed: { // Turn data into viewable values
+<pre><code class="language-javascript">computed: { // Turn data into viewable values
 identicon: function() {
   return jdenticon.toSvg(this.textInput, 200);
-}</pre>
+}</code></pre>
             <figcaption>Fig 01-034</figcaption>
           </figure>
           <p>Ok so I know that at this point we still don't really see any change in the output rendered to the browser
@@ -881,22 +877,22 @@ identicon: function() {
             going to reference this computed identicon function by writing the following:
           </p>
           <figure>
-                    <pre v-pre class="prettyprint">&lt;div&gt;
+<pre v-pre><code class="language-html">&amp;lt;div&amp;gt;
     Output:
     {{ identicon }}
-&lt;/div&gt;</pre>
+&amp;lt;/div&amp;gt;</code></pre>
             <figcaption>Fig 01-035</figcaption>
           </figure>
           <p>So now in the browser output you'll see a bunch of crazy strange text. This might not look like what we
             want but it is actually pretty close to what we need. You should see an svg tag which is a type of image.
-            So, in this case, whenever we make use of the jdenticon <code class="prettyprint">toSvg</code> function it
+            So, in this case, whenever we make use of the jdenticon <code class="language-">toSvg</code> function it
             returns an SVG element. But when we try to show that inside of our template we just see the actual raw Html
             that represents our Svg.
           </p>
           <p>To actually get this to show up as a real piece of rendered Svg we're going to use another Vue directive:
           </p>
           <figure>
-            <pre class="prettyprint">    &lt;div v-html=&quot;identicon&quot;&gt;&lt;/div&gt;</pre>
+            <code class="language-">    &lt;div v-html=&quot;identicon&quot;&gt;&lt;/div&gt;</code>
             <figcaption>Fig 01-036</figcaption>
           </figure>
           <p>Now you should see the identicon appear on the screen. Now I know that the last step there, where I said
@@ -919,26 +915,26 @@ identicon: function() {
             <figcaption>Fig 01-037</figcaption>
           </figure>
           <p>At the very top we first start off by creating our Vue instance. When that instance is created the <code
-            class="prettyprint">data</code> property is evaluated:
+            class="language-">data</code> property is evaluated:
           </p>
           <figure>
-                    <pre class="prettyprint">data: { // Initialize our list of 'ingredients'
+<pre><code class="language-javascript">data: { // Initialize our list of 'ingredients'
  textInput: ''
-},</pre>
+  },</code></pre>
             <figcaption>Fig 01-038</figcaption>
           </figure>
           <p>Vue sees that we are providing an object that has a property named <code
-            class="prettyprint">textInput</code> with a value of empty string. Because we are initializing the <code
-            class="prettyprint">data</code> property Vue is going to take that and it's going to assign it to the value
-            of <code class="prettyprint">this</code> which is accessible inside of our computed functions and our
+            class="language-">textInput</code> with a value of empty string. Because we are initializing the <code
+            class="language-">data</code> property Vue is going to take that and it's going to assign it to the value
+            of <code class="language-">this</code> which is accessible inside of our computed functions and our
             methods functions. After that value is initialized our template inside the Dom is then evaluated by Vue and
             eventually rendered onto the screen. So that's when we actually see some starting content appear
           </p>
           <p>We then wait for some user to type into our text input. The instant they do our <code
-            class="prettyprint">onInput</code> method is executed. Inside of that <code
-            class="prettyprint">onInput</code> method we update the value of <code class="prettyprint">textInput</code>.
+            class="language-">onInput</code> method is executed. Inside of that <code
+            class="language-">onInput</code> method we update the value of <code class="language-">textInput</code>.
             That's when some interesting stuff starts to happen. So when you start to update data properties that have
-            been assigned to <code class="prettyprint">this</code> our template gets automatically re-rendered to the
+            been assigned to <code class="language-">this</code> our template gets automatically re-rendered to the
             screen. So Vue says - "Hey!, someone just updated that value. I need automatically re-render the template
             and update content that is visible on the screen.
           </p>
@@ -947,27 +943,27 @@ identicon: function() {
             put together the directive right underneath Output:
           </p>
           <figure>
-                    <pre class="prettyprint">&lt;div&gt;
-    Output:
-    &lt;div v-html=&quot;identicon&quot; /&gt;
-  &lt;/div&gt;</pre>
+<pre><code class="language-html">&amp;lt;div&amp;gt;
+  Output:
+  &amp;lt;div v-html=&amp;quot;identicon&amp;quot; /&amp;gt;
+&amp;lt;/div&amp;gt;</code></pre>
             <figcaption>Fig 01-039</figcaption>
           </figure>
-          <p>So we added in the directive of <code class="prettyprint">v-html</code> which we're going to expand upon in
-            just a moment and inside there we referenced the <code class="prettyprint">identicon</code> computed
+          <p>So we added in the directive of <code class="language-">v-html</code> which we're going to expand upon in
+            just a moment and inside there we referenced the <code class="language-">identicon</code> computed
             function.</p>
-          <p>So Vue locates the <code class="prettyprint">identicon</code> function and executes it and then whatever is
-            returned from that function will be provided to this <code class="prettyprint">v-html</code> directive. So
-            in this case the <code class="prettyprint">identicon</code> function returns some raw Html as a string (with
-            an <code class="prettyprint">svg</code> tag inside it). But as you an I very well know we don't want to show
+          <p>So Vue locates the <code class="language-">identicon</code> function and executes it and then whatever is
+            returned from that function will be provided to this <code class="language-">v-html</code> directive. So
+            in this case the <code class="language-">identicon</code> function returns some raw Html as a string (with
+            an <code class="language-">svg</code> tag inside it). But as you an I very well know we don't want to show
             raw Html to the user - we want to display an identicon. So to get Vue to interpret that string as Html and
-            not a plain old string we used the <code class="prettyprint">v-html</code> directive. This directive says -
+            not a plain old string we used the <code class="language-">v-html</code> directive. This directive says -
             "We're going to give you a snippet of Html. It's gonna be a string but it's going to look like Html. You
             need to interpret that as Html and render it as Html in the output. Don't try to just print out the string."
           </p>
-          <p>What we did before where we use the curly braces <code v-pre class="prettyprint">{{ identicon }}</code>
+          <p>What we did before where we use the curly braces <code v-pre class="language-">{{ identicon }}</code>
             this is how we just print out a very simple string.</p>
-          <p>Traditionally we don't use the <code class="prettyprint">v-html</code> tag unless you are working on an
+          <p>Traditionally we don't use the <code class="language-">v-html</code> tag unless you are working on an
             application where you actually need to make use of some pre-generated Html. So it's much more frequently
             that we'll use other methods for displaying content on the screen.
           </p>
@@ -987,33 +983,33 @@ identicon: function() {
             declare that Vue template in the JavaScript side.
           </p>
           <p>To demonstrate this alternative configuration go back to our CodePen and take all the Html that is inside
-            the <code class="prettyprint">div</code> with an <code class="prettyprint">id</code> of <code
-              class="prettyprint">app</code> and cut and paste it into a new property called <code class="prettyprint">template:</code>
+            the <code class="language-">div</code> with an <code class="language-">id</code> of <code
+              class="language-">app</code> and cut and paste it into a new property called <code class="language-">template:</code>
             that we add to the bottom of the JavaScript panel:
           </p>
           <figure>
-                    <pre class="prettyprint">template: `
-&lt;div&gt;
-  &lt;h3&gt;My Identicon Generator&lt;/h3&gt;
+<pre><code class="language-javascript">template: `
+&amp;lt;div&amp;gt;
+  &amp;lt;h3&amp;gt;My Identicon Generator&amp;lt;/h3&amp;gt;
       Input:
-    &lt;div&gt;
-      &lt;input v-on:input=&quot;onInput&quot; /&gt;
-    &lt;/div&gt;
-    &lt;div&gt;
+    &amp;lt;div&amp;gt;
+      &amp;lt;input v-on:input=&amp;quot;onInput&amp;quot; /&amp;gt;
+    &amp;lt;/div&amp;gt;
+    &amp;lt;div&amp;gt;
       Output:
-      &lt;div v-html=&quot;identicon&quot; &gt;&lt;/div&gt;
-&lt;/div&gt;`</pre>
+      &amp;lt;div v-html=&amp;quot;identicon&amp;quot; &amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;/div&amp;gt;`</code></pre>
             <figcaption>Fig 01-031</figcaption>
           </figure>
           <p>Note the use of back ticks (the character on the keyboard to the left of 1) and additional enclosing <code
-            class="prettyprint">div</code>.
+            class="language-">div</code>.
           </p>
           <p>So when we make use of a template that is attached directly to an instance we provide a string that
             contains some amount of Html. Inside that string we have to have exactly one root element (which is why we
-            added the additional <code class="prettyprint">div</code>). If I were to remove the root <code
-              class="prettyprint">div</code> you would see the we only see the <code
-              class="prettyprint">h3</code> element in the browser window (which is now the root element). >That's the
-            reason for the root <code class="prettyprint">div</code>. We are expected to only return 1 root element
+            added the additional <code class="language-">div</code>). If I were to remove the root <code
+              class="language-">div</code> you would see the we only see the <code
+              class="language-">h3</code> element in the browser window (which is now the root element). >That's the
+            reason for the root <code class="language-">div</code>. We are expected to only return 1 root element
             inside the template string.
           </p>
           <p>So you'll see very plainly that everything works the exact same way that it did before. This is just a
@@ -1028,22 +1024,22 @@ identicon: function() {
           <h3>Referencing Data in the Template</h3>
           <p>In this section I want to focus on the fact that we used a computed function when putting our application
             together. Now what I want to be very clear about is that our template can show data that has been assigned
-            to our <code class="prettyprint">data</code> property. We don't have to always use computed functions.
+            to our <code class="language-">data</code> property. We don't have to always use computed functions.
           </p>
           <p>In general we only ever use computed functions anytime we want to somehow mess around with some piece of
             data before it gets shown on the screen. Let me show you a good example of this. Back inside of our
             application let's say that we want to dramatically change how our app behaves. Let's say that maybe instead
             of entering in some input and then getting back an identicon we want to just echo back our text directly to
             the user. So if I enter "my slice of pie" the output should be simply "my slice of pie" - no change
-            whatsoever. If you want to print out some value that is assigned to <code class="prettyprint">data</code>
+            whatsoever. If you want to print out some value that is assigned to <code class="language-">data</code>
             without making any change to it whatsoever you don't have to use a computed function. Instead you can
-            reference your property or your <code class="prettyprint">data</code> name directly from within the
+            reference your property or your <code class="language-">data</code> name directly from within the
             template.
           </p>
           <p>To do this scroll down to where the template is defined (in the JavaScript panel) and locate the <code
-            class="prettyprint">div</code> with a directive of <code
-            class="prettyprint">v-html </code>. So, we don't want to show the identicon anymore so I am going to delete
-            that <code class="prettyprint">div</code> entirely.
+            class="language-">div</code> with a directive of <code
+            class="language-">v-html </code>. So, we don't want to show the identicon anymore so I am going to delete
+            that <code class="language-">div</code> entirely.
           </p>
           <p>Instead I will directly reference the text input property and just try to print it out directly into the
             template. To print out a direct property without trying to do any fancy directives or anything like that we
@@ -1052,33 +1048,33 @@ identicon: function() {
             functions or the name of one of our data properties:
           </p>
           <figure>
-                    <pre v-pre class="prettyprint">&lt;div&gt;
+<pre v-pre><code class="language-html">&lt;div&gt;
     Output:
     {{ textInput }}
-&lt;/div&gt;</pre>
+&lt;/div&gt;</code></pre>
             <figcaption>Fig 01-032</figcaption>
           </figure>
           <p>Now if I start to type inside of my textInput again you'll see that the text gets directly mirrored right
             underneath. That's because I'm just taking whatever my input value is an printing out directly inside the
             template. One thing I want to mention inside of here, very explicitly, is that when we reference this <code
-              class="prettyprint">textInput</code> we did not have to do anything like say <code
-              class="prettyprint">this.textInput</code> or <code class="prettyprint">this.data.textInput</code> We
+              class="language-">textInput</code> we did not have to do anything like say <code
+              class="language-">this.textInput</code> or <code class="language-">this.data.textInput</code> We
             simply write the name of the property inside the curly braces.
           </p>
           <p>One issue that raises is you'll want to make sure when you're defining computed functions you don't
             accidentally duplicate the name of one of your data properties. So I would not want to make a computed
-            function named <code class="prettyprint">textInput</code> because then it would be really ambiguous as wo
+            function named <code class="language-">textInput</code> because then it would be really ambiguous as wo
             whether inside my template I'm referring to the data property or the computed function name.
           </p>
           <p>So, to recap, we don't have to use a computed property to display data if we don't want to/need to. We can
             just reference the data name directly and that will be printed out verbatim inside of our template.
           </p>
-          <p>In CodePen revert back to the original <code class="prettyprint">v-html</code> directive:</p>
+          <p>In CodePen revert back to the original <code class="language-">v-html</code> directive:</p>
           <figure>
-                    <pre class="prettyprint">&lt;div&gt;
+<pre><code class="language-">&lt;div&gt;
     Output:
     &lt;div v-html=&quot;identicon&quot;&gt;&lt;/div&gt;
-&lt;/div&gt;</pre>
+&lt;/div&gt;</code></pre>
             <figcaption>Fig 01-033</figcaption>
           </figure>
           <h3>Expressions in Templates</h3>
@@ -1089,59 +1085,58 @@ identicon: function() {
           </p>
           <p>If we want to we can put in some tiny amount of JavaScript logic into those curly braces. To be more
             precise we can put exactly one Javascript expression inside the curly braces. So we can't write out a full
-            <code class="prettyprint">if</code> statement, we can't write out a <code
-              class="prettyprint">for</code> loop or anything like that.
+            <code class="language-">if</code> statement, we can't write out a <code
+              class="language-">for</code> loop or anything like that.
           </p>
           <p>Back in CodePen at the very bottom of the template where we've got the identicon content being printed out
-            inside the <code class="prettyprint">div</code> using the <code
-              class="prettyprint">v-html</code> directive.
+            inside the <code class="language-">div</code> using the <code
+              class="language-">v-html</code> directive.
           </p>
-          <p>Delete the <code class="prettyprint">div</code> replacing it with another set of curly braces . Inside the
+          <p>Delete the <code class="language-">div</code> replacing it with another set of curly braces . Inside the
             braces reference textInput again:</p>
           <figure>
-                    <pre v-pre class="prettyprint">&lt;div&gt;
+<pre v-pre><code class="language-html">&lt;div&gt;
     Output:
     {{ textInput }}
-&lt;/div&gt;</pre>
+&lt;/div&gt;</code></pre>
             <figcaption>Fig 01-034</figcaption>
           </figure>
           <p>Now if I type something out inside the input, just as before, I see the same text appear in the Output. So,
-            right now, we are simply referencing <code class="prettyprint">textInput</code>. However, if we want to we
+            right now, we are simply referencing <code class="language-">textInput</code>. However, if we want to we
             can add a very limited amount of Javascript logic inside of these curly braces.</p>
           <p>So, for example, we could do a little bit of string concatenation:</p>
           <figure>
-                    <pre v-pre class="prettyprint">&lt;div&gt;
-    Output:
-    {{ textInput + 'abcd' }}
- &lt;/div&gt;</pre>
+<pre v-pre><code class="language-html">&lt;div&gt;
+  Output:
+  {{ textInput + 'abcd' }}
+&lt;/div&gt;</code></pre>
             <figcaption>Fig 01-034</figcaption>
           </figure>
           <p>Or we could reverse the string. In Javascript we reverse the string by splitting it into an array by every
             character and then reverse that array and, finally, join the result back together:</p>
           <figure>
-                    <pre v-pre class="prettyprint">&lt;div&gt;
+<pre v-pre><code class="language-html">&lt;div&gt;
 Output:
 {{ textInput.split('').reverse().join('') }}
-&lt;/div&gt;</pre>
+&lt;/div&gt;</code></pre>
             <figcaption>Fig 01-035</figcaption>
           </figure>
           <p>Now what I want to point out here is that while I can add some amount of logic into the string
             interpolation it is almost always preferable to use a computed function.</p>
           <p>So instead of the string interpolation method shown above we could use a computed function:</p>
           <figure>
-                    <pre class="prettyprint">reverse: function() {
-      return this.textInput.split('').reverse().join('');
-    }</pre>
+<pre><code class="language-javascript">reverse: function() {
+  return this.textInput.split('').reverse().join('');
+}</code></pre>
             <figcaption>Fig 01-036</figcaption>
           </figure>
           <p>So that's doing the same operation as before. Now inside the template we reference our computed function
             instead:
           </p>
           <figure>
-                    <pre v-pre class="prettyprint">&lt;div&gt;
-    Output:
-    {{ reverse }}
-&lt;/div&gt;</pre>
+<pre v-pre><code class="language-html">&lt;div&gt;
+  Output: {{ reverse }}
+&lt;/div&gt;</code></pre>
             <figcaption>Fig 01-037</figcaption>
           </figure>
           <p>I highly recommend you use computed functions anytime you need to play around with some data before it gets
@@ -1157,7 +1152,18 @@ Output:
 </template>
 
 <script>
-export default {name: 'VuejsEssentials01AnIntroductionToVue'}
+import Prism from 'vue-prism-component';
+export default {
+  name: 'VuejsEssentials01AnIntroductionToVue',
+  components: {
+    Prism
+  }
+}
 </script>
 
-<style scoped></style>
+<style scoped>
+  img {
+    max-width: 100%;
+  }
+
+</style>
