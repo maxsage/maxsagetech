@@ -178,11 +178,11 @@
     </div>
 </template>
 
-<script>
-export default {
-  name: 'VuejsEssentials00CourseContents.vue'
-}
-</script>
+<!--<script>-->
+<!--export default {-->
+  <!--name: 'VuejsEssentials00CourseContents.vue'-->
+<!--}-->
+<!--</script>-->
 
 <style scoped>
 

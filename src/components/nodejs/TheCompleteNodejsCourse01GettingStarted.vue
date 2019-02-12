@@ -85,7 +85,7 @@
           <h3>05 Installing Node</h3>
 
           <p>To see if we already have Node installed:</p>
-          <figure><pre class="prettyprint">node --version</pre>
+          <figure><pre class="terminal">node --version</pre>
             <figcaption>Fig 01-001</figcaption>
           </figure>
 
@@ -95,19 +95,19 @@
           <h3>06 Your First Node Program</h3>
           <p>Create a new file called 06-your-first-node-program.js</p>
 
-          <figure><pre class="prettyprint">function sayHello(name) {
+          <figure><pre><code class="language-javascript">function sayHello(name) {
   console.log('Hello ' + name);
 }
 
 sayHello('Mosh');
-          </pre>
+          </code></pre>
             <figcaption>Fig 01-002</figcaption>
           </figure>
 
           <p>Run the application by passing it to Node using the following terminal command:</p>
 
           <figure>
-            <pre class="prettyprint">node 06-your-first-node-program.js</pre>
+            <pre class="terminal">node 06-your-first-node-program.js</pre>
             <figcaption>Fig 01-002a</figcaption>
           </figure>
 
@@ -204,5 +204,8 @@ export default {
 }</script>
 
 <style scoped>
+  img {
+    max-width: 100%;
+  }
 
 </style>

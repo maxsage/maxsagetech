@@ -83,7 +83,10 @@ export default {
   name: 'WPFDataBindingInDepth01CourseOverview'
 }
 </script>
-
 <style scoped>
+  img {
+    max-width: 100%;
+  }
 
 </style>
+

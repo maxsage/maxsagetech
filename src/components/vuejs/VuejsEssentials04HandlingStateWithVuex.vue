@@ -50,9 +50,9 @@
             application running at the following addresses:
           </p>
           <figure>
-<pre class="prettyprint">App running at:
+<pre><code class="language-">App running at:
     - Local:   http://localhost:8080/
-    - Network: http://192.168.0.37:8080/</pre>
+            - Network: http://192.168.0.37:8080/</code></pre>
             <figcaption>Fig 04-004</figcaption>
           </figure>
           <p>Back in the code editor you should see some pretty familiar files and folders - these were all generated
@@ -67,33 +67,33 @@
             in the previous application:
           </p>
           <figure>
-<pre class="prettyprint">import Vue from 'vue';
+<pre><code class="language-javascript">import Vue from 'vue';
 import App from './App';
 
 new Vue ({
     render: h =&gt; h(App)
-}).mount('#app');</pre>
+}).mount('#app');</code></pre>
             <figcaption>Fig 04-005</figcaption>
           </figure>
 
-          <p>We start by importing the Vue library. Next we add an <code class="prettyprint">import</code> statement for
+          <p>We start by importing the Vue library. Next we add an <code class="language-">import</code> statement for
             the App component. The App component does not yet exist but we will create it in just a moment. We create a
-            new Vue instance and supply an object with a <code class="prettyprint">render</code> property (remember this
+            new Vue instance and supply an object with a <code class="language-">render</code> property (remember this
             is one of the many ways of getting content to show up in the browser when Vue first starts up). We define
-            our <code class="prettyprint">h</code> function. Then, after we create the Vue instance, we render it to the
-            <code class="prettyprint">div</code> with an <code class="prettyprint">id</code> of <code
+            our <code class="language-">h</code> function. Then, after we create the Vue instance, we render it to the
+            <code class="language-">div</code> with an <code class="language-">id</code> of <code
               class="prettyprint">app</code>. This will target the element that gets created for us by default inside of
             our public <span class="filename">index.html</span> file:
           </p>
           <figure>
-            <pre class="prettyprint">&lt;div id=&quot;app&quot;&gt;&lt;/div&gt;</pre>
-            <figcaption>Fig 04-006</figcaption>
+<pre><code class="language-html">&lt;div id=&quot;app&quot;&gt;&lt;/div&gt;</code></pre>
+          <figcaption>Fig 04-006</figcaption>
           </figure>
           <p>Create a new file called <span class="filename">App.vue</span> inside the <span class="filename">src
           </span> directory:
           </p>
           <figure>
-<pre class="prettyprint">&lt;template&gt;
+<pre><code class="language-html">&lt;template&gt;
     &lt;h3&gt;Im an App!&lt;/h3&gt;
 &lt;/template&gt;
 
@@ -101,11 +101,11 @@ new Vue ({
     export default {
         name: 'App'
     };
-&lt;/script&gt;</pre>
+  &lt;/script&gt;</code></pre>
             <figcaption>Fig 04-007</figcaption>
           </figure>
-          <p>We add a <code class="prettyprint">template</code> with a placeholder <code class="prettyprint">h3</code>
-            tag, we add a <code class="prettyprint">script</code> tag and define our <code class="prettyprint">export
+          <p>We add a <code class="language-">template</code> with a placeholder <code class="language-">h3</code>
+            tag, we add a <code class="language-">script</code> tag and define our <code class="language-">export
               default</code>. We've created our App component, we've got our <span class="filename">main.js</span> file
             which imports the App component, creates the Vue instance and renders it in the browser. Back in the browser
             you should see the following:
@@ -122,7 +122,7 @@ new Vue ({
               components</span> folder create a file called <span class="filename">AppHeader.vue</span>:
           </p>
           <figure>
-<pre class="prettyprint">&lt;template&gt;
+<pre><code class="language-html">&lt;template&gt;
     &lt;div&gt;
         Image Storage
     &lt;/div&gt;
@@ -132,37 +132,37 @@ new Vue ({
     export default {
         name: 'AppHeader'
     };
-&lt;/script&gt;</pre>
+  &lt;/script&gt;</code></pre>
             <figcaption>Fig 04-009</figcaption>
           </figure>
           <p>In the App component we will now import AppHeader and make sure that it is visible. Add an <code
-            class="prettyprint">import</code> statement to the <code class="prettyprint">&lt;script&gt;</code> tag:
+            class="prettyprint">import</code> statement to the <code class="language-">&lt;script&gt;</code> tag:
           </p>
           <figure>
-            <pre class="prettyprint">import AppHeader from './components/AppHeader';</pre>
+<pre><code class="language-javascript">import AppHeader from './components/AppHeader';</code></pre>
             <figcaption>Fig 04-010</figcaption>
           </figure>
-          <p>Then we add the <code class="prettyprint">AppHeader</code> to the <code
+          <p>Then we add the <code class="language-">AppHeader</code> to the <code
             class="prettyprint">components</code> property of our component configuration object:
           </p>
           <figure>
-<pre class="prettyprint">export default {
+<pre><code class="language-javascript">export default {
         name: 'App',
         components: {
             AppHeader
         }
-    };</pre>
+  };</code></pre>
             <figcaption>Fig 04-011</figcaption>
           </figure>
           <p>So now we can show an instance of AppHeader inside of our app's template so we replace the placeholder
             heading:
           </p>
           <figure>
-<pre class="prettyprint">&lt;template&gt;
+<pre><code class="language-html">&lt;template&gt;
     &lt;div&gt;
         &lt;AppHeader&gt;&lt;/AppHeader&gt;
     &lt;/div&gt;
-&lt;/template&gt;</pre>
+  &lt;/template&gt;</code></pre>
             <figcaption>Fig 04-012</figcaption>
           </figure>
           <p>If you preview this in the browser you should see the AppHeader is now visible:</p>
@@ -190,14 +190,14 @@ new Vue ({
             all the custom CSS that you and I include directly into our project):
           </p>
           <figure>
-<pre class="prettyprint">&lt;head&gt;
+<pre><code class="language-html">&lt;head&gt;
     &lt;meta charset=&quot;utf-8&quot;&gt;
     &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;
     &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1.0&quot;&gt;
     &lt;link rel=&quot;icon&quot; href=&quot;&lt;%= BASE_URL %&gt;favicon.ico&quot;&gt;
     &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.css&quot; /&gt;
     &lt;title&gt;images&lt;/title&gt;
-&lt;/head&gt;</pre>
+&lt;/head&gt;</code></pre>
             <figcaption>Fig 04-014</figcaption>
           </figure>
           <p>If you now refresh the browser you should see the Image Storage logo has changed font - meaning the
@@ -212,24 +212,24 @@ new Vue ({
           <p>We can use the <a target="_blank" href="https://semantic-ui.com/collections/menu.html">Menu</a> component
             of the Collections section to style our AppHeader. The documentation gives a couple of different examples of
             menu components. The Pointing menu is close to the styling we require for the AppHeader menu bar. Clicking
-            on the code snippet icon we can see from the example Html that we need to place a <code class="prettyprint">div</code>
+            on the code snippet icon we can see from the example Html that we need to place a <code class="language-">div</code>
             with a couple of classes applied and then inside there any button that wants to appear on the left hand side
-            should be an <code class="prettyprint">anchor</code> tag with a class of <code
+            should be an <code class="language-">anchor</code> tag with a class of <code
               class="prettyprint">item </code>.
           <p>For buttons that we want to appear on the right-hand side we will place a <code
-            class="prettyprint">div</code> with a class of <code class="prettyprint">right</code> and <code
-            class="prettyprint">menu</code>. Inside the <code class="prettyprint">div</code> we place anchor tags which
+            class="prettyprint">div</code> with a class of <code class="language-">right</code> and <code
+            class="prettyprint">menu</code>. Inside the <code class="language-">div</code> we place anchor tags which
             will serve as the actual buttons. Back in the editor modify the <span class="filename">AppHeader.vue</span>
             file:
           </p>
           <figure>
-<pre class="prettyprint">&lt;template&gt;
+<pre><code class="language-html">&lt;template&gt;
     &lt;div class=&quot;ui secondary pointing menu&quot;&gt;
         &lt;a href=&quot;/&quot; class=&quot;active item&quot;&gt;
             Image Storage
         &lt;/a&gt;
     &lt;/div&gt;
-&lt;/template&gt;</pre>
+  &lt;/template&gt;</code></pre>
             <figcaption>Fig 04-015</figcaption>
           </figure>
           <p>Back in the browser you should see the page has some new styling applied:</p>
@@ -257,11 +257,11 @@ new Vue ({
   </div>
 </template>
 
-<script>
-export default {
-  name: 'VuejsEssentialsHandlingStateWithVuex.vue'
-}
-</script>
+<!--<script>-->
+<!--export default {-->
+  <!--name: 'VuejsEssentialsHandlingStateWithVuex.vue'-->
+<!--}-->
+<!--</script>-->
 
 <style scoped>
 

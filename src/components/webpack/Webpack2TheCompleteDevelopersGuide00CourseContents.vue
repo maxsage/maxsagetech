@@ -7,10 +7,6 @@
         </div>
         <div class="panel-body">
           <h2>01 Start Here!</h2>
-          <p>The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog.
-            The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog.
-            The quick brown fox jumps over the lazy dog.</p>
-
           <h2>02 Links to Github Repos</h2>
           <h2>03 Why Do We Use Build Tools?</h2>
           <p>Webpack has gained popularity as Single Page Apps have started to be implemented

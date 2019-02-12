@@ -365,7 +365,7 @@
             context, our data model, we've got a Loaded event handler hooked up:
           </p>
           <figure>
-<pre class="prettyprint">public partial class MainWindow : Window
+<pre><code class="language-csharp">public partial class MainWindow : Window
 {
     ZzaEntities _ZzaContext = new ZzaEntities();
 
@@ -373,7 +373,7 @@
     {
         InitializeComponent();
         Loaded += MainWindow_Loaded;
-    }</pre>
+  }</code></pre>
             <figcaption>Fig 01-017</figcaption>
           </figure>
           <p>
@@ -381,7 +381,7 @@
             Customer's Collection.
           </p>
           <figure>
-<pre class="prettyprint">void MainWindow_Loaded(object sender, RoutedEventArgs e)
+<pre><code class="language-">void MainWindow_Loaded(object sender, RoutedEventArgs e)
 {
 
     var firstCustomer = _ZzaContext.Customers.FirstOrDefault();
@@ -392,7 +392,7 @@
         .Where(o => o.CustomerId == firstCustomer.Id).Select(o => o.OrderDate).ToList();
     OrdersList.ItemsSource = orderDates;
 
-}</pre>
+  }</code></pre>
             <figcaption>Fig 01-018</figcaption>
           </figure>
           <p>
@@ -402,8 +402,8 @@
             property on a TextBox.
           </p>
           <figure>
-<pre class="prettyprint">CustomerIdLabel.Content = firstCustomer.Id;
-CustomerLastNameTextBox.Text = firstCustomer.LastName;</pre>
+<pre><code class="language-">CustomerIdLabel.Content = firstCustomer.Id;
+  CustomerLastNameTextBox.Text = firstCustomer.LastName;</code></pre>
             <figcaption>Fig 01-019</figcaption>
           </figure>
           <p>Next you can see I'm executing a query to go get the Orders for that current Customer and selecting just
@@ -411,9 +411,9 @@ CustomerLastNameTextBox.Text = firstCustomer.LastName;</pre>
             ListBox.
           </p>
           <figure>
-<pre class="prettyprint">var orderDates = _ZzaContext.Orders
+<pre><code class="language-">var orderDates = _ZzaContext.Orders
     .Where(o => o.CustomerId == firstCustomer.Id).Select(o => o.OrderDate).ToList();
-OrdersList.ItemsSource = orderDates;</pre>
+  OrdersList.ItemsSource = orderDates;</code></pre>
             <figcaption>Fig 01-020</figcaption>
           </figure>
           <p>
@@ -423,13 +423,13 @@ OrdersList.ItemsSource = orderDates;</pre>
             the ListBox and the CustomerId matches the one that is the current Customer based on our CustomerIdLabel.
           </p>
           <figure>
-<pre class="prettyprint">void OnOrderSelected(object sender, SelectionChangedEventArgs args)
+<pre><code class="language-">void OnOrderSelected(object sender, SelectionChangedEventArgs args)
 {
     var selectedOrder = _ZzaContext.Orders.Include("OrderItems")
         .Where(o => o.OrderDate == (DateTime)OrdersList.SelectedItem &&
             o.CustomerId == (Guid)CustomerIdLabel.Content).FirstOrDefault();
     OrderItemsDataGrid.ItemsSource = selectedOrder.OrderItems;
-}</pre>
+  }</code></pre>
             <figcaption>Fig 01-021</figcaption>
           </figure>
           <p>
@@ -444,7 +444,7 @@ OrdersList.ItemsSource = orderDates;</pre>
             member variable.
           </p>
           <figure>
-<pre class="prettyprint">private void OnSave(object sender, RoutedEventArgs e)
+<pre><code class="language-">private void OnSave(object sender, RoutedEventArgs e)
 {
     var customer = _ZzaContext.Customers.Where(c => c.Id == (Guid)(CustomerIdLabel.Content)).FirstOrDefault();
     customer.LastName = CustomerLastNameTextBox.Text;
@@ -455,7 +455,7 @@ OrdersList.ItemsSource = orderDates;</pre>
     // ...
     // Persist those changes somewhere
     _ZzaContext.SaveChanges();
-}</pre>
+  }</code></pre>
             <figcaption>Fig 01-022</figcaption>
           </figure>
 
@@ -509,10 +509,10 @@ OrdersList.ItemsSource = orderDates;</pre>
 
           <p>So first we'll go to our CustomerIdLabel here:</p>
           <figure>
-                <pre class="prettyprint">&lt;Label x:Name="CustomerIdLabel"
+                <pre><code class="language-">&lt;Label x:Name="CustomerIdLabel"
    Grid.Row="0"
    Grid.Column="1"
-   Content="{Binding Id}" /&gt;</pre>
+                  Content="{Binding Id}" /&gt;</code></pre>
             <figcaption>Fig 01-023A</figcaption>
           </figure>
 
@@ -531,22 +531,22 @@ OrdersList.ItemsSource = orderDates;</pre>
             and that Source object has to be set as the DataContext for this TextBox.
           </p>
           <figure>
-                <pre class="prettyprint">&lt;TextBox x:Name="CustomerLastNameTextBox"
+                <pre><code class="language-">&lt;TextBox x:Name="CustomerLastNameTextBox"
     Grid.Row="1"
     Grid.Column="1"
-    Text="{Binding LastName}" /&gt;</pre>
+                  Text="{Binding LastName}" /&gt;</code></pre>
             <figcaption>Fig 01-024</figcaption>
           </figure>
           <p>
             Next, for our ListBox, we can drop down here and we can do a Binding like this:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;ListBox x:Name="OrdersList"
+                <pre><code class="language-">&lt;ListBox x:Name="OrdersList"
      Grid.Row="2"
      Grid.Column="1"
      Height="100"
      ItemsSource="{Binding}"
-     SelectionChanged="OnOrderSelected" /&gt;</pre>
+                  SelectionChanged="OnOrderSelected" /&gt;</code></pre>
             <figcaption>Fig01-025</figcaption>
           </figure>
 
@@ -558,7 +558,7 @@ OrdersList.ItemsSource = orderDates;</pre>
             but Binding on its own like this:
           </p>
           <figure>
-            <pre class="prettyprint">ItemsSource="{Binding}"</pre>
+            <pre><code class="language-">ItemsSource="{Binding}"</code></pre>
             <figcaption>Fig01-025A</figcaption>
           </figure>
           <p>implies that the Source object is the DataContext and that we're not looking for any particular property on
@@ -568,11 +568,11 @@ OrdersList.ItemsSource = orderDates;</pre>
             Then we could drop down to the DataGrid and do the same thing:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;DataGrid x:Name="OrderItemsDataGrid"
+                <pre><code class="language-">&lt;DataGrid x:Name="OrderItemsDataGrid"
     ItemsSource="{Binding}"
     AutoGenerateColumns="True"
     Grid.Row="2"&gt;
-&lt;/DataGrid&gt;</pre>
+                  &lt;/DataGrid&gt;</code></pre>
             <figcaption>Fig01-026</figcaption>
           </figure>
 
@@ -581,26 +581,26 @@ OrdersList.ItemsSource = orderDates;</pre>
             little weird, because this implies that we have a different DataContext for the DataGrid:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;DataGrid x:Name="OrderItemsDataGrid"
+                <pre><code class="language-">&lt;DataGrid x:Name="OrderItemsDataGrid"
     ItemsSource="{Binding}"
     AutoGenerateColumns="True"
     Grid.Row="2"&gt;
-&lt;/DataGrid&gt;</pre>
+                  &lt;/DataGrid&gt;</code></pre>
             <figcaption>Fig01-026A</figcaption>
           </figure>
           <p>for the ListBox:</p>
           <figure>
-                <pre class="prettyprint">&lt;ListBox x:Name="OrdersList"
+                <pre><code class="language-">&lt;ListBox x:Name="OrdersList"
      Grid.Row="2"
      Grid.Column="1"
      Height="100"
      ItemsSource="{Binding}"
-     SelectionChanged="OnOrderSelected" /&gt;</pre>
+                  SelectionChanged="OnOrderSelected" /&gt;</code></pre>
             <figcaption>Fig01-026B</figcaption>
           </figure>
           <p>and for the customer-oriented controls up above:</p>
           <figure>
-<pre class="prettyprint">&lt;Label x:Name="CustomerIdLabel"
+<pre><code class="language-">&lt;Label x:Name="CustomerIdLabel"
     Grid.Row="0"
     Grid.Column="1"
     Content="{Binding Id}" /&gt;
@@ -610,7 +610,7 @@ OrdersList.ItemsSource = orderDates;</pre>
 &lt;TextBox x:Name="CustomerLastNameTextBox"
     Grid.Row="1"
     Grid.Column="1"
-    Text="{Binding LastName}" /&gt;</pre>
+  Text="{Binding LastName}" /&gt;</code></pre>
             <figcaption>Fig01-026C</figcaption>
           </figure>
 
@@ -623,13 +623,13 @@ OrdersList.ItemsSource = orderDates;</pre>
             set to something different at an element level.
           </p>
           <figure>
-                <pre class="prettyprint">void MainWindow_Loaded(object sender, RoutedEventArgs e)
+                <pre><code class="language-">void MainWindow_Loaded(object sender, RoutedEventArgs e)
 {
 
     var firstCustomer = _ZzaContext.Customers.FirstOrDefault();
     DataContext = firstCustomer;
     //CustomerIdLabel.Content = firstCustomer.Id;
-    //CustomerLastNameTextBox.Text = firstCustomer.LastName;</pre>
+                  //CustomerLastNameTextBox.Text = firstCustomer.LastName;</code></pre>
             <figcaption>Fig01-027</figcaption>
           </figure>
           <p>
@@ -637,10 +637,10 @@ OrdersList.ItemsSource = orderDates;</pre>
             list because the ItemsSource is being set through the binding now that we added in the XAML.
           </p>
           <figure>
-                <pre class="prettyprint">var orderDates = _ZzaContext.Orders
+                <pre><code class="language-">var orderDates = _ZzaContext.Orders
     .Where(o => o.CustomerId == firstCustomer.Id).Select(o => o.OrderDate).ToList();
 //OrdersList.ItemsSource = orderDates;
-OrdersList.DataContext = orderDates;</pre>
+                  OrdersList.DataContext = orderDates;</code></pre>
             <figcaption>Fig01-028</figcaption>
           </figure>
           <p>
@@ -649,13 +649,13 @@ OrdersList.DataContext = orderDates;</pre>
             ItemsSource property in the XAML will pick it up and render it.
           </p>
           <figure>
-<pre class="prettyprint"> void OnOrderSelected(object sender, SelectionChangedEventArgs args)
+<pre><code class="language-"> void OnOrderSelected(object sender, SelectionChangedEventArgs args)
     {
         var selectedOrder = _ZzaContext.Orders.Include("OrderItems")
             .Where(o => o.OrderDate == (DateTime)OrdersList.SelectedItem &&
                 o.CustomerId == (Guid)CustomerIdLabel.Content).FirstOrDefault();
         //OrderItemsDataGrid.ItemsSource = selectedOrder.OrderItems;
-        OrderItemsDataGrid.DataContext = selectedOrder.OrderItems;</pre>
+  OrderItemsDataGrid.DataContext = selectedOrder.OrderItems;</code></pre>
             <figcaption>Fig01-029</figcaption>
           </figure>
           <p>
@@ -664,7 +664,7 @@ OrdersList.DataContext = orderDates;</pre>
             some column definitions that include just those columns that we want to do.
           </p>
           <figure>
-                    <pre class="prettyprint">      AutoGenerateColumns="False"
+                    <pre><code class="language-">      AutoGenerateColumns="False"
       Grid.Row="2">
     &lt;DataGrid.Columns&gt;
         &lt;DataGridTextColumn x:Name="idColumn"
@@ -674,7 +674,7 @@ OrdersList.DataContext = orderDates;</pre>
         &lt;DataGridTextColumn x:Name="instructionsColumn"
                             Binding="{Binding Instructions}"
                             Header="Instructions"
-                            Width="Auto" /&gt;</pre>
+                      Width="Auto" /&gt;</code></pre>
             <figcaption>Fig01-030</figcaption>
           </figure>
           <p>
@@ -684,7 +684,7 @@ OrdersList.DataContext = orderDates;</pre>
             bindings are assuming their DataContext has properties like Id, Instructions, ProductId, and so on.
           </p>
           <figure>
-                    <pre class="prettyprint">      AutoGenerateColumns="False"
+                    <pre><code class="language-">      AutoGenerateColumns="False"
       Grid.Row="2"&gt;
     &lt;DataGrid.Columns&gt;
         &lt;DataGridTextColumn x:Name="idColumn"
@@ -694,7 +694,7 @@ OrdersList.DataContext = orderDates;</pre>
         &lt;DataGridTextColumn x:Name="instructionsColumn"
                             Binding="{Binding Instructions}"
                             Header="Instructions"
-                            Width="Auto" /&gt;</pre>
+                      Width="Auto" /&gt;</code></pre>
             <figcaption>Fig01-031</figcaption>
           </figure>
           <p>
@@ -709,10 +709,10 @@ OrdersList.DataContext = orderDates;</pre>
             writing it this way.
           </p>
           <figure>
-                <pre class="prettyprint">&lt;DataGridTextColumn x:Name="idColumn"
+                <pre><code class="language-">&lt;DataGridTextColumn x:Name="idColumn"
     Binding="{Binding Path=Id}"
     Header="Id"
-    Width="SizeToHeader" /&gt;</pre>
+                  Width="SizeToHeader" /&gt;</code></pre>
             <figcaption>Fig01-032</figcaption>
           </figure>
           <p>
@@ -732,14 +732,14 @@ OrdersList.DataContext = orderDates;</pre>
             So if we drop into the code-behind here we can clean up those commented lines of code.
           </p>
           <figure>
-                <pre class="prettyprint">private void OnSave(object sender, RoutedEventArgs e)
+                <pre><code class="language-">private void OnSave(object sender, RoutedEventArgs e)
 {
     //var customer = _ZzaContext.Customers.Where(c => c.Id == (Guid)(CustomerIdLabel.Content)).FirstOrDefault();
     //customer.LastName = CustomerLastNameTextBox.Text;
     // Get all the other editable field values...
     // Persist those changes somewhere
     _ZzaContext.SaveChanges();
-}</pre>
+                  }</code></pre>
             <figcaption>Fig01-034</figcaption>
           </figure>
 
@@ -752,10 +752,10 @@ OrdersList.DataContext = orderDates;</pre>
             save changes here and not have to do any pushing and pulling anymore.
           </p>
           <figure>
-                <pre class="prettyprint">private void OnSave(object sender, RoutedEventArgs e)
+                <pre><code class="language-">private void OnSave(object sender, RoutedEventArgs e)
 {
     _ZzaContext.SaveChanges();
-}</pre>
+                  }</code></pre>
             <figcaption>Fig01-035</figcaption>
           </figure>
           <p>
@@ -766,7 +766,7 @@ OrdersList.DataContext = orderDates;</pre>
             for other properties on a customer
           </p>
           <figure>
-<pre class="prettyprint">&lt;Label Grid.Row=&quot;1&quot;
+<pre><code class="language-">&lt;Label Grid.Row=&quot;1&quot;
     Grid.Column=&quot;0&quot;
     Content=&quot;Customer Last Name&quot; /&gt;
 &lt;TextBox Text=&quot;{Binding LastName}&quot;
@@ -789,7 +789,7 @@ OrdersList.DataContext = orderDates;</pre>
     Content=&quot;Customer Email&quot; /&gt;
 &lt;TextBox Text=&quot;{Binding Email}&quot;
     Grid.Row=&quot;4&quot;
-    Grid.Column=&quot;1&quot; /&gt;</pre>
+  Grid.Column=&quot;1&quot; /&gt;</code></pre>
             <figcaption>Fig01-036</figcaption>
           </figure>
           <p>
@@ -812,16 +812,18 @@ OrdersList.DataContext = orderDates;</pre>
           <h3>Demo: Consolidating DataContexts</h3>
           <div class="example">
             <div class="input-group">
-              <input id="Ex02-004" class="form-control" type="text"
+              <input id="Ex02-005" class="form-control" type="text"
                      value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 2\before\DataBindingBasics\DataBindingBasics.sln">
-              <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex02-004"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
+              <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex02-005"><img
+                src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
             </div>
           </div>
           <div class="example">
             <div class="input-group">
-              <input id="Ex02-005" class="form-control" type="text"
+              <input id="Ex02-006" class="form-control" type="text"
                      value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 2\after\DataBindingBasics\DataBindingBasics.sln">
- <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex02-005"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
+ <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex02-006"><img
+   src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
             </div>
           </div>
 
@@ -832,7 +834,7 @@ OrdersList.DataContext = orderDates;</pre>
             separate DataContext on the DataGrid itself.
           </p>
           <figure>
-<pre class="prettyprint">public MainWindow()
+<pre><code class="language-">public MainWindow()
 {
     InitializeComponent();
     Loaded += MainWindow_Loaded;
@@ -847,7 +849,7 @@ void MainWindow_Loaded(object sender, RoutedEventArgs e)
     var orderDates = _ZzaContext.Orders
         .Where(o => o.CustomerId == firstCustomer.Id).Select(o => o.OrderDate).ToList();
     OrdersList.DataContext = orderDates;
-}</pre>
+  }</code></pre>
             <figcaption>Fig01-038</figcaption>
           </figure>
           <p>
@@ -863,7 +865,7 @@ void MainWindow_Loaded(object sender, RoutedEventArgs e)
             screen, all just exposed as properties on that ViewModel.
           </p>
           <figure>
-                <pre class="prettyprint">namespace DataBindingBasics
+                <pre><code class="language-">namespace DataBindingBasics
 {
     public class MainWindowViewModel
     {
@@ -871,7 +873,7 @@ void MainWindow_Loaded(object sender, RoutedEventArgs e)
         public List&lt;DateTime&gt; OrderDates { get; set; }
         public List&lt;OrderItem&gt; OrderItems { get; set; }
     }
-}</pre>
+                  }</code></pre>
             <figcaption>Fig01-039</figcaption>
           </figure>
 
@@ -889,9 +891,9 @@ void MainWindow_Loaded(object sender, RoutedEventArgs e)
             this DataContext setting
           </p>
           <figure>
-                <pre class="prettyprint">var firstCustomer = _ZzaContext.Customers.FirstOrDefault();
+                <pre><code class="language-">var firstCustomer = _ZzaContext.Customers.FirstOrDefault();
 _ViewModel.Customer = firstCustomer;
-DataContext = firstCustomer;</pre>
+                  DataContext = firstCustomer;</code></pre>
             <figcaption>Fig01-040</figcaption>
           </figure>
           <p>
@@ -900,7 +902,7 @@ DataContext = firstCustomer;</pre>
             for the current Order.
           </p>
           <figure>
-                <pre class="prettyprint"> void MainWindow_Loaded(object sender, RoutedEventArgs e)
+                <pre><code class="language-"> void MainWindow_Loaded(object sender, RoutedEventArgs e)
 {
 
     var firstCustomer = _ZzaContext.Customers.FirstOrDefault();
@@ -916,7 +918,7 @@ void OnOrderSelected(object sender, SelectionChangedEventArgs args)
         .Where(o => o.OrderDate == (DateTime)OrdersList.SelectedItem &&
             o.CustomerId == (Guid)CustomerIdLabel.Content).FirstOrDefault();
     _ViewModel.OrderItems = selectedOrder.OrderItems.ToList();
- </pre>
+                </code></pre>
             <figcaption>Fig01-041</figcaption>
           </figure>
           <p>
@@ -924,10 +926,10 @@ void OnOrderSelected(object sender, SelectionChangedEventArgs args)
             DataContext will be set at a window level and it'll flow down to all of the child controls.
           </p>
           <figure>
-                <pre class="prettyprint">var orderDates = _ZzaContext.Orders
+                <pre><code class="language-">var orderDates = _ZzaContext.Orders
     .Where(o => o.CustomerId == firstCustomer.Id).Select(o => o.OrderDate).ToList();
 _ViewModel.OrderDates = orderDates;
-DataContext = _ViewModel;</pre>
+                  DataContext = _ViewModel;</code></pre>
             <figcaption>Fig01-042</figcaption>
           </figure>
           <p>
@@ -937,12 +939,12 @@ DataContext = _ViewModel;</pre>
             here, and so on.
           </p>
           <figure>
-                <pre class="prettyprint">&lt;Label Grid.Row="1"
+                <pre><code class="language-">&lt;Label Grid.Row="1"
    Grid.Column="0"
    Content="Customer Last Name" />
 &lt;TextBox Text="{Binding Customer.LastName}"
    Grid.Row="1"
-   Grid.Column="1" /&gt;</pre>
+                  Grid.Column="1" /&gt;</code></pre>
             <figcaption>Fig01-043</figcaption>
           </figure>
           <p>
@@ -951,7 +953,7 @@ DataContext = _ViewModel;</pre>
             our ViewModel
           </p>
           <figure>
-                <pre class="prettyprint">&lt;Grid DataContext="{Binding Customer}"&gt;
+                <pre><code class="language-">&lt;Grid DataContext="{Binding Customer}"&gt;
     &lt;Grid.ColumnDefinitions&gt;
         &lt;ColumnDefinition Width="Auto" /&gt;
         &lt;ColumnDefinition Width="*" /&gt;
@@ -961,7 +963,7 @@ DataContext = _ViewModel;</pre>
         &lt;RowDefinition Height="Auto" /&gt;
         &lt;RowDefinition Height="Auto" /&gt;
         &lt;RowDefinition Height="Auto" /&gt;
-    &lt;/Grid.RowDefinitions&gt;</pre>
+                  &lt;/Grid.RowDefinitions&gt;</code></pre>
             <figcaption>Fig01-044</figcaption>
           </figure>
           <p>
@@ -973,23 +975,23 @@ DataContext = _ViewModel;</pre>
             ViewModel:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;ListBox x:Name="OrdersList"
+                <pre><code class="language-">&lt;ListBox x:Name="OrdersList"
     ItemsSource="{Binding OrderDates}"
     Grid.Row="0"
     Grid.Column="1"
     Height="100"
-    SelectionChanged="OnOrderSelected" /></pre>
+                  SelectionChanged="OnOrderSelected" /></code></pre>
             <figcaption>Fig01-045</figcaption>
           </figure>
           <p>
             And go down to the DataGrid and change that one to point to the OrderItems.
           </p>
           <figure>
-                <pre class="prettyprint">&lt;DataGrid x:Name="OrderItemsDataGrid"
+                <pre><code class="language-">&lt;DataGrid x:Name="OrderItemsDataGrid"
     ItemsSource="{Binding OrderItems}"
     AutoGenerateColumns="False"
     Grid.Row="2"&gt;
-&lt;DataGrid.Columns&gt;</pre>
+                  &lt;DataGrid.Columns&gt;</code></pre>
             <figcaption>Fig01-046</figcaption>
           </figure>
 
@@ -1009,9 +1011,9 @@ DataContext = _ViewModel;</pre>
             when our event handler fires, the Data Binding doesn't know anything about it.
           </p>
           <figure>
-                <pre class="prettyprint">public Customer Customer { get; set; }
+                <pre><code class="language-">public Customer Customer { get; set; }
 public List&lt;DateTime&gt; OrderDates { get; set; }
-public List&lt;OrderItem&gt; OrderItems { get; set; }</pre>
+                  public List&lt;OrderItem&gt; OrderItems { get; set; }</code></pre>
             <figcaption>Fig01-048</figcaption>
           </figure>
 
@@ -1023,8 +1025,8 @@ public List&lt;OrderItem&gt; OrderItems { get; set; }</pre>
             workaround at this point.
           </p>
           <figure>
-                <pre class="prettyprint">OrderItemsDataGrid.GetBindingExpression(DataGrid.ItemsSourceProperty)
-                    .UpdateTarget();</pre>
+                <pre><code class="language-">OrderItemsDataGrid.GetBindingExpression(DataGrid.ItemsSourceProperty)
+                  .UpdateTarget();</code></pre>
             <figcaption>Fig01-049</figcaption>
           </figure>
           <p>
@@ -1035,11 +1037,11 @@ public List&lt;OrderItem&gt; OrderItems { get; set; }</pre>
             object here.
           </p>
           <figure>
-                <pre class="prettyprint">&lt;DataGrid x:Name="OrderItemsDataGrid"
+                <pre><code class="language-">&lt;DataGrid x:Name="OrderItemsDataGrid"
     ItemsSource="{Binding OrderItems}"
     AutoGenerateColumns="False"
     Grid.Row="2"&gt;
-&lt;DataGrid.Columns&gt;</pre>
+                  &lt;DataGrid.Columns&gt;</code></pre>
             <figcaption>Fig01-050</figcaption>
           </figure>
           <p>
@@ -1091,12 +1093,9 @@ public List&lt;OrderItem&gt; OrderItems { get; set; }</pre>
   </div>
 </template>
 
-<script>
-export default {
-  name: 'WPFDatabindingInDepth03DataSources'
-}
-</script>
-
 <style scoped>
+  img {
+    max-width: 100%;
+  }
 
 </style>

@@ -35,7 +35,7 @@
             is going to send back a big array of objects to us - each object inside that array is going to represent one
             uploaded image - so in essence it's going to be very similar to the YouTube API we worked with earlier in
             the course. When we start thinking about our state design it's going to make a lot of sense to just have a
-            single property called <code class="prettyprint">images</code> and this will point to an array that contains
+            single property called <code class="language-">images</code> and this will point to an array that contains
             a list of all the images that we've fetched from the Imgur API. Initially the array will be empty:</p>
           <figure>
             <img src="./images/vuejsessentials/Fig07-002.png"/>
@@ -43,7 +43,7 @@
           </figure>
           <p>For the getters all we're doing is showing a list of all of the images that the user has uploaded on
             screen. We are not performing any filtering or advanced computation or anything like that. We will have just
-            one getter called <code class="prettyprint">allImages</code> . If someone calls this getter we just going
+            one getter called <code class="language-">allImages</code> . If someone calls this getter we just going
             return back to them a list of all the images inside inside of our state </p>
           <figure>
             <img src="./images/vuejsessentials/Fig07-003.png"/>
@@ -57,33 +57,33 @@
             <img src="./images/vuejsessentials/Fig07-004.png"/>
             <figcaption>Fig 07-004</figcaption>
           </figure>
-          <p>We are going to be in a similar situation here with <code class="prettyprint">uploadImage</code> to what we
-            had in the Auth module. In the Auth module we put together that <code class="prettyprint">login</code>
+          <p>We are going to be in a similar situation here with <code class="language-">uploadImage</code> to what we
+            had in the Auth module. In the Auth module we put together that <code class="language-">login</code>
             action - which didn't actually modify our state or call any mutations. It's actually going be very similar
-            in this case as well. <code class="prettyprint">uploadImage</code> is going to attempt to take an image or
+            in this case as well. <code class="language-">uploadImage</code> is going to attempt to take an image or
             multiple images and upload them to the Imgur API. There's probably not a lot of stuff beyond that the <code
-              class="prettyprint">uploadImage</code> action really needs to do because whenever we upload an image -
-            that's going to be on the upload form and the <code class="prettyprint">uploadImage</code> action is going
+              class="language-">uploadImage</code> action really needs to do because whenever we upload an image -
+            that's going to be on the upload form and the <code class="language-">uploadImage</code> action is going
             to have no reason to ever try to modify the state object.
           </p>
-          <p>On the other hand we have <code class="prettyprint">fetchImages</code> which without doubt is going to have
-            to call a mutation to update the <code class="prettyprint">images</code> piece of state. We will create a
-            mutation called <code class="prettyprint">setImages</code> that will be something very similar to the <code
-              class="prettyprint">setToken</code> mutation that we had in the Auth module: </p>
+          <p>On the other hand we have <code class="language-">fetchImages</code> which without doubt is going to have
+            to call a mutation to update the <code class="language-">images</code> piece of state. We will create a
+            mutation called <code class="language-">setImages</code> that will be something very similar to the <code
+              class="language-">setToken</code> mutation that we had in the Auth module: </p>
           <figure>
             <img src="./images/vuejsessentials/Fig07-005.png"/>
             <figcaption>Fig 07-005</figcaption>
           </figure>
-          <p>We'll say that after the <code class="prettyprint">fetchImages</code> action makes a network request over
+          <p>We'll say that after the <code class="language-">fetchImages</code> action makes a network request over
             to the Imgur API to get a list of all of our images it should call the <code
-              class="prettyprint">setImages</code> mutation and attempt to update the list of images stored inside of
+              class="language-">setImages</code> mutation and attempt to update the list of images stored inside of
             our state. The design of this module is going to be very similar to the Auth module we worked on earlier .
             So this will be a good opportunity to reinforce a lot of the stuff that we just learned.</p>
           <h3>Module Implementation</h3>
           <p>In the <span class="filename">modules</span> directory create a new file called <span class="filename">images.js</span>
             and add the following boilerplate code:</p>
           <figure>
-<pre class="prettyprint">const state = {
+<pre><code class="language-javascript">const state = {
     images: []
 };
 
@@ -100,42 +100,41 @@ const mutations = {
         state.images = images;
     }
 };
-</pre>
+</code></pre>
             <figcaption>Fig 07-006</figcaption>
           </figure>
-          <p>The <code class="prettyprint">allImages</code> getter is a function that gets called with our <code
-            class="prettyprint">state</code> object and all we want to do is return the list of <code
-            class="prettyprint">images</code> from <code
-            class="prettyprint">state</code> . The <code
-            class="prettyprint">setImages</code> mutation gets called with an array of image objects. We just take the
-            entire array and update the value of <code class="prettyprint">images</code> replacing what is already
-            there. Remember that when this gets called we first have our current <code class="prettyprint">state</code>
+          <p>The <code class="language-">allImages</code> getter is a function that gets called with our <code
+            class="language-">state</code> object and all we want to do is return the list of <code
+            class="language-">images</code> from <code
+            class="language-">state</code> . The <code
+            class="language-">setImages</code> mutation gets called with an array of image objects. We just take the
+            entire array and update the value of <code class="language-">images</code> replacing what is already
+            there. Remember that when this gets called we first have our current <code class="language-">state</code>
             object and then any optional arguments - in this case the array of images that comes back from the Imgur
-            API. We take that array and assign it to <code class="prettyprint">state.images</code> . As we said
+            API. We take that array and assign it to <code class="language-">state.images</code> . As we said
             previously most of the mutations that we put together inside of a Vuex application are going to be very
             straightforward in nature because they are specifically designed to be very small, very discrete changes to
             our state object so it will be rare to do a lot of complicated stuff here. Instead we try to put any
-            complicated business logic we have into an action object. With <code class="prettyprint">fetchImages</code>
-            action we just add the function stub. We will look at the functionality inside <code class="prettyprint">fetchImages</code>
+            complicated business logic we have into an action object. With <code class="language-">fetchImages</code>
+            action we just add the function stub. We will look at the functionality inside <code class="language-">fetchImages</code>
             in the next section.</p>
           <h3>Fetch Images API Documentation</h3>
-          <p>The purpose of the <code class="prettyprint">fetchImages</code> action is to reach out to the Imgur API and
+          <p>The purpose of the <code class="language-">fetchImages</code> action is to reach out to the Imgur API and
             retrieve any images that this user has ever uploaded. There are a couple of different considerations here.
             First off we have to think about where we are going to locate the code to make this actual API request.
             Secondly we have to think about how we actually fetch the images at all.</p>
           <p>The Imgur API <a target="_blank" href="apidocs.imgur.com">documentation</a> has a section on Account which
             lists all the different API endpoints that are tied to a users account. We are looking for Account Images
             which returns all the images that have been uploaded by the current user. To get the list of images we
-            perform a GET request to <code class="prettyprint">https://api.imgur.com/3/account/me/images</code>. What's
+            perform a GET request to <code class="language-">https://api.imgur.com/3/account/me/images</code>. What's
             very important to note here is that we have to send along a very specific header on the request as well. The
-            Header has to include the <code class="prettyprint">access_token</code> that we obtained when we went
+            Header has to include the <code class="language-">access_token</code> that we obtained when we went
             through the OAuth process in order to access the user's list of images.</p>
           <h3>Fetching Images</h3>
           <p>In the <span class="filename">imgur.js</span> file located in the <span class="filename">api</span>
             directory:</p>
           <figure>
-                    <pre class="prettyprint">import qs from 'qs';
-
+<pre><code class="language-javascript">import qs from 'qs';
 const CLIENT_ID = 'c3feb8623a2803b';
 const ROOT_URL = 'https://api.imgur.com';
 
@@ -148,54 +147,54 @@ export default {
 
         window.location = `${ROOT_URL}/oauth2/authorize?${qs.stringify(querystring )}`;
     }
-};</pre>
+};</code></pre>
             <figcaption>Fig 07-007</figcaption>
           </figure>
-          <p>You'll recall that we created the <code class="prettyprint">default</code> object that houses a couple of
+          <p>You'll recall that we created the <code class="language-">default</code> object that houses a couple of
             different functions related to working with the Imgur API. Add a new function under the <code
-              class="prettyprint">login</code> action:</p>
+              class="language-">login</code> action:</p>
           <figure>
-<pre class="prettyprint">fetchImages() {
+<pre><code class="language-javascript">fetchImages() {
     return axios.get(`${ROOT_URL}/3/account/me/images`)
-}</pre>
+  }</code></pre>
             <figcaption>Fig 07-008</figcaption>
           </figure>
           <p>We also need to import the axios library:</p>
           <figure>
-            <pre class="prettyprint">import axios from 'axios';</pre>
+            <pre><code class="language-javascript">import axios from 'axios';</code></pre>
             <figcaption>Fig 07-009</figcaption>
           </figure>
           <p>Remember we use that library to make network requests off to arbitrary endpoints. The <code
-            class="prettyprint">fetchImages</code> function makes a GET request using axios. We use string interpolation
-            to concatenate our <code class="prettyprint">ROOT_URL</code> with the remainder of the address for the
+            class="language-">fetchImages</code> function makes a GET request using axios. We use string interpolation
+            to concatenate our <code class="language-">ROOT_URL</code> with the remainder of the address for the
             Account Images endpoint. This will make the GET request over to the Imgur API. However at this point we are
             not passing the required information in the Header of the request. First of all we will add a Header to the
-            axios request and then after that we will look at how we get access to the actual <code class="prettyprint">access_token</code>
-            from the <code class="prettyprint">fetchImages</code> action. The first argument to the GET request is the
+            axios request and then after that we will look at how we get access to the actual <code class="language-">access_token</code>
+            from the <code class="language-">fetchImages</code> action. The first argument to the GET request is the
             actual Url that we want to make the request to and then the second argument is going to be an object that
             can have a collection of different options that customize the request that we're making. One possible option
-            we could pass in here is a <code class="prettyprint">headers</code> object:</p>
+            we could pass in here is a <code class="language-">headers</code> object:</p>
           <figure>
-<pre class="prettyprint">fetchImages(token) {
+<pre><code class="language-javascript">fetchImages(token) {
     return axios.get(`${ROOT_URL}/3/account/me/images`, {
         headers: {
             Authorization: `Bearer ${token}`
         }
     })
-}</pre>
+  }</code></pre>
             <figcaption>Fig 07-010</figcaption>
           </figure>
           <p>This is going to be a list of different headers that we're going to include along with the request. We
-            follow the specifications laid out in the documentation by adding a key of <code class="prettyprint">Authorization</code>.
-            The value that we specify is a template string - <code class="prettyprint">`Bearer ${}`</code>. We want to
-            add the <code class="prettyprint">access_token</code> between the curly braces so, for the moment, we make
-            the assumption that when we call the <code class="prettyprint">fetchImages</code> function from within our
-            images module we can pass the <code class="prettyprint">access_token</code> in as an argument. We will
-            figure out how to get the <code class="prettyprint">access_token</code> into that module shortly.
+            follow the specifications laid out in the documentation by adding a key of <code class="language-">Authorization</code>.
+            The value that we specify is a template string - <code class="language-">`Bearer ${}`</code>. We want to
+            add the <code class="language-">access_token</code> between the curly braces so, for the moment, we make
+            the assumption that when we call the <code class="language-">fetchImages</code> function from within our
+            images module we can pass the <code class="language-">access_token</code> in as an argument. We will
+            figure out how to get the <code class="language-">access_token</code> into that module shortly.
           </p>
           <h3>Communicating Across Modules</h3>
-          <p>In the last section we put together our <code class="prettyprint">fetchImages</code> function inside of
-            imgur helper. We want to call this function from the <code class="prettyprint">fetchImages</code> action
+          <p>In the last section we put together our <code class="language-">fetchImages</code> function inside of
+            imgur helper. We want to call this function from the <code class="language-">fetchImages</code> action
             inside of our images module. We want to get our access token over to this function. Remember that you and I
             are working inside of the Images module:
           </p>
@@ -205,212 +204,212 @@ export default {
           </figure>
           <p>However our token is saved inside the Auth module - which is a totally separate piece of state inside of
             our overall Vuex instance. So inside of <span class="filename">images.js</span> we import our <code
-              class="prettyprint">api</code> :</p>
+              class="language-">api</code> :</p>
           <figure>
-            <pre class="prettyprint">import api from '../../api/imgur';</pre>
+            <pre><code class="language-javascript">import api from '../../api/imgur';</code></pre>
             <figcaption>Fig 07-012</figcaption>
           </figure>
-          <p>Then inside of the <code class="prettyprint">fetchImages</code> function we can use our api that we just
+          <p>Then inside of the <code class="language-">fetchImages</code> function we can use our api that we just
             imported to call <code
-              class="prettyprint">api.fetchImages();</code></p>
+              class="language-">api.fetchImages();</code></p>
           <figure>
-<pre class="prettyprint">const actions = {
-    fetchImages() {
-        api.fetchImages();
-    }
-};</pre>
+<pre><code class="language-javascript">const actions = {
+  fetchImages() {
+      api.fetchImages();
+  }
+};</code></pre>
             <figcaption>Fig 07-013</figcaption>
           </figure>
           <p>In order to reach out to that totally different module and get information out of it the <code
-            class="prettyprint">fetchImages</code> action gets called with a first argument that, as we've discussed a
+            class="language-">fetchImages</code> action gets called with a first argument that, as we've discussed a
             couple of times now, is going to give us the ability to reach into other modules inside of our application.
             Previously, remember when we defined that first argument inside of an action we said it was an object with a
-            couple of different properties. So, for example, in the Auth module the <code class="prettyprint">finalizeLogin</code>
-            and <code class="prettyprint">logout</code> actions both make use of the <code
-              class="prettyprint">commit</code> function which allows us to call a mutation. Another property that
-            exists on that first argument is called <code class="prettyprint">rootState</code> :</p>
+            couple of different properties. So, for example, in the Auth module the <code class="language-">finalizeLogin</code>
+            and <code class="language-">logout</code> actions both make use of the <code
+              class="language-">commit</code> function which allows us to call a mutation. Another property that
+            exists on that first argument is called <code class="language-">rootState</code> :</p>
           <figure>
-<pre class="prettyprint">const actions = {
-    fetchImages({ rootState }) {
-        api.fetchImages();
-    }
-};</pre>
+<pre><code class="language-javascript">const actions = {
+  fetchImages({ rootState }) {
+      api.fetchImages();
+  }
+};</code></pre>
             <figcaption>Fig 07-014</figcaption>
           </figure>
-          <p><code class="prettyprint">rootState</code> is a reference to all of the state that is held inside of our
-            Vuex store or instance. So <code class="prettyprint">rootState</code> here gives us the ability to reach
-            into other modules and access state or access data that is held inside them. The <code class="prettyprint">rootState</code>
+          <p><code class="language-">rootState</code> is a reference to all of the state that is held inside of our
+            Vuex store or instance. So <code class="language-">rootState</code> here gives us the ability to reach
+            into other modules and access state or access data that is held inside them. The <code class="language-">rootState</code>
             object is going to have different properties assigned to it based on how you have hooked up your modules to
             your Vuex instance. Let me explain what I mean by that. If you recall inside the <span class="filename">store</span>
             directory we've got that <span class="filename">index.js</span> file inside of which we created our Vuex
             instance and wired up our Auth module as a module called simply auth:
           </p>
           <figure>
-                    <pre class="prettyprint">export default new Vuex.Store({
-    modules: {
-        auth
-    }
-});</pre>
+          <pre><code class="language-javascript">export default new Vuex.Store({
+  modules: {
+      auth
+  }
+});</code></pre>
             <figcaption>Fig 07-015</figcaption>
           </figure>
           <p>Because we hooked the Auth module up to the store as a module called <code
-            class="prettyprint">auth</code> above, we can access the state inside of this Auth module by writing out
-            <code class="prettyprint">rootState.auth</code> and then whatever property we want off that state object.
-            Our Auth module has only one property on it's data object - the <code class="prettyprint">token</code>
+            class="language-">auth</code> above, we can access the state inside of this Auth module by writing out
+            <code class="language-">rootState.auth</code> and then whatever property we want off that state object.
+            Our Auth module has only one property on it's data object - the <code class="language-">token</code>
             property. So we use the following code in our Images module to reach over into that Auth module and pull the
             token out of that Auth module state:
           </p>
           <figure>
-<pre class="prettyprint">const actions = {
+<pre><code class="language-javascript">const actions = {
     fetchImages({ rootState }) {
         rootState.auth.token;
         api.fetchImages();
     }
-};</pre>
+};</code></pre>
             <figcaption>Fig 07-016</figcaption>
           </figure>
           <p>I'm going to use ES2015 destructuring syntax to clean up the code a little bit:</p>
           <figure>
-            <pre class="prettyprint">const { token } = rootState.auth;</pre>
+            <pre><code class="language-javascript">const { token } = rootState.auth;</code></pre>
             <figcaption>Fig 07-017</figcaption>
           </figure>
           <p>So now we can take that token that we've got from the module and pass it along to the <code
-            class="prettyprint">fetchImages</code> function that we put together inside of the <span class="filename">imgur.js</span>
+            class="language-">fetchImages</code> function that we put together inside of the <span class="filename">imgur.js</span>
             api helper file:
           </p>
           <figure>
-<pre class="prettyprint">const actions = {
+<pre><code class="language-javascript">const actions = {
     fetchImages({ rootState }) {
         const { token } = rootState.auth;
         api.fetchImages(token);
     }
-};</pre>
+  };</code></pre>
             <figcaption>Fig 07-018</figcaption>
           </figure>
           <p>Next in the <span class="filename">imgur.js</span> api file in the <code
-            class="prettyprint">fetchImages</code> function where we make the axios request:</p>
+            class="language-">fetchImages</code> function where we make the axios request:</p>
           <figure>
-<pre class="prettyprint">    fetchImages(token) {
+<pre><code class="language-javascript">fetchImages(token) {
         return axios.get(`${ROOT_URL}/3/account/me/images`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
         })
-    }</pre>
+  }</code></pre>
             <figcaption>Fig 07-019</figcaption>
           </figure>
           <p>Note - we are returning the request from the function. So back inside of the images module when we call
-            <code class="prettyprint">api.fetchImages(token);</code> because we are calling an asynchronous request we
+            <code class="language-">api.fetchImages(token);</code> because we are calling an asynchronous request we
             have to write a little bit of code to handle the response that comes back. Previously in the VideoBrowser
             application when we made a request, we interfaced with that request by using a promise. However, this time
             around we are going to follow the convention of Vuex a little bit more closely by using an async await
             syntax here instead to wait for this api request to be completed:
           </p>
           <figure>
-<pre class="prettyprint">const actions = {
-    async fetchImages({ rootState }) {
-        const { token } = rootState.auth;
-        const response = await api.fetchImages(token);
-    }
-};</pre>
+<pre><code class="language-javascript">const actions = {
+  async fetchImages({ rootState }) {
+      const { token } = rootState.auth;
+      const response = await api.fetchImages(token);
+  }
+};</code></pre>
             <figcaption>Fig 07-020</figcaption>
           </figure>
-          <p>Firstly we mark <code class="prettyprint">fetchImages</code> with the <code
-            class="prettyprint">async</code> keyword then we add the <code class="prettyprint">await</code> keyword in
+          <p>Firstly we mark <code class="language-">fetchImages</code> with the <code
+            class="language-">async</code> keyword then we add the <code class="language-">await</code> keyword in
             front of the api call. Then we store the response in a variable called <code
-              class="prettyprint">response</code>. Finally when we get this response back it should have a list of all
+              class="language-">response</code>. Finally when we get this response back it should have a list of all
             the images inside of our application we will eventually call commit. Before call commit and actually store
             these images inside of our module I think it would probably be a really good experience to console log out
             the response object to get a better idea of what information we get back from the Imgur API:</p>
           <figure>
-<pre class="prettyprint">const actions = {
+<pre><code class="language-javascript">const actions = {
     async fetchImages({ rootState }) {
         const { token } = rootState.auth;
         const response = await api.fetchImages(token);
         console.log(response);
     }
-};</pre>
+  };</code></pre>
             <figcaption>Fig 07-021</figcaption>
           </figure>
           <h3>Testing Images Response</h3>
           <p>In this section we're going to wire up the Images module to our Vuex store and then we'll wire up all that
             stuff to our ImageList component and attempt to reach out to the Imgur API and get a list of all of our
             images. Again, the first thing we have to do is make sure that we export our <code
-              class="prettyprint">state</code> , <code class="prettyprint">getters</code> , <code class="prettyprint">actions</code>
-            and <code class="prettyprint">mutations</code> from this module file. At the bottom add the following <code
-              class="prettyprint">export</code>
+              class="language-">state</code> , <code class="language-">getters</code> , <code class="language-">actions</code>
+            and <code class="language-">mutations</code> from this module file. At the bottom add the following <code
+              class="language-">export</code>
 
             statement:</p>
           <figure>
-<pre class="prettyprint">export default {
-    state,
-    getters,
-    actions,
-    mutations
-}</pre>
+<pre><code class="language-javascript">export default {
+  state,
+  getters,
+  actions,
+  mutations
+}</code></pre>
             <figcaption>Fig 07-022</figcaption>
           </figure>
           <p>And just like before the names of each of these objects right here are especially important. Next in <span
             class="filename">index.js</span> file we create our Vuex instance and import the Images module:
           </p>
           <figure>
-            <pre class="prettyprint">import images from './modules/images';</pre>
+          <pre><code class="language-javascript">import images from './modules/images';</code></pre>
             <figcaption>Fig 07-023</figcaption>
           </figure>
-          <p>Next we'll hook that module up inside the <code class="prettyprint">modules</code> object to tell Vuex
+          <p>Next we'll hook that module up inside the <code class="language-">modules</code> object to tell Vuex
             about the additional module we have created:</p>
           <figure>
-                    <pre class="prettyprint">export default new Vuex.Store({
-    modules: {
-        auth,
-        images
-    }
-});</pre>
+          <pre><code class="language-javascript">export default new Vuex.Store({
+  modules: {
+      auth,
+      images
+  }
+});</code></pre>
             <figcaption>Fig 07-024</figcaption>
           </figure>
-          <p>The next thing we have to do is actually take that <code class="prettyprint">store</code> , take the <code
-            class="prettyprint">action</code> inside of it and call it from one of the functions inside our lifecycle
+          <p>The next thing we have to do is actually take that <code class="language-">store</code> , take the <code
+            class="language-">action</code> inside of it and call it from one of the functions inside our lifecycle
             methods inside our components. The chances are that we only want to attempt to load up our list of images
             from the Imgur API when we are showing the ImageList component on the screen. In the ImageList component we
-            make use of the <code class="prettyprint">created()</code> lifecycle method. First off though let's setup
-            <code class="prettyprint">mapActions</code> for fetching images. Add the <code
-              class="prettyprint">import</code> statement for <code class="prettyprint">mapActions</code> :</p>
+            make use of the <code class="language-">created()</code> lifecycle method. First off though let's setup
+            <code class="language-">mapActions</code> for fetching images. Add the <code
+              class="language-">import</code> statement for <code class="language-">mapActions</code> :</p>
           <figure>
-            <pre class="prettyprint">import { mapActions } from 'vuex';</pre>
+          <pre><code class="language-javascript">import { mapActions } from 'vuex';</code></pre>
             <figcaption>Fig 07-025</figcaption>
           </figure>
-          <p>Next we will wire up the <code class="prettyprint">fetchImages</code> action and wire it up to this
-            component's <code class="prettyprint">methods</code> property. We define the <code class="prettyprint">methods</code>
-            property and call <code class="prettyprint">mapActions</code> passing in an array containing the name of the
-            action that we want merge into our ImageList component - <code class="prettyprint">fetchImages</code> :
+          <p>Next we will wire up the <code class="language-">fetchImages</code> action and wire it up to this
+            component's <code class="language-">methods</code> property. We define the <code class="language-">methods</code>
+            property and call <code class="language-">mapActions</code> passing in an array containing the name of the
+            action that we want merge into our ImageList component - <code class="language-">fetchImages</code> :
           </p>
           <figure>
-<pre class="prettyprint">export default {
+<pre><code class="language-javascript">export default {
     name: 'ImageList',
     methods: mapActions(['fetchImages']),
-}</pre>
+  }</code></pre>
             <figcaption>Fig 07-025</figcaption>
           </figure>
           <p>And as we were just saying we also want to define a lifecycle method because the instant we are about to
             load this component up we want to attempt to reach out to the Imgur API and fetch our list of images so we
-            can show them on the screen. Underneath our <code class="prettyprint">methods</code> definition I'll add in
-            our <code class="prettyprint">created</code> function which will be called automatically because it is
-            called <code class="prettyprint">created</code> . Inside the lifecycle method we can fetch our images:</p>
+            can show them on the screen. Underneath our <code class="language-">methods</code> definition I'll add in
+            our <code class="language-">created</code> function which will be called automatically because it is
+            called <code class="language-">created</code> . Inside the lifecycle method we can fetch our images:</p>
           <figure>
-<pre class="prettyprint">export default {
-        name: 'ImageList',
-        methods: mapActions(['fetchImages']),
-        created() {
-            this.fetchImages();
-        }
-    }</pre>
+<pre><code class="language-javascript">export default {
+  name: 'ImageList',
+  methods: mapActions(['fetchImages']),
+  created() {
+      this.fetchImages();
+  }
+}</code></pre>
             <figcaption>Fig 07-026</figcaption>
           </figure>
           <p>We are just about ready to test this out inside the browser. One thing I want to remind you about is that
             we have not yet gone through the process of uploading any images. So while we may be able to run this code
             inside the browser I really don't expect to see any images come back on the api. However I would like to run
             this code just to verify we are not getting any errors. In the browser make sure you are on the Image List -
-            <code class="prettyprint">localhost:8080</code> and logged in. Click on the Network tab inside chrome
+            <code class="language-">localhost:8080</code> and logged in. Click on the Network tab inside chrome
             devtools, filter by XHR requests and then refresh the entire page. At this point we have not yet setup our
             application to work correctly if you're not logged in when it comes to fetching this list of images. When
             you refresh you should see a GET request to the images endpoint at Imgur. You'll notice that there's two
@@ -423,27 +422,27 @@ export default {
             <figcaption>Fig 07-027</figcaption>
           </figure>
           <p>This means we fetched no images. Also in the console log we've got the entire response object with the
-            <code class="prettyprint">data</code> property:</p>
+            <code class="language-">data</code> property:</p>
           <figure>
             <img src="./images/vuejsessentials/Fig07-028.png"/>
             <figcaption>Fig 07-028</figcaption>
           </figure>
           <p>One thing that's going to be really confusing here, and this is why I wanted to do the console log, is that
-            whenever we make a request with axios the response comes back with a <code class="prettyprint">data</code>
+            whenever we make a request with axios the response comes back with a <code class="language-">data</code>
             property that contains data that was sent back to us by the remote api. The reason this is really confusing
             is that when Imgurs API in particular sends a response back to us - there response object has a <code
-              class="prettyprint">data</code> property nested inside of it as well. The first <code class="prettyprint">data</code>
+              class="language-">data</code> property nested inside of it as well. The first <code class="language-">data</code>
             object shown in Fig 07-028 is from axios behaving as usual saying whatever information we get back is going
-            to be on the <code class="prettyprint">data</code> property. Inside there is a second <code
-              class="prettyprint">data</code> property that is being returned by Imgurs API - they just decided to call
-            this property <code class="prettyprint">data</code> as well and they decided to return the results of our
-            query inside that <code class="prettyprint">data</code> property. In other words we've got <code
-              class="prettyprint">data.data</code> these two nested data properties which is a bit confusing but we'll
+            to be on the <code class="language-">data</code> property. Inside there is a second <code
+              class="language-">data</code> property that is being returned by Imgurs API - they just decided to call
+            this property <code class="language-">data</code> as well and they decided to return the results of our
+            query inside that <code class="language-">data</code> property. In other words we've got <code
+              class="language-">data.data</code> these two nested data properties which is a bit confusing but we'll
             get around that.</p>
           <h3>Image Upload via Imgur</h3>
           <p>Upload an image or images to <a href="imgur.com">imgur.com</a> and then refresh the browser of your
-            application at <code class="prettyprint">localhost:8080</code> . If you look at the Network tab again and
-            select the images GET request you should see that the <code class="prettyprint">data</code> object contains
+            application at <code class="language-">localhost:8080</code> . If you look at the Network tab again and
+            select the images GET request you should see that the <code class="language-">data</code> object contains
             a single object. </p>
           <figure>
             <img src="./images/vuejsessentials/Fig07-029.png"/>
@@ -453,78 +452,78 @@ export default {
             the dimensions, type of image, and (most relevant for us) a direct link to the image.</p>
           <h3>Committing Images to State</h3>
           <p>We are now able to successfully retrieve a list of images from the Imgur API and the last thing we have to
-            do inside of our images module is to make sure that we complete the code fo our <code class="prettyprint">fetchImages</code>
+            do inside of our images module is to make sure that we complete the code fo our <code class="language-">fetchImages</code>
             action. We got back our response object that contains our images but we need to make sure that we call that
-            <code class="prettyprint">setImages</code> mutation to update the list of images that are stored inside of
-            our <code class="prettyprint">state</code> object. Remember how we do that from the first argument:
+            <code class="language-">setImages</code> mutation to update the list of images that are stored inside of
+            our <code class="language-">state</code> object. Remember how we do that from the first argument:
           </p>
           <figure>
-            <pre class="prettyprint">async fetchImages({ rootState }) </pre>
+            <pre><code class="language-javascript">async fetchImages({ rootState }) </code></pre>
             <figcaption>Fig 07-030</figcaption>
           </figure>
-          <p>We are going to pull off the <code class="prettyprint">commit</code> function in addition to the <code
-            class="prettyprint">rootState</code> object. The <code class="prettyprint">rootState</code> object gives us
+          <p>We are going to pull off the <code class="language-">commit</code> function in addition to the <code
+            class="language-">rootState</code> object. The <code class="language-">rootState</code> object gives us
             access to state within other modules:</p>
           <figure>
-                    <pre class="prettyprint">const actions = {
-    async fetchImages({ rootState, commit }) {
-        const { token } = rootState.auth;
-        const response = await api.fetchImages(token);
-    }
-};</pre>
+        <pre><code class="language-javascript">const actions = {
+  async fetchImages({ rootState, commit }) {
+      const { token } = rootState.auth;
+      const response = await api.fetchImages(token);
+  }
+ };</code></pre>
             <figcaption>Fig 07-031</figcaption>
           </figure>
-          <p>We also remove the <code class="prettyprint">console.log</code> statement and call <code
-            class="prettyprint">commit</code> instead:</p>
+          <p>We also remove the <code class="language-">console.log</code> statement and call <code
+            class="language-">commit</code> instead:</p>
           <figure>
-<pre class="prettyprint">const actions = {
+          <pre><code class="language-javascript">const actions = {
     async fetchImages({ rootState, commit }) {
         const { token } = rootState.auth;
         const response = await api.fetchImages(token);
         commit('setImages', response.data.data);
     }
-};</pre>
+  };</code></pre>
             <figcaption>Fig 07-032</figcaption>
           </figure>
-          <p>The first argument to <code class="prettyprint">commit</code> is a string that tells Vuex which mutation we
-            are trying to call - so in this case <code class="prettyprint">setImages</code>. The second argument we
-            provide is the new list of images to store inside of our state - <code class="prettyprint">response.data.data</code>.
+          <p>The first argument to <code class="language-">commit</code> is a string that tells Vuex which mutation we
+            are trying to call - so in this case <code class="language-">setImages</code>. The second argument we
+            provide is the new list of images to store inside of our state - <code class="language-">response.data.data</code>.
             We are now getting back our list of image(s) and storing them inside our ImageList modules <code
-              class="prettyprint">state</code> object.</p>
+              class="language-">state</code> object.</p>
           <h3>Mapping the Images Getter</h3>
           <p>Our Images module is now taking our list of images back from the Imgur API and storing them on our Images
-            module <code class="prettyprint">state</code> . We are now going to move over to our ImageList component and
+            module <code class="language-">state</code> . We are now going to move over to our ImageList component and
             make sure that the component is aware of all the images that are being fetched by our api. At present we are
             only calling the action to fetch the images. Now remember these actions attempt to modify our <code
-              class="prettyprint">state</code> in some fashion. To actually get information out of our <code
-              class="prettyprint">state</code> object we have to make use of <code class="prettyprint">getters</code> .
-            Remember inside of our Images module we made that <code class="prettyprint">getter</code> called <code
-              class="prettyprint">allImages</code> which returns all the images that are stored inside of our <code
-              class="prettyprint">state</code> object. So we want to take the <code class="prettyprint">allImages</code>
+              class="language-">state</code> in some fashion. To actually get information out of our <code
+              class="language-">state</code> object we have to make use of <code class="language-">getters</code> .
+            Remember inside of our Images module we made that <code class="language-">getter</code> called <code
+              class="language-">allImages</code> which returns all the images that are stored inside of our <code
+              class="language-">state</code> object. So we want to take the <code class="language-">allImages</code>
             getter and map it to our ImageList component. To do so we are going to <code
-              class="prettyprint">import</code> our <code class="prettyprint">mapGetters</code> function:</p>
+              class="language-">import</code> our <code class="language-">mapGetters</code> function:</p>
           <figure>
-            <pre class="prettyprint">import { mapActions, mapGetters } from 'vuex';</pre>
+            <pre><code class="language-javascript">import { mapActions, mapGetters } from 'vuex';</code></pre>
             <figcaption>Fig 07-033A</figcaption>
           </figure>
-          <p>and add it to our component definitions <code class="prettyprint">computed</code> property:</p>
+          <p>and add it to our component definitions <code class="language-">computed</code> property:</p>
           <figure>
-            <pre class="prettyprint">computed: mapGetters(['allImages',  'isLoggedIn']),</pre>
+            <pre><code class="language-javascript">computed: mapGetters(['allImages',  'isLoggedIn']),</code></pre>
             <figcaption>Fig 07-033B</figcaption>
           </figure>
-          <p>We use a <code class="prettyprint">computed</code> property to read information into our component and make
+          <p>We use a <code class="language-">computed</code> property to read information into our component and make
             it accessible from our actual template. Now that we've got the list of images inside of here we can
             reference that list of images inside of our template as we please. So for now, I'll just print out the
             number of images that are being fetched from the API:
           </p>
           <figure>
-                    <pre v-pre class="prettyprint">&lt;template&gt;
+          <pre v-pre><code class="language-html">&lt;template&gt;
     &lt;div&gt;
         Image List
 
         {{ allImages.length }}
     &lt;/div&gt;
-&lt;/template&gt;</pre>
+&lt;/template&gt;</code></pre>
             <figcaption>Fig 07-034</figcaption>
           </figure>
           <p>If you now view the application now you should see the number of images returned from the API:</p>
@@ -539,32 +538,37 @@ export default {
             just want to get some temporary solution in here. We'll then go and take care of the UploadForm and then
             we're going to come back to this once we have the ability to upload a lot of images and we'll do something
             way more interesting to display our images on the screen. Firstly, clear out the contents of the <code
-              class="prettyprint">div</code> in the ImageList component and replace it with the following code:</p>
+              class="language-">div</code> in the ImageList component and replace it with the following code:</p>
           <figure>
-<pre class="prettyprint">&lt;template&gt;
+<pre><code class="language-html">&lt;template&gt;
     &lt;div&gt;
         &lt;img v-for=&quot;image in allImages&quot; :src=&quot;image.link&quot; /&gt;
     &lt;/div&gt;
-&lt;/template&gt;</pre>
+  &lt;/template&gt;</code></pre>
             <figcaption>Fig 07-036</figcaption>
           </figure>
-          <p>We use the <code class="prettyprint">v-for</code> directive to loop over all the different images that we
-            fetch and display one <code class="prettyprint">img</code> tag for each image. Remember how we use the <code
-              class="prettyprint">v-for</code> directive - we write out <code
-              class="prettyprint">v-for</code> and then a temporary variable name (in this case <code
-              class="prettyprint">image</code> ), then the <code
-              class="prettyprint"> in</code> keyword, then the name of the collection of records that we want to iterate
+          <p>We use the <code class="language-">v-for</code> directive to loop over all the different images that we
+            fetch and display one <code class="language-">img</code> tag for each image. Remember how we use the <code
+              class="language-">v-for</code> directive - we write out <code
+              class="language-">v-for</code> and then a temporary variable name (in this case <code
+              class="language-">image</code> ), then the <code
+              class="language-"> in</code> keyword, then the name of the collection of records that we want to iterate
             over which in this case is <code
-              class="prettyprint">allImages</code> Then inside the tag that contains the <code
-              class="prettyprint">v-for</code> directive we can use the temporary variable (<code class="prettyprint">image</code>)
-            for any other purpose we might want. So in the context of an <code class="prettyprint">img</code> tag we
-            probably want to define the <code class="prettyprint">src</code> property. Remember that anytime we want to
-            pass in a <code class="prettyprint">src</code> property or any Html property to an element and we want to
+              class="language-">allImages</code> Then inside the tag that contains the <code
+              class="language-">v-for</code> directive we can use the temporary variable (<code class="language-">image</code>)
+            for any other purpose we might want. So in the context of an <code class="language-">img</code> tag we
+            probably want to define the <code class="language-">src</code> property. Remember that anytime we want to
+            pass in a <code class="language-">src</code> property or any Html property to an element and we want to
             ensure that the property comes from a variable we have to make use of the <code
-              class="prettyprint">v-bind</code> syntax. If we now view this in the browser we should see the image is
+              class="language-">v-bind</code> syntax. If we now view this in the browser we should see the image is
             displaying as expected.</p>
         </div>
       </div>
     </div>
   </div>
 </template>
+<style scoped>
+  img {
+    max-width: 100%;
+  }
+</style>

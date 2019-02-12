@@ -41,12 +41,12 @@
           the window object:</p>
 
           <figure>
-            <pre class="prettyprint">window.console.log</pre>
+            <pre><code class="language-javascript">window.console.log</code></pre>
             <figcaption>Fig 02-001</figcaption>
           </figure>
           <p>or</p>
           <figure>
-            <pre class="prettyprint">console.log</pre>
+            <pre><code class="language-javascript">console.log</code></pre>
             <figcaption>Fig 02-002</figcaption>
           </figure>
 
@@ -56,7 +56,7 @@
             call</p>
 
           <figure>
-            <pre class="prettyprint">window.setTimeout</pre>
+            <pre><code class="language-javascript">window.setTimeout</code></pre>
             <figcaption>Fig 02-003</figcaption>
           </figure>
 
@@ -65,14 +65,14 @@
             Node is that a variable declared like this:</p>
 
           <figure>
-            <pre class="prettyprint">var message = '';</pre>
+            <pre><code class="language-javascript">var message = '';</code></pre>
             <figcaption>Fig 02-004</figcaption>
           </figure>
 
           <p>is not added to the global object. So, in Node,  if we wrote:</p>
 
           <figure>
-            <pre class="prettyprint">console.log(global.message);</pre>
+            <pre><code class="language-javascript">console.log(global.message);</code></pre>
             <figcaption>Fig 02-005</figcaption>
           </figure>
 
@@ -85,11 +85,10 @@
           scope:</p>
 
           <figure>
-          <pre class="prettyprint">var sayHello = function() {
+          <pre><code class="language-javascript">var sayHello = function() {
 
 }
-
-window.sayHello();</pre>
+window.sayHello();</code></pre>
             <figcaption>Fig 02-005</figcaption>
           </figure>
 
@@ -115,7 +114,7 @@ window.sayHello();</pre>
           <p>If we write out the module object to the console:</p>
 
           <figure>
-            <pre class="prettyprint">console.log(module)</pre>
+            <pre><code class="language-javascript">console.log(module)</code></pre>
             <figcaption>Fig 02-006</figcaption>
           </figure>
 
@@ -123,18 +122,18 @@ window.sayHello();</pre>
           filename, loaded etc:</p>
 
           <figure>
-          <pre class="prettyprint">Module {
-id: '.',
-exports: {},
-parent: null,
-filename: 'C:\\DevelopmentTutorials\\TheCompleteNodeJSCourse\\02-node-module-system\\12-modules.js',
-loaded: false,
-children: [],
-paths:
-[ 'C:\\DevelopmentTutorials\\TheCompleteNodeJSCourse\\02-node-module-system\\node_modules',
-'C:\\DevelopmentTutorials\\TheCompleteNodeJSCourse\\node_modules',
-'C:\\DevelopmentTutorials\\node_modules',
-'C:\\node_modules' ] }</pre>
+          <pre><code class="language-json">Module {
+  id: '.',
+  exports: {},
+  parent: null,
+  filename: 'C:\\DevelopmentTutorials\\TheCompleteNodeJSCourse\\02-node-module-system\\12-modules.js',
+  loaded: false,
+  children: [],
+  paths:
+    [ 'C:\\DevelopmentTutorials\\TheCompleteNodeJSCourse\\02-node-module-system\\node_modules',
+      'C:\\DevelopmentTutorials\\TheCompleteNodeJSCourse\\node_modules',
+      'C:\\DevelopmentTutorials\\node_modules',
+      'C:\\node_modules' ] }</code></pre>
             <figcaption>Fig 02-007</figcaption>
           </figure>
 
@@ -147,7 +146,7 @@ paths:
           we can send an http request to log a message:</p>
 
           <figure>
-            <pre class="prettyprint">var url = 'http://mylogger.io/log';</pre>
+            <pre><code class="language-javascript">var url = 'http://mylogger.io/log';</code></pre>
             <figcaption>Fig 02-008</figcaption>
           </figure>
 
@@ -155,9 +154,9 @@ paths:
           For now, for simplicity, we will just write the message to the console:</p>
 
           <figure>
-          <pre class="prettyprint">function log(message) {
-                      // Send an HTTP request
-                    }</pre>
+          <pre><code class="language-javascript">function log(message) {
+  // Send an HTTP request
+}</code></pre>
             <figcaption>Fig 02-009</figcaption>
           </figure>
 
@@ -171,7 +170,7 @@ paths:
           an empty object. Anything that we add to this object will be exported from the module:</p>
 
           <figure>
-            <pre class="prettyprint">module.exports.log = log;</pre>
+            <pre><code class="language-javascript">module.exports.log = log;</code></pre>
             <figcaption>Fig 02-010</figcaption>
           </figure>
 
@@ -179,14 +178,14 @@ paths:
           following:</p>
 
           <figure>
-            <pre class="prettyprint">module.exports.url = url;</pre>
+            <pre><code class="language-javascript">module.exports.url = url;</code></pre>
             <figcaption>Fig 02-011</figcaption>
           </figure>
 
           <p>We can change the name that get's exported:</p>
 
           <figure>
-            <pre class="prettyprint">module.exports.endPoint = url;</pre>
+            <pre><code class="language-javascript">module.exports.endPoint = url;</code></pre>
             <figcaption>Fig 02-012</figcaption>
           </figure>
 
@@ -197,7 +196,7 @@ paths:
           <p>To load a module we use the require function:</p>
 
           <figure>
-            <pre class="prettyprint">require('./13-logger');</pre>
+            <pre><code class="language-javascript">require('./13-logger');</code></pre>
             <figcaption>Fig 02-013</figcaption>
           </figure>
 
@@ -208,14 +207,14 @@ paths:
           <p>If the file was in a subfolder we could specify:</p>
 
           <figure>
-            <pre class="prettyprint">require('./subFolder/logger');</pre>
+            <pre><code class="language-javascript">require('./subFolder/logger');</code></pre>
             <figcaption>Fig 02-014</figcaption>
           </figure>
 
           <p>or if the file was in a parent folder:</p>
 
           <figure>
-            <pre class="prettyprint">require('../logger');</pre>
+            <pre><code class="language-javascript">require('../logger');</code></pre>
             <figcaption>Fig 02-015</figcaption>
           </figure>
 
@@ -224,9 +223,9 @@ paths:
           <p>To demonstrate write the following:</p>
 
           <figure>
-          <pre class="prettyprint">var logger = require('./logger');
+          <pre><code class="language-javascript">var logger = require('./logger');
 
-                    console.log(logger);</pre>
+console.log(logger);</code></pre>
             <figcaption>Fig 02-016</figcaption>
           </figure>
 
@@ -234,7 +233,7 @@ paths:
           a function. We can now call this function in app.js:</p>
 
           <figure>
-            <pre class="prettyprint">logger.log('message');</pre>
+            <pre><code class="language-">logger.log('message');</code></pre>
             <figcaption>Fig 02-017</figcaption>
           </figure>
 
@@ -243,14 +242,14 @@ paths:
           result in constant:</p>
 
           <figure>
-            <pre class="prettyprint">const logger = require('./13-logger');</pre>
+            <pre><code class="language-">const logger = require('./13-logger');</code></pre>
             <figcaption>Fig 02-018</figcaption>
           </figure>
 
           <p>This prevents us from accidentally overwriting the value of logger:</p>
-
+a
           <figure>
-            <pre class="prettyprint">logger = 1;</pre>
+            <pre><code class="language-">logger = 1;</code></pre>
             <figcaption>Fig 02-019</figcaption>
           </figure>
 
@@ -263,14 +262,14 @@ paths:
           single function:</p>
 
           <figure>
-            <pre class="prettyprint">module.exports = log;</pre>
+            <pre><code class="language-">module.exports = log;</code></pre>
             <figcaption>Fig 02-020</figcaption>
           </figure>
 
           <p>then in app.js call the function directly:</p>
 
           <figure>
-            <pre class="prettyprint">logger('message');</pre>
+            <pre><code class="language-javascript">logger('message');</code></pre>
             <figcaption>Fig 02-021</figcaption>
           </figure>
 
@@ -281,16 +280,16 @@ paths:
           line of logger.js (this must be on the first line):</p>
 
           <figure>
-            <pre class="prettyprint">var x=;</pre>
+            <pre><code class="language-javascript">var x=;</code></pre>
             <figcaption>Fig 02-022</figcaption>
           </figure>
 
           <p>If you run logger.js you will receive the following error:</p>
 
           <figure>
-          <pre class="prettyprint">(function (exports, require, module, __filename, __dirname) { var x =;
+          <pre><code class="language-javascript">(function (exports, require, module, __filename, __dirname) { var x =;
 
-                    SyntaxError: Unexpected token ;</pre>
+            SyntaxError: Unexpected token ;</code></pre>
             <figcaption>Fig 02-023</figcaption>
           </figure>
 
@@ -302,16 +301,16 @@ paths:
           our code will look similar to this (we will remove the syntax error):</p>
 
           <figure>
-          <pre class="prettyprint">(function (exports, require, module, __filename, __dirname) {
-                    var url = 'http://mylogger.io/log';
+          <pre><code class="language-javascript">(function (exports, require, module, __filename, __dirname) {
+  var url = 'http://mylogger.io/log';
 
-                    function log(message) {
-                      // Send an HTTP request
-                      console.log(message);
-                    }
+  function log(message) {
+    // Send an HTTP request
+    console.log(message);
+  }
 
-                      module.exports = log;
-                    })</pre>
+  module.exports = log;
+})</code></pre>
             <figcaption>Fig 02-024</figcaption>
           </figure>
 
@@ -328,21 +327,21 @@ paths:
           previously. The exports parameter is a shortcut to module.exports so we could write:</p>
 
           <figure>
-            <pre class="prettyprint">module.exports.log = log;</pre>
+            <pre><code class="language-javascript">module.exports.log = log;</code></pre>
             <figcaption>Fig 02-025</figcaption>
           </figure>
 
           <p>or</p>
 
           <figure>
-            <pre class="prettyprint">exports.log = log;</pre>
+            <pre><code class="language-javascript">exports.log = log;</code></pre>
             <figcaption>Fig 02-026</figcaption>
           </figure>
 
           <p>However you can't reset exports like this:</p>
 
           <figure>
-            <pre class="prettyprint">exports = log; // module.exports</pre>
+            <pre><code class="language-javascript">exports = log; // module.exports</code></pre>
             <figcaption>Fig 02-027</figcaption>
           </figure>
 
@@ -350,10 +349,10 @@ paths:
           file and the path. Let's take a look:</p>
 
           <figure>
-          <pre class="prettyprint">console.log(__filename);
+          <pre><code class="language-javascript">console.log(__filename);
 console.log(__dirname);
 
-__dirname returns a path to the directory that contains that module.</pre>
+__dirname returns a path to the directory that contains that module.</code></pre>
             <figcaption>Fig 02-028</figcaption>
           </figure>
 
@@ -372,15 +371,15 @@ __dirname returns a path to the directory that contains that module.</pre>
             <li>Stream - for working with streams of data.</li>
           </ul>
 
-          <p>In this section we will investigate the Path module. If you run 16-path-module.js
+          <p>In this section we will investigate the Path module. If you run <span class="filename">16-path-module.js</span>
           you will get the following information:</p>
 
           <figure>
-          <pre class="prettyprint">{ root: 'C:\\',
-                    dir: 'C:\\DevelopmentTutorials\\TheCompleteNodeJSCourse\\02-node-module-system',
-                    base: '16-path-module.js',
-                    ext: '.js',
-                    name: '16-path-module' }</pre>
+          <pre><code class="language-javascript">{ root: 'C:\\',
+    dir: 'C:\\DevelopmentTutorials\\TheCompleteNodeJSCourse\\02-node-module-system',
+    base: '16-path-module.js',
+    ext: '.js',
+name: '16-path-module' }</code></pre>
             <figcaption>Fig 02-029</figcaption>
           </figure>
 
@@ -397,8 +396,8 @@ __dirname returns a path to the directory that contains that module.</pre>
           <p>If you run 17-os-module.js you will get the following information:</p>
 
           <figure>
-          <pre class="prettyprint">Total Memory: 17081073664
-                    Free Memory: 10441883648</pre>
+          <pre class="terminal">Total Memory: 17081073664
+Free Memory: 10441883648</pre>
             <figcaption>Fig 02-030</figcaption>
           </figure>
 
@@ -426,30 +425,30 @@ __dirname returns a path to the directory that contains that module.</pre>
           function returns an EventEmitter class (hence the casing):</p>
 
           <figure>
-            <pre class="prettyprint">const EventEmitter = require('events');</pre>
+            <pre><code class="language-javascript">const EventEmitter = require('events');</code></pre>
             <figcaption>Fig 02-031</figcaption>
           </figure>
 
           <p>We then create an instance of the EventEmitter class:</p>
 
           <figure>
-            <pre class="prettyprint">const emitter = new EventEmitter();</pre>
+            <pre><code class="language-javascript">const emitter = new EventEmitter();</code></pre>
             <figcaption>Fig 02-032</figcaption>
           </figure>
 
           <p>The emit method raises an event:</p>
 
           <figure>
-            <pre class="prettyprint">emitter.emit('messageLogged');</pre>
+            <pre><code class="language-javascript">emitter.emit('messageLogged');</code></pre>
             <figcaption>Fig 02-033</figcaption>
           </figure>
 
           <p>In order to respond to the event being raised we need to register a listener:</p>
 
           <figure>
-          <pre class="prettyprint">emitter.on('messageLogged', function() {
-                      console.log('Listener called');
-                    });</pre>
+          <pre><code class="language-javascript">emitter.on('messageLogged', function() {
+  console.log('Listener called');
+});</code></pre>
             <figcaption>Fig 02-034</figcaption>
           </figure>
 
@@ -467,7 +466,7 @@ __dirname returns a path to the directory that contains that module.</pre>
           directly. When raising an event, we can add additional arguments, referred to as event arguments:</p>
 
           <figure>
-            <pre class="prettyprint">emitter.emit('messageLogged', 1, 'url');</pre>
+            <pre><code class="language-javascript">emitter.emit('messageLogged', 1, 'url');</code></pre>
             <figcaption>Fig 02-035</figcaption>
           </figure>
 
@@ -475,16 +474,16 @@ __dirname returns a path to the directory that contains that module.</pre>
           values inside an object:</p>
 
           <figure>
-            <pre class="prettyprint">emitter.emit('messageLogged', {id: 1, url: 'http://' });</pre>
+            <pre><code class="language-javascript">emitter.emit('messageLogged', {id: 1, url: 'http://' });</code></pre>
             <figcaption>Fig 02-036</figcaption>
           </figure>
 
           <p>When registering the listener the callback function can also recieve the event argument:</p>
 
           <figure>
-          <pre class="prettyprint">emitter.on('messageLogged', function(arg) {
-                      console.log('Listener called');
-                    });</pre>
+          <pre><code class="language-javascript">emitter.on('messageLogged', function(arg) {
+  console.log('Listener called');
+});</code></pre>
             <figcaption>Fig 02-037</figcaption>
           </figure>
 
@@ -504,7 +503,7 @@ __dirname returns a path to the directory that contains that module.</pre>
           <p>We create a class in 21-logger.js called Logger that extends the EventEmitter class:</p>
 
           <figure>
-            <pre class="prettyprint">class Logger extends EventEmitter {</pre>
+            <pre><code class="language-javascript">class Logger extends EventEmitter {</code></pre>
             <figcaption>Fig 02-038</figcaption>
           </figure>
 
@@ -539,16 +538,16 @@ __dirname returns a path to the directory that contains that module.</pre>
               scope. So, variables and functions defined in one file are only scoped to that file
               and not visible to other files unless explicitly exported.</li>
             <li>To export a variable or function from a module, you need to add them to
-              module.exports: <pre class="prettyprint">module.exports.sayHello = sayHello;</pre></li>
+              module.exports: <code class="language-">module.exports.sayHello = sayHello;</code></li>
             <li>To load a module, use the require function. This function returns the
               module.exports object exported from the target module:
-              <pre class="prettyprint">const logger = require(‘./logger’);</pre></li>
+              <code class="language-">const logger = require(‘./logger’);</code></li>
             <li>Node has a few built-in modules that enable us to work with the file system, path
               objects, network, operating system, etc.</li>
             <li>EventEmitter is one of the core classes in Node that allows us to raise (emit) and
               handle events. Several built-in classes in Node derive from EventEmitter.</li>
             <li>To create a class with the ability to raise events, we should extend EventEmitter:
-              <pre class="prettyprint">class Logger extends EventEmitter { }</pre></li>
+              <code class="language-">class Logger extends EventEmitter { }</code></li>
           </ul>
         </div>
       </div>

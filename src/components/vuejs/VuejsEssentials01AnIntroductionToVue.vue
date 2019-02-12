@@ -1151,15 +1151,15 @@ Output:
   </div>
 </template>
 
-<script>
-import Prism from 'vue-prism-component';
-export default {
-  name: 'VuejsEssentials01AnIntroductionToVue',
-  components: {
-    Prism
-  }
-}
-</script>
+<!--<script>-->
+<!--import Prism from 'vue-prism-component';-->
+<!--export default {-->
+  <!--name: 'VuejsEssentials01AnIntroductionToVue',-->
+  <!--components: {-->
+    <!--Prism-->
+  <!--}-->
+<!--}-->
+<!--</script>-->
 
 <style scoped>
   img {

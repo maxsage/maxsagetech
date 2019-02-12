@@ -236,8 +236,8 @@
           <ul>
             <li>Number: Floating point numbers, for decimals and integers</li>
             <li>String: Sequence of characters, used for text</li>
-            <li>Boolean: Logical data type that can only be <code class="prettyprint">true</code> or <code
-              class="prettyprint">false</code>
+            <li>Boolean: Logical data type that can only be <code class="language-">true</code> or <code
+              class="language-">false</code>
             </li>
             <li>Undefined: Data type of a variable that does not have a value yet</li>
             <li>Null: Also means 'non-existent'</li>
@@ -256,9 +256,9 @@
             declarations:
           </p>
           <figure>
-          <pre class="prettyprint">var _3years = 3;
-var john/mark = 'John and MArk';
-var if = 23;</pre>
+          <pre><code class="language-javascript">var _3years = 3;
+var john/mark = 'John and Mark';
+var if = 23;</code></pre>
             <figcaption>Fig 01-001</figcaption>
           </figure>
           <p>In the second example the symbol appears in the middle of the variable name but this still throws an
@@ -267,17 +267,17 @@ var if = 23;</pre>
           <h4>Variable Mutation and Type Coercion</h4>
           <p>Comments exist in all programming languages. In Javascript there are single and multi-line comments:</p>
           <figure>
-          <pre class="prettyprint">// Single line comment
+          <pre><code class="language-javascript">// Single line comment
 
 /* A comment
  that extends over multiple
 lines
-*/</pre>
+*/</code></pre>
             <figcaption>Fig 01-002</figcaption>
           </figure>
           <p>Consider the following code:</p>
           <figure>
-<pre class="prettyprint">/************************************
+<pre><code class="language-javascript">/************************************
 * Variable mutation and type coercion
 *************************************/
 
@@ -285,7 +285,7 @@ var firstName = 'John';
 var age = 28;
 
 // Type coercion
-console.log(firstName + ' ' + age);</pre>
+  console.log(firstName + ' ' + age);</code></pre>
             <figcaption>Fig 01-003</figcaption>
           </figure>
           <p>Will output the following to the console:</p>
@@ -293,7 +293,7 @@ console.log(firstName + ' ' + age);</pre>
             <pre class="terminal">John 28</pre>
             <figcaption>Fig 01-004</figcaption>
           </figure>
-          <p>The <code class="prettyprint">age</code> variable is a number but is output as a string thanks to a
+          <p>The <code class="language-">age</code> variable is a number but is output as a string thanks to a
             Javascript feature called type coercion - which means Javascript automatically converts types from one to
             another as required. Other programming languages (e.g. C#) are not like this, we would need to explicitly
             convert the variables to a different type (e.g. ToString()). This is just one example of type coercion - we
@@ -301,7 +301,7 @@ console.log(firstName + ' ' + age);</pre>
           </p>
           <p>Consider the following code:</p>
           <figure>
-          <pre class="prettyprint">/************************************
+          <pre><code class="language-javascript">/************************************
 * Variable mutation and type coercion
 *************************************/
 
@@ -315,7 +315,7 @@ var job, isMarried;
 job = 'teacher';
 isMarried = false;
 
-console.log(firstName + ' is a ' + age + ' year old ' + job + '. Is he married? ' + isMarried);</pre>
+console.log(firstName + ' is a ' + age + ' year old ' + job + '. Is he married? ' + isMarried);</code></pre>
             <figcaption>Fig 01-005</figcaption>
           </figure>
           <p>Will output the following:</p>
@@ -325,12 +325,12 @@ John is a 28 year old teacher. Is he married? false</pre>
             <figcaption>Fig 01-006</figcaption>
           </figure>
           <p>We can define multiple variables on one line and then define them later on. Notice in the <code
-            class="prettyprint">console.log</code> command the boolean <code class="prettyprint">isMarried</code> also
+            class="language-">console.log</code> command the boolean <code class="language-">isMarried</code> also
             get's converted to a string. Comment out the isMarried declaration:</p>
           <figure>
-          <pre class="prettyprint">//isMarried = false;
+          <pre><code class="language-javascript">//isMarried = false;
 
-console.log(firstName + ' is a ' + age + ' year old ' + job + '. Is he married? ' + isMarried);</pre>
+console.log(firstName + ' is a ' + age + ' year old ' + job + '. Is he married? ' + isMarried);</code></pre>
             <figcaption>Fig 01-007</figcaption>
           </figure>
           <p>Will output the following:</p>
@@ -339,11 +339,11 @@ console.log(firstName + ' is a ' + age + ' year old ' + job + '. Is he married? 
 John is a 28 year old teacher. Is he married? undefined</pre>
             <figcaption>Fig 01-008</figcaption>
           </figure>
-          <p>This illustrates that event the <code class="prettyprint">undefined</code> data type get's coerced to a
+          <p>This illustrates that event the <code class="language-">undefined</code> data type get's coerced to a
             string.</p>
           <p>Let's look at variable mutation. Consider the following code:</p>
           <figure>
-<pre class="prettyprint">// Variable mutation
+<pre><code class="language-javascript">// Variable mutation
 var firstName = 'John';
 var age = 28;
 var isMarried = false;
@@ -353,21 +353,21 @@ job = 'driver';
 alert(firstName + ' is a ' + age + ' year old ' + job + '. Is he married? ' + isMarried);
 
 var lastName = prompt('What is his last Name?');
-console.log(firstName + ' ' + lastName);</pre>
+  console.log(firstName + ' ' + lastName);</code></pre>
             <figcaption>Fig 01-009</figcaption>
           </figure>
           <p>Variable mutation means to change the value of a variable. In this example we redefine the <code
-            class="prettyprint">age</code> variable from a number to a string. We also introduced the <code
-            class="prettyprint">alert</code> command which displays a popup window over the top of the browser window
-            and the <code class="prettyprint">prompt</code> command which prompts the user for some input which we
-            assign to the <code class="prettyprint">lastName</code> variable.
+            class="language-">age</code> variable from a number to a string. We also introduced the <code
+            class="language-">alert</code> command which displays a popup window over the top of the browser window
+            and the <code class="language-">prompt</code> command which prompts the user for some input which we
+            assign to the <code class="language-">lastName</code> variable.
           </p>
           <h4>Basic Operators</h4>
           <p>Let's now learn about a couple of basic Javascript operators. Consider the following code:</p>
           <figure>
-          <pre class="prettyprint">/*****************************
-* Basic operators
-*/
+          <pre><code class="language-javascript">/*****************************
+ * Basic operators           *
+******************************/
 var now, yearJohn, yearMark;
 now = 2018;
 ageJohn = 28;
@@ -392,7 +392,7 @@ console.log(typeof johnOlder);
 console.log(typeof ageJohn);
 console.log(typeof 'Mark is older tha John');
 var x;
-console.log(typeof x);</pre>
+            console.log(typeof x);</code></pre>
           <figcaption>Fig 01-010</figcaption>
           </figure>
           <p>The code above illustrates some Javascript basic operators (-, +, *, / etc.) and logical operators (&gt;,
@@ -430,10 +430,13 @@ console.log(typeof x);</pre>
 
 <script>
 export default {
-  name: 'TheCompleteJavascriptCourse.vue'
+  name: 'TheCompleteJavascriptCourse'
 }
 </script>
 
 <style scoped>
+  img {
+    max-width: 100%;
+  }
 
 </style>

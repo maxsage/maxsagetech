@@ -616,15 +616,15 @@ var _c = _vm._self._c || _h</code></pre>
   </div>
 </template>
 
-<script>
-import Prism from 'vue-prism-component';
-export default {
-  name: 'VuejsEssentials02MovingOnWithVueCLI.vue',
-  components: {
-    Prism
-  }
-}
-</script>
+<!--<script>-->
+<!--import Prism from 'vue-prism-component';-->
+<!--export default {-->
+  <!--name: 'VuejsEssentials02MovingOnWithVueCLI.vue',-->
+  <!--components: {-->
+    <!--Prism-->
+  <!--}-->
+<!--}-->
+<!--</script>-->
 
 <style scoped>
   img {

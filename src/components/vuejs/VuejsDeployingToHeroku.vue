@@ -30,7 +30,7 @@
             tutorial):
           </p>
           <figure>
-          <pre class="prettyprint">npm install --global vue-cli
+          <pre class="terminal">npm install --global vue-cli
 vue init webpack &lt;YOUR-PROJECT-NAME-HERE&gt;
 cd &lt;YOUR-PROJECT-NAME-HERE&gt;
 npm install npm run dev</pre>
@@ -41,12 +41,12 @@ npm install npm run dev</pre>
           </p>
           <p>Make sure your browser window opens and displays the starter project.</p>
           <h3>2. Create Your Heroku App</h3>
-          <p>Heroku is a platform that let’s us easily deploy and host our Vue.js app. If you haven’t already, sign up
+          <p>Heroku is a platform that let’s us easily deploy and host our VueJS app. If you haven’t already, sign up
             for a Heroku account here. Then, install Heroku’s CLI tool via the instructions <a
               href="https://dashboard.heroku.com">here</a>. Then, let’s create our Heroku app:
           </p>
           <figure>
-            <pre class="prettyprint">heroku create &lt;YOUR-PROJECT-NAME-HERE&gt;</pre>
+            <pre class="terminal">heroku create &lt;YOUR-PROJECT-NAME-HERE&gt;</pre>
             <figcaption>Fig 01-002</figcaption>
           </figure>
           <p>When this is done, you’ll get a fresh URL to your project, i.e. https:// &lt;YOUR-PROJECT-NAME-HERE&gt;.herokuapp.com.
@@ -56,7 +56,7 @@ npm install npm run dev</pre>
             let’s go ahead and set the NODE_ENV setting to production:
           </p>
           <figure>
-            <pre class="prettyprint">heroku config:set NODE_ENV=production --app &lt;YOUR-PROJECT-NAME-HERE&gt;</pre>
+            <pre class="terminal">heroku config:set NODE_ENV=production --app &lt;YOUR-PROJECT-NAME-HERE&gt;</pre>
             <figcaption>Fig 01-003</figcaption>
           </figure>
           <h3>3. Create a server.js and Build Your Site</h3>
@@ -65,12 +65,12 @@ npm install npm run dev</pre>
             Express if you haven’t already. After that, add express:
           </p>
           <figure>
-            <pre class="prettyprint">npm install express --save</pre>
+            <pre class="terminal">npm install express --save</pre>
             <figcaption>Fig 01-004</figcaption>
           </figure>
           <p>Now add a server.js file to your project’s root directory:</p>
           <figure>
-          <pre class="prettyprint">// server.js
+          <pre><code class="language-javascript">// server.js
 
 var express = require('express');
 var path = require('path');
@@ -80,7 +80,7 @@ app = express(); app.use(serveStatic(__dirname + &quot;/dist&quot;));
 var port = process.env.PORT || 5000;
 
 app.listen(port);
-console.log('server started '+ port);</pre>
+console.log('server started '+ port);</code></pre>
             <figcaption>Fig 01-005</figcaption>
           </figure>
           <p><strong>IMPORTANT: What you probably noticed is that this will serve up a dist directory.</strong> dist is
@@ -88,13 +88,13 @@ console.log('server started '+ port);</pre>
             this and then tell Heroku to run server.js so Heroku hosts up this dist directory:
           </p>
           <figure>
-            <pre class="prettyprint">npm run build</pre>
+            <pre class="terminal">npm run build</pre>
             <figcaption>Fig 01-006</figcaption>
           </figure>
           <p>You should see an output dist directory now.</p>
           <p>Let’s test our server.js file by running it:</p>
           <figure>
-            <pre class="prettyprint">node server.js</pre>
+            <pre class="terminal">node server.js</pre>
             <figcaption>Fig 01-007</figcaption>
           </figure>
           <p>Now go to http://localhost:5000 and make sure your app loads. This is the actual site Heroku will serve up.
@@ -104,7 +104,7 @@ console.log('server started '+ port);</pre>
           </p>
 
           <figure>
-          <pre class="prettyprint">// package.json
+          <pre><code class="language-json">// package.json
 {
   &quot;name&quot;: &quot;&lt;YOUR-PROJECT-NAME-HERE&gt;&quot;,
   &quot;version&quot;: &quot;1.0.0&quot;,
@@ -115,7 +115,7 @@ console.log('server started '+ port);</pre>
     &quot;dev&quot;: &quot;node build/dev-server.js&quot;,
     &quot;build&quot;: &quot;node build/build.js&quot;,
     &quot;start&quot;: &quot;node server.js&quot;, &lt;--- EDIT THIS LINE HERE
-...</pre>
+...</code></pre>
             <figcaption>Fig 01-008</figcaption>
           </figure>
           <h3>4. Git Init and Add Your Heroku Remote</h3>
@@ -123,19 +123,19 @@ console.log('server started '+ port);</pre>
             repository:
           </p>
           <figure>
-            <pre class="prettyprint">git init</pre>
+            <pre class="terminal">&gt;git init</pre>
             <figcaption>Fig 01-009</figcaption>
           </figure>
           <p>Now let’s add our Heroku remote repository:</p>
           <figure>
-            <pre class="prettyprint">heroku git:remote --app &lt;YOUR-PROJECT-NAME-HERE&gt;</pre>
+            <pre class="terminal">heroku git:remote --app &lt;YOUR-PROJECT-NAME-HERE&gt;</pre>
             <figcaption>Fig 01-009</figcaption>
           </figure>
           <p>Let’s keep our generated dist directory so that we can always keep a pristine copy of what we’ve deployed
             to Heroku by removing dist/ from .gitigore
           </p>
           <figure>
-          <pre class="prettyprint">.DS_Store
+          <pre class="language-git">.DS_Store
 node_modules/ dist/ &lt;--- REMOVE THIS LINE
 npm-debug.log*
 yarn-debug.log*
@@ -154,13 +154,13 @@ selenium-debug.log
           </figure>
           <p>Now, most importantly, let’s add and commit our code files:</p>
           <figure>
-            <pre class="prettyprint">git add . &amp;&amp; git commit -a -m &quot;Adding files.&quot;</pre>
+            <pre class="terminal">git add . &amp;&amp; git commit -a -m &quot;Adding files.&quot;</pre>
             <figcaption>Fig 01-011</figcaption>
           </figure>
           <h3>5. Push Your Code to Deploy!</h3>
           <p>Now all we need to deploy to Heroku is:</p>
           <figure>
-            <pre class="prettyprint">git push heroku master</pre>
+            <pre class="terminal">git push heroku master</pre>
             <figcaption>Fig 01-012</figcaption>
           </figure>
           <p>This will take our committed code, push it to Heroku’s remote repository, run our start command in
@@ -173,7 +173,7 @@ selenium-debug.log
           <h3>6. Updating your site</h3>
           <p>When you make further modifications to the app run the following to push them to heroku:</p>
           <figure>
-          <pre class="prettyprint">npm run build
+          <pre class="terminal">npm run build
 git add .
 git commit -m &quot;update&quot;
 git push heroku master</pre>
@@ -186,7 +186,7 @@ git push heroku master</pre>
           <h3>Git Bash</h3>
           <p>To change directory in Git Bash:</p>
           <figure>
-            <pre class="prettyprint">cd /c/Development/maxsagetech</pre>
+            <pre class="terminal">cd /c/Development/maxsagetech</pre>
             <figcaption>Fig 01-014</figcaption>
           </figure>
           <h3>Node</h3>
@@ -194,19 +194,19 @@ git push heroku master</pre>
             that matches the runtime you're developing with. To find this use:
           </p>
           <figure>
-            <pre class="prettyprint">node --version</pre>
+            <pre class="terminal">node --version</pre>
             <figcaption>Fig 01-015</figcaption>
           </figure>
           <p>Which will return something like:</p>
           <figure>
-            <pre class="prettyprint">v8.11.2</pre>
+            <pre class="terminal">v8.11.2</pre>
             <figcaption>Fig 01-016</figcaption>
           </figure>
           <p>Specify this in the package.json like so:</p>
           <figure>
-<pre class="prettyprint">&quot;engines&quot;: {
+<pre><code class="language-json">&quot;engines&quot;: {
   &quot;node&quot;: &quot;8.11.2&quot;
-},</pre>
+},</code></pre>
             <figcaption>Fig 01-017</figcaption>
           </figure>
           <h3>Fixing the "cannot GET /URL" error on refresh with Client Side Routers</h3>
@@ -214,11 +214,11 @@ git push heroku master</pre>
             Router in conjunction with a basic express configuration when deploying to heroku. If you browse to a route
             e.g. <a target="_blank" href="https://maxsagetech.herokuapp.com/vuejsessentials-01-an-introduction-to-vue">https
               ://maxsagetech.herokuapp.com/vuejsdeployingtoheroku</a>
-            using the links in the application (behind the scenes these use <code class="prettyprint">&lt;router-link&gt;</code>)
+            using the links in the application (behind the scenes these use <code class="language-">&lt;router-link&gt;</code>)
             and then hit refresh you will see get an error message:
           </p>
           <figure>
-            <pre class="prettyprint">Cannot GET /vuejsdeployingtoheroku</pre>
+            <pre class="terminal">Cannot GET /vuejsdeployingtoheroku</pre>
             <figcaption>Fig 01-018</figcaption>
           </figure>
           <p>This is an error that can occur with all CSR - not just Vue Router. Let's use React as an example. The
@@ -242,7 +242,7 @@ git push heroku master</pre>
             href="https://forum.vuejs.org/t/how-do-i-implement-connect-history-api-fallback-so-that-url-paths-redirect-to-index-html/10938/2">
             How do I implement `connect-history-api-fallback` so that URL paths redirect to index.html?
           </a>
-          <p>It involves installing <code class="prettyprint">connect-history-api-fallback</code> and configuring your
+          <p>It involves installing <code class="terminal">connect-history-api-fallback</code> and configuring your
             server.js express configuration file to use it.
           </p>
         </div>

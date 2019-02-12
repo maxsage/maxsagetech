@@ -2386,16 +2386,16 @@ export default {
   </div>
 </template>
 
-<script>
-  import Prism from 'vue-prism-component';
+<!--<script>-->
+  <!--import Prism from 'vue-prism-component';-->
 
-  export default {
-    name: 'VuejsEssentialsWritingEffectiveApps.vue',
-    components: {
-      Prism
-    }
-  }
-</script>
+  <!--export default {-->
+    <!--name: 'VuejsEssentialsWritingEffectiveApps.vue',-->
+    <!--components: {-->
+      <!--Prism-->
+    <!--}-->
+  <!--}-->
+<!--</script>-->
 
 <style scoped>
   img {
