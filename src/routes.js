@@ -5,8 +5,7 @@ import Javascript from './components/javascript/Javascript.vue'
 import TheCompleteJavascriptCourse from './components/javascript/TheCompleteJavascriptCourse.vue'
 
 import Nodejs from './components/nodejs/Nodejs.vue'
-import TheCompleteNodejsCourse01GettingStarted from './components/nodejs/TheCompleteNodejsCourse01GettingStarted.vue'
-import TheCompleteNodejsCourse02NodeModuleSystem from './components/nodejs/TheCompleteNodejsCourse02NodeModuleSystem.vue'
+import TheCompleteNodejsCourse from './components/nodejs/TheCompleteNodejsCourse.vue'
 
 import Vuejs from './components/vuejs/Vuejs.vue'
 
@@ -26,7 +25,7 @@ import Webpack from './components/webpack/Webpack.vue'
 
 import WebpackRemoveAutomaticLoaderModuleNameExtension from './components/webpack/WebpackRemoveAutomaticLoaderModuleNameExtension.vue'
 
-import Webpack2TheCompleteDevelopersGuide00CourseContents from './components/webpack/Webpack2TheCompleteDevelopersGuide00CourseContents.vue'
+import Webpack2TheCompleteDevelopersGuide00CourseContents from './components/webpack/Webpack2TheCompleteDevelopersGuide.vue'
 
 import WPF from './components/wpf/WPF.vue'
 
@@ -110,16 +109,9 @@ export const routes = [
     }
   },
   {
-    path: '/thecompletenodejscourse-01-getting-started',
+    path: '/thecompletenodejscourse',
     components: {
-      default: TheCompleteNodejsCourse01GettingStarted,
-      'header-top': Header
-    }
-  },
-  {
-    path: '/thecompletenodejscourse-02-node-module-system',
-    components: {
-      default: TheCompleteNodejsCourse02NodeModuleSystem,
+      default: TheCompleteNodejsCourse,
       'header-top': Header
     }
   },
