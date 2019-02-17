@@ -75,8 +75,10 @@
         <p><a href="https://www.udemy.com/vuejs-2-the-complete-guide/learn/v4/t/lecture/5941054?start=383">S23BM002</a> - Where you should use computed properties instead of methods</p>
 
         <h3>24 An Alternative to Computed Properties: Watching for Changes</h3>
+        S24BM001 The Vue watch object
 
         <h3>25 Saving Time with Shorthands</h3>
+        S25BM001 @ shorthand for v-on: and : shorthand for v-bind:
 
         <h3>26 Dynamic Styling with CSS Classes - Basics</h3>
 
