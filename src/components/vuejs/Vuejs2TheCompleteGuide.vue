@@ -36,7 +36,7 @@
             - You cant use curly braces in any Html element attribute</p>
           <a href="https://www.udemy.com/vuejs-2-the-complete-guide/learn/v4/t/lecture/5940966?start=99">S12BM002</a> -
           Binding Dynamically using v-bind
-        </div>
+        </div>git
 
         <h3>13 Understanding and Using Directives</h3>
 
