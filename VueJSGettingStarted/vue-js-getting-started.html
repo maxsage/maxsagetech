@@ -188,7 +188,8 @@
           </div>
           <div>
             <h3>
-              Running Fast with Vue </h3>
+              Running Fast with Vue
+            </h3>
             <p>
               Vue apps start fast and run fast. These two valuable speed indicators are met because of the size of Vue
               itself and its virtual document object model. As of the time of writing, the core Vue library was only 27.
@@ -273,7 +274,8 @@
           </div>
           <div>
             <h3>
-              Installing and Setting up Vue </h3>
+              Installing and Setting up Vue
+            </h3>
             <p>
               Vue has a core library that is focused on app structure; however, modern apps often need more than just
               structure. They need to be able to do things like make HTTP requests to call web services. In fact, we
@@ -284,7 +286,8 @@
           </div>
           <div>
             <h3>
-              Installing Vue.js </h3>
+              Installing Vue.js
+            </h3>
             <p>
               Vue is the core library that you'll need for all Vue apps. This library can be installed using a Content
               Delivery Network, also known as a CDN. Vue is available on several CDNs; however, the recommended CDN is
@@ -333,7 +336,8 @@
           </div>
           <div>
             <h3>
-              Installing Axios </h3>
+              Installing Axios
+            </h3>
             <p>
               Axios is the recommended library for making HTTP requests from Vue. Axios is not part of the view project
               itself. Instead, it's simply one of the most popular HTTP client libraries available. Axios, like Vue, is
@@ -363,7 +367,8 @@
           </div>
           <div>
             <h3>
-              Initializing an Instance of Vue </h3>
+              Initializing an Instance of Vue
+            </h3>
             <p>
               To initialize an instance of Vue, invoke the Vue constructor function. This function brings an instance of
               Vue to life. In the rest of this course, we'll refer to an instance of Vue as just a view when it makes
@@ -390,7 +395,8 @@
           </div>
           <div>
             <h3>
-              Mounting an Instance of Vue </h3>
+              Mounting an Instance of Vue
+            </h3>
             <p>
               Mounting is when Vue's virtual DOM is actually shown to the user. In other words, this is when your view
               becomes visible to the user. To mount an instance of Vue onto the DOM, use the el option in the Vue
@@ -418,7 +424,8 @@
           </div>
           <div>
             <h3>
-              Lifecycle of a View </h3>
+              Lifecycle of a View
+            </h3>
             <p>
               Each view has its own lifecycle. This lifecycle has four main stages. In order of execution, these four
               stages are creation, mounting, updating, and destroy:
@@ -509,7 +516,8 @@
           <h2>Creating Vue.js Templates </h2>
           <div>
             <h3>
-              Introducing Templates </h3>
+              Introducing Templates
+            </h3>
             <p>
               The last module showed you how to initialize an instance of Vue. That instance of Vue represented our
               fictional beer search engine called Growler. In this module, we'll continue to create Growler, and begin
@@ -529,7 +537,8 @@
           </div>
           <div>
             <h3>
-              Defining Template Data </h3>
+              Defining Template Data
+            </h3>
             <p>
               Templates are driven by data. In the first module, the Growler view was initialized with this code:
             </p>
@@ -570,7 +579,8 @@
           </div>
           <div>
             <h3>
-              Loading Data Properties </h3>
+              Loading Data Properties
+            </h3>
             <p>
               Vue loads data properties during the creation stage. For each property in the data object, Vue uses
               JavaScript's built-in Object. defineProperty method to create getters and setters:
@@ -632,7 +642,8 @@
           </div>
           <div>
             <h3>
-              Naming Properties </h3>
+              Naming Properties
+            </h3>
             <p>
               Each property in the data object has a name. The name is what's used in the Vue template to reference a
               property value. The name can be whatever you want, as long as it's consistent with JavaScript variable
@@ -648,7 +659,8 @@
           </div>
           <div>
             <h3>
-              Understanding Property Values </h3>
+              Understanding Property Values
+            </h3>
             <p>
               Each property in the data object has a value. The value of a property is what will be shown in the view.
               If you modify a value, the UI will asynchronously change to reflect the change in the value. That's why
@@ -667,7 +679,8 @@
           </div>
           <div>
             <h3>
-              Binding Content to a Template </h3>
+              Binding Content to a Template
+            </h3>
             <p>
               A template is made to show content. For example, think of the name of our fictional beer search engine,
               growler, as a piece of content. Earlier in this module, the name was added to the data object as a
@@ -677,7 +690,8 @@
           </div>
           <div>
             <h3>
-              Binding Text </h3>
+              Binding Text
+            </h3>
             <p>If you have some plain, unformatted text that you want to bind to a template, you can create a data
               binding. Vue has two syntaxes you can use to bind text to a template. The first is a semantic syntax that
               uses curly braces. The second is a declarative syntax that uses an attribute in your template. The choice
@@ -688,7 +702,8 @@
           </div>
           <div>
             <h3>
-              Semantic Bindings </h3>
+              Semantic Bindings
+            </h3>
             <p>
               You can create a data binding with a semantic syntax by using double curly braces. Oftentimes, these curly
               braces are referred to as mustaches. Mustaches are used in HTML elements as placeholders. They can exist
@@ -727,7 +742,8 @@
           </div>
           <div>
             <h3>
-              Declarative Bindings </h3>
+              Declarative Bindings
+            </h3>
             <p>
               Declarative bindings are created via directives. Directives are pre-defined tokens that tell Vue to do
               something specific to a DOM element. They provide a way to reactively update the DOM when an associated
@@ -766,7 +782,8 @@
           </div>
           <div>
             <h3>
-              One Time Bindings </h3>
+              One Time Bindings
+            </h3>
             <p>
               Let's be honest, the appName value probably doesn't need to change at runtime. For that reason, it doesn't
               make sense to listen for changes to appNames value. After all, listening for changes does require more
@@ -792,7 +809,8 @@
           </div>
           <div>
             <h3>
-              Binding to HTML </h3>
+              Binding to HTML
+            </h3>
             <p>
               You can show plain HTML inside of an element by adding the HTML directive to an element. To demonstrate,
               I'm going to jump back to our example. Here you can see the appName property is now a link to the root of
@@ -850,7 +868,8 @@
           </div>
           <div>
             <h3>
-              Binding to HTML Attributes </h3>
+              Binding to HTML Attributes
+            </h3>
             <p>
               Attributes are an important part of any HTML element. They are used to describe an HTML element. Vue made
               sure to consider HTML attributes in its design. I'm going to show you how to bind to HTML attributes. To
@@ -861,7 +880,8 @@
           </div>
           <div>
             <h3>
-              Introducing the Bind Directive </h3>
+              Introducing the Bind Directive
+            </h3>
             <p>
               The bind directive is specifically designed to bind to HTML attributes. With the bind directive, you can
               bind data property values to HTML attributes. For example, what if the logo for growler was defined in a
@@ -898,7 +918,8 @@
           </div>
           <div>
             <h3>
-              Binding to CSS Properties </h3>
+              Binding to CSS Properties
+            </h3>
             <p>
               You should strive to keep your design separate from your logic. Sometimes, though, the two worlds collide.
               If this happens, you might find yourself in a situation where you need to bind to an HTML element style
@@ -970,7 +991,8 @@
           </div>
           <div>
             <h3>
-              Binding to CSS Classes </h3>
+              Binding to CSS Classes
+            </h3>
             <p>
               Vue lets you bind directly to CSS classes. This is an improvement over binding to CSS properties, because
               it helps you maintain separation between your design and your data. This separation helps you keep your
@@ -1059,7 +1081,8 @@
           </div>
           <div>
             <h3>
-              Using JavaScript Expressions </h3>
+              Using JavaScript Expressions
+            </h3>
             <p>
               Vue lets you use the full power of JavaScript expressions in your bindings. If you've work with
               JavaScript, or any other language for a while, it can be easy to forget some language-specific
@@ -1137,7 +1160,8 @@
           <h2>Binding with Forms in Vue.js </h2>
           <div>
             <h3>
-              An Introduction to Binding with Forms </h3>
+              An Introduction to Binding with Forms
+            </h3>
             <p>
               Let me begin by saying, I'm really happy you've stuck with this course thus far. From this module forward,
               the fictional beer search engine is going to take shape much faster. In the last module, I showed you how
@@ -1158,7 +1182,8 @@
           </div>
           <div>
             <h3>
-              Using Input Bindings </h3>
+              Using Input Bindings
+            </h3>
             <p>
               When you're ready to collect data, you need to create a two-way binding. Two-way bindings can be created
               using the model directive. This directive can be used with input tags, textarea tags, and select tags.
@@ -1169,7 +1194,8 @@
           </div>
           <div>
             <h3>
-              Binding to Text Fields </h3>
+              Binding to Text Fields
+            </h3>
             <p>
               In HTML, a text field is usually created using one of two tags. First, there's the input tag, second
               there's the textarea tag, I'll cover binding with both of these in this section. Most search engines have
@@ -1236,7 +1262,8 @@
           </div>
           <div>
             <h3>
-              Binding to Checkboxes </h3>
+              Binding to Checkboxes
+            </h3>
             <p>
               An HTML checkbox lets a user pick one value or another. In reality, there are two situations where using
               checkboxes should be considered. The first scenario is when you want the user to choose a single value, in
@@ -1291,7 +1318,8 @@
           </div>
           <div>
             <h3>
-              Binding to Radio Buttons </h3>
+              Binding to Radio Buttons
+            </h3>
             <p>
               HTML radio buttons are used to let someone choose one of several options. For example, the checkbox
               approach just discussed would let the user signal that they want to search beers and breweries, however,
@@ -1321,7 +1349,8 @@
           </div>
           <div>
             <h3>
-              Binding to Drop Down Lists </h3>
+              Binding to Drop Down Lists
+            </h3>
             <p>
               Dropdown lists in HTML can be created with a select element. This element is useful for two main
               scenarios. First, the select element can be used to let someone make a single choice. In other situations,
@@ -1359,7 +1388,8 @@
           </div>
           <div>
             <h3>
-              Modifying Bound Values </h3>
+              Modifying Bound Values
+            </h3>
             <p>
               By default, Vue synchronizes a value input by the user with the data, whenever an input event is fired.
               Input events are triggered when an HTML input or select element collects user input. This occurs after the
@@ -1373,7 +1403,8 @@
           </div>
           <div>
             <h3>
-              Using the Trim Modifier </h3>
+              Using the Trim Modifier
+            </h3>
             <p>
               The trim modifier automatically removes whitespace added while input. This modifier removes both leading
               and trailing whitespace. This includes spaces, tabs, and line breaks:
@@ -1398,7 +1429,8 @@
           </div>
           <div>
             <h3>
-              Using the Number Modifier </h3>
+              Using the Number Modifier
+            </h3>
             <p>
               The number modifier automatically tries to cast user input to a number. This modifier is helpful, because
               HTML input elements always return values as strings. This modifier tries to get a number object for you:
@@ -1433,7 +1465,8 @@
           </div>
           <div>
             <h3>
-              Lazily Binding Values (Lazy Binding) </h3>
+              Lazily Binding Values (Lazy Binding)
+            </h3>
             <p>
               In the last section, I mentioned that Vue synchronizes user input whenever the onInput event is fired. As
               a general rule, this means any time a user presses a key, Vue will synchronize the user input with the
@@ -1501,7 +1534,8 @@
           <h2>Responding to User Events in Vue.js </h2>
           <div>
             <h3>
-              Responding to User Events in Vue.js </h3>
+              Responding to User Events in Vue.js
+            </h3>
             <p>
               The last module showed you how to bind with forms in Vue. Collecting data is an important part of many web
               apps. In many web apps, though, it's just as important to respond to user interactions. These interactions
@@ -1516,7 +1550,8 @@
           </div>
           <div>
             <h3>
-              Using Event Handlers </h3>
+              Using Event Handlers
+            </h3>
             <p>
               As users interact with an app, they expect certain things to happen when they do certain things. For
               example, in Growler, if a user clicked the search button, they would expect a search to run. To meet this
@@ -1548,7 +1583,8 @@
           </div>
           <div>
             <h3>
-              Defining Event Handlers </h3>
+              Defining Event Handlers
+            </h3>
             <p>
               In this example, executeSearch is the name of a JavaScript function:
             </p>
@@ -1589,7 +1625,8 @@
           </div>
           <div>
             <h3>
-              Examining Events and Passing Parameters </h3>
+              Examining Events and Passing Parameters
+            </h3>
             <p>
               If you need to examine the event that was triggered, you can include an optional event parameter like
               this:
@@ -1649,7 +1686,8 @@
           </div>
           <div>
             <h3>
-              Altering Event Behaviors </h3>
+              Altering Event Behaviors
+            </h3>
             <p>
               As you interact with an app, you may learn that some things don't behave like you'd expect. You probably
               won't experience any issues with basic apps; however, as an app grows in size, it becomes more complex.
@@ -1664,7 +1702,8 @@
           </div>
           <div>
             <h3>
-              Understanding Event Propagation </h3>
+              Understanding Event Propagation
+            </h3>
             <p>
               When events are invoked, they can start a chain reaction. This can happen because, by default, events in
               the HTML DOM are propagated through the visual tree. For example, imagine that the Search button in
@@ -1691,7 +1730,8 @@
           </div>
           <div>
             <h3>
-              Event Capturing </h3>
+              Event Capturing
+            </h3>
             <p>
               Event capturing should be used if you want an event to be handled in the opposite order of event bubbling.
               Instead of the event target being first in the order of events, the event handling starts at the window
@@ -1742,7 +1782,8 @@
           </div>
           <div>
             <h3>
-              Using the Prevent Modifier </h3>
+              Using the Prevent Modifier
+            </h3>
             <p>
               The prevent modifier lets you bypass the default event behavior of an element. This modifier serves as
               Vue's representation of JavaScript's built-in preventDefault method. At first glance, you may wonder, why
@@ -1780,7 +1821,8 @@
           </div>
           <div>
             <h3>
-              Using the Stop Modifier </h3>
+              Using the Stop Modifier
+            </h3>
             <p>
               The stop modifier can be used to cease event propagation. This modifier serves as a convenient hook to
               JavaScript's built-in stopPropagation method. If I revisit the Search button example and apply the stop
@@ -1814,7 +1856,8 @@
           </div>
           <div>
             <h3>
-              Using the Self Modifier </h3>
+              Using the Self Modifier
+            </h3>
             <p>
               The self modifier lets you declare that an element should trigger an event only if the element is the
               originator. This means that this modifier is only concerned with one element, the target. If the self
@@ -1850,7 +1893,8 @@
           </div>
           <div>
             <h3>
-              Using the Once Modifier </h3>
+              Using the Once Modifier
+            </h3>
             <p>
               The once modifier can be used if you want to run an event one, and only one time. In other words, if this
               modifier is applied, and the event is triggered, this same event won't get triggered by that element
@@ -1914,7 +1958,8 @@
           </div>
           <div>
             <h3>
-              Reacting to Keyed Events </h3>
+              Reacting to Keyed Events
+            </h3>
             <p>
               Earlier in this module, I showed you how to attach two events. Imaging using an event handler to respond
               to the keys pressed by a user. For example, a common example is to perform an action when a user presses
@@ -1974,7 +2019,8 @@
           </div>
           <div>
             <h3>
-              Creating Key Modifiers </h3>
+              Creating Key Modifiers
+            </h3>
             <p>
               Vue lets you create key modifiers for key codes that are used less often. This can be useful if your app
               needs to support specific shortcuts via keys. For example, in Growler, it would be nice to show
@@ -2008,105 +2054,237 @@
           </div>
           <div>
             <h3>
-              Reacting to Mouse Button Events </h3>
+              Reacting to Mouse Button Events
+            </h3>
             <p>
               Sometimes, mouse-specific actions are as important to the user experience as the keyboard. Vue provides
               three modifiers that are specific to the mouse. These modifiers are for the left, middle, and right
-              buttons on a mouse. These three modifiers can be used with mouse-related events to respond accordingly.
+              buttons on a mouse.</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-031.png"/>
+              <figcaption>Fig 04-031</figcaption>
+            </figure>
+            <p>These three modifiers can be used with mouse-related events to respond accordingly.
               Specifically, all three of these modifiers can work with the mousedown and mouseup events. However, beyond
               the mousedown and mouseup events, these three modifiers provide limited support for the mouse-related
               events. For that reason, I'd like to discuss the left, middle, and right modifiers more closely so you can
-              fully harness their power. The left modifier empowers you to respond to a user interacting with the left
+              fully harness their power.</p>
+
+            <p>The left modifier empowers you to respond to a user interacting with the left
               mouse button. For example, imagine that there's an area on the web page that you want to react to the user
-              clicking on. In fact, I'm going to jump over to Google Chrome and show this. This example, which is part
+              clicking on. In fact, I'm going to jump over to Google Chrome and show this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-032.png"/>
+              <figcaption>Fig 04-032</figcaption>
+            </figure>
+            <p>This example, which is part
               of the exercise files for this course, prints the mouse event when the left mouse button is used. This
               works in both of these boxes. Now, if I use the right mouse button in the box on the left, you'll see the
-              event still gets triggered. This is because I haven't applied the left modifier to this element. However,
+              event still gets triggered.</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-033.png"/>
+              <figcaption>Fig 04-033</figcaption>
+            </figure>
+            <p> This is because I haven't applied the left modifier to this element. However,
               the left modifier is applied with the event on the box on the right. You'll notice that when I right-click
-              in this box nothing gets written to the event log. The implementation for this looks like this. On this
+              in this box nothing gets written to the event log:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-034.png"/>
+              <figcaption>Fig 04-034</figcaption>
+            </figure>
+            <p>The implementation for this looks like this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-035.png"/>
+              <figcaption>Fig 04-035</figcaption>
+            </figure>
+            <p>On this
               slide, I'm using the mousedown event to respond to a user clicking on a div element. However, I've added
               the left modifier to the mousedown event. This has the impact of only reaching the onBlockClick event
               handler if the mousedown event was triggered via the left mouse button. A more familiar approach would be
-              to use the click event like this. While this code technically works, I want to take it a step further and
-              actually remove the left modifier. Once removed, this code becomes cleaner and looks like this. The reason
+              to use the click event like this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-036.png"/>
+              <figcaption>Fig 04-036</figcaption>
+            </figure>
+            <p>While this code technically works, I want to take it a step further and
+              actually remove the left modifier.</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-037.png"/>
+              <figcaption>Fig 04-037</figcaption>
+            </figure>
+            <p>Once removed, this code becomes cleaner and looks like this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-038.png"/>
+              <figcaption>Fig 04-038</figcaption>
+            </figure>
+            <p>The reason
               this approach is better is because the click event only fires if the event was triggered by the left mouse
               button. In other words, using the left modifier with the click event is redundant. That's why on this
-              slide I'm showing a question mark to represent the left modifier support for the click event. Beyond the
+              slide:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-039.png"/>
+              <figcaption>Fig 04-039</figcaption>
+            </figure>
+            <p>I'm showing a question mark to represent the left modifier support for the click event. Beyond the
               click event, though, you can see that support is limited to the mousedown and mouseup event handlers.
-              These two events are also only supported options for the middle mouse modifier. The middle mouse modifier
+              These two events are also only supported options for the middle mouse modifier.</p>
+            <p>The middle mouse modifier
               lets you respond to a user interacting with the middle mouse button. This modifier is rarely used in an
               app. Personally, I've never needed it; however, I wanted to include it in case you needed to use it.
-              Notably, as shown on this slide, there are only two mouse-related events that this modifier works with,
-              the mousedown and mouseup events. You can add the middle modifier to one of these events, like this. There
+              Notably, as shown on this slide:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-040.png"/>
+              <figcaption>Fig 04-040</figcaption>
+            </figure>
+            <p>There are only two mouse-related events that this modifier works with,
+              the mousedown and mouseup events. You can add the middle modifier to one of these events, like this.</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-041.png"/>
+              <figcaption>Fig 04-041</figcaption>
+            </figure>
+            <p>There
               is nothing really exciting here. Once again, I wanted to mention the middle modifier for completeness.
-              While you might never need to use the middle modifier, you may need to use the right modifier. The right
+              While you might never need to use the middle modifier, you may need to use the right modifier.</p>
+            <p>The right
               modifier empowers you to respond to a user interacting with the right mouse button. I want to revisit
               Google Chrome to show the difference in behavior. In this example, I'm once again plugging into the
               mousedown event. You'll notice that when I use the right mouse button in the box on the right, an event is
-              logged, but if I use the left mouse button, nothing gets logged. This is because I added the right mouse
-              modifier to the mousedown event, like this. This approach is similar to the approach shown in the middle
+              logged:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-042.png"/>
+              <figcaption>Fig 04-042</figcaption>
+            </figure>
+            <p>but if I use the left mouse button, nothing gets logged:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-043.png"/>
+              <figcaption>Fig 04-043</figcaption>
+            </figure>
+            <p>This is because I added the right mouse
+              modifier to the mousedown event, like this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-044.png"/>
+              <figcaption>Fig 04-044</figcaption>
+            </figure>
+            <p>This approach is similar to the approach shown in the middle
               and left modifiers shown earlier; however, when I clicked in the box, you probably noticed that a context
-              menu, like this, appeared. If you want to use the right modifier, there's a good chance you want to create
+              menu appeared. If you want to use the right modifier, there's a good chance you want to create
               your own context menu. Your initial instinct may be to leverage the click event; however, the right
-              modifier doesn't work with the click event. Instead, you have to use the contextmenu event, like this.
+              modifier doesn't work with the click event. Instead, you have to use the contextmenu event, like this.</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-045.png"/>
+              <figcaption>Fig 04-045</figcaption>
+            </figure>
+            <p>
               This example is a bit more involved. I want to break it down, though. First, look at the contextmenu event
               in the div element. Notice that I'm using the prevent modifier with the contextmenu event. Without the
               prevent modifier, the browser's default context menu would appear. However, by adding the prevent
               modifier, Vue bypasses the default event behavior. This means the browser's context menu won't appear.
-              However, the onBlockClick event handler will still get executed. Notably, the right modifier isn't even
+              However, the onBlockClick event handler will still get executed.</p>
+            <p>Notably, the right modifier isn't even
               used. That's because the contextmenu event only works with the right mouse button. While the right
               modifier could be used, it would just be redundant. The onBlockClick event handler is responsible for
-              showing and positioning the context menu. The menu is rendered based on whether the showContextMenu
+              showing and positioning the context menu:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-046.png"/>
+              <figcaption>Fig 04-046</figcaption>
+            </figure>
+            <p>The menu is rendered based on whether the showContextMenu
               property is set to true or not. You'll notice that the if directive is used to accomplish this. If you
-              think you've missed something, don't worry; the if directive is discussed in the next module. Still, if
+              think you've missed something, don't worry; the if directive is discussed in the next module.</p>
+            <p>Still, if
               the context menu is shown, it's positioned using the binding approach discussed in module 2. Each item in
-              the context menu has its own event handler. Finally, when you focus on something outside of the menu, the
-              context menu will go away. When activated, this context menu looks like this. While it's ugly, it does in
+              the context menu has its own event handler.:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-047.png"/>
+              <figcaption>Fig 04-047</figcaption>
+            </figure>
+            <p>Finally, when you focus on something outside of the menu, the
+              context menu will go away. When activated, this context menu looks like this.</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-048.png"/>
+              <figcaption>Fig 04-048</figcaption>
+            </figure>
+            <p>While it's ugly, it does in
               fact work. There are additional enhancements that could be made to make it more robust. Those are more
               advanced topics that are beyond the scope of this module, though. The reason I wanted to show this context
-              menu was to explain how to react to a user clicking the right mouse button on their mouse. You also saw
+              menu was to explain how to react to a user clicking the right mouse button on their mouse.</p>
+            <p>You also saw
               how to use the middle and left modifiers. As discussed, some of these modifiers work with some
               mouse-related events, but not others. I've created this reference slide to help you quickly look up what
-              events work with each modifier. You may want to pause this video and take a screenshot or print this
+              events work with each modifier:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-049.png"/>
+              <figcaption>Fig 04-049</figcaption>
+            </figure>
+            <p>You may want to pause this video and take a screenshot or print this
               screen out. Either way, Vue lets you go beyond using mouse buttons as modifiers. In fact, Vue also has
               modifiers that let you react to special keys.
             </p>
           </div>
           <div>
             <h3>
-              Reacting to Special Keys </h3>
+              Reacting to Special Keys
+            </h3>
             <p>
               Personally, after learning to type in school, I learned about keyboard shortcuts. Popular shortcuts to
               copy and paste, like Ctrl+C and Ctrl+V, are still part of my everyday use. These shortcuts improve the
               experience of an app by giving the user more power. For that reason, you might want to consider adding
               keyboard shortcuts to your Vue apps with special keys. Special keys like Alt, Ctrl, and Shift are
-              technically known as modifier keys. I'm going to refer to these modifier keys as special keys. The reason
+              technically known as modifier keys. I'm going to refer to these modifier keys as special keys.</p>
+            <p>The reason
               why is because we're already talking about modifiers in Vue. I'm concerned that if I use the term modifier
               keys instead of special keys, it will create confusion. Either way, special keys empower you to deliver
-              keyboard shortcuts. This slide shows the modifiers Vue provides for special keys. The Alt, Ctrl, and Shift
+              keyboard shortcuts. This slide shows the modifiers Vue provides for special keys:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-051.png"/>
+              <figcaption>Fig 04-051</figcaption>
+            </figure>
+            <p>The Alt, Ctrl, and Shift
               are commonly used keys in keyboard shortcuts. The meta key, is the Windows or Command key. Either way,
               let's create a keyboard shortcut in Growler. For example, the default behavior of the Search field is to
               run a search. Pretend that you wanted to add a keyboard shortcut for users who may want to run multiple
               searches at once. For example, what if we let the users run their search in another tab. That behavior
-              would look like this. Now, I'm going to enter a query for Porter. Now if I press the Enter key, you'll see
+              would look like this.</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-052.png"/>
+              <figcaption>Fig 04-052</figcaption>
+            </figure>
+            <p>Now, I'm going to enter a query for Porter. Now if I press the Enter key, you'll see
               that I get one beer returned. Now I'm going to press Ctrl+Enter. Notice that another tab opened. If I
-              switch to this tab, you'll see that my query ran in this tab. Now I'm going to close this tab. I'm going
+              switch to this tab, you'll see that my query ran in this tab:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-053.png"/>
+              <figcaption>Fig 04-053</figcaption>
+            </figure>
+            <p>Now I'm going to close this tab. I'm going
               to go ahead and run multiple queries. I'm going to open each query in its own tab by using the Ctrl+Enter
               shortcut. First, I'll run a search for ale, then a search for stout, and finally, a search for pilsner.
-              Now if I look in the tabs, you'll see that each query ran in its own tab. Part of implementing this
-              feature involved implenting the keyboard shortcut, which I did, like this. This snippet is from the
+              Now if I look in the tabs, you'll see that each query ran in its own tab:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-054.png"/>
+              <figcaption>Fig 04-054</figcaption>
+            </figure>
+            <p>Part of implementing this
+              feature involved implementing the keyboard shortcut, which I did, like this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-055.png"/>
+              <figcaption>Fig 04-055</figcaption>
+            </figure>
+            <p>This snippet is from the
               Growler sample app. This snippet brings several of the concepts we've been discussing, together. First,
               the trim modifier from module 3 is used to remove whitespace from the query as a user enters it. If a user
               presses the Enter key, the executeNewSearch function will get run. The enter and prevent modifiers
               discussed earlier in this module were chained together to properly handle the desired default behavior. As
               an added bonus, we included a keyboard shortcut that allows a user to press Enter and Ctrl to run the
-              query in a new tab. That was made possible by chaining the control and enter modifiers together. As you
+              query in a new tab. That was made possible by chaining the control and enter modifiers together.</p>
+            <p>As you
               can see, the special key modifiers and their mouse button counterparts help you deliver powerful features
               in your apps. By taking control of the event propagation approach, you can be sure to deliver a
               high-performing app. Collectively, these modifiers are powerful additions in Vue that let you enforce a
               separation between the UI and the logic. With modifiers, you don't have to worry about DOM event details.
               In this module, you learned how to respond to events by using event handlers. You also learned how to
-              alter event behavior with modifiers. These two things explain how to respond to user events in Vue. In the
+              alter event behavior with modifiers. These two things explain how to respond to user events in Vue.</p>
+            <p>In the
               context of the beer search engine, you now know how to collect the user query. You also know how to
               respond to the user clicking the Search button. When a user clicks the Search button, though, they'll
               expect to see the results of their query. That's the topic of the next module.
@@ -2117,12 +2295,14 @@
           <h2>Conditional Rendering and Rendering of Lists </h2>
           <div>
             <h3>
-              Conditional Rendering and Rendering of Lists </h3>
+              Conditional Rendering and Rendering of Lists
+            </h3>
             <p>
               The last module showed you how to respond to user events in Vue. That discussion gave me the opportunity
               to show you how to handle things like button clicks and pressing keys. These types of interactions are
               used in most apps. In fact, in Growler, if you click the Search button or press the Enter key, you would
-              expect a search to run. Once run, you would expect that query to return a list of results. In this module,
+              expect a search to run. Once run, you would expect that query to return a list of results.</p>
+            <p>In this module,
               I'm going to show you how to render those results. In this module, we're going to look at a number of
               directives in Vue that deal with rendering. This module will begin with a discussion on rendering elements
               conditionally. From there, we'll dive into rendering lists of items. As part of this, you'll see how to
@@ -2132,7 +2312,8 @@
           </div>
           <div>
             <h3>
-              Rendering Elements Conditionally </h3>
+              Rendering Elements Conditionally
+            </h3>
             <p>
               Vue has several directives to help you show and hide elements when certain conditions are met. These
               directives relate to development concepts like if/else statements. Vue's conditional directives are best
@@ -2142,24 +2323,43 @@
           </div>
           <div>
             <h3>
-              Rendering Conditionally on Load </h3>
+              Rendering Conditionally on Load
+            </h3>
             <p>
               As apps grow in size, they can take longer to load. In this situation, you should strive to create a great
               loading experience in your app. You can do this by rendering elements after they've loaded. This can be
               useful if your app is coming from a slower network connection, or if you need to wait for additional
-              JavaScript object initialization. To demonstrate what a poor experience could look like, I've created an
-              example which looks like this. This example is part of the sample repo that's part of this course. That
-              repo can be found here. Still, in this example, the load of Growler is intentionally delayed by 3 seconds.
+              JavaScript object initialization.</p>
+            <p>To demonstrate what a poor experience could look like, I've created an
+              example which looks like this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-001.png"/>
+              <figcaption>Fig 05-001</figcaption>
+            </figure>
+            <p>This example is part of the sample repo that's part of this course. That
+              repo can be found here:</p>
+            <a href="https://github.com/ecofic/course-vue-getting-started">https://github.com/ecofic/course-vue-getting-started</a>
+            <p>Still, in this example, the load of Growler is intentionally delayed by 3 seconds.
               This is to simulate a slow network connection. Notice how the area on the left shows the binding syntax.
               This happens because nothing is hiding the content while the Growler view is being created. If a user sees
               this, they may think that the app is broken. However, the area on the right is a bit cleaner. The user
-              doesn't see anything until Growler has been created. This is made possible by the cloak directive. The
-              cloak directive hides elements until a view is compiled. In module 1, we discussed that compilation
+              doesn't see anything until Growler has been created. This is made possible by the cloak directive.</p>
+            <p>The cloak directive hides elements until a view is compiled. In module 1, we discussed that compilation
               happens right after a view has been created. To use the cloak directive, you add it to an element, like
-              this. As you can see, I simply added the cloak directive to the header element. You can probably imagine
+              this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-002.png"/>
+              <figcaption>Fig 05-002</figcaption>
+            </figure>
+            <p>As you can see, I simply added the cloak directive to the header element. You can probably imagine
               that cloak can be used with a loading indicator in an app. Still, you should probably be aware that you
               can't just apply the cloak directive to hide content while an app is loading. In fact, to actually hide
-              content, you must also include this CSS in your app. This CSS sets the display property of an element that
+              content, you must also include this CSS in your app:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-003.png"/>
+              <figcaption>Fig 05-003</figcaption>
+            </figure>
+            <p>This CSS sets the display property of an element that
               includes the cloak directive. I typically place this CSS definition in a shared CSS file so that it's
               widely available in my app. In fact, this CSS definition is in the public/css/app. css file in the sample
               repo for this project. If you look at it, you'd see the code above, which sets the display property to
@@ -2171,45 +2371,87 @@
           </div>
           <div>
             <h3>
-              Rendering Conditionally During Runtime </h3>
+              Rendering Conditionally During Runtime
+            </h3>
             <p>
               Vue provides several directives that empower you to conditionally render elements during runtime. One of
               these directives is a familiar if/else construct. There's also an additional directive called show. These
               directives serve unique purposes. For that reason, I'm going to cover these directives in detail in this
-              section. The if/else directives let you conditionally render content based on an expression. If an
+              section.</p>
+            <p>The if/else directives let you conditionally render content based on an expression. If an
               expression returns a truthy value, the condition will be met, and the element will render. If the
               expression does not evaluate as truthy, the element will not be rendered. For example, look at the
-              following sample. In this example, I'm showing the number of beers returned on a search in Growler. The
+              following sample:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-004.png"/>
+              <figcaption>Fig 05-004</figcaption>
+            </figure>
+            <p>In this example, I'm showing the number of beers returned on a search in Growler. The
               cloak directive is used to hide any bindings until Growler is created. Once Growler has been created,
               these if/else directives determine what to render based on the number of beers found. If no beers were
-              found, this descriptive block of text is shown. If a single beer was found, this block of text is shown.
-              Finally, if more than a single beer was found, this block of text is shown. If you get the exercise files
-              for this course and run this sample for yourself, you'll see a screen that looks like this. Each time you
+              found, this descriptive block of text is shown:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-005.png"/>
+              <figcaption>Fig 05-005</figcaption>
+            </figure>
+            <p>If a single beer was found, this block of text is shown:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-006.png"/>
+              <figcaption>Fig 05-006</figcaption>
+            </figure>
+            <p>
+              Finally, if more than a single beer was found, this block of text is shown:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-007.png"/>
+              <figcaption>Fig 05-007</figcaption>
+            </figure>
+            <p>If you get the exercise files
+              for this course and run this sample for yourself, you'll see a screen that looks like this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-008.png"/>
+              <figcaption>Fig 05-008</figcaption>
+            </figure>
+            <p>Each time you
               click the Search button, a random collection of beers will be generated. This could cause a different
               block in the if/else statement to get rendered. I bring this up, because each time the value changes, the
               elements and all of their children will be destroyed and reconstructed. It's not a big deal in this small
               example, but it's something to keep in mind from a performance perspective for more complex user
-              interfaces. If you need to toggle something regularly, you may want to consider the show directive. The
+              interfaces. If you need to toggle something regularly, you may want to consider the show directive.</p>
+            <p>The
               show directive is another option to conditionally show content at runtime. As shown in the following
-              example, the show directive is similar to the if directive. Earlier, I used the if/else directive to
+              example:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-009.png"/>
+              <figcaption>Fig 05-009</figcaption>
+            </figure>
+            <p>The show directive is similar to the if directive. Earlier, I used the if/else directive to
               conditionally show information. Those directives were appropriate in that case because I wanted to show a
               grammatically correct phrase. In this example, though, I'm using the show directive because I'm showing or
               hiding a block of elements. This approach is slightly different, because in this case only the display css
-              property is changed. The show directive is a way to conditionally set the CSS display property at runtime.
+              property is changed.</p>
+            <p>The show directive is a way to conditionally set the CSS display property at runtime.
               If the expression on this directive evaluates as falsy, the elements display property will be set to none.
               This also means that when you use the show directive, it will always render the element. The show
-              directive is used to simply show or hide an HTML block. At this point, you may think the show and if
+              directive is used to simply show or hide an HTML block.</p>
+            <p>At this point, you may think the show and if
               directive are pretty similar. You might want to know what makes them differ from each other. While the if
-              and show directives are similar, there are some important differences. First, the if/else directives are
+              and show directives are similar, there are some important differences.</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-010.png"/>
+              <figcaption>Fig 05-010</figcaption>
+            </figure>
+            <p> First, the if/else directives are
               better for more complex logic, while the show directive is better for basic logic. That's why the if/else
               directives were used when showing the count of beer results. If it wasn't for the need to handle the case
               where a single beer was returned, a show directive would have been better. The reason why is because of
-              rendering. The show directive always renders an element, however, the if directive only renders the
+              rendering.</p>
+            <p>The show directive always renders an element, however, the if directive only renders the
               content if an expression is truthy. In other words, the if directive conditionally renders elements. From
               this behavior, we can draw two conclusions. First, the if directive has higher toggling costs at runtime
               than the show directive. At runtime, the if directive destroys and recreates the virtual DOM as conditions
               change. On the other hand, the show directive just toggles the CSS display property, which is faster at
-              runtime. The second conclusion is that if something is unlikely to change after a rendering, it's better
+              runtime.</p>
+            <p>The second conclusion is that if something is unlikely to change after a rendering, it's better
               to use an if directive. The show and if directives are important to keep in mind when rendering content
               conditionally at runtime. For the smoothest experience, use the cloak directive while your view is
               loading. Still, rendering individual items are one thing, rendering lists of items are another.
@@ -2217,7 +2459,8 @@
           </div>
           <div>
             <h3>
-              Rendering Lists of Items </h3>
+              Rendering Lists of Items
+            </h3>
             <p>
               Vue provides one directive that's focused on lists of items. That directive is called for. The for
               directive can be used in a number of ways. You can use the for directive to loop a specific number of
@@ -2228,25 +2471,39 @@
           </div>
           <div>
             <h3>
-              Looping a Specific Number of Times </h3>
+              Looping a Specific Number of Times
+            </h3>
             <p>
               In some situations, you know the exact number of times that you want to loop. For example, in Growler, we
               know the number of pages of search results that are returned by a search. This information, and the for
-              directive, could be used to create a search results pager like this. In this code snippet, I'm using an
+              directive, could be used to create a search results pager like this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-011.png"/>
+              <figcaption>Fig 05-011</figcaption>
+            </figure>
+            <p>In this code snippet, I'm using an
               HTML unordered list to house a list of pages. Notice that the for directive isn't placed on the ul tag,
               though. Instead, I've placed it on the list item element, because that's the element that needs to be
               repeated. This template will repeat until the limit is reached. In total, the number of list item elements
               created will match pageCount. That's because when looping to a number, like pageCount, Vue automatically
-              iterates by an interval of 1. Notably, the alias itself also starts at 1. The alias is a variable used in
+              iterates by an interval of 1.</p>
+            <p>Notably, the alias itself also starts at 1. The alias is a variable used in
               the context before a directive. This variable represents the current item that's being iterated on. When
               looping through a range of numbers, like in our paging example, this value starts at 1. This may surprise
               you if you've worked with other programming languages. In other languages, this value would likely start
               at 0, however, when working with numbers, Vue automatically starts this value at 1, not 0. This lets you
-              bind the page alias in the template to get what you want. Next to the alias is a delimiter called in. The
+              bind the page alias in the template to get what you want.</p>
+            <p>Next to the alias is a delimiter called in. The
               delimiter helps make the for directive more readable. In this case, the delimiter is the word in, however,
-              you have the choice to use the term of instead. The decision to choose in or of comes down to personal
+              you have the choice to use the term of instead:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-012.png"/>
+              <figcaption>Fig 05-012</figcaption>
+            </figure>
+            <p>The decision to choose in or of comes down to personal
               preference. The reason that of is an option is because of is more consistent with JavaScript's iterator
-              syntax. Either way, we'll be using the in delimiter in this course. To the right of the delimiter is the
+              syntax. Either way, we'll be using the in delimiter in this course.</p>
+            <p>To the right of the delimiter is the
               source data. The source is what's being iterated over. You can iterate over a range of integers, however,
               you cannot iterate over a range of floating-point numbers. You can only use whole integer values in a for
               directive when looping a specific number of times. If you try to use a floating-point number, you'll get
@@ -2256,28 +2513,60 @@
           </div>
           <div>
             <h3>
-              Traversing Object Properties </h3>
+              Traversing Object Properties
+            </h3>
             <p>
               The for directive can be used to traverse object properties. The cool thing is, you don't even have to use
-              a different syntax. In fact, if you use a JavaScript object as the source for a for directive, like this,
-              you'll get a list of the property values in the object. In this example, each property value of
-              currentUser would appear as a list item in the view, meaning this HTML would get rendered like this. From
-              this rendering, you can see that if a property is a string or a number, the value simply appears, however,
-              if a property is an array or another object, it will be rendered in a string representation. Using a for
+              a different syntax. In fact, if you use a JavaScript object as the source for a for directive, like
+              this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-013.png"/>
+              <figcaption>Fig 05-013</figcaption>
+            </figure>
+            <p>You'll get a list of the property values in the object. In this example, each property value of
+              currentUser would appear as a list item in the view, meaning this HTML would get rendered like this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-014.png"/>
+              <figcaption>Fig 05-014</figcaption>
+            </figure>
+            <p>From this rendering, you can see that if a property is a string or a number, the value simply appears,
+              however, if a property is an array or another object, it will be rendered in a string representation.
+              Using a for
               directive to get property values is pretty straightforward. You can also use the for directive to get the
-              property names. To get each property's name and value, you can loop through an object like this. If you
+              property names. To get each property's name and value, you can loop through an object like this.</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-015.png"/>
+              <figcaption>Fig 05-015</figcaption>
+            </figure>
+            <p>If you
               look closely at the for directive, you'll notice that I added the k parameter. This parameter represents
-              the key or property name for the current property. So if this code were rendered, you'd see this. The for
-              directive's flexibility doesn't stop there, though. You can also get the current index while looping. In
+              the key or property name for the current property. So if this code were rendered, you'd see this.</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-016.png"/>
+              <figcaption>Fig 05-016</figcaption>
+            </figure>
+            <p>The for
+              directive's flexibility doesn't stop there, though. You can also get the current index while looping.</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-017.png"/>
+              <figcaption>Fig 05-017</figcaption>
+            </figure>
+            <p>In
               this example, I've added the i parameter to the for directive. This parameter represents the current
               iteration index. With each iteration, I'm using the value, key, and index of each property. Now, if this
-              view was rendered, you'd actually see all three of these components as shown on the screen. While not
+              view was rendered, you'd actually see all three of these components as shown on the screen:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-018.png"/>
+              <figcaption>Fig 05-018</figcaption>
+            </figure>
+            <p>While not
               surprising, there is an interesting detail here. Earlier, while showing the for directive loop a specific
               number of times, I mentioned that the alias starts at 1. Here on the screen, though, you can see that 0 is
               shown. The reason for this is because when looping over a range, the alias starts at 1. This is just a
               nice little thing that Vue does. But in the context of properties, the alias starts at 0, not 1. This is
               consistent with many programming languages, including JavaScript. There is one detail that is not
-              consistent across JavaScript engine implementations, though. To iterate over an object, Vue gets the list
+              consistent across JavaScript engine implementations, though.</p>
+            <p>To iterate over an object, Vue gets the list
               of keys using the JavaScript Object. keys function. This function returns an array of innumerable
               properties in a JavaScript object. I'm mentioning this, because different JavaScript engines return these
               properties in different orders. For that reason, if you need to list the properties in a consistent order,
@@ -2287,48 +2576,129 @@
           </div>
           <div>
             <h3>
-              Iterating Through Arrays </h3>
+              Iterating Through Arrays
+            </h3>
             <p>
               You can use the for directive to iterate through JavaScript arrays. You can iterate over arrays of values,
               arrays of objects, and even arrays of arrays. To demonstrate, let's assume in Growler that we wanted to
               create the search results pager. This time, though, the number of pages aren't in a numeric property, like
-              this, instead, they'll be created in an array like this. This slide shows a pre-defined JavaScript array
+              this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-019.png"/>
+              <figcaption>Fig 05-019</figcaption>
+            </figure>
+            <p>Instead, they'll be created in an array like this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-020.png"/>
+              <figcaption>Fig 05-020</figcaption>
+            </figure>
+            <p>This slide shows a pre-defined JavaScript array
               called pages. The HTML template loops through the array and creates a list item with a link for each page.
               This for directive syntax has already been shown several times, however, this time we're iterating through
-              an array of values. If we wanted to loop through an array of objects, we could by doing some like this. In
+              an array of values. If we wanted to loop through an array of objects, we could by doing some like
+              this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-021.png"/>
+              <figcaption>Fig 05-021</figcaption>
+            </figure>
+            <p>In
               this example, we're creating the pager by using an array of objects called pages. Each object in this
               array contains a number and a URL. These two properties are bound in the template during rendering. In
               this case, we're using the attribute binding syntax and the semantic binding approach described in module
               2. In some situations, you may want the index of the current item in the array. You could get that index
-              using an approach similar to the one used earlier, like this. In this example, I've added the indexer
+              using an approach similar to the one used earlier, like this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-022.png"/>
+              <figcaption>Fig 05-022</figcaption>
+            </figure>
+            <p>In this example, I've added the indexer
               parameter i. Beyond that, everything else is the same. While you've seen the indexer approach, you haven't
               seen how to iterate through nested arrays. Let's pretend that each page object in our pages array has a
               property called sections. This property may be used to divide a result page into multiple groups. This
-              updated array may look something like this. On this slide, I'm looping through each page in pages using
+              updated array may look something like this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-023.png"/>
+              <figcaption>Fig 05-023</figcaption>
+            </figure>
+            <p>On this slide, I'm looping through each page in pages using
               the for directive again. While working with each page, though, I also loop through the nested array named
-              sections using an inner for directive. In my semantic binding, I'm referencing data from the outer for
-              directive here, and data from the inner for directive here. When items are associated with groups, you
+              sections using an inner for directive:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-024.png"/>
+              <figcaption>Fig 05-024</figcaption>
+            </figure>
+
+            <p>In my semantic binding, I'm referencing data from the outer for
+              directive here:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-025.png"/>
+              <figcaption>Fig 05-025</figcaption>
+            </figure>
+            <p>and data from the inner for directive here:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-026.png"/>
+              <figcaption>Fig 05-026</figcaption>
+            </figure>
+            <p>When items are associated with groups, you
               often need to use conditional logic, which raises the question, what happens if an element uses both an if
               directive and a for directive?
             </p>
           </div>
           <div>
             <h3>
-              Using v-for and v-if Together </h3>
+              Using v-for and v-if Together
+            </h3>
             <p>
               When a for directive and an if directive are used on the same element, the for directive has higher
               precedence. This means that while a for directive is iterating, it will run first on each iteration. Then,
               the if directive will get run separately. This is handy if you only want to render specific items in a
-              list. For example, in Growler, let's pretend that you wanted to let the user filter the beer results based
-              on the alcohol by volume level. That might look something like this. This approach may be used with search
+              list.</p>
+            <p>For example, in Growler, let's pretend that you wanted to let the user filter the beer results based
+              on the alcohol by volume level. That might look something like this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-027.png"/>
+              <figcaption>Fig 05-027</figcaption>
+            </figure>
+            <p>This approach may be used with search
               results to filter out beers that have more alcohol than you prefer. You can see that as I slide the
-              slider, the list of beers changes. This is happening because each beer in the underlying array is getting
-              rendered conditionally at runtime. This rendering is happening via the HTML template shown on this slide.
+              slider, the list of beers changes.</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-028.png"/>
+              <figcaption>Fig 05-028</figcaption>
+            </figure>
+            <p>This is happening because each beer in the underlying array is getting
+              rendered conditionally at runtime. This rendering is happening via the HTML template shown on this
+              slide:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-029.png"/>
+              <figcaption>Fig 05-029</figcaption>
+            </figure>
+            <p>
               Here on the left, you can see an array of hard-coded beers. Each beer has a name and an alcohol by volume
-              value. By default, we're setting the maximum alcohol by volume level at 7%. This property is bound to the
-              slider in the HTML template. The array of beers is bound as list items using the for directive. While
+              value. By default, we're setting the maximum alcohol by volume level at 7%:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-030.png"/>
+              <figcaption>Fig 05-030</figcaption>
+            </figure>
+            <p>This property is bound to the
+              slider in the HTML template:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-031.png"/>
+              <figcaption>Fig 05-031</figcaption>
+            </figure>
+            <p>The array of beers is bound as list items using the for directive:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-032.png"/>
+              <figcaption>Fig 05-032</figcaption>
+            </figure>
+            <p>While
               iterating, Vue will decide whether or not to render each beer, by comparing the current beer's abv to the
-              maxAbv value. This works because the iteration happens before the comparison. In other words, the for
+              maxAbv value.</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-033.png"/>
+              <figcaption>Fig 05-033</figcaption>
+            </figure>
+            <p>This works because the iteration happens before the comparison. In other words, the for
               directive takes precedence over the if directive. Using if directives on the same line as a for directive
               can help you create compact templates. Creating a compact template can help you keep your code clean if
               you're rendering lists of items. While the items I've shown up to this point have been static, that's not
@@ -2337,14 +2707,25 @@
           </div>
           <div>
             <h3>
-              Detecting Array Changes </h3>
+              Detecting Array Changes
+            </h3>
             <p>
               In module 2, I explained how templates can automatically react to property changes. This is possible due
               to the change notification and dependency tracking features that happen behind the scenes. However, I also
               mentioned that these features do not automatically happen on native JavaScript arrays. Instead, you must
-              use a different approach if an array changes or is replaced. When an array changes, it mutates. Vue has
-              seven baked-in mutation functions to change an array as needed. These seven functions are sort, reverse,
-              push, pop, shift, unshift, and splice. Each of these functions are wrappers around the standard JavaScript
+              use a different approach if an array changes or is replaced.</p>
+            <p>When an array changes, it mutates. Vue has
+              seven baked-in mutation functions to change an array as needed. These seven functions are:</p>
+            <ul>
+              <li>sort</li>
+              <li>reverse</li>
+              <li>push</li>
+              <li>pop</li>
+              <li>shift</li>
+              <li>unshift</li>
+              <li>splice</li>
+            </ul>
+            <p>Each of these functions are wrappers around the standard JavaScript
               array functions of the same names. The reason these wrapper functions are needed is to trigger Vue
               updates. If you're unfamiliar with these functions, don't worry, I'm going to go through each of them. If
               you are familiar with these JavaScript functions, I encourage you to at least watch the first one, so you
@@ -2353,37 +2734,91 @@
           </div>
           <div>
             <h3>
-              Using the Sort Function </h3>
+              Using the Sort Function
+            </h3>
             <p>
               The sort function puts elements in an array in order. For example, let's pretend that I have an array of
-              beer names defined like this. If I applied the sort function like this, the array would be sorted in
+              beer names defined like this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-034.png"/>
+              <figcaption>Fig 05-034</figcaption>
+            </figure>
+            <p>If I applied the sort function like this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-035.png"/>
+              <figcaption>Fig 05-035</figcaption>
+            </figure>
+            <p>The array would be sorted in
               ascending order. This happens because, by default, the sort function treats each element in the array as a
               string, and orders elements in ascending order. Now, imagine the array were a list of alcohol by volume
-              values. If that were the case, you would see a slightly different result. In fact, let's imagine there's
+              values:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-036.png"/>
+              <figcaption>Fig 05-036</figcaption>
+            </figure>
+            <p> If that were the case, you would see a slightly different result. In fact, let's imagine there's
               an array called abv, which contains these values. Now, if I applied the sort function to this array, I
-              would get this result. Notice that the numbers are not in numerical order. This is because, by default,
+              would get this result:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-037.png"/>
+              <figcaption>Fig 05-037</figcaption>
+            </figure>
+            <p>Notice that the numbers are not in numerical order. This is because, by default,
               the sort function treats each element in the array as a string, even if it's another type. to overcome
-              this behavior, you must customize the sort function like this. On this slide, I'm using an override of the
+              this behavior, you must customize the sort function like this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-038.png"/>
+              <figcaption>Fig 05-038</figcaption>
+            </figure>
+            <p>On this slide, I'm using an override of the
               sort function. This override accepts a comparison function. During the sort operation, this function
               determines how two array elements should be ordered in relation to each other. These elements are passed
               in as the parameters. It is your responsibility to return a negative, 0 or positive value when comparing
-              the elements. A negative value means that the first parameter should be in the array before the second
+              the elements.</p>
+            <p>A negative value means that the first parameter should be in the array before the second
               parameter. A value of 0 means that there should be no change in the order. Finally, if a positive value is
               returned, the first parameter should be in the array after the second parameter. In the context of this
-              slide, all of this was condensed down to this single line of code. At this point, you've seen how to use
+              slide:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-039.png"/>
+              <figcaption>Fig 05-039</figcaption>
+            </figure>
+            <p>All of this was condensed down to this single line of code. At this point, you've seen how to use
               the sort function to arrange an array in ascending order. Now, imagine you wanted to show things in
               descending order. In that situation, you may want to use the reverse function.
             </p>
           </div>
           <div>
             <h3>
-              Using the Reverse Function </h3>
+              Using the Reverse Function
+            </h3>
             <p>
               The reverse function rearranges an array into the opposite direction. Put simply, the reverse function
-              reverses an array. To demonstrate, let's revisit the array of beer names. This array has already been
+              reverses an array. To demonstrate, let's revisit the array of beer names.</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-040.png"/>
+              <figcaption>Fig 05-040</figcaption>
+            </figure>
+            <p>
+            <p>This array has already been
               sorted in ascending order. If I apply the reverse function, the beer names will now appear in descending
-              order. This isn't just for changing the direction of a sort, though. Let's take a smaller, unsorted array.
-              If the reverse function were to be applied, it would appear like this. Notice in this example that the
+              order:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-041.png"/>
+              <figcaption>Fig 05-041</figcaption>
+            </figure>
+            <p>This isn't just for changing the direction of a sort, though. Let's take a smaller, unsorted array:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-042.png"/>
+              <figcaption>Fig 05-042</figcaption>
+            </figure>
+            <p>
+              If the reverse function were to be applied, it would appear like this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-043.png"/>
+              <figcaption>Fig 05-043</figcaption>
+            </figure>
+            <p>Notice in this example that the
               elements in the array are reversed. No sorting was applied before the arranging happened. Once again, the
               reverse function is purely for changing the direction of an array. If you need to manage elements in an
               array, you might consider the push and pop functions.
@@ -2391,36 +2826,84 @@
           </div>
           <div>
             <h3>
-              Pushing and Popping Array Items </h3>
+              Pushing and Popping Array Items
+            </h3>
             <p>
               The push function adds items to the end of an array. After an item is added to the array, the push
-              function returns the updated length of the array. Let's revisit the list of beer names for a second. I
-              could add a beer named Pope Lick Porter to this list with the push function, like this. Once added, the
-              beers array becomes this. As you can see, the Pope Lick Porter was added to the end of the list. If I
+              function returns the updated length of the array. Let's revisit the list of beer names for a second:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-044.png"/>
+              <figcaption>Fig 05-044</figcaption>
+            </figure>
+            <p>I could add a beer named Pope Lick Porter to this list with the push function, like this</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-045.png"/>
+              <figcaption>Fig 05-045</figcaption>
+            </figure>
+            <p>Once added, the
+              beers array becomes this.</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-046.png"/>
+              <figcaption>Fig 05-046</figcaption>
+            </figure>
+            <p>As you can see, the Pope Lick Porter was added to the end of the list. If I
               wanted to remove this beer, I could look to the pop function. The pop function removes the last element
               from an array. Once removed, the pop function returns the item that was removed from the array. Notice
               that this differs from the push function, which returned the array length. So if I took the array from the
-              last slide, and then called the pop function, this would be the result. In addition, the pop function
-              would return this, for use, if you needed it. The pop and push functions are useful for working with the
+              last slide, and then called the pop function, this would be the result:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-047.png"/>
+              <figcaption>Fig 05-047</figcaption>
+            </figure>
+            <p>In addition, the pop function
+              would return this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-048.png"/>
+              <figcaption>Fig 05-048</figcaption>
+            </figure>
+            </figure>
+            <p>For use, if you needed it. The pop and push functions are useful for working with the
               end of an array. If you need to work with items at the beginning of an array, you may consider the shift
               and unshift functions.
             </p>
           </div>
           <div>
             <h3>
-              Using the Shift and Unshift Function </h3>
+              Using the Shift and Unshift Function
+            </h3>
             <p>
               To add items to the beginning of an array, you can use the unshift function. Personally, the name of this
               function has always made me do a double-take. The idea that I need to call a function name with the prefix
               of un to add something has always thrown me off. Still, just like the push function, once the item is
-              added to the array, the unshift function will return the new length of the array. An example of adding a
-              beer name to the beginning of an array would look like this. In this example, I'm adding the Pope Lick
-              Porter to the start of the beers array. Once added, the beers array has a length of 4. That new length
+              added to the array, the unshift function will return the new length of the array.</p>
+            <p>An example of adding a beer name to the beginning of an array would look like this.</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-049.png"/>
+              <figcaption>Fig 05-049</figcaption>
+            </figure>
+            <p>In this example, I'm adding the Pope Lick
+              Porter to the start of the beers array:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-050.png"/>
+              <figcaption>Fig 05-050</figcaption>
+            </figure>
+            <p>Once added, the beers array has a length of 4:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-051.png"/>
+              <figcaption>Fig 05-051</figcaption>
+            </figure>
+            <p>That new length
               would get returned by the unshift function call. If I chose to remove the Pope Lick Porter that I just
-              added, I could use the shift function. The shift function removes the first item of an array. Once
+              added, I could use the shift function.</p>
+            <p>The shift function removes the first item of an array. Once
               removed, this function will return that item. This is similar to the pop function, except that instead of
               removing the last item, the shift function removes the first item. So if you wanted to remove the Pope
-              Lick Porter from the array that was shown on the previous slide, you could, like this. As visible on this
+              Lick Porter from the array that was shown on the previous slide, you could, like this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-052.png"/>
+              <figcaption>Fig 05-052</figcaption>
+            </figure>
+            <p>As visible on this
               slide, the shift function removes the first item from the beers array. You've also seen how to remove
               items from the end of an array. If you need to remove items from the middle of an array, you need to do
               some splicing.
@@ -2428,55 +2911,142 @@
           </div>
           <div>
             <h3>
-              Splicing an Array </h3>
+              Splicing an Array
+            </h3>
             <p>
               When it comes to array management, the splice function is the Swiss Army knife of array functions. The
               splice function lets you add and remove items to and from an array. You can add or remove items to or from
-              the start, middle or end of an array. Since I've already shown you how to add and remove items from the
+              the start, middle or end of an array.</p>
+            <p>Since I've already shown you how to add and remove items from the
               start and end of an array, let's talk about the middle of an array. Let's once again visit a list of
-              beers. In this list, we have four beers. Now, imagine that we wanted to remove the middle two beers. To
-              remove the Hyote Chocolate Stout and the Ahool Ale, you could use the splice function like this. In this
+              beers.</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-053.png"/>
+              <figcaption>Fig 05-053</figcaption>
+            </figure>
+            <p>In this list, we have four beers. Now, imagine that we wanted to remove the middle two beers. To
+              remove the Hyote Chocolate Stout and the Ahool Ale, you could use the splice function like this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-054.png"/>
+              <figcaption>Fig 05-054</figcaption>
+            </figure>
+            <p>In this
               example, I'm using the splice function to remove two beers from the beers array. The first parameter is a
               required integer. This integer specifies where in the array to begin adding or removing items. The second
               parameter is optional, however, on this slide it means that I want to remove the two beers beginning at
               the first index. Had I not included it, all beers beginning with the first index would have been removed
-              from the array. In either case, the splice function would return the removed items into their own array.
-              The beers array itself would get updated to this. The splice function isn't just for removing items,
+              from the array.</p>
+            <p>In either case, the splice function would return the removed items into their own array.
+              The beers array itself would get updated to this.</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-055.png"/>
+              <figcaption>Fig 05-055</figcaption>
+            </figure>
+            <p>The splice function isn't just for removing items,
               though. You can actually use the splice function to insert items into an array. For example, let's take
-              our updated list of beers and add the removed beers back into the array. We could do that like this. In
+              our updated list of beers and add the removed beers back into the array. We could do that like this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-056.png"/>
+              <figcaption>Fig 05-056</figcaption>
+            </figure>
+            <p>In
               this code snippet, I'm looping through the list of beers that were previously removed. The splice function
-              is responsible for adding each beer back to the list. The first parameter specifies that I want to begin
-              adding beers after the first item in the array. When adding items with the splice function, the second
-              parameter is required. Since we don't want to remove any beers, I've set it to 0. Then, I'm passing in the
-              name of the beer to add it to the list. Once completed, we get the following list of beers. Splicing is a
+              is responsible for adding each beer back to the list:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-057.png"/>
+              <figcaption>Fig 05-057</figcaption>
+            </figure>
+            <p>The first parameter specifies that I want to begin
+              adding beers after the first item in the array:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-058.png"/>
+              <figcaption>Fig 05-058</figcaption>
+            </figure>
+            <p>When adding items with the splice function, the second
+              parameter is required:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-059.png"/>
+              <figcaption>Fig 05-059</figcaption>
+            </figure>
+            <p>Since we don't want to remove any beers, I've set it to 0. Then, I'm passing in the
+              name of the beer to add it to the list:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-060.png"/>
+              <figcaption>Fig 05-060</figcaption>
+            </figure>
+            <p>Once completed, we get the following list of beers:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-061.png"/>
+              <figcaption>Fig 05-061</figcaption>
+            </figure>
+            <p>Splicing is a
               great way to add and remove elements to an array, however, you can also use the splice function to update
               existing elements in an array.
             </p>
           </div>
           <div>
             <h3>
-              Updating an Array Element </h3>
+              Updating an Array Element
+            </h3>
             <p>
               Up to this point, I've shown you how to update an array using a variety of mutations functions, however,
               in some situations you may want to update an individual item in an array. For example, we've been changing
-              a list of beers. Now, imagine that in this array we discovered that the Ahool Ale wasn't just an ale.
+              a list of beers. Now, imagine that in this array we discovered that the Ahool Ale wasn't just an ale.</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-062.png"/>
+              <figcaption>Fig 05-062</figcaption>
+            </figure>
+            <p>
               Instead, we learned that it should be a pale ale. In that case, we could update the Ahool Ale item like
-              this. In this snippet, I'm using a function that's baked in to view. This utility function is necessary,
+              this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-063.png"/>
+              <figcaption>Fig 05-063</figcaption>
+            </figure>
+            <p>In this snippet, I'm using a function that's baked in to view. This utility function is necessary,
               because Vue cannot detect updates to individual array elements. This is due to the limitations of
-              JavaScript explained at the start of module 2. Still, Vue provides a utility function named set to help
-              you get past this limitation. In this example, the first parameter is the array that's getting updated.
-              The second parameter is the index of the item in the array that we want to update. Finally, the third
-              parameter is the new value. When executed, this line tells Vue to update the UI. This will result in the
-              following. If you prefer to stay closer to JavaScript APIs, you can by using the splice function. If you
+              JavaScript explained at the start of module 2.</p>
+            <p>Still, Vue provides a utility function named set to help
+              you get past this limitation. In this example, the first parameter is the array that's getting
+              updated:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-064.png"/>
+              <figcaption>Fig 05-064</figcaption>
+            </figure>
+            <p>
+              The second parameter is the index of the item in the array that we want to update</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-065.png"/>
+              <figcaption>Fig 05-065</figcaption>
+            </figure>
+            <p>Finally, the third parameter is the new value:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-066.png"/>
+              <figcaption>Fig 05-066</figcaption>
+            </figure>
+            <p>When executed, this line tells Vue to update the UI. This will result in the
+              following:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-067.png"/>
+              <figcaption>Fig 05-067</figcaption>
+            </figure>
+            <p>If you prefer to stay closer to JavaScript APIs, you can by using the splice function:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-068.png"/>
+              <figcaption>Fig 05-068</figcaption>
+            </figure>
+            <p>If you
               prefer to use the splice approach, this example becomes this. Everything on this slide is the same, except
               for the code used to update the Ahool Pale Ale. This line of code is exactly one character longer than
               vue. set approach. For that reason, it's a marginal change if you prefer to use splice over the vue. set
-              function. There's no difference here, it comes down to personal preference. Still, that's how you can
+              function. There's no difference here, it comes down to personal preference.</p>
+            <p>Still, that's how you can
               update an array element. You also saw how to add and remove elements from an array. You also saw how to
               rearrange arrays with the sort and reverse options. This module was about more than that, though. In this
               module, you learned how to handle array changes. This is important because arrays are often the data
               source for lists of items in a view. For that reason, you also saw how to render lists of items. In
-              addition, you learned how to conditionally render elements. While these features help you display exactly
+              addition, you learned how to conditionally render elements.</p>
+            <p>While these features help you display exactly
               what you want, there are ways to do it even better. In the next module, I'm going to show you how to react
               to data changes to get even better performance in your view.
             </p>
@@ -2486,40 +3056,83 @@
           <h2>Reacting to Data Changes with Filters, Computed Properties, and Watchers </h2>
           <div>
             <h3>
-              Introduction </h3>
+              Introduction
+            </h3>
             <p>
               Before we dive into this final module, I want to personally thank you for watching this course. I hope
               you'll reach out to me on Twitter, @chadcampbell, and share your opinions about this course. After you've
               done that, I want to show you what you've learned, and how it all ties together. Then I'll show you some
-              final tweaks that'll improve your app. Welcome to the final lap. In module 1, I mentioned that a UI for
+              final tweaks that'll improve your app. Welcome to the final lap.</p>
+            <p>In module 1, I mentioned that a UI for
               searching fictional beers and breweries would be used to drive home the concepts of this course. If you
-              opened the code samples associated with this course, which are found here, you'll notice in the upper
-              right corner is a button that says view full example. If you click this button, you'll see the following.
+              opened the code samples associated with this course, which are found here:</p>
+            <a href="https://github.com/ecofic/course-vue-getting-started">https://github.com/ecofic/course-vue-getting-started</a>
+            <p>You'll notice in the upper
+              right corner is a button that says view full example:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-001.png"/>
+              <figcaption>Fig 06-001</figcaption>
+            </figure>
+            <p>If you click this button, you'll see the following:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-002.png"/>
+              <figcaption>Fig 06-002</figcaption>
+            </figure>
+            <p>
               I'm going to run a search for ale, and press Enter. With some results on the screen, I want to quickly
               show you what you've learned in this course. In module 2, I showed you how to use templates. That
-              information was used to render the name of our fictional beer engine, Growler, as shown here. As a
+              information was used to render the name of our fictional beer engine, Growler, as shown here:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-003.png"/>
+              <figcaption>Fig 06-003</figcaption>
+            </figure>
+            <p>As a
               reminder, the color change is based on whether the app can connect to the internet or not. In module 3, I
               showed you how to bind to forms. You saw how to use the model directive to bind to HTML input elements
-              like text fields. This information was used for the search field in Growler. You also saw how to use
+              like text fields. This information was used for the search field in Growler</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-004.png"/>
+              <figcaption>Fig 06-004</figcaption>
+            </figure>
+            <p>You also saw how to use
               modifiers to handle common development chores and lighten your load. If you look next to the query field,
-              you'll see a Search button. In module 4, you saw how to use event handlers. This empowered you to do
+              you'll see a Search button:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-005.png"/>
+              <figcaption>Fig 06-005</figcaption>
+            </figure>
+            <p>In module 4, you saw how to use event handlers. This empowered you to do
               things like handle a button click. In addition, you saw how to address common scenarios, like a user
               pressing the Enter key, which may be used in place of the Search button. In the case of Growler, if you
               did either of these things, you'd expect a search request to get fired off. While making the actual call
               to the search service is beyond the scope of this course, you still saw how to initiate that process. In
-              addition, this sample app has the code to do that if you want to look at it. Going even further, if you
+              addition, this sample app has the code to do that if you want to look at it.</p>
+            <p>Going even further, if you
               want to learn how to create the actual search engine behind this button, please check out my Pluralsight
               course, Adding Search Abilities to Your Apps with Azure Search. Either way, once results were returned,
-              you need a way to show them. In module 5, you saw how to conditionally render content. You saw how to
+              you need a way to show them.</p>
+            <p>In module 5, you saw how to conditionally render content. You saw how to
               render content conditionally at load time, and at runtime. You also saw how to render lists of items. This
-              information could be used to render these results in the search engine. As you can see on the screen, the
+              information could be used to render these results in the search engine:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-006.png"/>
+              <figcaption>Fig 06-006</figcaption>
+            </figure>
+            <p>As you can see on the screen, the
               information you've learned in this course can be used to build a functioning app, however, there are a
               number of things that can be done to improve this app, specifically in regards to reacting to data
-              changes. In this module, I'm going to show you how to react to data changes. Frist, I'll show you how to
+              changes.</p>
+            <p>In this module, I'm going to show you how to react to data changes. Frist, I'll show you how to
               monitor data changes with watchers. Then, I'll show you how to render templates even faster with something
-              called computed properties. Finally, I'll show you how to easily format data in a view using filters. This
+              called computed properties. Finally, I'll show you how to easily format data in a view using filters.</p>
+            <p>This
               module is ordered this way because it matches how data changes get propagated. In fact, here's a diagram
-              to reinforce the data flow. This diagram is here to help you remember the order of operations. Each of the
+              to reinforce the data flow:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-007.png"/>
+              <figcaption>Fig 06-007</figcaption>
+            </figure>
+            <p>This diagram is here to help you remember the order of operations. Each of the
               items that will be discussed in this module is intended to help you write better code. In fact, each of
               these items are entirely optional. You can achieve similar results using the other material presented in
               this course, however, I believe that once you learn about each of these topics, you'll see better ways to
@@ -2528,60 +3141,178 @@
           </div>
           <div>
             <h3>
-              Monitoring Data Changes with Watchers </h3>
+              Monitoring Data Changes with Watchers
+            </h3>
             <p>
               In module 3, you learned how to collect data from a user via input bindings. In module 4, you learned how
               to respond to user events like button clicks. You could take the information from these two modules and
               react to a user event that likely results in a data change. This event could be something like a button
-              click or a blur event on an input field. There is a more direct and more predicable approach, though. Vue
+              click or a blur event on an input field. There is a more direct and more predicable approach, though.</p>
+            <p>Vue
               provides a way to directly react to a change in the data itself. Watchers are special functions that let
               you react to data property changes. For any data property, you can create a watcher in the watch option of
               a Vue instance. To demonstrate, let's imagine that users could buy beers from a list of beers. As a matter
               of fact, I'm going to switch over to Google Chrome and show you what that screen would look like. Now,
-              when I click the buy button, notice that the Subtotal field updates. Each time I click the buy button, the
-              price of the beer is added to the Subtotal. I want to take a moment and explain the code powering this. To
+              when I click the buy button, notice that the Subtotal field updates:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-008.png"/>
+              <figcaption>Fig 06-008</figcaption>
+            </figure>
+            <p>Each time I click the buy button, the
+              price of the beer is added to the Subtotal. I want to take a moment and explain the code powering
+              this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-009.png"/>
+              <figcaption>Fig 06-009</figcaption>
+            </figure>
+            <p>To
               show you all of the code involved on the screen, I have to break this story down across multiple slides,
-              so please bear with me. Let's begin by looking at the data that's driving this view. Each beer in the
-              beers property is rendered as a table row, thanks to the for directive. Each table row includes the beer's
-              name, price, and a button. If clicked, this button will pass the beer to the buy function. The buy
-              function is defined in the methods option. That option is depicted by these ellipses. In reality, it looks
-              like this. This slide has the methods option now visible. The ellipses represent the data object shown in
-              the last slide. Here you can see the buy function triggered by the button in the template. If called, this
+              so please bear with me. Let's begin by looking at the data that's driving this view:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-010.png"/>
+              <figcaption>Fig 06-010</figcaption>
+            </figure>
+            <p>Each beer in the
+              beers property is rendered as a table row:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-011.png"/>
+              <figcaption>Fig 06-011</figcaption>
+            </figure>
+            <p>Thanks to the for directive. Each table row includes the beer's
+              name, price, and a button:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-012.png"/>
+              <figcaption>Fig 06-012</figcaption>
+            </figure>
+            <p>If clicked, this button will pass the beer to the buy function. The buy
+              function is defined in the methods option. That option is depicted by these ellipses:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-013.png"/>
+              <figcaption>Fig 06-013</figcaption>
+            </figure>
+            <p>In reality, it looks
+              like this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-014.png"/>
+              <figcaption>Fig 06-014</figcaption>
+            </figure>
+            <p>This slide has the methods option now visible. The ellipses represent the data object shown in
+              the last slide:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-015.png"/>
+              <figcaption>Fig 06-015</figcaption>
+            </figure>
+            <p>Here you can see the buy function triggered by the button in the template.</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-016.png"/>
+              <figcaption>Fig 06-016</figcaption>
+            </figure>
+            <p>If called, this
               function adds a beer to the user's shopping cart. When the shopping cart is updated, we want to update the
-              subTotal property. Now, I could call the updateSubTotal function directly, if I wanted to, but in reality,
+              subTotal property. Now, I could call the updateSubTotal function directly:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-017.png"/>
+              <figcaption>Fig 06-017</figcaption>
+            </figure>
+            <p>If I wanted to, but in reality,
               there could be other functions that update the shopping cart also. Maybe users want to remove items from
               their cart, or change the number of beers. Either way, instead of calling the updateSubTotal function
-              directly, it makes sense to call the function when the shopping cart itself changes. To do that, I'm going
-              to create a watcher, as shown on this slide. The ellipses in this slide represent the methods option
-              defined in the last slide. Notice the addition of the watch option, though. The watch option defines a
-              list of watchers. Each key is the name of a property in the data object. This is the name of the property
+              directly, it makes sense to call the function when the shopping cart itself changes.</p>
+            <p>To do that, I'm going
+              to create a watcher, as shown on this slide:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-018.png"/>
+              <figcaption>Fig 06-018</figcaption>
+            </figure>
+            <p>The ellipses in this slide represent the methods option
+              defined in the last slide. Notice the addition of the watch option, though:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-019.png"/>
+              <figcaption>Fig 06-019</figcaption>
+            </figure>
+            <p>The watch option defines a
+              list of watchers. Each key is the name of a property in the data object:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-020.png"/>
+              <figcaption>Fig 06-020</figcaption>
+            </figure>
+            <p>This is the name of the property
               to monitor for data changes. If a data change happens, the keys value defines how to respond to that
               change. This definition includes the watcher's behavior and depth.
             </p>
           </div>
           <div>
             <h3>
-              Defining a Watcher's Behavior' </h3>
+              Defining a Watcher's Behavior'
+            </h3>
             <p>
-              I want to focus specifically on the watch option in this definition. If you focus on it, you can see that
+              I want to focus specifically on the watch option in this definition:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-021.png"/>
+              <figcaption>Fig 06-021</figcaption>
+            </figure>
+            <p>If you focus on it, you can see that
               the behavior of the watcher is defined in a JavaScript function. In this case, a basic function is used
-              that calls the updateSubTotal function. Technically, since this is all this watcher is doing, it could be
-              simplified like this. In this example, the updateSubTotal function is called whenever the shopping cart is
+              that calls the updateSubTotal function:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-022.png"/>
+              <figcaption>Fig 06-022</figcaption>
+            </figure>
+            <p>Technically, since this is all this watcher is doing, it could be
+              simplified like this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-023.png"/>
+              <figcaption>Fig 06-023</figcaption>
+            </figure>
+            <p>In this example, the updateSubTotal function is called whenever the shopping cart is
               updated. When updated, Vue looks for the function named updateSubTotal in the methods option. At this
-              point, you may be wondering why you would want to associate a full-blown function with a watcher. The
-              approach on this slide is clearly more compact. Well, there is an added benefit to using a function. To
-              demonstrate, I want to show you another example. In this example, I've defined a watcher on the subTotal
-              property. Notice that in this watcher I've passed two parameters into the watcher function. When Vue calls
+              point, you may be wondering why you would want to associate a full-blown function with a watcher:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-024.png"/>
+              <figcaption>Fig 06-024</figcaption>
+            </figure>
+            <p>The
+              approach on this slide is clearly more compact.
+            <p>
+            <p>Well, there is an added benefit to using a function. To
+              demonstrate, I want to show you another example.</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-025.png"/>
+              <figcaption>Fig 06-025</figcaption>
+            </figure>
+            <p>In this example, I've defined a watcher on the subTotal
+              property. Notice that in this watcher I've passed two parameters into the watcher function:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-026.png"/>
+              <figcaption>Fig 06-026</figcaption>
+            </figure>
+            <p>When Vue calls
               a watcher function, it automatically passes in two parameters. I've named those parameters latest and
               original, in this case. Technically, you could give these parameters any valid name you wanted to. Still,
               what's important is what they represent. The first value is the value that the data property has been
-              changed to. In this example, the latest parameter would be the value of the Subtotal including an added
-              beer. However, the original parameter would be the value of the Subtotal before the price of the new beer
-              is included. This is a way of inspecting the before and after state of a watched property. At this point,
+              changed to.</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-027.png"/>
+              <figcaption>Fig 06-027</figcaption>
+            </figure>
+            <p>In this example, the latest parameter would be the value of the Subtotal including an added
+              beer. However, the original parameter:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-028.png"/>
+              <figcaption>Fig 06-028</figcaption>
+            </figure>
+            <p>Would be the value of the Subtotal before the price of the new beer
+              is included. This is a way of inspecting the before and after state of a watched property.</p>
+            <p>At this point,
               you may want to know why I chose to use the subTotal property instead of the shopping cart property used
               earlier. The fact is, I could not use the shopping cart property to show the latest and original parameter
               usage. The reason why is because Vue doesn't keep data copies for objects and arrays. Since the shopping
-              cart is an array, it wouldn't work. Instead, you would need to use an expression like this to detect a
+              cart is an array, it wouldn't work. Instead, you would need to use an expression like this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-029.png"/>
+              <figcaption>Fig 06-029</figcaption>
+            </figure>
+            <p>To detect a
               change in the length of an array. This example watches for changes to the length of the shopping cart. If
               a beer is added or removed from the array, the subTotal will get updated. While this is useful for
               handling changes to the length of an array, sometimes the contents of an item within an array, changes. To
@@ -2590,24 +3321,68 @@
           </div>
           <div>
             <h3>
-              Defining a Watcher's Depth </h3>
+              Defining a Watcher's Depth
+            </h3>
             <p>
               By default, watchers use a shallow monitoring approach. In other words, a watcher compares old and new
               values by reference. This means that properties nested in a watched property do not cause a change to be
-              detected when they get changed. I want to demonstrate this point, because I believe it's important. Up to
-              this point, the shopping cart property in the data object has just been an array. Let's expand the
+              detected when they get changed.</p>
+            <p>I want to demonstrate this point, because I believe it's important. Up to
+              this point, the shopping cart property in the data object has just been an array:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-030.png"/>
+              <figcaption>Fig 06-030</figcaption>
+            </figure>
+            <p>Let's expand the
+
               responsibility of the shopping cart, though. In fact, now it will have an array named items, which
-              represent the items in the shopping cart. The shopping cart will also have a property named subTotal. The
+              represent the items in the shopping cart:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-031.png"/>
+              <figcaption>Fig 06-031</figcaption>
+            </figure>
+            <p>The shopping cart will also have a property named subTotal:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-032.png"/>
+              <figcaption>Fig 06-032</figcaption>
+            </figure>
+            <p>The
               goal is that as beers are bought, the subtotal will get updated. If you're curious, we're basically
               refactoring code we've used earlier. I'm doing this just to demonstrate a scenario that I believe you'll
               run into in the real world. Now, if I run this code, you'll notice that the subtotal doesn't get updated
-              when I click the buy button next to a beer. You might be thinking that this was working earlier, why isn't
+              when I click the buy button next to a beer.</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-033.png"/>
+              <figcaption>Fig 06-033#</figcaption>
+            </figure>
+            <p>
+              You might be thinking that this was working earlier, why isn't
               it working now? The reason why is because the items property is nested within the shopping cart, so by
               default, Vue won't be able to detect the addition of beers to the items array. This means that the
-              subtotal never gets updated. However, I could update the watcher definition like this to react to changes
+              subtotal never gets updated:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-034.png"/>
+              <figcaption>Fig 06-034</figcaption>
+            </figure>
+            <p>However, I could update the watcher definition like this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-035.png"/>
+              <figcaption>Fig 06-035</figcaption>
+            </figure>
+            <p>To react to changes
               in nested properties. This watcher syntax is slightly different than what's been used. The handler defines
-              the function to call when the shoppingCart property changes. The notable part of this example, though, is
-              the deep property. By setting this property to true, I'm telling Vue to watch for changes to properties
+              the function to call when the shoppingCart property changes:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-036.png"/>
+              <figcaption>Fig 06-036</figcaption>
+            </figure>
+            <p>The notable part of this example, though, is
+              the deep property:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-037.png"/>
+              <figcaption>Fig 06-037</figcaption>
+            </figure>
+            <p>By setting this property to true, I'm telling Vue to watch for changes to properties
               nested within the shoppingCart property. This is set to false, by default, for performance reasons. For
               that reason, you should turn deep monitoring on only when it makes sense. After all, you shouldn't watch
               properties unless you have to. Watchers are a powerful way to react to data changes in a view. In general,
@@ -2617,32 +3392,71 @@
           </div>
           <div>
             <h3>
-              Faster Rendering with Computed Properties </h3>
+              Faster Rendering with Computed Properties
+            </h3>
             <p>
               A great user experience is a fast, responsive user experience. In order to meet this goal, you need to
               make implementation choices that will deliver the greatest performance. When rendering data in your UI,
               you can use methods to handle data conversions. However, when you call a method, the logic is run each
               time. If this logic is complex, or if it's called a lot of times, your app might render more slowly.
-              Fortunately, Vue provides a way to cache properties once they've been computed. Computed properties are
+              Fortunately, Vue provides a way to cache properties once they've been computed.</p>
+            <p>
+              Computed properties are
               functions whose results are cached until their depending values change. This means that the first time a
               computed property is called, a result will be generated and cached. Then, anytime the computed property is
-              called again, the cached value will be returned. Notably, the logic won't be reevaluated. Instead, a
-              computed properties result will only be regenerated if a depending value changes. This means a faster
+              called again, the cached value will be returned. Notably, the logic won't be re-evaluated. Instead, a
+              computed properties result will only be regenerated if a depending value changes:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-038.png"/>
+              <figcaption>Fig 06-038</figcaption>
+            </figure>
+            <p>This means a faster
               runtime experience. Let's see how to initialize a computed property.
             </p>
           </div>
           <div>
             <h3>
-              Initializing Computed Properties </h3>
+              Initializing Computed Properties
+            </h3>
             <p>
               To initialize a computed property, you set up something that looks like a method. To demonstrate, let's
-              look at an example. In this example, I have a computed property named isOnline. This property is a flag
+              look at an example:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-039.png"/>
+              <figcaption>Fig 06-039</figcaption>
+            </figure>
+            <p>In this example, I have a computed property named isOnline:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-040.png"/>
+              <figcaption>Fig 06-040</figcaption>
+            </figure>
+            <p>This property is a flag
               that signals if the search engine is able to access the internet, or not. It provides a simple yes or no,
-              based on the value of canConnect. By default, this property is set to false when the app starts. Once the
-              app is created, the Axios library mentioned in module 1 is used to see if the app can reach a website. The
+              based on the value of canConnect:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-041.png"/>
+              <figcaption>Fig 06-041</figcaption>
+            </figure>
+            <p>By default, this property is set to false when the app starts. Once the
+              app is created, the Axios library mentioned in module 1 is used to see if the app can reach a website:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-042.png"/>
+              <figcaption>Fig 06-042</figcaption>
+            </figure>
+            <p>The
               result of that request is used to set the canConnect property. When the canConnect property changes, the
-              isOnline computed property will get refreshed. In other words, the cached value will be replaced with the
-              new value. This results in the UI bindings getting updated as well. So, if the can Connect property gets
+              isOnline computed property will get refreshed:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-043.png"/>
+              <figcaption>Fig 06-043</figcaption>
+            </figure>
+            <p>In other words, the cached value will be replaced with the
+              new value. This results in the UI bindings getting updated as well.</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-044.png"/>
+              <figcaption>Fig 06-044</figcaption>
+            </figure>
+            <p>So, if the can Connect property gets
               set to false, the UI will show no, and if the canConnect property is set to true, the UI will show yes.
               Computed properties are great when you want to cache values. That's why, by default, they strictly
               retrieve values. Basically, computed properties are getters by default, but if you want to expand a
@@ -2652,20 +3466,48 @@
           </div>
           <div>
             <h3>
-              Using Computed Properties as Accessors </h3>
+              Using Computed Properties as Accessors
+            </h3>
             <p>
               Computed properties can be used as accessors. Accessors are computed properties that can get or set
               property values. This concept may sound familiar, in fact, accessors are found in some form in other
-              popular languages like C#, C++, and Java. To see what Vue's version of an accessor looks like, let's do a
-              before and after of the isOnline computed property. Here on the left, you can see the isOnline computed
+              popular languages like C#, C++, and Java.</p>
+            <p>To see what Vue's version of an accessor looks like, let's do a
+              before and after of the isOnline computed property:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-045.png"/>
+              <figcaption>Fig 06-045</figcaption>
+            </figure>
+            <p>Here on the left, you can see the isOnline computed
               property used in the last section. Now, I could expand this code and explicitly declare that this computed
-              property is a getter by defining a get function like this. This approach does not change the behavior of
-              the computed property. Rather, it's a more verbose way of achieving the same goal. Now, if I wanted to set
-              the canConnect value, I could by adding a set function, like this. Now, the isOnline computed property
+              property is a getter by defining a get function like this.</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-046.png"/>
+              <figcaption>Fig 06-046.png</figcaption>
+            </figure>
+            <p>This approach does not change the behavior of
+              the computed property. Rather, it's a more verbose way of achieving the same goal.</p>
+            <p>Now, if I wanted to set
+              the canConnect value, I could by adding a set function, like this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-047.png"/>
+              <figcaption>Fig 06-047</figcaption>
+            </figure>
+            <p>Now, the isOnline computed property
               lets you both get and set the canConnect data value. Notice how the set function takes in a parameter
-              called newValue. This parameter is the value that you want to change a property to. This empowers you to
+              called newValue:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-048.png"/>
+              <figcaption>Fig 06-048</figcaption>
+            </figure>
+            <p>This parameter is the value that you want to change a property to. This empowers you to
               use the existing value as a before value, and the newValue parameter as the after value. Then, when the
-              new value is set to the canConnect data property value, the get function is rerun. The reason why is
+              new value is set to the canConnect data property value:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-049.png"/>
+              <figcaption>Fig 06-049</figcaption>
+            </figure>
+            <p>The get function is rerun. The reason why is
               because canConnect is the dependency property for the computed property. This, in turn, means the UI will
               get updated to reflect the data change. Expanding a computed property to an accessor is great when you
               need to do more than retrieve a value. In fact, using a setter is a great way to impose validation on
@@ -2676,55 +3518,133 @@
           </div>
           <div>
             <h3>
-              Formatting with Filters </h3>
+              Formatting with Filters
+            </h3>
             <p>
               When working on an app, you may need to perform some basic transformations. For example, in Growler, each
               beer has International Beer Units, or IBUs, associated with it. Pretend for a second that that data looks
-              like this. Well, if that were the case, you may want to transform the data in two ways. First, you may
+              like this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-050.png"/>
+              <figcaption>Fig 06-050</figcaption>
+            </figure>
+            <p>Well, if that were the case, you may want to transform the data in two ways. First, you may
               want to remove the periods. Next, you may want to make the text upper case. If you did these two things,
-              each value would become this. These kinds of basic text transformations are best implemented as filters.
+              each value would become this.</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-051.png"/>
+              <figcaption>Fig 06-051</figcaption>
+            </figure>
+            <p>These kinds of basic text transformations are best implemented as filters.
               Filters are a special type of function in Vue. They're intended to be used for common text conversions.
               This includes things like converting a string to lowercase, perhaps reversing a string, or, as seen in the
               case of our beer search engine, removing periods and converting the text to uppercase. If you wanted to
-              make a filter that meets the needs of the last example, You'd have a filter that looks like this. This
-              slide has a predefined list of beers squished here in an array called results. The beer listed here has
+              make a filter that meets the needs of the last example, You'd have a filter that looks like this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-052.png"/>
+              <figcaption>Fig 06-052</figcaption>
+            </figure>
+            <p>This
+              slide has a predefined list of beers squished here in an array called results:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-053.png"/>
+              <figcaption>Fig 06-053</figcaption>
+            </figure>
+            <p>The beer listed here has
               its international beer units available through the ibu property. In the HTML, a for directive is used to
-              loop through the results. For each result, mustaches are used to create a semantic binding on the name.
-              Mustaches are again used to bind the IBUs to the template. I'm using mustaches, because, as of the time of
+              loop through the results:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-054.png"/>
+              <figcaption>Fig 06-054</figcaption>
+            </figure>
+            <p>For each result, mustaches are used to create a semantic binding on the name:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-055.png"/>
+              <figcaption>Fig 06-055</figcaption>
+            </figure>
+            <p>Mustaches are again used to bind the IBUs to the template. I'm using mustaches, because, as of the time of
               writing, filters could not be used with the HTML or text directives. Either way, inside of these mustaches
               there's a filter named convertIBU being applied.
             </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-056.png"/>
+              <figcaption>Fig 06-056</figcaption>
+            </figure>
           </div>
           <div>
             <h3>
-              Defining Filters </h3>
+              Defining Filters
+            </h3>
             <p>
-              The convertIBU filter is defined in an instance-level object called filters. This object is at the same
+              The convertIBU filter is defined in an instance-level object called filters.</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-057.png"/>
+              <figcaption>Fig 06-057</figcaption>
+            </figure>
+            <p>This object is at the same
               level as the data and methods objects you've already seen in this course. Inside of the filters object is
               a comma-delimited list of functions that can be used in a binding. In this case, only one filter named
               convertIBU is defined. This function takes in a value which is automatically passed in. The periods are
               then removed from the value, and it's converted to uppercase. That's it. If you wanted to pass in an
-              additional parameter, you could, like this. In this example, I'm passing in a parameter called empty. This
+              additional parameter, you could, like this.</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-058.png"/>
+              <figcaption>Fig 06-058</figcaption>
+            </figure>
+            <p>In this example, I'm passing in a parameter called empty:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-059.png"/>
+              <figcaption>Fig 06-059</figcaption>
+            </figure>
+            <p>This
               parameter's value is used if a beer doesn't have an IBU value. In this case, two dashes will be used
-              instead of an empty string. Still, the value that the filter is being applied to is automatically passed
+              instead of an empty string:</p>
+
+            <p>Still, the value that the filter is being applied to is automatically passed
               into the function. Whether you pass in additional parameters or not, the value is always the first
               parameter passed to a filter, well, unless you're calling a filter programmatically, that is.
             </p>
           </div>
           <div>
             <h3>
-              Programmatically Calling a Filter </h3>
+              Programmatically Calling a Filter
+            </h3>
             <p>
               While you can call filters decoratively, you can also call them programmatically. Once your view has been
               instantiated, the filters object becomes available via the options property. This means that you can
               access your filters via JavaScript. For example, if you wanted to refactor the convertIBU filter into
               multiple filters, you could. In fact, let's pretend that you decided to refactor the convertIBU filter
-              like this. This slide shows the convertIBU filter refactored. Now, instead of one single filter, there are
-              actually three. It should be noted that all of these filters belong in the filters object discussed
+              like this.</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-060.png"/>
+              <figcaption>Fig 06-060</figcaption>
+            </figure>
+            <p>This slide shows the convertIBU filter refactored. Now, instead of one single filter, there are
+              actually three:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-061.png"/>
+              <figcaption>Fig 06-061</figcaption>
+            </figure>
+            <p>It should be noted that all of these filters belong in the filters object discussed
               earlier. I'm showing them this way due to the available real estate on the screen. You can see the actual
               implementation in the sample repo that goes with this course. Still, the convertIBU filter shown in the
-              left half is calling the removePeriods and toUpperCase filters defined in the right half. I want to point
-              out this check right here. This assertion is used to ensure that Growler is defined. The reason for this
+              left half:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-062.png"/>
+              <figcaption>Fig 06-062</figcaption>
+            </figure>
+            <p>Is calling the removePeriods and toUpperCase filters defined in the right half.</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-063.png"/>
+              <figcaption>Fig 06-063</figcaption>
+            </figure>
+            <p>I want to point
+              out this check right here.</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-064.png"/>
+              <figcaption>Fig 06-064</figcaption>
+            </figure>
+            <p>This assertion is used to ensure that Growler is defined. The reason for this
               is because filters are added to the options after instantiation. Without this check, the app would not
               work. Still, once available, I can programmatically call each of the filters as shown on the screen. In
               reality, though, you shouldn't do this. I did this for the sole purpose of showing you the syntax of how
@@ -2734,43 +3654,101 @@
           </div>
           <div>
             <h3>
-              Chaining Filters Together </h3>
+              Chaining Filters Together
+            </h3>
             <p>
               Just like the modifiers explained in module 3, you can also chain filters together. Instead of using a
               period, though, as in the case with modifiers, you use a pipe. Let's pretend for a second that the filter
-              definitions were changed one more time. For example, I'll make each filter its own unit, like this. Now,
-              there are three distinct filters, convertIBU, removePeriods, and toUpperCase. Each of these filters is
-              being called in sequence by the HTML template shown on the right half of the screen. The result of the
-              convertIBU filter is passed as the value into the removePeriods filter. Then, the result of the
-              removePeriods filter is passed as the value to the toUpperCase filter. After all of these filters have
+              definitions were changed one more time. For example, I'll make each filter its own unit, like this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-065.png"/>
+              <figcaption>Fig 06-065</figcaption>
+            </figure>
+            <p>Now,
+              there are three distinct filters, convertIBU, removePeriods, and toUpperCase:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-066.png"/>
+              <figcaption>Fig 06-066</figcaption>
+            </figure>
+            <p>Each of these filters is
+              being called in sequence by the HTML template shown on the right half of the screen:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-067.png"/>
+              <figcaption>Fig 06-067</figcaption>
+            </figure>
+            <p>The result of the
+              convertIBU filter:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-068.png"/>
+              <figcaption>Fig 06-068</figcaption>
+            </figure>
+            <p>is passed as the value into the removePeriods filter:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-069.png"/>
+              <figcaption>Fig 06-069</figcaption>
+            </figure>
+            <p>Then, the result of the
+              removePeriods filter is passed as the value to the toUpperCase filter:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-070.png"/>
+              <figcaption>Fig 06-070</figcaption>
+            </figure>
+            <p>After all of these filters have
               executed, the result is rendered in the HTML. Filters are a nice way to handle basic text transformations.
               At this point, you may be wondering, why use a filter instead of just calling a method?
             </p>
           </div>
           <div>
             <h3>
-              Comparing Filters to Methods </h3>
+              Comparing Filters to Methods
+            </h3>
             <p>
               Filters and methods are closely related. In fact, you can use methods to get the same result as a filter,
               however, filters serve a slightly different purposes. Filters are intended to be used in your HTML
               template. With this intent, there are two rules for defining filters. First, filters should only take in a
               value and return a new value. Along with this, filters should not change the value of any properties in a
-              view. The convertIBU filter shown met both of these rules. Beyond the intended purpose, though, filters
+              view. The convertIBU filter shown met both of these rules.</p>
+            <p>Beyond the intended purpose, though, filters
               are just easier to read. Imagine the functions called by the convertIBU filters were methods. In that
-              case, you'd call them like this. When compared to the version that uses filters, which do you find easier
+              case, you'd call them like this.</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-071.png"/>
+              <figcaption>Fig 06-071</figcaption>
+            </figure>
+            <p>When compared to the version that uses filters:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-072.png"/>
+              <figcaption>Fig 06-072</figcaption>
+            </figure>
+            <p>Which do you find easier
               to read? Personally, I find the filter version easier to read. It's more readable because of the chaining
               abilities. You don't have to mentally parse the code, you just read the code from left to right, which is
-              more natural. If you're wondering whether you should use a filter or a method, there is another test. In
+              more natural. If you're wondering whether you should use a filter or a method, there is another test.</p>
+            <p>In
               general, filters are intended to be used across views, however, a method is specific to the instance. If
               you intend to reuse the code, you may want to ask yourself, if it should be a filter. Filters are a great
               way to handle basic text transformations. For more complex data transformations, a computed property is
-              more appropriate. Finally, if you need to handle asynchronous data operations, you should consider a
-              watcher. I've tried to summarize the abilities of each construct on this slide. If you would like to pause
+              more appropriate.</p>
+            <p>Finally, if you need to handle asynchronous data operations, you should consider a
+              watcher. I've tried to summarize the abilities of each construct on this slide.</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig06-073.png"/>
+              <figcaption>Fig 06-073</figcaption>
+            </figure>
+            <p>If you would like to pause
               the video and take a screenshot or print this out, it may be handy for you. Either way, in this module,
               you saw how to use watchers, computed properties, and filters to react to data changes. This concludes the
-              content for this course. There are a number of valuable topics that are outside the scope of this course.
-              For example, we barely scratched the surface of Axios. There are also more advanced topics like
-              components, transitions, routing, state management, and server-side rendering. The reason these topics
+              content for this course.</p>
+            <p>There are a number of valuable topics that are outside the scope of this course.
+              For example, we barely scratched the surface of Axios. There are also more advanced topics like:</p>
+            <ul>
+              <li>Components</li>
+              <li>Transitions</li>
+              <li>Routing</li>
+              <li>State Management</li>
+              <li>Server-Side Rendering</li>
+            </ul>
+              <p>The reason these topics
               were not part of this course, is because this course was focused on getting you started with Vue. js. If
               you would like to learn about these more advanced topics, as well as other topics, please let me know on
               Twitter, @chadcampbell. If there is enough interest, I'd be happy to put together a follow-up course. Once
