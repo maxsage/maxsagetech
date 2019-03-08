@@ -9,7 +9,8 @@
     "start": "node server.js",
     "lint": "eslint --ext .js, src",
     "build": "node build/build.js",
-    "serve": "node server.js"
+    "serve": "node server.js",
+    "heroku-postbuild": "echo Skip build on Heroku"
   },
   "dependencies": {
     "connect-history-api-fallback": "^1.5.0",
@@ -77,5 +78,6 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "heroku-run-build-script": true
 }
