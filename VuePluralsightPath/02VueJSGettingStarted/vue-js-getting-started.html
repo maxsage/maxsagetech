@@ -3178,6 +3178,7 @@
               <img src="./images/vue-js-getting-started/Fig06-007.png"/>
               <figcaption>Fig 06-007</figcaption>
             </figure>
+            <p class="example">Module 06 - lifecycle of watchers, computed properties, and filters</p>
             <p>This diagram is here to help you remember the order of operations. Each of the items that will be
               discussed in this module is intended to help you write better code. In fact, each of these items are
               entirely optional. You can achieve similar results using the other material presented in this course,
@@ -3203,6 +3204,8 @@
               <img src="./images/vue-js-getting-started/Fig06-008.png"/>
               <figcaption>Fig 06-008</figcaption>
             </figure>
+            <p class="example">Module 06 - Using watched property</p>
+            <p class="example">Module 06 - Using watched property with a reference</p>
             <p>Each time I click the buy button, the price of the beer is added to the Subtotal. I want to take a moment
               and explain the code powering this:</p>
             <figure>
@@ -3293,11 +3296,13 @@
               <img src="./images/vue-js-getting-started/Fig06-022.png"/>
               <figcaption>Fig 06-022</figcaption>
             </figure>
+            <p class="example">Module 06 - Introductory example</p>
             <p>Technically, since this is all this watcher is doing, it could be simplified like this:</p>
             <figure>
               <img src="./images/vue-js-getting-started/Fig06-023.png"/>
               <figcaption>Fig 06-023</figcaption>
             </figure>
+            <p class="example">Module 06 - Simplified example</p>
             <p>In this example, the updateSubTotal function is called whenever the shopping cart is updated. When
               updated, Vue looks for the function named updateSubTotal in the methods option. At this point, you may be
               wondering why you would want to associate a full-blown function with a watcher:</p>
@@ -3313,6 +3318,7 @@
               <img src="./images/vue-js-getting-started/Fig06-025.png"/>
               <figcaption>Fig 06-025</figcaption>
             </figure>
+            <p class="example">Module 06 - Getting before and after values</p>
             <p>In this example, I've defined a watcher on the subTotal property. Notice that in this watcher I've passed
               two parameters into the watcher function:</p>
             <figure>
@@ -3359,6 +3365,8 @@
               By default, watchers use a shallow monitoring approach. In other words, a watcher compares old and new
               values by reference. This means that properties nested in a watched property do not cause a change to be
               detected when they get changed.</p>
+            <p class="example">Module 06 - Defining a Watcher's Depth Example</p>
+
             <p>I want to demonstrate this point, because I believe it's important. Up to this point, the shopping cart
               property in the data object has just been an array:</p>
             <figure>
@@ -3452,6 +3460,7 @@
               <img src="./images/vue-js-getting-started/Fig06-039.png"/>
               <figcaption>Fig 06-039</figcaption>
             </figure>
+            <p class="example">Module 06 - Initializing a computed property</p>
             <p>In this example, I have a computed property named isOnline:</p>
             <figure>
               <img src="./images/vue-js-getting-started/Fig06-040.png"/>
@@ -3507,8 +3516,9 @@
               like this.</p>
             <figure>
               <img src="./images/vue-js-getting-started/Fig06-046.png"/>
-              <figcaption>Fig 06-046.png</figcaption>
+              <figcaption>Fig 06-046</figcaption>
             </figure>
+            <p class="example">Module 06 - Adding a getter</p>
             <p>This approach does not change the behavior of the computed property. Rather, it's a more verbose way of
               achieving the same goal.</p>
             <p>Now, if I wanted to set the canConnect value, I could by adding a set function, like this:</p>
@@ -3516,6 +3526,7 @@
               <img src="./images/vue-js-getting-started/Fig06-047.png"/>
               <figcaption>Fig 06-047</figcaption>
             </figure>
+            <p class="example">Module 06 - Adding a setter</p>
             <p>Now, the isOnline computed property lets you both get and set the canConnect data value. Notice how the
               set function takes in a parameter called newValue:</p>
             <figure>
@@ -3566,6 +3577,7 @@
               <img src="./images/vue-js-getting-started/Fig06-052.png"/>
               <figcaption>Fig 06-052</figcaption>
             </figure>
+            <p class="example">Module 06 - using a filter</p>
             <p>This slide has a predefined list of beers squished here in an array called results:</p>
             <figure>
               <img src="./images/vue-js-getting-started/Fig06-053.png"/>
@@ -3610,6 +3622,7 @@
               <img src="./images/vue-js-getting-started/Fig06-058.png"/>
               <figcaption>Fig 06-058</figcaption>
             </figure>
+            <p class="example">Module 06 - Passing a parameter to a filter</p>
             <p>In this example, I'm passing in a parameter called empty:</p>
             <figure>
               <img src="./images/vue-js-getting-started/Fig06-059.png"/>
@@ -3637,6 +3650,7 @@
               <img src="./images/vue-js-getting-started/Fig06-060.png"/>
               <figcaption>Fig 06-060</figcaption>
             </figure>
+            <p class="example">Module 06 - Programmatically calling filters</p>
             <p>This slide shows the convertIBU filter refactored. Now, instead of one single filter, there are actually
               three:</p>
             <figure>
@@ -3679,6 +3693,7 @@
               <img src="./images/vue-js-getting-started/Fig06-065.png"/>
               <figcaption>Fig 06-065</figcaption>
             </figure>
+            <p class="example">Module 06 - chaining filters together</p>
             <p>Now, there are three distinct filters, convertIBU, removePeriods, and toUpperCase:</p>
             <figure>
               <img src="./images/vue-js-getting-started/Fig06-066.png"/>
@@ -3705,6 +3720,7 @@
               <img src="./images/vue-js-getting-started/Fig06-070.png"/>
               <figcaption>Fig 06-070</figcaption>
             </figure>
+
             <p>After all of these filters have executed, the result is rendered in the HTML. Filters are a nice way to
               handle basic text transformations. At this point, you may be wondering, why use a filter instead of just
               calling a method?
@@ -3726,6 +3742,7 @@
               <img src="./images/vue-js-getting-started/Fig06-071.png"/>
               <figcaption>Fig 06-071</figcaption>
             </figure>
+            <p class="example">Module 06 - comparing methods to filters</p>
             <p>When compared to the version that uses filters:</p>
             <figure>
               <img src="./images/vue-js-getting-started/Fig06-072.png"/>
