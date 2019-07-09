@@ -938,7 +938,7 @@
               going to copy this here. You can also just download the zip if you'd like to. We'll flip back over to our
               play folder. And now I'm going to type:</p>
             <figure>
-              <pre><code class="language-command-line">git clone git@github.com@johnpapa/heroes-vue.git</code></pre>
+              <pre><code class="language-command-line">git clone https://github.com/johnpapa/heroes-vue.git</code></pre>
               <figcaption>Fig 03-025</figcaption>
             </figure>
             <p>And now once we get that, we're going to go into that folder and then run:</p>
@@ -1081,124 +1081,376 @@
             <h3>Debugging Vue in the Browser</h3>
             <p>
               One of the most essential tools for developing with any platform is a debugger, and Vue is no exception.
-              So let's run the heroes-vue app again using npm run quick. And then when it's done we'll launch this in
-              the browser. And we'll go full screen real quick, but let's say we wanted to walk through this application
-              here in a debugger. We'll open up the developer tools over here on the right-hand side, and we'll click on
-              Sources. Now we happen to know that there is a heroes and a heroeslist and a heroesdetails component in
-              our application. So here we can see with sources all the files. Let's actually hide that navigator. And
-              I'm going to right-click up here and choose Close all. Now let's say we want to walk through the process
-              of what happens when we edit a hero; notice joe over here. So let's first go up and we'll happen to know
-              it's in the hero-detail vue is where this happens. That's where the save is pressed. So here in saveHero
-              on line 72 I'll set a breakpoint. Now this is going to emit a save event, and it's going to be caught by
-              the heroes component. So I'll have to go look for the heroes component. It's right there, heroes. vue. And
-              we should look up where for where is it getting mapped to for save? Right down here on line 85. We know
-              that because the template up top is listening on the heroDetail, right here, for save to call the save
-              function here. So we've got our breakpoint set up and we can see these if we pull up the bottom piece. We
-              can now see our breakpoints set to hero-detail. vue and heroes. vue. So let's go ahead and edit joe, and
-              then we'll press Save down here. Notice we can catch that in the debugger. It shows us the editing hero.
-              We can see the description, the ID, and the name. We can also break into this in the console, and we can
+              So let's run the heroes-vue app again using:</p>
+            <figure>
+              <pre><code class="language-command-line">npm run quick</code></pre>
+              <figcaption>Fig 03-049</figcaption>
+            </figure>
+            <p>And then when it's done we'll launch this in the browser. And we'll go full screen real quick, but let's
+              say we wanted to walk through this application here in a debugger. We'll open up the developer tools over
+              here on the right-hand side, and we'll click on Sources:</p>
+            <figure>
+              <img src="./images/Fig03-050.PNG"/>
+              <figcaption>Fig 03-050.PNG</figcaption>
+            </figure>
+            <p>Now we happen to know that there is a heroes and a hero-list and a hero-details component in our
+              application. So here we can see with sources all the files. Let's actually hide that navigator. And I'm
+              going to right-click up here and choose Close all:</p>
+            <figure>
+              <img src="./images/Fig03-051.PNG"/>
+              <figcaption>Fig 03-051</figcaption>
+            </figure>
+            <p>Now let's say we want to walk through the process of what happens when we edit a hero; notice joe over
+              here:</p>
+            <figure>
+              <img src="./images/Fig03-052.PNG"/>
+              <figcaption>Fig 03-052</figcaption>
+            </figure>
+            <p>So let's first go up and we happen to know it's in the hero-detail vue is where this happens. That's
+              where the save is pressed. So here in saveHero on line 72 I'll set a breakpoint:</p>
+            <figure>
+              <img src="./images/Fig03-053.PNG"/>
+              <figcaption>Fig 03-053</figcaption>
+            </figure>
+            <p>Now this is going to emit a save event, and it's going to be caught by the heroes component. So I'll have
+              to go look for the heroes component. It's right there:</p>
+            <figure>
+              <img src="./images/Fig03-054.PNG"/>
+              <figcaption>Fig 03-054</figcaption>
+            </figure>
+            <p>heroes. vue. And we should look up where for where is it getting mapped to for save? Right down here on
+              line 85:</p>
+            <figure>
+              <img src="./images/Fig03-055.PNG"/>
+              <figcaption>Fig 03-055</figcaption>
+            </figure>
+            <p>We know that because the template up top is listening on the heroDetail, right here:</p>
+            <figure>
+              <img src="./images/Fig03-056.PNG"/>
+              <figcaption>Fig 03-056</figcaption>
+            </figure>
+            <p>for save to call the save function.</p>
+            <p>So we've got our breakpoint set up and we can see these if we pull up the bottom piece of the developer
+              tools:</p>
+            <figure>
+              <img src="./images/Fig03-057.PNG"/>
+              <figcaption>Fig 03-057</figcaption>
+            </figure>
+            <p>We can now see our breakpoints set to hero-detail. vue and heroes vue. So let's go ahead and edit joe,
+              and then we'll press Save down here:</p>
+            <figure>
+              <img src="./images/Fig03-058.PNG"/>
+              <figcaption>Fig 03-058</figcaption>
+            </figure>
+            <p>Notice we can catch that in the debugger. It shows us the editing hero:</p>
+            <figure>
+              <img src="./images/Fig03-059.PNG"/>
+              <figcaption>Fig 03-059</figcaption>
+            </figure>
+            <p>We can see the description, the ID, and the name. We can also break into this in the console, and we can
               type in any of those values, so we could do this. editingHero, and we can see the whole object right
-              there. And then we can let it run through by clicking this button there to resume. And notice now here
-              back in the heroes component it's listening to that save event that was emitted from the hero details, now
-              we can walk through it line by line if we want, stepping over it. We can hover over this hero. id. Here's
-              the new hero right there. Now we can just press run, resume, and we're good to go. Now we can disable our
-              breakpoints, and if we go and edit again, we can put in here with an exclamation and do Save. Nothing gets
+              there:</p>
+            <figure>
+              <img src="./images/Fig03-060.PNG"/>
+              <figcaption>Fig 03-060</figcaption>
+            </figure>
+            <p>And then we can let it run through by clicking this button there to resume:</p>
+            <figure>
+              <img src="./images/Fig03-061.PNG"/>
+              <figcaption>Fig 03-061</figcaption>
+            </figure>
+            <p>And notice now here back in the heroes component</p>
+            <figure>
+              <img src="./images/Fig03-062.PNG"/>
+              <figcaption>Fig 03-062</figcaption>
+            </figure>
+            <p>it's listening to that save event that was emitted from the hero details, now we can walk through it line
+              by line if we want, stepping over it. We can hover over this hero. id. Here's the new hero right
+              there:</p>
+            <figure>
+              <img src="./images/Fig03-063.PNG"/>
+              <figcaption>Fig 03-063</figcaption>
+            </figure>
+            <p>
+              Now we can just press run, resume:</p>
+            <figure>
+              <img src="./images/Fig03-064.PNG"/>
+              <figcaption>Fig 03-064</figcaption>
+            </figure>
+            <p>and we're good to go. Now we can disable our breakpoints:</p>
+            <figure>
+              <img src="./images/Fig03-065.PNG"/>
+              <figcaption>Fig 03-065</figcaption>
+            </figure>
+            <p>and if we go and edit again, we can put in an exclamation in the name field and then Save. Nothing gets
               caught. There's nothing specific about Vue in this process. It's just walking through and debugging
               JavaScript inside of the Chrome development tools. I find it very useful to be able to use this as just
-              another tool in my toolbox when using the Vue CLI to develop Vue applications.
-            </p></div>
+              another tool in my toolbox when using the Vue CLI to develop Vue applications.</p>
+          </div>
           <div>
             <h3>Developing with Vue in Visual Studio Code</h3>
             <p>There are some great editors out there that you can use. My favorite happens to be Visual Studio Code.
-              And you can grab that here from code. visualstudio. com. There's great support in VS Code for using things
-              like Vue. First you can download the version you like. I happen to like to use the Insiders version.
-              That's what I have installed here. The Stable you get once a month. The Insiders you happen to get updates
-              almost daily, sometimes more than once a day. This means that you're getting the new features as soon as
-              they're available. It's been extremely stable for me, so that's what I've been using for the last several
-              years. It only takes a moment to download. We'll do that right now. And after you downloaded it, it brings
-              you to a Getting Started page. Notice it's about 66 MB at the time of recording. And there we go, it's
+              And you can grab that here:</p>
+            <figure>
+              <img src="./images/Fig03-066.PNG"/>
+              <figcaption>Fig 03-066</figcaption>
+            </figure>
+            <p>from code. visualstudio. com. There's great support in VS Code for using things like Vue. First you can
+              download the version you like. I happen to like to use the Insiders version. That's what I have installed
+              here. The Stable you get once a month. The Insiders you happen to get updates almost daily, sometimes more
+              than once a day. This means that you're getting the new features as soon as they're available. It's been
+              extremely stable for me, so that's what I've been using for the last several years.</p>
+            <p>It only takes a moment to download. We'll do that right now. And after you downloaded it, it brings you
+              to a Getting Started page. Notice it's about 66 MB at the time of recording. And there we go, it's
               installed. At that point you can then install it on your machine by opening up the zip file. Now once we
               open code and we look at a project such as the HEROES-VUE project, you'll notice that when we click on a
-              Vue file, all the text is the same color. It's not recognizing what a. vue file is. One of the great
-              things about VS Code is you can extend it with language services, in this case a Vue language service, and
-              there's an extension for that. If we click on the extensions icon on the left, and then go search for it,
-              they call it Vetur, right there, by Pine Wu, we can then install this and then we'll reload. And now let's
-              go back and look at that same file called heroes. vue. Notice we get all the syntax coloring and
-              highlighting that we need. There's a whole lot more inside of Vetur that we get. Let's take a quick look
-              at that by opening up the extension, and now we'll type Vetur again. This time it finds one that we have.
-              Let's go check out the docs. There's a lot of things that you get out of the box, like
-              syntax-highlighting, you get a couple snippets, linting and error checking, formatting. For formatting it
-              uses Prettier if you've got the prettierrc file inside of your project, which I happen to have inside the
-              vue-heroes project. You get IntelliSense inside the template, style, and script tags for the single file
-              component in Vue. There's a recipe right here for debugging inside of Visual Studio Code. And there's a
-              whole lot more on there including a roadmap for future versions. Okay, so back inside of VS Code, let's go
-              and look at a Vue file real quick. I'm going to hit Cmd+B to hide the sidebar and Cmd+J to hide the bottom
-              panel. Now let's say that I had nothing in this file. I'm going to highlight everything and delete it.
-              Maybe I need to put in a brand new Vue file here. One of the snippets you get out of the box is called
+              Vue file, all the text is the same color:</p>
+            <figure>
+              <img src="./images/Fig03-067.PNG"/>
+              <figcaption>Fig 03-067</figcaption>
+            </figure>
+            <p>It's not recognizing what a. vue file is. One of the great things about VS Code is you can extend it with
+              language services, in this case a Vue language service, and there's an extension for that. If we click on
+              the extensions icon on the left, and then go search for it, they call it Vetur, right there, by Pine
+              Wu:</p>
+            <figure>
+              <img src="./images/Fig03-068.PNG"/>
+              <figcaption>Fig 03-068</figcaption>
+            </figure>
+            <p>
+              we can then install this and then we'll reload. And now let's go back and look at that same file called
+              heroes.vue. Notice we get all the syntax coloring and highlighting that we need.</p>
+            <figure>
+              <img src="./images/Fig03-069.PNG"/>
+              <figcaption>Fig 03-069</figcaption>
+            </figure>
+            <p>There's a whole lot more inside of Vetur that we get. Let's take a quick look at that by opening up the
+              extension:</p>
+            <figure>
+              <img src="./images/Fig03-070.PNG"/>
+              <figcaption>Fig 03-070</figcaption>
+            </figure>
+            <p>and now we'll type Vetur again. This time it finds one that we have. Let's go check out the docs:</p>
+            <figure>
+              <img src="./images/Fig03-071.PNG"/>
+              <figcaption>Fig 03-071</figcaption>
+            </figure>
+            <p>There's a lot of things that you get out of the box, like syntax-highlighting, you get a couple snippets,
+              linting and error checking, formatting:</p>
+            <figure>
+              <img src="./images/Fig03-072.PNG"/>
+              <figcaption>Fig 03-072</figcaption>
+            </figure>
+            <p>For formatting it uses Prettier if you've got the prettierrc file inside of your project, which I happen
+              to have inside the vue-heroes project. You get IntelliSense inside the template, style, and script tags
+              for the single file component in Vue. There's a recipe right here:</p>
+            <figure>
+              <img src="./images/Fig03-073.PNG"/>
+              <figcaption>Fig 03-073</figcaption>
+            </figure>
+            <p>for debugging inside of Visual Studio Code. And there's a whole lot more on there including a roadmap for
+              future versions.</p>
+            <p>Okay, so back inside of VS Code, let's go and look at a Vue file real quick. I'm going to hit Cmd+B to
+              hide the sidebar and Cmd+J to hide the bottom panel. Now let's say that I had nothing in this file. I'm
+              going to highlight everything and delete it:</p>
+            <figure>
+              <img src="./images/Fig03-074.PNG"/>
+              <figcaption>Fig 03-074</figcaption>
+            </figure>
+            <p>Maybe I need to put in a brand new Vue file here. One of the snippets you get out of the box is called
               scaffold, and it gives you the template, the script, and then the style tags. But I happen to like another
               extension that's out there. Don't worry that this file's empty, we've got Git source control here. You can
               always undo. If you go to the extensions there's another one. This time I'm going to type in vue just to
               see what's out there. There's some Vue snippets right here from hollowtree, but there's also some from
-              sarah. drasner. I happen to like these ones here, so I'll install those. You can really use any that you
-              like of course. Once we have those snippets installed, now I can type something called vbase, and notice
-              on the right-hand side it's previewing what I'm going to get. There's vbase. It's very similar to the
-              other extension that we had. And let's say inside of here we wanted to do something with data. I could
-              type in vdata. And we get the data attribute right there. We can type our key in and our value. Let's say
-              we wanted a method. I can type in vmethod, and there we go. If I wanted to do a computed, there's a
-              vcomputed we can use. So some nice little snippets that we can use inside of our code as we're generating
-              the files. And of course, like any good editor, there's always an undo with Git control. We can discard
-              those changes, and we get our file back. There's a whole lot of other extensions that you can install. One
-              of my favorites, again, is Prettier that you can use for formatting your code. And if you happen to like
-              this theme, it's called Winter is Coming and it's one that I created. You can download and install these
-              for free right from VS Code. I realize the editor is a very personal choice. I happen to really like this
-              one because it makes my development flow much easier. So that's the one I'll be using throughout this
-              course. And if you'd like to use it, these are some great tips that you can use to get going. </p>
+              sarah. drasner.</p>
+            <figure>
+              <img src="./images/Fig03-075.PNG"/>
+              <figcaption>Fig 03-075</figcaption>
+            </figure>
+            <p>I happen to like these ones here, so I'll install those. You can really use any that you like of course.
+              Once we have those snippets installed, now I can type something called vbase:</p>
+            <figure>
+              <img src="./images/Fig03-076.PNG"/>
+              <figcaption>Fig 03-076</figcaption>
+            </figure>
+            <p>and notice on the right-hand side it's previewing what I'm going to get. There's vbase. It's very similar
+              to the other extension that we had. And let's say inside of here we wanted to do something with data. I
+              could type in vdata. And we get the data attribute right there:</p>
+            <figure>
+              <img src="./images/Fig03-077.PNG"/>
+              <figcaption>Fig 03-077</figcaption>
+            </figure>
+            <p>We can type our key in and our value. Let's say we wanted a method. I can type in vmethod, and there we
+              go. If I wanted to do a computed, there's a vcomputed we can use. So some nice little snippets that we can
+              use inside of our code as we're generating the files. And of course, like any good editor, there's always
+              an undo with Git control. We can discard those changes, and we get our file back.</p>
+            <p>There's a whole lot of other extensions that you can install. One of my favorites, again, is Prettier
+              that you can use for formatting your code. And if you happen to like this theme, it's called Winter is
+              Coming and it's one that I created. You can download and install these for free right from VS Code. I
+              realize the editor is a very personal choice. I happen to really like this one because it makes my
+              development flow much easier. So that's the one I'll be using throughout this course. And if you'd like to
+              use it, these are some great tips that you can use to get going. </p>
           </div>
           <div>
             <h3>Debugging Vue in Visual Studio Code</h3>
             <p>
               We know that we can debug inside of Chrome, but if we install the extension for Chrome debugging in VS
-              Code, we can do it right from VS Code. So here we can type in Chrome in the extensions marketplace. Notice
-              I've already got the debugger there. It's a little popular. It's got 15 million downloads. So it's quite
-              the well-used extension. Let's take a look at how we can set this up. First, inside of the vue. config.
-              js, notice I have from lines 2 through 4 configureWebpack and my devtool is set to source-map. And then
-              let's hit the Debug pane over here and hit the gear and choose Chrome. That's going to set up a debug
-              configuration for Chrome. Now we'll name this something that's a little more useful like Vue with Chrome.
-              And the name is just what's going to show up in the box in the upper left. The URL is where you're
-              launching from. Our app happens to launch from 9626. Because it's the Tour of Heroes app it's heroes-vue.
-              If you're using 8080 or 8000, make sure you adjust the port accordingly. Our web root is where our source
-              code is. Ours happens to be in workspaceFolder/src. I like to set the setting called breakOnLoad. I set
-              that to true. And if you'd like to know what these things do, if you hover over them you get a little
-              tooltip. And this is an experimental feature and it says here of course that if it's true it's going to
-              attempt to set a breakpoint before the scripts are loaded. So it can hit anything at the beginning. And
-              then there's a sourceMapPathOverride, which we're going to set. And when you automatically type this it's
-              going to fill in a bunch of these options for us. Now it's okay to leave them all here, but the one we
-              really need is right there. It's the second one, so we could just run with this one here. Now once we have
-              these, what do we accomplish? We set up a launch configuration that allows us to set breakpoints and debug
-              right here inside of VS Code. So how does it work? Okay, once we do this, and this is a one-time thing,
-              you save this for your project. And again, we set the vue. config. js, and we set a launch. json file up,
-              which is a VS Code feature. When we have both of those and the Chrome debugging extension installed, all
-              we have to do now is run our app and set breakpoints. So let's close both these files. And let's go find
-              our heroes. vue, and we'll come down into the data. And I'll set a breakpoint right there on the return of
-              data, and we'll do another one on askToDelete. So when we click the button to delete, we should get a
-              breakpoint there. Next we run our app. In this case we can run it from terminal. I'm going to open up the
-              terminal right here inside of VS Code. It's integrated into it. Npm run quick will do it for me. That'll
-              build it, and then launch it when it's ready. Don't worry about that localhost 9627, that's the back-end
-              server. We're proxying our API calls to that. Our app is actually running on 9626 as we can see here. Now
-              no debugger happened yet. That's because we haven't launched it. If we go back over here to the Debug
-              window, and now we click on the go button, this green button up here, make sure that Vue: Chrome is
-              selected because you could have multiple configurations. Now we run it. It launches the app in a browser
-              and notice we hit our first breakpoint. Return on the data. Now I'm going to go ahead and show this side
-              by side, VS Code on the left, and we'll make it so we can see everything pretty good, and the app on the
-              right. It says it's paused in the VS Code. Now we can let it run. Everything's good here unless we want to
-              delete the second one. When I click Delete right here, it goes over here and it prompts us for it. So
-              let's go back to full screen on VS Code. We can hover over hero and we can see the values. We can look
-              over on the left at the Local window. Now we can see the values there. We can edit them as well. We can
-              change this to John if we want to right there. Probably not a great idea, but we can do these things. And
-              then we can step through one by one. Now it's going to show the modal. And if I flip back over to the
-              code, you can see that the code is still running on this side, and I could let it rip. Just let it run.
-              We're good. Now it's asking if I want to delete it. I'll say no. This is how easy it is to debug projects
-              that you create with the Vue CLI right from VS Code using the Chrome debugger extension.
+              Code, we can do it right from VS Code. So here we can type in Chrome in the extensions marketplace:</p>
+            <figure>
+              <img src="./images/Fig03-078.PNG"/>
+              <figcaption>Fig 03-078</figcaption>
+            </figure>
+            <p>Notice I've already got the debugger there. It's a little popular. It's got 15 million downloads. So it's
+              quite the well-used extension. Let's take a look at how we can set this up. First, inside of the vue.
+              config. js, notice I have from lines 2 through 4 configureWebpack and my devtool is set to source-map:</p>
+            <figure>
+              <img src="./images/Fig03-079.PNG"/>
+              <figcaption>Fig 03-079</figcaption>
+            </figure>
+            <p>
+              And then let's hit the Debug pane over here</p>
+            <figure>
+              <img src="./images/Fig03-080.PNG"/>
+              <figcaption>Fig 03-080</figcaption>
+            </figure>
+            <p>and hit the gear:</p>
+            <figure>
+              <img src="./images/Fig03-081.PNG"/>
+              <figcaption>Fig 03-081</figcaption>
+            </figure>
+            <p>and choose Chrome:</p>
+            <figure>
+              <img src="./images/Fig03-082.PNG"/>
+              <figcaption>Fig 03-082</figcaption>
+            </figure>
+            <p>That's going to set up a debug configuration for Chrome. Now we'll name this something that's a little
+              more useful like Vue with Chrome. And the name is just what's going to show up in the box in the upper
+              left:</p>
+            <figure>
+              <img src="./images/Fig03-083.PNG"/>
+              <figcaption>Fig 03-083</figcaption>
+            </figure>
+            <p>
+              The URL is where you're launching from. Our app happens to launch from 9626:</p>
+            <figure>
+              <img src="./images/Fig03-084.PNG"/>
+              <figcaption>Fig 03-084</figcaption>
+            </figure>
+            <p>Because it's the Tour of Heroes app it's heroes-vue. If you're using 8080 or 8000, make sure you adjust
+              the port accordingly. Our web root is where our source code is. Ours happens to be in
+              workspaceFolder/src:</p>
+            <figure>
+              <img src="./images/Fig03-085.PNG"/>
+              <figcaption>Fig 03-085</figcaption>
+            </figure>
+            <p>
+              I like to set the setting called breakOnLoad:</p>
+            <figure>
+              <img src="./images/Fig03-086.PNG"/>
+              <figcaption>Fig 03-086</figcaption>
+            </figure>
+            <p>I set that to true. And if you'd like to know what these things do, if you hover over them you get a
+              little tooltip. And this is an experimental feature and it says here of course that if it's true it's
+              going to attempt to set a breakpoint before the scripts are loaded. So it can hit anything at the
+              beginning.</p>
+            <p>And then there's a sourceMapPathOverride, which we're going to set. And when you automatically type this
+              it's going to fill in a bunch of these options for us:</p>
+            <figure>
+              <img src="./images/Fig03-087.PNG"/>
+              <figcaption>Fig 03-087</figcaption>
+            </figure>
+            <p>Now it's okay to leave them all here, but the one we really need is right there:</p>
+            <figure>
+              <img src="./images/Fig03-088.PNG"/>
+              <figcaption>Fig 03-088</figcaption>
+            </figure>
+            <p>It's the second one, so we could just run with this one here.</p>
+            <p>Now once we have these, what do we accomplish? We set up a launch configuration that allows us to set
+              breakpoints and debug right here inside of VS Code. So how does it work? Okay, once we do this, and this
+              is a one-time thing, you save this for your project. And again, we set the vue. config. js, and we set a
+              launch.json file up, which is a VS Code feature.</p>
+            <p>When we have both of those and the Chrome debugging extension installed, all we have to do now is run our
+              app and set breakpoints. So let's close both these files. And let's go find our heroes.vue, and we'll come
+              down into the data. And I'll set a breakpoint right there on the return of data:</p>
+            <figure>
+              <img src="./images/Fig03-089.PNG"/>
+              <figcaption>Fig 03-089</figcaption>
+            </figure>
+            <p>and we'll do another one on askToDelete:</p>
+            <figure>
+              <img src="./images/Fig03-090.PNG"/>
+              <figcaption>Fig 03-090</figcaption>
+            </figure>
+            <p>So when we click the button to delete, we should get a breakpoint there. Next we run our app. In this
+              case we can run it from terminal. I'm going to open up the terminal right here inside of VS Code. It's
+              integrated into it:</p>
+            <figure>
+              <pre><code class="language-command-line">npm run quick</code></pre>
+              <figcaption>Fig 03-091</figcaption>
+            </figure>
+            <p>will do it for me. That'll build it, and then launch it when it's ready. Don't worry about that localhost
+              9627:</p>
+            <figure>
+              <img src="./images/Fig03-092.PNG"/>
+              <figcaption>Fig 03-092</figcaption>
+            </figure>
+            <p>that's the back-end server. We're proxying our API calls to that. Our app is actually running on 9626 as
+              we can see here:</p>
+            <figure>
+              <img src="./images/Fig03-093.PNG"/>
+              <figcaption>Fig 03-093</figcaption>
+            </figure>
+            <p>Now no debugger happened yet. That's because we haven't launched it. If we go back over here to the Debug
+              window:</p>
+            <figure>
+              <img src="./images/Fig03-094.PNG"/>
+              <figcaption>Fig 03-094</figcaption>
+            </figure>
+            <p>and now we click on the go button, this green button up here:</p>
+            <figure>
+              <img src="./images/Fig03-095.PNG"/>
+              <figcaption>Fig 03-095</figcaption>
+            </figure>
+            <p>make sure that Vue: Chrome is selected because you could have multiple configurations. Now we run it. It
+              launches the app in a browser and notice we hit our first breakpoint:</p>
+            <figure>
+              <img src="./images/Fig03-096.PNG"/>
+              <figcaption>Fig 03-096</figcaption>
+            </figure>
+            <p>Return on the data. Now I'm going to go ahead and show this side by side, VS Code on the left, and we'll
+              make it so we can see everything pretty good, and the app on the right. It says it's paused in the VS
+              Code. Now we can let it run. Everything's good here unless we want to delete the second one. When I click
+              Delete right here:</p>
+            <figure>
+              <img src="./images/Fig03-097.PNG"/>
+              <figcaption>Fig 03-097</figcaption>
+            </figure>
+            <p>it goes over here and it prompts us for it. So let's go back to full screen on VS Code. We can hover over
+              hero and we can see the values:</p>
+            <figure>
+              <img src="./images/Fig03-098.PNG"/>
+              <figcaption>Fig 03-098</figcaption>
+            </figure>
+            <p>We can look over on the left at the Local window. Now we can see the values there:</p>
+            <figure>
+              <img src="./images/Fig03-099.PNG"/>
+              <figcaption>Fig 03-099</figcaption>
+            </figure>
+            <p>We can edit them as well. We can change this to John if we want to right there. Probably not a great
+              idea, but we can do these things. And then we can step through one by one:</p>
+            <figure>
+              <img src="./images/Fig03-100.PNG"/>
+              <figcaption>Fig 03-100</figcaption>
+            </figure>
+            <p>Now it's going to show the modal. And if I flip back over to the code, you can see that the code is still
+              running on this side, and I could let it rip. Just let it run. We're good. Now it's asking if I want to
+              delete it:</p>
+            <figure>
+              <img src="./images/Fig03-101.PNG"/>
+              <figcaption>Fig 03-101</figcaption>
+            </figure>
+            <p>I'll say no. This is how easy it is to debug projects that you create with the Vue CLI right from VS Code
+              using the Chrome debugger extension.
             </p></div>
           <div>
             <h3>Reviewing the Vue Tooling</h3>
@@ -1207,11 +1459,16 @@
               course, we need the Vue CLI and its UI to do the great tooling that it has for us to generate our projects
               and do our builds and our runs, and we integrated it all by doing debugging both through the Chrome
               browser and in VS Code using the Chrome debugging extension. And finally, don't forget that one of the
-              best tools we have is the great documentation that Vue provides for us. I'm a firm believer of making sure
-              before you start a project that you have all your tools laid out and a good plan, and hopefully by going
-              through this module you've got that plan for your Vue CLI, the documentation, the browser tooling,
-              debugging plans for yourselves both with the browser and VS Code, and all the extensions that you need.
-              And now we're set up to be successful using the Vue CLI to create great Vue applications. </p></div>
+              best tools we have is the great documentation that Vue provides for us:</p>
+            <figure>
+              <img src="./images/Fig03-102.PNG"/>
+              <figcaption>Fig 03-102</figcaption>
+            </figure>
+            <p>I'm a firm believer of making sure before you start a project that you have all your tools laid out and a
+              good plan, and hopefully by going through this module you've got that plan for your Vue CLI, the
+              documentation, the browser tooling, debugging plans for yourselves both with the browser and VS Code, and
+              all the extensions that you need. And now we're set up to be successful using the Vue CLI to create great
+              Vue applications. </p></div>
         </div>
         <div><h2>Creating a Vue Application</h2>
           <div>
@@ -1219,265 +1476,533 @@
             <p>As developers, when we start to build a new application, so many thoughts go through our heads when we
               stare at that blank screen. What files am I going to create? What features do I need? Are there any
               settings I want to have right out of the gate? What's the folder structure going to look like? Vue CLI can
-              help answer all of these for us, which is great. So in this module, we're going to walk through creating a
-              Vue application. Sometimes we need to get it started quickly, and we'll learn the options that we can do
-              to get out of the gate fast, and then we're going to look through all the different creation options
-              because there's so many creation options for creating a brand-new project. When we walk through using the
-              Vue CLI, it's going to ask us a lot of questions. These are called prompts. We'll learn what these prompts
-              are and how we can save and share and then reuse these favorite answers of ours from the prompts. By the
-              end of this module, you'll have mastered how to customize the Vue CLI to generate new projects just the
-              way you need them. </p></div>
-          <div>
-            <h3>Learning the Application Creation Options</h3>
-            <p>Learning the different options for creating Vue apps is an important part of using the Vue CLI. The first
-              step when using many of these commands is to look at the help flag. So we just type in vue create --help,
-              it will tell us all the many options that come with vue create and what the default settings are and what
-              they all do. When we generate a new Vue app, there's a couple commands that you need to learn, the first
-              to which is the vue create. So we can say vue create hello-vue, and if we do this by default and hit
-              Enter, we'll follow the prompts after this to create an application. We'll learn more about those prompts
-              in an upcoming section. We've seen a few times now we can do vue create hello-vue, and then -d, or
-              --default. This will use the default settings and create a Vue application. Basically, it won't ask us any
-              questions, it'll just create the app for us with some very intelligent defaults. Another option we can do
-              is vue create hello-vue -db. We're combining two different aliases now for both defaults and creating a
-              bare project. That's what the b stands for. What's a bare project? This means instead of having the Vue
-              app come up with a bunch of links and helpful quick starts, none of those will be there because when you
-              build an application, you're probably not going to want all of those things on your page, but when you're
-              first starting out, they're kind of helpful. We just learned about an alias there for -d and for -b. So
-              let's take a step back and learn what these do. Two dashes prefix the options normally, so --default, just
-              like this here, but we can also use a single dash with d to alias as shortcut. In this case, -d stands for
-              default. Notice here that the first character of default is d, and that happens to be the alias. That's a
-              convention when available, but it isn't always the case because sometimes d can only be used once. Let's
-              take a look at some of these here. Here are some common vue create options. We learned about default,
-              which is just -d. We also saw a -b earlier where we can scaffold without the beginner instructions. That
-              stands for bare. Package manager is -m. This is do you want to use npm or Yarn at this time? Notice that
-              the -m is not the first letter of the option, which is p. This is what I meant earlier when it's not
-              always the first letter of the option. So, keep in mind the aliases are shortcuts, but if you forget
-              those, you can always do vue create --help to see them. If you want to change your registry, maybe you've
-              got an internal one you have to point to your own npm registry, you can use -r, or --registry. If you need
-              to use a proxy to be able to create your own app, you can use the --proxy, or an alias of -x. If you want
-              to skip to git initialization, which is on by default, you could go ahead and use -n or no-git. And we're
-              going to learn about presets in a later section of this module where we can skip a bunch of prompts and
-              basically use our saved customizations. That's --preset, or -p. Of course, don't forget --help, which is
-              almost always -h in most CLIs I've ever used. You may have been wondering about earlier when we saw a -d
-              and b together. Yes, we can combine some of these single character aliases. We could do vue create hello
-              vue -dbm yarn, right here, and what this means is we're going to use the defaults, we're going to have a
-              bare project, and we're going to use the Yarn package manager, so we're combining those three together.
-              This just makes it easy to use and we can set a bunch of options as we see here. Now that we've learned
-              about some of these options, let's go try them ourselves. </p>
-          </div>
-          <div>
-            <h3>Creating a Default, Bare App with Yarn</h3>
-            <p>Let's open up VS Code. I'm using the Insiders version. Now I'm going to hit Cmd+Shift+P, or it could be
-              Ctrl+Shift+P on Windows, then we're going to open up the integrated terminal, just like that. Now notice
-              that I'm inside of the folder called play/vue. You should be inside whatever folder that you're creating
-              these projects in. First we're going to type in vue --help. That's going to give us the help commands for
-              the Vue CLI itself. We see that create is in there, so we're going to do vue create --help. Now we can see
-              the different commands that we can use on vue create. We've used vue default before right here, but let's
-              try out the bare with default. So now we'll do vue create, and then hello-vue-bare. We'll do d for
-              default, b for bare, and let's also throw in the m for package manager and we'll specify yarn. Now when I
-              hit Enter, it's going to create this project. And notice it's using yarn, right here, so yarn install, and
-              it's going to go get all of the packages that we need and put it on our machines. Perfect. Now we have
-              hello vue bare, and it's giving us the commands to get in there. We'll do hello like that. We're going to
-              vue bare and change our directory. Now we can type yarn serve, but here's a quick VS Code tip. When you're
-              inside the integrated terminal, notice that my folder on the left in the Explorer is the VUE folder. And
-              now inside of terminal, I'm one level down. If I want to make the Explorer show just hello-vue-bare, I
-              could close VS Code and restart it, but check out this tip. If you're using Code, just type code, if
-              you're using Code Insiders, you type code-insiders here. Say you want to open up which folder, the current
-              one I'm in. I want to get to hello-vue-bare, and then I'm going to do -r. Basically it's going to replace
-              this running instance of VS Code with one that'll have the folders in the left showing that folder I want.
-              Now I hit Enter, you'll see a flash of the screen, and now you can see that the folder I'm in is the vue
-              bare project. If we open up package. json, we can see the name right there on line 2. I'm going to open up
-              the terminal again, Cmd+Shift+P, view integrated terminal, and we're back in business. So what did the vue
-              bare project give us? If we scroll down a little bit and we come over to src, we'll see that we have a
-              single App. vue, which really just has the Vue logo and then an h1. If we went back and looked at the
-              project when we didn't run it with bare, we would see we have all these links and helpful tips to go into
-              the documentation. You'll also notice we do have yarn. lock files in here because we specified Yarn as our
-              package manager. And of course we've got the defaults because we used -d. So these are just some other
-              common options that you can use when creating quick projects with Vue. </p></div>
-          <div>
-            <h3>Differences in the Vue CLI Creation Prompts</h3>
-            <p>
-              Defaults are great, but most often you're going to want to set up your own customizations or use some of
-              the different prompts that the CLI offers you to create your own projects. This is why it's really
-              important to master the CLI prompts. I like to think about the prompts in three different ways. First, we
-              have the absence of prompts where we just use -d for our defaults. Second, we could also walk through the
-              prompts one by one and choose everything each time we create a project. And then third, we can create a
-              preset so we can skip the prompts and just go to our favorites. We've already tried creating defaults, and
-              before we can create presets, it's really important to understand what the different prompts offer you. So
-              let's go ahead and walk through a demo of all the different prompts so we can understand what they do.
-            </p></div>
-          <div>
-            <h3>Exploring the Application Creation Prompts</h3>
-            <p>
-              Let's go back to VS Code in the integrated terminal, or you can choose your own separate terminal, and I'm
-              going to go back to my play/vue folder. I'm going to open back into the vue folder itself. We'll type in
-              vue create and we'll do prompts, like this. We're going to walk through the different prompts here. The
-              first prompt is a preset that I already created. You're probably not seeing that one. We'll talk more
-              about prompts shortly. The second one is choosing the defaults, and that we've already done with the -d
-              flag. Same thing here. And then the third option is to manually select our features. We're going to select
-              this one. Notice how I'm going up and down here too. I'm using the up and down arrows to do this, and then
-              I'll hit the Enter key to select it. Now we get a bunch of options that we can choose. Two of them are on
-              by default currently, Babel and the Linter/Formatter. Notice the hints on how we can select them. We can
-              do space to select, A to toggle them all, or I to invert a selection. So we can do I here, and you'll
-              notice they're inverting all of the selections. We can do A to select them all, A again to deselect them,
-              or we can walk through one by one. Let's choose everything. We can do it one by one like this, or again we
-              could choose A to unselect or A to get them all, because we're just going to walk through what these
-              different things mean. First, we chose that we wanted to use TypeScript, and we're now getting asked a
-              question about do we want to use class-style component syntax, yes or no. Notice that Yes is uppercase and
-              no is in lowercase. That means that Yes is the default. If we just hit Enter, it will be Yes. Class-style
-              component syntax means that we're going to have a class for our components, and it's going to use this at
-              component decorator for TypeScript. We'll choose Yes for now. Should we use Babel alongside TypeScript for
-              auto-detecting polyfills? This is a good idea to make sure if we have to support older browsers, so we'll
-              select Yes. Next, it's asking about the router. Because we selected the router, we're being asked about
-              the history mode. Generally, a good idea these days is to use history mode, so capital Yes here. What does
-              this mean? This means that if we don't select this, we're going to have to use hash routing, and hash
-              routing will allow us to use client-side routing on any server, but that's going to put the little hash in
-              all of our URLs. We don't want that. We want normal URLs without the hashes, so we're going to use history
-              mode. Then we can choose our CSS preprocessor. This could be Sass, Less, or Stylus. We'll choose Sass.
-              Next, we get to choose our linter or formatter, or a combination thereof. Because we're using TypeScript,
-              we could choose TSLint. My favorite when I'm not using TypeScript is just ESLint with Prettier. You could
-              choose whichever you like. And then next, it's asking about how to fix things when we're linting. I like
-              to lint on save. That way when I save my files, it'll automatically check them. I happen to use auto save
-              in VS Code, which I can show you up here. In the menu, you go to File, Auto Save is automatically checked
-              for me, it may not be for you. That means any time I make a change in a file, it's going to save the code
-              and it'll automatically lint it. If auto save is not on for your editor, it'll only lint when you press
-              Save. If you don't want it to be that frequent, you could do lint and fix on commits. Next, we pick our
-              unit testing solution. That could be Mocha and Chai or Jest. You pick your choice. And then we can choose
-              our end-to-end testing framework, Cypress or Nightwatch currently. I like Cypress, so that's the one I'm
-              going to choose. Here's one that a lot of people have a strong opinion on, and I'm one of those people. I
-              like to have all of my configs for all these different things in dedicated config files as opposed to
-              putting them all in a single file inside package. json. If we choose the dedicated config files, we'll
-              have a separate file for ESLint and for Babel and for everything that we used for configuration. It's more
-              files in the root, but it's much more conventional too. And then finally when you're done making your
-              selections, it'll ask if you want to create a preset. No is a default here. We're not going to do it for
-              this one, but you can absolutely choose a preset and then save it and then reload that later. We'll be
-              seeing that in an upcoming section here in this module. Now to get out of the CLI, because we just wanted
-              to walk through these, I'm going to hit Ctrl+C and it's going to cancel it. Sometimes you have to Ctrl+C
-              twice. Here we've seen all the different prompts that we can use. Now notice if I go back and do a project
-              called vue create prompts, and this time I do manually select and I only select let's say Babel and the
-              linter, now we're skipping all the other questions that don't apply. There's no more TypeScript questions,
-              for example, or unit testing questions. And again, you can just cancel out of here, and that's all you
-              need to know about going to the prompts.
-            </p></div>
-          <div>
-            <h3>Understanding the Vue CLI Presets</h3>
-            <p>
-              In this section, let's learn about how we can create and share and load Vue CLI presets, because
-              effectively if we're creating the same projects all the time with the same kinds of settings, we should be
-              able to do that without answering all these prompts all the time. So the presets are really a lifesaver.
-              They help us save those preferences, your preferences, for creating new Vue projects. Let's see how we do
-              this. To create a preset, first we go through the prompts. We might use prompts like this where we pick a
-              preset and we say nope, we're going to do manual features, you might choose Babel on the linter, we choose
-              all the options that we want, and when we're done, it's going to ask us if we want to save this as a
-              preset. So at that point, we can save the preset by putting a y in here for yes, and then we'll name that
-              preset. Now by default when you save a preset, it stores it in your. vuerc file. This dot file is in your
-              home folder on your computer. Now that doesn't really help you for sharing it though, so you can go find
-              those settings there. Another option is you can create your own preset. json file and just point the CLI
-              to it. And then a great option for sharing is put it up in a repository like GitHub or Bitbucket so you
-              can save it to preset. json in a repository and use that. Great. So once we have the presets, how do we
-              use them? Well, for in our. vuerc, we'll automatically get prompted for them. That's how we saw the all
-              JavaScript one earlier that I created, but what if it's up in GitHub or in a local file? Well, we can
-              point to those too. We'd say vue create, and then the name of your project, hello, --preset, and in this
-              case I'm assuming GitHub. I'm saying johnpapa/, and then the name of our repository. So that repository is
-              up in GitHub and it's going to go look in there for a file called preset. json. You can also look at your
-              local file. So we could do vue create hello --preset, and then point to whatever path your preset. json
-              file happens to be located in. We can customize presets to include any options that are available in the
-              CLI, and we can extend them with plugins that support things like prompts. Let's walk through how we can
-              save, share, and load from different presets.
-            </p></div>
-          <div>
-            <h3>Creating a Preset</h3>
-            <p>Let's walk through creating our own preset. We'll type in vue create, and we'll just call this one all
-              because that's what we're going to select in this preset. We're going to walk through some prompts here.
-              We'll choose Manually select all features, and then we're going to choose everything. We can hit A here to
-              select them all, and we're going to un-select TypeScript. We're just going to do everything that happens
-              to be JavaScript just for now just to show how we can do this. So we're going to walk through our
-              different selections here. I'm going to choose Enter, Enter, Enter, Enter, Enter, Enter, Enter. Just go
-              through all of these options here and we're just going to try this out. Then we can choose to select a
-              preset. I'm going to say Yes in this case, and then give it a name like all JavaScript. Now I already made
-              one of my own, which you probably saw as I typed it right up here at the beginning, preset for all options
-              JavaScript. So once you save yours, you'll see it in your list when you run the command again, so go ahead
-              and try that. But where does that get saved? Well it's being stored in a. vuerc file, so here's another
-              trick. To load this file inside the editor, I'm going to type code-insiders, or you can use code if that's
-              what you're using as your editor, and I'm going to open up that file. Mine happens to be in my home folder
-              on my Mac. Like this, it'll be in your home folder on Windows if you're using that as well. And then to
-              make sure it loads inside of this instance of VS Code, I'm going to use -r right up there. It's going to
-              load. Now you'll see that that's what the options look like. Notice the name I gave it. It's up here, All
-              options JavaScript. Your name should appear there as well. Then I've got all of my plugins and other
-              options that I happen to set in my preset. You might be wondering why it's all the same color, I'm not
-              getting any IntelliSense here. If I highlight everything and I de-indent it there, if that's a word, and
-              then I format, nothing's really working here. In fact, the editor tells me I don't know what kind of file
-              this is. It's a. vuerc. We can't expect the editor to know everything, right? So here's a neat thing you
-              can try inside of VS Code. If you go to Cmd+Shift+P, or Ctrl+Shift+P, the Command palette, and you type in
-              settings up top, we're going to go to the Preferences, User settings. Now up here we're going to type in
-              file associations, or part of the word like this. And then we can select Files: Associations here in the
-              JSON settings. Now at the bottom of this file, I'm just going to type in file. associations, like this,
-              and then I'm going to tell it, look, when you see a. vuerc file that happens to be JSON format, like this,
-              and make sure you save that file if you don't have auto save on. Now when I go back to my. vuerc, notice
-              I'm getting color coding because it knows it's JSON, and if I format this document, which I can do through
-              Cmd+Shift+P again or Ctrl+Shift+P on Windows, now I can format that. So here we can see where we can find
-              our. vuerc file and look at the formatting for the presets and how we can edit it right here inside of VS
-              Code. </p>
-          </div>
-          <div>
-            <h3>Creating an App from a Preset</h3>
-            <p>If you want to create a file that you can use or give to a friend so they can use your presets, you can
-              do that too. To do that, let's grab just the preset information. We don't need all the JSON from. vuerc
-              file. We could type this from here if we wanted to, but just to make this easier to see, I'll collapse the
-              plugins. Let me grab everything that's inside of these curly braces right there. I'll create a new file,
-              and then you'll see here I've got some JSON, which basically includes all the settings that we want for
-              our preset. I'm going to save this file. We're going to call it preset. json and I'm going to put it
-              inside my play/vue folder. And there we go. Then I can format the file and it should be good to go. Make
-              sure you got all the JSON right. Now once I have that file and I have these different options in there,
-              whatever those presets are, we can automatically use those to create a project, and of course you can edit
-              this if you want to. For example, we can say you know what, we don't really want Vuex in this particular
-              case. So now I could say inside of my vue folder, vue create --preset, and then I can point to this file.
-              Now if you named it preset. json, all you have to do is point to the folder that it's in, and I'm in the
-              same folder where preset. json is so I just can say. /. If it was another folder, I could say
-              other/folder, wherever it happens to be. And then I can name my app, so I'm just going to call it my-app,
-              and then when I run through this, it's going to generate an app using the presets that I have right here.
-              Perfect. Once that's done, we now have a project, which we can get into called my-app, and we can see all
-              the files that happen to be in there. This is how you can create a local file for preset. json. </p></div>
-          <div>
-            <h3>Sharing and Using Remote Presets</h3>
-            <p>
-              A lot of us work on teams, large and small. When I work on teams, what I like is to have consistent
-              conventions. So for my presets, I like to put them up in GitHub. You'll see one here at this GitHub
-              repository at johnpapa/vue-cli-preset-all-javascript, and you can see inside the preset. json file, those
-              are the presets I use when I want to use all the JavaScript options. Then from the ReadMe, you can see the
-              command that we can use to run that. Let's copy that for a moment. And we'll flip back to VS Code. Inside
-              of our vue folder, we'll paste that. Before we run it, we'll give it a different project name. So we're
-              saying vue create, use the preset located at GitHub, johnpapa/, and then the URL name, and then we'll give
-              it a new and unique name. You pick whatever you want. Now when we enter that, it's going to run through
-              the preset up in the GitHub repository, and then it's going to run through what all those presets happen
-              to need. Now while it's doing that, another option we could do, we'll flip back over to the GitHub
-              repository, is notice inside the preset, I've got the eslint plugin here on line 6 set to use Prettier and
-              lintOn save. What if we wanted to use this eslint plugin, but instead of defining we want Prettier and
-              lintOn save, we want to ask the user with a prompt. Instead we could replace lines 7 and 8 with prompts
-              true, so we just change that JSON here and that could prompt just that one part. Now the plugin that
-              you're using has to support those prompts for this to work. And you can learn more about this more
-              advanced option in the docs of the Vue CLI. So if we flip back over to our project that we just created,
-              we can see we successfully created vue-hello-js. That's what I called mine. We could then see the end of
-              that folder, and then I'm going to open it up inside of Code Insiders, and here we can see we've got
-              Cypress running. That was our end-to-end test. If we look in the package. json, which is really the source
-              of truth here, we can see we've got our end-to-end tests, our unit tests on lines 9 and 10, we've got our
-              router on line 15, our service worker for our PWA in 13, Vuex on line 16, and so on and so forth. You may
-              have also wondered, what happens if your repository is private because maybe you didn't want to share the
-              presets outside of your company. Well you can do that too. Just make sure you set up your repo, and if it
-              is private, use the --clone option when you do a vue create with the preset.
-            </p></div>
-          <div>
-            <h3>App Creation Options and What's Next?</h3>
-            <p>
-              You just learned how to use the Vue CLI to create Vue applications in a variety of ways. You can use the
-              options like default and bare, or you can set the package manager to Yarn or npm. Sometimes we need a
-              little bit more customization on things so we can go through the manual process of all the prompts by just
-              running vue create with no options. And we also learned how we can use the vue presets to create our own
-              presets and then share them with other people. There's one other way to create Vue applications, and
-              that's using the Vue CLI's UI. We'll learn more about that in a later module. Next up, let's learn how we
-              can build and serve Vue applications.
-            </p></div>
+              help answer all of these for us, which is great.</p>
+            <p>So in this module, we're going to walk through creating a Vue application. Sometimes we need to get it
+              started quickly, and we'll learn the options that we can do to get out of the gate fast, and then we're
+              going to look through all the different creation options because there's so many creation options for
+              creating a brand-new project.</p>
+            <p>When we walk through using the Vue CLI, it's going to ask us a lot of questions. These are called
+              prompts. We'll learn what these prompts are and how we can save and share and then reuse these favorite
+              answers of ours from the prompts. By the end of this module, you'll have mastered how to customize the Vue
+              CLI to generate new projects just the way you need them. </p></div>
+          <p>
+          <h3>Learning the Application Creation Options</h3>
+          <p>Learning the different options for creating Vue apps is an important part of using the Vue CLI. The first
+            step when using many of these commands is to look at the help flag. So we just type in:</p>
+          <figure>
+            <pre><code class="language-command-line">vue create --help</code></pre>
+            <figcaption>Fig 04-001</figcaption>
+          </figure>
+          <p>it will tell us all the many options that come with vue create and what the default settings are and what
+            they all do. When we generate a new Vue app, there's a couple commands that you need to learn, the first to
+            which is the vue create. So we can say:</p>
+          <figure>
+            <pre><code class="language-command-line">vue create hello-vue</code></pre>
+            <figcaption>Fig 04-002</figcaption>
+          </figure>
+          <p>and if we do this by default and hit Enter, we'll follow the prompts after this to create an application.
+            We'll learn more about those prompts in an upcoming section. We've seen a few times now we can do:</p>
+          <figure>
+            <pre><code class="language-command-line">vue create hello-vue -d</code></pre>
+            <figcaption>Fig 04-003</figcaption>
+          </figure>
+          <p>or</p>
+          <figure>
+            <pre><code class="language-command-line">vue create hello-vue --default</code></pre>
+            <figcaption>Fig 04-004</figcaption>
+          </figure>
+          <p>This will use the default settings and create a Vue application. Basically, it won't ask us any questions,
+            it'll just create the app for us with some very intelligent defaults. Another option we can do is:</p>
+          <figure>
+            <pre><code class="language-command-line">vue create hello-vue -db</code></pre>
+            <figcaption>Fig 04-005</figcaption>
+          </figure>
+          <p>We're combining two different aliases now for both defaults and creating a bare project. That's what the b
+            stands for. What's a bare project? This means instead of having the Vue app come up with a bunch of links
+            and helpful quick starts, none of those will be there because when you build an application, you're probably
+            not going to want all of those things on your page, but when you're first starting out, they're kind of
+            helpful.</p>
+          <p>We just learned about an alias there for -d and for -b. So let's take a step back and learn what these do.
+            Two dashes prefix the options normally, so --default, just like this here:</p>
+          <figure>
+            <pre><code class="language-command-line">vue create hello-vue --default</code></pre>
+            <figcaption>Fig 04-006</figcaption>
+          </figure>
+          <p>but we can also use a single dash with d to alias as shortcut. In this case:</p>
+          <figure>
+            <pre><code class="language-command-line">vue create hello-vue -d</code></pre>
+            <figcaption>Fig 04-007</figcaption>
+          </figure>
+          <p>-d stands for default. Notice here that the first character of default is d, and that happens to be the
+            alias. That's a convention when available, but it isn't always the case because sometimes d can only be used
+            once. Let's take a look at some of these here. Here are some common vue create options:</p>
+          <table class="table">
+            <thead>
+            <tr>
+              <th>Options</th>
+              <th>Alias</th>
+              <th>Description</th>
+            </tr>
+            </thead>
+            <tr>
+              <td>--default</td>
+              <td>-d</td>
+              <td>Use the defaults (no prompts)</td>
+            </tr>
+            <tr>
+              <td>--bare</td>
+              <td>-b</td>
+              <td>Scaffold without beginner instructions</td>
+            </tr>
+            <tr>
+              <td>--packageManager</td>
+              <td>-m</td>
+              <td>Use npm or yarn</td>
+            </tr>
+            <tr>
+              <td>--registry</td>
+              <td>-r</td>
+              <td>url of npm registry</td>
+            </tr>
+            <tr>
+              <td>--proxy</td>
+              <td>-x</td>
+              <td>Use a proxy when creating the app</td>
+            </tr>
+            <tr>
+              <td>--no-git</td>
+              <td>-n</td>
+              <td>Skip git initialization</td>
+            </tr>
+            <tr>
+              <td>--preset</td>
+              <td>-p</td>
+              <td>Skip prompts and use a preset</td>
+            </tr>
+            <tr>
+              <td>--help</td>
+              <td>-h</td>
+              <td>Output usage information</td>
+            </tr>
+          </table>
+          <p>We learned about default, which is just -d. We also saw a -b earlier where we can scaffold without the
+            beginner instructions. That stands for bare.</p>
+          <p>Package manager is -m. This is do you want to use npm or Yarn at this time? Notice that the -m is not the
+            first letter of the option, which is p. This is what I meant earlier when it's not always the first letter
+            of the option. So, keep in mind the aliases are shortcuts, but if you forget those, you can always do:</p>
+          <figure>
+            <pre><code class="language-command-line">vue create --help</code></pre>
+            <figcaption>Fig 04-008</figcaption>
+          </figure>
+          <p>to see them. If you want to change your registry, maybe you've got an internal one you have to point to
+            your own npm registry, you can use -r, or --registry. If you need to use a proxy to be able to create your
+            own app, you can use the --proxy, or an alias of -x. If you want to skip to git initialization, which is on
+            by default, you could go ahead and use -n or no-git. And we're going to learn about presets in a later
+            section of this module where we can skip a bunch of prompts and basically use our saved customizations.
+            That's --preset, or -p.</p>
+          <p>Of course, don't forget --help, which is almost always -h in most CLIs I've ever used.</p>
+          <p>You may have been wondering about earlier when we saw a -d and b together. Yes, we can combine some of
+            these single character aliases. We could do:</p>
+          <figure>
+            <pre><code class="language-command-line">vue create hello vue -dbm yarn</code></pre>
+            <figcaption>Fig 04-009</figcaption>
+          </figure>
+          <p>right here, and what this means is we're going to use the defaults, we're going to have a bare project, and
+            we're going to use the Yarn package manager, so we're combining those three together. This just makes it
+            easy to use and we can set a bunch of options as we see here. Now that we've learned about some of these
+            options, let's go try them ourselves.
+          </
+          >
         </div>
+        <div>
+          <h3>Creating a Default, Bare App with Yarn</h3>
+          <p>Let's open up VS Code. I'm using the Insiders version. Now I'm going to hit Cmd+Shift+P, or it could be
+            Ctrl+Shift+P on Windows, then we're going to open up the integrated terminal, just like that. Now notice
+            that I'm inside of the folder called play/vue:</p>
+          <figure>
+            <img src="./images/Fig04-010.PNG"/>
+            <figcaption>Fig 04-010</figcaption>
+          </figure>
+          <p>You should be inside whatever folder that you're creating these projects in. First we're going to type
+            in</p>
+          <figure>
+            <pre><code class="language-command-line">vue --help</code></pre>
+            <figcaption>Fig 04-011</figcaption>
+          </figure>
+          <p>That's going to give us the help commands for the Vue CLI itself. We see that create is in there:</p>
+          <figure>
+            <img src="./images/Fig04-012.PNG"/>
+            <figcaption>Fig 04-012</figcaption>
+          </figure>
+          <p>so we're going to do vue create --help. Now we can see the different commands that we can use on vue
+            create:</p>
+          <figure>
+            <img src="./images/Fig04-013.PNG"/>
+            <figcaption>Fig 04-013</figcaption>
+          </figure>
+          <p>We've used vue default before right here, but let's try out the bare with default. So now we'll do:</p>
+          <figure>
+            <pre><code class="language-command-line">vue create hello-vue-bare -dbm -yarn</code></pre>
+            <figcaption>Fig 04-014</figcaption>
+          </figure>
+          <p>We'll do d for default, b for bare, and let's also throw in the m for package manager and we'll specify
+            yarn. Now when I hit Enter, it's going to create this project. And notice it's using yarn, right here:</p>
+          <figure>
+            <img src="./images/Fig04-015.PNG"/>
+            <figcaption>Fig 04-015.PNG</figcaption>
+          </figure>
+          <p>so yarn install, and it's going to go get all of the packages that we need and put it on our machines.
+            Perfect. Now we have hello vue bare, and it's giving us the commands to get in there. We'll do:</p>
+          <figure>
+            <pre><code class="language-command-line">cd hello-vue-bare</code></pre>
+            <figcaption>Fig 04-016</figcaption>
+          </figure>
+          <p>like that. Now we can type:</p>
+          <figure>
+            <pre><code class="language-command-line">yarn serve</code></pre>
+            <figcaption>Fig 04-017</figcaption>
+          </figure>
+          <p>but here's a quick VS Code tip. When you're inside the integrated terminal, notice that my folder on the
+            left in the Explorer is the Vue folder:</p>
+          <figure>
+            <img src="./images/Fig04-018.PNG"/>
+            <figcaption>Fig 04-018</figcaption>
+          </figure>
+          <p>And now inside of terminal, I'm one level down. If I want to make the Explorer show just hello-vue-bare, I
+            could close VS Code and restart it, but check out this tip. If you're using Code, just type:</p>
+          <figure>
+            <pre><code class="language-command-line">code . -r</code></pre>
+            <figcaption>Fig 04-019</figcaption>
+          </figure>
+          <p>if you're using Code Insiders, you type:</p>
+          <figure>
+            <pre><code class="language-command-line">code-insiders . -r</code></pre>
+            <figcaption>Fig 04-020</figcaption>
+          </figure>
+          <p>Say you want to open up which folder, the current one I'm in. I want to get to hello-vue-bare, and then I'm
+            going to do -r. Basically it's going to replace this running instance of VS Code with one that'll have the
+            folders in the left showing that folder I want. Now I hit Enter, you'll see a flash of the screen, and now
+            you can see that the folder I'm in is the vue bare project:</p>
+          <figure>
+            <img src="./images/Fig04-021.PNG"/>
+            <figcaption>Fig 04-021</figcaption>
+          </figure>
+          <p>If we open up package. json, we can see the name right there on line 2:</p>
+          <figure>
+            <img src="./images/Fig04-022.PNG"/>
+            <figcaption>Fig 04-022</figcaption>
+          </figure>
+          <p>I'm going to open up the terminal again, Cmd+Shift+P, view integrated terminal, and we're back in business.
+            So what did the vue bare project give us? If we scroll down a little bit and we come over to src, we'll see
+            that we have a single App.vue:</p>
+          <figure>
+            <img src="./images/Fig04-023.PNG"/>
+            <figcaption>Fig 04-023</figcaption>
+          </figure>
+          <p>which really just has the Vue logo and then an h1. If we went back and looked at the project when we didn't
+            run it with bare, we would see we have all these links and helpful tips to go into the documentation. You'll
+            also notice we do have yarn.lock files in here:</p>
+          <figure>
+            <img src="./images/Fig04-024.PNG"/>
+            <figcaption>Fig 04-024</figcaption>
+          </figure>
+          <p>because we specified Yarn as our package manager. And of course we've got the defaults because we used -d.
+            So these are just some other common options that you can use when creating quick projects with Vue. </p>
+        </div>
+        <div>
+          <h3>Differences in the Vue CLI Creation Prompts</h3>
+          <p>
+            Defaults are great, but most often you're going to want to set up your own customizations or use some of the
+            different prompts that the CLI offers you to create your own projects. This is why it's really important to
+            master the CLI prompts. I like to think about the prompts in three different ways.</p>
+          <figure>
+            <img src="./images/Fig04-025.PNG"/>
+            <figcaption>Fig 04-025</figcaption>
+          </figure>
+          <p>First, we have the absence of prompts where we just use -d for our defaults. Second, we could also walk
+            through the prompts one by one and choose everything each time we create a project. And then third, we can
+            create a preset so we can skip the prompts and just go to our favorites.</p>
+          <p>We've already tried creating defaults, and before we can create presets, it's really important to
+            understand what the different prompts offer you. So let's go ahead and walk through a demo of all the
+            different prompts so we can understand what they do.
+          </p></div>
+        <div>
+          <h3>Exploring the Application Creation Prompts</h3>
+          <p>
+            Let's go back to VS Code in the integrated terminal, or you can choose your own separate terminal, and I'm
+            going to go back to my play/vue folder. I'm going to open back into the vue folder itself:</p>
+          <figure>
+            <img src="./images/Fig04-026.PNG"/>
+            <figcaption>Fig 04-026</figcaption>
+          </figure>
+          <p>We'll type in:</p>
+          <figure>
+            <pre><code class="language-command-line">vue create prompts</code></pre>
+            <figcaption>Fig 04-027</figcaption>
+          </figure>
+          <p>We're going to walk through the different prompts here:</p>
+          <figure>
+            <img src="./images/Fig04-028.PNG"/>
+            <figcaption>Fig 04-028</figcaption>
+          </figure>
+          <p>The first prompt is a preset that I already created. You're probably not seeing that one. We'll talk more
+            about prompts shortly. The second one is choosing the defaults:</p>
+          <figure>
+            <img src="./images/Fig04-029.PNG"/>
+            <figcaption>Fig 04-029</figcaption>
+          </figure>
+          <p>and that we've already done with the -d flag. Same thing here. And then the third option is to manually
+            select our features:</p>
+          <figure>
+            <img src="./images/Fig04-030.PNG"/>
+            <figcaption>Fig 04-030</figcaption>
+          </figure>
+          <p>We're going to select this one. Notice how I'm going up and down here too. I'm using the up and down arrows
+            to do this, and then I'll hit the Enter key to select it. Now we get a bunch of options that we can choose.
+            Two of them are on by default currently, Babel and the Linter/Formatter:</p>
+          <figure>
+            <img src="./images/Fig04-031.PNG"/>
+            <figcaption>Fig 04-031</figcaption>
+          </figure>
+          <p>Notice the hints on how we can select them. We can do space to select, A to toggle them all, or I to invert
+            a selection. So we can do I here:</p>
+          <figure>
+            <img src="./images/Fig04-032.PNG"/>
+            <figcaption>Fig 04-032</figcaption>
+          </figure>
+          <p>and you'll notice they're inverting all of the selections. We can do A to select them all:</p>
+          <figure>
+            <img src="./images/Fig04-033.PNG"/>
+            <figcaption>Fig 04-033</figcaption>
+          </figure>
+          <p>A again to deselect them:</p>
+          <figure>
+            <img src="./images/Fig04-034.PNG"/>
+            <figcaption>Fig 04-034</figcaption>
+          </figure>
+          <p>or we can walk through one by one. Let's choose everything, because we're just going to walk through what
+            these different things mean. First, we chose that we wanted to use TypeScript, and we're now getting asked a
+            question about do we want to use class-style component syntax, yes or no:</p>
+          <figure>
+            <img src="./images/Fig04-035.PNG"/>
+            <figcaption>Fig 04-035</figcaption>
+          </figure>
+          <p>Notice that Yes is uppercase and no is in lowercase</p>
+          <figure>
+            <img src="./images/Fig04-036.PNG"/>
+            <figcaption>Fig 04-036</figcaption>
+          </figure>
+          <p>That means that Yes is the default. If we just hit Enter, it will be Yes. Class-style component syntax
+            means that we're going to have a class for our components, and it's going to use this at component decorator
+            for TypeScript. We'll choose Yes for now.</p>
+          <p>Should we use Babel alongside TypeScript for auto-detecting polyfills:</p>
+          <figure>
+            <img src="./images/Fig04-037.PNG"/>
+            <figcaption>Fig 04-037</figcaption>
+          </figure>
+          <p>This is a good idea to make sure if we have to support older browsers, so we'll select Yes. Next, it's
+            asking about the router:</p>
+          <figure>
+            <img src="./images/Fig04-038.PNG"/>
+            <figcaption>Fig 04-038</figcaption>
+          </figure>
+          <p>Because we selected the router, we're being asked about the history mode. Generally, a good idea these days
+            is to use history mode, so capital Yes here. What does this mean? This means that if we don't select this,
+            we're going to have to use hash routing, and hash routing will allow us to use client-side routing on any
+            server, but that's going to put the little hash in all of our URLs. We don't want that. We want normal URLs
+            without the hashes, so we're going to use history mode.</p>
+          <figure>
+            <img src="./images/Fig04-039.PNG"/>
+            <figcaption>Fig 04-039</figcaption>
+          </figure>
+          <p>Then we can choose our CSS preprocessor. This could be Sass, Less, or Stylus. We'll choose Sass.</p>
+          <p>Next, we get to choose our linter or formatter, or a combination thereof:</p>
+          <figure>
+            <img src="./images/Fig04-040.PNG"/>
+            <figcaption>Fig 04-040</figcaption>
+          </figure>
+          <p>Because we're using TypeScript, we could choose TSLint. My favorite when I'm not using TypeScript is just
+            ESLint with Prettier. You could choose whichever you like.</p>
+          <p>Next, it's asking about how to fix things when we're linting:</p>
+          <figure>
+            <img src="./images/Fig04-041.PNG"/>
+            <figcaption>Fig 04-041</figcaption>
+          </figure>
+          <p>I like to lint on save. That way when I save my files, it'll automatically check them. I happen to use auto
+            save in VS Code, which I can show you up here. In the menu, you go to File, Auto Save is automatically
+            checked for me:</p>
+          <figure>
+            <img src="./images/Fig04-042.PNG"/>
+            <figcaption>Fig 04-042</figcaption>
+          </figure>
+          <p>it may not be for you. That means any time I make a change in a file, it's going to save the code and it'll
+            automatically lint it. If auto save is not on for your editor, it'll only lint when you press Save. If you
+            don't want it to be that frequent, you could do lint and fix on commits.</p>
+          <p>Next, we pick our unit testing solution:</p>
+          <figure>
+            <img src="./images/Fig04-043.PNG"/>
+            <figcaption>Fig 04-043</figcaption>
+          </figure>
+          <p>That could be Mocha and Chai or Jest. You pick your choice. And then we can choose our end-to-end testing
+            framework:</p>
+          <figure>
+            <img src="./images/Fig04-044.PNG"/>
+            <figcaption>Fig 04-044</figcaption>
+          </figure>
+          <p>Cypress or Nightwatch currently. I like Cypress, so that's the one I'm going to choose. Here's one that a
+            lot of people have a strong opinion on, and I'm one of those people:</p>
+          <figure>
+            <img src="./images/Fig04-045.PNG"/>
+            <figcaption>Fig 04-045</figcaption>
+          </figure>
+          <p>I like to have all of my configs for all these different things in dedicated config files as opposed to
+            putting them all in a single file inside package.json. If we choose the dedicated config files, we'll have a
+            separate file for ESLint and for Babel and for everything that we used for configuration. It's more files in
+            the root, but it's much more conventional too.</p>
+          <p>And then finally when you're done making your selections, it'll ask if you want to create a preset:</p>
+          <figure>
+            <img src="./images/Fig04-046.PNG"/>
+            <figcaption>Fig 04-046.PNG</figcaption>
+          </figure>
+          <p>No is a default here. We're not going to do it for this one, but you can absolutely choose a preset and
+            then save it and then reload that later. We'll be seeing that in an upcoming section here in this
+            module.</p>
+          <p>
+            Now to get out of the CLI, because we just wanted to walk through these, I'm going to hit Ctrl+C and it's
+            going to cancel it. Sometimes you have to Ctrl+C twice. Here we've seen all the different prompts that we
+            can use. Now notice if I go back and do a project called
+            <figure>
+              <pre><code class="language-command-line">vue create prompts</code></pre>
+              <figcaption>Fig 04-047</figcaption>
+            </figure>
+          <p>and this time I do manually select and I only select let's say Babel and the linter:</p>
+          <figure>
+            <img src="./images/Fig04-047.PNG"/>
+            <figcaption>Fig 04-047</figcaption>
+          </figure>
+          <p>now we're skipping
+          all
+            the other questions that don't apply. There's no more TypeScript questions, for example, or unit testing
+            questions. And again, you can just cancel out of here, and that's all you need to know about going to the
+            prompts.
+          </p></div>
+        <div>
+          <h3>Understanding the Vue CLI Presets</h3>
+          <p>
+            In this section, let's learn about how we can create and share and load Vue CLI presets, because effectively
+            if we're creating the same projects all the time with the same kinds of settings, we should be able to do
+            that without answering all these prompts all the time. So the presets are really a lifesaver. They help us
+            save those preferences, your preferences, for creating new Vue projects. Let's see how we do this. To create
+            a preset, first we go through the prompts. We might use prompts like this where we pick a preset and we say
+            nope, we're going to do manual features, you might choose Babel on the linter, we choose all the options
+            that we want, and when we're done, it's going to ask us if we want to save this as a preset. So at that
+            point, we can save the preset by putting a y in here for yes, and then we'll name that preset. Now by
+            default when you save a preset, it stores it in your. vuerc file. This dot file is in your home folder on
+            your computer. Now that doesn't really help you for sharing it though, so you can go find those settings
+            there. Another option is you can create your own preset. json file and just point the CLI to it. And then a
+            great option for sharing is put it up in a repository like GitHub or Bitbucket so you can save it to preset.
+            json in a repository and use that. Great. So once we have the presets, how do we use them? Well, for in our.
+            vuerc, we'll automatically get prompted for them. That's how we saw the all JavaScript one earlier that I
+            created, but what if it's up in GitHub or in a local file? Well, we can point to those too. We'd say vue
+            create, and then the name of your project, hello, --preset, and in this case I'm assuming GitHub. I'm saying
+            johnpapa/, and then the name of our repository. So that repository is up in GitHub and it's going to go look
+            in there for a file called preset. json. You can also look at your local file. So we could do vue create
+            hello --preset, and then point to whatever path your preset. json file happens to be located in. We can
+            customize presets to include any options that are available in the CLI, and we can extend them with plugins
+            that support things like prompts. Let's walk through how we can save, share, and load from different
+            presets.
+          </p></div>
+        <div>
+          <h3>Creating a Preset</h3>
+          <p>Let's walk through creating our own preset. We'll type in vue create, and we'll just call this one all
+            because that's what we're going to select in this preset. We're going to walk through some prompts here.
+            We'll choose Manually select all features, and then we're going to choose everything. We can hit A here to
+            select them all, and we're going to un-select TypeScript. We're just going to do everything that happens to
+            be JavaScript just for now just to show how we can do this. So we're going to walk through our different
+            selections here. I'm going to choose Enter, Enter, Enter, Enter, Enter, Enter, Enter. Just go through all of
+            these options here and we're just going to try this out. Then we can choose to select a preset. I'm going to
+            say Yes in this case, and then give it a name like all JavaScript. Now I already made one of my own, which
+            you probably saw as I typed it right up here at the beginning, preset for all options JavaScript. So once
+            you save yours, you'll see it in your list when you run the command again, so go ahead and try that. But
+            where does that get saved? Well it's being stored in a. vuerc file, so here's another trick. To load this
+            file inside the editor, I'm going to type code-insiders, or you can use code if that's what you're using as
+            your editor, and I'm going to open up that file. Mine happens to be in my home folder on my Mac. Like this,
+            it'll be in your home folder on Windows if you're using that as well. And then to make sure it loads inside
+            of this instance of VS Code, I'm going to use -r right up there. It's going to load. Now you'll see that
+            that's what the options look like. Notice the name I gave it. It's up here, All options JavaScript. Your
+            name should appear there as well. Then I've got all of my plugins and other options that I happen to set in
+            my preset. You might be wondering why it's all the same color, I'm not getting any IntelliSense here. If I
+            highlight everything and I de-indent it there, if that's a word, and then I format, nothing's really working
+            here. In fact, the editor tells me I don't know what kind of file this is. It's a. vuerc. We can't expect
+            the editor to know everything, right? So here's a neat thing you can try inside of VS Code. If you go to
+            Cmd+Shift+P, or Ctrl+Shift+P, the Command palette, and you type in settings up top, we're going to go to the
+            Preferences, User settings. Now up here we're going to type in file associations, or part of the word like
+            this. And then we can select Files: Associations here in the JSON settings. Now at the bottom of this file,
+            I'm just going to type in file. associations, like this, and then I'm going to tell it, look, when you see
+            a. vuerc file that happens to be JSON format, like this, and make sure you save that file if you don't have
+            auto save on. Now when I go back to my. vuerc, notice I'm getting color coding because it knows it's JSON,
+            and if I format this document, which I can do through Cmd+Shift+P again or Ctrl+Shift+P on Windows, now I
+            can format that. So here we can see where we can find our. vuerc file and look at the formatting for the
+            presets and how we can edit it right here inside of VS Code. </p>
+        </div>
+        <div>
+          <h3>Creating an App from a Preset</h3>
+          <p>If you want to create a file that you can use or give to a friend so they can use your presets, you can do
+            that too. To do that, let's grab just the preset information. We don't need all the JSON from. vuerc file.
+            We could type this from here if we wanted to, but just to make this easier to see, I'll collapse the
+            plugins. Let me grab everything that's inside of these curly braces right there. I'll create a new file, and
+            then you'll see here I've got some JSON, which basically includes all the settings that we want for our
+            preset. I'm going to save this file. We're going to call it preset. json and I'm going to put it inside my
+            play/vue folder. And there we go. Then I can format the file and it should be good to go. Make sure you got
+            all the JSON right. Now once I have that file and I have these different options in there, whatever those
+            presets are, we can automatically use those to create a project, and of course you can edit this if you want
+            to. For example, we can say you know what, we don't really want Vuex in this particular case. So now I could
+            say inside of my vue folder, vue create --preset, and then I can point to this file. Now if you named it
+            preset. json, all you have to do is point to the folder that it's in, and I'm in the same folder where
+            preset. json is so I just can say. /. If it was another folder, I could say other/folder, wherever it
+            happens to be. And then I can name my app, so I'm just going to call it my-app, and then when I run through
+            this, it's going to generate an app using the presets that I have right here. Perfect. Once that's done, we
+            now have a project, which we can get into called my-app, and we can see all the files that happen to be in
+            there. This is how you can create a local file for preset. json. </p></div>
+        <div>
+          <h3>Sharing and Using Remote Presets</h3>
+          <p>
+            A lot of us work on teams, large and small. When I work on teams, what I like is to have consistent
+            conventions. So for my presets, I like to put them up in GitHub. You'll see one here at this GitHub
+            repository at johnpapa/vue-cli-preset-all-javascript, and you can see inside the preset. json file, those
+            are the presets I use when I want to use all the JavaScript options. Then from the ReadMe, you can see the
+            command that we can use to run that. Let's copy that for a moment. And we'll flip back to VS Code. Inside of
+            our vue folder, we'll paste that. Before we run it, we'll give it a different project name. So we're saying
+            vue create, use the preset located at GitHub, johnpapa/, and then the URL name, and then we'll give it a new
+            and unique name. You pick whatever you want. Now when we enter that, it's going to run through the preset up
+            in the GitHub repository, and then it's going to run through what all those presets happen to need. Now
+            while it's doing that, another option we could do, we'll flip back over to the GitHub repository, is notice
+            inside the preset, I've got the eslint plugin here on line 6 set to use Prettier and lintOn save. What if we
+            wanted to use this eslint plugin, but instead of defining we want Prettier and lintOn save, we want to ask
+            the user with a prompt. Instead we could replace lines 7 and 8 with prompts true, so we just change that
+            JSON here and that could prompt just that one part. Now the plugin that you're using has to support those
+            prompts for this to work. And you can learn more about this more advanced option in the docs of the Vue CLI.
+            So if we flip back over to our project that we just created, we can see we successfully created
+            vue-hello-js. That's what I called mine. We could then see the end of that folder, and then I'm going to
+            open it up inside of Code Insiders, and here we can see we've got Cypress running. That was our end-to-end
+            test. If we look in the package. json, which is really the source of truth here, we can see we've got our
+            end-to-end tests, our unit tests on lines 9 and 10, we've got our router on line 15, our service worker for
+            our PWA in 13, Vuex on line 16, and so on and so forth. You may have also wondered, what happens if your
+            repository is private because maybe you didn't want to share the presets outside of your company. Well you
+            can do that too. Just make sure you set up your repo, and if it is private, use the --clone option when you
+            do a vue create with the preset.
+          </p></div>
+        <div>
+          <h3>App Creation Options and What's Next?</h3>
+          <p>
+            You just learned how to use the Vue CLI to create Vue applications in a variety of ways. You can use the
+            options like default and bare, or you can set the package manager to Yarn or npm. Sometimes we need a little
+            bit more customization on things so we can go through the manual process of all the prompts by just running
+            vue create with no options. And we also learned how we can use the vue presets to create our own presets and
+            then share them with other people. There's one other way to create Vue applications, and that's using the
+            Vue CLI's UI. We'll learn more about that in a later module. Next up, let's learn how we can build and serve
+            Vue applications.
+          </p></div>
         <div><h2>Building and Serving Vue</h2>
           <div>
             <h3>Overview of the Building and Serving</h3>
@@ -2076,7 +2601,8 @@
               That's what I recommend. Go there and then look through the rich ecosystem in the menu structure in the
               documentation because they point out an awesome list and a bunch of other ideas for how you can find
               really rich plugins. Now that we've learned about the plugins and how we can add them, let's go do it
-              together. </p></div>
+              together. </p>
+          </div>
           <div>
             <h3>Adding a Plugin Via the Vue CLI</h3>
             <p>Let's walk through creating a project to see what the experience is for getting plugins right out of the
@@ -2317,7 +2843,8 @@
               configuration you have might have. So this list on the left will vary. One last thing about PWA, notice
               there's something specific for about opening up the manifest in the upper right-hand corner. We can click
               on that or if you go back to ESLint, remember what used to be there for that one was opening eslintrc. So
-              this is how you can open up and edit your configuration using the UI. </p></div>
+              this is how you can open up and edit your configuration using the UI. </p>
+          </div>
           <div>
             <h3>Running Tasks with the Vue CLI UI</h3>
             <p>Perhaps the coolest part of the Vue UI is that we can run the tasks. So let's click on the clipboard on
