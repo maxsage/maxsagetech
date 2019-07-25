@@ -2376,67 +2376,192 @@
             <p>In this module on intersection-component communication, we'll explore how to communicate between
               components. You don't get far in building an application before you run into situations where one
               component needs to know something about what's going on with another component, so it'll be good to learn
-              how to accomplish this with Vue. There are a few topics to cover including using props to share data with
-              child components, validating component props, passing data to parent components with events, and injecting
-              content into a child component with slots. Understanding how to do this will allow us to build rich
-              client-side applications with Vue, so let's dive in.
+              how to accomplish this with Vue.</p>
+            <p>There are a few topics to cover including using props to share data with child components, validating
+              component props, passing data to parent components with events, and injecting content into a child
+              component with slots. Understanding how to do this will allow us to build rich client-side applications
+              with Vue, so let's dive in.
             </p>
           </div>
           <div><h3>Creating Child Components</h3>
             <p>So far, we haven't really done much with creating child components, other than the fact that our App
               component uses our RobotBuilder component. If we take a look at this RobotBuilder template, you can see a
-              lot of repeating code here for each of the individual part selectors. Let's turn this into a part selector
-              component and reuse it in each of these places. When we do that, we'll need to pass down to the
-              PartSelector component the parts that we want it to select from, and that will be a great way to show how
-              to communicate between components. So we'll start by creating a PartSelector component, and rather than
-              completing this whole thing from scratch, let's start with a partially completed component. So over here
-              in our helper repo in the src, build folder, we have this PartSelector. vue file. So let's grab that and
-              paste that into our new component. So if we take a look at what we've pasted in here, you can see that at
-              the top here we have some HTML that looks a lot like the HTML that was being repeated multiple times over
-              in our RobotBuilder. And then down here in the component script, you can see that we have some functions
-              for getting the next and previous index, and down here methods on our component for selecting the next
-              part and the previous part that call those functions. This should look a little bit familiar because this
-              same code, or code a lot like it, existed over in our RobotBuilder. So we've just moved that over into our
-              PartSelector. And then notice up here, we're importing all of the available parts, and we're setting, here
-              on line 13, this parts variable to the heads from the availableParts. This is just temporary so we can get
-              up and going. The parts for the PartSelector will actually be passed into us by its parent component, so
-              we'll delete this pretty quick here. So just to bring you up to speed with what the plan is, if we look at
-              our robot builder, each one of these parts is going to be a different instance of the PartSelector, and
-              the RobotBuilder will be responsible for giving each instance of the PartSelector the correct list of
-              parts for it to work with. So in the RobotBuilder, when we create this instance of the PartSelector, it
-              will pass in a list of heads, and when it creates this one, it will pass in a list of arms, etc. This will
-              be a great way to learn how to communicate with child components. And now that the PartSelector will be
-              taking care of all of the selecting of the parts, then over in our RobotBuilder we can delete a bunch of
-              stuff here. So we can delete these functions here that we saw exist now over in the PartSelector, and then
-              we can delete all of these functions down here. And notice how many of these there are that we're going to
-              be deleting, and all of these will be replaced with just two functions in the PartSelector. So you can see
-              how this is going to be eliminating duplication, and it's going to be a lot cleaner. All right, and then
-              we're not going to needs these selected indexes here, either. And then we're just going to initialize each
-              one of these parts in our selected robot to just an empty object, so each one of these will be just
-              initialized like this. And actually, now that this doesn't have any complex calculations anymore, it
-              doesn't really need to be a computed property, so let's just move this up to our data object. And this
-              will just be a property instead of a function, and it'll just return this object. And now we're just going
-              to go ahead and import our PartSelector. All right, and then this is something that you may not have
-              noticed in the App component, but whenever you reference a child component, not only do you need to import
-              it; you also need to list it in a components array on the parent component like this. This is what makes
-              our component aware of this selector so that we can now use it up here. Okay, so now we're going to
-              replace each one of these with just a PartSelector. So we have one at the bottom for our base, three in
-              the middle for the left arm, torso, and right arm, and then up here in the head, we have a little bit more
-              going on. So we can go ahead and replace all of this here with the PartSelector, and we can get rid of
-              this div here. This stuff, however, we're going to want to reuse later, and so I'm just going to comment
-              that out for now. Okay, so now we can use these PartSelector elements because we have declared them down
-              here. Oh, and actually, this is not supposed to be an array; this is an object. So this is really an
-              object where we're saying that we have a PartSelector component that is set to that PartSelector, but we
-              can just use the shorthand syntax like this. But you can see already how much cleaner our template is
-              because we cleaned up so much duplication. So let's go check this out. Okay, well, we've got all heads
-              again, so not exactly what we want, but it is what we expected since our PartSelector is currently just
-              hardcoded to return heads. To fix that, each instance of our PartSelector needs to receive its list of
-              parts from its parent component, so we'll do that next. But you'll also notice that our arrows on our
-              buttons are missing, and the buttons aren't exactly in the right place. So depending on where the
-              PartSelector is, sometimes the buttons need to be on the top and bottom of the image, and sometimes they
-              need to be on the left and right. So the PartSelector will also need to know what position it's in before
-              it knows what type of buttons to display, so we'll fix that too. We'll get into all of that in the next
-              clip when we start talking about how to pass data down to child components.
+              lot of repeating code here for each of the individual part selectors:</p>
+            <figure>
+              <img src="./images/Fig03-001.png"/>
+              <figcaption>Fig 03-001</figcaption>
+            </figure>
+            <p>Let's turn this into a part selector component and reuse it in each of these places. When we do that,
+              we'll need to pass down to the PartSelector component the parts that we want it to select from, and that
+              will be a great way to show how to communicate between components.</p>
+            <figure>
+              <img src="./images/Fig03-002.png"/>
+              <figcaption>Fig 03-002</figcaption>
+            </figure>
+            <p>So we'll start by creating a PartSelector component, and rather than completing this whole thing from
+              scratch, let's start with a partially completed component. So over here in our helper repo in the src,
+              build folder, we have this PartSelector.vue file:</p>
+            <figure>
+              <img src="./images/Fig03-003.png"/>
+              <figcaption>Fig 03-003</figcaption>
+            </figure>
+            <p>So let's grab that and paste that into our new component. So if we take a look at what we've pasted in
+              here, you can see that at the top here:</p>
+            <figure>
+              <img src="./images/Fig03-004.png"/>
+              <figcaption>Fig 03-004</figcaption>
+            </figure>
+            <p>we have some HTML that looks a lot like the HTML that was being repeated multiple times over in our
+              RobotBuilder. And then down here in the component script, you can see that we have some functions for
+              getting the next and previous index:</p>
+            <figure>
+              <img src="./images/Fig03-005.png"/>
+              <figcaption>Fig 03-005</figcaption>
+            </figure>
+            <p>and down here:</p>
+            <figure>
+              <img src="./images/Fig03-006.png"/>
+              <figcaption>Fig 03-006</figcaption>
+            </figure>
+            <p>methods on our component for selecting the next part and the previous part that call those functions.
+              This should look a little bit familiar because this same code, or code a lot like it, existed over in our
+              RobotBuilder. So we've just moved that over into our PartSelector.</p>
+            <p>And then notice up here:</p>
+            <figure>
+              <img src="./images/Fig03-007.png"/>
+              <figcaption>Fig 03-007</figcaption>
+            </figure>
+            <p>we're importing all of the available parts, and we're setting, here on line 13:</p>
+            <figure>
+              <img src="./images/Fig03-008.png"/>
+              <figcaption>Fig 03-008</figcaption>
+            </figure>
+            <p>this parts variable to the heads from the availableParts. This is just temporary so we can get up and
+              going. The parts for the PartSelector will actually be passed into us by its parent component, so we'll
+              delete this pretty quick here.</p>
+            <p>So just to bring you up to speed with what the plan is, if we look at our robot builder, each one of
+              these parts is going to be a different instance of the PartSelector, and the RobotBuilder will be
+              responsible for giving each instance of the PartSelector the correct list of parts for it to work with. So
+              in the RobotBuilder, when we create this instance of the PartSelector, it will pass in a list of heads,
+              and when it creates this one, it will pass in a list of arms, etc. This will be a great way to learn how
+              to communicate with child components.</p>
+            <p>And now that the PartSelector will be taking care of all of the selecting of the parts, then over in our
+              RobotBuilder we can delete a bunch of stuff here. So we can delete these functions here:</p>
+            <figure>
+              <img src="./images/Fig03-009.png"/>
+              <figcaption>Fig 03-009</figcaption>
+            </figure>
+            <p>that we saw exist now over in the PartSelector, and then we can delete all of these functions down here.
+              And notice how many of these there are that we're going to be deleting:</p>
+            <figure>
+              <img src="./images/Fig03-010.png"/>
+              <figcaption>Fig 03-010</figcaption>
+            </figure>
+            <p>and all of these will be replaced with just two functions in the PartSelector. So you can see how this is
+              going to be eliminating duplication, and it's going to be a lot cleaner. All right, and then we're not
+              going to needs these selected indexes here:</p>
+            <figure>
+              <img src="./images/Fig03-011.png"/>
+              <figcaption>Fig 03-011</figcaption>
+            </figure>
+            <p>either. And then we're just going to initialize each one of these parts in our selected robot to just an
+              empty object, so each one of these will be just initialized like this:</p>
+            <figure>
+              <img src="./images/Fig03-012.png"/>
+              <figcaption>Fig 03-012</figcaption>
+            </figure>
+            <p>And actually, now that this doesn't have any complex calculations anymore, it doesn't really need to be a
+              computed property, so let's just move this up to our data object:</p>
+            <figure>
+              <img src="./images/Fig03-013.png"/>
+              <figcaption>Fig 03-013</figcaption>
+            </figure>
+            <p>And this will just be a property instead of a function, and it'll just return this object.</p>
+            <p>And now we're just going to go ahead and import our PartSelector</p>
+            <figure>
+              <img src="./images/Fig03-014.png"/>
+              <figcaption>Fig 03-014</figcaption>
+            </figure>
+            <p>All right, and then this is something that you may not have noticed in the App component, but whenever
+              you reference a child component, not only do you need to import it; you also need to list it in a
+              components array on the parent component like this:</p>
+            <figure>
+              <img src="./images/Fig03-015.png"/>
+              <figcaption>Fig 03-015</figcaption>
+            </figure>
+            <p>This is what makes our component aware of this selector so that we can now use it up here. Okay, so now
+              we're going to replace each one of these:</p>
+            <figure>
+              <img src="./images/Fig03-016.png"/>
+              <figcaption>Fig 03-016</figcaption>
+            </figure>
+            <p>with just a PartSelector:</p>
+            <figure>
+              <img src="./images/Fig03-017.png"/>
+              <figcaption>Fig 03-017</figcaption>
+            </figure>
+            <p>So we have one at the bottom for our base, three in the middle for the left arm, torso, and right
+              arm:</p>
+            <figure>
+              <img src="./images/Fig03-018.png"/>
+              <figcaption>Fig 03-018</figcaption>
+            </figure>
+            <p>
+              and then up here in the head, we have a little bit more going on. So we can go ahead and replace all of
+              this here</p>
+            <figure>
+              <img src="./images/Fig03-019.png"/>
+              <figcaption>Fig 03-019</figcaption>
+            </figure>
+            <p>with the PartSelector:</p>
+            <figure>
+              <img src="./images/Fig03-020.png"/>
+              <figcaption>Fig 03-020</figcaption>
+            </figure>
+            <p>and we can get rid of this div here:</p>
+            <figure>
+              <img src="./images/Fig03-021.png"/>
+              <figcaption>Fig 03-021</figcaption>
+            </figure>
+            <p>This stuff, however:</p>
+            <figure>
+              <img src="./images/Fig03-022.png"/>
+              <figcaption>Fig 03-022</figcaption>
+            </figure>
+            <p>we're going to want to reuse later, and so I'm just going to comment that out for now.</p>
+            <p>Okay, so now we can use these PartSelector elements because we have declared them down here. Oh, and
+              actually, this is not supposed to be an array:</p>
+            <figure>
+              <img src="./images/Fig03-023.png"/>
+              <figcaption>Fig 03-023</figcaption>
+            </figure>
+            <p>this is an object</p>
+            <figure>
+              <img src="./images/Fig03-024.png"/>
+              <figcaption>Fig 03-024</figcaption>
+            </figure>
+            <p>So this is really an object where we're saying that we have a PartSelector component that is set to that
+              PartSelector:</p>
+            <figure>
+              <img src="./images/Fig03-025.png"/>
+              <figcaption>Fig 03-025</figcaption>
+            </figure>
+            <p>but we can just use the shorthand syntax as shown previously. But you can see already how much cleaner
+              our template is because we cleaned up so much duplication. So let's go check this out:</p>
+            <figure>
+              <img src="./images/Fig03-026.png"/>
+              <figcaption>Fig 03-026</figcaption>
+            </figure>
+            <p>Okay, well, we've got all heads again, so not exactly what we want, but it is what we expected since our
+              PartSelector is currently just hardcoded to return heads. To fix that, each instance of our PartSelector
+              needs to receive its list of parts from its parent component, so we'll do that next.</p>
+            <p>But you'll also notice that our arrows on our buttons are missing, and the buttons aren't exactly in the
+              right place. So depending on where the PartSelector is, sometimes the buttons need to be on the top and
+              bottom of the image, and sometimes they need to be on the left and right. So the PartSelector will also
+              need to know what position it's in before it knows what type of buttons to display, so we'll fix that too.
+            </p>
+            <p>We'll get into all of that in the next clip when we start talking about how to pass data down to child
+              components.
             </p>
           </div>
           <div><h3>Using Props to Share Data with Child Components</h3>
