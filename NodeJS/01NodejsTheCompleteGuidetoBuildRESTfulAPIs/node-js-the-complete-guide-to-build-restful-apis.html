@@ -304,34 +304,49 @@ window.sayHello();</code></pre>
           variables and functions in the global scope. Instead we need modularity where we create
           small building blocks or modules where we define our variables and functions. They are
           then encapsulated in that module.</p>
-
-        Every file in a node application is considered a module.
-
-        Variables and functions defined within the module are private (in OOP terms). If we want to
-        make a variable of function available outside of the module we need to explicitly export it.
-
-        Every Node application has at least one file or module which we refer to as the main module.
-
-        If we write out the module object to the console:
-
-        console.log(module)
-
-        We will see a JSON object containing various properties such as id, exports, parent,
-        filename, loaded etc:
-
-        Module { id: '.', exports: {}, parent: null, filename:
-        'C:\\DevelopmentTutorials\\TheCompleteNodeJSCourse\\02-node-module-system\\12-modules.js',
-        loaded: false, children: [], paths: [
-        'C:\\DevelopmentTutorials\\TheCompleteNodeJSCourse\\02-node-module-system\\node_modules',
-        'C:\\DevelopmentTutorials\\TheCompleteNodeJSCourse\\node_modules',
-        'C:\\DevelopmentTutorials\\node_modules', 'C:\\node_modules' ] }
-
-
-        13 Creating a Module -------------------- Let's add a new module called logger.js for
-        logging messages. The module will be re-used in this application and potentially other
-        applications. In this module we will imagine that we are going to use a remote logging
-        service for logging our messages. So there are third party websites out there that provide a
-        url where we can send an http request to log a message:
+<figure>
+  <img src="./images/Fig02-007.PNG"/>
+  <figcaption>Fig 02-007</figcaption>
+</figure>
+        <p>Every file in a node application is considered a module.</p>
+        <figure>
+          <img src="./images/Fig02-008.PNG"/>
+          <figcaption>Fig 02-008</figcaption>
+        </figure>
+        <p>Variables and functions defined within the module are private (in OOP terms). If we want
+          to make a variable of function available outside of the module we need to explicitly
+          export it.</p>
+        <p>Every Node application has at least one file or module which we refer to as the main
+          module.</p>
+        <p>If we write out the module object to the console:</p>
+        <figure>
+        <pre><code class="language-command">console.log(module)</code></pre>
+        <figcaption>Fig 02-009</figcaption>
+        </figure>
+        <p>We will see a JSON object containing various properties such as id, exports, parent,
+          filename, loaded etc:</p>
+        <figure>
+        <pre><code class="language-command">Module {
+          id: '.',
+          exports: {},
+          parent: null,
+          filename: 'C:\\DevelopmentTutorials\\TheCompleteNodeJSCourse\\02-node-module-system\\12-modules.js',
+          loaded: false,
+          children: [],
+          paths:
+        [ 'C:\\DevelopmentTutorials\\TheCompleteNodeJSCourse\\02-node-module-system\\node_modules',
+          'C:\\DevelopmentTutorials\\TheCompleteNodeJSCourse\\node_modules',
+          'C:\\DevelopmentTutorials\\node_modules', 'C:\\node_modules' ] }</code></pre>
+        <figcaption>Fig 02-010</figcaption>
+        </figure>
+        <p>In Node, every file is a module, and the variables and functions defined in that file
+        are scoped to that module, they are not available outside of that module.</p>
+        <h3>13 Creating a Module</h3>
+        <p>Let's add a new module called logger.js for logging messages. The module will be re-used
+          in this application and potentially other applications. In this module we will imagine
+          that we are going to use a remote logging service for logging our messages. So there are
+          third party websites out there that provide a url where we can send an http request to log
+          a message:</p>
 
 
         var url = 'http://mylogger.io/log';
