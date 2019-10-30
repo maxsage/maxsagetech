@@ -347,25 +347,39 @@ window.sayHello();</code></pre>
           that we are going to use a remote logging service for logging our messages. So there are
           third party websites out there that provide a url where we can send an http request to log
           a message:</p>
+        <figure>
+            <pre><code class="language-javascript">var url = 'http://mylogger.io/log';</code></pre>
+        <figcaption>Fig 02-011</figcaption>
+        </figure>
+        <p>The above url is made up but let's imagine that we are sending an http request to this endpoint.</p>
+        <p>We also create a function called log that takes a message and sends an http request. For now, for simplicity,
+          we will just write the message to the console:
+        </p>
+        <figure>
+            <pre><code class="language-javascript">function log(message) {
+    // Send an HTTP request
+    console.log(message);
+}</code></pre>
+        <figcaption>Fig 02-012</figcaption>
+        </figure>
+        <p>The variable and the log function are both scoped to this module - they are private and not visible from the
+          outside.
+        </p>
+        <p>However in app.js we want to be able to access the log function. So we need to make this public and visible
+          from the outside.
+        </p>
+        <p>One of the properties of the module object is exports which by default is set to an empty object:</p>
+        <figure>
+          <img src="./images/Fig02-013.png"/>
+          <figcaption>Fig 02-013</figcaption>
+        </figure>
+        <p>Anything that we add to this object will be exported from the module and will be available from outside
+          the module:</p>
+        <figure>
+            <pre><code class="language-javascript">module.exports.log = log;</code></pre>
+        <figcaption>Fig 02-014</figcaption>
+        </figure>
 
-
-        var url = 'http://mylogger.io/log';
-
-        We also create a function called log that takes a message and sends an http request. For
-        now, for simplicity, we will just write the message to the console:
-
-        function log(message) { // Send an HTTP request }
-
-        The variable and the log function are both scoped to this module - they are private and not
-        visible from the outside.
-
-        However in app.js we want to be able to access the log function. So we need to make this
-        public and visible from the outside.
-
-        One of the properties of the module object is exports which by default is set to an empty
-        object. Anything that we add to this object will be exported from the module:
-
-        module.exports.log = log;
 
         Similarly if we wanted to export the url we defined in 13-logger.js we could write the
         following:
