@@ -444,52 +444,186 @@ true</code></pre>
           </figure>
           <p>This will remove the dependency from package.json and the node_modules folder.</p>
           <h3>37 Working with Global Packages</h3>
-          To install a global package: npm i -g npm
-
-          All the commands listed so far work with the global flag: npm -g outdated
-
-          To uninstall a global package: npm un -g npm
-
+          <p>All the packages that we have installed so far like underscore and jshint are particular to the
+        project where they are installed. There are, however, packages on the npm registry that are not specific to
+            an application. These are often command line tools that you want to access from everywhere. They are not
+          tied to a specific project. npm is an example of one of these global packages - it is a command line tool
+            that can be run from any folder. It is not specific to a given project.</p>
+          <p>Another popular command line tool is AngularCLI. We use this to install a new Angular project.
+          </p>
+          <p>To install a global package:</p>
+          <figure>
+              <pre><code class="language-command">npm i -g npm</code></pre>
+          <figcaption>Fig 03-055</figcaption>
+          </figure>
+          <p>All the commands listed so far work with the global flag. For example here is the command to list all
+            the outdated global packages you run:</p>
+          <figure>
+              <pre><code class="language-command">npm -g outdated</code></pre>
+          <figcaption>Fig 03-056</figcaption>
+          </figure>
+          <p>This lists all the global packages that have been installed:</p>
+          <figure>
+            <img src="./images/Fig03-057.PNG"/>
+            <figcaption>Fig 03-057</figcaption>
+          </figure>
+          <p>To uninstall a global package:</p>
+          <figure>
+              <pre><code class="language-command">npm un -g npm</code></pre>
+          <figcaption>Fig 03-058</figcaption>
+          </figure>
           <h3>38 Publishing a Package</h3>
-          To publish a npm package: create a new directory (e.g. lion-lib) and add a package.json. Add a new file:
-          index.js with required code: module.exports.add = function(a, b) { return a + b }
+          <p>To publish an npm package to the npm registry:</p>
+            <p>Create a new directory (e.g. lion-lib). Now add a package.json by running:</p>
+          <figure>
+              <pre><code class="language-command">npm init --yes</code></pre>
+          <figcaption>Fig 03-059</figcaption>
+          </figure>
+          <p>Add a new file: index.js with the following code: </p>
+          <figure>
+              <pre><code class="language-javascript">module.exports.add = function(a, b) { return a + b }</code></pre>
+          <figcaption>Fig 03-060</figcaption>
+          </figure>
+          <p>If you don't have an account on npmjs.com you will need to run:</p>
+          <figure>
+              <pre><code class="language-command">npm add user </code></pre>
+          <figcaption>Fig 03-061</figcaption>
+          </figure>
+          <p>or if you have already got an account:</p>
+          <figure>
+              <pre><code class="language-command">npm login</code></pre>
+          <figcaption>Fig 03-060</figcaption>
+          </figure>
+          <p>Either way you will be prompted to login. When logged in issue the following command:</p>
+          <figure>
+              <pre><code class="language-command">npm publish</code></pre>
+          <figcaption>Fig 03-061</figcaption>
+          </figure>
+          <p>You will probably receive an error message saying that lion-lib is not on the registry or that you do
+            not have permissions to publish it (if it is there):</p>
 
-          If you don't have an account on npmjs.com you will need to run npm add user or if you have already got an
-          account: npm login
-
-          When logged in issue the following command: npm publish
-
-          You will need to update the package name in package.json.
-
-          We should now be able to use this package in another node application:
-
-          var lion = require('lion-lib');
+          <p>You will need to update the package name in package.json so that it is unique (lion-lib is already in
+            use). You can now run npm publish again.</p>
+          <p>We should now be able to use this package in another node application:</p>
+          <figure>
+              <pre><code class="language-command">npm i lion-lib</code></pre>
+          <figcaption>Fig 03-062</figcaption>
+          </figure>
+          <p>If you look in the node_modules/package.json file you should see more metadata that has been added by
+            npmjs as part of the publish process:</p>
+          <figure>
+            <img src="./images/Fig03-063.PNG"/>
+            <figcaption>Fig 03-063</figcaption>
+          </figure>
+          <p>The package will also be listed under dependencies:</p>
+          <figure>
+            <img src="./images/Fig03-064.png"/>
+            <figcaption>Fig 03-064</figcaption>
+          </figure>
+          <p>And in the code (e.g. index.js):</p>
+          <figure>
+              <pre><code class="language-javascript">var lion = require('lion-lib');
+var result = lion.add(1, 2);
+console.log(result);</code></pre>
+          <figcaption>Fig 03-065</figcaption>
+          </figure>
 
           <h3>39 Updating a Published Package</h3>
-          If we run: npm publish fom the lion-lib folder we receive an error:
-
-          "You cannot publish over the previously published version 1.0.0: lion-lib"
-
-          Depending on the kind of change we have made the we need to update the version number. In this instance we
-          will just update the minor version: npm version minor then publish to npm: npm publish
-
+          <p>We will start by exporting a new function from our lion-lib package. In index.js add the following 
+            code:</p>
+          <figure>
+              <pre><code class="language-javascript">module.exports.multiply = function(a, b) { return a * b };</code></pre>
+          <figcaption>Fig 03-066</figcaption>
+          </figure>
+          <p>Now we want to publish this new version. If we run:</p>
+          <figure>
+              <pre><code class="language-command">npm publish </code></pre>
+          <figcaption>Fig 03-067</figcaption>
+          </figure>
+          <p>fom the lion-lib folder we receive an error:</p>
+          <figure>
+              <pre><code class="language-command">&quot;You cannot publish over the previously published version 1.0.0: lion-lib&quot;</code></pre>
+          <figcaption>Fig 03-068</figcaption>
+          </figure>
+          <p>Depending on the kind of change we have made the we need to update the version number. In this instance,
+           the change we made was a simple change, not a bug fix, but not a major new version. The API remained the
+            same - the add function was not changed. Any applications dependent on the add function will continue to
+            work. We just added a new feature in the form of the multiply function.</p>
+            <p>For this reason we  will just update the minor version. You could manually update the package.json
+              file or use the npm version command with the major, minor or patch parameters:</p>
+          <figure>
+              <pre><code class="language-command">npm version minor</code></pre>
+          <figcaption>Fig 03-069</figcaption>
+          </figure>
+          <p>then publish to npm:</p>
+          <figure>
+              <pre><code class="language-command">npm publish</code></pre>
+          <figcaption>Fig 03-068</figcaption>
+          </figure>
+          <p>Upon which you should see the following message:</p>
+          <figure>
+            <img src="./images/Fig03-069.png"/>
+            <figcaption>Fig 03-069</figcaption>
+          </figure>
           <h3>40 Recap</h3>
-          NPM So, in this section, you learned that: - Every Node application has a package.json file that includes
-          metadata about the application. This includes the name of the application, its version, dependencies, etc. -
-          We use NPM to download and install 3rd-party packages from NPM registry: - All the installed packages and
-          their dependencies are stored under node_modules folders. This folder should be excluded from the source
-          control. - Node packages follow semantic versioning: major.minor.patch - Useful NPM commands are: // Install a
-          package npm i
-          <packageName>
-            // Install a specific version of a package npm i
-            <packageName>@
-              <version>
-                // Install a package as a development dependency npm i
-                <packageName> —save-dev // Uninstall a package npm un
-                  <packageName>
-                    // List installed packages npm list —depth=0 // View outdated packages npm outdated // Update
-                    packages npm update - To install/uninstall packages globally, use -g flag
+          <p>So, in this section, you learned that:</p>
+          <ul>
+            <li>Every Node application has a package.json file that includes
+              metadata about the application. This includes the name of the application, its version, dependencies, etc.</li>
+            <li>We use NPM to download and install 3rd-party packages from NPM registry:</li>
+            <li>All the installed packages and
+              their dependencies are stored under node_modules folders. This folder should be excluded from the source
+              control.</li>
+            <li>Node packages follow semantic versioning: major.minor.patch</li>
+          </ul>
+          <p>Useful NPM commands are:</p>
+          <p>Install a package</p>
+          <figure>
+              <pre><code class="language-command">npm i &lt;packageName&gt;</code></pre>
+          <figcaption>Fig 03-070</figcaption>
+          </figure>
+          <p>Install a specific version of a package</p>
+          <figure>
+              <pre><code class="language-command">npm i &lt;packageName&gt;@ &lt;version&gt;</code></pre>
+          <figcaption>Fig 03-071</figcaption>
+          </figure>
+          <p>Install a package as a development dependency</p>
 
-
+          <figure>
+              <pre><code class="language-command">npm i &lt;packageName&gt; &mdash;save-dev</code></pre>
+          <figcaption>Fig 03-072</figcaption>
+          </figure>
+          <p>Uninstall a package</p>
+          <figure>
+              <pre><code class="language-command">npm un &lt;packageName&gt;</code></pre>
+          <figcaption>Fig 03-073</figcaption>
+          </figure>
+          <p>List installed packages</p>
+          <figure>
+              <pre><code class="language-command">npm list —depth=0</code></pre>
+          <figcaption>Fig 03-074</figcaption>
+          </figure>
+          <p>View outdated packages</p>
+          <figure>
+              <pre><code class="language-command">npm outdated</code></pre>
+          <figcaption>Fig 03-075</figcaption>
+          </figure>
+          <p>Update packages</p>
+          <figure>
+              <pre><code class="language-command">npm update</code></pre>
+          <figcaption>Fig 03-076</figcaption>
+          </figure>
+          <p>To install/uninstall packages globally, use -g flag</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 </html>
+<script>
+import Javascript from "../../src/components/javascript/Javascript";
+export default {
+  components: {Javascript}
+}
+</script>
