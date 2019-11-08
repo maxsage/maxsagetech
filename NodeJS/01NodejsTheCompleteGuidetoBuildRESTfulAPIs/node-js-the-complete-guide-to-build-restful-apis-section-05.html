@@ -22,117 +22,134 @@
     <div class="panel panel-primary">
       <div class="panel-heading">
                   <h2>Section 5 - Express Advanced Topics</h2>
+      </div>
+      <div class="panel-body">
                   <h3>56 - Introduction</h3>
-                  In the last section we learnt how to build RESTful services using express. In this
-                  section we are going to look at more advanced express topics including: -
-                  middleware - configuration - debugging - templating engines
+        <p>In the last section we learnt how to build RESTful services using express. In this section we are going to
+          look at more advanced express topics including:</p>
+        <ul>
+          <li>middleware</li>
+          <li>configuration</li>
+          <li>debugging</li>
+          <li>templating engines</li>
+        </ul>
 
                   <h3>57 - Middleware</h3>
-                  One of the core concepts in express that we need to learn is the concept of
-                  middleware or middleware functions. A middleware function is basically a function
-                  that takes a request object and either returns a response to the client or passes
-                  control to another middleware function. You have already seen two examples of
-                  middleware functions - one is the route handler function:
+        <p>One of the core concepts in express that we need to learn is the concept of middleware or middleware
+          functions. A middleware function is basically a function that takes a request object and either returns a
+          response to the client or passes control to another middleware function. You have already seen two examples of
+          middleware functions - one is the route handler function:</p>
 
-                  app.get('/api/genres', (req, res) => { res.send(genres); });
-
-                  In express every route handler function we have is technically a middleware
-                  function because it takes a request object and returns a response to the client.
-                  So it terminates the request response cycle.
-
-                  The other example is:
-
-                  app.use(express.json());
-
-                  So when we call the express.json() method it returns a middleware function. The
-                  job of this middleware function is to read the request and if there is an object
-                  in the body of the request it will pass the body of the request into a JSON object
-                  then it will set the req.body property. So essentially at runtime when we receive
-                  a request on the server the request goes through the Request Processing Pipeline.
-                  In this pipeline we have one or more middleware functions. Each middleware
-                  function either terminates the request response cycle by returning a response
-                  object or it can pass control to another middleware function.
-
-                  Our current implementation has two middleware functions. The first one is the
-                  middleware function that parses the request body into a Json object but in this
-                  case it doesn't terminate the request/response lifecycle so it passes control to
-                  the second middleware function which is the route handler.
-
-                  In our route handler we have the request object with the body property populated.
-                  Here we can perform some operation and then terminate the request/response cycle
-                  by returning a response to the client.
-
-                  Express includes a few built-in middleware functions but we can also create custom
-                  middleware functions that we can put at the front of our request processing
-                  pipeline. Every request that we get on the server will then go through our
-                  middleware function. With this custom middleware function we can perform cross
-                  cutting concerns. For example we can do logging, authentication, authourization
-                  and so on.
-
-                  An express application is essentially nothing but a bunch of middleware functions.
+                  <figure>
+                      <pre><code class="language-javascript">app.get('/api/genres', (req, res) => {
+  res.send(genres);
+});</code></pre>
+                  <figcaption>Fig 05-001</figcaption>
+                  </figure>
+        <p>In express every route handler function we have is technically a middleware function because it takes a
+          request object and returns a response to the client. So it terminates the request response cycle.
+        </p>
+        <p>The other example is:</p>
+                  <figure>
+                      <pre><code class="language-javascript">app.use(express.json());</code></pre>
+                  <figcaption>Fig 05-002</figcaption>
+                  </figure>
+        <p>So when we call the express.json() method it returns a middleware function. The job of this middleware
+          function is to read the request and if there is an object in the body of the request it will pass the body of
+          the request into a JSON object then it will set the req.body property.</p>
+        <p>So essentially at runtime when we receive a request on the server the request goes through the Request
+          Processing Pipeline:</p>
+        <figure>
+          <img src="./images/Fig05-003.png"/>
+          <figcaption>Fig 05-003</figcaption>
+        </figure>
+        <p>In this pipeline we have one or more middleware functions. Each middleware function
+          either terminates the request response cycle by returning a response object or it can pass control to another
+          middleware function.</p>
+        <p>Our current implementation has two middleware functions. The first one is the middleware function that parses
+          the request body into a Json object but in this case it doesn't terminate the request/response lifecycle so it
+          passes control to the second middleware function which is the route handler:</p>
+        <figure>
+          <img src="./images/Fig05-004.png"/>
+          <figcaption>Fig 05-004</figcaption>
+        </figure>
+        <p>In our route handler we have the request object with the body property populated. Here we can perform some
+          operation and then terminate the request/response cycle by returning a response to the client.</p>
+        <p>Express includes a few built-in middleware functions but we can also create custom middleware functions that
+          we can put at the front of our request processing pipeline. Every request that we get on the server will then
+          go through our middleware function. With this custom middleware function we can perform cross cutting
+          concerns. For example we can do logging, authentication, authorization and so on.</p>
+        <p>An express application is essentially nothing but a bunch of middleware functions.</p>
 
                   <h3>58 - Creating Custom Middleware</h3>
-                  Now let me show you how to create a custom middleware function:
+        <p>Now let me show you how to create a custom middleware function:</p>
+<figure>
+    <pre><code class="language-javascript">app.use(function (req, res, next) {
+  console.log('Logging...');
+  next();
+});</code></pre>
+<figcaption>Fig 05-005</figcaption>
+</figure>
+        <p>So we call app.use and pass a function that takes req, res and next (which is reference to the next
+          middleware function in the pipeline). In the function we just do a simple console.log. Then we call next() to
+          pass control to the next middleware function in the pipeline. If we don't call next() then our request will
+          end up hanging because we are not terminating our request/response lifecycle.</p>
+        <p>If we comment out the line that calls next(); then in Postman perform a GET request. You will see that you
+          don't receive a response. If you also check the terminal you can see our Logging message. This indicates our
+          middleware function was called successfully but because we are not passing control to another middelware
+          function to terminate the request response cycle our request ends up hanging.</p>
+        <p>Uncomment the call to next();</p>
+        <p>We can also create another middleware function for performing authentication:</p>
+        <figure>
+            <pre><code class="language-javascript">app.use(function (req, res, next) {
+  console.log('Authenticating...');
+  next();
+});</code></pre>
+        <figcaption>Fig 05-006</figcaption>
+        </figure>
+        <p>Back in Postman send another request and, if you check the terminal, you should see two messages:</p>
+        <figure>
+            <pre><code class="language-command">Logging...
 
-                  app.use(function (req, res, next) { console.log('Logging...'); next(); });
+Authenticating...</code></pre>
+        <figcaption>Fig 05-007</figcaption>
+        </figure>
+        <p>The thing to take away here is that our middleware functions are called in sequence. First our Logging
+          middleware function is called, then the middelware function for authenticating the user, and then finally the
+          route handler which is another middleware function.</p>
+        <p>In terms of clean coding when you want to create custom middleware function you don't want to create all that
+          code inside index.js. Each middleware function should be in a separate file or module.
+        </p>
+        <p>Create a new file called logger.js and move the Logging middelware function out of index.js and into
+          logger.js:</p>
+<figure>
+    <pre><code class="language-javascript">function log(req, res, next) {
+  console.log('Logging...');
+  next();
+}
 
-                  So we call app.use and pass a function that takes req, res and next (which is
-                  reference to the next middleware function in the pipeline). In the function we
-                  just do a simple console.log. Then we call next() to pass control to the next
-                  middleware function in the pipeline. If we don't call next() then our request will
-                  end up hanging because we are not terminating our request/response lifecycle.
-
-                  If we comment out the line that calls next(); then in Postman perform a GET
-                  request. You will see that you don't receive a response. If you also check the
-                  terminal you can see our Logging message. This indicates our middelware function
-                  was called successfully but because we are not passing control to another
-                  middelware function to terminate the request response cycle our request ends up
-                  hanging.
-
-                  Uncomment the call to next();
-
-                  We can also create another middelware function for performing authentication:
-
-                  app.use(function (req, res, next) { console.log('Authenticating...'); next(); });
-
-                  Back in Postman send another request and, if you check the terminal, you should
-                  see two messages:
-
-                  Logging... Authenticating...
-
-                  The thing to take away here is that our middleware functions are called in
-                  sequence. First our Logging middelware function is called, then the middelware
-                  function for authenticating the user, and then finally the route handler which is
-                  another middelware function.
-
-                  In terms of clean coding when you want to create custom middleware function you
-                  don't want to create all that code inside index.js. Each middleware function
-                  should be in a separate file or module.
-
-                  Create a new file called logger.js and move the Logging middelware function out of
-                  index.js and into logger.js:
-
-                  function log(req, res, next) { console.log('Logging...'); next(); }
-
-                  module.exports = log;
-
-                  Call the function log and export it. In index.js load the new logger module at the
-                  top of the file:
-
-                  const logger = require('./logger.js');
-
-                  then install it by calling app.use:
-
-                  app.use(logger);
-
-                  We pass the logger function. Now we can understand exactly what this line means:
-
-                  app.use(express.json());
-
-                  When we call express.json() it returns a middleware function that has three
-                  parameters: req, res, and next. That middleware function parses the req body and
-                  if there is a Json object it will set req.body and then it will pass control to
-                  the next middleware function.
+module.exports = log;</code></pre>
+<figcaption>Fig 05-008</figcaption>
+</figure>
+        <p>Call the function log and export it. In index.js load the new logger module at the top of the file:</p>
+                  <figure>
+                      <pre><code class="language-javascript">const logger = require('./logger.js');</code></pre>
+                  <figcaption>Fig 05-009</figcaption>
+                  </figure>
+        <p>then install it by calling app.use:</p>
+                  <figure>
+                      <pre><code class="language-javascript">app.use(logger);</code></pre>
+                  <figcaption>Fig 05-010</figcaption>
+                  </figure>
+        <p>We pass the logger function. Now we can understand exactly what this line means:</p>
+                  <figure>
+                      <pre><code class="language-javascript">app.use(express.json());</code></pre>
+                  <figcaption>Fig 05-011</figcaption>
+                  </figure>
+        <p>When we call express.json() it returns a middleware function that has three parameters: req, res, and next.
+          That middleware function parses the req body and if there is a Json object it will set req.body and then it
+          will pass control to the next middleware function.
+        </p>
 
                   <h3>59 - Built-in Middleware</h3>
                   In the last lecture you learned how to build custom middleware. We discussed
