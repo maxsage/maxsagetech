@@ -87,14 +87,14 @@
 
             If we comment out the line that calls next(); then in Postman perform a GET
             request. You will see that you don't receive a response. If you also check the
-            terminal you can see our Logging message. This indicates our middelware function
+            terminal you can see our Logging message. This indicates our middleware function
             was called successfully but because we are not passing control to another
-            middelware function to terminate the request response cycle our request ends
+            middleware function to terminate the request response cycle our request ends
             up hanging.
 
             Uncomment the call to next();
 
-            We can also create another middelware function for performing authentication:
+            We can also create another middleware function for performing authentication:
 
             app.use(function (req, res, next) {
             console.log('Authenticating...');
@@ -108,15 +108,15 @@
             Authenticating...
 
             The thing to take away here is that our middleware functions are called in
-            sequence. First our Logging middelware function is called, then the middelware
+            sequence. First our Logging middleware function is called, then the middleware
             function for authenticating the user, and then finally the route handler which
-            is another middelware function.
+            is another middleware function.
 
             In terms of clean coding when you want to create custom middleware function you
             don't want to create all that code inside index.js. Each middleware function
             should be in a separate file or module.
 
-            Create a new file called logger.js and move the Logging middelware function out
+            Create a new file called logger.js and move the Logging middleware function out
             of index.js and into logger.js:
 
             function log(req, res, next) {
@@ -151,7 +151,7 @@
             middleware that parses the body of the request and if there is a json object it
             will populate req.body.
 
-            Another similar middelware function is urlencoded:
+            Another similar middleware function is urlencoded:
 
             app.use(express.urlencoded());
 
@@ -207,7 +207,7 @@
             ---------------------------
             In this lecture we will look at some third party middleware available in express.
             If you browse to expressjs.com and click on Resources you should see a link to
-            Middleware. These are all the third-party middelware that you can use in your
+            Middleware. These are all the third-party middleware that you can use in your
             applications.
 
             helmet helps you secure your application by setting various http headers.
