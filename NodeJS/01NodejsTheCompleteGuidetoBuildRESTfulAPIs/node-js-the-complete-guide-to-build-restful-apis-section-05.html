@@ -21,12 +21,12 @@
   <div class="panel-group">
     <div class="panel panel-primary">
       <div class="panel-heading">
-                  <h2>Section 5 - Express Advanced Topics</h2>
+        <h2>Section 5 - Express Advanced Topics</h2>
       </div>
       <div class="panel-body">
-                  <h3>56 - Introduction</h3>
-        <p>In the last section we learnt how to build RESTful services using express. In this section we are going to
-          look at more advanced express topics including:</p>
+        <h3>56 - Introduction</h3>
+        <p>In the last section we learnt how to build RESTful services using express. In this
+          section we are going to look at more advanced express topics including:</p>
         <ul>
           <li>middleware</li>
           <li>configuration</li>
@@ -34,70 +34,78 @@
           <li>templating engines</li>
         </ul>
 
-                  <h3>57 - Middleware</h3>
-        <p>One of the core concepts in express that we need to learn is the concept of middleware or middleware
-          functions. A middleware function is basically a function that takes a request object and either returns a
-          response to the client or passes control to another middleware function. You have already seen two examples of
-          middleware functions - one is the route handler function:</p>
+        <h3>57 - Middleware</h3>
+        <p>One of the core concepts in express that we need to learn is the concept of middleware or
+          middleware functions. A middleware function is basically a function that takes a request
+          object and either returns a response to the client or passes control to another middleware
+          function. You have already seen two examples of middleware functions - one is the route
+          handler function:</p>
 
-                  <figure>
+        <figure>
                       <pre><code class="language-javascript">app.get('/api/genres', (req, res) => {
   res.send(genres);
 });</code></pre>
-                  <figcaption>Fig 05-001</figcaption>
-                  </figure>
-        <p>In express every route handler function we have is technically a middleware function because it takes a
-          request object and returns a response to the client. So it terminates the request response cycle.
+          <figcaption>Fig 05-001</figcaption>
+        </figure>
+        <p>In express every route handler function we have is technically a middleware function
+          because it takes a request object and returns a response to the client. So it terminates
+          the request response cycle.
         </p>
         <p>The other example is:</p>
-                  <figure>
-                      <pre><code class="language-javascript">app.use(express.json());</code></pre>
-                  <figcaption>Fig 05-002</figcaption>
-                  </figure>
-        <p>So when we call the express.json() method it returns a middleware function. The job of this middleware
-          function is to read the request and if there is an object in the body of the request it will pass the body of
-          the request into a JSON object then it will set the req.body property.</p>
-        <p>So essentially at runtime when we receive a request on the server the request goes through the Request
-          Processing Pipeline:</p>
+        <figure>
+          <pre><code class="language-javascript">app.use(express.json());</code></pre>
+          <figcaption>Fig 05-002</figcaption>
+        </figure>
+        <p>So when we call the express.json() method it returns a middleware function. The job of
+          this middleware function is to read the request and if there is an object in the body of
+          the request it will pass the body of the request into a JSON object then it will set the
+          req.body property.</p>
+        <p>So essentially at runtime when we receive a request on the server the request goes
+          through the Request Processing Pipeline:</p>
         <figure>
           <img src="./images/Fig05-003.png"/>
           <figcaption>Fig 05-003</figcaption>
         </figure>
         <p>In this pipeline we have one or more middleware functions. Each middleware function
-          either terminates the request response cycle by returning a response object or it can pass control to another
-          middleware function.</p>
-        <p>Our current implementation has two middleware functions. The first one is the middleware function that parses
-          the request body into a Json object but in this case it doesn't terminate the request/response lifecycle so it
-          passes control to the second middleware function which is the route handler:</p>
+          either terminates the request response cycle by returning a response object or it can pass
+          control to another middleware function.</p>
+        <p>Our current implementation has two middleware functions. The first one is the middleware
+          function that parses the request body into a Json object but in this case it doesn't
+          terminate the request/response lifecycle so it passes control to the second middleware
+          function which is the route handler:</p>
         <figure>
           <img src="./images/Fig05-004.png"/>
           <figcaption>Fig 05-004</figcaption>
         </figure>
-        <p>In our route handler we have the request object with the body property populated. Here we can perform some
-          operation and then terminate the request/response cycle by returning a response to the client.</p>
-        <p>Express includes a few built-in middleware functions but we can also create custom middleware functions that
-          we can put at the front of our request processing pipeline. Every request that we get on the server will then
-          go through our middleware function. With this custom middleware function we can perform cross cutting
-          concerns. For example we can do logging, authentication, authorization and so on.</p>
+        <p>In our route handler we have the request object with the body property populated. Here we
+          can perform some operation and then terminate the request/response cycle by returning a
+          response to the client.</p>
+        <p>Express includes a few built-in middleware functions but we can also create custom
+          middleware functions that we can put at the front of our request processing pipeline.
+          Every request that we get on the server will then go through our middleware function. With
+          this custom middleware function we can perform cross cutting concerns. For example we can
+          do logging, authentication, authorization and so on.</p>
         <p>An express application is essentially nothing but a bunch of middleware functions.</p>
 
-                  <h3>58 - Creating Custom Middleware</h3>
+        <h3>58 - Creating Custom Middleware</h3>
         <p>Now let me show you how to create a custom middleware function:</p>
-<figure>
+        <figure>
     <pre><code class="language-javascript">app.use(function (req, res, next) {
   console.log('Logging...');
   next();
 });</code></pre>
-<figcaption>Fig 05-005</figcaption>
-</figure>
-        <p>So we call app.use and pass a function that takes req, res and next (which is reference to the next
-          middleware function in the pipeline). In the function we just do a simple console.log. Then we call next() to
-          pass control to the next middleware function in the pipeline. If we don't call next() then our request will
-          end up hanging because we are not terminating our request/response lifecycle.</p>
-        <p>If we comment out the line that calls next(); then in Postman perform a GET request. You will see that you
-          don't receive a response. If you also check the terminal you can see our Logging message. This indicates our
-          middleware function was called successfully but because we are not passing control to another middleware
-          function to terminate the request response cycle our request ends up hanging.</p>
+          <figcaption>Fig 05-005</figcaption>
+        </figure>
+        <p>So we call app.use and pass a function that takes req, res and next (which is reference
+          to the next middleware function in the pipeline). In the function we just do a simple
+          console.log. Then we call next() to pass control to the next middleware function in the
+          pipeline. If we don't call next() then our request will end up hanging because we are not
+          terminating our request/response lifecycle.</p>
+        <p>If we comment out the line that calls next(); then in Postman perform a GET request. You
+          will see that you don't receive a response. If you also check the terminal you can see our
+          Logging message. This indicates our middleware function was called successfully but
+          because we are not passing control to another middleware function to terminate the request
+          response cycle our request ends up hanging.</p>
         <p>Uncomment the call to next();</p>
         <p>We can also create another middleware function for performing authentication:</p>
         <figure>
@@ -105,566 +113,710 @@
   console.log('Authenticating...');
   next();
 });</code></pre>
-        <figcaption>Fig 05-006</figcaption>
+          <figcaption>Fig 05-006</figcaption>
         </figure>
-        <p>Back in Postman send another request and, if you check the terminal, you should see two messages:</p>
+        <p>Back in Postman send another request and, if you check the terminal, you should see two
+          messages:</p>
         <figure>
             <pre><code class="language-command">Logging...
 
 Authenticating...</code></pre>
-        <figcaption>Fig 05-007</figcaption>
+          <figcaption>Fig 05-007</figcaption>
         </figure>
-        <p>The thing to take away here is that our middleware functions are called in sequence. First our Logging
-          middleware function is called, then the middleware function for authenticating the user, and then finally the
-          route handler which is another middleware function.</p>
-        <p>In terms of clean coding when you want to create custom middleware function you don't want to create all that
-          code inside index.js. Each middleware function should be in a separate file or module.
+        <p>The thing to take away here is that our middleware functions are called in sequence.
+          First our Logging middleware function is called, then the middleware function for
+          authenticating the user, and then finally the route handler which is another middleware
+          function.</p>
+        <p>In terms of clean coding when you want to create custom middleware function you don't
+          want to create all that code inside index.js. Each middleware function should be in a
+          separate file or module.
         </p>
-        <p>Create a new file called logger.js and move the Logging middleware function out of index.js and into
-          logger.js:</p>
-<figure>
+        <p>Create a new file called logger.js and move the Logging middleware function out of
+          index.js and into logger.js:</p>
+        <figure>
     <pre><code class="language-javascript">function log(req, res, next) {
   console.log('Logging...');
   next();
 }
 
 module.exports = log;</code></pre>
-<figcaption>Fig 05-008</figcaption>
-</figure>
-        <p>Call the function log and export it. In index.js load the new logger module at the top of the file:</p>
-                  <figure>
-                      <pre><code class="language-javascript">const logger = require('./logger.js');</code></pre>
-                  <figcaption>Fig 05-009</figcaption>
-                  </figure>
+          <figcaption>Fig 05-008</figcaption>
+        </figure>
+        <p>Call the function log and export it. In index.js load the new logger module at the top of
+          the file:</p>
+        <figure>
+          <pre><code class="language-javascript">const logger = require('./logger.js');</code></pre>
+          <figcaption>Fig 05-009</figcaption>
+        </figure>
         <p>then install it by calling app.use:</p>
-                  <figure>
-                      <pre><code class="language-javascript">app.use(logger);</code></pre>
-                  <figcaption>Fig 05-010</figcaption>
-                  </figure>
+        <figure>
+          <pre><code class="language-javascript">app.use(logger);</code></pre>
+          <figcaption>Fig 05-010</figcaption>
+        </figure>
         <p>We pass the logger function. Now we can understand exactly what this line means:</p>
-                  <figure>
-                      <pre><code class="language-javascript">app.use(express.json());</code></pre>
-                  <figcaption>Fig 05-011</figcaption>
-                  </figure>
-        <p>When we call express.json() it returns a middleware function that has three parameters: req, res, and next.
-          That middleware function parses the req body and if there is a Json object it will set req.body and then it
-          will pass control to the next middleware function.
+        <figure>
+          <pre><code class="language-javascript">app.use(express.json());</code></pre>
+          <figcaption>Fig 05-011</figcaption>
+        </figure>
+        <p>When we call express.json() it returns a middleware function that has three parameters:
+          req, res, and next. That middleware function parses the req body and if there is a Json
+          object it will set req.body and then it will pass control to the next middleware function.
         </p>
 
-                  <h3>59 - Built-in Middleware</h3>
-                  In the last lecture you learned how to build custom middleware. We discussed
-                  before that express has some built-in middleware functions. One of them is the
-                  json middleware that parses the body of the request and if there is a json object
-                  it will populate req.body.
-
-                  Another similar middleware function is urlencoded:
-
-                  app.use(express.urlencoded());
-
-                  We receive a middleware function as a result from this method call. This
-                  middleware function parses incoming requests with url encoded payloads. So a
-                  request with a body like this:
-
-                  key=value&key=vale
-
-                  This is more of a traditional approach - it is not used all that often these days.
-                  Basically if you have an http form with input fields and post that form to the
-                  server then the body of the request will look like the above.
-
-                  So the urlencoded middleware function parses this body and populates req.body like
-                  a Json object.
-
-                  To demonstrate go back to Postman and perform a POST request to:
-
-                  http://localhost:5000/api/courses
-
-                  Previously we passed a Json object in the body by selecting raw and then JSON
-                  (application/json). However in this demo we are going to use x-www-form-urlencoded
-                  which allows us to pass key value pairs in the body of the request and they will
-                  be concatenated when this request is sent to the server. We add name as the key
-                  and mycourse as the value. If we send this request you should see that we have
-                  created a new course on the server. So our middleware function was able to read
-                  our request with urlencoded payload.
-
-                  If you check the terminal you will see a message:
-
-                  body-parser deprecated undefined exteded: provide extended option
-
-                  This is telling us that we should pass an object with extended set to true:
-
-                  app.use(express.urlencoded( { extended: true }));
-
-                  This allows us to pass arrays and complex objects using the urlencoded format.
-
-                  Finally the last built-in middleware function that we have in express is static
-                  which we use to serve static files:
-
-                  app.use(express.static('public'));
-
-                  We pass the name of the folder to the static method (public). We put all our
-                  static assets like css, images and so on inside this folder. For this demo we
-                  create a public folder with a readme.txt file inside it.
-
-                  If we browse to http://localhost:5000/readme.txt the browser should serve the
-                  contents of the text file. Note that we do not have public in the url. Our static
-                  content is served from the root of the site.
-
-                  <h3>60 - Third-party Middleware</h3>
-                  In this lecture we will look at some third party middleware available in express.
-                  If you browse to expressjs.com and click on Resources you should see a link to
-                  Middleware. These are all the third-party middleware that you can use in your
-                  applications.
-
-                  helmet helps you secure your application by setting various http headers.
-
-                  So back in the terminal install helmet:
-
-                  npm i helmet
-
-                  Then in index.js at the top of the file we load the helmet module using the
-                  require function:
-
-                  const helmet = require('helmet');
-
-                  Which returns a function which we can call:
-
-                  app.use(helmet());
-
-                  which, in turn, returns a middleware function which we can then use.
-
-                  The other third-party middleware which may be useful is morgan which can be used
-                  to log http requests:
-
-                  npm i morgan
-
-                  We load morgan using the require function:
-
-                  const morgan = require('morgan');
-
-                  then we use it like this:
-
-                  app.use(morgan('tiny'));
-
-                  morgan accepts different formats. Above we use 'tiny'
-
-                  With morgan in place everytime we send a request to the server it will be logged.
-                  So if you send a simple GET request to http://localhost:5000/api/courses and then
-                  check the terminal you should see the following:
-
-                  GET /api/courses 200 79 - 7.491 ms
-
-                  This is the tiny format. The above information indicates we sent an http GET
-                  request to the /api/courses endpoint. The result was a status 200 which means
-                  successful. The request took 7.491ms to respond.
-
-                  For more details you can set a different format. By default morgan logs to the
-                  console but you can also configure it to write to a log file.
-
-                  <h3>61 - Environments</h3>
-                  In a more complex enterprise application you need to know what environment your
-                  code is running on - development or production. You may want to enable or disable
-                  certain features based on the current environment. For example, perhaps you only
-                  want to enable logging of http requests when in a development environment. Let's
-                  look at how to do this.
-
-                  Earlier you learned about the process object - a global object in node which gives
-                  us access to the current process. The process object has a property called env
-                  which gives us access to the system's environment variables. We have a standard
-                  environment variable called NODE_ENV which returns the environment for this node
-                  application. If it's not set we get undefined. We can set this to development,
-                  testing, staging, production. To demonstrate let's log this on the console:
-
-                  console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
-
-                  Another way to get the current environment is by using the app object.:
-
-                  console.log(`app: ${app.get('env')}`);
-
-                  The difference here is that if the environment variable is not set app.get('env')
-                  will return development not undefined.
-
-                  The approach you choose is down to personal preference.
-
-                  In this demo we want to enable logging of http requests only on a development
-                  machine so we can write code like this:
-
-                  if (app.get('env') == 'development') { app.use(morgan('tiny'));
-                  console.log('Morgan enabled....') }
-
-                  If you run the application now and check the terminal you should see:
-
-                  Morgan enabled.....
-
-                  If you set the environment variable to production and re-run you will see that
-                  morgan is not enabled (the console message wont appear).
-
-                  <h3>62 - Configuration</h3>
-                  One topic which goes hand in hand with environments (which we covered in the
-                  previous lecture) is the topic of storing configuration settings for the
-                  application and overriding those settings in each environment. For example, in
-                  your development environment you're going to use a different database and mail
-                  server. So in this lecture we will look at how to store configuration settings for
-                  our application and then how to override them in each environment.
-
-                  The most popular package for managing configuration settings is rc:
-
-                  npmjs.com/package/rc
-
-                  However this package has several issues which is why we will look at:
-
-                  npmjs.com/package/config
-
-                  We install config like this:
-
-                  npm i config
-
-                  Now in the project create folder called config and add a default configuration
-                  file called default.json with the following json object:
-
-                  { "name": "My Express App" }
-
-                  Now create a new file called development.json which will contain configuration
-                  settings specific to the development environment. As part of this we are able to
-                  override the settings that we have defined in default.json and add additional
-                  settings:
-
-                  { "name": "My Express App - Development", "mail": { "host": "dev-mail-server" } }
-
-                  As you can see from the above code we can add configuration settings that are
-                  complex objects - "mail" above.
-
-                  Create another file called production.json and copy the settings from
-                  development.json to this file. Change the name and mail host settings:
-
-                  { "name": "My Express App - Production", "mail": { "host": "prod-mail-server" } }
-
-                  Now back in index.js load the config module:
-
-                  const config = require('config');
-
-                  and add some code to write the configuration settings to the console:
-
-                  // Configuration console.log('Application Name:' + config.get('name'));
-                  console.log('Mail Server:' + config.get('mail.host'));
-
-                  Now try switching NODE_ENV between development and production and you should see
-                  those settings written to the console changing.
-
-                  It is important that you don't store applicationsecrets in these configuration
-                  files. You should use environment variables for this instead. For example, let's
-                  assume that we want to store the password for our mail server. In the terminal set
-                  an environment variable to store the mail server password:
-
-                  setx vidly_mailpassword 1234
-
-                  Add another file called custom-environment-variables.json to the configuration
-                  file. We use this file to define the mapping of configuration settings to
-                  environment variables:
-
-                  { "mail": { "password": "vidly_mailpassword" } }
-
-                  Back in index.js let's display the password of the mail server:
-
-                  console.log('Mail Password:' + config.get('mail.password'));
-
-                  The config object will look at various sources to find a value for the
-                  configuration setting. The source could be a configuration or json file an
-                  environment variable or even a command line argument (check the documentation)
-
-                  If you run the application now you should see the mail server password in the
-                  console:
-
-                  Mail Password:1234
-
-                  <h3>63 - Debugging</h3>
-                  Earlier in the section we wrote code to check if we were in the development
-                  environment. If yes then we enabled morgan:
-
-                  if (app.get('env') == 'development') { app.use(morgan('tiny'));
-                  console.log('Morgan enabled....') }
-
-                  In the above code we use the console.log command which is a Javascript programmers
-                  best friend. The problem with this approach, however, is that when you've finished
-                  debugging you comment out or delete the console.log lines. If you then need them
-                  in the future you need to rewrite them or uncomment them. This approach can become
-                  very tedious.
-
-                  A better way to log messages for the purposes of debugging is to use the debug
-                  package in node. With debug we can replace all the console.log statements with a
-                  call to a debug function. We can then use an environment variable to
-                  enable/disable debuggging. This approach also let's us control the level of
-                  information we want to see. Perhaps, you are working on a database problem so you
-                  only want to view debugging information related to the database.
-
-                  In the terminal install debug:
-
-                  npm i debug
-
-                  In index.js load the debug module:
-
-                  const startupDebugger = require('debug')('app:startup');
-
-                  The require function above returns a function which we call passing in an argument
-                  which is an arbitrary namespace that we define for debugging. For example, we can
-                  define the namespace app:startup. Now when we call this function with the
-                  app:startup argument we get a function for writing debugging messages in that
-                  namespace. We call that function startupDebugger.
-
-                  Potentially we can have another debugger for debugging database related messages.
-                  So, once again, we load the debug module, we get a function, we call that
-                  function, passing in a namespace app:db. This will return a debugging function
-                  which we store in dbDebugger:
-
-                  const dbDebugger = require('debug')('app:db');
-
-                  Now we can replace our console.log line with a call to startupDebugger function:
-
-                  if (app.get('env') == 'development') { app.use(morgan('tiny'));
-                  startupDebugger('Morgan enabled....') }
-
-                  Potentially, somewhere in the application, we may perform some database work.
-                  There you might need to write some debugging information. For this we can use the
-                  dbDebugger function:
-
-                  // Db work... dbDebugger('Connected to the database....');
-
-                  Now we go back to the terminal an use an environment variable to determine what
-                  kind of debugging information we want to see in the console:
-
-                  setx DEBUG app:startup
-
-                  Now, if you run the application, we will see only the debugging messages that are
-                  part of this namespace app:startup:
-
-                  app:startup Morgan enabled.... +0ms
-
-                  Next time you run, if you don't want to see any debugging information just reset
-                  the environment variable:
-
-                  setx DEBUG ""
-
-                  We may want to see debugging messages from multiple namespaces. So we can set our
-                  environment variable like so:
-
-                  setx DEBUG app:startup,app:db
-
-                  which will result in the following being written to the console:
-
-                  app:startup Morgan enabled.... +0ms app:db Connected to the database.... +0ms
-
-                  If you want to see all the debugging message for the app namespace we can use a
-                  wildcard:
-
-                  setx DEBUG app:*
-
-                  The beautiful thing about this debugging module is that it colour codes the
-                  namespace to allow us to easily distinguish between various debugging messages.
-
-                  There is a faster way to set the level of debugging we want to see. We don't have
-                  to set the environment variable explicitly. We can set the environment variable at
-                  the time of running our application:
-
-                  DEBUG=app:db nodemon index.js
-
-                  The above doesn't work on my development environment!
-
-                  Finally, in this demo we created two debugging functions: startupDebugger and
-                  dbDebugger. In a real world scenario you may not need multiple debugger functions
-                  in the same file or module. In that case you can simplify the code by changing the
-                  name of the debugger function to just debug:
-
-                  debug('Morgan enabled....');
-
-                  <h3>64 - Templating Engines</h3>
-                  In all the endpoints we have implemented so far we return JSON objects in the
-                  response. Sometimes however you need to return HTML to the client. That's where
-                  you would use a templating engine. There are various templating engines available
-                  for express applications. The most popular are: - Pug (previously known as Jade) -
-                  Mustache - EJS
-
-                  Each templating engine has a different syntax for generating dynamic Html and
-                  returning it to the client. We will use Pug to generate dynamic HTML and return it
-                  to the client. First install Pug:
-
-                  npm i pug
-
-                  Back in index.js set the view engine for the application:
-
-                  app.set('view engine', 'pug');
-
-                  When we set this express will internally load this module so we don't have to
-                  require it.
-
-                  There is another optional setting for overriding the path for templates:
-
-                  app.set('views', './myViews');
-
-                  The default value is ./views.
-
-                  Add a new folder called views with a file called index.pug. With pug we can define
-                  our template using a syntax like this:
-
-                  html head title=title body h1= message
-
-                  We specify html elements then with the title element we set the value dynamically
-                  to a variable that will be set at runtime. We do the same with the h1 message. Pug
-                  has a cleaner syntax than regular Html. Of course some people love it, some people
-                  hate it. Let's see how we can convert this to regular Html and return it to the
-                  client.
-
-                  Back in our index module remember earlier when we defined a route for the root of
-                  the application:
-
-                  app.get('/', (req, res) => { res.send('Hello World'); });
-
-                  Here we send a simple message to the client. We want to replace this with Html
-                  markup using the render function and return it to the client:
-
-                  res.render('index', { title: 'My Express App', message: 'Hello' });
-
-                  As the first argument we specify the name of our view: index. As the second
-                  argument we pass an object which includes all the values for the parameters that
-                  we have defined in our template - title and message.
-
-                  Start the application and browse to http://localhost:3000. We should see the Html
-                  markup we generated using the pug template with the title and h1 generated
-                  dynamically:
-
-                  <h3>65 - Database Integration</h3>
-                  A separate section later in the course will look in depth into working with
-                  MongoDb but in this lecture we will look at what our various database integration
-                  options are when using Node and Express.
-
-                  expressjs.com/en/guide/database-integration.html provides a list of database
-                  drivers that are available for you to use.
-
-                  <h3>66 - Authentication</h3>
-                  Authentication is outside the scope of express because express is a minimal
-                  lightweight framework which doesn't have an opinion on authentication.
-
-                  <h3>67 - Structuring Express Applications</h3>
-                  If you look back at the index.js file we have created over the last few sections
-                  you will see we have ended up with quite a large file.
-
-                  In a real world application you don't want to write all that code inside index.js
-                  so we will look at how to properly structure the application.
-
-                  The first thing to do is to take out all of the code for the courses api and put
-                  it into a separate file . In other words, for every api endpoint we want to have a
-                  separate file/module. So, for example, all the routes for dealing with courses
-                  should be in a file called courses.js and all the routes for dealing with authors
-                  should be in authors.js.
-
-                  Create a new directory called routes and a new file called courses.js
-
-                  Now in index.js select all the code for working with courses and paste it into
-                  courses.js which should leave you with approximately 40 lines of code in index.js.
-
-                  Now let's finish refactoring courses.js. First we need to load express:
-
-                  const express = require('express');
-
-                  In index.js we called express as a function and we got an app object. This
-                  approach does not work when you separate the routes in a separate module. Here we
-                  need to use a router:
-
-                  const router = express.Router();
-
-                  You will need to also refactor the rest of the courses.js file to use router
-                  object instead of the app object.
-
-                  Finally at the bottom of courses.js we export the router:
-
-                  module.exports = router;
-
-                  In summary, we get the router at the top, add routes to it and finally export the
-                  router at the end of the module.
-
-                  Next we need to load the course module inside the index module. So back in
-                  index.js:
-
-                  const courses = require('./routes/courses');
-
-                  Finally, once we load the module we need to call
-
-                  app.use('/api/courses', courses);
-
-                  We supply two arguments - the first is a path, the second is the courses router
-                  object that we imported. Basically we are telling express that for any routes
-                  starting /api/courses use the courses router.
-
-                  With the above complete we can go back to the courses module and make our routes a
-                  little bit shorter by removing all references to /api/courses. So instead of:
-
-                  router.get('/api/courses', (req, res) => { res.send(courses); });
-
-                  we can use:
-
-                  router.get('/', (req, res) => { res.send(courses); });
-
-                  Next move the courses array from index.js to courses.js:
-
-                  const courses = [ { id: 1, name: 'course1' }, { id: 2, name: 'course2' }, { id: 3,
-                  name: 'course3' }, ];
-
-                  Next we can move the home route from index.js to a new file in the routes folder
-                  called home.js:
-
-                  const express = require('express'); const router = express.Router();
-
-                  router.get('/', (req, res) => { res.render('index', { title: 'My Express App',
-                  message: 'Hello' }); });
-
-                  module.exports = router;
-
-                  In index.js load the module:
-
-                  const home = require('./routes/home');
-
-                  Finally in the middleware calls we say that any path that starts with / should use
-                  the home router:
-
-                  app.use('/', home);
-
-                  Now index.js just contains the startup code for our application.
-
-                  One last thing. Earlier we created the logger middleware and put it into a
-                  separate module. We exported the logger function at the end of the module. Now, in
-                  terms of structuring your application, it is possible you might have multiple
-                  middleware functions. It is better to keep these all in a folder called middleware
-                  so create that folder and move logger.js inside it.
-
-                  In index.js, where we load the middleware don't forget to change the path:
-
-                  const logger = require('./middleware/logger.js');
-
-                  <h3>68 - Project - Restructure the App</h3>
-                  Currently in the vidly application, as it stands, all of the routes for dealing
-                  with genres have been defined in index.js. As an exercise, you can move all the
-                  routes to a new routes folder.
-
-                  Watch the video for a description of how to refactor the genres routes into their
-                  own module (starting at approx 0:54).
-
-                  <h3>69 - Recap</h3>
-                  Express: Advanced Topics So, in this section, you learned that: - A middleware
-                  function is a function that takes a request object and either terminates the
-                  request/response cycle or passes control to another middleware function. - Express
-                  has a few built-in middleware functions: - json(): to parse the body of requests
-                  with a JSON payload - urlencoded(): to parse the body of requests with URL-encoded
-                  payload - static(): to serve static files - You can create custom middleware for
-                  cross-cutting concerns, such as logging, authentication, etc. // Custom middleware
-                  (applied on all routes) app.use(function(req, res, next)) { // … next(); } //
-                  Custom middleware (applied on routes starting with /api/admin)
-                  app.use(‘/api/admin’, function(req, res, next)) { // … next(); } - We can detect
-                  the environment in which our Node application is running (development, production,
-                  etc) using process.env.NODE_ENV and app.get(‘env’). - The config package gives us
-                  an elegant way to store configuration settings for our applications. - We can use
-                  the debug package to add debugging information to an application. Prefer this
-                  approach to console.log() statements. - To return HTML markup to the client, use a
-                  templating engine. There are various templating engines available out there. Pug,
-                  EJS and Mustache are the most popular ones.
-
-
+        <h3>59 - Built-in Middleware</h3>
+        <p>In the last lecture you learned how to build custom middleware. We discussed before that
+          express has some built-in middleware functions. One of them is the json middleware that
+          parses the body of the request and if there is a json object it will populate
+          req.body.</p>
+        <p>Another similar middleware function is urlencoded:</p>
+        <figure>
+          <pre><code class="language-javascript">app.use(express.urlencoded());</code></pre>
+          <figcaption>Fig 05-012</figcaption>
+        </figure>
+        <p>We receive a middleware function as a result from this method call. This middleware
+          function parses incoming requests with url encoded payloads. So a request with a body like
+          this:</p>
+        <figure>
+          <pre><code class="language-javascript">key=value&amp;key=vale</code></pre>
+          <figcaption>Fig 05-013</figcaption>
+        </figure>
+        <p>This is more of a traditional approach - it is not used all that often these days.
+          Basically if you have an html form with input fields and post that form to the server then
+          the body of the request will look like the above.</p>
+        <p>So the urlencoded middleware function parses this body and populates req.body like a Json
+          object.</p>
+        <p>To demonstrate go back to Postman and perform a POST request to:</p>
+        <figure>
+          <pre><code class="language-command">http://localhost:5000/api/courses</code></pre>
+          <figcaption>Fig 05-014</figcaption>
+        </figure>
+        <p>Previously we passed a Json object in the body by selecting raw and then JSON
+          (application/json). However in this demo we are going to use x-www-form-urlencoded which
+          allows us to pass key value pairs in the body of the request and they will be concatenated
+          when this request is sent to the server. We add name as the key and mycourse as the
+          value:</p>
+        <figure>
+          <img src="./images/Fig05-015.PNG"/>
+          <figcaption>Fig 05-015</figcaption>
+        </figure>
+        <p>
+          If we send this request you should see that we have created a new course on the
+          server:</p>
+        <figure>
+          <img src="./images/Fig05-016.PNG"/>
+          <figcaption>Fig 05-016</figcaption>
+        </figure>
+        <p>So our middleware function was able to read our request with urlencoded payload.</p>
+        <p>If you check the terminal you will see a message:</p>
+        <figure>
+          <pre><code class="language-command">body-parser deprecated undefined exteded: provide extended option</code></pre>
+          <figcaption>Fig 05-017</figcaption>
+        </figure>
+        <p>This is telling us that we should pass an object with extended set to true:</p>
+        <figure>
+          <pre><code
+            class="language-javascript">app.use(express.urlencoded( { extended: true }));</code></pre>
+          <figcaption>Fig 05-018</figcaption>
+        </figure>
+        <p>This allows us to pass arrays and complex objects using the urlencoded format.</p>
+        <p>Finally the last built-in middleware function that we have in express is static which we
+          use to serve static files:</p>
+        <figure>
+          <pre><code class="language-javascript">app.use(express.static('public'));</code></pre>
+          <figcaption>Fig 05-019</figcaption>
+        </figure>
+        <p>We pass the name of the folder to the static method (public). We put all our static
+          assets like css, images and so on inside this folder. For this demo we create a public
+          folder with a readme.txt file inside it.</p>
+        <p>If we browse to:</p>
+        <figure>
+          <pre><code class="language-command">http://localhost:5000/readme.txt</code></pre>
+          <figcaption>Fig 05-020</figcaption>
+        </figure>
+        <p>the browser should serve the contents of the text file:</p>
+        <figure>
+          <img src="./images/Fig05-021.PNG"/>
+          <figcaption>Fig 05-021</figcaption>
+        </figure>
+        <p>Note that we do not have public in the url. Our static content is served from the root of
+          the site.</p>
+        <h3>60 - Third-party Middleware</h3>
+        <p>In this lecture we will look at some third party middleware available in express. If you
+          browse to expressjs.com and click on Resources you should see a link to Middleware. These
+          are all the third-party middleware that you can use in your applications.</p>
+        <p>helmet helps you secure your application by setting various http headers.</p>
+        <p>So back in the terminal install helmet:</p>
+        <figure>
+          <pre><code class="language-command">npm i helmet</code></pre>
+          <figcaption>Fig 05-022</figcaption>
+        </figure>
+        <p>Then in index.js at the top of the file we load the helmet module using the require
+          function:</p>
+        <figure>
+          <pre><code class="language-javascript">const helmet = require('helmet');</code></pre>
+          <figcaption>Fig 05-023</figcaption>
+        </figure>
+        <p>Which returns a function which we can call:</p>
+        <figure>
+          <pre><code class="language-command">app.use(helmet());</code></pre>
+          <figcaption>Fig 05-024</figcaption>
+        </figure>
+        <p>which, in turn, returns a middleware function which we can then use.</p>
+        <p>The other third-party middleware which may be useful is morgan which can be used to log
+          http requests:</p>
+        <figure>
+          <pre><code class="language-command">npm i morgan</code></pre>
+          <figcaption>Fig 05-025</figcaption>
+        </figure>
+        <p>We load morgan using the require function:</p>
+        <figure>
+          <pre><code class="language-javascript">const morgan = require('morgan');</code></pre>
+          <figcaption>Fig 05-026</figcaption>
+        </figure>
+        <p>then we use it like this:</p>
+        <figure>
+          <pre><code class="language-javascript">app.use(morgan('tiny'));</code></pre>
+          <figcaption>Fig 05-027</figcaption>
+        </figure>
+        <p>morgan accepts different formats. Above we use 'tiny'</p>
+        <p>With morgan in place everytime we send a request to the server it will be logged. So if
+          you send a simple GET request to http://localhost:5000/api/courses and then check the
+          terminal you should see the following:</p>
+        <figure>
+          <pre><code class="language-command">GET /api/courses 200 79 - 7.491 ms</code></pre>
+          <figcaption>Fig 05-028</figcaption>
+        </figure>
+        <p>This is the tiny format. The above information indicates we sent an http GET request to
+          the /api/courses endpoint. The result was a status 200 which means successful. The request
+          took 7.491ms to respond.</p>
+        <p>For more details you can set a different format. By default morgan logs to the console
+          but you can also configure it to write to a log file.</p>
+
+        <h3>61 - Environments</h3>
+        <p>In a more complex enterprise application you need to know what environment your code is
+          running on - development or production. You may want to enable or disable certain features
+          based on the current environment.</p>
+        <p>For example, perhaps you only want to enable logging of http requests when in a
+          development environment. Let's look at how to do this.</p>
+        <p>Earlier you learned about the process object - a global object in node which gives us
+          access to the current process. The process object has a property called env which gives us
+          access to the system's environment variables. We have a standard environment variable
+          called NODE_ENV which returns the environment for this node application. If it's not set
+          we get undefined. We can set this to development, testing, staging, production. To
+          demonstrate let's log this on the console:</p>
+        <figure>
+          <pre><code
+            class="language-command">console.log(`NODE_ENV: ${process.env.NODE_ENV}`);</code></pre>
+          <figcaption>Fig 05-029</figcaption>
+        </figure>
+        <p>Another way to get the current environment is by using the app object.:</p>
+        <figure>
+          <pre><code class="language-command">console.log(`app: ${app.get('env')}`);</code></pre>
+          <figcaption>Fig 05-030</figcaption>
+        </figure>
+        <p>The difference here is that if the environment variable is not set app.get('env') will
+          return development not undefined.</p>
+        <p>The approach you choose is down to personal preference.</p>
+        <p>In this demo we want to enable logging of http requests only on a development machine so
+          we can write code like this:</p>
+        <figure>
+        <pre><code class="language-javascript">if (app.get('env') == 'development')
+{
+  app.use(morgan('tiny'));
+  console.log('Morgan enabled....')
+}</code></pre>
+          <figcaption>Fig 05-031</figcaption>
+        </figure>
+        <p>If you run the application now and check the terminal you should see:</p>
+        <figure>
+          <pre><code class="language-command">Morgan enabled.....</code></pre>
+          <figcaption>Fig 05-032</figcaption>
+        </figure>
+        <p>If you set the environment variable to production and re-run you will see that morgan is
+          not enabled (the console message wont appear).</p>
+
+        <h3>62 - Configuration</h3>
+        <p>One topic which goes hand in hand with environments (which we covered in the previous
+          lecture) is the topic of storing configuration settings for the application and overriding
+          those settings in each environment. For example, in your development environment you're
+          going to use a different database and mail server. So in this lecture we will look at how
+          to store configuration settings for our application and then how to override them in each
+          environment.</p>
+        <p>The most popular package for managing configuration settings is rc:</p>
+        <figure>
+          <pre><code class="language-command">npmjs.com/package/rc</code></pre>
+          <figcaption>Fig 05-033</figcaption>
+        </figure>
+        <p>However this package has several issues which is why we will look at:</p>
+        <figure>
+          <pre><code class="language-command">npmjs.com/package/config</code></pre>
+          <figcaption>Fig 05-034</figcaption>
+        </figure>
+        <figure>
+          <pre><code class="language-command">npm i config</code></pre>
+          <figcaption>Fig 05-035</figcaption>
+        </figure>
+        <p>Now in the project create folder called config and add a default configuration file
+          called default.json with the following json object:</p>
+        <figure>
+        <pre><code class="language-json">{
+  &quot;name&quot;: &quot;My Express App&quot;
+}</code></pre>
+          <figcaption>Fig 05-036</figcaption>
+        </figure>
+        <p>Now create a new file called development.json which will contain configuration settings
+          specific to the development environment. As part of this we are able to override the
+          settings that we have defined in default.json and add additional settings:</p>
+        <figure>
+        <pre><code class="language-json">{
+  &quot;name&quot;: &quot;My Express App - Development&quot;,
+  &quot;mail&quot;: { &quot;host&quot;: &quot;dev-mail-server&quot; }
+}</code></pre>
+          <figcaption>Fig 05-037</figcaption>
+        </figure>
+        <p>As you can see from the above code we can add configuration settings that are complex
+          objects - "mail" above.</p>
+        <p>Create another file called production.json and copy the settings from development.json to
+          this file. Change the name and mail host settings:</p>
+        <figure>
+        <pre><code class="language-json">{
+  &quot;name&quot;: &quot;My Express App - Production&quot;,
+  &quot;mail&quot;: { &quot;host&quot;: &quot;prod-mail-server&quot; }
+}</code></pre>
+          <figcaption>Fig 05-038</figcaption>
+        </figure>
+        <p>Now back in index.js load the config module:</p>
+        <figure>
+          <pre><code class="language-javascript">const config = require('config');</code></pre>
+          <figcaption>Fig 05-039</figcaption>
+        </figure>
+        <p>and add some code to write the configuration settings to the console:</p>
+        <figure>
+        <pre><code class="language-javascript">// Configuration
+console.log('Application Name:' + config.get('name'));
+console.log('Mail Server:' + config.get('mail.host'));</code></pre>
+          <figcaption>Fig 05-040</figcaption>
+        </figure>
+        <p>Now try switching NODE_ENV between development:</p>
+        <figure>
+          <img src="./images/Fig05-041.PNG"/>
+          <figcaption>Fig 05-041</figcaption>
+        </figure>
+        <p>and production:</p>
+        <figure>
+          <img src="./images/Fig05-042.PNG"/>
+          <figcaption>Fig 05-042</figcaption>
+        </figure>
+        <p>and you should see those settings written to the console changing.</p>
+        <p>It is important that you don't store application secrets in these configuration files.
+          You should use environment variables for this instead. For example, let's assume that we
+          want to store the password for our mail server. In the terminal set an environment
+          variable to store the mail server password:</p>
+        <figure>
+          <pre><code class="language-command">setx vidly_mailpassword 1234</code></pre>
+          <figcaption>Fig 05-043</figcaption>
+        </figure>
+        <p>Add another file called custom-environment-variables.json to the configuration file. We
+          use this file to define the mapping of configuration settings to environment
+          variables:</p>
+        <figure>
+          <pre><code class="language-json">{ &quot;mail&quot;:
+  { &quot;password&quot;: &quot;vidly_mailpassword&quot; }
+}</code></pre>
+          <figcaption>Fig 05-044</figcaption>
+        </figure>
+        <p>Back in index.js let's display the password of the mail server:</p>
+        <figure>
+          <pre><code class="language-javascript">console.log('Mail Password:' + config.get('mail.password'));</code></pre>
+          <figcaption>Fig 05-043</figcaption>
+        </figure>
+        <p>The config object will look at various sources to find a value for the configuration
+          setting. The source could be a configuration or json file an environment variable or even
+          a command line argument (check the documentation)</p>
+        <p>If you run the application now you should see the mail server password in the
+          console:</p>
+        <figure>
+          <img src="./images/Fig05-044.PNG"/>
+          <figcaption>Fig 05-044</figcaption>
+        </figure>
+        <h3>63 - Debugging</h3>
+        <p>Earlier in the section we wrote code to check if we were in the development environment.
+          If yes then we enabled morgan:</p>
+        <figure>
+<pre><code class="language-javascript">if (app.get('env') == 'development')
+{
+  app.use(morgan('tiny'));
+  console.log('Morgan enabled....')
+}</code></pre>
+          <figcaption>Fig 05-045</figcaption>
+        </figure>
+        <p>In the above code we use the console.log command which is a Javascript programmers best
+          friend. The problem with this approach, however, is that when you've finished debugging
+          you comment out or delete the console.log lines. If you then need them in the future you
+          need to rewrite them or uncomment them. This approach can become very tedious.</p>
+        <p>A better way to log messages for the purposes of debugging is to use the debug package in
+          node. With debug we can replace all the console.log statements with a call to a debug
+          function. We can then use an environment variable to enable/disable debuggging. This
+          approach also let's us control the level of information we want to see. Perhaps, you are
+          working on a database problem so you only want to view debugging information related to
+          the database.</p>
+        <p>In the terminal install debug:</p>
+        <figure>
+          <pre><code class="language-command">npm i debug</code></pre>
+          <figcaption>Fig 05-046</figcaption>
+        </figure>
+        <p>In index.js load the debug module:</p>
+        <figure>
+          <pre><code class="language-javascript">const startupDebugger = require('debug')('app:startup');</code></pre>
+          <figcaption>Fig 05-047</figcaption>
+        </figure>
+        <p>The require function above returns a function which we call passing in an argument which
+          is an arbitrary namespace that we define for debugging. For example, we can define the
+          namespace app:startup. Now when we call this function with the app:startup argument we get
+          a function for writing debugging messages in that namespace. We call that function
+          startupDebugger.</p>
+        <p>Potentially we can have another debugger for debugging database related messages. So,
+          once again, we load the debug module, we get a function, we call that function, passing in
+          a namespace app:db. This will return a debugging function which we store in
+          dbDebugger:</p>
+        <figure>
+          <pre><code
+            class="language-javascript">const dbDebugger = require('debug')('app:db');</code></pre>
+          <figcaption>Fig 05-048</figcaption>
+        </figure>
+        <p>Now we can replace our console.log line with a call to startupDebugger function:</p>
+        <figure>
+        <pre><code class="language-javascript">if (app.get('env') == 'development') {
+  app.use(morgan('tiny'));
+  startupDebugger('Morgan enabled....')
+}</code></pre>
+          <figcaption>Fig 05-049</figcaption>
+        </figure>
+        <p>Potentially, somewhere in the application, we may perform some database work. There you
+          might need to write some debugging information. For this we can use the dbDebugger
+          function:</p>
+        <figure>
+        <pre><code class="language-javascript">// Db work...
+dbDebugger('Connected to the database....');</code></pre>
+          <figcaption>Fig 05-050</figcaption>
+        </figure>
+        <p>Now we go back to the terminal an use an environment variable to determine what kind of
+          debugging information we want to see in the console:</p>
+        <figure>
+          <pre><code class="language-command">setx DEBUG app:startup</code></pre>
+          <figcaption>Fig 05-051</figcaption>
+        </figure>
+        <p>Now, if you run the application, we will see only the debugging messages that are part of
+          this namespace app:startup:</p>
+        <figure>
+          <pre><code class="language-command">app:startup Morgan enabled.... +0ms</code></pre>
+          <figcaption>Fig 05-052</figcaption>
+        </figure>
+        <p>Next time you run, if you don't want to see any debugging information just reset the
+          environment variable:</p>
+        <figure>
+          <pre><code class="language-command">setx DEBUG ""</code></pre>
+          <figcaption>Fig 05-053</figcaption>
+        </figure>
+        <p>We may want to see debugging messages from multiple namespaces. So we can set our
+          environment variable like so:</p>
+        <figure>
+          <pre><code class="language-command#">setx DEBUG app:startup,app:db</code></pre>
+          <figcaption>Fig 05-054</figcaption>
+        </figure>
+        <p>which will result in the following being written to the console:</p>
+        <figure>
+          <img src="./images/Fig05-055.PNG"/>
+          <figcaption>Fig 05-055</figcaption>
+        </figure>
+        <p>The beautiful thing about this debugging module is that it colour codes the namespace to
+          allow us to easily distinguish between various debugging messages.</p>
+        <p>If you want to see all the debugging message for the app namespace we can use a
+          wildcard:</p>
+        <figure>
+          <pre><code class="language-command">setx DEBUG app:*</code></pre>
+          <figcaption>Fig 05-056</figcaption>
+        </figure>
+
+        <p>There is a faster way to set the level of debugging we want to see. We don't have to set
+          the environment variable explicitly. We can set the environment variable at the time of
+          running our application:</p>
+        <figure>
+          <pre><code class="language-command">DEBUG=app:db nodemon index.js</code></pre>
+          <figcaption>Fig 05-057</figcaption>
+        </figure>
+        <p>The above doesn't work on my development environment!</p>
+        <p>Finally, in this demo we created two debugging functions: startupDebugger and dbDebugger.
+          In a real world scenario you may not need multiple debugger functions in the same file or
+          module. In that case you can simplify the code by changing the name of the debugger
+          function to just debug:</p>
+        <figure>
+          <img src="./images/Fig05-058.PNG"/>
+          <figcaption>Fig 05-058</figcaption>
+        </figure>
+
+        <h3>64 - Templating Engines</h3>
+        <p>In all the endpoints we have implemented so far we return JSON objects in the
+          response:</p>
+        <figure>
+          <img src="./images/Fig05-059.PNG"/>
+          <figcaption>Fig 05-059</figcaption>
+        </figure>
+        <p>
+          Sometimes however you need to return HTML to the client. That's where you would use a
+          templating engine. There are various templating engines available for express
+          applications.</p>
+        <p>The most popular are:</p>
+        <ul>
+          <li>Pug (previously known as Jade)</li>
+          <li>Mustache</li>
+          <li>EJS</li>
+        </ul>
+        <p>Each templating engine has a different syntax for generating dynamic Html and returning
+          it to the client. We will use Pug to generate dynamic HTML and return it to the client.
+          First install Pug:</p>
+        <figure>
+          <pre><code class="language-command">npm i pug</code></pre>
+          <figcaption>Fig 05-060</figcaption>
+        </figure>
+        <p>Back in index.js set the view engine for the application:</p>
+        <figure>
+          <pre><code class="language-javascript">app.set('view engine', 'pug');</code></pre>
+          <figcaption>Fig 05-061</figcaption>
+        </figure>
+        <p>When we set this express will internally load this module so we don't have to require
+          it.</p>
+        <p>There is another optional setting for overriding the path for templates:</p>
+        <figure>
+          <pre><code class="language-javascript">app.set('views', './myViews');</code></pre>
+          <figcaption>Fig 05-062</figcaption>
+        </figure>
+        <p>The default value is ./views.</p>
+        <p>Add a new folder called views with a file called index.pug. With pug we can define our
+          template using a syntax like this:</p>
+        <figure>
+        <pre><code class="language-command">html
+  head
+    title= title
+      body
+        h1= message</code></pre>
+          <figcaption>Fig 05-063</figcaption>
+        </figure>
+        <p>We specify html elements then with the title element we set the value dynamically to a
+          variable that will be set at runtime. We do the same with the h1 message. Pug has a
+          cleaner syntax than regular Html. Of course some people love it, some people hate it.
+          Let's see how we can convert this to regular Html and return it to the client.</p>
+        <p>Back in our index module remember earlier when we defined a route for the root of the
+          application:</p>
+        <figure>
+        <pre><code class="language-javascript">app.get('/', (req, res) =&gt; {
+  res.send('Hello World');
+});</code></pre>
+          <figcaption>Fig 05-064</figcaption>
+        </figure>
+        <p>Here we send a simple message to the client. We want to replace this with Html markup
+          using the render function and return it to the client:</p>
+        <figure>
+          <pre><code class="language-javascript">res.render('index', { title: 'My Express App', message: 'Hello' });</code></pre>
+          <figcaption>Fig 05-065</figcaption>
+        </figure>
+        <p>As the first argument we specify the name of our view: index. As the second argument we
+          pass an object which includes all the values for the parameters that we have defined in
+          our template - title and message.</p>
+        <p>Start the application and browse to http://localhost:3000. We should see the Html markup
+          we generated using the pug template with the title and h1 generated dynamically:</p>
+        <figure>
+          <img src="./images/Fig05-066.PNG"/>
+          <figcaption>Fig 05-066</figcaption>
+        </figure>
+        <h3>65 - Database Integration</h3>
+        <p>A separate section later in the course will look in depth into working with MongoDb but
+          in this lecture we will look at what our various database integration options are when
+          using Node and Express.</p>
+        <p>expressjs.com/en/guide/database-integration.html provides a list of database drivers that
+          are available for you to use.</p>
+        <figure>
+          <img src="./images/Fig05-067.PNG"/>
+          <figcaption>Fig 05-067</figcaption>
+        </figure>
+        <p>In the case of MongoDb instead of using the Mongodb driver directly you can use another
+          package that is called Mongoose which is built on top of Mongo client. This gives us a
+          simpler Api.
+        </p>
+        <h3>66 - Authentication</h3>
+        <p>Authentication is outside the scope of express because express is a minimal lightweight
+          framework which doesn't have an opinion on authentication. We will have a look at this
+          topic again later in the course.</p>
+
+        <h3>67 - Structuring Express Applications</h3>
+        <p>If you look back at the index.js file we have created over the last few sections you will
+          see we have ended up with quite a large file.</p>
+        <p>In a real world application you don't want to write all that code inside index.js so we
+          will look at how to properly structure the application.</p>
+        <p>The first thing to do is to take out all of the code for the courses api and put it into
+          a separate file . In other words, for every api endpoint we want to have a separate
+          file/module. So, for example, all the routes for dealing with courses should be in a file
+          called courses.js and all the routes for dealing with, let's say, authors should be in
+          authors.js .</p>
+        <p>Create a new directory called routes and a new file called courses.js</p>
+        <p>Now in index.js select all the code for working with courses and paste it into courses.js
+          which should leave you with approximately 40 lines of code in index.js.</p>
+        <p>Now let's finish refactoring courses.js. First we need to load express:</p>
+        <figure>
+          <pre><code class="language-javascript">const express = require('express');</code></pre>
+          <figcaption>Fig 05-068</figcaption>
+        </figure>
+        <p>In index.js we called express as a function and we got an app object. This approach does
+          not work when you separate the routes in a separate module. Here we need to use a
+          router:</p>
+        <figure>
+          <pre><code class="language-javascript">const router = express.Router();</code></pre>
+          <figcaption>Fig 05-069</figcaption>
+        </figure>
+        <p>You will need to also refactor the rest of the courses.js file to use router object
+          instead of the app object.</p>
+        <p>Finally at the bottom of courses.js we export the router:</p>
+        <figure>
+          <pre><code class="language-javascript">module.exports = router;</code></pre>
+          <figcaption>Fig 05-070</figcaption>
+        </figure>
+        <p>In summary, we get the router at the top, add routes to it and finally export the router
+          at the end of the module.</p>
+        <p>Next we need to load the course module inside the index module. So back in index.js:</p>
+        <figure>
+          <pre><code class="language-javascript">const courses = require('./routes/courses');</code></pre>
+          <figcaption>Fig 05-071</figcaption>
+        </figure>
+        <p>Finally, once we load the module we need to call</p>
+        <figure>
+          <pre><code class="language-javascript">app.use('/api/courses', courses);</code></pre>
+          <figcaption>Fig 05-072</figcaption>
+        </figure>
+        <p>We supply two arguments - the first is a path, the second is the courses router object
+          that we imported. Basically we are telling express that for any routes starting
+          /api/courses use the courses router.</p>
+        <p>With the above complete we can go back to the courses module and make our routes a little
+          bit shorter by removing all references to /api/courses. So instead of:</p>
+        <figure>
+        <pre><code class="language-javascript">router.get('/api/courses', (req, res) =>
+{
+  res.send(courses);
+});</code></pre>
+          <figcaption>Fig 05-073</figcaption>
+        </figure>
+        <p>we can use:</p>
+        <figure>
+        <pre><code class="language-javascript">router.get('/', (req, res) =&gt;
+{
+  res.send(courses);
+});</code></pre>
+          <figcaption>Fig 05-074</figcaption>
+        </figure>
+        <p>Next move the courses array from index.js to courses.js:</p>
+        <figure>
+        <pre><code class="language-javascript">const courses = [
+  { id: 1, name: 'course1' },
+  { id: 2, name: 'course2' },
+  { id: 3, name: 'course3' },
+];</code></pre>
+          <figcaption>Fig 05-075</figcaption>
+        </figure>
+        <p>Next we can move the home route from index.js to a new file in the routes folder called
+          home.js:</p>
+        <figure>
+        <pre><code class="language-javascript">const express = require('express');
+const router = express.Router();</code></pre>
+          <figcaption>Fig 05-076</figcaption>
+        </figure>
+        <p>Now cut and paste the route from index.js but instead of app we attach it to the
+          router:</p>
+        <figure>
+        <pre><code class="language-javascript">router.get('/', (req, res) =&gt; {
+  res.render('index', { title: 'My Express App', message: 'Hello' });
+});</code></pre>
+          <figcaption>Fig 05-077</figcaption>
+        </figure>
+        <p>Finally we export the router:</p>
+        <figure>
+          <pre><code class="language-javascript">module.exports = router;</code></pre>
+          <figcaption>Fig 05-078</figcaption>
+        </figure>
+        <p>In index.js load the module:</p>
+        <figure>
+          <pre><code class="language-javascript">const home = require('./routes/home');</code></pre>
+          <figcaption>Fig 05-079</figcaption>
+        </figure>
+        <p>Finally in the middleware calls we say that any path that starts with / should use the
+          home router:</p>
+        <figure>
+          <pre><code class="language-javascript">app.use('/', home);</code></pre>
+          <figcaption>Fig 05-080</figcaption>
+        </figure>
+        <p>Now index.js just contains the startup code for our application.</p>
+        <p>One last thing. Earlier we created the logger middleware and put it into a separate
+          module. We exported the logger function at the end of the module. Now, in terms of
+          structuring your application, it is possible you might have multiple middleware functions.
+          It is better to keep these all in a folder called middleware so create that folder and
+          move logger.js inside it.</p>
+        <p>In index.js, where we load the middleware don't forget to change the path:</p>
+        <figure>
+          <pre><code
+            class="language-javascript">const logger = require('./middleware/logger.js');</code></pre>
+          <figcaption>Fig 05-081</figcaption>
+        </figure>
+        <h3>68 - Project - Restructure the App</h3>
+        <p>Currently in the vidly application, as it stands, all of the routes for dealing with
+          genres have been defined in index.js. As an exercise, you can move all the routes to a new
+          routes folder.</p>
+        <p>Watch the video for a description of how to refactor the genres routes into their own
+          module (starting at approx 0:54).</p>
+        <h3>69 - Recap</h3>
+        <p>So, in this section, you learned that:</p>
+        <ul>
+          <li>A middleware function is a function that takes a request object and either terminates
+            the request/response cycle or passes control to another middleware function.
+          </li>
+          <li>Express has a few built-in middleware functions:
+            <ul>
+              <li>json(): to parse the body of requests with a JSON payload</li>
+              <li>urlencoded(): to parse the body of requests with URL-encoded payload</li>
+              <li>static(): to serve static files</li>
+            </ul>
+          </li>
+          <li>You can create custom middleware for cross-cutting concerns, such as logging,
+            authentication, etc.
+
+            <figure>
+<pre><code class="language-javascript">// Custom middleware (applied on all routes)
+app.use(function(req, res, next)) {
+  // &hellip;
+  next();
+}
+
+// Custom middleware (applied on routes starting with /api/admin)
+app.use(&lsquo;/api/admin&rsquo;, function(req, res, next)) {
+  // &hellip;
+  next();
+}</code></pre>
+              <figcaption>Fig 05-082</figcaption>
+            </figure>
+          </li>
+          <li>We can detect the environment in which our Node application is running (development,
+            production, etc) using process.env.NODE_ENV and app.get(‘env’).
+          </li>
+          <li>The config package gives us an elegant way to store configuration settings for our
+            applications.
+          </li>
+          <li>We can use the debug package to add debugging information to an application. Prefer
+            this approach to console.log() statements.
+          </li>
+          <li>To return HTML markup to the client, use a templating engine. There are various
+            templating engines available out there. Pug, EJS and Mustache are the most popular ones.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 </html>
