@@ -102,7 +102,8 @@
         </figure>
         <p>Initially you will receive an error:</p>
         <figure>
-          <pre><code class="language-command">Path: Data directory C:\data\db\ not found, terminating</code></pre>
+                    <pre><code
+                      class="language-command">Path: Data directory C:\data\db\ not found, terminating</code></pre>
           <figcaption>Fig 07-008</figcaption>
         </figure>
         <p>Create this folder and run mongod again.</p>
@@ -305,7 +306,8 @@ mongoose.connect('mongodb://localhost/playground')
         <p>In MongoDB or in a NoSQL database we don't have this structure. You dont have to define
           or script the above tables. We simply create our objects and store them in a database.
           That's why we call them schema-less - we don't have a schema.</p>
-        <p>We omit the date property to let the default value of <code class="language-javascript">Date.now</code>
+        <p>We omit the date property to let the default value of <code
+          class="language-javascript">Date.now</code>
           to take effect.</p>
         <p>To recap, once we have a schema we need to compile that into a model which gives us a
           class. Next we can create an object based on that class. This object maps to a document in
@@ -598,7 +600,7 @@ console.log(courses);</code></pre>
 
         <h3>93 - Counting</h3>
         <p>So in this query:</p>
-<figure>
+        <figure>
 <pre><code class="language-javascript">async function getCourses() {
   const courses = await Course
     .find({author: 'Mosh', isPublished: true })
@@ -607,19 +609,19 @@ console.log(courses);</code></pre>
     .select({ name: 1, tags: 1 });
   console.log(courses);
 }</code></pre>
-<figcaption>Fig 07-058</figcaption>
-</figure>
+          <figcaption>Fig 07-058</figcaption>
+        </figure>
         <p>We are filtering our courses and picking only the name and tags properties. If we run the
           application we get something like this:</p>
-<figure>
-  <img src="./images/Fig07-059.PNG"/>
-  <figcaption>Fig 07-059</figcaption>
-</figure>
+        <figure>
+          <img src="./images/Fig07-059.PNG"/>
+          <figcaption>Fig 07-059</figcaption>
+        </figure>
         <p>Sometimes you just want to retrieve the number of documents that match your criteria. In
           this case we can switch the select method for the count method:</p>
         <figure>
-        <pre><code class="language-javascript">.count();</code></pre>
-        <figcaption>Fig 07-060</figcaption>
+          <pre><code class="language-javascript">.count();</code></pre>
+          <figcaption>Fig 07-060</figcaption>
         </figure>
         <h3>94 - Pagination</h3>
         <p>The method that goes hand in hand with the limit method (covered earlier) is the skip
@@ -628,203 +630,257 @@ console.log(courses);</code></pre>
         <figure>
         <pre><code class="language-javascript">const pageNumber = 2;
 const pageSize = 10;</code></pre>
-        <figcaption>Fig 07-061</figcaption>
+          <figcaption>Fig 07-061</figcaption>
         </figure>
         <p>Here the values have been hardcoded for simplicity but in a real world application you
           would pass these values as query string parameters in our RESTfull API:</p>
         <figure>
-        <pre><code class="language-command">/api/courses?pageNumber=2&amp;pageSize=10</code></pre>
-        <figcaption>Fig 07-062</figcaption>
+          <pre><code class="language-command">/api/courses?pageNumber=2&amp;pageSize=10</code></pre>
+          <figcaption>Fig 07-062</figcaption>
         </figure>
         <p>In order to implement pagination we need to skip all the documents in the previous
           page:</p>
         <figure>
-        <pre><code class="language-javascript">.skip((pageNumber - 1) * pageSize)</code></pre>
-        <figcaption>Fig 07-063</figcaption>
+          <pre><code class="language-javascript">.skip((pageNumber - 1) * pageSize)</code></pre>
+          <figcaption>Fig 07-063</figcaption>
         </figure>
         <p>Here we are assuming that page number starts from 1 - so more acurately this is page
           number not page index. Next, we change limit to pageSize:</p>
         <figure>
-        <pre><code class="language-javascript">.limit(pageSize)</code></pre>
-        <figcaption>Fig 07-064</figcaption>
+          <pre><code class="language-javascript">.limit(pageSize)</code></pre>
+          <figcaption>Fig 07-064</figcaption>
         </figure>
         <p>With this we can get the documents in a given page.</p>
         <h3>95 - Exercise 1</h3>
-
-        In this exercise we use two files: exercise-data.json exercise.txt
-
-        The json file contains 7 course objects which we are going to import into a new database
-        called mongo-exercises.
-
-        The exercise.txt file contains a command which we can run from a terminal to import the json
-        file:
-
-        mongoimport --db mongo-exercises --collection courses --file exercise-data.json --jsonArray
-
-        The flags have the following meaning:
-
-        --db Specifies the database to use for the import --collection Specifies the collection to
-        use --file Specify the file which contains the data to import --jsonArray Specifies the data
-        to be imported is in the format of a Json Array
-
-        Once you run this command you should be able to browse the new database and the courses
-        collection from MongoDB Compass.
-
-        The first exercise is to write a program to get all the published courses, sort them by
-        name, pick only the name and author properties and display them.
-
-        First we load mongoose and store it in a const:
-
-        const mongoose = require('mongoose');
-
-        Next we connect to our MongoDb database:
-
-        mongoose.connect('mongodb://localhost/mongo-exercises')
-
-        Next we create a schema to define the shape of documents in our courses collection:
-
-        const courseSchema = new mongoose.Schema({ name: String, author: String, tags: [ String ],
-        date: { type: Date, default: Date.now }, isPublished: Boolean, price: Number });
-
-        Next we create a model specifying the collection in singular form and the schema:
-
-        const Course = mongoose.model('Course', courseSchema);
-
-        Now we have a model we can use it to query our courses:
-
-        async function getCourses() { return await Course .find( { isPublished: true, tags:
-        'backend' }) .sort({ name: 1 }) .select({name: 1, author: 1}); }
-
-        Because we are using await we use an async function. We call the getCourses function:
-
-        const courses = await getCourses();
-
-        As we mentioned earlier, when we decorate a function with async our JavaScript engine
-        automatically wraps the result in a promise:
-
-        //TODO fig xx-xx
-
-        For this reason we await the result and store it in a const. Because we use the await
-        operator we need to wrap this line in an async function which we will call run:
-
-        async function run(){ const courses = await getCourses(); console.log(courses); }
-
-        Finally we call the run function:
-
-        run();
-
-        If you now run the application you should see something similar to this:
-
-        [ { _id: 5c2788220a54c304a4a8b0da, name: 'ASP.NET MVC Course', author: 'Mosh' }, { _id:
-        5c2788220a54c304a4a8b0d8, name: 'Express.js Course', author: 'Mosh' }, { _id:
-        5c2788220a54c304a4a8b0d9, name: 'Node.js Course', author: 'Mosh' }, { _id:
-        5c2788220a54c304a4a8b0dc, name: 'Node.js Course by Jack', author: 'Jack' } ]
-
+        <p>In this exercise we use two files: exercise-data.json exercise.txt</p>
+        <p>The json file contains 7 course objects which we are going to import into a new database
+          called mongo-exercises:</p>
+        <figure>
+          <img src="./images/Fig07-065.PNG"/>
+          <figcaption>Fig 07-065</figcaption>
+        </figure>
+        <p>The exercise.txt file contains a command which we can run from a terminal to import the json
+          file:</p>
+        <figure>
+          <pre><code class="language-command">mongoimport --db mongo-exercises --collection courses --file exercise-data.json --jsonArray</code></pre>
+          <figcaption>Fig 07-066</figcaption>
+        </figure>
+        <p>The flags have the following meaning:</p>
+        <table class="table">
+          <thead>
+          <tr>
+            <td>Flag</td>
+            <td>Description</td>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>--db</td>
+            <td>Specifies the database to use for the import</td>
+          </tr>
+          <tr>
+            <td>--collection</td>
+            <td>Specifies the collection to use</td>
+          </tr>
+          <tr>
+            <td>--file</td>
+            <td>Specify the file which contains the data to import</td>
+          </tr>
+          <tr>
+            <td>--jsonArray</td>
+            <td>Specifies the data to be imported is in the format of a Json Array</td>
+          </tr>
+          </tbody>
+        </table>
+        <p>Once you run this command you should be able to browse the new database and the courses
+          collection from MongoDB Compass:</p>
+        <figure>
+          <img src="./images/Fig07-067.PNG"/>
+          <figcaption>Fig 07-067</figcaption>
+        </figure>
+        <p>The first exercise is to write a program to get all the published courses, sort them by
+          name, pick only the name and author properties and display them.</p>
+        <p>First we load mongoose and store it in a const:</p>
+        <figure>
+          <pre><code class="language-javascript">const mongoose = require('mongoose');</code></pre>
+          <figcaption>Fig 07-068</figcaption>
+        </figure>
+        <p>Next we connect to our MongoDb database:</p>
+        <figure>
+          <pre><code class="language-javascript">mongoose.connect('mongodb://localhost/mongo-exercises')</code></pre>
+          <figcaption>Fig 07-069</figcaption>
+        </figure>
+        <p>Next we create a schema to define the shape of documents in our courses collection:</p>
+        <figure>
+    <pre><code class="language-javascript">const courseSchema = new mongoose.Schema({
+  name: String,
+  author: String,
+  tags: [ String ],
+  date: { type: Date, default: Date.now },
+  isPublished: Boolean,
+  price: Number
+});</code></pre>
+          <figcaption>Fig 07-070</figcaption>
+        </figure>
+        <p>Next we create a model specifying the collection in singular form and the schema:</p>
+        <figure>
+          <pre><code class="language-javascript">const Course = mongoose.model('Course', courseSchema);</code></pre>
+          <figcaption>Fig 07-071</figcaption>
+        </figure>
+        <p>Now we have a model we can use it to query our courses:</p>
+        <figure>
+    <pre><code class="language-javascript">async function getCourses() {
+  return await Course
+    .find({
+      isPublished: true,
+      tags: 'backend' })
+    .sort({ name: 1 })
+    .select({name: 1, author: 1});
+}</code></pre>
+          <figcaption>Fig 07-072</figcaption>
+        </figure>
+        <p>Because we are using await we use an async function. We call the getCourses function:</p>
+        <figure>
+          <pre><code class="language-javascript">const courses = await getCourses();</code></pre>
+          <figcaption>Fig 07-073</figcaption>
+        </figure>
+        <p>As we mentioned earlier, when we decorate a function with async our JavaScript engine
+          automatically wraps the result in a promise. getCourses returns a promise of any[]. That means a promise that
+          when resolved will give us an array of objects:</p>
+        <figure>
+          <img src="./images/Fig07-074.PNG"/>
+          <figcaption>Fig 07-074</figcaption>
+        </figure>
+        <p>For this reason we await the result and store it in a const. Because we use the await
+          operator we need to wrap this line in an async function which we will call run:</p>
+<figure>
+    <pre><code class="language-javascript">async function run() {
+  const courses = await getCourses();
+  console.log(courses);
+}</code></pre>
+    <figcaption>Fig 07-075</figcaption>
+</figure>
+        <p>Finally we call the run function:</p>
+        <figure>
+            <pre><code class="language-javascript">run();</code></pre>
+            <figcaption>Fig 07-076</figcaption>
+        </figure>
+        <p>If you now run the application you should see something similar to this:</p>
+<figure>
+    <img src="./images/Fig07-077.PNG"/>
+    <figcaption>Fig 07-077</figcaption>
+</figure>
         <h3>96 - Exercise 2</h3>
-
-        For the second exercise we need to get all the published frontend and backend courses, sort
-        them by their price in a descending order, pick only their name and author, and display
-        them.
-
-        The code in this exercise is identical to exercise 1 apart from the query in getCourses:
-
-        async function getCourses() { return await Course // First solution is to use the in
-        comparison query operator .find({isPublished: true, tags: {$in: ['backend', 'frontend']}})
-        .sort({ price: -1 }) .select({name: 1, author: 1, price: 1, tags: 1, isPublished: true}); }
-
-        So we want to get all the published frontend and backend courses. An array:
-
-        .find({isPublished: true, tags: ['backend', 'frontend']})
-
-        wont work because this will return courses that contain both the specified tags (the logical
-        AND operator will be applied). We need to modify this query to use the in operator
-        (discussed earlier in the section on comparison operators):
-
-        .find({isPublished: true, tags: {$in: ['backend', 'frontend']}})
-
-        We set the tags property to an object. This object contains key value pairs. The keys are
-        MongoDB operators - in this case $in. The Javascript construct we use to represent multiple
-        values is an array. We set an array of two strings: 'frontend' and 'backend'.
-
-        Next we sort by price in a descending order:
-
-        .sort({ price: -1 })
-
-        Alternatively we can use the following syntax:
-
-        .sort('-price')
-
-        Finally we specify that just the name, author and price properties should be returned:
-
-        .select('name author price')
-
-        Run the application and you should see something similar to the following:
-
-        [ { _id: 5c2788220a54c304a4a8b0d9, name: 'Node.js Course', author: 'Mosh', price: 20 }, {
-        _id: 5c2788220a54c304a4a8b0da, name: 'ASP.NET MVC Course', author: 'Mosh', price: 15 }, {
-        _id: 5c2788220a54c304a4a8b0de, name: 'Angular Course', author: 'Mosh', price: 15 }, { _id:
-        5c2788220a54c304a4a8b0dc, name: 'Node.js Course by Jack', author: 'Jack', price: 12 } ]
-
-        You can see that the most expensive course is displayed first with the other courses sorted
-        by price descending as specified.
-
-        The other way to write this query is to use the or operator instead of the in operator:
-
-        async function getCourses() { return await Course // Second solution is to use the or
-        logical query operator .find({isPublished: true}) .or([ {tags: 'frontend'}, {tags:
-        'backend'}]) .sort({ price: -1 }) .select({name: 1, author: 1, price: 1, tags: 1,
-        isPublished: true}); }
-
-        This should return the exact same result as the first method.
-
+        <p>For the second exercise we need to get all the published frontend and backend courses, sort
+          them by their price in a descending order, pick only their name and author, and display
+          them.</p>
+        <p>The code in this exercise is identical to exercise 1 apart from the query in getCourses:</p>
+<figure>
+    <pre><code class="language-javascript">async function getCourses() {
+  return await Course
+    // First solution is to use the in comparison query operator
+    .find({isPublished: true, tags: {$in: ['backend', 'frontend']}})
+    .sort({ price: -1 })
+    .select({name: 1, author: 1, price: 1, tags: 1, isPublished: true}); }</code></pre>
+    <figcaption>Fig 07-078</figcaption>
+</figure>
+        <p>So we want to get all the published frontend and backend courses. An array:</p>
+<figure>
+    <pre><code class="language-javascript">.find({isPublished: true, tags: ['backend', 'frontend']})</code></pre>
+    <figcaption>Fig 07-079</figcaption>
+</figure>
+        <p>wont work because this will return courses that contain both the specified tags (the logical
+          AND operator will be applied). We need to modify this query to use the in operator
+          (discussed earlier in the section on comparison operators):</p>
+        <figure>
+            <pre><code class="language-javascript">.find({isPublished: true, tags: {$in: ['backend', 'frontend']}})</code></pre>
+            <figcaption>Fig 07-080</figcaption>
+        </figure>
+        <p>We set the tags property to an object. This object contains key value pairs. The keys are
+          MongoDB operators - in this case $in. The Javascript construct we use to represent multiple
+          values is an array. We set an array of two strings: 'frontend' and 'backend'.</p>
+        <p>Next we sort by price in a descending order:</p>
+        <figure>
+            <pre><code class="language-javascript">.sort({ price: -1 })</code></pre>
+            <figcaption>Fig 07-081</figcaption>
+        </figure>
+        <p>Alternatively we can use the following syntax:</p>
+        <figure>
+            <pre><code class="language-javascript">.sort('-price')</code></pre>
+            <figcaption>Fig 07-082</figcaption>
+        </figure>
+        <p>Finally we specify that just the name, author and price properties should be returned:</p>
+        <figure>
+            <pre><code class="language-javascript">.select('name author price')</code></pre>
+            <figcaption>Fig 07-083</figcaption>
+        </figure>
+        <p>Run the application and you should see something similar to the following:</p>
+<figure>
+    <pre><code class="language-command">[ { _id: 5c2788220a54c304a4a8b0d9,
+    name: 'Node.js Course',
+    author: 'Mosh', price: 20 },
+  { _id: 5c2788220a54c304a4a8b0da,
+    name: 'ASP.NET MVC Course',
+    author: 'Mosh', price: 15 },
+  { _id: 5c2788220a54c304a4a8b0de,
+    name: 'Angular Course',
+    author: 'Mosh', price: 15 },
+  { _id: 5c2788220a54c304a4a8b0dc,
+    name: 'Node.js Course by Jack',
+    author: 'Jack', price: 12 } ]</code></pre>
+    <figcaption>Fig 07-084</figcaption>
+</figure>
+        <p>You can see that the most expensive course is displayed first with the other courses sorted
+          by price descending as specified.</p>
+        <p>The other way to write this query is to use the or operator instead of the in operator:</p>
+<figure>
+    <pre><code class="language-javascript">async function getCourses() {
+  return await Course
+  // Second solution is to use the or logical query operator
+    .find({isPublished: true})
+    .or([ {tags: 'frontend'}, {tags: 'backend'}])
+    .sort({ price: -1 })
+    .select({name: 1, author: 1, price: 1, tags: 1, isPublished: true});
+}</code></pre>
+    <figcaption>Fig 07-085</figcaption>
+</figure>
+        <p>This should return the exact same result as the first method.</p>
         <h3>97 - Exercise 3</h3>
-
-        For the third exercise we will get all the published courses that are $15 or more, or have
-        the word 'by' in their title.
-
-        Again, the code is the same apart from the query in getCourses:
-
-        async function getCourses() { return await Course .find({ isPublished: true}) .or( [{ name:
-        /.*by.*/i}, { price: {$gte: 15}}]) .sort({ price: -1 }) .select({name: 1, author: 1, price:
-        1}); }
-
-        We cannot use a simple value to express a concept like $15 or more:
-
+        <p>For the third exercise we will get all the published courses that are $15 or more, or have
+          the word 'by' in their title.</p>
+        <p>Again, the code is the same apart from the query in getCourses:</p>
+<figure>
+    <pre><code class="language-javascript">async function getCourses() { 
+  return await Course 
+    .find({ isPublished: true}) 
+    .or( [{ name: /.*by.*/i}, { price: {$gte: 15}}]) 
+    .sort({ price: -1 }) 
+    .select({name: 1, author: 1, price: 1}); }</code></pre>
+    <figcaption>Fig 07-086</figcaption>
+</figure>
+        <p>We cannot use a simple value to express a concept like $15 or more:</p>
         .or([ { price: 15 }])
-
-        So we use an object that contains key value pairs. Our keys, again, are MongoDB operators
-        ($gte in this case):
-
+        <p>So we use an object that contains key value pairs. Our keys, again, are MongoDB operators
+          ($gte in this case):</p>
         .or([ { price: { $gte: 15 }}])
-
-        Our second filter should get the courses that have the word by in their title:
-
+        <p>Our second filter should get the courses that have the word by in their title:</p>
         .or( [{ name: /.*by.*/i}, { price: {$gte: 15}}])
-
-        Again we cannot use a simple value because we will then just get courses who's name is "by".
-        We replace the string with a regular expression:
-
+        <p>Again we cannot use a simple value because we will then just get courses who's name is "by".
+          We replace the string with a regular expression:</p>
         /pattern/
-
-        In regular expressions we use the period to represent a character and the * to represent 0
-        or more:
-
+        <p>In regular expressions we use the period to represent a character and the * to represent 0
+          or more:</p>
         /.*by.*/
-
-        This will return 0 or more characters before or after the search criteria "by". We add an i
-        to ensure the search is case insensitive:
-
+        <p>This will return 0 or more characters before or after the search criteria "by". We add an i
+          to ensure the search is case insensitive:</p>
         /.*by.*/i
-
-        If we run the application we should see something similar to the following:
-
+        <p>If we run the application we should see something similar to the following:</p>
         [ { _id: 5c2788220a54c304a4a8b0d9, name: 'Node.js Course', author: 'Mosh', price: 20 }, {
         _id: 5c2788220a54c304a4a8b0da, name: 'ASP.NET MVC Course', author: 'Mosh', price: 15 }, {
         _id: 5c2788220a54c304a4a8b0de, name: 'Angular Course', author: 'Mosh', price: 15 }, { _id:
         5c2788220a54c304a4a8b0dc, name: 'Node.js Course by Jack', author: 'Jack', price: 12 } ]
-
-        We get four courses, the first three have a price that is greater than or equal to 15$. The
-        fourth course has the string "by" in the name.
+        <p>We get four courses, the first three have a price that is greater than or equal to 15$. The
+          fourth course has the string "by" in the name.</p>
 
         <h3>98 - Updating Documents Query First</h3>
 
