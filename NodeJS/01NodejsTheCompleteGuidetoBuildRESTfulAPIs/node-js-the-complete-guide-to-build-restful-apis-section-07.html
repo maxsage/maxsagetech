@@ -753,69 +753,69 @@ const pageSize = 10;</code></pre>
         </figure>
         <p>For this reason we await the result and store it in a const. Because we use the await
           operator we need to wrap this line in an async function which we will call run:</p>
-<figure>
+        <figure>
     <pre><code class="language-javascript">async function run() {
   const courses = await getCourses();
   console.log(courses);
 }</code></pre>
-    <figcaption>Fig 07-075</figcaption>
-</figure>
+          <figcaption>Fig 07-075</figcaption>
+        </figure>
         <p>Finally we call the run function:</p>
         <figure>
-            <pre><code class="language-javascript">run();</code></pre>
-            <figcaption>Fig 07-076</figcaption>
+          <pre><code class="language-javascript">run();</code></pre>
+          <figcaption>Fig 07-076</figcaption>
         </figure>
         <p>If you now run the application you should see something similar to this:</p>
-<figure>
-    <img src="./images/Fig07-077.PNG"/>
-    <figcaption>Fig 07-077</figcaption>
-</figure>
+        <figure>
+          <img src="./images/Fig07-077.PNG"/>
+          <figcaption>Fig 07-077</figcaption>
+        </figure>
         <h3>96 - Exercise 2</h3>
         <p>For the second exercise we need to get all the published frontend and backend courses, sort
           them by their price in a descending order, pick only their name and author, and display
           them.</p>
         <p>The code in this exercise is identical to exercise 1 apart from the query in getCourses:</p>
-<figure>
+        <figure>
     <pre><code class="language-javascript">async function getCourses() {
   return await Course
     // First solution is to use the in comparison query operator
     .find({isPublished: true, tags: {$in: ['backend', 'frontend']}})
     .sort({ price: -1 })
     .select({name: 1, author: 1, price: 1, tags: 1, isPublished: true}); }</code></pre>
-    <figcaption>Fig 07-078</figcaption>
-</figure>
+          <figcaption>Fig 07-078</figcaption>
+        </figure>
         <p>So we want to get all the published frontend and backend courses. An array:</p>
-<figure>
-    <pre><code class="language-javascript">.find({isPublished: true, tags: ['backend', 'frontend']})</code></pre>
-    <figcaption>Fig 07-079</figcaption>
-</figure>
+        <figure>
+          <pre><code class="language-javascript">.find({isPublished: true, tags: ['backend', 'frontend']})</code></pre>
+          <figcaption>Fig 07-079</figcaption>
+        </figure>
         <p>wont work because this will return courses that contain both the specified tags (the logical
           AND operator will be applied). We need to modify this query to use the in operator
           (discussed earlier in the section on comparison operators):</p>
         <figure>
-            <pre><code class="language-javascript">.find({isPublished: true, tags: {$in: ['backend', 'frontend']}})</code></pre>
-            <figcaption>Fig 07-080</figcaption>
+          <pre><code class="language-javascript">.find({isPublished: true, tags: {$in: ['backend', 'frontend']}})</code></pre>
+          <figcaption>Fig 07-080</figcaption>
         </figure>
         <p>We set the tags property to an object. This object contains key value pairs. The keys are
           MongoDB operators - in this case $in. The Javascript construct we use to represent multiple
           values is an array. We set an array of two strings: 'frontend' and 'backend'.</p>
         <p>Next we sort by price in a descending order:</p>
         <figure>
-            <pre><code class="language-javascript">.sort({ price: -1 })</code></pre>
-            <figcaption>Fig 07-081</figcaption>
+          <pre><code class="language-javascript">.sort({ price: -1 })</code></pre>
+          <figcaption>Fig 07-081</figcaption>
         </figure>
         <p>Alternatively we can use the following syntax:</p>
         <figure>
-            <pre><code class="language-javascript">.sort('-price')</code></pre>
-            <figcaption>Fig 07-082</figcaption>
+          <pre><code class="language-javascript">.sort('-price')</code></pre>
+          <figcaption>Fig 07-082</figcaption>
         </figure>
         <p>Finally we specify that just the name, author and price properties should be returned:</p>
         <figure>
-            <pre><code class="language-javascript">.select('name author price')</code></pre>
-            <figcaption>Fig 07-083</figcaption>
+          <pre><code class="language-javascript">.select('name author price')</code></pre>
+          <figcaption>Fig 07-083</figcaption>
         </figure>
         <p>Run the application and you should see something similar to the following:</p>
-<figure>
+        <figure>
     <pre><code class="language-command">[ { _id: 5c2788220a54c304a4a8b0d9,
     name: 'Node.js Course',
     author: 'Mosh', price: 20 },
@@ -828,12 +828,12 @@ const pageSize = 10;</code></pre>
   { _id: 5c2788220a54c304a4a8b0dc,
     name: 'Node.js Course by Jack',
     author: 'Jack', price: 12 } ]</code></pre>
-    <figcaption>Fig 07-084</figcaption>
-</figure>
+          <figcaption>Fig 07-084</figcaption>
+        </figure>
         <p>You can see that the most expensive course is displayed first with the other courses sorted
           by price descending as specified.</p>
         <p>The other way to write this query is to use the or operator instead of the in operator:</p>
-<figure>
+        <figure>
     <pre><code class="language-javascript">async function getCourses() {
   return await Course
   // Second solution is to use the or logical query operator
@@ -842,280 +842,406 @@ const pageSize = 10;</code></pre>
     .sort({ price: -1 })
     .select({name: 1, author: 1, price: 1, tags: 1, isPublished: true});
 }</code></pre>
-    <figcaption>Fig 07-085</figcaption>
-</figure>
+          <figcaption>Fig 07-085</figcaption>
+        </figure>
         <p>This should return the exact same result as the first method.</p>
         <h3>97 - Exercise 3</h3>
         <p>For the third exercise we will get all the published courses that are $15 or more, or have
           the word 'by' in their title.</p>
         <p>Again, the code is the same apart from the query in getCourses:</p>
-<figure>
-    <pre><code class="language-javascript">async function getCourses() { 
-  return await Course 
-    .find({ isPublished: true}) 
-    .or( [{ name: /.*by.*/i}, { price: {$gte: 15}}]) 
-    .sort({ price: -1 }) 
+        <figure>
+    <pre><code class="language-javascript">async function getCourses() {
+  return await Course
+    .find({ isPublished: true})
+    .or( [{ name: /.*by.*/i}, { price: {$gte: 15}}])
+    .sort({ price: -1 })
     .select({name: 1, author: 1, price: 1}); }</code></pre>
-    <figcaption>Fig 07-086</figcaption>
-</figure>
+          <figcaption>Fig 07-086</figcaption>
+        </figure>
         <p>We cannot use a simple value to express a concept like $15 or more:</p>
-        .or([ { price: 15 }])
+        <figure>
+          <pre><code class="language-javascript">.or([ { price: 15 }])</code></pre>
+          <figcaption>Fig 07-087</figcaption>
+        </figure>
         <p>So we use an object that contains key value pairs. Our keys, again, are MongoDB operators
           ($gte in this case):</p>
-        .or([ { price: { $gte: 15 }}])
+        <figure>
+          <pre><code class="language-javascript">.or([ { price: { $gte: 15 }}])</code></pre>
+          <figcaption>Fig 07-088</figcaption>
+        </figure>
         <p>Our second filter should get the courses that have the word by in their title:</p>
-        .or( [{ name: /.*by.*/i}, { price: {$gte: 15}}])
+        <figure>
+          <pre><code class="language-javascript">.or( [{ name: /.*by.*/i}, { price: {$gte: 15}}])</code></pre>
+          <figcaption>Fig 07-089</figcaption>
+        </figure>
         <p>Again we cannot use a simple value because we will then just get courses who's name is "by".
           We replace the string with a regular expression:</p>
-        /pattern/
+        <figure>
+          <pre><code class="language-javascript">/pattern/</code></pre>
+          <figcaption>Fig 07-090</figcaption>
+        </figure>
         <p>In regular expressions we use the period to represent a character and the * to represent 0
           or more:</p>
-        /.*by.*/
+        <figure>
+          <pre><code class="language-javascript">/.*by.*/</code></pre>
+          <figcaption>Fig 07-091</figcaption>
+        </figure>
         <p>This will return 0 or more characters before or after the search criteria "by". We add an i
           to ensure the search is case insensitive:</p>
-        /.*by.*/i
+        <figure>
+          <pre><code class="language-javascript">/.*by.*/i</code></pre>
+          <figcaption>Fig 07-092</figcaption>
+        </figure>
         <p>If we run the application we should see something similar to the following:</p>
-        [ { _id: 5c2788220a54c304a4a8b0d9, name: 'Node.js Course', author: 'Mosh', price: 20 }, {
-        _id: 5c2788220a54c304a4a8b0da, name: 'ASP.NET MVC Course', author: 'Mosh', price: 15 }, {
-        _id: 5c2788220a54c304a4a8b0de, name: 'Angular Course', author: 'Mosh', price: 15 }, { _id:
-        5c2788220a54c304a4a8b0dc, name: 'Node.js Course by Jack', author: 'Jack', price: 12 } ]
+        <figure>
+          <img src="./images/Fig07-088.PNG"/>
+          <figcaption>Fig 07-088</figcaption>
+        </figure>
         <p>We get four courses, the first three have a price that is greater than or equal to 15$. The
           fourth course has the string "by" in the name.</p>
 
+
         <h3>98 - Updating Documents Query First</h3>
+        <p>In this lecture we will cover how to update documents in a MongoDB database. Let's create a
+          new async function called updateCourse:</p>
+        <figure>
+            <pre><code class="language-javascript">async function updateCourse(id) { }
+        updateCourse();</code></pre>
+          <figcaption>Fig 07-089</figcaption>
+        </figure>
+        <p>This function takes a parameter of the id of the course which we want to update. There are
+          basically two ways to update a document in MongoDB:</p>
+        <ul>
+          <li>Query first</li>
+          <li>Update first</li>
+        </ul>
+        <p>Query first involves the following steps:</p>
+        <ul>
+          <li>find a document</li>
+          <li>modify it's properties</li>
+          <li>save the document</li>
+        </ul>
+        <p>Update first involves the following steps:</p>
+        <ul>
+          <li>update directly</li>
+          <li>optionally get the updated document</li>
+        </ul>
+        <p>We will look at the second approach in the next lecture. So for Query first update the
+          updateCourse function:</p>
+        <figure>
+          <pre><code class="language-javascript">Course.findById(id);</code></pre>
+          <figcaption>Fig 07-090</figcaption>
+        </figure>
+        <p>this returns a promise which we await and store in a constant:</p>
+        <figure>
+          <pre><code class="language-javascript">const course = await Course.findById(id);</code></pre>
+          <figcaption>Fig 07-091</figcaption>
+        </figure>
+        <p>We need to check that a course with that id actually exists:</p>
+        <figure>
+          <pre><code class="language-javascript">if(!course) return;</code></pre>
+          <figcaption>Fig 07-092</figcaption>
+        </figure>
+        <p>If not we return immediately. However, if a course with that id does exist, we can update
+          the course:</p>
+        <figure>
+    <pre><code class="language-javascript">course.isPublished = true;
+course.author = 'Another Author';
+</code></pre>
+          <figcaption>Fig 07-093</figcaption>
+        </figure>
+        <p>Another approach involves using the set method instead of setting multiple properties:</p>
+        <figure>
+            <pre><code class="language-javascript">course.set({
+  isPublished: true;
+  author: 'Another Author'
+});</code></pre>
+          <figcaption>Fig 07-094</figcaption>
+        </figure>
+        <p>Finally we call the save method:</p>
+        <figure>
+            <pre><code class="language-javascript">const result = await course.save();
+console.log(result);</code></pre>
+          <figcaption>Fig 07-095</figcaption>
+        </figure>
+        <p>The save method returns a promise which we await. We then log it on the console. We can use
+          MongoDB Compass to get a valid Course Id which we can paste into the call to updateCourse:</p>
+        <figure>
+          <pre><code class="language-javascript">updateCourse('5c2788220a54c304a4a8b0d9');</code></pre>
+          <figcaption>Fig 07-096</figcaption>
+        </figure>
+        <p>If we run the application you should see something similar to this:</p>
+        <figure>
+          <img src="./images/Fig07-097.PNG"/>
+          <figcaption>Fig 07-097</figcaption>
+        </figure>
 
-        In this lecture we will cover how to update documents in a MongoDB database. Let's create a
-        new async function called updateCourse:
-
-        async function updateCourse(id) { }
-
-        updateCourse();
-
-        This function takes a parameter of the id of the course which we want to update. There are
-        basically two ways to update a document in MongoDB:
-
-        - Query first - Update first
-
-        Query first involves the following steps: - find a document - modify it's properties - save
-        the document
-
-        Update first involves the following steps: - update directly - optionally get the updated
-        document
-
-        We will look at the second approach in the next lecture. So for Query first update the
-        updateCourse function:
-
-        Course.findById(id);
-
-        this returns a promise which we await and store in a constant:
-
-        const course = await Course.findById(id);
-
-        We need to check that a course with that id actually exists:
-
-        if(!course) return;
-
-        If not we return immediately. However, if a course with that id does exist, we can update
-        the course:
-
-        course.isPublished = true; course.author = 'Another Author';
-
-        Another approach involves using the set method instead of setting multiple properties:
-
-        course.set({ isPublished: true; author: 'Another Author' });
-
-        Finally we call the save method:
-
-        const result = await course.save(); console.log(result);
-
-        The save method returns a promise which we await. We then log it on the console. We can use
-        MongoDB Compass to get a valid Course Id which we can paste into the call to updateCourse:
-
-        updateCourse('5c2788220a54c304a4a8b0d9');
-
-        If we run the application you should see something similar to this:
-
-        Connected to MongoDB... { tags: [], _id: 5ad1fb7a51d9a0bad08426b8, name: 'Node Course',
-        authors: [ { _id: 5ad1fb7a51d9a0bad08426b6, name: 'Mosh' }, { _id: 5ad1fb7a51d9a0bad08426b7,
-        name: 'John' } ], __v: 5, date: 2018-12-30T13:02:25.348Z, isPublished: true, author:
-        'Another Author' }
 
         <h3>99 - Updating A Document - Update First</h3>
-
-        In the last lecture you learned about the query first approach to update a document. This
-        approach is useful, if you receive an input from the client and you want to make sure that
-        the update is a valid operation.
-
-        For example, if the course is already published then perhaps we shouldn't be able to update
-        the Author. To implement this business rule we need to retrieve the course first. Then we
-        can add logic like this:
-
-        if (course.isPublished) return;
-
-        However, sometimes you just want to update one or more documents directly in the database.
-        So instead of findById we use the update method:
-
-        const course = await Course.update({ _id: id });
-
-        The first argument is a query or filter object. In the example above we pass an id which
-        should return just one document. We can pass something more generic:
-
-        const course = await Course.update({ isPublished: false });
-
-        This will update all the courses that are not published.
-
-        The second argument to the update method is the update object:
-
-        const course = await Course.update({ _id: id }, {
-
-        });
-
-        The update object uses one or more of the MongoDB update operators: $currentDate Sets the
-        value of a field to current date, either as a Date or a Timestamp. $inc Increments the value
-        of the field by the specified amount. $min Only update the field if the specified value is
-        less than the existing field value $max Only update the field if the specified value is
-        greater than the existing field value. $mul Multiplies the value of the field by the
-        specified amount. $rename Renames a field. $set Sets the value of a field in a document.
-        $setOnInsert Sets the value of a field if an update results in an insert of a document. Has
-        no effect on update operations that modify existing documents. $unset Removes the specified
-        field from a document.
-
-        We will use the set operator in our example:
-
-        const result = await Course.update({ _id: id }, { $set: { author: 'Mosh', isPublished: false
-        } });
-
-        With the update method we can update the document directly in the database without
-        retrieving it first.
-
-        If we run the application you should see something similar to this:
-
-        { n: 1, nModified: 1, ok: 1 }
-
-        We can see in the results object that we have modified one object.
-
-        Sometimes you want to get the document that was updated. For this you can use
-        findByIdAndUpdate instead of update:
-
-        const course = await Course.findByIdAndUpdate(id , { $set: { author: 'Jack', isPublished:
-        true } });
-
-        The first argument is an id instead of a query object. We get back a course object so rename
-        the const to course instead of result.
-
-        If we run this application you should see something like:
-
-        Connected to MongoDB... { tags: [ 'express', 'backend' ], _id: 5c2788220a54c304a4a8b0d8,
-        date: 2018-01-24T21:42:27.388Z, name: 'Express.js Course', author: 'Moshi', isPublished:
-        false, price: 10, __v: 0 }
-
-        The author and the isPublished properties do not reflect the new value. What we get here is
-        the original document before the update operation.
-
-        To get the updated document you need to pass an option:
-
-        const course = await Course.findByIdAndUpdate(id , { $set: { author: 'Jason', isPublished:
-        false } }, { new: true });
-
-        So we add an object with a key of new and a value of true. If we run again we should now see
-        the updated document:
-
-        Connected to MongoDB... { tags: [ 'express', 'backend' ], _id: 5c2788220a54c304a4a8b0d8,
-        date: 2018-01-24T21:42:27.388Z, name: 'Express.js Course', author: 'Jason', isPublished:
-        false, price: 10, __v: 0 }
+        <p>In the last lecture you learned about the query first approach to update a document. This
+          approach is useful, if you receive an input from the client and you want to make sure that
+          the update is a valid operation.</p>
+        <p>For example, if the course is already published then perhaps we shouldn't be able to update
+          the Author. To implement this business rule we need to retrieve the course first. Then we
+          can add logic like this:</p>
+        <figure>
+          <pre><code class="language-javascript">if (course.isPublished) return;</code></pre>
+          <figcaption>Fig 07-098</figcaption>
+        </figure>
+        <p>However, sometimes you just want to update one or more documents directly in the database.
+          So instead of findById we use the update method:</p>
+        <figure>
+          <pre><code class="language-javascript">const course = await Course.update({ _id: id });</code></pre>
+          <figcaption>Fig 07-099</figcaption>
+        </figure>
+        <p>The first argument is a query or filter object. In the example above we pass an id which
+          should return just one document. We can pass something more generic:</p>
+        <figure>
+          <pre><code
+            class="language-javascript">const course = await Course.update({ isPublished: false });</code></pre>
+          <figcaption>Fig 07-100</figcaption>
+        </figure>
+        <p>This will update all the courses that are not published.</p>
+        <p>The second argument to the update method is the update object:</p>
+        <figure>
+    <pre><code class="language-javascript">const course = await Course.update({ _id: id }, {
+});
+</code></pre>
+          <figcaption>Fig 07-101</figcaption>
+        </figure>
+        <p>The update object uses one or more of the MongoDB update operators:</p>
+        <table class="table">
+          <thead>
+          <tr>
+            <td>Operator</td>
+            <td>Description</td>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>$currentDate</td>
+            <td>Sets the value of a field to current date, either as a Date or a Timestamp.</td>
+          </tr>
+          <tr>
+            <td>$inc</td>
+            <td>Increments the value of the field by the specified amount.</td>
+          </tr>
+          <tr>
+            <td>$min</td>
+            <td>Only update the field if the specified value is less than the existing field value</td>
+          </tr>
+          <tr>
+            <td>$max</td>
+            <td>Only update the field if the specified value is greater than the existing field value.</td>
+          </tr>
+          <tr>
+            <td>$mul</td>
+            <td>Multiplies the value of the field by the specified amount.</td>
+          </tr>
+          <tr>
+            <td>$rename</td>
+            <td>Renames a field.</td>
+          </tr>
+          <tr>
+            <td>$set</td>
+            <td>Sets the value of a field in a document.</td>
+          </tr>
+          <tr>
+            <td>$setOnInsert</td>
+            <td>Sets the value of a field if an update results in an insert of a document. Has no effect on update
+              operations that modify existing documents.
+            </td>
+          </tr>
+          <tr>
+            <td>$unset</td>
+            <td> Removes the specified field from a document.
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <p>We will use the set operator in our example:</p>
+        <figure>
+    <pre><code class="language-javascript">const result = await Course.update({ _id: id }, {
+  $set: {
+    author: 'Mosh',
+    isPublished: false
+  }
+});</code></pre>
+          <figcaption>Fig 07-101</figcaption>
+        </figure>
+        <p>With the update method we can update the document directly in the database without
+          retrieving it first.</p>
+        <p>If we run the application you should see something similar to this:</p>
+        <figure>
+          <img src="./images/Fig07-102.png"/>
+          <figcaption>Fig 07-102.png</figcaption>
+        </figure>
+        <p>We can see in the results object that we have modified one document.</p>
+        <p>Sometimes you want to get the document that was updated. For this you can use
+          findByIdAndUpdate instead of update:</p>
+        <figure>
+    <pre><code class="language-javascript">const course = await Course.findByIdAndUpdate(id , {
+  $set: {
+    author: 'Jack',
+    isPublished: true }
+});</code></pre>
+          <figcaption>Fig 07-103</figcaption>
+        </figure>
+        <p>The first argument is an id instead of a query object. We get back a course object so we rename
+          the const to course instead of result.</p>
+        <p>If we run this application you should see something like:</p>
+        <figure>
+          <img src="./images/Fig07-104.png"/>
+          <figcaption>Fig 07-104</figcaption>
+        </figure>
+        <p>The author and the isPublished properties do not reflect the new value. What we get here is
+          the original document <u>before</u> the update operation.</p>
+        <p>To get the updated document you need to pass an option:</p>
+        <figure>
+    <pre><code class="language-javascript">const course = await Course.findByIdAndUpdate(id , {
+  $set: {
+    author: 'Jason',
+    isPublished: false
+  }
+},
+{ new: true });</code></pre>
+          <figcaption>Fig 07-105</figcaption>
+        </figure>
+        <p>So we add an object with a key of new and a value of true. If we run again we should now see
+          the updated document:</p>
+        <figure>
+          <img src="./images/Fig07-106.PNG"/>
+          <figcaption>Fig 07-106</figcaption>
+        </figure>
 
         <h3>100 - Removing Documents</h3>
-
-        Copy the code from the previous lecture and rename the updateCourse method removeCourse:
-
-        async function removeCourse(id) { const result = await Console.deleteOne({ _id: id });
-        console.log(result); }
-
-        The deletOne method will only ever delete one document. So if you specify a more generic
-        query then only the first document that matches the query will be deleted.
-
-        If you run the application you should see something like this:
-
-        { n: 1, ok: 1 }
-
-        The result object shows we have deleted one document.
-
-        If you want to delete multiple documents, instead of delete one use delete many:
-
-        async function removeCourse(id) { const result = await Course.deleteMany({ isPublished: true
-        }); console.log(result); }
-
-        This method also returns a result object that shows us the number of documents that were
-        deleted.
-
-        If you want to get the document that was deleted we use another method:
-
-        const course = await Course.findByIdAndRemove(id);
-
-        If the document has already been deleted this method will return null.
-
+        <p>Copy the code from the previous lecture and rename the updateCourse method removeCourse:</p>
+        <figure>
+    <pre><code class="language-javascript">async function removeCourse(id) {
+  const result = await Console.deleteOne({ _id: id });
+  console.log(result);
+}</code></pre>
+          <figcaption>Fig 07-107</figcaption>
+        </figure>
+        <p>The deletOne method will only ever delete one document. So if you specify a more generic
+          query then only the first document that matches the query will be deleted.</p>
+        <p>If you run the application you should see something like this:</p>
+        <figure>
+            <img src="./images/Fig07-108.PNG"/>
+            <figcaption>Fig 07-108</figcaption>
+        </figure>
+        <p>The result object shows we have deleted one document.</p>
+        <p>If you want to delete multiple documents, instead of delete one use delete many:</p>
+<figure>
+    <pre><code class="language-javascript">async function removeCourse(id) {
+  const result = await Course.deleteMany({
+    isPublished: true
+  }); console.log(result); }</code></pre>
+    <figcaption>Fig 07-109</figcaption>
+</figure>
+        <p>This method also returns a result object that shows us the number of documents that were
+          deleted.</p>
+        <p>If you want to get the document that was deleted we use another method:</p>
+        <figure>
+            <pre><code class="language-javascript">const course = await Course.findByIdAndRemove(id);</code></pre>
+            <figcaption>Fig 07-110</figcaption>
+        </figure>
+        <p>If the document has already been deleted this method will return null.</p>
         <h3>101 - Recap</h3>
-
-        CRUD Operations using MongoDB ------------------------------------------
-
-        So, in this section, you learned that:
-
-        - MongoDB is an open-source document database. It stores data in flexible, JSONlike
-        documents. - In relational databases we have tables and rows, in MongoDB we have collections
-        and documents. A document can contain sub-documents. - We don’t have relationships between
-        documents. - To connect to MongoDB:
-
-        Connecting to MongoDB --------------------- const mongoose = require(‘mongoose’);
-        mongoose.connect(‘mongodb://localhost/playground') .then(() => console.log(‘Connected…’))
-        .catch(err => console.error(‘Connection failed…’));
-
-        - To store objects in MongoDB, we need to define a Mongoose schema first. The schema defines
-        the shape of documents in MongoDB.
-
-        Defining a schema ----------------- const courseSchema = new mongoose.Schema({ name: String,
-        price: Number });
-
-        - We can use a SchemaType object to provide additional details:
-
-        Using a SchemaType object ------------------------- const courseSchema = new
-        mongoose.Schema({ isPublished: { type: Boolean, default: false } });
-
-        - Supported types are: String, Number, Date, Buffer (for storing binary data), Boolean and
-        ObjectID. - Once we have a schema, we need to compile it into a model. A model is like a
-        class. It’s a blueprint for creating objects:
-
-        Creating a model ---------------- const Course = mongoose.model(‘Course’, courseSchema);
-
-        CRUD Operations ---------------
-
-        Saving a document -----------------
-
-        let course = new Course({ name: ‘…’ }); course = await course.save();
-
-        Querying documents ------------------
-
-        const courses = await Course .find({ author: ‘Mosh’, isPublished: true }) .skip(10)
-        .limit(10) .sort({ name: 1, price: -1 }) .select({ name: 1, price: 1 });
-
-        Updating a document (query first) ---------------------------------
-
-        const course = await Course.findById(id); if (!course) return; course.set({ name: ‘…’ });
-        course.save();
-
-        Updating a document (update first) ----------------------------------
-
-        const result = await Course.update({ _id: id }, { $set: { name: ‘…’ } });
-
-        Updating a document (update first) and return it
-        ------------------------------------------------
-
-        const result = await Course.findByIdAndUpdate({ _id: id }, { $set: { name: ‘…’ } }, { new:
-        true });
-
-        Removing a document -------------------
-
-        const result = await Course.deleteOne({ _id: id }); const result = await Course.deleteMany({
-        _id: id }); const course = await Course.findByIdAndRemove(id);
+        <p>So, in this section, you learned that:</p>
+<ul>
+  <li>MongoDB is an open-source document database. It stores data in flexible, JSONlike
+    documents.</li>
+  <li>In relational databases we have tables and rows, in MongoDB we have collections
+    and documents. A document can contain sub-documents.</li>
+  <li>We don’t have relationships between documents.</li>
+</ul>
+        <h4>To connect to MongoDB:</h4>
+<figure>
+    <pre><code class="language-javascript">const mongoose = require(&lsquo;mongoose&rsquo;);
+mongoose.connect(&lsquo;mongodb://localhost/playground')
+  .then(() =&gt; console.log(&lsquo;Connected&hellip;&rsquo;))
+  .catch(err =&gt; console.error(&lsquo;Connection failed&hellip;&rsquo;));</code></pre>
+    <figcaption>Fig 07-111</figcaption>
+</figure>
+      <p>To store objects in MongoDB, we need to define a Mongoose schema first. The schema defines
+        the shape of documents in MongoDB.</p>
+      <h4>Defining a schema</h4>
+<figure>
+    <pre><code class="language-javascript">const courseSchema = new mongoose.Schema({
+  name: String,
+  price: Number });</code></pre>
+    <figcaption>Fig 07-112</figcaption>
+</figure>
+        <p>We can use a SchemaType object to provide additional details:</p>
+        <h4>Using a SchemaType object</h4>
+<figure>
+    <pre><code class="language-javascript">const courseSchema = new mongoose.Schema({
+  isPublished: { type: Boolean, default: false }
+});</code></pre>
+    <figcaption>Fig 07-113</figcaption>
+</figure>
+        <p>Supported types are:</p>
+        <ul>
+          <li>String</li>
+          <li>Number</li>
+          <li>Date</li>
+          <li>Buffer (for storing binary data)</li>
+          <li>Boolean</li>
+          <li>ObjectID</li>
+        </ul>
+        <p>Once we have a schema, we need to compile it into a model. A model is like a
+          class. It’s a blueprint for creating objects:</p>
+        <h4>Creating a model</h4>
+        <figure>
+            <pre><code class="language-javascript">const Course = mongoose.model(&lsquo;Course&rsquo;, courseSchema);</code></pre>
+            <figcaption>Fig 07-114</figcaption>
+        </figure>
+        <h4>CRUD Operations</h4>
+        <p>Saving a document:</p>
+<figure>
+    <pre><code class="language-javascript">let course = new Course({ name: &lsquo;&hellip;&rsquo; });
+course = await course.save();</code></pre>
+    <figcaption>Fig 07-115</figcaption>
+</figure>
+        <p>Querying documents:</p>
+<figure>
+    <pre><code class="language-javascript">const courses = await Course
+  .find({ author: &lsquo;Mosh&rsquo;, isPublished: true })
+  .skip(10)
+  .limit(10)
+  .sort({ name: 1, price: -1 })
+  .select({ name: 1, price: 1 });</code></pre>
+    <figcaption>Fig 07-116</figcaption>
+</figure>
+        <p>Updating a document (query first)</p>
+<figure>
+    <pre><code class="language-javascript">const course = await Course.findById(id);
+if (!course) return;
+  course.set({ name: &lsquo;&hellip;&rsquo; });
+  course.save();</code></pre>
+    <figcaption>Fig 07-117</figcaption>
+</figure>
+        <p>Updating a document (update first)</p>
+<figure>
+    <pre><code class="language-javascript">const result = await Course.update({ _id: id }, {
+  $set: { name: &lsquo;&hellip;&rsquo; } });</code></pre>
+    <figcaption>Fig 07-118</figcaption>
+</figure>
+        <p>Updating a document (update first) and return it</p>
+<figure>
+    <pre><code class="language-javascript">const result = await Course.findByIdAndUpdate({ _id: id }, {
+  $set: { name: ‘…’ }
+}, { new: true });</code></pre>
+    <figcaption>Fig 07-119</figcaption>
+</figure>
+        <p>Removing a document</p>
+<figure>
+    <pre><code class="language-javascript">const result = await Course.deleteOne({ _id: id });
+const result = await Course.deleteMany({ _id: id });
+const course = await Course.findByIdAndRemove(id);</code></pre>
+    <figcaption>Fig 07-120</figcaption>
+</figure>
       </div>
     </div>
   </div>
