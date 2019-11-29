@@ -44,7 +44,8 @@
           <figcaption>Fig 08-002</figcaption>
         </figure>
         <p>And then save that course to the database then that would be a perfectly valid operation.</p>
-        <p>Currently MongoDB doesn't care if we add a course without a name or price. In this lecture we will see how to add validation.</p>
+        <p>Currently MongoDB doesn't care if we add a course without a name or price. In this lecture we will see how to
+          add validation.</p>
         <p>Let's make the name required:</p>
         <figure>
     <pre><code class="language-javascript">const courseSchema = new mongoose.Schema({
@@ -58,12 +59,14 @@
           <figcaption>Fig 08-003</figcaption>
         </figure>
         <p>First we replace the String definition with an object. We set the type to String and required to true.</p>
-        <p>Now if we create a course without a name and try to save the course in the database we will receive an exception:</p>
+        <p>Now if we create a course without a name and try to save the course in the database we will receive an
+          exception:</p>
         <figure>
           <img src="./images/Fig08-004.PNG"/>
           <figcaption>Fig 08-004</figcaption>
         </figure>
-        <p>This means that the promise was rejected but the rejection has not been handled. Remember that promises can be in three states:</p>
+        <p>This means that the promise was rejected but the rejection has not been handled. Remember that promises can
+          be in three states:</p>
         <ul>
           <li>pending</li>
           <li>fulfilled</li>
@@ -84,7 +87,8 @@ catch (ex) {
           <img src="./images/Fig08-005.PNG"/>
           <figcaption>Fig 08-005</figcaption>
         </figure>
-        <p>So MongoDB doesn't allow us to save invalid course objects to the database - validation kicks in at the point we try and save our course to the database.</p>
+        <p>So MongoDB doesn't allow us to save invalid course objects to the database - validation kicks in at the point
+          we try and save our course to the database.</p>
         <p>We can also manually trigger validation:</p>
         <figure>
             <pre><code class="language-javascript">try {
@@ -94,13 +98,15 @@ catch (ex) {
 }</code></pre>
           <figcaption>Fig 08-006</figcaption>
         </figure>
-        <p>The validate method returns a promise of void so we can await the validate method. If our course is invalid we will get an exception and end up in the catch block.</p>
+        <p>The validate method returns a promise of void so we can await the validate method. If our course is invalid
+          we will get an exception and end up in the catch block.</p>
         <p>Running the application should return the same result:</p>
         <figure>
           <img src="./images/Fig08-007.PNG"/>
           <figcaption>Fig 08-007</figcaption>
         </figure>
-        <p>The problem with the validate method returning a promise of void is that we don't get any result. Ideally the validate method would return a boolean so we could write something like this:</p>
+        <p>The problem with the validate method returning a promise of void is that we don't get any result. Ideally the
+          validate method would return a boolean so we could write something like this:</p>
         <figure>
     <pre><code class="language-javascript">try {
   const isValid = await course.validate();
@@ -142,32 +148,49 @@ catch (ex) {
           <pre><code class="language-javascript">name: { type: String, required: true },</code></pre>
           <figcaption>Fig 08-011</figcaption>
         </figure>
-        <p>is only meaningful in mongoose. MongoDB doesn't care about this name property. So if you have worked with databases like SQL Server or MySQL you know that in these databases we can define validation at the database level.</p>
-        <p>In MongoDB we can't specify required fields at the database level - this logic is only meaningful in Mongoose. At the time we try and save the course Mongoose runs the validation logic and if the course is not valid Mongoose prevents it being saved to the database.</p>
-        <p>One last point of clarification. Earlier in the section about express we looked at a validation package called Joi. We used Joi for validation so you might be asking why we have two kinds of validation. The two types of validation complement each other. We use Joi in our restful APIs to make sure the data that the client is sending is valid data. However, we still need the Mongoose validation to make sure that the data saved in the database is in the right shape.</p>
-        <p>It is possible that the client sends us a valid course in the body of the request, but when we create a course object in our Http service we may, for example, forget the name property to what we get from req.body.name:</p>
+        <p>is only meaningful in mongoose. MongoDB doesn't care about this name property. So if you have worked with
+          databases like SQL Server or MySQL you know that in these databases we can define validation at the database
+          level.</p>
+        <p>In MongoDB we can't specify required fields at the database level - this logic is only meaningful in
+          Mongoose. At the time we try and save the course Mongoose runs the validation logic and if the course is not
+          valid Mongoose prevents it being saved to the database.</p>
+        <p>One last point of clarification. Earlier in the section about express we looked at a validation package
+          called Joi. We used Joi for validation so you might be asking why we have two kinds of validation. The two
+          types of validation complement each other. We use Joi in our restful APIs to make sure the data that the
+          client is sending is valid data. However, we still need the Mongoose validation to make sure that the data
+          saved in the database is in the right shape.</p>
+        <p>It is possible that the client sends us a valid course in the body of the request, but when we create a
+          course object in our Http service we may, for example, forget the name property to what we get from
+          req.body.name:</p>
         <figure>
           <pre><code class="language-javascript">name: 'Angular Course', // req.body.name</code></pre>
           <figcaption>Fig 08-012</figcaption>
         </figure>
-        <p>So by enforcing validation in Mongoose we can ensure that programming errors like the one described above will not result in invalid documents being persisted in a MongoDB database.</p>
+        <p>So by enforcing validation in Mongoose we can ensure that programming errors like the one described above
+          will not result in invalid documents being persisted in a MongoDB database.</p>
 
         <h3>103 - Built-in Validators</h3>
-        <p>In the last lecture we learned about the required validator which is one of the built-in validators in Mongoose. In this lecture we will examine the built-in validators in more detail.</p>
-        <p>The required property can be set to a boolean or a function that returns a boolean. This is useful when you want to conditionally make a property required or not. To demonstrate, let's imagine that price is only required if the course is published:</p>
+        <p>In the last lecture we learned about the required validator which is one of the built-in validators in
+          Mongoose. In this lecture we will examine the built-in validators in more detail.</p>
+        <p>The required property can be set to a boolean or a function that returns a boolean. This is useful when you
+          want to conditionally make a property required or not. To demonstrate, let's imagine that price is only
+          required if the course is published:</p>
         <figure>
     <pre><code class="language-javascript">price:
 { type: Number,
   required: function() { return this.isPublished; }, }</code></pre>
           <figcaption>Fig 08-013</figcaption>
         </figure>
-        <p>First we replace Number with an object, set the type to number. Add the required property and specify a function. If published is true then the price will be required.</p>
+        <p>First we replace Number with an object, set the type to number. Add the required property and specify a
+          function. If published is true then the price will be required.</p>
         <p>For clarification, we cannot replace the function we specified above with an arrow function:</p>
         <figure>
           <pre><code class="language-javascript">required: () =&gt; { return this.isPublished; },</code></pre>
           <figcaption>Fig 08-014</figcaption>
         </figure>
-        <p>This is because arrow functions don't have their own this. Arrow functions use the this value of the enclosing execution context. In this particular context, there will be a function somewhere in the Mongoose module that will call this function:</p>
+        <p>This is because arrow functions don't have their own this. Arrow functions use the this value of the
+          enclosing execution context. In this particular context, there will be a function somewhere in the Mongoose
+          module that will call this function:</p>
         <figure>
           <pre><code class="language-javascript">() =&gt; { return this.isPublished; },</code></pre>
           <figcaption>Fig 08-015</figcaption>
@@ -179,7 +202,8 @@ catch (ex) {
           <figcaption>Fig 08-016</figcaption>
         </figure>
         <p>The validation message is returned as a simple string.</p>
-        <p>Depending on the type of properties defined in your schema you will have different properties available. For example, with strings you also have minlength, maxlength and match.</p>
+        <p>Depending on the type of properties defined in your schema you will have different properties available. For
+          example, with strings you also have minlength, maxlength and match.</p>
         <figure>
     <pre><code class="language-javascript">name: {
   type: String,
@@ -191,7 +215,8 @@ catch (ex) {
           <figcaption>Fig 08-017</figcaption>
         </figure>
         <p>match allows you to pass a regular expression (not really relevant for the name of a course)</p>
-        <p>Another useful validator we have for strings is enum. To demonstrate add another property called category:</p>
+        <p>Another useful validator we have for strings is enum. To demonstrate add another property called
+          category:</p>
         <figure>
     <pre><code class="language-javascript">category: {
   type: String,
@@ -200,13 +225,15 @@ catch (ex) {
 },</code></pre>
           <figcaption>Fig 08-018</figcaption>
         </figure>
-        <p>We set the enum validator to an array of valid strings. When we create a course the category will have to be set to one of these categories otherwise we will receive a validation error.</p>
+        <p>We set the enum validator to an array of valid strings. When we create a course the category will have to be
+          set to one of these categories otherwise we will receive a validation error.</p>
         <p>Add category to to the course object in the createCourse function:</p>
         <figure>
           <pre><code class="language-javascript">category: '-',</code></pre>
           <figcaption>Fig 08-019</figcaption>
         </figure>
-        <p>If we reinstate the name and price properties in the course object and then run the application you will see:</p>
+        <p>If we reinstate the name and price properties in the course object and then run the application you will
+          see:</p>
         <figure>
           <img src="./images/Fig08-020.PNG"/>
           <figcaption>Fig 08-020.PNG</figcaption>
@@ -218,7 +245,9 @@ catch (ex) {
           <pre><code class="language-javascript">tags: [ String ],</code></pre>
           <figcaption>Fig 08-021</figcaption>
         </figure>
-        <p>tags is a string array. What if we want to enforce a rule that every course should have at least one tag. We cannot use the required validator here because with required you can simply pass an empty array and that would be perfectly valid from Mongooses point of view.</p>
+        <p>tags is a string array. What if we want to enforce a rule that every course should have at least one tag. We
+          cannot use the required validator here because with required you can simply pass an empty array and that would
+          be perfectly valid from Mongooses point of view.</p>
         <p>Here we need a custom validator. First replace the tags String definition with an object:</p>
         <figure>
     <pre><code class="language-javascript">tags: {
@@ -232,7 +261,9 @@ catch (ex) {
 },</code></pre>
           <figcaption>Fig 08-022</figcaption>
         </figure>
-        <p>We set the type to Array. Then we define a custom validator. We set the validate property to a an object. In this object we define a property called validator which we set to a function. This function takes an argument v (short for value). We define the custom validator logic inside this function:</p>
+        <p>We set the type to Array. Then we define a custom validator. We set the validate property to a an object. In
+          this object we define a property called validator which we set to a function. This function takes an argument
+          v (short for value). We define the custom validator logic inside this function:</p>
         <figure>
           <pre><code class="language-javascript">return v.length &gt; 0;</code></pre>
           <figcaption>Fig 08-023</figcaption>
@@ -266,7 +297,8 @@ tags: [], // empty array</code></pre>
           <img src="./images/Fig08-028.PNG"/>
           <figcaption>Fig 08-028</figcaption>
         </figure>
-        <p>We get the same message. If we don't set the tags property then because it's type is defined as array Mongoose will initialize this to an empty array.</p>
+        <p>We get the same message. If we don't set the tags property then because it's type is defined as array
+          Mongoose will initialize this to an empty array.</p>
         <p>Set the tags property to null:</p>
         <figure>
           <pre><code class="language-javascript">tags: [],</code></pre>
@@ -277,15 +309,18 @@ tags: [], // empty array</code></pre>
           <img src="./images/Fig08-030.PNG"/>
           <figcaption>Fig 08-030</figcaption>
         </figure>
-        <p>This is not the kind of validation message we want to get. To remedy this we need to modify our validation logic:</p>
+        <p>This is not the kind of validation message we want to get. To remedy this we need to modify our validation
+          logic:</p>
         <figure>
           <pre><code class="language-javascript">return v &amp;&amp; v.length &gt; 0;</code></pre>
           <figcaption>Fig 08-031</figcaption>
         </figure>
         <p>Now the property will only be classed as valid when v has a value with a length greater than 0.</p>
         <h3>105 - Async Validators</h3>
-        <p>Sometimes the validation logic may involve getting something from a database or from a remote http service. In that case we need an async validator.</p>
-        <p>To convert our synchronous tags validator to an asynchronous one we first set the isAsync property to true:</p>
+        <p>Sometimes the validation logic may involve getting something from a database or from a remote http service.
+          In that case we need an async validator.</p>
+        <p>To convert our synchronous tags validator to an asynchronous one we first set the isAsync property to
+          true:</p>
         <figure>
     <pre><code class="language-javascript">tags: {
   type: Array,
@@ -303,14 +338,18 @@ tags: [], // empty array</code></pre>
 },</code></pre>
           <figcaption>Fig 08-032</figcaption>
         </figure>
-        <p>We change the signature of the method we supply to the validator property by adding a second argument of a callback.</p>
-        <p>Remember, in the section about asynchronous JavaScript, you learned that one of the simplest approaches to deal with asynchronous code is to use a callback.</p>
-        <p>In this function we use the setTimeout function to simulate an async operation. So, at some point, we will receive the result:</p>
+        <p>We change the signature of the method we supply to the validator property by adding a second argument of a
+          callback.</p>
+        <p>Remember, in the section about asynchronous JavaScript, you learned that one of the simplest approaches to
+          deal with asynchronous code is to use a callback.</p>
+        <p>In this function we use the setTimeout function to simulate an async operation. So, at some point, we will
+          receive the result:</p>
         <figure>
           <pre><code class="language-javascript">const result = v &amp;&amp; v.length &gt; 0;</code></pre>
           <figcaption>Fig 08-033</figcaption>
         </figure>
-        <p>In this demo we use the same logic as used previously. In a real world scenario the result would be calculated based on the value that you get from your file system, database or remote service.</p>
+        <p>In this demo we use the same logic as used previously. In a real world scenario the result would be
+          calculated based on the value that you get from your file system, database or remote service.</p>
         <p>Finally we call the callback function with the result.</p>
         <p>Test the application:</p>
         <figure>
@@ -320,8 +359,11 @@ tags: [], // empty array</code></pre>
         <p>We get a delay of 4 seconds before we see the validation message.</p>
 
         <h3>106 - Validation Errors</h3>
-        <p>So far we have only displayed a simple message about our validation error. In this lecture we will examine the error object in more detail.</p>
-        <p>The exception we get in the catch block has a property called errors which provides a separate property for each invalid property in our course object. Currently in our course object we have two invalid properties - category and tags:</p>
+        <p>So far we have only displayed a simple message about our validation error. In this lecture we will examine
+          the error object in more detail.</p>
+        <p>The exception we get in the catch block has a property called errors which provides a separate property for
+          each invalid property in our course object. Currently in our course object we have two invalid properties -
+          category and tags:</p>
         <figure>
     <pre><code class="language-javascript">const course = new Course({
   name: 'Angular Course',
@@ -333,7 +375,8 @@ tags: [], // empty array</code></pre>
 });</code></pre>
           <figcaption>Fig 08-035</figcaption>
         </figure>
-        <p>With this the errors object will have two properties tags and categories. We can iterate over all the properties in this error object and get more details about each validation error:</p>
+        <p>With this the errors object will have two properties tags and categories. We can iterate over all the
+          properties in this error object and get more details about each validation error:</p>
         <figure>
     <pre><code class="language-javascript">for(field in ex.errors)
   console.log(ex.errors[field]);</code></pre>
@@ -344,12 +387,14 @@ tags: [], // empty array</code></pre>
           <img src="./images/Fig08-037.PNG"/>
           <figcaption>Fig 08-037</figcaption>
         </figure>
-        <p>Below the Validation Error we see the stack trace. The validation error objects contain the following properties:</p>
+        <p>Below the Validation Error we see the stack trace. The validation error objects contain the following
+          properties:</p>
         <figure>
           <img src="./images/Fig08-038.PNG"/>
           <figcaption>Fig 08-038</figcaption>
         </figure>
-        <p>properties gives us information about the validation requirements for this property. Using the category property as an example:</p>
+        <p>properties gives us information about the validation requirements for this property. Using the category
+          property as an example:</p>
         <ul>
           <li>validator - Gives us access to our validator function</li>
           <li>type The type of this validator is enum</li>
@@ -358,55 +403,60 @@ tags: [], // empty array</code></pre>
           <li>value - The current value</li>
           <li>kind - a shortcut to properties.type</li>
           <li>path - category</li>
-          <li>value - the current value for this property. '-' in this example.</p>
-            <p>So here:</p>
-            <figure>
+          <li>value - the current value for this property. '-' in this example.</li>
+        </ul>
+        <p>So here:</p>
+        <figure>
     <pre><code class="language-javascript">for(field in ex.errors)
   console.log(ex.errors[field]);</code></pre>
-              <figcaption>Fig 08-039</figcaption>
-            </figure>
-            <p>We are iterating over these validation error objects and we have multiple validation error objects - category and tag.</p>
-            <p>If you want to get the validation message for each invalid property you simply access the message property:</p>
-            <figure>
+          <figcaption>Fig 08-039</figcaption>
+        </figure>
+        <p>We are iterating over these validation error objects and we have multiple validation error objects -
+          category and tag.</p>
+        <p>If you want to get the validation message for each invalid property you simply access the message
+          property:</p>
+        <figure>
     <pre><code class="language-javascript">for(field in ex.errors)
   console.log(ex.errors[field].message);</code></pre>
-              <figcaption>Fig 08-040</figcaption>
-            </figure>
-            <p>Run the application again:</p>
-            <figure>
-              <img src="./images/Fig08-041.PNG"/>
-              <figcaption>Fig 08-041</figcaption>
-            </figure>
-            <p>We have two validation error messages.</p>
-            <h3>107 - Schema Type Options</h3>
-            <p>When defining a schema we've learned that we can set the type of the property directly:</p>
-            <figure>
-              <pre><code class="language-javascript">author: String,</code></pre>
-              <figcaption>Fig 08-042</figcaption>
-            </figure>
-            <p>or use a schema type object:</p>
-            <figure>
+          <figcaption>Fig 08-040</figcaption>
+        </figure>
+        <p>Run the application again:</p>
+        <figure>
+          <img src="./images/Fig08-041.PNG"/>
+          <figcaption>Fig 08-041</figcaption>
+        </figure>
+        <p>We have two validation error messages.</p>
+        <h3>107 - Schema Type Options</h3>
+        <p>When defining a schema we've learned that we can set the type of the property directly:</p>
+        <figure>
+          <pre><code class="language-javascript">author: String,</code></pre>
+          <figcaption>Fig 08-042</figcaption>
+        </figure>
+        <p>or use a schema type object:</p>
+        <figure>
     <pre><code class="language-javascript">category: {
   type: String,
   required: true,
   enum: ['web', 'mobile', 'network']
 },</code></pre>
-              <figcaption>Fig 08-043</figcaption>
-            </figure>
-            <p>This object has a few properties which we covered in the last section (type, required, enum etc.) In this lecture we will cover a few more useful properties that are available on schema type objects.</p>
-            <p>For strings we have three additional properties that you can use. Using the category property as an example.</p>
-            <p>Lowercase - When set to true Mongoose will automatically convert the property to lowercase:</p>
-            <figure>
+          <figcaption>Fig 08-043</figcaption>
+        </figure>
+        <p>This object has a few properties which we covered in the last section (type, required, enum etc.) In this
+          lecture we will cover a few more useful properties that are available on schema type objects.</p>
+        <p>For strings we have three additional properties that you can use. Using the category property as an
+          example.</p>
+        <p>Lowercase - When set to true Mongoose will automatically convert the property to lowercase:</p>
+        <figure>
     <pre><code class="language-javascript">category: {
   type: String,
   required: true,
   enum: ['web', 'mobile', 'network'],
   lowercase: true,
   trim: true },</code></pre>
-              <figcaption>Fig 08-044</figcaption>
-            </figure>
-            <p>In the course object in the createCourse function we set the category to Web and tags to frontend:</p>
-            <figure>
+          <figcaption>Fig 08-044</figcaption>
+        </figure>
+        <p>In the course object in the createCourse function we set the category to Web and tags to frontend:</p>
+        <figure>
     <pre><code class="language-javascript">async function createCourse() {
   const course = new Course({
     name: 'Angular Course',
@@ -416,16 +466,19 @@ tags: [], // empty array</code></pre>
     isPublished: true,
     price: 15.8
 });</code></pre>
-              <figcaption>Fig 08-045</figcaption>
-            </figure>
-            <p>Run the application (you might need to create a course with a category first):</p>
-            <figure>
-              <img src="./images/Fig08-044.PNG"/>
-              <figcaption>Fig 08-044</figcaption>
-            </figure>
-            <p>Look at the category - you have a lowercase web. You also have an uppercase property. Finally you have trim which will automatically remove any padding we have around our string.</p>
-            <p>We have another couple of schema type object properties which can be used irrespective of the type of property you are working with. For example, lets say we always want to round the value of our price property:</p>
-            <figure>
+          <figcaption>Fig 08-045</figcaption>
+        </figure>
+        <p>Run the application (you might need to create a course with a category first):</p>
+        <figure>
+          <img src="./images/Fig08-044.PNG"/>
+          <figcaption>Fig 08-044</figcaption>
+        </figure>
+        <p>Look at the category - you have a lowercase web. You also have an uppercase property. Finally you have
+          trim which will automatically remove any padding we have around our string.</p>
+        <p>We have another couple of schema type object properties which can be used irrespective of the type of
+          property you are working with. For example, lets say we always want to round the value of our price
+          property:</p>
+        <figure>
     <pre><code class="language-javascript">price: {
   type: Number,
   required: function() { return this.isPublished; },
@@ -434,11 +487,13 @@ tags: [], // empty array</code></pre>
   get: v =&gt; Math.round(v),
   set: v =&gt; Math.round(v)
 }</code></pre>
-              <figcaption>Fig 08-045</figcaption>
-            </figure>
-            <p>We define a custom getter and setter. We pass an arrow function that takes v for value as an argument. Now we define our custom logic for getting this value. So we can apply Math.round to round the value. We pass a similar function in the setter.</p>
-            <p>If we now set our price to a decimal:</p>
-            <figure>
+          <figcaption>Fig 08-045</figcaption>
+        </figure>
+        <p>We define a custom getter and setter. We pass an arrow function that takes v for value as an argument.
+          Now we define our custom logic for getting this value. So we can apply Math.round to round the value. We
+          pass a similar function in the setter.</p>
+        <p>If we now set our price to a decimal:</p>
+        <figure>
     <pre><code class="language-javascript">async function createCourse() {
   const course = new Course({
     name: 'Angular Course',
@@ -448,22 +503,27 @@ tags: [], // empty array</code></pre>
     isPublished: true,
     price: 15.8
 });</code></pre>
-              <figcaption>Fig 08-046</figcaption>
-            </figure>
-            <p>Run the application:</p>
-            <figure>
-              <img src="./images/Fig08-047.PNG"/>
-              <figcaption>Fig 08-047</figcaption>
-            </figure>
-            <p>We create a new course object and the price is set to 16. This is because when we set the price value in our createCourse method the custom setter was called which rounded the value. If you look at the last course document in Compass you should see the price is set to 16:</p>
-            <figure>
-              <img src="./images/Fig08-048.PNG"/>
-              <figcaption>Fig 08-048</figcaption>
-            </figure>
-            <p>Edit the type of the property to Double and modify the value to 15.8 and then save changes. Here we are simulating a scenario where we have a document that was stored in the database before we implemented the rounding logic.</p>
-            <p>In this case if you read the courses and access the price property our custom getter will be called and the value will be rounded.</p>
-            <p>Modify getCourses to find the id of the course you just created:</p>
-            <figure>
+          <figcaption>Fig 08-046</figcaption>
+        </figure>
+        <p>Run the application:</p>
+        <figure>
+          <img src="./images/Fig08-047.PNG"/>
+          <figcaption>Fig 08-047</figcaption>
+        </figure>
+        <p>We create a new course object and the price is set to 16. This is because when we set the price value in
+          our createCourse method the custom setter was called which rounded the value. If you look at the last
+          course document in Compass you should see the price is set to 16:</p>
+        <figure>
+          <img src="./images/Fig08-048.PNG"/>
+          <figcaption>Fig 08-048</figcaption>
+        </figure>
+        <p>Edit the type of the property to Double and modify the value to 15.8 and then save changes. Here we are
+          simulating a scenario where we have a document that was stored in the database before we implemented the
+          rounding logic.</p>
+        <p>In this case if you read the courses and access the price property our custom getter will be called and
+          the value will be rounded.</p>
+        <p>Modify getCourses to find the id of the course you just created:</p>
+        <figure>
     <pre><code class="language-javascript">async function getCourses() {
   // Make sure you provide an _id for a Course that has a category
   const courses = await Course
@@ -472,75 +532,81 @@ tags: [], // empty array</code></pre>
     .select( {
       name: 1, category: 1, tags: 1, price: 1});
       console.log(courses[0].price); }</code></pre>
-              <figcaption>Fig 08-049</figcaption>
-            </figure>
-            <p>If you read the price property specifically:</p>
-            <figure>
-              <pre><code class="language-javascript">console.log(courses[0].price);</code></pre>
-              <figcaption>Fig 08-050</figcaption>
-            </figure>
-            <p>And run the application you will see the price property is rounded:</p>
-            <figure>
-              <img src="./images/Fig08-051.PNG"/>
-              <figcaption>Fig 08-051</figcaption>
-            </figure>
-            <p>Note if you return the whole course object:</p>
-            <figure>
-              <pre><code class="language-">console.log(courses[0]);</code></pre>
-              <figcaption>Fig 08-052</figcaption>
-            </figure>
-            <p>the price DOES not get rounded:</p>
-            <figure>
+          <figcaption>Fig 08-049</figcaption>
+        </figure>
+        <p>If you read the price property specifically:</p>
+        <figure>
+          <pre><code class="language-javascript">console.log(courses[0].price);</code></pre>
+          <figcaption>Fig 08-050</figcaption>
+        </figure>
+        <p>And run the application you will see the price property is rounded:</p>
+        <figure>
+          <img src="./images/Fig08-051.PNG"/>
+          <figcaption>Fig 08-051</figcaption>
+        </figure>
+        <p>Note if you return the whole course object:</p>
+        <figure>
+          <pre><code class="language-">console.log(courses[0]);</code></pre>
+          <figcaption>Fig 08-052</figcaption>
+        </figure>
+        <p>the price DOES not get rounded:</p>
+        <figure>
     <pre><code class="language-command">{ tags: [ 'frontend' ],
   _id: 5c2a73f354daee1cd461fe1e,
   name: 'Angular Course',
   category: 'web',
   price: 15.8
 }</code></pre>
-              <figcaption>Fig 08-053</figcaption>
-            </figure>
+          <figcaption>Fig 08-053</figcaption>
+        </figure>
 
-            <h3>108 - Project Add Persistence to Genres API</h3>
-            <p>Now we will go back to our vidly project. Earlier in the course we built the genres module. In the module
-              we used an array to keep all the genres in our application (54 - Project Build the Genres API):</p>
-<figure>
+        <h3>108 - Project Add Persistence to Genres API</h3>
+        <p>Now we will go back to our vidly project. Earlier in the course we built the genres module. In the module
+          we used an array to keep all the genres in our application (54 - Project Build the Genres API):</p>
+        <figure>
     <pre><code class="language-javascript">const genres = [
   { id: 1, name: 'Horror' },
   { id: 2, name: 'Comedy' },
   { id: 3, name: 'Thriller' },
   { id: 3, name: 'Sci-Fi' }
 ];</code></pre>
-    <figcaption>Fig 08-054</figcaption>
-</figure>
-            <p>Now that you know how to use MongoDB and Mongoose I want you to remove the array and modify the route handlers (get, post etc.) to work with our MongoDB database.</p>
-            <h4>Solution</h4>
-            <p>I got the previous project from 68 - Project - Restructure the App</p>
-            <p>First install Mongoose:</p>
-            <figure>
-                <pre><code class="language-command">npm i mongoose</code></pre>
-                <figcaption>Fig 08-055</figcaption>
-            </figure>
-            <p>Back in the code we need to connect to MongoDB. However we don't want to make the connection in genres.js because that is something we can do once at the application level. The genres.js module is purely responsible for our genres api. In this application in the future we are going to have more APIs for working with videos, rentals etc. We don't want to connect with MongoDB multiple times. We connect once when the application starts.</p>
-            <p>So in index.js load mongoose:</p>
-            <figure>
-                <pre><code class="language-javascript">const mongoose = require('mongoose');</code></pre>
-                <figcaption>Fig 08-056</figcaption>
-            </figure>
-            <p>Then connect to MongoDB passing the connection string:</p>
-<figure>
+          <figcaption>Fig 08-054</figcaption>
+        </figure>
+        <p>Now that you know how to use MongoDB and Mongoose I want you to remove the array and modify the route
+          handlers (get, post etc.) to work with our MongoDB database.</p>
+        <h4>Solution</h4>
+        <p>I got the previous project from 68 - Project - Restructure the App</p>
+        <p>First install Mongoose:</p>
+        <figure>
+          <pre><code class="language-command">npm i mongoose</code></pre>
+          <figcaption>Fig 08-055</figcaption>
+        </figure>
+        <p>Back in the code we need to connect to MongoDB. However we don't want to make the connection in genres.js
+          because that is something we can do once at the application level. The genres.js module is purely
+          responsible for our genres api. In this application in the future we are going to have more APIs for
+          working with videos, rentals etc. We don't want to connect with MongoDB multiple times. We connect once
+          when the application starts.</p>
+        <p>So in index.js load mongoose:</p>
+        <figure>
+          <pre><code class="language-javascript">const mongoose = require('mongoose');</code></pre>
+          <figcaption>Fig 08-056</figcaption>
+        </figure>
+        <p>Then connect to MongoDB passing the connection string:</p>
+        <figure>
     <pre><code class="language-javascript">mongoose.connect('mongodb://localhost/vidly')
   .then(() =&gt; console.log('Connected to MongoDB'))
   .catch(err =&gt; console.error('Could not connect to MongoDB...'));</code></pre>
-    <figcaption>Fig 08-057</figcaption>
-</figure>
-            <p>The connect method returns a promise. If the connection is resolved we display a message on the console. If it is not we catch an error.</p>
-            <p>Back in the genres module we also load mongoose:</p>
-            <figure>
-                <pre><code class="language-javascript">const mongoose = require('mongoose');</code></pre>
-                <figcaption>Fig 08-058</figcaption>
-            </figure>
-            <p>Ok so now we have to define a schema for our genres:</p>
-<figure>
+          <figcaption>Fig 08-057</figcaption>
+        </figure>
+        <p>The connect method returns a promise. If the connection is resolved we display a message on the console.
+          If it is not we catch an error.</p>
+        <p>Back in the genres module we also load mongoose:</p>
+        <figure>
+          <pre><code class="language-javascript">const mongoose = require('mongoose');</code></pre>
+          <figcaption>Fig 08-058</figcaption>
+        </figure>
+        <p>Ok so now we have to define a schema for our genres:</p>
+        <figure>
     <pre><code class="language-javascript">const genreSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -548,16 +614,20 @@ tags: [], // empty array</code></pre>
     minlength: 5,
     maxlength: 50 }
 });</code></pre>
-    <figcaption>Fig 08-059</figcaption>
-</figure>
-            <p>The database is going to manage the id property so we just need the name property here. We provide a schema type object with a type of String, required to true and a minlength/maxlength.</p>
-            <p>Now that we have a schema we need to create a model:</p>
-            <figure>
-                <pre><code class="language-javascript">const Genre = new mongoose.model('Genre', genreSchema);</code></pre>
-                <figcaption>Fig 08-060</figcaption>
-            </figure>
-            <p>We pass the collection we want to work with - Genre in it's singular form. Then we pass the schema. This is the only place in our code where we have referenced genreSchema so technically we don't really need a separate constant to store the schema. We can move the schema definition inside the model method:</p>
-<figure>
+          <figcaption>Fig 08-059</figcaption>
+        </figure>
+        <p>The database is going to manage the id property so we just need the name property here. We provide a
+          schema type object with a type of String, required to true and a minlength/maxlength.</p>
+        <p>Now that we have a schema we need to create a model:</p>
+        <figure>
+              <pre><code
+                class="language-javascript">const Genre = new mongoose.model('Genre', genreSchema);</code></pre>
+          <figcaption>Fig 08-060</figcaption>
+        </figure>
+        <p>We pass the collection we want to work with - Genre in it's singular form. Then we pass the schema. This
+          is the only place in our code where we have referenced genreSchema so technically we don't really need a
+          separate constant to store the schema. We can move the schema definition inside the model method:</p>
+        <figure>
     <pre><code class="language-javascript">const Genre = new mongoose.model('Genre', new mongoose.Schema({
   name: {
     type: String,
@@ -566,169 +636,188 @@ tags: [], // empty array</code></pre>
     maxlength: 50
   }
 }));</code></pre>
-    <figcaption>Fig 08-061</figcaption>
-</figure>
-            <p>This makes our code a little bit cleaner.</p>
-            <p>Now that we have a model we can get rid of the genres array:</p>
-<figure>
+          <figcaption>Fig 08-061</figcaption>
+        </figure>
+        <p>This makes our code a little bit cleaner.</p>
+        <p>Now that we have a model we can get rid of the genres array:</p>
+        <figure>
     <pre><code class="language-javascript">const genres = [
   { id: 1, name: 'Action' },
   { id: 2, name: 'Horror' },
   { id: 3, name: 'Romance' },
 ];</code></pre>
-    <figcaption>Fig 08-062</figcaption>
-</figure>
-            <p>Our first route is the get route. Here we should return all the genres in our database:</p>
-<figure>
+          <figcaption>Fig 08-062</figcaption>
+        </figure>
+        <p>Our first route is the get route. Here we should return all the genres in our database:</p>
+        <figure>
     <pre><code class="language-javascript">router.get('/', async (req, res) =&gt; {
   const genres = await Genre
     .find()
     .sort('name');
   res.send(genres);
 });</code></pre>
-    <figcaption>Fig 08-063</figcaption>
-</figure>
-            <p>We set genres to Genre.find(). This returns a promise which we await. We also mark the function as async.</p>
-            <p>In this implementation we could remove the constant and add the Genre.find() method here:</p>
-            <figure>
-                <pre><code class="language-javascript">res.send(await Genre.find());</code></pre>
-                <figcaption>Fig 08-064</figcaption>
-            </figure>
-            <p>However, some people prefer to have the separate constant, because they think it makes the code more readable.</p>
-            <p>Next, let's work on our post route handler. Here, currently, we are creating a genre object:</p>
-<figure>
+          <figcaption>Fig 08-063</figcaption>
+        </figure>
+        <p>We set genres to Genre.find(). This returns a promise which we await. We also mark the function as
+          async.</p>
+        <p>In this implementation we could remove the constant and add the Genre.find() method here:</p>
+        <figure>
+          <pre><code class="language-javascript">res.send(await Genre.find());</code></pre>
+          <figcaption>Fig 08-064</figcaption>
+        </figure>
+        <p>However, some people prefer to have the separate constant, because they think it makes the code more
+          readable.</p>
+        <p>Next, let's work on our post route handler. Here, currently, we are creating a genre object:</p>
+        <figure>
     <pre><code class="language-javascript">const genre = {
   id: genres.length + 1,
   name: req.body.name
 };</code></pre>
-    <figcaption>Fig 08-065</figcaption>
-</figure>
-            <p>We set the genre to a new Genre model and then pass the object to initialize our genre. We don't need to supply an id any longer because this is now handled by the database:</p>
-<figure>
-    <pre><code class="language-javascript">const genre = new Genre({ name: req.body.name });</code></pre>
-    <figcaption>Fig 08-066</figcaption>
-</figure>
-            <p>Now we need to save the genre object to the database. Instead of pushing it into an array:</p>
-            <figure>
-                <pre><code class="language-javascript">genres.push(genre);</code></pre>
-                <figcaption>Fig 08-067</figcaption>
-            </figure>
-            <p>We call genre.save() which returns a promise which we await. The result we get is the actual genre document that is saved in the database. This document contains the id property, which we want to return to the client. To achieve this we change the genre declaration from a const to a let:</p>
-            <figure>
-                <pre><code class="language-javascript">let genre = new Genre({ name: req.body.name });</code></pre>
-                <figcaption>Fig 08-068</figcaption>
-            </figure>
-            <p>and then we can reset genre:</p>
-            <figure>
-                <pre><code class="language-javascript">genre = await genre.save();</code></pre>
-                <figcaption>Fig 08-069</figcaption>
-            </figure>
-            <p>Here we are using the async method so we need to mark our route as async:</p>
-            <figure>
-                <pre><code class="language-javascript">router.post('/', async (req, res) =&gt; {</code></pre>
-                <figcaption>Fig 08-070</figcaption>
-            </figure>
-            <p>We can then return genre to the client:</p>
-            <figure>
-                <pre><code class="language-javascript">res.send(genre);</code></pre>
-                <figcaption>Fig 08-071</figcaption>
-            </figure>
-            <p>The next route handler is the put method. First we need to find the genre, if it is not found we need to return a 404 error, then we need to validate the object that we receive from the client, if the object is valid we can update the genre.</p>
-            <p>In this scenario we can use the query first or update first approach. In this lecture we will use the update first approach:</p>
-<figure>
+          <figcaption>Fig 08-065</figcaption>
+        </figure>
+        <p>We set the genre to a new Genre model and then pass the object to initialize our genre. We don't need to
+          supply an id any longer because this is now handled by the database:</p>
+        <figure>
+          <pre><code class="language-javascript">const genre = new Genre({ name: req.body.name });</code></pre>
+          <figcaption>Fig 08-066</figcaption>
+        </figure>
+        <p>Now we need to save the genre object to the database. Instead of pushing it into an array:</p>
+        <figure>
+          <pre><code class="language-javascript">genres.push(genre);</code></pre>
+          <figcaption>Fig 08-067</figcaption>
+        </figure>
+        <p>We call genre.save() which returns a promise which we await. The result we get is the actual genre
+          document that is saved in the database. This document contains the id property, which we want to return to
+          the client. To achieve this we change the genre declaration from a const to a let:</p>
+        <figure>
+          <pre><code class="language-javascript">let genre = new Genre({ name: req.body.name });</code></pre>
+          <figcaption>Fig 08-068</figcaption>
+        </figure>
+        <p>and then we can reset genre:</p>
+        <figure>
+          <pre><code class="language-javascript">genre = await genre.save();</code></pre>
+          <figcaption>Fig 08-069</figcaption>
+        </figure>
+        <p>Here we are using the async method so we need to mark our route as async:</p>
+        <figure>
+          <pre><code class="language-javascript">router.post('/', async (req, res) =&gt; {</code></pre>
+          <figcaption>Fig 08-070</figcaption>
+        </figure>
+        <p>We can then return genre to the client:</p>
+        <figure>
+          <pre><code class="language-javascript">res.send(genre);</code></pre>
+          <figcaption>Fig 08-071</figcaption>
+        </figure>
+        <p>The next route handler is the put method. First we need to find the genre, if it is not found we need to
+          return a 404 error, then we need to validate the object that we receive from the client, if the object is
+          valid we can update the genre.</p>
+        <p>In this scenario we can use the query first or update first approach. In this lecture we will use the
+          update first approach:</p>
+        <figure>
     <pre><code class="language-javascript">router.put('/:id', async (req, res) =&gt; {
   const genre = await Genre.findByIdAndUpdate(req.params.id, {
     name: req.body.name },
     { new: true });</code></pre>
-    <figcaption>Fig 08-072</figcaption>
-</figure>
-            <p>We call findByIdAndUpdate passing the first argument of req.params.id and the second argument of our update object where we set name to req.body.name. Finally our third argument is the options object where we set new to true which will get the updated object from the database. We await the promise returned by findByIdAndUpdate, get the result and store it in the genre const.  We mark the function as async because we have used await here.</p>
-            <p>If don't have a genre we need to return an error so we remove the line that finds the genre in an array:</p>
-<figure>
-    <pre><code class="language-javascript">const genre = genres.find(c =&gt; c.id === parseInt(req.params.id));</code></pre>
-    <figcaption>Fig 08-073</figcaption>
-</figure>
-            <p>But keep the line that returns the 404 error if we don't have a genre:</p>
-<figure>
-    <pre><code class="language-javascript">if (!genre) return res.status(404).send('The genre with the given ID was not found.');</code></pre>
-    <figcaption>Fig 08-074</figcaption>
-</figure>
-            <p>With this new implementation we need to move these two lines:</p>
-<figure>
+          <figcaption>Fig 08-072</figcaption>
+        </figure>
+        <p>We call findByIdAndUpdate passing the first argument of req.params.id and the second argument of our
+          update object where we set name to req.body.name. Finally our third argument is the options object where
+          we set new to true which will get the updated object from the database. We await the promise returned by
+          findByIdAndUpdate, get the result and store it in the genre const. We mark the function as async because
+          we have used await here.</p>
+        <p>If don't have a genre we need to return an error so we remove the line that finds the genre in an
+          array:</p>
+        <figure>
+          <pre><code
+            class="language-javascript">const genre = genres.find(c =&gt; c.id === parseInt(req.params.id));</code></pre>
+          <figcaption>Fig 08-073</figcaption>
+        </figure>
+        <p>But keep the line that returns the 404 error if we don't have a genre:</p>
+        <figure>
+          <pre><code class="language-javascript">if (!genre) return res.status(404).send('The genre with the given ID was not found.');</code></pre>
+          <figcaption>Fig 08-074</figcaption>
+        </figure>
+        <p>With this new implementation we need to move these two lines:</p>
+        <figure>
     <pre><code class="language-javascript">const { error } = validateGenre(req.body);
 if (error) return res.status(400).send(error.details[0].message);</code></pre>
-    <figcaption>Fig 08-075</figcaption>
-</figure>
-            <p>We need to validate this genre that we're getting in the request before attempting to update the database.</p>
-            <p>We can also remove this property:</p>
-            <figure>
-                <pre><code class="language-javascript">genre.name = req.body.name;</code></pre>
-                <figcaption>Fig 08-076</figcaption>
-            </figure>
-            <p>The genre we now have is the update genre.</p>
-            <p>Let's move onto the delete route handler where will use a similar approach:</p>
-<figure>
-    <pre><code class="language-javascript">const genre = await Genre.findByIdAndRemove(req.params.id);</code></pre>
-    <figcaption>Fig 08-077</figcaption>
-</figure>
-            <p>We use Genre.findByIdAndRemove passing the req.params.id. We get a promise which we await and store in a const. Because we have used await we set the method to async:</p>
-            <figure>
-                <pre><code class="language-javascript">router.delete('/:id', async (req, res) =&gt; {</code></pre>
-                <figcaption>Fig 08-078</figcaption>
-            </figure>
-            <p>We no longer need to look up a genre in an array:</p>
-            <figure>
-                <pre><code class="language-javascript">const genre = genres.find(c =&gt; c.id === parseInt(req.params.id));</code></pre>
-                <figcaption>Fig 08-079</figcaption>
-            </figure>
-            <p>We retain the line to return a 404 if no genre is found:</p>
-<figure>
-    <pre><code class="language-javascript">if (!genre) return res.status(404).send('The genre with the given ID was not found.');</code></pre>
-    <figcaption>Fig 08-080</figcaption>
-</figure>
-            <p>We can remove the next two lines because we are no longer working with an array:</p>
-            <figure>
+          <figcaption>Fig 08-075</figcaption>
+        </figure>
+        <p>We need to validate this genre that we're getting in the request before attempting to update the
+          database.</p>
+        <p>We can also remove this property:</p>
+        <figure>
+          <pre><code class="language-javascript">genre.name = req.body.name;</code></pre>
+          <figcaption>Fig 08-076</figcaption>
+        </figure>
+        <p>The genre we now have is the update genre.</p>
+        <p>Let's move onto the delete route handler where will use a similar approach:</p>
+        <figure>
+          <pre><code
+            class="language-javascript">const genre = await Genre.findByIdAndRemove(req.params.id);</code></pre>
+          <figcaption>Fig 08-077</figcaption>
+        </figure>
+        <p>We use Genre.findByIdAndRemove passing the req.params.id. We get a promise which we await and store in a
+          const. Because we have used await we set the method to async:</p>
+        <figure>
+          <pre><code class="language-javascript">router.delete('/:id', async (req, res) =&gt; {</code></pre>
+          <figcaption>Fig 08-078</figcaption>
+        </figure>
+        <p>We no longer need to look up a genre in an array:</p>
+        <figure>
+          <pre><code
+            class="language-javascript">const genre = genres.find(c =&gt; c.id === parseInt(req.params.id));</code></pre>
+          <figcaption>Fig 08-079</figcaption>
+        </figure>
+        <p>We retain the line to return a 404 if no genre is found:</p>
+        <figure>
+          <pre><code class="language-javascript">if (!genre) return res.status(404).send('The genre with the given ID was not found.');</code></pre>
+          <figcaption>Fig 08-080</figcaption>
+        </figure>
+        <p>We can remove the next two lines because we are no longer working with an array:</p>
+        <figure>
                 <pre><code class="language-javascript">const index = genres.indexOf(genre);
 genres.splice(index, 1);</code></pre>
-                <figcaption>Fig 08-081</figcaption>
-            </figure>
-            <p>Finally, if we delete the genre successfully, we will return the genre to the client:</p>
-            <figure>
-                <pre><code class="language-javascript">res.send(genre);</code></pre>
-                <figcaption>Fig 08-082</figcaption>
-            </figure>
-            <p>The last route handler is get where get a single genre:</p>
-            <figure>
-                <pre><code class="language-javascript">const genre = await Genre.findById(req.params.id);</code></pre>
-                <figcaption>Fig 08-082</figcaption>
-            </figure>
-            <p>Because we have used await we mark the method as async:</p>
-            <figure>
-                <pre><code class="language-javascript">router.get('/:id', async (req, res) =&gt; {</code></pre>
-                <figcaption>Fig 08-083</figcaption>
-            </figure>
-            <p>We remove the line to look up the genre in the genres array:</p>
-            <figure>
-                <pre><code class="language-javascript">const genre = genres.find(c =&gt; c.id === parseInt(req.params.id));</code></pre>
-                <figcaption>Fig 08-084</figcaption>
-            </figure>
-            <p>If we don't have a genre we return a 404 error:</p>
-<figure>
-    <pre><code class="language-javascript">if (!genre) return res.status(404).send('The genre with the given ID was not found.');</code></pre>
-    <figcaption>Fig 08-085</figcaption>
-</figure>
-            <p>otherwise we return the genre object to the client:</p>
-            <figure>
-                <pre><code class="language-javascript">res.send(genre);</code></pre>
-                <figcaption>Fig 08-086</figcaption>
-            </figure>
-            <p>Now run the application.</p>
-            <figure>
-                <img src="./images/Fig08-087.PNG"/>
-                <figcaption>Fig 08-087</figcaption>
-            </figure>
-            <p>This error is due to the new keyword here:</p>
-<figure>
+          <figcaption>Fig 08-081</figcaption>
+        </figure>
+        <p>Finally, if we delete the genre successfully, we will return the genre to the client:</p>
+        <figure>
+          <pre><code class="language-javascript">res.send(genre);</code></pre>
+          <figcaption>Fig 08-082</figcaption>
+        </figure>
+        <p>The last route handler is get where get a single genre:</p>
+        <figure>
+          <pre><code class="language-javascript">const genre = await Genre.findById(req.params.id);</code></pre>
+          <figcaption>Fig 08-082</figcaption>
+        </figure>
+        <p>Because we have used await we mark the method as async:</p>
+        <figure>
+          <pre><code class="language-javascript">router.get('/:id', async (req, res) =&gt; {</code></pre>
+          <figcaption>Fig 08-083</figcaption>
+        </figure>
+        <p>We remove the line to look up the genre in the genres array:</p>
+        <figure>
+          <pre><code
+            class="language-javascript">const genre = genres.find(c =&gt; c.id === parseInt(req.params.id));</code></pre>
+          <figcaption>Fig 08-084</figcaption>
+        </figure>
+        <p>If we don't have a genre we return a 404 error:</p>
+        <figure>
+          <pre><code class="language-javascript">if (!genre) return res.status(404).send('The genre with the given ID was not found.');</code></pre>
+          <figcaption>Fig 08-085</figcaption>
+        </figure>
+        <p>otherwise we return the genre object to the client:</p>
+        <figure>
+          <pre><code class="language-javascript">res.send(genre);</code></pre>
+          <figcaption>Fig 08-086</figcaption>
+        </figure>
+        <p>Now run the application.</p>
+        <figure>
+          <img src="./images/Fig08-087.PNG"/>
+          <figcaption>Fig 08-087</figcaption>
+        </figure>
+        <p>This error is due to the new keyword here:</p>
+        <figure>
     <pre><code class="language-javascript">const Genre = new mongoose.model('Genre', new mongoose.Schema({
   name: {
     type: String,
@@ -736,10 +825,10 @@ genres.splice(index, 1);</code></pre>
     minlength: 5,
     maxlength: 50 }
 }));</code></pre>
-    <figcaption>Fig 08-088</figcaption>
-</figure>
-            <p>This is not a Class it is a method:</p>
-<figure>
+          <figcaption>Fig 08-088</figcaption>
+        </figure>
+        <p>This is not a Class it is a method:</p>
+        <figure>
     <pre><code class="language-javascript">const Genre = mongoose.model('Genre', new mongoose.Schema({
   name: {
     type: String,
@@ -748,263 +837,381 @@ genres.splice(index, 1);</code></pre>
     maxlength: 50
   }
 }));</code></pre>
-    <figcaption>Fig 08-089</figcaption>
-</figure>
-            <p>Rerun the application:</p>
-            <figure>
-                <img src="./images/Fig08-090.PNG"/>
-                <figcaption>Fig 08-090</figcaption>
-            </figure>
-            <p>In postman send a get request to our Genres:</p>
-            <figure>
-                <img src="./images/Fig08-091.PNG"/>
-                <figcaption>Fig 08-091</figcaption>
-            </figure>
-            <p>Currently because we don't have any genres in our database we get an empty array.</p>
-            <p>Use a post request to create a new Genre:</p>
-            <figure>
-                <img src="./images/Fig08-092.PNG"/>
-                <figcaption>Fig 08-092</figcaption>
-            </figure>
-            <p>If you get the following error:</p>
-            <figure>
-                <img src="./images/Fig08-093.PNG"/>
-                <figcaption>Fig 08-093</figcaption>
-            </figure>
-            <p>It may be that you need to load Joi in the genres module instead of index.js</p>
-            <figure>
-                <pre><code class="language-javascript">const Joi = require('joi');</code></pre>
-                <figcaption>Fig 08-094</figcaption>
-            </figure>
-            <p>Resend the Post request in Postman and you should get a 200 response along with the document that was created in MongoDB:</p>
-            <figure>
-                <img src="./images/Fig08-094.PNG"/>
-                <figcaption>Fig 08-094</figcaption>
-            </figure>
-            <p>You get the id that is generated by MongoDB along with __v which is the version coming from Mongo. If you don't want to return this to the client you can simply exclude it from the genre object.</p>
-            <p>Now use Postman to get all the genres in the database:</p>
-            <figure>
-                <img src="./images/Fig08-095.PNG"/>
-                <figcaption>Fig 08-095</figcaption>
-            </figure>
-            <p>Now issue a Put request in Postman to update the name of a genre:</p>
-            <p>You should see the genre is updated properly:</p>
-            <figure>
-                <img src="./images/Fig08-096.PNG"/>
-                <figcaption>Fig 08-096</figcaption>
-            </figure>
-            <p>If you specify an invalid name (e.g. an empty string):</p>
-            <figure>
-                <img src="./images/Fig08-097.PNG"/>
-                <figcaption>Fig 08-097</figcaption>
-            </figure>
-            <p>You should receive a validation error along with a 400 Bad Request and an error message: "name" is not
-              allowed to be empty:</p>
-            <figure>
-                <img src="./images/Fig08-098.PNG"/>
-                <figcaption>Fig 08-098</figcaption>
-            </figure>
-            <p>Also if you specify an id that doesn't exist:</p>
-            <figure>
-                <img src="./images/Fig08-099.PNG"/>
-                <figcaption>Fig 08-099</figcaption>
-            </figure>
-            <p>You should receive a status code 404 and the message: The genre with the given id was not found.</p>
-            <figure>
-                <img src="./images/Fig08-100.PNG"/>
-                <figcaption>Fig 08-100</figcaption>
-            </figure>
-            <p>Finally test the Delete request and you should see the following response:</p>
-            <figure>
-                <img src="./images/Fig08-101.PNG"/>
-                <figcaption>Fig 08-101</figcaption>
-            </figure>
-            <p>Now if you go back to get all genres you should received an empty array in the response:</p>
-            <figure>
-                <img src="./images/Fig08-102.PNG"/>
-                <figcaption>Fig 08-102</figcaption>
-            </figure>
-            <h3>109 - Project Build Customers API</h3>
-            <p>The second exercise is to build an endpoint to manage the customers. And this is the shape of our Customer object:</p>
-            - isGold Boolean - name String - phone String
-            <h4>Solution</h4>
-            <p>In the routes folder add a new file called customer.js. In this module we are going to implement all the
-              routes for working with customers.</p>
-            <p>In index.js we need to load the customers module:</p>
-            const customers = require('./routes/customers');
-            <p>Now we tell express that wherever we have a route that starts with /api/customers you need to delegate
-              the handling of those routes to this customers router that we get from the customers module:</p>
+          <figcaption>Fig 08-089</figcaption>
+        </figure>
+        <p>Rerun the application:</p>
+        <figure>
+          <img src="./images/Fig08-090.PNG"/>
+          <figcaption>Fig 08-090</figcaption>
+        </figure>
+        <p>In postman send a get request to our Genres:</p>
+        <figure>
+          <img src="./images/Fig08-091.PNG"/>
+          <figcaption>Fig 08-091</figcaption>
+        </figure>
+        <p>Currently because we don't have any genres in our database we get an empty array.</p>
+        <p>Use a post request to create a new Genre:</p>
+        <figure>
+          <img src="./images/Fig08-092.PNG"/>
+          <figcaption>Fig 08-092</figcaption>
+        </figure>
+        <p>If you get the following error:</p>
+        <figure>
+          <img src="./images/Fig08-093.PNG"/>
+          <figcaption>Fig 08-093</figcaption>
+        </figure>
+        <p>It may be that you need to load Joi in the genres module instead of index.js</p>
+        <figure>
+          <pre><code class="language-javascript">const Joi = require('joi');</code></pre>
+          <figcaption>Fig 08-094</figcaption>
+        </figure>
+        <p>Resend the Post request in Postman and you should get a 200 response along with the document that was
+          created in MongoDB:</p>
+        <figure>
+          <img src="./images/Fig08-094.PNG"/>
+          <figcaption>Fig 08-094</figcaption>
+        </figure>
+        <p>You get the id that is generated by MongoDB along with __v which is the version coming from Mongo. If you
+          don't want to return this to the client you can simply exclude it from the genre object.</p>
+        <p>Now use Postman to get all the genres in the database:</p>
+        <figure>
+          <img src="./images/Fig08-095.PNG"/>
+          <figcaption>Fig 08-095</figcaption>
+        </figure>
+        <p>Now issue a Put request in Postman to update the name of a genre:</p>
+        <p>You should see the genre is updated properly:</p>
+        <figure>
+          <img src="./images/Fig08-096.PNG"/>
+          <figcaption>Fig 08-096</figcaption>
+        </figure>
+        <p>If you specify an invalid name (e.g. an empty string):</p>
+        <figure>
+          <img src="./images/Fig08-097.PNG"/>
+          <figcaption>Fig 08-097</figcaption>
+        </figure>
+        <p>You should receive a validation error along with a 400 Bad Request and an error message: "name" is not
+          allowed to be empty:</p>
+        <figure>
+          <img src="./images/Fig08-098.PNG"/>
+          <figcaption>Fig 08-098</figcaption>
+        </figure>
+        <p>Also if you specify an id that doesn't exist:</p>
+        <figure>
+          <img src="./images/Fig08-099.PNG"/>
+          <figcaption>Fig 08-099</figcaption>
+        </figure>
+        <p>You should receive a status code 404 and the message: The genre with the given id was not found.</p>
+        <figure>
+          <img src="./images/Fig08-100.PNG"/>
+          <figcaption>Fig 08-100</figcaption>
+        </figure>
+        <p>Finally test the Delete request and you should see the following response:</p>
+        <figure>
+          <img src="./images/Fig08-101.PNG"/>
+          <figcaption>Fig 08-101</figcaption>
+        </figure>
+        <p>Now if you go back to get all genres you should received an empty array in the response:</p>
+        <figure>
+          <img src="./images/Fig08-102.PNG"/>
+          <figcaption>Fig 08-102</figcaption>
+        </figure>
+        <h3>109 - Project Build Customers API</h3>
+        <p>The second exercise is to build an endpoint to manage the customers. And this is the shape of our
+          Customer object:</p>
+        <ul>
+          <li>isGold - Boolean</li>
+          <li>name - String</li>
+          <li>phone - String</li>
+        </ul>
+        <h4>Solution</h4>
+        <p>In the routes folder add a new file called customer.js. In this module we are going to implement all the
+          routes for working with customers.</p>
+        <p>In index.js we need to load the customers module:</p>
+        <figure>
+          <pre><code class="language-javascript">const customers = require('./routes/customers');</code></pre>
+          <figcaption>Fig 08-103</figcaption>
+        </figure>
+        <p>Now we tell express that wherever we have a route that starts with /api/customers you need to delegate
+          the handling of those routes to this customers router that we get from the customers module:</p>
+        <figure>
+          <pre><code class="language-javascript">app.use('/api/customers', customers);</code></pre>
+          <figcaption>Fig 08-104</figcaption>
+        </figure>
+        <p>We can see that, with the current structure, we don't pollute index.js with all the details of various
+          routes in our application. We are encapsulating the related routes inside modules. So in the customers
+          module we will need similar code to what we have in the genres module. We can copy over a lot of the code
+          from genres to customers and modify the relevant portions of code:</p>
 
-            app.use('/api/customers', customers);
+        <figure>
+    <pre><code class="language-javascript">const Joi = require('joi');
+const mongoose = require('mongoose');
+const express = require('express');
+const router = express.Router();
 
-            <p>We can see that, with the current structure, we don't pollute index.js with all the details of various routes in our application. We are encapsulating the related routes inside modules. So in the customers we will need similar code to what we have in the genres module. We can copy over a lot of the code from genres to customers and modify the relevant portions of code:</p>
+const Genre = mongoose.model('Genre', new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+    minlength: 5,
+    maxlength: 50
+  }
+}));
 
-            const Joi = require('joi'); const mongoose = require('mongoose'); const
-            express = require('express'); const router = express.Router();
+router.get('/', async (req, res) =&gt; {
+  const genres = await Genre.find().sort('name');
+  res.send(genres);
+});
 
-            const Genre = mongoose.model('Genre', new mongoose.Schema({ name: { type:
-            String, required: true, minlength: 5, maxlength: 50 } }));
+router.post('/', async (req, res) =&gt; {
+  const { error } = validateGenre(req.body);
+  if (error) return
+    res.status(400).send(error.details[0].message);
+    let genre = new Genre({ name: req.body.name });
+    genre = await genre.save();
 
-            router.get('/', async (req, res) => { const genres = await
-            Genre.find().sort('name'); res.send(genres); });
+  res.send(genre);
+});</code></pre>
+          <figcaption>Fig 08-105</figcaption>
+        </figure>
+        <p>At the end export the router:</p>
+        <figure>
+          <pre><code class="language-javascript">module.exports = router;</code></pre>
+          <figcaption>Fig 08-106</figcaption>
+        </figure>
+        <p>Now let's tailor the code for customers instead of genres. All our require statements remain the
+          same.</p>
+        <p>We need to define a new model:</p>
+        <figure>
+    <pre><code class="language-javascript">const Customer = mongoose.model('Customer',
+  new mongoose.Schema({
+    name: {
+      type: String,
+      required: true,
+      minlength: 5,
+      maxlength: 50
+    },
+    isGold: {
+      type: Boolean,
+      default: false
+    },
+    phone: {
+      type: String,
+      required: true,
+      minlength: 5,
+    }
+}));</code></pre>
+          <figcaption>Fig 08-107</figcaption>
+        </figure>
+        <p>Now we can move onto the route handlers. Our first route handler should get all the customers:</p>
+        <figure>
+    <pre><code class="language-javascript">router.get('/', async (req, res) =&gt; {
+  const customers = await Customer.find().sort('name');
+  res.send(customers); });</code></pre>
+          <figcaption>Fig 08-108</figcaption>
+        </figure>
+        <p>Now the second route handler for posting a new customer:</p>
+        <figure>
+    <pre><code class="language-javascript#">router.post('/', async (req, res) =&gt; {
+  const { error } = validateCustomer(req.body);
+  if (error) return res.status(400).send(error.details[0].message);</code></pre>
+          <figcaption>Fig 08-109</figcaption>
+        </figure>
+        <p>If the customer object is valid we save it to the databse:</p>
+        <figure>
+    <pre><code class="language-javascript">let customer = new Customer({
+    name: req.body.name,
+    phone: req.body.phone,
+    isGold: req.body.isGold
+});
+customer = await customer.save();
 
-            router.post('/', async (req, res) => { const { error } =
-            validateGenre(req.body); if (error) return
-            res.status(400).send(error.details[0].message);
+res.send(customer); });</code></pre>
+          <figcaption>Fig 08-110</figcaption>
+        </figure>
 
-            let genre = new Genre({ name: req.body.name }); genre = await genre.save();
+        <p>When posting a new customer we have to validate it so we will also need a validateCustomer function. We
+          can also copy this from genres as well and make some modifications:</p>
+        <figure>
+    <pre><code class="language-javascript">function validateCustomer(customer) {
+  const schema = {
+    name: Joi.string().min(5).max(50).required(),
+    phone: Joi.string().min(5).max(50).required(),
+    isGold: Joi.boolean()
+  };
 
-            res.send(genre); });
+  return Joi.validate(customer, schema);
+}</code></pre>
+          <figcaption>Fig 08-111</figcaption>
+        </figure>
 
-            <p>At the end export the router:</p>
+        <p>You might argue here that we have some kind of duplication because we have a schema for Joi validation
+          and we have also defined a schema for Mongoose validation. In my opinion there is no point refactoring the
+          code to get rid of the duplication because the requirements for the properties do not change often enough
+          to warrant the work.</p>
 
-            module.exports = router;
+        <p>Now modify the other route handlers to complete the customers module.</p>
 
-            <p>Now let's tailor the code for customers instead of genres. All our require statements remain the
-              same.</p>
-            <p>We need to define a new model:</p>
-            const Customer = mongoose.model('Customer', new mongoose.Schema({ name: {
-            type: String, required: true, minlength: 5, maxlength: 50 }, isGold: { type:
-            Boolean, default: false }, name: { type: String, required: true, minlength: 5,
-            maxlength: 50 } }));
-            <p>Now we can move onto the route handlers. Our first route handler should get
-              all the customers:</p>
-            router.get('/', async (req, res) => { const customers = await
-            Customer.find().sort('name'); res.send(customers); });
-            <p>Now the second route handler for posting a new customer:</p>
-            router.post('/', async (req, res) => { const { error } =
-            validateCustomer(req.body); if (error) return
-            res.status(400).send(error.details[0].message);
+        <h3>110 - Restructuring the Project</h3>
 
-            let customer = new Customer({ name: req.body.name, phone: req.body.phone,
-            isGold: req.body.isGold }); customer = await customer.save();
+        <p>If you look at the customers module as it currently stands you can see the definition of the Customer
+          model, then our route handlers, then the validateCustomer function.</p>
+        <p>If you look at the definition of the Customer model you can see it is not a big complex module - this
+          would not be the case in a real world application. So chances are, in the real world, the code in this
+          module will grow. to keep our applications maintainable we need to ensure that each module is responsible
+          for only one thing - the single responsibility principle in practice.</p>
+        <p>In this application the customers module that we have is part of the routes folder. Technically all we
+          should have in the customer module is the definition of our Customers routes. The definition of the
+          Customer model doesn't really belong in this module.</p>
+        <p>We need to extract this code and put it elsewhere. Create a models folder. We will use this to store
+          modules like customer.js, genres.js etc.</p>
+        <p>Add a new file called customers.js and move the Customer model definition into our new file in the models
+          folder. You will also need to add require statements for the dependencies to Joi and Mongoose:</p>
+        <figure>
+    <pre><code class="language-javascript">const Joi = require('joi');
+const mongoose = require('mongoose');
 
-            res.send(customer); });
+const Customer = mongoose.model('Customer', new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+    minlength: 5,
+    maxlength: 50
+  },
+  isGold: {
+    type: Boolean,
+    default: false
+  },
+  phone: {
+    type: String,
+    required: true,
+    minlength: 5,
+    maxlength: 50
+  }
+}));</code></pre>
+          <figcaption>Fig 08-112</figcaption>
+        </figure>
+        <p>You can also move the function for validating a Customer into customer.js</p>
+        <figure>
+    <pre><code class="language-javascript">function validateCustomer(customer) {
+  const schema = {
+    name: Joi.string().min(5).max(50).required(),
+    phone: Joi.string().min(5).max(50).required(), isGold: Joi.boolean()
+  };
 
-            <p>When posting a new customer we have to validate it so we will also need a validateCustomer function. We can also copy this from genres as well and make some modifications:</p>
-
-            function validateCustomer(customer) { const schema = { name:
-            Joi.string().min(5).max(50).required(), phone:
-            Joi.string().min(5).max(50).required(), isGold: Joi.boolean() };
-
-            return Joi.validate(customer, schema); }
-
-            <p>You might argue here that we have some kind of duplication because we have a schema for Joi validation
-              and we have also defined a schema for Mongoose validation. In my opinion there is no point refactoring the
-              code to get rid of the duplication because the requirements for the properties do not change often enough
-              to warrant the work.</p>
-
-            <p>Now modify the other route handlers to complete the customers module.</p>
-
-            <h3>110 - Restructuring the Project</h3>
-
-            <p>If you look at the customers module as it currently stands you can see the definition of the Customer
-              model, then our route handlers, then the validateCustomer function.</p>
-            <p>If you look at the definition of the Customer model you can see it is not a big complex module - this
-              would not be the case in a real world application. So chances are, in the real world, the code in this
-              module will grow. to keep our applications maintainable we need to ensure that each module is responsible
-              for only one thing - the single responsibility principle in practice.</p>
-            <p>In this application the customers module that we have is part of the routes module. Technically all we
-              should have in the customer module is the definition of our Customers routes. The definition of the
-              Customer model doesn't really belong in this module.</p>
-            <p>We need to extract this code and put it elsewhere. Create a models folder. We will use this to store
-              modules like customer.js, genres.js etc.</p>
-            <p>Add a new file called customers.js and move the Customer model definition into our new file in the models
-              folder. You will also need to add require statements for the dependencies to Joi and Mongoose:</p>
-            const Joi = require('joi'); const mongoose = require('mongoose');
-
-            const Customer = mongoose.model('Customer', new mongoose.Schema({ name: {
-            type: String, required: true, minlength: 5, maxlength: 50 }, isGold: { type:
-            Boolean, default: false }, name: { type: String, required: true, minlength: 5,
-            maxlength: 50 } }));
-
-            <p>You can also move the function for validating a Customer into customer.js</p>
-
-            function validateCustomer(customer) { const schema = { name:
-            Joi.string().min(5).max(50).required(), phone:
-            Joi.string().min(5).max(50).required(), isGold: Joi.boolean() };
-
-            return Joi.validate(customer, schema); }
-
-            <p>So now we have the single responsibility principle in practice. Our customer module has all the code for
-              defining and validating a customer object. Our customers.js module knows all about various routes to work
-              with customers. That means we no longer to load Joi as the responsibility of validating a customer has
-              been moved to customer.js</p>
-
-            <p>Finally at the end of the module we need to export the customer class as well as the validateCustomer
-              function:</p>
-
-            module.exports.Customer = Customer;
-
-            <p>A shorter way is to simply use the exports property:</p>
-
-            exports.Customer = Customer;
-
-            <p>So earlier we discussed that exports is a reference to module.exports. So we can simply add extra
-              properties in that object.</p>
-
-            <p>Similarly we need to export the validateCustomer function. We can make the name shorter (validate instead
-              of validateCustomer):</p>
-
-            exports.validate = validateCustomer;
-
-            <p>Now back in the old customers.js module we have two choices. One is to load the customer module like
-              this:</p>
-
-            const customer = require('../models/customer');
-
-            <p>This customer module has two properties - Customer and validate. If we use the approach above to load the
-              customer module then when we want to reference the customer type or model we have to write code like
-              this:</p>
-
-            const customer = await customer.Customer.find().sort('name');
-
-            <p>This is quite ugly. A better approach is to use object destructuring. This object that is returned from
-              loading this module has two properties - Customer and validate. We can destructure the object and load it
-              into two constants:</p>
-
-            const { Customer, validate } = require('../models/customer');
-
-            <p>So we add curly braces when defining the constant so now the Customer const will be set to what is
-              returned from this module .Customer. This means you don't have to repeat .Customer in several places.</p>
-
-            <p>Similarly the validate property will be set to what is returned from the module .validate.</p>
-
-            <p>Finally we need to replace the two calls to validateCustomer with validate (our shorter name).</p>
-
-            <p>If you now look at the number of lines of code we have in this module it is a lot shorter.</p>
-
-            <p>As an exercise modify the genres module to extract the model and put it in a separate module.</p>
-
-            <h3>111 - Recap</h3>
-
-            <h4>Mongoose: Validation</h4>
-            <p>So, in this section, you learned that:</p>
-
-            <p>When defining a schema, you can set the type of a property to a SchemaType object. You use this object to
-              define the validation requirements for the given property.</p>
-
-            // Adding validation new mongoose.Schema({ name: { type: String, required:
-            true } }) - Validation logic is executed by Mongoose prior to saving a
-            document to the database. You can also trigger it manually by calling the
-            validate() method. - Built-in validators: - Strings: minlength, maxlength,
-            match, enum - Numbers: min, max - Dates: min, max - All types: required
-
-            // Custom validation tags: [ type: Array, validate: { validator: function(v) {
-            return v && v.length > 0; }, message: ‘A course should have at least 1 tag.’ }
-            ]
-
-            <p>If you need to talk to a database or a remote service to perform the validation, you need to create an
-              async validator:</p>
-
-            validate: { isAsync: true validator: function(v, callback) { // Do the
-            validation, when the result is ready, call the callback callback(isValid); } }
-
-            <p>Other useful SchemaType properties: - Strings: lowercase, uppercase, trim - All types: get, set (to
-              define a custom getter/setter)</p>
-
-            price: { type: Number, get: v => Math.round(v), set: v => Math.round(v) }
-
+  return Joi.validate(customer, schema);
+}</code></pre>
+          <figcaption>Fig 08-113</figcaption>
+        </figure>
+        <p>So now we have the single responsibility principle in practice. Our customer module has all the code for
+          defining and validating a customer object. Our customers.js module knows all about various routes to work
+          with customers. That means we no longer to load Joi:</p>
+        <figure>
+          <pre><code class="language-javascript">const Joi = require('joi');</code></pre>
+          <figcaption>Fig 08-114</figcaption>
+        </figure>
+        <p>as the responsibility of validating a customer has
+          been moved to customer.js</p>
+        <p>Finally at the end of the module we need to export the customer class as well as the validateCustomer
+          function:</p>
+        <figure>
+          <pre><code class="language-javascript">module.exports.Customer = Customer;</code></pre>
+          <figcaption>Fig 08-115</figcaption>
+        </figure>
+        <p>A shorter way is to simply use the exports property:</p>
+        <figure>
+          <pre><code class="language-javascript">exports.Customer = Customer;</code></pre>
+          <figcaption>Fig 08-116</figcaption>
+        </figure>
+        <p>So earlier we discussed that exports is a reference to module.exports. So we can simply add extra
+          properties in that object.</p>
+        <p>Similarly we need to export the validateCustomer function. We can make the name shorter (validate instead
+          of validateCustomer):</p>
+        <figure>
+          <pre><code class="language-javascript">exports.validate = validateCustomer;</code></pre>
+          <figcaption>Fig 08-117</figcaption>
+        </figure>
+        <p>Now back in the old customers.js module we have two choices. One is to load the customer module like
+          this:</p>
+        <figure>
+          <pre><code class="language-javascript">const customer = require('../models/customer');</code></pre>
+          <figcaption>Fig 08-118</figcaption>
+        </figure>
+        <p>This customer module has two properties - Customer and validate. If we use the approach above to load the
+          customer module then when we want to reference the customer type or model we have to write code like
+          this:</p>
+        <figure>
+          <pre><code
+            class="language-javascript">const customer = await customer.Customer.find().sort('name');</code></pre>
+          <figcaption>Fig 08-119</figcaption>
+        </figure>
+        <p>This is quite ugly. A better approach is to use object destructuring. This object that is returned from
+          loading this module has two properties - Customer and validate. We can destructure the object and load it
+          into two constants:</p>
+        <figure>
+          <pre><code
+            class="language-javascript">const { Customer, validate } = require('../models/customer');</code></pre>
+          <figcaption>Fig 08-120</figcaption>
+        </figure>
+        <p>So we add curly braces when defining the constant so now the Customer const will be set to what is
+          returned from this module.Customer. This means you don't have to repeat .Customer in several places.</p>
+        <p>Similarly the validate property will be set to what is returned from the module.validate.</p>
+        <p>Finally we need to replace the two calls to validateCustomer with validate (our shorter name).</p>
+        <p>If you now look at the number of lines of code we have in this module it is a lot shorter.</p>
+        <p>As an exercise modify the genres module to extract the model and put it in a separate module.</p>
+        <h3>111 - Recap</h3>
+        <h4>Mongoose: Validation</h4>
+        <p>So, in this section, you learned that:</p>
+        <p>When defining a schema, you can set the type of a property to a SchemaType object. You use this object to
+          define the validation requirements for the given property.</p>
+        <h4>Adding validation</h4>
+        <figure>
+    <pre><code class="language-javascript">new mongoose.Schema({
+  name: { type: String, required: true }
+})</code></pre>
+          <figcaption>Fig 08-121</figcaption>
+        </figure>
+        <p>Validation logic is executed by Mongoose prior to saving a document to the database. You can also trigger
+          it manually by calling the validate() method.</p>
+        <h4>Built-in validators</h4>
+        <ul>
+          <li>Strings: minlength, maxlength, match, enum</li>
+          <li>Numbers: min, max</li>
+          <li>Dates: min, max</li>
+          <li>All types: required</li>
+        </ul>
+        <h4>Custom validation</h4>
+        <figure>
+    <pre><code class="language-javascript">tags: [
+  type: Array,
+  validate: {
+    validator: function(v) { return v &amp;&amp; v.length &gt; 0; },
+    message: &lsquo;A course should have at least 1 tag.&rsquo;
+  }
+]</code></pre>
+          <figcaption>Fig 08-122</figcaption>
+        </figure>
+        <p>If you need to talk to a database or a remote service to perform the validation, you need to create an
+          async validator:</p>
+        <figure>
+    <pre><code class="language-javascript">validate: {
+  isAsync: true
+  validator: function(v, callback) {
+    // Do the validation, when the result is ready, call the callback
+    callback(isValid);
+  }
+}</code></pre>
+          <figcaption>Fig 08-123</figcaption>
+        </figure>
+        <p>Other useful SchemaType properties: - Strings: lowercase, uppercase, trim - All types: get, set (to
+          define a custom getter/setter)</p>
+        <figure>
+    <pre><code class="language-javascript">price: {
+  type: Number,
+  get: v =&gt; Math.round(v),
+  set: v =&gt; Math.round(v)
+}</code></pre>
+          <figcaption>Fig 08-124</figcaption>
+        </figure>
       </div>
     </div>
   </div>
