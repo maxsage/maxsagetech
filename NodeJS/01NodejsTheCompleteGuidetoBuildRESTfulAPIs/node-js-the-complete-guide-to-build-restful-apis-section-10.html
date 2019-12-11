@@ -27,7 +27,13 @@
         <h3>124 - Introduction</h3>
         <p>Back to our vidly application. So far we have built these API endpoints so we can
           manage:</p>
-        /api/genres /api/movies /api/customers /api/rentals
+        <figure>
+        <pre><code class="language-command">/api/genres
+/api/movies
+/api/customers
+/api/rentals</code></pre>
+          <figcaption>Fig 10-001</figcaption>
+        </figure>
         <p>Nearly all applications out there require some sort of authentication and authorization.
           So in this section, we're going to take this application to the next level and implement
           authentication and authorization.</p>
@@ -35,13 +41,11 @@
         <p>So authentication is the process of identifying if the user is who they claim they are -
           that's when we login. So we send our username and password to the server, and the server
           authenticates us.</p>
-        <p>Authorization, is determining if the user has the right permission to perform the
-          given operation.</p>
-        // Authentication // Authorization
-        <p>So in our vidly application, we want to make sure that
-        only authenticated users or logged in users can perform operations that modify data. If the
-        user is anonymous - if they are not logged in they they can only read data from the
-        endpoints.</p>
+        <p>Authorization, is determining if the user has the right permission to perform the given
+          operation.</p>
+        <p>So in our vidly application, we want to make sure that only authenticated users or logged
+          in users can perform operations that modify data. If the user is anonymous - if they are
+          not logged in they they can only read data from the endpoints.</p>
         <p>If they want to create a new genre or update a movie, they have to be authenticated
           first. As an additional security, we want to make sure that only admin users can delete
           data. So that's a second level of authorization - we're talking about permissions
@@ -49,9 +53,11 @@
         <p>These are the requirements we are going to implement in this section. To do this, we are
           going to add two new endpoints to our application.</p>
         <p>First, we should be able to register users.</p>
-        // Register: POST /api/users
-        <p>Because we POST we create a new resource, in this case a new
-        user.</p>
+        <figure>
+          <pre><code class="language-command">// Register: POST /api/users</code></pre>
+          <figcaption>Fig 10-002</figcaption>
+        </figure>
+        <p>Because we POST we create a new resource, in this case a new user.</p>
         <p>We should also be able to login a user - that's used for authentication. Now here's a
           question for you. What http method, should we use to implement login? With login we are
           not creating a new resource, not updating or removing an existing one, so how can we
@@ -60,389 +66,500 @@
           Create/Read/Update/Delete semantic. The way we model this is RESTful terms is by referring
           to this as a request or command.</p>
         <p>So we are creating a new login request or command so we use POST</p>
-        // Login: POST /api/logins
-        <p>In your application, you may want to store all the logins into
-        the applications in a separate collection in MongoDB. So, in that context using POST makes
-        perfect sense here. Even if you don't store individual logins and you just want to validate
-        the username and password you can still treat this resource as login resource and use post
-        to create it.</p>
+        <figure>
+          <pre><code class="language-command">// Login: POST /api/logins</code></pre>
+          <figcaption>Fig 10-003</figcaption>
+        </figure>
+        <p>In your application, you may want to store all the logins into the applications in a
+          separate collection in MongoDB. So, in that context using POST makes perfect sense here.
+          Even if you don't store individual logins and you just want to validate the username and
+          password you can still treat this resource as login resource and use post to create
+          it.</p>
         <p>Here's an exercise for you. I want you to implement this API:</p>
-        // Register: POST /api/users
-        <p>to register new users. For each user we want the following
-        properties:</p>
-        - name - email - password
-        <p>Also, when defining your schema, for the email property in the
-        Schema type object, set the unique property to true. So when we define the Schema we set the
-        type of email to a Schema type object:</p>
-        email: { type: String, unique: true }
-        <p>This will ensure that we do not store two documents
-        with the same email in MongoDB.</p>
+        <figure>
+          <pre><code class="language-command">// Register: POST /api/users</code></pre>
+          <figcaption>Fig 10-004</figcaption>
+        </figure>
+        <p>to register new users. For each user we want the following properties:</p>
+        <ul>
+          <li>name</li>
+          <li>email</li>
+          <li>password</li>
+        </ul>
+        <p>Also, when defining your schema, for the email property in the Schema type object, set
+          the unique property to true. So when we define the Schema we set the type of email to a
+          Schema type object:</p>
+        <figure>
+<pre><code class="language-javascript">email: {
+  type: String,
+  unique: true
+}</code></pre>
+          <figcaption>Fig 10-004</figcaption>
+        </figure>
+        <p>This will ensure that we do not store two documents with the same email in MongoDB.</p>
         <h3>125 - Creating the User Model</h3>
         <p>First I am going to define a new User model. In the models folder add a new file called
           user.js</p>
         <p>To save time we can copy a lot of the code from genre.js:</p>
+        <figure>
+<pre><code class="language-javascript">const Joi = require('joi');
+const mongoose = require('mongoose');
 
-        const Joi = require('joi'); const mongoose = require('mongoose');
+const genreSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+    minlength: 5,
+    maxlength: 50
+  }
+});
 
-        const genreSchema = new mongoose.Schema({ name: { type: String, required: true, minlength:
-        5, maxlength: 50 } });
+const Genre = mongoose.model('Genre', genreSchema);
 
-        const Genre = mongoose.model('Genre', genreSchema);
+function validateGenre(genre) {
+  const schema = {
+    name: Joi.string().min(3).required()
+  };
 
-        function validateGenre(genre) { const schema = { name: Joi.string().min(3).required() };
+  return Joi.validate(genre, schema);
+}
 
-        return Joi.validate(genre, schema); }
-
-        exports.genreSchema = genreSchema; exports.Genre = Genre; exports.validate = validateGenre;
-
+exports.genreSchema = genreSchema;
+exports.Genre = Genre;
+exports.validate = validateGenre;</code></pre>
+          <figcaption>Fig 10-005</figcaption>
+        </figure>
         <p>So, at the top, we have this Schema. We will define this while calling the model method.
           There is really no need, in this case, to define this as a separate constant:</p>
-
-        const Genre = mongoose.model('Genre', new mongoose.Schema({ name: { type: String, required:
-        true, minlength: 5, maxlength: 50 } }));
-
+        <figure>
+<pre><code class="language-javascript">const Genre = mongoose.model('Genre',
+  new mongoose.Schema({
+    name: {
+      type: String,
+      required: true,
+      minlength: 5,
+      maxlength: 50
+  }
+}));</code></pre>
+          <figcaption>Fig 10-006</figcaption>
+        </figure>
         <p>Modify the model and collection name to User:</p>
-
-        const User = mongoose.model('User', new mongoose.Schema({
-
+        <figure>
+          <pre><code class="language-javascript">const User = mongoose.model('User', new mongoose.Schema({</code></pre>
+          <figcaption>Fig 10-007</figcaption>
+        </figure>
         <p>The name property is a required string that has to be between 5 and 50 characters. That
           sounds good to me. Next, let's add email:</p>
+        <figure>
+<pre><code class="language-javascript">email: {
+  type: String,
+  required: true,
+  minlength: 5,
+  maxlength: 255,
+  unique: true
+}</code></pre>
+          <figcaption>Fig 10-008</figcaption>
+        </figure>
 
-        email: { type: String, required: true, minlength: 5, maxlength: 255, unique: true }
-
-        <p>We increase the maximum length and also, as discussed in the last lectue, we should add
+        <p>We increase the maximum length and also, as discussed in the last lecture, we should add
           the unique property to make sure we don't store two users with the same email in
           MongoDB.</p>
-
         <p>The last property is password:</p>
-
-        password: { type: String, required: true, minlength: 5, maxlength: 1024 }
-
+        <figure>
+<pre><code class="language-javascript">password: {
+  type: String,
+  required: true,
+  minlength: 5,
+  maxlength: 1024
+}</code></pre>
+          <figcaption>Fig 10-009</figcaption>
+        </figure>
         <p>We set the max length to higher value because this password will be hashed. We don't need
           the unique property.</p>
         <p>Next is our validate function:</p>
-        function validateUser(user) { const schema = { name: Joi.string().min(5).max(50).required(),
-        email: Joi.string().min(5).max(255).required().email(), password:
-        Joi.string().min(5).max(255).required() };
-        <p>First, we rename to validateUser. We specify
-        name, which is between 5-50 characters and required. We have email, which should be between
-        5-255 characters and required. Here, we also call the email method to make sure the email is
-        valid. Finally we have password which is also a string between 5 and 255. This is the
-        password that the user sends in plain text. We are going to hash this which will result in a
-        longer string - that's the string we will store in MongoDB.</p>
-
+        <figure>
+<pre><code class="language-javascript">function validateUser(user) {
+  const schema = {
+    name: Joi.string().min(5).max(50).required(),
+    email: Joi.string().min(5).max(255).required().email(),
+    password: Joi.string().min(5).max(255).required()
+  };</code></pre>
+          <figcaption>Fig 10-010</figcaption>
+        </figure>
+        <p>First, we rename to validateUser. We specify name, which is between 5-50 characters and
+          required. We have email, which should be between 5-255 characters and required. Here, we
+          also call the email method to make sure the email is valid. Finally we have password which
+          is also a string between 5 and 255. This is the password that the user sends in plain
+          text. We are going to hash this which will result in a longer string - that's the string
+          we will store in MongoDB.</p>
         <p>Finally we need to change the call to Joi.validate from genre to user:</[>
-
-        return Joi.validate(user, schema);
+        <figure>
+          <pre><code class="language-javascript">return Joi.validate(user, schema);</code></pre>
+          <figcaption>Fig 10-011</figcaption>
+        </figure>
 
         <p>So we are done with our validate user function, now we need to export our user model. We
-          can delete our first exports statment - that's for our schema:</p>
-        exports.User = User; exports.validate = validateUser;
-        <p>So we are done with our User model.
-        In the next section we will add a route to register new users.</p>
-
+          can delete our first exports statement - that's for our schema:</p>
+        <figure>
+        <pre><code class="language-javascript">exports.User = User;
+exports.validate = validateUser;</code></pre>
+          <figcaption>Fig 10-012</figcaption>
+        </figure>
+        <p>So we are done with our User model. In the next section we will add a route to register
+          new users.</p>
         <h3>126 - Registering Users</h3>
         <p>Alright, now we are going to create a new route to register new users. In the routes
           folder add a new file, users.js. Once again, to save time, I'm going to go to genres.js
-          and copy the require statement and the new routes into our users.js module:</p>
+          and copy the require statements and the new routes into our users.js module:</p>
+        <figure>
+<pre><code class="language-javascript">const {Genre, validate} = require('../models/genre');
+const mongoose = require('mongoose');
+const express = require('express');
+const router = express.Router();
 
-        const {Genre, validate} = require('../models/genre'); const mongoose = require('mongoose');
-        const express = require('express'); const router = express.Router();
-
-        router.get('/', async (req, res) => { const genres = await Genre.find().sort('name');
-        res.send(genres); });
-
+router.get('/', async (req, res) =&gt; {
+  const genres = await Genre.find().sort('name');
+  res.send(genres);
+});</code></pre>
+          <figcaption>Fig 10-013</figcaption>
+        </figure>
         <p>Now let's make some changes. On the top we need to import the user model instead of the
           Genre model:</p>
-
-        const {User, validate} = require('../models/user');
-
+        <figure>
+          <pre><code
+            class="language-javascript">const {User, validate} = require('../models/user');</code></pre>
+          <figcaption>Fig 10-014</figcaption>
+        </figure>
         <p>So, for models/user, we import the user class as well as the validate function. We also
           require mongoose, express and router.</p>
-
         <p>Next we add our new route which is post:</p>
-
-        router.post('/', async (req, res) => {
-
+        <figure>
+          <pre><code
+            class="language-javascript">router.post('/', async (req, res) =&gt; {</code></pre>
+          <figcaption>Fig 10-015</figcaption>
+        </figure>
         <p>For creating, registering new users, and finally we need to export this router:</p>
-
-        module.exports = router;
-
+        <figure>
+          <pre><code class="language-javascript">module.exports = router;</code></pre>
+          <figcaption>Fig 10-016</figcaption>
+        </figure>
         <p>Now, in index.js, we need to tell express that for any route that starts with /api/users
           it should use the router we just exported above.</p>
-
-        const users = require('./routes/users');
-
+        <figure>
+          <pre><code
+            class="language-javascript">const users = require('./routes/users');</code></pre>
+          <figcaption>Fig 10-017</figcaption>
+        </figure>
         <p>Then we tell express to use this route:</p>
-
-        app.use('/api/users', users);
-
+        <figure>
+          <pre><code class="language-javascript">app.use('/api/users', users);</code></pre>
+          <figcaption>Fig 10-018</figcaption>
+        </figure>
         <p>So, we have built the big picture. Now let's go back to our users module and implement
           this new route:</p>
-
-        router.post('/', async (req, res) => { });
-
+        <figure>
+          <pre><code
+            class="language-javascript">router.post('/', async (req, res) =&gt; { });</code></pre>
+          <figcaption>Fig 10-019</figcaption>
+        </figure>
         <p>So, here we need to validate the request. If it's not valid we have to return a 400
           error, which is bad request, otherwise we're going to create a new use object and save it
           to the database.</p>
-        <p>We can borrow some more code from our genres module. Copy the boddy of the post method
+        <p>We can borrow some more code from our genres module. Copy the body of the post method
           onto the users post method and make the following adjustments:</p>
+        <figure>
+<pre><code class="language-javascript">router.post('/', async (req, res) =&gt; {
+  const { error } = validate(req.body);
+  if (error) return res.status(400).send(error.details[0].message);
 
-        router.post('/', async (req, res) => { const { error } = validate(req.body); if (error)
-        return res.status(400).send(error.details[0].message);
+  let user = await User.findOne({ email: req.body.email });
+  if (user) return res.status(400).send('User already registered.');
 
-        let user = await User.findOne({ email: req.body.email }); if (user) return
-        res.status(400).send('User already registered.');
+  user = new User({
+    name: req.body.name,
+    email: req.body.email,
+    password: req.body.password
+  });
 
-        user = new User({ name: req.body.name, email: req.body.email, password: req.body.password
+  user = await user.save();
 
-        });
-
-        user = await user.save();
-
-        res.send(user); });
+  res.send(user);
+});</code></pre>
+          <figcaption>Fig 10-020</figcaption>
+        </figure>
 
         <p>We add some validation to make sure the user is not already registered. We use findOne
           instead of findById because we are not looking a user up by their id we are looking them
           up by one of their properties - email:</p>
-
-        let user = await User.findOne({ email: req.body.email });
-
+        <figure>
+          <pre><code class="language-javascript">let user = await User.findOne({ email: req.body.email });</code></pre>
+          <figcaption>Fig 10-021</figcaption>
+        </figure>
         <p>This returns a promise which we await and assign to a user object. We define a variable
           instead of a constant because later we will reset this.</p>
-
         <p>In this scenario if the user already exists in the database we return a 400 bad request
           to the client:</p>
-
-        if (user) return status(400).send('User already registered.');
-
+        <figure>
+          <pre><code class="language-javascript">if (user) return status(400).send('User already registered.');</code></pre>
+          <figcaption>Fig 10-022</figcaption>
+        </figure>
         <p>Ok so if we have a valid user object that is not registered in the database then we save
           this user in the database.</p>
-
         <p>First we reset the user object (at this point it should be null):</p>
-
-        user = new User({ name: req.body.name, email: req.body.email, password: req.body.password
-
-        });
-
+        <figure>
+<pre><code class="language-javascript">user = new User({
+  name: req.body.name,
+  email: req.body.email,
+  password: req.body.password
+});</code></pre>
+          <figcaption>Fig 10-023</figcaption>
+        </figure>
         <p>And then we save the user and return it to the client:</p>
-
-        user = await user.save(); res.send(user);
-
+        <figure>
+          <pre><code
+            class="language-javascript">user = await user.save(); res.send(user);</code></pre>
+          <figcaption>Fig 10-024</figcaption>
+        </figure>
         <p>Test the application. In postman send a post request to:</p>
-
-        http://localhost:3000/api/users
-
+        <figure>
+          <pre><code class="language-command">http://localhost:3000/api/users</code></pre>
+          <figcaption>Fig 10-024</figcaption>
+        </figure>
         <p>In the body of the request set the raw property and type to Json (application/json)
           object and then pass three properties:</p>
-
-        { "name": "Mosh Hamedani", "email": "1" }
-
+        <figure>
+          <img src="./images/Fig10-025.PNG"/>
+          <figcaption>Fig 10-025</figcaption>
+        </figure>
         <p>So in this request I am sending an invalid email and we are not passing a password.</p>
-
         <p>You should receive the following response:</p>
-
-        "email" length must be at least 5 characters long
-
+        <figure>
+          <img src="./images/Fig10-026.PNG"/>
+          <figcaption>Fig 10-026</figcaption>
+        </figure>
         <p>So change the email to:</p>
-
-        { "name": "Mosh Hamedani", "email": "123456" }
-
+        <figure>
+          <img src="./images/Fig10-027.PNG"/>
+          <figcaption>Fig 10-027</figcaption>
+        </figure>
         <p>You should receive the following response:</p>
-
-        "email" must be a valid email
-
+        <figure>
+          <img src="./images/Fig10-028.PNG"/>
+          <figcaption>Fig 10-028</figcaption>
+        </figure>
         <p>So, now, let's change the email to:</p>
-
-        { "name": "Mosh Hamedani", "email": "programmingwithmosh@gmail.com" }
-
+        <figure>
+          <img src="./images/Fig10-029.PNG"/>
+          <figcaption>Fig 10-029</figcaption>
+        </figure>
         <p>And now you should receive the following message:</p>
-
-        "password" is required
-
+        <figure>
+          <img src="./images/Fig10-030.PNG"/>
+          <figcaption>Fig 10-030</figcaption>
+        </figure>
         <p>Finally let's add a password that is 5 characters long:</p>
-
-        { "name": "Mosh Hamedani", "email": "programmingwithmosh@gmail.com", "password": "12345" }
-
+        <figure>
+          <img src="./images/Fig10-031.PNG"/>
+          <figcaption>Fig 10-031</figcaption>
+        </figure>
         <p>At last you should get a 200 response and the user object that has been stored in the
           database should be returned to you:</p>
-
-        { "_id": "5c40ec28c44fce70cc7bf89f", "name": "Mosh Hamedani", "email":
-        "programmingwithmosh@gmail.com", "password": "12345", "__v": 0 }
-
+        <figure>
+          <img src="./images/Fig10-032.PNG"/>
+          <figcaption>Fig 10-032</figcaption>
+        </figure>
         <p>When registering a new user it isn't ideal that we are returning their password in the
           response above to the client. We will look at that in the next lecture.</p>
 
         <p>If we post again with the same values we should receive the following error message
           (along with 400 bad request):</p>
-
-        User already registered.
-
+        <figure>
+          <img src="./images/Fig10-033.PNG"/>
+          <figcaption>Fig 10-033</figcaption>
+        </figure>
         <h3>127 - Using Lodash</h3>
-
-        <p>So, back in our post method, we want to modify the response to our client. So
-        there are
-        two options here. One approach is to send a custom object like this:</p>
-
-        res.send({ name: user.name, email: user.email });
-
+        <p>So, back in our post method, we want to modify the response to our client. So there are
+          two options here. One approach is to send a custom object like this:</p>
+        <figure>
+<pre><code class="language-javascript">res.send({
+  name: user.name,
+  email: user.email
+});</code></pre>
+          <figcaption>Fig 10-034</figcaption>
+        </figure>
         <p>This way we can exclude the password and the version properties. This approach is
           perfectly fine but in this lecture we will introduce you to a useful library that gives
           you alot of utility functions for working with objects. If you are an experienced
           JavaScript developer you'll probably know what I'm talking about - lodash. This is the
           second option.</p>
-
         <p>lo-dash is basically the optimized version of underscore. Underscore has been around for
           a long time and has a lot of utility functions for working with objects, strings, arrays
           and so on.</p>
-
         <p>If you look in the documentation, you can see all the utility function that we have for
           working with arrays, numbers, strings, objects and so on. So lodash is extremely powerful
           and in this lecture we will look at how to use it in your Node applications.</p>
-
         <p>Install lodash</p>
-
-        npm i lodash
-
+        <figure>
+          <pre><code class="language-command">npm i lodash</code></pre>
+          <figcaption>Fig 10-035</figcaption>
+        </figure>
         <p>So in the users module we need to install lodash:</p>
-
-        const _ = require('lodash');
-
+        <figure>
+          <pre><code class="language-javascript">const _ = require('lodash');</code></pre>
+          <figcaption>Fig 10-035</figcaption>
+        </figure>
         <p>By convention we assign this to a constant called _ because it is short and clean. The
           underscore object has a utility method called pick:</p>
-
-        _.pick(user, ['name', 'email']);
-
+        <figure>
+          <pre><code class="language-javascript">_.pick(user, ['name', 'email']);</code></pre>
+          <figcaption>Fig 10-036</figcaption>
+        </figure>
         <p>We pass the pick method an object, user, and then pass an array of properties in the that
           object that we want to pick. This will return a new object with only those properties.</p>
-
         <p>Instead of manually repeating user. when we send the response:</p>
-
-        res.send({ name: user.name, email: user.email });
-
+        <figure>
+          <pre><code
+            class="language-javascript">res.send({ name: user.name, email: user.email });</code></pre>
+          <figcaption>Fig 10-037</figcaption>
+        </figure>
         <p>We can use the pick method:</p>
-
-        res.send( _.pick(user, ['id', ''name', 'email']) );
-
+        <figure>
+          <pre><code
+            class="language-javascript">res.send( _.pick(user, ['id', ''name', 'email']) );</code></pre>
+          <figcaption>Fig 10-038</figcaption>
+        </figure>
         <p>We have also included the id property in the example above. We can also modify the code
           when setting up the new user object.</p>
-
-        user = new User( _.pick(req.body, ['name', 'email', 'password']));
-
+        <figure>
+          <pre><code class="language-javascript">user = new User( _.pick(req.body, ['name', 'email', 'password']));</code></pre>
+          <figcaption>Fig 10-039</figcaption>
+        </figure>
         <p>Now here we might 50 properties. A malicious user may send us properties to be stored in
           the database. We only want to hand pick a few of these so in the example above we specify
           name, email and password.</p>
-
         <p>So we create the user, save it, then return it to the client.</p>
-
         <p>Test the application in postman. Send a new post request to the server and you should see
           the following object in the response:</p>
-
-        { "id": "5c40f89510d6601e481f70c0", "name": "Mosh Hamedani", "email":
-        "programmingwithmosh10@gmail.com" }
-
+        <figure>
+          <img src="./images/Fig10-040.PNG"/>
+          <figcaption>Fig 10-040</figcaption>
+        </figure>
         <p>Which contains only id, name and email. Now in all these requests so far we have sent
           really simple passwords. If you want to enforce password complexity there is an npm
           package built on top of Joi called Joi password complexity.</p>
-
         <p>You can use this library to configure an object that determins the password complexity in
           your application:</p>
-
-        const complexityOptions = { min: 10, max: 30, lowerCase: 1, upperCase: 1, numeric: 1,
-        symbol: 1, requirementCount: 2, }
-
+        <figure>
+<pre><code class="language-javascript">const complexityOptions = {
+  min: 10,
+  max: 30,
+  lowerCase: 1,
+  upperCase: 1,
+  numeric: 1,
+  symbol: 1,
+  requirementCount: 2,
+}</code></pre>
+          <figcaption>Fig 10-041</figcaption>
+        </figure>
         <p>As it stands our new api endpoint is storing passwords in plain text which is very bad.
           This will be addressed in the next lecture where we will examine password hashing</p>
-
         <h3>128 - Hashing Passwords</h3>
-
         <p>In this lecture we will look at how to hash passwords using a very popular library called
           bcrypt:</p>
-
-        npm i bcrypt
-
+        <figure>
+          <pre><code class="language-command">npm i bcrypt</code></pre>
+          <figcaption>Fig 10-042</figcaption>
+        </figure>
         <p>Create a playground file to learn how to use the bcrypt library called hash.js. Load
           bcrypt and store it in a constant:</p>
-
-        const bcrypt = require('bcrypt');
-
+        <figure>
+          <pre><code class="language-javascript">const bcrypt = require('bcrypt');</code></pre>
+          <figcaption>Fig 10-043</figcaption>
+        </figure>
         <p>To hash a password we need a salt. What is a salt? Well imagine our password is:</p>
-
-        1234
-
+        <figure>
+          <pre><code class="language-command">1234</code></pre>
+          <figcaption>Fig 10-035</figcaption>
+        </figure>
         <p>When we hash that let's imagine we get a string like this:</p>
-
-        1234 -> abcd
-
+        <figure>
+          <pre><code class="language-command">1234 -> abcd</code></pre>
+          <figcaption>Fig 10-036</figcaption>
+        </figure>
         <p>The hashing algorithm is one way so if we have abcd we cannot decrypt this and get 1234.
           From a security point of view that is great. If a hacker looks at out database he or she
           cannot decrypt these hashed passwords. However they can compile a list of popular
           passwords and hash them. They can then look at the database of our application, find the
           hashed password, and then they know that abcd represents 1234. So that's why we need a
           salt.</p>
-
         <p>A salt is basically a random string that is added before or after this password, so the
           resulting hash password will be different each time based on the salt used. Let's see this
           in action:</p>
-
-        bcrypt.genSalt();
-
+        <figure>
+          <pre><code class="language-javascript">bcrypt.genSalt();</code></pre>
+          <figcaption>Fig 10-037</figcaption>
+        </figure>
         <p>Note that this method has two version. The first one is asynchronous, the second one is
           synchronous. As a best practice you should always use asynchronous methods because as I
           told you at the beginning of the course in Node applications we have a single thread. We
           don't want to keep that thread busy because then we can't server other clients.</p>
-
         <p>So we call genSalt and as an argument we pass the number of rounds that we want to run
           the algorithm to generate the salt. The higher the number, the longer it's going to take
           to generate the salt. Also, the salt will be more complex and harder to break. So the
           default value is 10 we'll use that.</p>
-
-        bcrypt.genSalt(10);
-
+        <figure>
+          <pre><code class="language-javascript">bcrypt.genSalt(10);</code></pre>
+          <figcaption>Fig 10-038</figcaption>
+        </figure>
         <p>Because this is an asynchronous method, we can either pass a callback here, and that's
           what you see in the official documentation as well as a lot of tutorial videos on the web.
           But this method also has an overload that returns a promise. So, instead of passing a
           callback we get a promise, await it and then get the salt:</p>
-
-        const salt = await bcrypt.genSalt(10);
-
+        <figure>
+          <pre><code class="language-javascript">const salt = await bcrypt.genSalt(10);</code></pre>
+          <figcaption>Fig 10-039</figcaption>
+        </figure>
         <p>Now we need to wrap this in an async function like run:</p>
+        <figure>
+<pre><code class="language-javascript">async function run() {
+  const salt = await bcrypt.genSalt(10);
+  console.log(salt);
+}
 
-        async function run() { const salt = await bcrypt.genSalt(10); console.log(salt); }
-
-        run();
-
+run();</code></pre>
+          <figcaption>Fig 10-040</figcaption>
+        </figure>
         <p>We log the salt to the console and finally we call the run function. Run the
           application:</p>
-
-        $2b$10$yAVPxjSIzXXNTR8R37CM3O
-
+        <figure>
+          <img src="./images/Fig10-041.PNG"/>
+          <figcaption>Fig 10-041</figcaption>
+        </figure>
         <p>So this is an example of a Salt. We can see the number of rounds we use included in the
-          salt (10):</p>
-
-        $2b$10$
-
+          salt (10)</p>
         <p>So here we have a long random string that is included as part of hashing our password.
           With this, every time we hash our password with a new salt, we get a different result.</p>
-
         <p>Now that we have a salt we can hash our password:</p>
-
-        const hashed = await bcrypt.hash('1234', salt);
-
+        <figure>
+          <pre><code
+            class="language-javascript">const hashed = await bcrypt.hash('1234', salt);</code></pre>
+          <figcaption>Fig 10-042</figcaption>
+        </figure>
         <p>We use the hash method of the bcrypt object, we pass the password 1234 through as the
           first argument, the second argument is our salt. You can pass a callback through as the
           third argument but we are not going to use this. Instead we are going to get the promise
           that is returned.</p>
-
         <p>So we await the promise and get the hashed password. So now, let's log this on the
           console as well:</p>
-
-        console.log(hashed);
-
+        <figure>
+          <pre><code class="language-javascript">console.log(hashed);</code></pre>
+          <figcaption>Fig 10-043</figcaption>
+        </figure>
         <p>Run the application:</p>
-
-        $2b$10$HiiGktgLBfQe.ZBlzV.Vzu $2b$10$HiiGktgLBfQe.ZBlzV.VzujY/HM0inkT9qHxgUhVFsmp1OV/ALNy6
-
+        <figure>
+          <img src="./images/Fig10-044.PNG"/>
+          <figcaption>Fig 10-044</figcaption>
+        </figure>
         <p>On the first line we have our salt, on the second line we can see the salt as well - so
           the salt is included in the hashed password. The reason this is included is that later
           when we want to authenticate the user we want to validate their username and password. So
@@ -450,193 +567,207 @@
           have the original salt that was used to generate this hash. So during comparing the plain
           text password, with the hashed password, bcrypt needs to know the original salt that was
           used to hash the password.</p>
-
         <p>So now we know how bcrypt works let's put these two lines in our post route handler:</p>
-
-        const salt = await bcrypt.genSalt(10); user.password = await bcrypt.hash(user.password,
-        salt);
-
+        <figure>
+<pre><code class="language-javascript">const salt = await bcrypt.genSalt(10);
+user.password = await bcrypt.hash(user.password, salt);</code></pre>
+          <figcaption>Fig 10-045</figcaption>
+        </figure>
         <p>Instead of 1234 we use user.password - the plain text password. So we hash it with the
           salt then reset it by assigning to it. Finally we save the user to the database:</p>
-
-        await user.save();
-
+        <figure>
+          <pre><code class="language-javascript">await user.save();</code></pre>
+          <figcaption>Fig 10-046</figcaption>
+        </figure>
         <p>We also need to import bcrypt:</p>
-
-        const bcrypt = require('bcrypt');
-
+        <figure>
+          <pre><code class="language-javascript">const bcrypt = require('bcrypt');</code></pre>
+          <figcaption>Fig 10-047</figcaption>
+        </figure>
         <p>In Compass delete the users collection because all the user documents so far contain
           plain text passwords. Run the application and send a new post request in postman:</p>
-
-        { "id": "5c41b11db5aa91409489159f", "name": "Mosh Hamedani", "email":
-        "programmingwithmosh10@gmail.com" }
-
+        <figure>
+          <img src="./images/Fig10-048.PNG"/>
+          <figcaption>Fig 10-048</figcaption>
+        </figure>
         <p>So here we have a new user. Refresh the list in compass and you should see the new user
           with a hashed password:</p>
-
-        fig xx-xx
-
+        <figure>
+          <img src="./images/Fig10-049.PNG"/>
+          <figcaption>Fig 10-049</figcaption>
+        </figure>
         <p>So we have now implemented the register new user endpoint.</p>
-
         <h3>129 Authenticating Users</h3>
-
         <p>In the routes folder add a new file called auth.js. Copy and paste all the code from
           users.js to auth.js.</p>
-
         <p>Go to index.js and import the module:</p>
-
-        const auth = require('./routes/auth');
-
+        <figure>
+          <pre><code class="language-javascript">const auth = require('./routes/auth');</code></pre>
+          <figcaption>Fig 10-050</figcaption>
+        </figure>
         <p>We tell express to use the new route:</p>
-
-        app.use('/api/auth', auth);
-
+        <figure>
+          <pre><code class="language-javascript">app.use('/api/auth', auth);</code></pre>
+          <figcaption>Fig 10-051</figcaption>
+        </figure>
         <p>So, if we have any requests for the /api/auth endpoint or any of it's child endpoints we
           are going to delegate this to the auth router.</p>
-
         <p>Now, back in the auth module on the top, first we have to validate the body of the
           request. But the validate function we have here:</p>
-
-        const { error } = validate(req.body);
-
+        <figure>
+          <pre><code class="language-javascript">const { error } = validate(req.body);</code></pre>
+          <figcaption>Fig 10-052</figcaption>
+        </figure>
         <p>This is the one that we imported from our user module:</p>
-
-        const {User, validate} = require('../models/user');
-
+        <figure>
+          <pre><code
+            class="language-javascript">const {User, validate} = require('../models/user');</code></pre>
+          <figcaption>Fig 10-053</figcaption>
+        </figure>
         <p>So this is validating that in the body of the request we have three properties: - name -
           email - password</p>
-
         <p>In a real world application you might have other properties as part of registering a
           user. This validate function is for validating a new user, it's not for validating the
           email and password that we expect at this endpoint. So here we need a different validate
           function. So we remove the validate function that we were importing:</p>
-
-        const {User} = require('../models/user');
-
+        <figure>
+          <pre><code
+            class="language-javascript">const {User} = require('../models/user');</code></pre>
+          <figcaption>Fig 10-054</figcaption>
+        </figure>
         <p>And define a separate validate function in the auth module. Again, to save time, we can
           copy our validate function from the user module to the auth module and modify it:</p>
+        <figure>
+<pre><code class="language-javascript">function validate(req) {
+  const schema = {
+    email: Joi.string().min(5).max(255).required().email(),
+    password: Joi.string().min(5).max(255).required() };
 
-        function validate(req) { const schema = { email:
-        Joi.string().min(5).max(255).required().email(), password:
-        Joi.string().min(5).max(255).required() };
-
-        return Joi.validate(req, schema); }
-
+    return Joi.validate(req, schema);
+}</code></pre>
+          <figcaption>Fig 10-055</figcaption>
+        </figure>
         <p>We renamed the function to validate and changed the parameter to req. For this schema
           object we need only two properties - email and password so we also deleted the name.</p>
-
         <p>Now, back in our route handler, this is our first validation:</p>
-
-        const { error } = validate(req.body);
-
+        <figure>
+          <pre><code class="language-javascript">const { error } = validate(req.body);</code></pre>
+          <figcaption>Fig 10-056</figcaption>
+        </figure>
         <p>Next we need to make sure that we do have a user with a given email so we load the
           user:</p>
-
-        let user = await User.findOne({ email: req.body.email });
-
+        <figure>
+          <pre><code class="language-javascript">let user = await User.findOne({ email: req.body.email });</code></pre>
+          <figcaption>Fig 10-057</figcaption>
+        </figure>
         <p>If we don't have the user(we add a NOT ! to the expression) we should return a 400 bad
           request and send a message - "Invalid email or password".</p>
-
-        if (!user) return res.status(400).send('Invalid email or password.');
-
+        <figure>
+          <pre><code class="language-javascript">if (!user) return res.status(400).send('Invalid email or password.');</code></pre>
+          <figcaption>Fig 10-058</figcaption>
+        </figure>
         <p>Note that we don't send a error 404, which means not found, because we don't want to tell
           the client why the authentication failed. We don't want to tell if the email is incorrect
           or the password - so we don't want to say "We dont have a user with the given email". We
           just tell the client that this is a bad request, it doesn't have the right data to be
           processed. So this is for validating the username or email. Next we need to validate the
           password. For that we need to use bcrypt.</p>
-
         <p>So let's delete all this code here:</p>
-
-        user = new User(_.pick(req.body, ['name', 'email', 'password'])); const salt = await
-        bcrypt.genSalt(10); user.password = await bcrypt.hash(user.password, salt); await
-        user.save();
-
+        <figure>
+<pre><code class="language-javascript">user = new User(_.pick(req.body, ['name', 'email', 'password']));
+const salt = await bcrypt.genSalt(10);
+user.password = await bcrypt.hash(user.password, salt);
+await user.save();</code></pre>
+          <figcaption>Fig 10-059</figcaption>
+        </figure>
         <p>and add a call to the compare method of the bcrypt object:</p>
-
-        const validPassword = await bcrypt.compare(req.body.password, user.password);
-
+        <figure>
+          <pre><code class="language-javascript">const validPassword = await bcrypt.compare(req.body.password, user.password);</code></pre>
+          <figcaption>Fig 10-060</figcaption>
+        </figure>
         <p>We use the compare method to compare the plain text password with our hashed password.
-          Our
-        plain text password is in req.body.password and our hash password is in user.password. As
-        you saw earlier the hash password does include the salt. So when we call the compare method
-        bcrypt is going to get that salt and use it to rehash this plain text password. If they are
-        equal then this will return true. We await the promise and store the result in
-        validPassword.
-      </p>
-
+          Our plain text password is in req.body.password and our hash password is in user.password.
+          As you saw earlier the hash password does include the salt. So when we call the compare
+          method bcrypt is going to get that salt and use it to rehash this plain text password. If
+          they are equal then this will return true. We await the promise and store the result in
+          validPassword.
+        </p>
         <p>If the password is not valid:</p>
-
-        if(!validPassword) return res.status(400).send('Invalid email or password.');
-
+        <figure>
+          <pre><code class="language-javascript">if(!validPassword) return res.status(400).send('Invalid email or password.');</code></pre>
+          <figcaption>Fig 10-061</figcaption>
+        </figure>
         <p>We return a 400 error with the deliberately vague message.</p>
-
         <p>Finally, if we get to this point, then we have a valid login. So for now, I just want to
           send a simple true value to the client:</p>
-
-        res.send(true);
-
+        <figure>
+          <pre><code class="language-javascript">res.send(true);</code></pre>
+          <figcaption>Fig 10-062</figcaption>
+        </figure>
         <h3>130 - Testing the Authentication</h3>
-
         <p>So, for now, let's test this new endpoint back in Postman. We can modify the request we
           had for creating new users. So to save time we can save it as let's say Register User and
           Create a new collection to put it in called Vidly. In the future we can use Register User
           instead of opening a new tab, fill out the details and so on.</p>
-
         <p>Open a new tab and create a post request to test our authentication endpoint:</p>
-
-        http://localhost:3000/api/auth
-
+        <figure>
+          <pre><code class="language-command">http://localhost:3000/api/auth</code></pre>
+          <figcaption>Fig 10-063</figcaption>
+        </figure>
         <p>In the body of the request we are going to send a Json object:</p>
-
-        { "email": "programmingwithmosh10@gmail.com", "password": "12345" }
-
+        <figure>
+          <img src="./images/Fig10-064.PNG"/>
+          <figcaption>Fig 10-064</figcaption>
+        </figure>
         <p>If your application hangs it might be that we forgot to import Joi at the top of our auth
           module:</p>
-
-        const Joi = require('joi');
-
-        <p>Send the request again you get a status 200 with a response of true.</p>
-
+        <figure>
+          <pre><code class="language-javascript">const Joi = require('joi');</code></pre>
+          <figcaption>Fig 10-065</figcaption>
+        </figure>
+        <p>Send the request again you get a status 200 with a response of true:</p>
+        <figure>
+          <img src="./images/Fig10-066.PNG"/>
+          <figcaption>Fig 10-066</figcaption>
+        </figure>
         <p>If we change the password to an invalid value:</p>
-
-        { "email": "programmingwithmosh10@gmail.com", "password": "123456" }
-
+        <figure>
+          <img src="./images/Fig10-067.PNG"/>
+          <figcaption>Fig 10-067</figcaption>
+        </figure>
         <p>Send the request and you get a status 400 Bad Request with a message of "Invalid email or
-          password"</p>
-
-        <p>If we send a valid password but change the email so that it is invalid:</p>
-
-        { "email": "programmingwithmosh101@gmail.com", "password": "12345" }
-
-        <p>Again we get a status 400 Bad Request with the same generic message.</p>
-
+          password":</p>
+        <figure>
+          <img src="./images/Fig10-068.PNG"/>
+          <figcaption>Fig 10-068</figcaption>
+        </figure>
+        <p>If we send a valid password but change the email so that it is invalid again we get a
+          status 400 Bad Request with the same generic message.</p>
         <h3>131 - Json Web Tokens</h3>
-
         <p>So we now have an endpoint for authenticating users. Now we need to modify the response
           that we return so that instead of returning a true value we return a JSon web token. A
           Json web token is basically a long string that identifies a user. As a metaphor you can
           think of it as you drivers license or your passport.</p>
-
         <p>So when the user logs in on the server we generate the Json web token:</p>
-
-        fig xx-xx
-
+        <figure>
+          <img src="./images/Fig10-069.PNG"/>
+          <figcaption>Fig 10-069</figcaption>
+        </figure>
         <p>We give it to the client and then tell them - hey next time you want to come back here
           and call one of our API endpoints you need to show your passport, you need to show your
           drivers license. So on the client we need to store this Json web token which is a long
           string, so we can send it back to the server for future API calls. Now the client can be a
           web application or a mobile application.</p>
-
         <p>If it's a web application, e.g. Angular or React you can use local storage. This is
           special storage space that is available in every browser. If you're building a mobile app,
           you have a similar option depending on what platform you use.</p>
-
-        <p>So now, let me show you an example of a Json web token. Head over to jwt.io. On this
-          website we have a debugger for working with Json web tokens:</p>
-
+        <p>So now, let me show you an example of a Json web token. Head over to <a href="jwt.io">jwt.io</a>.
+          On this website we have a debugger for working with Json web tokens:</p>
+        <figure>
+          <img src="./images/Fig10-070.PNG"/>
+          <figcaption>Fig 10-070</figcaption>
+        </figure>
         fig xx-xx
-
         <p>In the encoded section you can see a real example of a Json web token. The long string
           that you see in the encoded section represents a Json object. When this is decoded we will
           get a Json object. You can see that this string has three parts - each part is color
@@ -648,45 +779,57 @@
           Web Token. We never have to worry about this header it's just a standard. What matters to
           us is the second part - the Payload which is the purple part.</p>
         <p>So here we have a Json object with three properties:</p>
-
-        - sub is like a user id - name - admin
-
+        <ul>
+          <li>sub is like a user id</li>
+          <li>name</li>
+          <li>admin</li>
+        </ul>
         <p>Now the payload that you see:</p>
-
-        { "sub": "1234567890", "name": "Mosh Hamedani", "admin": true }
-
+        <figure>
+<pre><code class="language-json">{
+  &quot;sub&quot;: &quot;1234567890&quot;,
+  &quot;name&quot;: &quot;Mosh Hamedani&quot;,
+  &quot;admin&quot;: true
+}</code></pre>
+          <figcaption>Fig 10-071</figcaption>
+        </figure>
         <p>is different from the payload I have here, because I modified the Json web token that is
           on this website. So I generated a custom web token and put it here. What I want to point
           out here is that this payload:</p>
-
-        { "sub": "1234567890", "name": "Mosh Hamedani", "admin": true }
-
+        <figure>
+<pre><code class="language-json">{
+  &quot;sub&quot;: &quot;1234567890&quot;,
+  &quot;name&quot;: &quot;Mosh Hamedani&quot;,
+  &quot;admin&quot;: true
+}</code></pre>
+          <figcaption>Fig 10-072</figcaption>
+        </figure>
         <p>include public properties about the user just like on your passport you have some
           properties about yourself like your name, dob, place of birth etc. We have the same exact
           concept in a Json web token. We can include a few basic public properties about a user and
           with this every time we send a token from the client to the server we can easily extract
           the user id from the payload.</p>
-
         <p>If we need to know the name of the user then we can simply extract that as well. We don't
           have to query the database, send the id to get a user object and then extract the name
           property.</p>
-
         <p>By the same token, if you want to know if the user is an admin user or not you can
           include that here:</p>
-
-        { "sub": "1234567890", "name": "Mosh Hamedani", "admin": true }
-
+        <figure>
+<pre><code class="language-json">{
+  &quot;sub&quot;: &quot;1234567890&quot;,
+  &quot;name&quot;: &quot;Mosh Hamedani&quot;,
+  &quot;admin&quot;: true
+}</code></pre>
+          <figcaption>Fig 10-073</figcaption>
+        </figure>
         <p>Again we don't have to send an extra query to the database, to see if the user with the
           given id is admin or not.</p>
-
         <p>You might be concerned about this approach from a security point of view, because you may
           think that anyone can simply set this admin property for themselves to true and then they
           will be treated as admin on the server. That's not how Json web tokens work.</p>
-
         <p>The third part of this Json Web Token, in blue, is a digital signature. This digital
           signature is created based on the content of the Json web token along with the secret or
           private key. This secret or private key is only available on the server.</p>
-
         <p>So if a malicious user gets the Json web token and modifies the admin property the
           digital signature will be invalid because the content of the Json web token is modified.
           Now we need a new digital signature but the hacker cannot generate this digital signature
@@ -694,382 +837,438 @@
           don't have access to the server they cannot create a valid digital signature, and when
           they send this new tampered Json Web Token to the server it will be declined. The server
           will say this is not a valid Json Web Token.</p>
-
         <p>So this is how Json Web Tokens work.</p>
-
         <h3>132 - Generating Authentication Tokens</h3>
-
         <p>If you look at the libraries on the jwt.io website you can see we have various libraries
           for working with Json Web Tokens for different platforms - .Net, Python, Node, etc.</p>
-
         <p>Back in the terminal install jsonwebtoken:</p>
-
-        npm i jsonwebtoken
-
+        <figure>
+          <pre><code class="language-command">npm i jsonwebtoken</code></pre>
+          <figcaption>Fig 10-074</figcaption>
+        </figure>
         <p>In the auth module, before return the response we need to create a new Json Web Token.
           First we need to import the jsonwebtoken module:</p>
-
-        const jwt = require('jsonwebtoken');
-
+        <figure>
+          <pre><code class="language-javascript">const jwt = require('jsonwebtoken');</code></pre>
+          <figcaption>Fig 10-075</figcaption>
+        </figure>
         <p>Now, back in our route handler, we call the sign method of the jwt object:</p>
-
-        const token = jwt.sign({ _id: user._id}, 'jwtPrivateKey');
-
+        <figure>
+          <pre><code class="language-javascript">const token = jwt.sign({ _id: user._id}, 'jwtPrivateKey');</code></pre>
+          <figcaption>Fig 10-076</figcaption>
+        </figure>
         <p>The first argument is a payload which can be a simple string or an object. The properties
           we add to the object are entirely up to us. So in our application for now, I want the
           payload of our Json web tokens be an object with only one property: _id.</p>
-
         <p>The second argument is a secret or private key. This private key is used to create the
           digital signature. For now we hard code the private key. You would not do this in a real
           world application, you should not store your secrets in your source code. Later we're
           going to extract this and put it in an environment variable. You can use any string here -
           it doesn't have to be jwtPrivateKey.</p>
-
         <p>As a result of calling the sign method we will get a token which we store in a constant
           called token.</p>
         <p>Finally we return this token to the client:</p>
-
-        res.send(token);
-
+        <figure>
+          <pre><code class="language-javascript">res.send(token);</code></pre>
+          <figcaption>Fig 10-077</figcaption>
+        </figure>
         <p>To test this send a post request with a valid email and password from Postman to our
-          authentication endpoint. You should receive a response containing a Json web token. Copy
-          this and then in jwt.io in the debugger paste it in:</p>
-
-        fig xx-xx
-
-        <p>So now you can see the payload of our Json web token:</p>
-
-        { "_id": "5c4235f7c157933a98284ac4", "iat": 1547850077 }
-
-        <p>We have our _id property which we set (that's the object id for a MongoDB document). You
-          also have iat, which is the time the token was created. We can use this to determine the
-          age of a JWT.</p>
-
+          authentication endpoint. You should receive a response containing a Json web token:</p>
+        <figure>
+          <img src="./images/Fig10-078.PNG"/>
+          <figcaption>Fig 10-078</figcaption>
+        </figure>
+        <p>Copy this and then in jwt.io in the debugger paste it in:</p>
+        <figure>
+          <img src="./images/Fig10-079.PNG"/>
+          <figcaption>Fig 10-079</figcaption>
+        </figure>
+        <p>So now you can see the payload of our Json web token. We have our _id property which we
+          set (that's the object id for a MongoDB document). You also have iat, which is the time
+          the token was created. We can use this to determine the age of a JWT.</p>
         <h3>133 - Storing Secrets in Environment Variables</h3>
-
         <p>Earlier in the course, when I was talking about express advanced topics, I introduced you
           to Node package called config. We use this package to store the configuration files of our
           application in Json files or environment variables.</p>
-
         <p>In this lecture we are going to take this private key out:</p>
-
-        const token = jwt.sign({ _id: user._id}, 'jwtPrivateKey');
-
+        <figure>
+        <pre><code class="language-javascript">const token = jwt.sign({ _id: user._id}, 'jwtPrivateKey');</code></pre>
+        <figcaption>Fig 10-080</figcaption>
+        </figure>
         <p>and store it in an environment variable because, as I told you before, you should never
           store secrets in your code base. Otherwise these secrets are visible to anyone who as
           access to your source code. So, back in the terminal, let's install the config module:</p>
-
-        npm i config
-
+        <figure>
+        <pre><code class="language-command">npm i config</code></pre>
+        <figcaption>Fig 10-081</figcaption>
+        </figure>
         <p>Back in the code create a new folder called config and in that folder create a file
           called default.json to store the default configuration.</p>
-
         <p>Add the following simple Json object to this file:</p>
-
-        { "jwtPrivateKey": "" }
-
+        <figure>
+        <pre><code class="language-json">{ &quot;jwtPrivateKey&quot;: &quot;&quot; }</code></pre>
+        <figcaption>Fig 10-082</figcaption>
+        </figure>
         <p>We just add one setting. We set this to an empty string, we don't specify the actual
           value. Here we're just defining a template for all the settings in our application.</p>
-
         <p>Create another file in the config folder called custom-environment-variables.json So, as
           we discussed before, in this file we specify the mapping between our application settings
           and our environment variables. So copy the Json object from default.json into
           custom-environment-variables.json. We also map the setting to an environment variable
           called jwtPrivateKey:</p>
-
-        { "jwtPrivateKey": "vidly_jwtPrivateKey" }
-
+        <figure>
+        <pre><code class="language-json">{ &quot;jwtPrivateKey&quot;: &quot;vidly_jwtPrivateKey&quot; }</code></pre>
+        <figcaption>Fig 10-083</figcaption>
+        </figure>
         <p>As a best practice, as discussed before, it is better to prefix this with an application
           name so you don't end up one application setting overwriting another application setting.
           So we use vidly_jwtPrivateKey.</p>
-
         <p>Go back to auth.js module where we are currently referencing the secret:</p>
-
-        const token = jwt.sign({ _id: user._id}, 'jwtPrivateKey');
-
+        <figure>
+        <pre><code class="language-javascript">const token = jwt.sign({ _id: user._id}, 'jwtPrivateKey');</code></pre>
+        <figcaption>Fig 10-084</figcaption>
+        </figure>
         <p>We are gong to replace this with a call to config.get method:</p>
-
-        const config = require('config');
-
-        <p>Back in the post method we call config.gert and passw the name of our application
+        <figure>
+        <pre><code class="language-javascript">const config = require('config');</code></pre>
+        <figcaption>Fig 10-085</figcaption>
+        </figure>
+        <p>Back in the post method we call config.get and pasw the name of our application
           setting:</p>
-
-        const token = jwt.sign({ _id: user._id}, config.get('jwtPrivateKey'));
-
+        <figure>
+        <pre><code class="language-javascript">const token = jwt.sign({ _id: user._id}, config.get('jwtPrivateKey'));</code></pre>
+        <figcaption>Fig 10-086</figcaption>
+        </figure>
         <p>That is not a secret it's the name of our application setting. The actual value or secret
           will be in an environment variable.</p>
-
         <p>One last change, in index.js. When the application starts we want to make sure that this
           environment variable is set. Otherwise we need to terminate the application because our
           authentication endpoint cannot function properly</p>
-
         <p>So, at the top of the file, we load the config module</p>
-
-        const config = require('config');
-
+        <figure>
+        <pre><code class="language-javascript">const config = require('config');</code></pre>
+        <figcaption>Fig 10-087</figcaption>
+        </figure>
         <p>We use the config.get method again:</p>
-
-        if(!config.get('jwtPrivateKey')) { console.error('FATAL ERROR: jwtPrivateKey is not
-        defined.'); process.exit(1); }
-
+<figure>
+<pre><code class="language-javascript">if(!config.get('jwtPrivateKey')) {
+  console.error('FATAL ERROR: jwtPrivateKey is not defined.');
+  process.exit(1);
+}</code></pre>
+<figcaption>Fig 10-088</figcaption>
+</figure>
         <p>If the environment variable is not defined we log a fatal error and then exit the
           process. Earlier you learned about the process object. This is one of the global objects
           in Node. Here we have a method called exit to which we supply a code. 0 indicates success.
           Anything but 0 indicates failure. Often we use exit(1) if you want to exit the process in
           case of an error.</p>
-
         <p>So, at this point, we have not set the environment variable. Let's run the application
           and see what happens:</p>
-
-        FATAL ERROR: jwtPrivateKey is not defined. [nodemon] app crashed - waiting for file changes
-        before starting...
-
+<figure>
+  <img src="./images/Fig10-089.png"/>
+  <figcaption>Fig 10-089</figcaption>
+</figure>
         <p>You might think the application is still running because nodemon has not terminated. But
-          if you go to postman and send an http request to the application, you will see our
+          if you go to Postman and send an http request to the application, you will see our
           application is not responding.</p>
-
         <p>If the application crashes nodemon continues to run. To demonstrate use node to run the
           application instead:</p>
-
-        node index.js
-
+        <figure>
+        <pre><code class="language-command">node index.js</code></pre>
+        <figcaption>Fig 10-090</figcaption>
+        </figure>
         <p>You receive the same error:</p>
-
-        FATAL ERROR: jwtPrivateKey is not defined.
-
-        <>but node terminates and we are back in the terminal.</>
-
+<figure>
+  <img src="./images/Fig10-091.PNG"/>
+  <figcaption>Fig 10-091</figcaption>
+</figure>
+        <p>but node terminates and we are back in the terminal.</p>
       <p>Now let's set the environment variable. As discussed before on Mac you use export on
         Windows you use set.</p>
-
-      <p>I set the environment variable on my Windows Machines to the following: vidly_jwtPrivateKey
-        myinSecureKey</p>
-
+      <p>I set the environment variable on my Windows Machines to the following:
+        <figure>
+        <pre><code class="language-command">vidly_jwtPrivateKey myinSecureKey</code></pre>
+        <figcaption>Fig 10-092</figcaption>
+        </figure></p>
       <p>If you back to postman and send another request to login you should see a valid Json web
         token that is signed with a private key that is stored in an environment variable:</p>
-
-        eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YzQyMzVmN2MxNTc5MzNhOTgyODRhYzQiLCJpYXQiOjE1NDc4OTE5NTR9.xROPzBJyEB2VkHTGgzF9lHM-ou0xnSuF0CCt40I-YG8
-
-      <p>View Environment Variables from the Command Line</p>
-
-      <p>SET View all. SET prefix View all variables with names starting with prefix.</p>
-
+<figure>
+  <img src="./images/Fig10-093.PNG"/>
+  <figcaption>Fig 10-093</figcaption>
+</figure>
+      <h4>Windows - View Environment Variables from the Command Line</h4>
+        <figure>
+        <pre><code class="language-command">SET</code></pre>
+        <figcaption>Fig 10-094</figcaption>
+        </figure>
+            <p>View all</p>
+        <figure>
+        <pre><code class="language-command">SET prefix </code></pre>
+        <figcaption>Fig 10-095</figcaption>
+        </figure>
+        <p>View all variables with names starting with prefix.</>
       <p>NOTE - doesn't seem to work from terminal in Visual Studio Code</p>
-
-        <h3>134 - Setting Response Headers</h3>
-
+      <h3>134 - Setting Response Headers</h3>
       <p>So, in the current implementation when the user logs in we generate a Json web token and
         return it in the body of the response. Now let's take this application to the next level.
         Let's imagine when the user registers we want to assume they are logged in, so they don't
         have to login separately.</p>
-
       <p>Of course this requirement does not apply to every application. Sometimes you want to
         enforce the user to verify their email address, so after this sign off you send them an
         email and they click a link. So the process is different.</p>
-
       <p>However, in this course, let's imagine that vidly is an application that runs locally in a
         video store. So, people who use this application are people who work in this video store so
         you don't need to verify their email address. So the first day that they join the store,
         they need to create an account and boom they're logged in.</p>
-
       <p>So let's go to the post method in our users module where we register a new user If you look
         the response we're returning here, we're returning an object with three properties:</p>
-
-        res.send(_.pick(user, ['id', 'name', 'email'])
-
+<figure>
+<pre><code class="language-javascript">res.send(_.pick(user, ['id', 'name', 'email'])</code></pre>
+<figcaption>Fig 10-096</figcaption>
+</figure>
       <p>Now, we could add the Json web token as another property here, but that's a bit ugly
         because it's not a property of a user. A better approach is to return the Json web token in
         an http header.</p>
-
       <p>So just like we have headers in our request we also have headers in our response. So I'm
         going to go back to our Auth module and borrow this line of code:</p>
-
-        const token = jwt.sign({ _id: user._id}, config.get('jwtPrivateKey'));
-
+<figure>
+<pre><code class="language-javascript">const token = jwt.sign({ _id: user._id}, config.get('jwtPrivateKey'));</code></pre>
+<figcaption>Fig 10-097</figcaption>
+</figure>
       <p>for generating the token. Back in the users module before we send the response to the
         client we generate the token then we call response.header:</p>
-
-        res.header('x-auth-token', token).send(_.pick(user, ['id', 'name', 'email']));
-
+      <figure>
+      <pre><code class="language-javascript">res.header('x-auth-token', token).send(_.pick(user, ['id', 'name', 'email']));</code></pre>
+      <figcaption>Fig 10-098</figcaption>
+      </figure>
       <p>The first argument is the name of the header. Because we are sending a custom header, we
         set the header prefix to x- and then supply an arbitrary name like auth-token. The second
         argument is our value, which in this case is our token. With this simple change we set the
         header and then send the response to the client.</p>
-
       <p>On the line above we are using jwt:</p>
-
-        const token = jwt.sign({ _id: user._id}, config.get('jwtPrivateKey'));
-
+<figure>
+<pre><code class="language-javascript">const token = jwt.sign({ _id: user._id}, config.get('jwtPrivateKey'));</code></pre>
+<figcaption>Fig 10-099</figcaption>
+</figure>
       <p>as well as the config module. So we need to import these at the top of our module:</p>
-
-        const jwt = require('jsonwebtoken'); const config = require('config');
-
+      <figure>
+      <pre><code class="language-javascript">const jwt = require('jsonwebtoken'); const config = require('config');</code></pre>
+      <figcaption>Fig 10-100</figcaption>
+      </figure>
       <p>Now let's test this:</p>
-
-        nodemon
-
-      <p>In postman find the Register user template and modify the email in the req.body:</p>
-
-        { "name": "Mosh Hamedani", "email": "notregisteredbefore1@gmail.com", "password": "12345" }
-
+      <figure>
+      <pre><code class="language-command">nodemon</code></pre>
+      <figcaption>Fig 10-101</figcaption>
+      </figure>
+      <p>In Postman find the Register user template and modify the email in the req.body:</p>
+      <figure>
+        <img src="./images/Fig10-102.PNG"/>
+        <figcaption>Fig 10-102</figcaption>
+      </figure>
       <p>Send this and you get the following response as you did before:</p>
-
-        { "id": "5c43208d29738a3c10b21544", "name": "Mosh Hamedani", "email":
-        "notregisteredbefore1@gmail.com" }
-
+      <figure>
+        <img src="./images/Fig10-103.PNG"/>
+        <figcaption>Fig 10-103</figcaption>
+      </figure>
       <p>Look in the headers tab and you should see a new header:</p>
-
-        x-auth-token
-        →eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YzQzMjI2ZWIwMTE2ZDI2ODA1NmEyMjMiLCJpYXQiOjE1NDc5MDM1OTh9.eRdcIsY-G8bv04NNhhPts0QYmsSHnTAdaKxzSlPG0oE
-
+<figure>
+  <img src="./images/Fig10-104.PNG"/>
+  <figcaption>Fig 10-104</figcaption>
+</figure>
       <p>This is set to our Json token. So in our client app, when we register the user we can read
         this header, we can store this Json web token, on the client, and next time we go to make an
         API call we can send this to the server.</p>
-
-        <h3>135 - Encapsulating Logic in Mongoose Modules</h3>
-
+      <h3>135 - Encapsulating Logic in Mongoose Modules</h3>
       <p>Now there is a problem in our current implementation. In the users module this is how we
         generate a Json web token:</p>
-
-        const token = jwt.sign({ _id: user._id}, config.get('jwtPrivateKey'));
-
+      <figure>
+      <pre><code class="language-javascript">const token = jwt.sign({ _id: user._id}, config.get('jwtPrivateKey'));</code></pre>
+      <figcaption>Fig 10-105</figcaption>
+      </figure>
       <p>We have the exact same code in the auth module:</p>
-
-        const token = jwt.sign({ _id: user._id}, config.get('jwtPrivateKey'));
-
+      <figure>
+      <pre><code class="language-javascript">const token = jwt.sign({ _id: user._id}, config.get('jwtPrivateKey'));</code></pre>
+      <figcaption>Fig 10-106</figcaption>
+      </figure>
       <p>Look at the payload of this Json object - currently we only have the id property. Chances
         are we're going to add another property in this payload - maybe the name of the user, maybe
         their email address, maybe their role, perhaps you want to know if they are an admin user or
         not. With the current implementation every time we want to change this payload we have to go
         to the other module and make the exact same change. In this lecture we will examine how to
         encapsulate this logic in a single place.</p>
-
       <p>Now, where should we move this logic to? An amateur programmer may think okay, I will
         create a function like this:</p>
-
-        function generateAuthenticationToken() {
-
-        }
-
+<figure>
+<pre><code class="language-javascript">function generateAuthenticationToken() {
+}</code></pre>
+<figcaption>Fig 10-107</figcaption>
+</figure>
       <p>Put this function somewhere that we can reuse, maybe in another module, that we can import
         in both auth and user modules, and with this we have the logic in a single place. Well, that
         is true, it works but with this approach you will end up with a lot of functions hanging
         around all over the place.</p>
-
       <p>In object oriented programming we have a principle called information expert principle.
         That means an object that has enough information and is an expert in a given area should be
         responsible for making decisions and performing tasks.</p>
-
       <p>As a real world example, think of a chef. A chef has the knowledge of cooking. That's why
         the act of cooking in a restaurant is done by the chef, not by the waiter. The waiter
         doesn't have the right knowledge or information about cooking at a restaurant. So if chef is
         an object then we leave the actual cooking to the chef.</p>
-
-      <p>Take this principle an apply it in this code. So here:</p>
-
-        const token = jwt.sign({ _id: user._id}, config.get('jwtPrivateKey'));
-
+      <p>Take this principle and apply it in this code. So here:</p>
+<figure>
+<pre><code class="language-javascript">const token = jwt.sign({ _id: user._id}, config.get('jwtPrivateKey'));</code></pre>
+<figcaption>Fig 10-108</figcaption>
+</figure>
       <p>as part of creating the Json web token, in the payload, we need the id of the user.
         Tomorrow we may need the name of the user or their email. All this information is
         encapsulated where? In the user object. So it's the user object that should be responsible
         for generating the authentication token.</p>
-
       <p>So the generateAuthenticationToken function we described above should not be hanging
         somewhere in a module, that should be a method in the user object. So we need to add the
         generateAuthenticationToken method to the user object that we load from the database:</p>
-
-        const token = user.generateAuthenticationToken();
-
+<figure>
+<pre><code class="language-javascript">const token = user.generateAuthenticationToken();</code></pre>
+<figcaption>Fig 10-109</figcaption>
+</figure>
       <p>This will give us our token. How can we add this? We need to go back to our user module
         where we defined our user model and make a simple change. So here's our user model:</p>
-
-        const User = mongoose.model('User', new mongoose.Schema({ name: { type: String, required:
-        true, minlength: 5, maxlength: 50 }, email: { type: String, required: true, minlength: 5,
-        maxlength: 255, unique: true }, password: { type: String, required: true, minlength: 5,
-        maxlength: 1024 } }));
+<figure>
+<pre><code class="language-javascript">const User = mongoose.model('User', new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+    minlength: 5,
+    maxlength: 50 },
+    email: {
+      type: String,
+      required: true,
+      minlength: 5,
+      maxlength: 255,
+      unique: true },
+    password: { type: String, required: true, minlength: 5,
+    maxlength: 1024
+  }
+}));</code></pre>
+<figcaption>Fig 10-110</figcaption>
+</figure>
 
       <p>We need to extract the definition of this schema and put it in a separate constant because
         we're going to work with that separately. So extract the schema code from the call to
         mongoose.model:</p>
-
-        const userSchema = new mongoose.Schema({ name: { type: String, required: true, minlength: 5,
-        maxlength: 50 }, email: { type: String, required: true, minlength: 5, maxlength: 255,
-        unique: true }, password: { type: String, required: true, minlength: 5, maxlength: 1024 }
-        });
-
+<figure>
+<pre><code class="language-javascript">const userSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+    minlength: 5,
+    maxlength: 50
+  },
+  email: {
+    type: String,
+    required: true,
+    minlength: 5,
+    maxlength: 255,
+    unique: true },
+  password: {
+    type: String,
+    required: true,
+    minlength: 5,
+    maxlength: 1024
+  }
+});</code></pre>
+<figcaption>Fig 10-111</figcaption>
+</figure>
       <p>And now add the following code to create the user model:</p>
-
-        const User = mongoose.model('User', userSchema);
-
+      <figure>
+      <pre><code class="language-javascript">const User = mongoose.model('User', userSchema);</code></pre>
+      <figcaption>Fig 10-112</figcaption>
+      </figure>
       <p>Now we want to add the generateAuthToken method to this schema:</p>
-
-        userSchema.methods.generateAuthToken = function() {}
-
+      <figure>
+      <pre><code class="language-javascript">userSchema.methods.generateAuthToken = function() {}</code></pre>
+      <figcaption>Fig 10-113</figcaption>
+      </figure>
       <p>userSchema.methods returns an object to which you can add additional key value pairs. So we
         add a key: generateAuthToken which we set to a function.</p>
-
       <p>When we do this, our use object will have a method called generateAuthToken. In this
         function we can have parameters. So if you have a parameter then when calling this method we
         can pass arguments. In this, we don't need any parameters. So, let's cut the logic for
         generating the token from auth.js:</p>
-
-        const token = jwt.sign({ _id: user._id}, config.get('jwtPrivateKey'));
-
+      <figure>
+      <pre><code class="language-javascript">const token = jwt.sign({ _id: user._id}, config.get('jwtPrivateKey'));</code></pre>
+      <figcaption>Fig 10-114</figcaption>
+      </figure>
       <p>and paste it into our generateAuthToken method in the user module. So in the payload:</p>
-
-        { _id: user._id}
-
+      <figure>
+      <pre><code class="language-javascript">{ _id: user._id}</code></pre>
+      <figcaption>Fig 10-115</figcaption>
+      </figure>
       <p>we need the id of the user. How do we get that? Well, now our generateAuthToken method is
         part of the user object so in order to reference the object itself we replace user with
         this:</p>
-
-        { _id: this._id}
-
+      <figure>
+      <pre><code class="language-javascript">{ _id: this._id}</code></pre>
+      <figcaption>Fig 10-116</figcaption>
+      </figure>
       <p>Remember using this means we should use the regular function syntax, you cannot use an
         arrow function:</p>
-
-        userSchema.methods.generateAuthToken = () => { const token = jwt.sign({ _id: user._id},
-        config.get('jwtPrivateKey')); }
-
-      <p>because, as discussed before, arrow function don't have their own this object. this in an
+<figure>
+<pre><code class="language-javascript">userSchema.methods.generateAuthToken = () =&gt; {
+  const token = jwt.sign({ _id: user._id}, config.get('jwtPrivateKey'));
+}</code></pre>
+<figcaption>Fig 10-117</figcaption>
+</figure>
+      <p>because, as discussed before, arrow functions don't have their own this object. this in an
         arrow function references the calling function.</p>
-
-      <p>Typically we use arrow function for standalone function. If you want to create a method
+      <p>Typically we use arrow functions for standalone functions. If you want to create a method
         that is part of an object you should not use an arrow function.</p>
-
       <p>So we have the token, you can finally return the token:</p>
-
-        userSchema.methods.generateAuthToken = function() { const token = jwt.sign({ _id: user._id},
-        config.get('jwtPrivateKey')); return token; }
-
+<figure>
+<pre><code class="language-javascript">userSchema.methods.generateAuthToken = function() {
+  const token = jwt.sign({ _id: user._id}, config.get('jwtPrivateKey'));
+  return token;
+}</code></pre>
+<figcaption>Fig 10-118</figcaption>
+</figure>
       <p>Back in the auth module we generate the token:</p>
-
-        const token = user.generateAuthToken();
-
-      <p>and send it to the user:</p>
-
-        res.send(token);
-
-      <p>We need to make the same change in our users module.</p>
-
+<figure>
+<pre><code class="language-javascript">const token = user.generateAuthToken();</code></pre>
+<figcaption>Fig 10-119</figcaption>
+</figure>
+      <p>and send it to the client:</p>
+<figure>
+<pre><code class="language-javascript">res.send(token);</code></pre>
+<figcaption>Fig 10-120</figcaption>
+</figure>
+      <p>We need to make the same change in our users module. So delete this line:</p>
+        <figure>
+        <pre><code class="language-javascript">const token = jwt.sign({ _id: user._id }, config.get('jwtPrivateKey')));</code></pre>
+        <figcaption>Fig 10-121</figcaption>
+        </figure>
+        <p>And replace it with this:</p>
+        <figure>
+        <pre><code class="language-javascript">const token = user.generateAuthToken();</code></pre>
+        <figcaption>Fig 10-122</figcaption>
+        </figure>
       <p>Remove the require statements for config and jwt from the auth module:</p>
-
-        const config = require('config'); const jwt = require('jsonwebtoken');
-
+<figure>
+<pre><code class="language-javascript">const config = require('config');
+const jwt = require('jsonwebtoken');</code></pre>
+<figcaption>Fig 10-123</figcaption>
+</figure>
       <p>and add them to the top of the user module. Test the application by registering a new user
         in Postman:</p>
+      <figure>
+        <img src="./images/Fig10-124.PNG"/>
+        <figcaption>Fig 10-124</figcaption>
+      </figure>
 
-      <p>You should see the following in the body of the response:</p>
-
-        { "id": "5c434756a5687a327067fc8c", "name": "Mosh Hamedani", "email":
-        "notregisteredbefore6@gmail.com" }
-
-      <p>and our authentication should be visible in the headers section:</p>
-
-        x-auth-token
-        →eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YzQzNDc1NmE1Njg3YTMyNzA2N2ZjOGMiLCJpYXQiOjE1NDc5MTMwNDd9.O8lzuUh_bNumSsmrRZozQB2zRIazNYRJlgH9ZLCYVng
-
-        <h3>136 - Authorization Middleware</h3>
+        <p>and our authentication should be visible in the headers section:</p>
+<figure>
+  <img src="./images/Fig10-125.PNG"/>
+  <figcaption>Fig 10-125</figcaption>
+</figure>
+      <h3>136 - Authorization Middleware</h3>
 
       <p>So at the beginning of this section we decided to protect operations that modify data and
         only make them available to users that have authenticated.</p>
@@ -1077,16 +1276,16 @@
       <p>For example, in genres.js the post endpoint that creates a new genre should only be
         available to authenticated users:</p>
 
-        router.post('/', async (req, res) => { const { error } = validate(req.body); if (error)
-        return res.status(400).send(error.details[0].message);
+      router.post('/', async (req, res) => { const { error } = validate(req.body); if (error) return
+      res.status(400).send(error.details[0].message);
 
-        let genre = new Genre({ name: req.body.name }); genre = await genre.save();
+      let genre = new Genre({ name: req.body.name }); genre = await genre.save();
 
-        res.send(genre); });
+      res.send(genre); });
 
       <p>We can enforce this with some logic that reads the req header:</p>
 
-        const token = req.header('x-auth-token');
+      const token = req.header('x-auth-token');
 
       <p>The request object has a method called header to which we supply the name of the header
         (x-auth-token). We expect a JWT stored in this header so we store it in token.</p>
@@ -1095,7 +1294,7 @@
         otherwise we return a response code 401 (the client doesnt have the authentcation
         credentials to access this resource):</p>
 
-        const token = req.header('x-auth-token'); res.status(401);
+      const token = req.header('x-auth-token'); res.status(401);
 
       <p>We don't want to repeat this logic in every route handler that needs to modify data. So we
         need to put this logic in a middleware function (which we discussed back in the section
@@ -1108,7 +1307,7 @@
 
       <p>Add a function to this file called auth which accepts three parameters:</p>
 
-        function auth(req, res, next)
+      function auth(req, res, next)
 
       <p>Next is used to pass control to the next middleware function in the request processing
         pipeline. If this concept feels unfamiliar to you then go back to the section called express
@@ -1117,34 +1316,34 @@
       <p>In the body of the function implement logic to attempt to get the token. If we don't have a
         token then we return a 401 response with a message:</p>
 
-        function auth(req, res, next) { const token = req.header('x-auth-token'); if(!token)
-        res.status(401).send('Access denied. No token provided'); }
+      function auth(req, res, next) { const token = req.header('x-auth-token'); if(!token)
+      res.status(401).send('Access denied. No token provided'); }
 
       <p>This helps the client to figure out why they cannot access this resource. If there is a
         token we need to verify that it is valid using JWT module. On the top of the file import
         jsonwebtoken:</p>
 
-        const jwt = require('jsonwebtoken');
+      const jwt = require('jsonwebtoken');
 
       <p>Next call the verify method passing the token as the first argument and the private key for
         decoding the token as the second:</p>
 
-        const decoded = jwt.verify(token, config.get('jwtPrivateKey'));
+      const decoded = jwt.verify(token, config.get('jwtPrivateKey'));
 
       <p>For the above logic to work you will need to import the config module:</p>
 
-        const config = require('config');
+      const config = require('config');
 
       <p>Now we call jwt.verify:</p>
 
-        const decoded = jwt.verify(token, config.get('jwtPrivateKey'));
+      const decoded = jwt.verify(token, config.get('jwtPrivateKey'));
 
       <p>As the first argument we pass a token, and as the second argument we pass the private key
         for decoding this token. So, because we store that private key in an environment variable,
         we need to use the config module to read it. Add a require statement for config at the top
         of the file:</p>
 
-        const config = require('config');
+      const config = require('config');
 
       <p>If the supplied token is valid the verify method will return the decoded payload which we
         assign to const called decoded.</p>
@@ -1152,8 +1351,8 @@
       <p>However if the token is not valid the verify method will throw an exception. We can catch
         this exception and return a 400 response - bad request:</p>
 
-        try { const decoded = jwt.verify(token, config.get('jwtPrivateKey')); } catch(ex) {
-        res.status(400).send('Invalid token.'); }
+      try { const decoded = jwt.verify(token, config.get('jwtPrivateKey')); } catch(ex) {
+      res.status(400).send('Invalid token.'); }
 
       <p>Again, with this error message, we can troubleshoot the authentication issues. So if I'm
         the client I cannot access a given API endpoint, we look at the error message, okay we
@@ -1162,19 +1361,19 @@
 
       <p>Back in the try block we add our decoded payload to our req:</p>
 
-        req.user = decoded;
+      req.user = decoded;
 
       <p>We add the user property to our request object and set this to decoded. This is different
         to earlier when we only put the user _id property in the payload:</p>
 
-        userSchema.methods.generateAuthToken = function() { const token = jwt.sign({ _id: user._id},
-        config.get('jwtPrivateKey')); return token; }
+      userSchema.methods.generateAuthToken = function() { const token = jwt.sign({ _id: user._id},
+      config.get('jwtPrivateKey')); return token; }
 
       <p>So we added a generateAuthToken method to our userSchema. We created a Json web token and
         you can see the payload is just the user id. So when we decode the jwt the object we get
         will just contain the id. We put this in the request ( in auth.js) as a user object.</p>
 
-        req.user = decoded;
+      req.user = decoded;
 
       <p>So in our route handlers we can access request.user._id and so on.</p>
 
@@ -1182,7 +1381,7 @@
         in the request processing pipeline - in our case that's our route handler so we call
         next:</p>
 
-        next();
+      next();
 
       <p>As we discussed before, in middleware functions, we either terminate the request/ response
         life cycle or pass control to the next middleware function.</p>
@@ -1190,23 +1389,23 @@
       <p>There is a small issue with the code. In the case where we don't have a token we send a
         status 401 to the client but we should also make sure that we exit from the function:</p>
 
-        if(!token) return res.status(401).send('Access denied. No token provided');
+      if(!token) return res.status(401).send('Access denied. No token provided');
 
       <p>The last thing to do is export the auth function:</p>
 
-        module.exports = auth;
+      module.exports = auth;
 
       <p>Alternatively we can make this code more concise by exporting the function directly
         instead:</p>
 
-        module.exports = function (req, res, next) {}
+      module.exports = function (req, res, next) {}
 
-        <h3>137 - Protecting Routes</h3>
+      <h3>137 - Protecting Routes</h3>
 
       <p>So now that we have a middleware function we could either go to index.js where we are
         already applying middleware functions:</p>
 
-        app.use(express.json());
+      app.use(express.json());
 
       <p>So could add our middleware function in index.js and then it would be executed before every
         route handler. However, we don't want to do this because not all api endpoints should be
@@ -1218,34 +1417,34 @@
 
       <p>So, back to the genres module, here's our post route handler:</p>
 
-        router.post('/', async (req, res) => {
+      router.post('/', async (req, res) => {
 
       <p>The first argument is the route, the second is optionally middleware and the third will be
         the actual route handler. So at the top of the genres file let's import the middleware
         function:</p>
 
-        const auth = require('../middleware/auth');
+      const auth = require('../middleware/auth');
 
       <p>Now modify the post method to pass auth as a middleware function to be executed before the
         other middleware function which in this case is our route handler:</p>
 
-        router.post('/', auth, async (req, res) => { }
+      router.post('/', auth, async (req, res) => { }
 
       <p>Now let's test this in Postman by sending a POST request to the genres endpoint (make sure
         you don't send the authentication token in the header):</p>
 
-        http://localhost:3000/api/genres
+      http://localhost:3000/api/genres
 
       <p>You should receive response code 401 Unauthorized and the message:</p>
 
-        Access denied. Not token provided
+      Access denied. Not token provided
 
       <p>Now in the Headers tab of Postman provide an invalid token by entering x-auth-token for the
         key and 1234 for the value.</p>
 
       <p>You should receive response code 400 Bad Request and the message:</p>
 
-        Invalid token.
+      Invalid token.
 
       <p>Finally let's supply a valid token (copied from our POST User method that we use to
         register a new user). Also make sure you supply a valid JSon object in the body of the
@@ -1257,7 +1456,7 @@
       <p>As an exercise apply this middleware function can now be applied to other middleware
         functions that modify data.</p>
 
-        <h3>138 - Getting the Current User</h3>
+      <h3>138 - Getting the Current User</h3>
 
       <p>In a lot of applications there are times when we want to get information about the
         currently logged in user.</p>
@@ -1271,7 +1470,7 @@
       <p>We need to add another handler for get methods. Now here as the route or the path we can
         pass a parameter:</p>
 
-        router.get('/:id');
+      router.get('/:id');
 
       <p>But this means the client should send the id to the server. Whilst this approach is
         perfectly fine there are times, perhaps for security reasons, you dont want to have an
@@ -1281,7 +1480,7 @@
       <p>An often used approach to get information about the current user is to have an api endpoint
         like me:</p>
 
-        router.get('/me');
+      router.get('/me');
 
       <p>With this the client is not going to send the user id - it will be obtained from the Json
         Web Token.</p>
@@ -1291,13 +1490,13 @@
 
       <p>Now let's add the route handler:</p>
 
-        router.get('/me', auth, async (req, res) => { const user = await
-        User.findById(req.user._id).select('-password'); res.send(user); });
+      router.get('/me', auth, async (req, res) => { const user = await
+      User.findById(req.user._id).select('-password'); res.send(user); });
 
       <p>The me api endpoint should only be available to authenticated users so we need to import
         the auth middleware:</p>
 
-        const auth = require('../middleware/auth');
+      const auth = require('../middleware/auth');
 
       <p>To clarify here auth represents authorization NOT authentication because authentication is
         about validating the username and password. In this case we want to see if the user has
@@ -1307,7 +1506,7 @@
         from executing the code in the route handler. The route handler has access to the req.user
         object which means we can access it's _id property:</p>
 
-        (req.user._id)
+      (req.user._id)
 
       <p>So instead of passing the _id property in the path or route we get it from req.user._id
         which actually comes from our Json Web Token which makes it a more secure approach.</p>
@@ -1315,40 +1514,40 @@
       <p>We call User.findById excluding the password (we don't want to send this back to the
         client):</p>
 
-        const user = await User.findById(req.user._id).select('-password');
+      const user = await User.findById(req.user._id).select('-password');
 
       <p>Finally you can send this user object to the client:</p>
 
-        res.send(user);
+      res.send(user);
 
       <p>Let's test in Postman using GET request:</p>
 
-        http://localhost:3000/api/users/me
+      http://localhost:3000/api/users/me
 
       <p>Initially dont specify a JWT and you will receive a 401 Unauthorized response with the
         message:</p>
 
-        Access denied. No token provided.
+      Access denied. No token provided.
 
       <p>Now add a valid JWT (you can get this from Register User) in the header and click send. You
         will receive a 200 OK response and the user account details that match the supplied JWT in
         the body of the response:</p>
 
-        { "_id": "5ad5fd6ed4b65e98dee78835", "name": "Mosh Hamedani", "email": "maxsage@gmail.com",
-        "__v": 0 }
+      { "_id": "5ad5fd6ed4b65e98dee78835", "name": "Mosh Hamedani", "email": "maxsage@gmail.com",
+      "__v": 0 }
 
       <p>Note the password has been excluded.</p>
 
-        <h3>139 - Logging Out Users</h3>
+      <h3>139 - Logging Out Users</h3>
 
       <p>In our routes/auth module we defined this route:</p>
 
-        router.post('/', async (req, res) => { }
+      router.post('/', async (req, res) => { }
 
       <p>For authenticating users. What about logging out users? Do we need a separate route for
         that? No, because we are not storing this token:</p>
 
-        const token = user.generateAuthToken();
+      const token = user.generateAuthToken();
 
       <p>anywhere in the server, so we don't need a separate route handler to delete this token. So
         technically you need to implement the logging out feature on the client not on the
@@ -1375,7 +1574,7 @@
         make sure to use https. So a hacker, sitting in the middle, sniffing traffic cannot read the
         token sent from client to the server because the data is encrypted.</p>
 
-        <h3>140 - Role Based Authorization</h3>
+      <h3>140 - Role Based Authorization</h3>
 
       <p>So far we have implemented authentication and authorization successfully. Now let's take
         this application to the next level. Let's imagine certain operations such as deleting data
@@ -1385,11 +1584,11 @@
 
       <p>In models/user.js examine the userSchema. Currently we have three properties:</p>
 
-        - name - email - password
+      - name - email - password
 
       <p>We need to add another property to the userSchema called isAdmin of type Boolean:</p>
 
-        isAdmin: Boolean
+      isAdmin: Boolean
 
       <p>In MongoDB Compass make one of the users an admin by editing a document and adding a field
         after password. Don't forget to change the default type from string to Boolean. So, now we
@@ -1406,8 +1605,7 @@
       <p>Now back in the user model when we generate the token we want to add our new isAdmin
         property in the payload:</p>
 
-        const token = jwt.sign({ _id: this._id, isAdmin: this.isAdmin },
-        config.get('jwtPrivateKey'));
+      const token = jwt.sign({ _id: this._id, isAdmin: this.isAdmin }, config.get('jwtPrivateKey'));
 
       <p>This is the benefit of encapsulating this logic inside the user object. It means there is a
         single place that we need to modify. Previously we had this logic in two different places -
@@ -1417,7 +1615,7 @@
         admin or not. In the middleware folder and a new file called admin.js with the following
         code:</p>
 
-        module.exports = function(req, res, next) { }
+      module.exports = function(req, res, next) { }
 
       <p>We set module.exports to a middleware function that takes a request, a response and a
         reference to the next middleware function in the request processing pipeline. So here we're
@@ -1425,23 +1623,23 @@
         function. Our authorisation middleware function sets req.user which means we can access that
         in our new function:</p>
 
-        module.exports = function(req, res, next) { if(!req.user.isAdmin) return
-        res.status(403).send('Access denied.'); }
+      module.exports = function(req, res, next) { if(!req.user.isAdmin) return
+      res.status(403).send('Access denied.'); }
 
       <p>If req.user.isAdmin is false we return response code 403 which means forbidden. This is one
         of the areas that a lot of developers get wrong. So we have:</p>
 
-        401 Unauthorized - the user tries to access a protected resource without a valid JWT 403
-        Forbidden - the user sends a valid JWT but they are not authorized to access the resource
-        (e.g. non-admin)
+      401 Unauthorized - the user tries to access a protected resource without a valid JWT 403
+      Forbidden - the user sends a valid JWT but they are not authorized to access the resource
+      (e.g. non-admin)
 
       <p>So if the user isAdmin we pass control to the next middleware function:</p>
-        next();
-      <p>Which in this case is the route handler. Now we are going to apply this
-      middleware function on one of our routes. In the delete api endpoint of genres we pass two
-      middleware functions using an array</p>
+      next();
+      <p>Which in this case is the route handler. Now we are going to apply this middleware function
+        on one of our routes. In the delete api endpoint of genres we pass two middleware functions
+        using an array</p>
 
-        router.delete('/:id', [auth, admin], async (req, res) => { }
+      router.delete('/:id', [auth, admin], async (req, res) => { }
 
       <p>The first one is auth and the second is admin. These middleware functions will be executed
         in sequence. First auth - if the client sends a valid Json web token, then we'll get to the
@@ -1449,20 +1647,20 @@
         route handler will be executed. Import the admin middleware function at the top of
         genre.js:</p>
 
-        const admin = require(''../middleware/admin');
+      const admin = require(''../middleware/admin');
 
-        <h3>141 - Testing the Authorization</h3>
+      <h3>141 - Testing the Authorization</h3>
 
       <p>So back in MongoDB Compass, go to the genres collection and copy a valid genre id. In
         Postman send a delete request to:</p>
 
-        http://localhost:5000/api/genres/5c43a8a94e22960a2c26ef3f
+      http://localhost:5000/api/genres/5c43a8a94e22960a2c26ef3f
 
       <p>So initially I don't have a token.</p>
 
       <p>We receive a response status 401 Unauthorized with the message:</p>
 
-        Access denied. No token provided.
+      Access denied. No token provided.
 
       <p>Next use Postman to login with a user that is not an admin and copy the resulting JWT. You
         can verify that the user is not an admin using the debugger at jwt.io - you should only see
@@ -1470,64 +1668,66 @@
 
       <p>You will receive a response status 403 Forbidden with the message:</p>
 
-        Access denied
+      Access denied
 
       <p>Now login at the auth endpoint with a user that IS NOT an admin:</p>
 
-        http://localhost:3000/api/auth
+      http://localhost:3000/api/auth
 
       <p>In the response body you should receive a JWT:</p>
 
-        eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1NDc5OTM3NDd9.LHozVfSKCYNMdXoGnZ_qcDGqbjFjHp8RuSMolDd6Ahc
+      eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1NDc5OTM3NDd9.LHozVfSKCYNMdXoGnZ_qcDGqbjFjHp8RuSMolDd6Ahc
 
       <p>We can verify that this user is not an admin by going to JWT debugger (jwt.io) and pasting
         the JWT into the encoded section:</p>
 
-        fig xx-xx
+      fig xx-xx
 
       <p>If you check the payload you should see only the id property (and iat) we don't have
         isAdmin. So, this user should not be able to delete a genre. We can verify that by using
         Postman to send another delete request to the genres endpoint:</p>
 
-        http://localhost:5000/api/genres/5c43a8a94e22960a2c26ef3f
+      http://localhost:5000/api/genres/5c43a8a94e22960a2c26ef3f
 
       <p>We add the x-auth-token to the headers (make sure you are in headers NOT Params. Send this
         request and you should get 403 - forbidden with a message in the body:</p>
 
-        Access denied.
+      Access denied.
 
       <p>Now, in contrast, if we log in with a user that is an admin then we should be able to
         delete the genre.</p>
 
-      <>So now login at the auth endpoint with a user that IS an admin:</>
+      <>So now login at the auth endpoint with a user that IS an admin:
+    </
+    >
 
-        http://localhost:3000/api/auth
+    http://localhost:3000/api/auth
 
     <p>Copy the JWT (which is a little bit longer than previous JWT's) into JWT debugger. If you
       check the payload then isAdmin should be set to true.</p>
 
-        { "_id": "5c445adddfbdc04b04613d8a", "isAdmin": true, "iat": 1547994978 }
+    { "_id": "5c445adddfbdc04b04613d8a", "isAdmin": true, "iat": 1547994978 }
 
     <p>Next, copy and paste this JWT in the DELETE Genre request in Postman, hit Send and you will
       receive a response status 200 OK and the deleted Genre object in the body of the response:</p>
 
-        { "_id": "5c43a8a94e22960a2c26ef3f", "name": "Griller", "__v": 0 }
+    { "_id": "5c43a8a94e22960a2c26ef3f", "name": "Griller", "__v": 0 }
 
     <p>One last thing before we finish the lecture. In this simple application we have a single
       isAdmin property to determine if the user is an admin or not. In your application you might
       have multiple roles:</p>
 
-        admin moderator etc.
+    admin moderator etc.
 
     <p>In that case you would need a property like roles:</p>
 
-        isAdmin: Boolean, roles: []
+    isAdmin: Boolean, roles: []
 
     <p>This would be an array. This could contain strings or complex objects, that really depends on
       the scope of your application. In a more advanced application instead of managing roles you
       would manage operations, that is the operations that the user is allowed to perform:</p>
 
-        isAdmin: Boolean, roles: [], operations []
+    isAdmin: Boolean, roles: [], operations []
 
     <p>operations would be an array of complex objects. For example, for a given user, we would say
       this user is allowed to delete genres, or create genres. So you would control access at a more
@@ -1536,16 +1736,16 @@
       generated as part of authenticating the user. Then you would add middleware, where currently
       we are just checking the value of this boolean property:</p>
 
-        if(!req.user.isAdmin) return res.status(403).send('Access denied.');
+    if(!req.user.isAdmin) return res.status(403).send('Access denied.');
 
     <p>In a more complex application we can look at the roles array or the operations array. Based
       on that, you make a decision, you either decline access:</p>
 
-        return res.status(403)
+    return res.status(403)
 
     <p>or grant it:</p>
 
-        next();
+    next();
     <h3>142 - Recap</h3>
     <h4>Authentication and Authorization</h4>
     <p>So, in this section, you learned that:</p>
@@ -1554,8 +1754,8 @@
     <p>Authorization is the process of determining if the user has permission to perform a given
       operation. - To hash passwords, use bcrypt</p>
     <h4>Hashing passwords</h4>
-    const salt = await bcrypt.genSalt(10); const hashed = await bcrypt.hash(‘1234’, salt);
-    // Validating passwords const isValid = await bcrypt.compare(‘1234’, hashed);
+    const salt = await bcrypt.genSalt(10); const hashed = await bcrypt.hash(‘1234’, salt); //
+    Validating passwords const isValid = await bcrypt.compare(‘1234’, hashed);
 
     <p>A JSON Web Token (JWT) is a JSON object encoded as a long string. We use them to identify
       users. It’s similar to a passport or driver’s license. It includes a few public properties
@@ -1580,8 +1780,7 @@
 
     <h4>Adding a method to a Mongoose model</h4>
 
-    userSchema.methods.generateAuthToken = function() { } const token =
-    user.generateAuthToken();
+    userSchema.methods.generateAuthToken = function() { } const token = user.generateAuthToken();
 
     <p>Implement authorization using a middleware function. Return a 401 error (unauthorized) if the
       client doesn’t send a valid token. Return 403 (forbidden) if the user provided a valid token
@@ -1595,7 +1794,7 @@
       Store JWTs on the client. If you have a strong reason for storing them on the server, make
       sure to encrypt them before storing them in a database.</p>
 
-        </div>
-      </div>
+  </div>
+</div>
 </body>
 </html>

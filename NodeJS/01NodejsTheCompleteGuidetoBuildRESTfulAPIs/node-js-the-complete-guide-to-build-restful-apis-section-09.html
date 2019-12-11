@@ -25,43 +25,45 @@
       </div>
       <div class="panel-body">
         <h3>112 - Modelling Relationships</h3>
-        <p>So in all the examples we have looked at so far we have worked with single, self-contained documents. In the
-          real world, the entities and concepts that we work with, they have some kind of association. For example, you
-          can have a Course object or document and of course this course has an author. But the Author is more than just
-          a name - it's more than just a simple string.</p>
-        <p>You might have a collection of Authors where we store author documents. In each author document we could have
-          properties like name, website, image etc. In this lecture we will discuss how to work with related objects.
-          There are two approaches:</p>
+        <p>So in all the examples we have looked at so far we have worked with single,
+          self-contained documents. In the real world, the entities and concepts that we work with,
+          they have some kind of association. For example, you can have a Course object or document
+          and of course this course has an author. But the Author is more than just a name - it's
+          more than just a simple string.</p>
+        <p>You might have a collection of Authors where we store author documents. In each author
+          document we could have properties like name, website, image etc. In this lecture we will
+          discuss how to work with related objects. There are two approaches:</p>
         <ul>
           <li>Using References (Normalization)</li>
           <li>Using Embedded Documents (De-normalization)</li>
         </ul>
-        <p>With the first approach, references, we have a separate collection for storing our Authors. So we can have an
-          Author object like this:</p>
+        <p>With the first approach, references, we have a separate collection for storing our
+          Authors. So we can have an Author object like this:</p>
         <figure>
 <pre><code class="language-javascript">let author = {
   name: 'Mosh'
 }</code></pre>
           <figcaption>Fig 09-001</figcaption>
         </figure>
-        <p>We can add various properties in the author object and then we would have a separate collection where we
-          store course objects like this:</p>
+        <p>We can add various properties in the author object and then we would have a separate
+          collection where we store course objects like this:</p>
         <figure>
 <pre><code class="language-javascript">let course = {
   author: 'id'
 }</code></pre>
           <figcaption>Fig 09-002</figcaption>
         </figure>
-        <p>So here we have a course object. We set the author to the id of an author document in the authors collection.
-          So here we are using a reference.</p>
-        <p>For clarification, in relational databases, we have this concept of relationships which enforces data
-          integrity. However in MongoDB or NoSQL databases in general, we don't really have a relationship. So even
-          though I'm setting the ID of an author here there is actually no association or relationship between the
-          author and course object in the database. This means it is possible to set the author's id property to
-          something invalid and MonoDB doesn't care about that.</p>
-        <p>Now we could take this example to the next level by saying that a course might have multiple authors. So
-          instead of the author property we could have authors which we set to an array of references where we store
-          multiple id's:</p>
+        <p>So here we have a course object. We set the author to the id of an author document in the
+          authors collection. So here we are using a reference.</p>
+        <p>For clarification, in relational databases, we have this concept of relationships which
+          enforces data integrity. However in MongoDB or NoSQL databases in general, we don't really
+          have a relationship. So even though I'm setting the ID of an author here there is actually
+          no association or relationship between the author and course object in the database. This
+          means it is possible to set the author's id property to something invalid and MonoDB
+          doesn't care about that.</p>
+        <p>Now we could take this example to the next level by saying that a course might have
+          multiple authors. So instead of the author property we could have authors which we set to
+          an array of references where we store multiple id's:</p>
         <figure>
 <pre><code class="language-javascript">let course = {
   author: 'id',
@@ -77,9 +79,9 @@
 }</code></pre>
           <figcaption>Fig 09-004</figcaption>
         </figure>
-        <p>The other approach is to use embedded documents or de-normalization. We can embed an author document inside
-          of a course document. So here we can have a course object or document and in this document we have the author
-          property which we set to an object:</p>
+        <p>The other approach is to use embedded documents or de-normalization. We can embed an
+          author document inside of a course document. So here we can have a course object or
+          document and in this document we have the author property which we set to an object:</p>
         <figure>
 <pre><code class="language-javascript">let course = {
   author: {
@@ -88,32 +90,38 @@
 }</code></pre>
           <figcaption>Fig 09-005</figcaption>
         </figure>
-        <p>The object will contain all the properties relevant to an Author. So we are embedding a document inside of
-          another document. This is called de-normalization. If you have never worked with NoSQL databases before and
-          you come from a relational database background, you may think that the first approach is the way to go.
-          However, that is not necessarily the case when working with NoSQL databases - each approach has it's strength
-          and weaknesses. What approach you choose really depends on your application and it's querying
+        <p>The object will contain all the properties relevant to an Author. So we are embedding a
+          document inside of another document. This is called de-normalization. If you have never
+          worked with NoSQL databases before and you come from a relational database background, you
+          may think that the first approach is the way to go. However, that is not necessarily the
+          case when working with NoSQL databases - each approach has it's strength and weaknesses.
+          What approach you choose really depends on your application and it's querying
           requirements.</p>
-        <p>So basically, you need to do a trade-off between query performance versus consistency. With the first
-          approach (references or normalization) you have a single place to define an author. If tomorrow, I decide to
-          change the name of this author from Mosh to Mosh Hamedani, there is a single place that I need to modify. All
-          courses that are referencing that author will automatically see the update.</p>
-        <p>This means the first approach provides consistency. However, every time we want to query a course we need to
-          do an extra query to load the related author. Sometimes that extra query may not be a big deal but in certain
-          situations you might want to make sure a query runs as fast as possible. If that's the case you need to look
-          at the second approach - using embedded documents.</p>
-        <p>With this approach we can load a course object and it's author using a single query because the author is
-          embedded inside the course object or the course document. However, with this approach, if tomorrow I decide to
-          change the name of this author from Mosh to Mosh Hamedani then the chances are there will be multiple course
-          documents that need to be updated. If our update operation doesn't complete successfully, it is possible that
-          we wil have some course documents that are not updated. This will result in inconsistent data.</p>
-        <p>So, in every part of your application, you will need to think about the queries that you will run ahead of
-          time. You will design your database based on those queries.</p>
-        <p>There is a third approach, known as the hybrid approach. Imagine, for example, that each author has 50
-          properties. We don't want duplicate all those properties inside every course in database. So we can have a
-          separate collection of authors, but instead of using a reference here, we can embed an author document inside
-          of a course document but not the complete representation for that author. So, with the hybrid approach, our
-          database will look like this:</p>
+        <p>So basically, you need to do a trade-off between query performance versus consistency.
+          With the first approach (references or normalization) you have a single place to define an
+          author. If tomorrow, I decide to change the name of this author from Mosh to Mosh
+          Hamedani, there is a single place that I need to modify. All courses that are referencing
+          that author will automatically see the update.</p>
+        <p>This means the first approach provides consistency. However, every time we want to query
+          a course we need to do an extra query to load the related author. Sometimes that extra
+          query may not be a big deal but in certain situations you might want to make sure a query
+          runs as fast as possible. If that's the case you need to look at the second approach -
+          using embedded documents.</p>
+        <p>With this approach we can load a course object and it's author using a single query
+          because the author is embedded inside the course object or the course document. However,
+          with this approach, if tomorrow I decide to change the name of this author from Mosh to
+          Mosh Hamedani then the chances are there will be multiple course documents that need to be
+          updated. If our update operation doesn't complete successfully, it is possible that we wil
+          have some course documents that are not updated. This will result in inconsistent
+          data.</p>
+        <p>So, in every part of your application, you will need to think about the queries that you
+          will run ahead of time. You will design your database based on those queries.</p>
+        <p>There is a third approach, known as the hybrid approach. Imagine, for example, that each
+          author has 50 properties. We don't want duplicate all those properties inside every course
+          in database. So we can have a separate collection of authors, but instead of using a
+          reference here, we can embed an author document inside of a course document but not the
+          complete representation for that author. So, with the hybrid approach, our database will
+          look like this:</p>
         <figure>
 <pre><code class="language-javascript">// Hybrid
 let author = {
@@ -122,7 +130,8 @@ let author = {
 }</code></pre>
           <figcaption>Fig 09-006</figcaption>
         </figure>
-        <p>Now we have a separate collection of courses. In this collection we'll have course documents like this:</p>
+        <p>Now we have a separate collection of courses. In this collection we'll have course
+          documents like this:</p>
         <figure>
 <pre><code class="language-javascript">let course = {
   author: {
@@ -134,19 +143,21 @@ let author = {
 }</code></pre>
           <figcaption>Fig 09-007</figcaption>
         </figure>
-        <p>The id property is a reference to an author document. The name property is the name of the author as a string
-          and is embedded into the course document. With this approach we can quickly read a course object, along with
-          it's author, so we can optimize our query performance but we don't have to store all the properties of an
-          author inside a course document.</p>
-        <p>This approach is particularly useful if you want to have a snapshot of your data at a point in time. For
-          example, imagine you were designing an e-commerce site. There we will have collections like orders, products,
-          shopping carts and so on. In each order, we need to store the snapshot of a product, because we want to know
-          the price of that product at a given point in time. That's where the hybrid approach is useful.</p>
-        <p>So, again, which approach you use really depends on the application you are building - there is no right or
-          wrong. Each approach has it's strength and weaknesses.</p>
+        <p>The id property is a reference to an author document. The name property is the name of
+          the author as a string and is embedded into the course document. With this approach we can
+          quickly read a course object, along with it's author, so we can optimize our query
+          performance but we don't have to store all the properties of an author inside a course
+          document.</p>
+        <p>This approach is particularly useful if you want to have a snapshot of your data at a
+          point in time. For example, imagine you were designing an e-commerce site. There we will
+          have collections like orders, products, shopping carts and so on. In each order, we need
+          to store the snapshot of a product, because we want to know the price of that product at a
+          given point in time. That's where the hybrid approach is useful.</p>
+        <p>So, again, which approach you use really depends on the application you are building -
+          there is no right or wrong. Each approach has it's strength and weaknesses.</p>
         <h3>113 - Referencing Documents</h3>
-        <p>In this lecture, we will discuss how to reference a document in another document. The demo code contains two
-          modules. The first is author with three properties:</p>
+        <p>In this lecture, we will discuss how to reference a document in another document. The
+          demo code contains two modules. The first is author with three properties:</p>
         <ul>
           <li>name</li>
           <li>bio</li>
@@ -158,17 +169,17 @@ let author = {
             name
           </li>
         </ul>
-        <p>In this lecture we will add another property - author where we will reference an author document. We also
-          have a few helper functions:</p>
+        <p>In this lecture we will add another property - author where we will reference an author
+          document. We also have a few helper functions:</p>
         <ul>
           <li>createAuthor</li>
           <li>createCourse</li>
           <li>listCourses</li>
         </ul>
-        <p>All these functions are similar to what you have seen earlier in this section - so there is nothing new
-          here.</p>
-        <p>Now before getting started go to MongoDB compass and delete the playground database so we can start on a
-          clean canvas.</p>
+        <p>All these functions are similar to what you have seen earlier in this section - so there
+          is nothing new here.</p>
+        <p>Now before getting started go to MongoDB compass and delete the playground database so we
+          can start on a clean canvas.</p>
         <p>At the bottom of index.js you can see we have a call to the creatAuthor function.</p>
         <figure>
           <pre><code
@@ -180,13 +191,15 @@ let author = {
           <img src="./images/Fig09-009.PNG"/>
           <figcaption>Fig 09-009</figcaption>
         </figure>
-        <p>So we created one Author - you can see the id above. Now let's copy this and then back in the code comment
-          out the call to createAuthor and enable createCourse pasting in the id from above:</p>
+        <p>So we created one Author - you can see the id above. Now let's copy this and then back in
+          the code comment out the call to createAuthor and enable createCourse pasting in the id
+          from above:</p>
         <figure>
           <pre><code class="language-javascript">createCourse('Node Course', '5c33787f925b1d69c861529e');</code></pre>
           <figcaption>Fig 09-010</figcaption>
         </figure>
-        <p>If you look at the implementation of this function we create a course object with two properties:</p>
+        <p>If you look at the implementation of this function we create a course object with two
+          properties:</p>
         <ul>
           <li>name</li>
           <li>author</li>
@@ -196,16 +209,18 @@ let author = {
           <img src="./images/Fig09-011.png"/>
           <figcaption>Fig 09-011</figcaption>
         </figure>
-        <p>This has created a course object - you can see the id and name above but we don't have an author. The reason
-          for this is because when we defined this course model we only added the name property:</p>
+        <p>This has created a course object - you can see the id and name above but we don't have an
+          author. The reason for this is because when we defined this course model we only added the
+          name property:</p>
         <figure>
 <pre><code class="language-javascript">const Course = mongoose.model('Course', new mongoose.Schema({
   name: String
 }));</code></pre>
           <figcaption>Fig 09-012</figcaption>
         </figure>
-        <p>So when saving a course object, only the properties that you have defined in your model will be persisted in
-          the database. So here, in our model, we need to add another property author:</p>
+        <p>So when saving a course object, only the properties that you have defined in your model
+          will be persisted in the database. So here, in our model, we need to add another property
+          author:</p>
         <figure>
 <pre><code class="language-javascript">const Course = mongoose.model('Course', new mongoose.Schema({
   name: String,
@@ -216,26 +231,28 @@ let author = {
 }));</code></pre>
           <figcaption>Fig 09-013</figcaption>
         </figure>
-        <p>We set this to a schema type object. The type of this property should be ObjectId. So we use
-          mongoose.Schema.Types.ObjectId. We also set a property called ref and specify the target collection - Author.
-          In the author property we will store an ObjectId that references an author document. However, once again, we
-          don't really have a proper relationship here. We can store a course with an invalid author, and Mongo doesn't
+        <p>We set this to a schema type object. The type of this property should be ObjectId. So we
+          use mongoose.Schema.Types.ObjectId. We also set a property called ref and specify the
+          target collection - Author. In the author property we will store an ObjectId that
+          references an author document. However, once again, we don't really have a proper
+          relationship here. We can store a course with an invalid author, and Mongo doesn't
           complain about that.</p>
         <p>So now have modified the model run the application again:</p>
         <figure>
           <img src="./images/Fig09-014.PNG"/>
           <figcaption>Fig 09-014</figcaption>
         </figure>
-        <p>we now have the author property. Now, back in MongoDB compass, let's look at this playground database and our
-          courses collection:</p>
+        <p>we now have the author property. Now, back in MongoDB compass, let's look at this
+          playground database and our courses collection:</p>
         <figure>
           <img src="./images/Fig09-015.PNG"/>
           <figcaption>Fig 09-015</figcaption>
         </figure>
-        <p>You can see we have two documents. The first one doesn't have an author, but the second one does.</p>
+        <p>You can see we have two documents. The first one doesn't have an author, but the second
+          one does.</p>
         <h3>114 - Population</h3>
-        <p>In this lecture, we will get all the courses along with their Authors. Let's enable the call to
-          listCourses():</p>
+        <p>In this lecture, we will get all the courses along with their Authors. Let's enable the
+          call to listCourses():</p>
         <figure>
           <pre><code class="language-javascript">listCourses();</code></pre>
           <figcaption>Fig 09-016</figcaption>
@@ -250,8 +267,8 @@ let author = {
 }</code></pre>
           <figcaption>Fig 09-016</figcaption>
         </figure>
-        <p>We are calling the find method to get all the courses and we're selecting only their name property. Save the
-          changes and run the application.</p>
+        <p>We are calling the find method to get all the courses and we're selecting only their name
+          property. Save the changes and run the application.</p>
         <figure>
           <img src="./images/Fig09-017.PNG"/>
           <figcaption>Fig 09-017</figcaption>
@@ -271,9 +288,9 @@ let author = {
           <img src="./images/Fig09-019.PNG"/>
           <figcaption>Fig 09-019</figcaption>
         </figure>
-        <p>Our second document now has an author. We are only getting the reference or the object id here. In a real
-          world application, you want to load this author document so we can display it's name. That's where we can call
-          the populate method:</p>
+        <p>Our second document now has an author. We are only getting the reference or the object id
+          here. In a real world application, you want to load this author document so we can display
+          it's name. That's where we can call the populate method:</p>
         <figure>
 <pre><code class="language-javascript">async function listCourses() {
   const courses = await Course
@@ -284,8 +301,9 @@ let author = {
 }</code></pre>
           <figcaption>Fig 09-020</figcaption>
         </figure>
-        <p>As the first argument we specify the path to a given property - in this case author. And because earlier,
-          when defining the course model, we set author to be an ObjectId and we referenced the Author collection:</p>
+        <p>As the first argument we specify the path to a given property - in this case author. And
+          because earlier, when defining the course model, we set author to be an ObjectId and we
+          referenced the Author collection:</p>
         <figure>
 <pre><code class="language-javascript">const Course = mongoose.model('Course', new mongoose.Schema({
   name: String,
@@ -296,18 +314,19 @@ let author = {
 }));</code></pre>
           <figcaption>Fig 09-021</figcaption>
         </figure>
-        <p>When we load a course object and populate the author property, Mongoose knows that it should query the
-          authors collection in MongoDB. Run the application:</p>
+        <p>When we load a course object and populate the author property, Mongoose knows that it
+          should query the authors collection in MongoDB. Run the application:</p>
         <figure>
           <img src="./images/Fig09-022.PNG"/>
           <figcaption>Fig 09-022</figcaption>
         </figure>
-        <p>Our first document doesn't have an author so we don't get anything. Our second course does have an author and
-          we can see a complete representation of an author document. In a real world application, an author can have
-          multiple properties. Perhaps when showing a list of courses, we don't want to get all the additional
-          properties of the author - maybe you just want to get the name property.</p>
-        <p>We can achieve this by supplying a second argument to the populate method which specifies the properties you
-          want to include or exclude:</p>
+        <p>Our first document doesn't have an author so we don't get anything. Our second course
+          does have an author and we can see a complete representation of an author document. In a
+          real world application, an author can have multiple properties. Perhaps when showing a
+          list of courses, we don't want to get all the additional properties of the author - maybe
+          you just want to get the name property.</p>
+        <p>We can achieve this by supplying a second argument to the populate method which specifies
+          the properties you want to include or exclude:</p>
         <figure>
           <pre><code class="language-javascript">.populate('author', 'name -_id')</code></pre>
           <figcaption>Fig 09-023</figcaption>
@@ -317,10 +336,11 @@ let author = {
           <img src="./images/Fig09-024.PNG"/>
           <figcaption>Fig 09-024</figcaption>
         </figure>
-        <p>Now the author property only contains the name property. It's also possible to use the populate method to
-          populate multiple properties. For example, let's imagine that each course has a category and the category
-          references the category document. So here we can call populate again, add category, and optionally pick only
-          the name property of each category document:</p>
+        <p>Now the author property only contains the name property. It's also possible to use the
+          populate method to populate multiple properties. For example, let's imagine that each
+          course has a category and the category references the category document. So here we can
+          call populate again, add category, and optionally pick only the name property of each
+          category document:</p>
         <figure>
 <pre><code class="language-javascript">async function listCourses() {
   const courses = await Course
@@ -332,22 +352,25 @@ let author = {
 }</code></pre>
           <figcaption>Fig 09-025</figcaption>
         </figure>
-        <p>One last thing to finish the lecture. Earlier we discussed how Mongo doesn't have relationships or data
-          integrity in our database. So here in our courses collection it is possible to set our author to an invalid
-          document. You can use Compass to simulate this by manually editing the ObjectId of the author property:</p>
+        <p>One last thing to finish the lecture. Earlier we discussed how Mongo doesn't have
+          relationships or data integrity in our database. So here in our courses collection it is
+          possible to set our author to an invalid document. You can use Compass to simulate this by
+          manually editing the ObjectId of the author property:</p>
         <figure>
           <img src="./images/Fig09-026.PNG"/>
           <figcaption>Fig 09-026</figcaption>
         </figure>
-        <p>MongoDB allows you to make this modification without complaining. If you run the application:</p>
+        <p>MongoDB allows you to make this modification without complaining. If you run the
+          application:</p>
         <figure>
           <img src="./images/Fig09-027.PNG"/>
           <figcaption>Fig 09-027</figcaption>
         </figure>
-        <p>You can see the author is now null because there is no author with the given id in our database.</p>
+        <p>You can see the author is now null because there is no author with the given id in our
+          database.</p>
         <h3>115 - Embedding Documents</h3>
-        <p>So in the last lecture you learned how to use references to relate documents. In this lecture we are going to
-          look at another technique which is embedding documents.</p>
+        <p>So in the last lecture you learned how to use references to relate documents. In this
+          lecture we are going to look at another technique which is embedding documents.</p>
         <p>Here we have the authorSchema exactly as it was in the previous lecture:</p>
         <figure>
     <pre><code class="language-javascript">const authorSchema = new mongoose.Schema({
@@ -375,8 +398,9 @@ let author = {
 }));</code></pre>
           <figcaption>Fig 09-030</figcaption>
         </figure>
-        <p>Here we don't have the Author property. That's what we are going to add in this lecture. In the last lecture
-          we set the type of our author property to an ObjectId and referenced the Author collection:</p>
+        <p>Here we don't have the Author property. That's what we are going to add in this lecture.
+          In the last lecture we set the type of our author property to an ObjectId and referenced
+          the Author collection:</p>
         <figure>
     <pre><code class="language-javascript">const Course = mongoose.model('Course', new mongoose.Schema({
   name: String,
@@ -387,7 +411,8 @@ let author = {
 }));</code></pre>
           <figcaption>Fig 09-031</figcaption>
         </figure>
-        <p>In this lecture we are going to embed an author document directly inside of the course document:</p>
+        <p>In this lecture we are going to embed an author document directly inside of the course
+          document:</p>
         <figure>
     <pre><code class="language-javascript">const Course = mongoose.model('Course', new mongoose.Schema({
   name: String,
@@ -406,7 +431,8 @@ let author = {
 });</code></pre>
           <figcaption>Fig 09-033</figcaption>
         </figure>
-        <p>That is the only change we need to make. Now let's take a look at the createCourse function:</p>
+        <p>That is the only change we need to make. Now let's take a look at the createCourse
+          function:</p>
         <figure>
     <pre><code class="language-javascript">async function createCourse(name, author) {
   const course = new Course({
@@ -418,25 +444,28 @@ let author = {
 }</code></pre>
           <figcaption>Fig 09-034</figcaption>
         </figure>
-        <p>We take a course name and an author, initialize the course and save it, as we did previously.</p>
+        <p>We take a course name and an author, initialize the course and save it, as we did
+          previously.</p>
         <p>At the end of the file we have a call to the createCourse function:</p>
         <figure>
           <pre><code class="language-javascript">createCourse('Node Course', new Author({ name: 'Mosh' }));</code></pre>
           <figcaption>Fig 09-035</figcaption>
         </figure>
-        <p>Before going any further open MongoDB Compass and delete the playground database. We want to start on a clean
-          canvas to make sure we are on the same page.</p>
+        <p>Before going any further open MongoDB Compass and delete the playground database. We want
+          to start on a clean canvas to make sure we are on the same page.</p>
         <p>Run the application:</p>
         <figure>
           <img src="./images/Fig09-036.PNG"/>
           <figcaption>Fig 09-036</figcaption>
         </figure>
-        <p>You can see the new course document. We can see author is an object with two properties - id and name. So
-          this is an embedded or sub-document. These sub-documents are like normal documents so most features that are
-          available in normal documents are also available in sub documents. For example, we can implement validation
-          here, we can enforce that author.name should be required.</p>
-        <p>However, these sub-documents, cannot be created on their own. They can only be saved in the context of their
-          parent. So let's say I want to change the name of this author. Copy the course id. Create a new function:</p>
+        <p>You can see the new course document. We can see author is an object with two properties -
+          id and name. So this is an embedded or sub-document. These sub-documents are like normal
+          documents so most features that are available in normal documents are also available in
+          sub documents. For example, we can implement validation here, we can enforce that
+          author.name should be required.</p>
+        <p>However, these sub-documents, cannot be created on their own. They can only be saved in
+          the context of their parent. So let's say I want to change the name of this author. Copy
+          the course id. Create a new function:</p>
         <figure>
     <pre><code class="language-javascript">async function updateAuthor(courseId) {
   const course = await Course.findById(courseId);
@@ -445,23 +474,25 @@ let author = {
 }</code></pre>
           <figcaption>Fig 09-037</figcaption>
         </figure>
-        <p>First we find a course with the given id. Then, we modify the author and call course.save().</p>
+        <p>First we find a course with the given id. Then, we modify the author and call
+          course.save().</p>
 
         <p>Bear in mind we don't have course.author.save() - that does not exist.</p>
         <p>Let's add a call to this function:</p>
         <figure>
-          <pre><code class="language-javascript">updateAuthor('5ac4da76334f0d2cf09211e5');</code></pre>
+          <pre><code
+            class="language-javascript">updateAuthor('5ac4da76334f0d2cf09211e5');</code></pre>
           <figcaption>Fig 09-038</figcaption>
         </figure>
-        <p>Run the application again. To check the document has been updated look at Compass. Refresh the view then
-          browse the playground database, courses collection, course document, author property. You should see the
-          author name has been updated:</p>
+        <p>Run the application again. To check the document has been updated look at Compass.
+          Refresh the view then browse the playground database, courses collection, course document,
+          author property. You should see the author name has been updated:</p>
         <figure>
           <img src="./images/Fig09-039.PNG"/>
           <figcaption>Fig 09-039</figcaption>
         </figure>
-        <p>We can also update a sub-document directly. So, instead of querying it first, we can update it directly in
-          the database:</p>
+        <p>We can also update a sub-document directly. So, instead of querying it first, we can
+          update it directly in the database:</p>
         <figure>
     <pre><code class="language-javascript">async function updateAuthor(courseId) {
   const course = await Course.update({ _id: courseId}, {
@@ -472,17 +503,18 @@ let author = {
 }</code></pre>
           <figcaption>Fig 09-040</figcaption>
         </figure>
-        <p>We replace findById with update passing a query object as the first argument. The second argument is our
-          update object. We use the set operator, which we have seen before, which we set to an object. Here we pass one
-          or more key/value pairs. To access the a nested property we use the dot notation. Let's say we want to update
-          the name of the author of a course:</p>
+        <p>We replace findById with update passing a query object as the first argument. The second
+          argument is our update object. We use the set operator, which we have seen before, which
+          we set to an object. Here we pass one or more key/value pairs. To access the a nested
+          property we use the dot notation. Let's say we want to update the name of the author of a
+          course:</p>
         <figure>
           <pre><code class="language-javascript">'author.name': 'John Smith'</code></pre>
           <figcaption>Fig 09-041</figcaption>
         </figure>
-        <p>With this we don't need to modify this object in memory and save it explicitly. We update it directly in the
-          database. So back in the terminal run the application again. Go into Compass and refresh. You should see the
-          author name has been updated:</p>
+        <p>With this we don't need to modify this object in memory and save it explicitly. We update
+          it directly in the database. So back in the terminal run the application again. Go into
+          Compass and refresh. You should see the author name has been updated:</p>
         <figure>
           <img src="./images/Fig09-042.PNG"/>
           <figcaption>Fig 09-042</figcaption>
@@ -498,11 +530,11 @@ let author = {
 }</code></pre>
           <figcaption>Fig 09-043</figcaption>
         </figure>
-        <p>We can specify author.name to remove the nested property or we can specify author to remove the sub-document
-          as a whole (as in the code above)</p>
-        <p>As discussed previously, these sub-documents are similar to normal documents, so here we can enforce
-          validation. We can enforce that every course should have an author, so here's the definition of our course
-          schema:</p>
+        <p>We can specify author.name to remove the nested property or we can specify author to
+          remove the sub-document as a whole (as in the code above)</p>
+        <p>As discussed previously, these sub-documents are similar to normal documents, so here we
+          can enforce validation. We can enforce that every course should have an author, so here's
+          the definition of our course schema:</p>
         <figure>
     <pre><code class="language-javascript">const Course = mongoose.model('Course', new mongoose.Schema({
   name: String,
@@ -511,8 +543,8 @@ let author = {
 ));</code></pre>
           <figcaption>Fig 09-044</figcaption>
         </figure>
-        <p>We make this author property required by passing a Schema type object and setting the type to authorSchema
-          and the required property to true:</p>
+        <p>We make this author property required by passing a Schema type object and setting the
+          type to authorSchema and the required property to true:</p>
         <figure>
     <pre><code class="language-javascript">const Course = mongoose.model('Course', new mongoose.Schema({
   name: String,
@@ -520,9 +552,9 @@ let author = {
 }));</code></pre>
           <figcaption>Fig 09-045</figcaption>
         </figure>
-        <p>This syntax is identical to the validation we looked at in the section on Mongoose data validation. If you
-          want to make a specific property in the author document required you apply that validation on the author
-          sub-document itself:</p>
+        <p>This syntax is identical to the validation we looked at in the section on Mongoose data
+          validation. If you want to make a specific property in the author document required you
+          apply that validation on the author sub-document itself:</p>
         <figure>
     <pre><code class="language-javascript">const authorSchema = new mongoose.Schema({
   name: { type: String, required: true },
@@ -533,9 +565,10 @@ let author = {
         </figure>
         <p>We specify a schema type object and set the required property to true.</p>
         <h3>116 - Using an Array of Sub-documents</h3>
-        <p>So in the last lecture we add an author as a sub-document in the course document. In this lecture, I'm going
-          to show you how to change this to an array of sub-documents.</p>
-        <p>First rename the property to authors, then change it's value to an array of authorSchema:</p>
+        <p>So in the last lecture we add an author as a sub-document in the course document. In this
+          lecture, I'm going to show you how to change this to an array of sub-documents.</p>
+        <p>First rename the property to authors, then change it's value to an array of
+          authorSchema:</p>
         <figure>
     <pre><code class="language-javascript">const Course = mongoose.model('Course', new mongoose.Schema({
   name: String,
@@ -543,7 +576,8 @@ let author = {
 }));</code></pre>
           <figcaption>Fig 09-047</figcaption>
         </figure>
-        <p>We need to modify the createCourse function so that when creating an array we pass an array of authors:</p>
+        <p>We need to modify the createCourse function so that when creating an array we pass an
+          array of authors:</p>
         <figure>
     <pre><code class="language-javascript">async function createCourse(name, authors) {
   const course = new Course({
@@ -552,7 +586,8 @@ let author = {
 });</code></pre>
           <figcaption>Fig 09-048</figcaption>
         </figure>
-        <p>Finally, in the call to createCourse, instead of passing one author object we pass an array:</p>
+        <p>Finally, in the call to createCourse, instead of passing one author object we pass an
+          array:</p>
         <figure>
     <pre><code class="language-javascript">createCourse('Node Course', [
   new Author({ name: 'Mosh' }),
@@ -561,15 +596,16 @@ let author = {
           <figcaption>Fig 09-049</figcaption>
         </figure>
         <p>Now back in Compass delete the courses collection. Run the application:</p>
-        <p>In Compass refresh and look at the new document that has been created in the courses collection:</p>
+        <p>In Compass refresh and look at the new document that has been created in the courses
+          collection:</p>
         <figure>
           <img src="./images/Fig09-050.PNG"/>
           <figcaption>Fig 09-050</figcaption>
         </figure>
-        <p>You can see the courses collection and the course document with an array of authors. Every Author is an
-          object and when you expand you see two properties _id and name.</p>
-        <p>We can add authors to this array at a later date if required. Back in the code, let's create a new function
-          called addAuthor:</p>
+        <p>You can see the courses collection and the course document with an array of authors.
+          Every Author is an object and when you expand you see two properties _id and name.</p>
+        <p>We can add authors to this array at a later date if required. Back in the code, let's
+          create a new function called addAuthor:</p>
         <figure>
     <pre><code class="language-javascript">async function addAuthor(courseId, author) {
   const course = await Course.findById(courseId);
@@ -578,16 +614,16 @@ let author = {
 }</code></pre>
           <figcaption>Fig 09-051</figcaption>
         </figure>
-        <p>First we find a course, then we push the author into the authors array. At this point our changes are not
-          saved to the database so we call course.save.</p>
+        <p>First we find a course, then we push the author into the authors array. At this point our
+          changes are not saved to the database so we call course.save.</p>
         <p>Add a call to the addAuthor function:</p>
         <figure>
           <pre><code
             class="language-javascript">addAuthor('5c361a1ad2643c0ab0b82381', new Author({ name: 'Amy'}));</code></pre>
           <figcaption>Fig 09-052</figcaption>
         </figure>
-        <p>Run the application and check in Compass to ensure the new Author has been successfully added to the
-          array.</p>
+        <p>Run the application and check in Compass to ensure the new Author has been successfully
+          added to the array.</p>
         <p>Removing an Author is very similar:</p>
         <figure>
     <pre><code class="language-javascript">async function removeAuthor(courseId, authorId) {
@@ -598,10 +634,11 @@ let author = {
 }</code></pre>
           <figcaption>Fig 09-053</figcaption>
         </figure>
-        <p>We supply two parameters - courseId and authorId. We use the findById method to find the course. Next we use
-          dot notation to goto course.authors and here we have an id method. The id method can be used to lookup a child
-          object by it's id. So we pass the authorId and store the returned author object in a const called author. Now
-          we can call the remove method on the author object. Finally we call course.save();</p>
+        <p>We supply two parameters - courseId and authorId. We use the findById method to find the
+          course. Next we use dot notation to goto course.authors and here we have an id method. The
+          id method can be used to lookup a child object by it's id. So we pass the authorId and
+          store the returned author object in a const called author. Now we can call the remove
+          method on the author object. Finally we call course.save();</p>
         <p>Add a call to the removeAuthor function:</p>
         <figure>
           <pre><code
@@ -616,8 +653,9 @@ let author = {
         <p>The specified author should have been removed.</p>
         <p>This is how we work with sub-documents.</p>
         <h3>117 - Project - Build the Movies API</h3>
-        <p>Alright now, I want to get back to our vidly project, and build an API to manage the list of movies. Now,
-          don't think that this is exactly like managing the list of genres, this exercise is more challenging.</p>
+        <p>Alright now, I want to get back to our vidly project, and build an API to manage the list
+          of movies. Now, don't think that this is exactly like managing the list of genres, this
+          exercise is more challenging.</p>
         <p>So this is the shape of the movies that we want to store in MongoDB:</p>
         <ul>
           <li>title: String</li>
@@ -625,16 +663,19 @@ let author = {
           <li>numberInStock: Number</li>
           <li>dailyRentalRate: Number</li>
         </ul>
-        <p>Note that the vidly database already contains a genres collection but we are embedding genre documents inside
-          a movie document to optimize the performance of our queries. Also, take into account, that it's very unlikely
-          that we will rename the name of a genre in the future - sci-fi is sci-fi, thriller is thriller so in this
-          particular case, I'm not worried about our data becoming inconsistent in the future.</p>
-        <p>You might be curious why we still need a separate genres collection. Somewhere in our application on the
-          client side you may want to have a drop-down list that allows the user to select the genre for a movie. For
-          this reason, we will keep the genres collection - querying this collection is much easier than querying all
-          the movies and then getting the unique list of genres.</p>
-        <p>To save time we wont type the solution out by hand. You can download it as a zip file attached to this
-          lecture. Here we will just highlight the key points that are important to understand.</p>
+        <p>Note that the vidly database already contains a genres collection but we are embedding
+          genre documents inside a movie document to optimize the performance of our queries. Also,
+          take into account, that it's very unlikely that we will rename the name of a genre in the
+          future - sci-fi is sci-fi, thriller is thriller so in this particular case, I'm not
+          worried about our data becoming inconsistent in the future.</p>
+        <p>You might be curious why we still need a separate genres collection. Somewhere in our
+          application on the client side you may want to have a drop-down list that allows the user
+          to select the genre for a movie. For this reason, we will keep the genres collection -
+          querying this collection is much easier than querying all the movies and then getting the
+          unique list of genres.</p>
+        <p>To save time we wont type the solution out by hand. You can download it as a zip file
+          attached to this lecture. Here we will just highlight the key points that are important to
+          understand.</p>
         <p>Let's start with our movie model and the Movie schema:</p>
         <figure>
     <pre><code class="language-javascript">const Movie = mongoose.model('Movies', new mongoose.Schema({
@@ -664,20 +705,23 @@ let author = {
 }));</code></pre>
           <figcaption>Fig 09-056</figcaption>
         </figure>
-        <p>We have a title property which is a string that is required. trimming is also enabled to get rid of any
-          paddings around the title of the movie. I set the minimum length to five characters and the maximum length to
-          255 characters. This is because I don't want a malicious client to send a very long string t hat could
-          potentially cause problems in our application.</p>
-        <p>Next we have genre. I have set the type of this genre to genreSchema. In the code above the model definition
-          you can see we have created a genreSchema constant and loaded it from our genre module:</p>
+        <p>We have a title property which is a string that is required. trimming is also enabled to
+          get rid of any paddings around the title of the movie. I set the minimum length to five
+          characters and the maximum length to 255 characters. This is because I don't want a
+          malicious client to send a very long string t hat could potentially cause problems in our
+          application.</p>
+        <p>Next we have genre. I have set the type of this genre to genreSchema. In the code above
+          the model definition you can see we have created a genreSchema constant and loaded it from
+          our genre module:</p>
         <figure>
-          <pre><code class="language-javascript">const { genreSchema } = require('./genre');</code></pre>
+        <pre><code
+          class="language-javascript">const { genreSchema } = require('./genre');</code></pre>
           <figcaption>Fig 09-057</figcaption>
         </figure>
-        <p>The genreSchema is defined in a file called genre.js. Previously we didn't define the genreSchema separately.
-          Instead it was defined directly in the call to mongoose.model. However, because we need to reference the
-          genreSchema in our movie module it has been extracted into a separate constant that can be reused in multiple
-          places:</p>
+        <p>The genreSchema is defined in a file called genre.js. Previously we didn't define the
+          genreSchema separately. Instead it was defined directly in the call to mongoose.model.
+          However, because we need to reference the genreSchema in our movie module it has been
+          extracted into a separate constant that can be reused in multiple places:</p>
         <figure>
     <pre><code class="language-javascript">const genreSchema = new mongoose.Schema({
   name: {
@@ -695,7 +739,8 @@ let author = {
           <pre><code class="language-javascript">exports.genreSchema = genreSchema;</code></pre>
           <figcaption>Fig 09-059</figcaption>
         </figure>
-        <p>So back in the Movie module, next we have the numberInStock property which is a required number:</p>
+        <p>So back in the Movie module, next we have the numberInStock property which is a required
+          number:</p>
         <figure>
             <pre><code class="language-javascript">numberInStock: {
   type: Number,
@@ -705,9 +750,10 @@ let author = {
 },</code></pre>
           <figcaption>Fig 09-060</figcaption>
         </figure>
-        <p>The min is set to 0 because we don't want to end up with a negative number here. This kind of validation
-          ensures our application behaves properly. We also set a maximum of 255 character. Again this is to prevent a
-          malicious client to sending a very large number that could potentially cause problems in our application.</p>
+        <p>The min is set to 0 because we don't want to end up with a negative number here. This
+          kind of validation ensures our application behaves properly. We also set a maximum of 255
+          character. Again this is to prevent a malicious client to sending a very large number that
+          could potentially cause problems in our application.</p>
         <p>The same is true for the last property dailyRentalRate:</p>
         <figure>
             <pre><code class="language-javascript">dailyRentalRate: {
@@ -718,8 +764,8 @@ let author = {
   }</code></pre>
           <figcaption>Fig 09-061</figcaption>
         </figure>
-        <p>Below the definition of our Schema and model we have our validateMovie function. This is where we define our
-          Joi schema:</p>
+        <p>Below the definition of our Schema and model we have our validateMovie function. This is
+          where we define our Joi schema:</p>
         <figure>
     <pre><code class="language-javascript">function validateMovie(movie) {
   const schema = {
@@ -730,9 +776,9 @@ let author = {
 };</code></pre>
           <figcaption>Fig 09-062</figcaption>
         </figure>
-        <p>This is different to our Mongoose schema. Note that our Joi schema has a property called genreId not genre
-          because we want the client to send only the Id of a genre. Therefore the genreId is set to a string that is
-          required.</p>
+        <p>This is different to our Mongoose schema. Note that our Joi schema has a property called
+          genreId not genre because we want the client to send only the Id of a genre. Therefore the
+          genreId is set to a string that is required.</p>
         <p>In contrast in our Mongoose schema we have genre:</p>
         <figure>
             <pre><code class="language-javascript">genre: {
@@ -741,13 +787,14 @@ let author = {
 },</code></pre>
           <figcaption>Fig 09-063</figcaption>
         </figure>
-        <p>Which is a complex object. So you can see that in a real world application your Mongoose Schema can start to
-          grow independent of your Joi Schema.</p>
-        <p>The Joi schema validates what the client sends us - the input to our API. The Mongoose Schema is a
-          representation of our model in the application. That's our persistence model, that's what we're store as a
-          document in MongoDB.</p>
-        <p>So that covers our movie module. Now let's take a look at our movies routes. We will overview just one route
-          here - the one that calls the post method to create a new movie:</p>
+        <p>Which is a complex object. So you can see that in a real world application your Mongoose
+          Schema can start to grow independent of your Joi Schema.</p>
+        <p>The Joi schema validates what the client sends us - the input to our API. The Mongoose
+          Schema is a representation of our model in the application. That's our persistence model,
+          that's what we're store as a document in MongoDB.</p>
+        <p>So that covers our movie module. Now let's take a look at our movies routes. We will
+          overview just one route here - the one that calls the post method to create a new
+          movie:</p>
         <figure>
     <pre><code class="language-javascript">router.post('/', async (req, res) =&gt; {
   const { error } = validate(req.body);
@@ -771,26 +818,30 @@ let author = {
 });</code></pre>
           <figcaption>Fig 09-064</figcaption>
         </figure>
-        <p>At the top we validate the object that we send in the request, if it's invalid we return a 400 error which is
-          bad request (as we did before). After that we have something new. We use findById to find a genre. If it
-          doesn't exist we return the 400 error with the message 'Invalid genre.'. This makes sure that the genreId that
-          the client sends represents a valid genre.</p>
-        <p>Below that we create the movie object. We set the title based on what we get in the request but for genre we
-          set the value to a complex object with two properties - _id and name. We read both of these from the genre.
-          You might ask why I didn't send this genre to the genre objected that we loaded in the code nearer the top of
-          the post method:</p>
+        <p>At the top we validate the object that we send in the request, if it's invalid we return
+          a 400 error which is bad request (as we did before). After that we have something new. We
+          use findById to find a genre. If it doesn't exist we return the 400 error with the message
+          'Invalid genre.'. This makes sure that the genreId that the client sends represents a
+          valid genre.</p>
+        <p>Below that we create the movie object. We set the title based on what we get in the
+          request but for genre we set the value to a complex object with two properties - _id and
+          name. We read both of these from the genre. You might ask why I didn't send this genre to
+          the genre objected that we loaded in the code nearer the top of the post method:</p>
         <figure>
-          <pre><code class="language-javascript">const genre = await Genre.findById(req.body.genreId);</code></pre>
+        <pre><code
+          class="language-javascript">const genre = await Genre.findById(req.body.genreId);</code></pre>
           <figcaption>Fig 09-065</figcaption>
         </figure>
-        <p>The reason we don't do that is that, is because this genre object, also has a version property that is set by
-          Mongo which we dont want in movie.genre. Also, in a more complex application, the object that we load when we
-          call Genre.findById may have 50 properties. We don't want to store all those properties when embedding the
-          genre document in the movie document. That's why we selectively set the properties.</p>
-        <p>The rest of the code in the vidly application, as it currently stands, is pretty self explanatory.</p>
+        <p>The reason we don't do that is that, is because this genre object, also has a version
+          property that is set by Mongo which we dont want in movie.genre. Also, in a more complex
+          application, the object that we load when we call Genre.findById may have 50 properties.
+          We don't want to store all those properties when embedding the genre document in the movie
+          document. That's why we selectively set the properties.</p>
+        <p>The rest of the code in the vidly application, as it currently stands, is pretty self
+          explanatory.</p>
         <h3>118 - Project - Build the Rentals API</h3>
-        <p>So far we have built APIs to manage customer, genres and movies. Now let's take this application to the next
-          level.</p>
+        <p>So far we have built APIs to manage customer, genres and movies. Now let's take this
+          application to the next level.</p>
         <p>I want you to implement an API to manage the rentals:</p>
         <ul>
           <li>Create a new rental: POST /api/rentals</li>
@@ -857,33 +908,37 @@ let author = {
         <p>
           We have a customer property with the type set to a custom schema that is defined here:</p>
         <figure>
-          <pre><code class="language-javascript">customer: { type: new mongoose.Schema({</code></pre>
+          <pre><code
+            class="language-javascript">customer: { type: new mongoose.Schema({</code></pre>
           <figcaption>Fig 09-067</figcaption>
         </figure>
-        <p>In other words I am not reusing the customer Schema we defined in the customer module. The reason for this is
-          that because our customer can have 50 properties. We don't want to have all those properties inside the Rental
-          object. We only need the primary properties that we need when displaying the list of rentals. So we have:</p>
+        <p>In other words I am not reusing the customer Schema we defined in the customer module.
+          The reason for this is that because our customer can have 50 properties. We don't want to
+          have all those properties inside the Rental object. We only need the primary properties
+          that we need when displaying the list of rentals. So we have:</p>
         <ul>
           <li>name</li>
           <li>isGold - perhaps we want to give a discount to our gold customers</li>
-          <li>phone - when we look at a list or rentals or a single rental it might be handy to have contact information
-            for this customer
+          <li>phone - when we look at a list or rentals or a single rental it might be handy to have
+            contact information for this customer
           </li>
         </ul>
         <p></p>
-        <p>You might ask, what if in the future we need to display more information about this customer on the rental
-          page. Here we will have the id of the customer as well so for anything additional we can always send a GET
-          request to our customer API to get a complete representation of our customer.</p>
+        <p>You might ask, what if in the future we need to display more information about this
+          customer on the rental page. Here we will have the id of the customer as well so for
+          anything additional we can always send a GET request to our customer API to get a complete
+          representation of our customer.</p>
         <p>By the same token we have a movie property set to a custom schema:</p>
         <figure>
           <pre><code class="language-javascript">movie: { type: new mongoose.Schema({</code></pre>
           <figcaption>Fig 09-067</figcaption>
         </figure>
-        <p>We have not re-used the movie Schema that we defined in movie.js. This is for the same reason as before - our
-          movie may have 50 properties and we don't want to add them all here. So for a rental object or rental
-          document, we only need the title of the movie and dailyRentalRate because in the future we are going to use
-          this to calculate the rental fee. If we include this in an embedded document we don't need and additional
-          query for the movies collection to calculate the rental fee.</p>
+        <p>We have not re-used the movie Schema that we defined in movie.js. This is for the same
+          reason as before - our movie may have 50 properties and we don't want to add them all
+          here. So for a rental object or rental document, we only need the title of the movie and
+          dailyRentalRate because in the future we are going to use this to calculate the rental
+          fee. If we include this in an embedded document we don't need and additional query for the
+          movies collection to calculate the rental fee.</p>
         <p>Note that both the customer and the movie are marked as required:</p>
         <figure>
           <pre><code class="language-javascript">required: true </code></pre>
@@ -895,14 +950,16 @@ let author = {
             class="language-javascript">dateOut: { type: Date, required: true, default: Date.now },</code></pre>
           <figcaption>Fig 09-069</figcaption>
         </figure>
-        <p>It's a date, it's required and the default value for this property is the current date/time.</p>
+        <p>It's a date, it's required and the default value for this property is the current
+          date/time.</p>
         <p>We also need another property called dateReturned:</p>
         <figure>
           <pre><code class="language-javascript">dateReturned: { type: Date },</code></pre>
           <figcaption>Fig 09-070</figcaption>
         </figure>
-        <p>This is also a date but it's not required because initially we don't have a value for this property and then
-          in the future when this customer returns a movie we will set this value.</p>
+        <p>This is also a date but it's not required because initially we don't have a value for
+          this property and then in the future when this customer returns a movie we will set this
+          value.</p>
         <p>The last property is rentalFee:</p>
         <figure>
           <pre><code class="language-javascript">rentalFee: { type: Number, min: 0 }</code></pre>
@@ -922,12 +979,13 @@ let author = {
 }</code></pre>
           <figcaption>Fig 09-072</figcaption>
         </figure>
-        <p>Note that the schema we have here is very different to the schema we defined in our rental documents in
-          MongoDB. Here we have only two properties - customerId and MovieId. These are the properties that the client
-          sends to the server because we don't want the client to set the dateOut property. This should be set on the
-          server based on the current date/time. By the same toke we don't want the client to set dateReturned or
-          rentalFee. These should be set on the server. So, when creating a new rental, the client should send only two
-          values - customerId and movieId.</p>
+        <p>Note that the schema we have here is very different to the schema we defined in our
+          rental documents in MongoDB. Here we have only two properties - customerId and MovieId.
+          These are the properties that the client sends to the server because we don't want the
+          client to set the dateOut property. This should be set on the server based on the current
+          date/time. By the same toke we don't want the client to set dateReturned or rentalFee.
+          These should be set on the server. So, when creating a new rental, the client should send
+          only two values - customerId and movieId.</p>
         <p>Now let's take a look at the API implementation in routes\rentals.js.</p>
         <p>We have an endpoint to get the list of rentals:</p>
         <figure>
@@ -937,38 +995,41 @@ let author = {
 });</code></pre>
           <figcaption>Fig 09-073</figcaption>
         </figure>
-        <p>Very simple - just like before except that here we are sorting by dateOut in a descending order. That's why
-          we have the minus sign.</p>
-        <p>Now let's take a look at our other route for creating a new rental. First we validate the request:</p>
+        <p>Very simple - just like before except that here we are sorting by dateOut in a descending
+          order. That's why we have the minus sign.</p>
+        <p>Now let's take a look at our other route for creating a new rental. First we validate the
+          request:</p>
         <figure>
     <pre><code class="language-javascript">const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);</code></pre>
           <figcaption>Fig 09-074</figcaption>
         </figure>
-        <p>If it's not valid we send a 400 error. After that we want to make sure that the customer id that the client
-          is sending us is a valid customer. That's why here we find the customer by id:</p>
+        <p>If it's not valid we send a 400 error. After that we want to make sure that the customer
+          id that the client is sending us is a valid customer. That's why here we find the customer
+          by id:</p>
         <figure>
     <pre><code class="language-javascript">const customer = await Customer.findById(req.body.customerId);
 if (!customer) return res.status(400).send('Invalid customer.');</code></pre>
           <figcaption>Fig 09-075</figcaption>
         </figure>
-        <p>If we don't find the customer we respond with a 400 error and say this is an invalid customer.</p>
-        <p>By the same token, we need to validate the movie id that the client sends us. We find the movie and if it
-          doesn't exist we return a 400 error:</p>
+        <p>If we don't find the customer we respond with a 400 error and say this is an invalid
+          customer.</p>
+        <p>By the same token, we need to validate the movie id that the client sends us. We find the
+          movie and if it doesn't exist we return a 400 error:</p>
         <figure>
     <pre><code class="language-javascript">const movie = await Movie.findById(req.body.movieId);
 if (!movie) return res.status(400).send('Invalid movie.');</code></pre>
           <figcaption>Fig 09-076</figcaption>
         </figure>
-        <p>We also want to make sure that the movie we are renting out is in stock. So, if numberInStock is 0 we return
-          a 400 error:</p>
+        <p>We also want to make sure that the movie we are renting out is in stock. So, if
+          numberInStock is 0 we return a 400 error:</p>
         <figure>
     <pre><code class="language-javascript">if (movie.numberInStock === 0)
   return res.status(400).send('Movie not in stock.');</code></pre>
           <figcaption>Fig 09-077</figcaption>
         </figure>
         <p>After this point everything is valid so we create a new rental object:</p>
-<figure>
+        <figure>
     <pre><code class="language-javascript">let rental = new Rental({
   customer: {
     _id: customer._id,
@@ -983,280 +1044,669 @@ if (!movie) return res.status(400).send('Invalid movie.');</code></pre>
 });
 
 rental = await rental.save();</code></pre>
-    <figcaption>Fig 09-078</figcaption>
-</figure>
-        <p>We set the customer object to a complex object with the _id, name and phone properties. We store the _id here
-          because perhaps in the future we want more information about the customer that is not available in the rental
-          document so we can query the customer later.</p>
-        <p>Similarly we have the movie property which is a complex object with three properties - _id, title and
-          dailyRentalRate. Note that here, we have not set the dateOut property. This is because earlier we defined the
-          property to have a default value of the current date/time. So when we save this rental Mongoose will
-          automatically set that property.</p>
+          <figcaption>Fig 09-078</figcaption>
+        </figure>
+        <p>We set the customer object to a complex object with the _id, name and phone properties.
+          We store the _id here because perhaps in the future we want more information about the
+          customer that is not available in the rental document so we can query the customer
+          later.</p>
+        <p>Similarly we have the movie property which is a complex object with three properties -
+          _id, title and dailyRentalRate. Note that here, we have not set the dateOut property. This
+          is because earlier we defined the property to have a default value of the current
+          date/time. So when we save this rental Mongoose will automatically set that property.</p>
         <p>After that we update the numberInStock property of the movie then save:</p>
         <figure>
             <pre><code class="language-javascript">movie.numberInStock--;
         movie.save();</code></pre>
-            <figcaption>Fig 09-079</figcaption>
+          <figcaption>Fig 09-079</figcaption>
         </figure>
-        <p>Here, we have a problem. There are two separate operations. It is
-        possible that after we save the rental something goes wrong, maybe our server crashes, or connection to MongoDB
-        drops meaning that perhaps the second operation - movie.save() will not complete.</p>
-        <p>That's where we need a transaction. With a transaction we can ensure that both these operations will update
-          the state of our data in the database or none of them will be applied. So they are atomic - they both complete
-          or the both roll back. Now in a lot of relational databases we have the concept of transactions. In MongoDB,
-          we don't really have transactions.</p>
-        <p>There is a technique that is called two phase commit which is beyond the scope of this course. In the next
-          lecture, however, we will look at an npm package that simulates a transaction in Mongoose.</p>
+        <p>Here, we have a problem. There are two separate operations. It is possible that after we
+          save the rental something goes wrong, maybe our server crashes, or connection to MongoDB
+          drops meaning that perhaps the second operation - movie.save() will not complete.</p>
+        <p>That's where we need a transaction. With a transaction we can ensure that both these
+          operations will update the state of our data in the database or none of them will be
+          applied. So they are atomic - they both complete or the both roll back. Now in a lot of
+          relational databases we have the concept of transactions. In MongoDB, we don't really have
+          transactions.</p>
+        <p>There is a technique that is called two phase commit which is beyond the scope of this
+          course. In the next lecture, however, we will look at an npm package that simulates a
+          transaction in Mongoose.</p>
         <h3>119 - Transactions</h3>
-        <p>In some relational database like SQL server or MySQL we have the concept of transaction which basically means
-          a group of operations that should be performed as a unit. So either all these operations will complete and
-          change the state of the database or, if something fails at some point, all these operations that have been
-          applied will be rolled back and our database will go back to it's initial state.</p>
-        <p>Now, in MongoDB we don't have transactions as we have in these relational databases. We have a technique
-          called two phase commit, which you can learn more about at:</p>
-        https://docs.mongodb.com/manual/tutorial/perform-two-phase-commits/ <p>This document clearly explains how to
-        perform two phase commits using a real world example. Now, in this lecture, I'm going to introduce you to a
-        library that uses the concept of transaction, but internally it implements this transaction using the two phase
-        commit. So, back in the terminal, let's install fawn:</p>
-        npm i fawn <p>The version I had installed was 2.1.5. In routes\rentals.js first we need to load fawn:</p>
-        const Fawn = require('fawn'); <p>This a class with an initialize method that we need to call:</p>
-        Fawn.init(mongoose); <p>Back in the post method where we create a rental object:</p>
-        let rental = new Rental({ <p>We are no longer going to create the rental and update the movie explicitly.
-        Instead we are going to create a task object which is like a transaction. So delete these three lines:</p>
-        rental = await rental.save(); movie.numberInStock--; movie.save(); <p>New up a Fawn task:</p>
-        new Fawn.Task() <p>Here we can add one more operations. All these operations together will be treated as a unit.
-        So we want to save the new rental to the rentals collection:</p>
-        .save('rentals', rental) <p>Note that here you are working directly with the collection. That's why we need to
-        pass the actual name of the collection, which is plural, not singular, and also note that this name is case
-        sensitive (if you look in Compass you will see the name of the collections are all lowercase). This is our first
-        operation - saving the rental.</p>
-        <p>As part of this unit we also want to update the movies collection. Here, as the second arugment, we pass a
-          query object to determine the movie, or movies that should be updated. The third argument is our update
-          object. Here we use the increment operator setting the value to an object. The target property you want to
-          update is numberInStock. We want to decrement this property by -1:</p>
-        .update('movies', { _id: movie._id }, { $inc: { numberInStock: -1 } }) <p>So we have defined two operations:</p>
-        .save('rentals', rental) .update('movies', { _id: movie._id }, { $inc: { numberInStock: -1 } }) <p>Maybe in your
-        application, as part of performing this transaction, you want to remove a document somewhere else. So we could
-        add another operation .remove You can read more about Fawn on their GitHub page documentation.</p>
+        <p>In some relational database like SQL server or MySQL we have the concept of transaction
+          which basically means a group of operations that should be performed as a unit:</p>
+        <figure>
+          <img src="./images/Fig09-080.PNG"/>
+          <figcaption>Fig 09-080</figcaption>
+        </figure>
+        <p> So either all these operations will complete and change the state of the database or, if
+          something fails at some point, all these operations that have been applied will be rolled
+          back and our database will go back to it's initial state.</p>
+        <p>Now, in MongoDB we don't have transactions as we have in these relational databases. We
+          have a technique called two phase commit, which you can learn more about at:</p>
+        <a href="https://docs.mongodb.com/manual/tutorial/perform-two-phase-commits/">Two phase
+          commits</a>
+        <p>This document clearly explains how to perform two phase commits using a real world
+          example.</p>
+        <p>Now, in this lecture, I'm going to introduce you to a library that uses the concept of
+          transaction, but internally it implements this transaction using the two phase commit. So,
+          back in the terminal, let's install fawn:</p>
+        <figure>
+          <pre><code class="language-command">npm i fawn</code></pre>
+          <figcaption>Fig 09-081</figcaption>
+        </figure>
+        <p>The version I had installed was 2.1.5. In routes\rentals.js first we need to load
+          fawn:</p>
+        <figure>
+          <pre><code class="language-javascript">const Fawn = require('fawn');</code></pre>
+          <figcaption>Fig 09-082</figcaption>
+        </figure>
+        <p>This a class with an initialize method that we need to call:</p>
+        <figure>
+          <pre><code class="language-javascript">Fawn.init(mongoose);</code></pre>
+          <figcaption>Fig 09-083</figcaption>
+        </figure>
+        <p>Back in the post method where we create a rental object:</p>
+        <figure>
+          <pre><code class="language-javascript">let rental = new Rental({</code></pre>
+          <figcaption>Fig 09-084</figcaption>
+        </figure>
+        <p>We are no longer going to create the rental and update the movie explicitly. Instead we
+          are going to create a task object which is like a transaction. So delete these three
+          lines:</p>
+        <figure>
+        <pre><code class="language-javascript">rental = await rental.save();
+movie.numberInStock--;
+movie.save(); </code></pre>
+          <figcaption>Fig 09-085</figcaption>
+        </figure>
+        <p>New up a Fawn task:</p>
+        <figure>
+          <pre><code class="language-javascript">new Fawn.Task()</code></pre>
+          <figcaption>Fig 09-086</figcaption>
+        </figure>
+        <p>Here we can add one more operations. All these operations together will be treated as a
+          unit. So we want to save the new rental to the rentals collection:</p>
+        <figure>
+<pre><code class="language-javascript">new Fawn.Task()
+  .save('rentals', rental)</code></pre>
+          <figcaption>Fig 09-087</figcaption>
+        </figure>
+        <p>Note that here you are working directly with the collection. That's why we need to pass
+          the actual name of the collection, which is plural, not singular, and also note that this
+          name is case sensitive. If you look in Compass you will see the name of the collections
+          are all lowercase:</p>
+        <figure>
+          <img src="./images/Fig09-088.PNG"/>
+          <figcaption>Fig 09-088.PNG</figcaption>
+        </figure>
+        <p>This is our first operation - saving the rental.</p>
+        <p>As part of this unit we also want to update the movies collection. Here, as the second
+          arugment, we pass a query object to determine the movie, or movies that should be updated.
+          The third argument is our update object. Here we use the increment operator setting the
+          value to an object. The target property you want to update is numberInStock. We want to
+          decrement this property by -1:</p>
+        <figure>
+          <pre><code class="language-javascript">.update('movies', { _id: movie._id },
+  { $inc: { numberInStock: -1 }
+})</code></pre>
+          <figcaption>Fig 09-089</figcaption>
+        </figure>
+        <p>So we have defined two operations:</p>
+        <figure>
+<pre><code class="language-javascript">.save('rentals', rental)
+.update('movies', { _id: movie._id },
+  { $inc: { numberInStock: -1 }
+})</code></pre>
+          <figcaption>Fig 09-090</figcaption>
+        </figure>
+        <p>Maybe in your application, as part of performing this transaction, you want to remove a
+          document somewhere else. So we could add another operation .remove You can read more about
+          Fawn on their GitHub page documentation.</p>
         <p>So, after we chain all these operations, finally you need to call run():</p>
-        new Fawn.Task() .save('rentals', rental) .update('movies', { _id: movie._id }, { $inc: { numberInStock: -1 } })
-        .run(); <p>If you don't call run then none of the operations will be performed. Now, it's possible that
-        something fails during this transaction so we need to wrap this in a try\catch block:</p>
-        try { new Fawn.Task() .save('rentals', rental) .update('movies', { _id: movie._id }, { $inc: { numberInStock: -1
-        } }) .run(); res.send(rental); } catch(ex) { res.status(500).send('Something failed.'); } <p>If something fails
-        we catch the exception and return a 500 error to the client which means internal server error. In a real world
-        application at this point you want to log this exception so later you can come back and see what went wrong. We
-        are going to have a separate section in the course about error handling and logging so for now don't worry about
-        it.</p>
+        <figure>
+<pre><code class="language-javascript">new Fawn.Task()
+  .save('rentals', rental)
+  .update('movies', { _id: movie._id },
+    { $inc: { numberInStock: -1 }
+  })
+  .run();</code></pre>
+          <figcaption>Fig 09-091</figcaption>
+        </figure>
+        <p>If you don't call run then none of the operations will be performed. Now, it's possible
+          that something fails during this transaction so we need to wrap this in a try\catch
+          block:</p>
+        <figure>
+<pre><code class="language-javascript">try {
+  new Fawn.Task()
+    .save('rentals', rental)
+    .update('movies', { _id: movie._id },
+      { $inc: { numberInStock: -1 }
+    })
+    .run();
+
+    res.send(rental);
+  }
+  catch(ex) {
+    res.status(500).send('Something failed.');
+  }
+});</code></pre>
+          <figcaption>Fig 09-092</figcaption>
+        </figure>
+
+        <p>If something fails we catch the exception and return a 500 error to the client which
+          means internal server error. In a real world application at this point you want to log
+          this exception so later you can come back and see what went wrong. We are going to have a
+          separate section in the course about error handling and logging so for now don't worry
+          about it.</p>
         <p>In MongoDB Compass delete the rentals collection. Run the application:</p>
-        nodemon <p>Back in Compass look at the movies collection:</p>
-        //TODO fig xx-xx <p>Here we have a movie with numberInStock of 8. We will create a new rental and then check the
-        numberInStock has decremented by 1 to 7.</p>
+        <figure>
+          <pre><code class="language-javascript">nodemon</code></pre>
+          <figcaption>Fig 09-093</figcaption>
+        </figure>
+        <p>Back in Compass look at the movies collection:</p>
+        <figure>
+          <img src="./images/Fig09-093.PNG"/>
+          <figcaption>Fig 09-093.PNG</figcaption>
+        </figure>
+        <p>Here we have a movie with numberInStock of 8. We will create a new rental and then check
+          the numberInStock has decremented by 1 to 7.</p>
         <p>In Postman send a post request to our rentals endpoint:</p>
-        http://localhost:3000/api/rentals <p>In the body of the request I have a valid customerId and movieId:</p>
-        { "customerId": "5c37c6fc99ee168d28f4f617", "movieId": "5c37c5bb99ee168d28f4f616" } <p>Let's send this and our
-        response should be;</p>
-        { "dateOut": "2019-01-10T22:29:06.114Z", "_id": "5c37c73299ee168d28f4f619", "customer": { "isGold": false,
-        "_id": "5c37c6fc99ee168d28f4f617", "name": "Fred Smith", "phone": "07856 771163" }, "movie": { "_id":
-        "5c37c5bb99ee168d28f4f616", "title": "Terminator", "dailyRentalRate": 2 } } <p>We can see dateOut, id, customer
-        and movie.</p>
-        <p>Now, back in the Compass, in the movies collection refresh the list and you should see the number in stock
-          drops to 7. So this verifies that our transaction completed successfully.</p>
+        <figure>
+          <pre><code class="language-command">http://localhost:3000/api/rentals</code></pre>
+          <figcaption>Fig 09-094</figcaption>
+        </figure>
+        <p>In the body of the request I have a valid customerId and movieId:</p>
+        <figure>
+          <img src="./images/Fig09-095.PNG"/>
+          <figcaption>Fig 09-095</figcaption>
+        </figure>
+        <p>Let's send this and our response should be:</p>
+        <figure>
+          <img src="./images/Fig09-096.PNG"/>
+          <figcaption>Fig 09-096</figcaption>
+        </figure>
+        <p>We can see dateOut, id, customer and movie.</p>
+        <p>Now, back in the Compass, in the movies collection refresh the list and you should see
+          the number in stock drops to 7:</p>
+        <figure>
+          <img src="./images/Fig09-097.PNG"/>
+          <figcaption>Fig 09-097</figcaption>
+        </figure>
+        <p>So this verifies that our transaction completed successfully.</p>
         <p>A question for you - In our post method we create our rental object</p>
-        let rental = new Rental({ customer: { _id: customer._id, name: customer.name, phone: customer.phone }, movie: {
-        _id: movie._id, title: movie.title, dailyRentalRate: movie.dailyRentalRate } }); <p>We only set customer and
-        movie. Then in our try block we create the Fawn task, run it then send the rental object to the client. In this
-        code we didn't set the id or dateOut property but in the body of the response we can see both the properties are
-        set. So how did this happen?</p>
-        <p>You might expect that MongoDB set the dateOut and id properties but in MongoDB we don't have these default
-          values. We define them in our mongoose Schema. So when we create a new rental object Mongoose knows the Schema
-          for this object, it looks at various properties and sets the default values. The same is true for the _id
-          properties, MongoDB doesn't set this. The _id property is set before we save the document to the database. I
-          didn't tell you this earlier because I didn't want confuse your with too many details.</p>
-        <p>We will cover more about id in the next lecture. Let's look at one more thing before we finish this lecture.
-          Back in Compass click the refresh collections button and you will see a new collection:</p>
-        ojlinttaskcollections <p>So where did that come from? The Fawn library that we installed uses that collection to
-        perform two phase commits. When we run the Fawn task it adds a new document to that collection that represents
-        our transaction. Then it will execute each of the operations in the task independently then finally , when all
-        the operations are complete, it will delete the document from the collection.</p>
+        <figure>
+<pre><code class="language-javascript">let rental = new Rental({
+  customer: {
+    _id: customer._id,
+    name: customer.name,
+    phone: customer.phone
+  },
+  movie: {
+    _id: movie._id,
+    title: movie.title,
+    dailyRentalRate: movie.dailyRentalRate
+  }
+});</code></pre>
+          <figcaption>Fig 09-098</figcaption>
+        </figure>
+        <p>We only set customer and movie. Then in our try block we create the Fawn task, run it
+          then send the rental object to the client. In this code we didn't set the id or dateOut
+          property but in the body of the response we can see both the properties are set:</p>
+        <figure>
+          <img src="./images/Fig09-099.PNG"/>
+          <figcaption>Fig 09-099</figcaption>
+        </figure>
+        <p>So how did this happen?</p>
+        <p>You might expect that MongoDB set the dateOut and id properties but in MongoDB we don't
+          have these default values. We define them in our mongoose Schema. So when we create a new
+          rental object:</p>
+        <figure>
+          <pre><code class="language-javascript">let rental = new Rental({</code></pre>
+          <figcaption>Fig 09-100</figcaption>
+        </figure>
+        <p>Mongoose knows the Schema for this object, it looks at various properties and sets the
+          default values. The same is true for the _id properties, MongoDB doesn't set this. The _id
+          property is set before we save the document to the database. I didn't tell you this
+          earlier because I didn't want confuse your with too many details.</p>
+        <p>We will cover more about id in the next lecture. Let's look at one more thing before we
+          finish this lecture. Back in Compass click the refresh collections button and you will see
+          a new collection ojlinttaskcollections:</p>
+        <figure>
+          <img src="./images/Fig09-101.PNG"/>
+          <figcaption>Fig 09-101</figcaption>
+        </figure>
+        <p>So where did that come from? The Fawn library that we installed uses that collection to
+          perform two phase commits. When we run the Fawn task it adds a new document to that
+          collection that represents our transaction. Then it will execute each of the operations in
+          the task independently then finally , when all the operations are complete, it will delete
+          the document from the collection.</p>
         <h3>120 - ObjectId</h3>
-        <p>In this lecture we are going to look at object id's in MongoDB. You may have noticed that when you store a
-          document in MongoDB it sets the value of the _id property to a long string like this:</p>
-        // _id: 5ac4aa5307ac0119b0e74255 <p>Here we have 24 characters where every two characters represent a byte. So
-        essentially we have 12 bytes to uniquely identify a document in MongoDB. The twelve bytes are used in the
-        following way:</p>
+        <p>In this lecture we are going to look at object id's in MongoDB. You may have noticed that
+          when you store a document in MongoDB it sets the value of the _id property to a long
+          string like this:</p>
+        <figure>
+          <pre><code class="language-command">// _id: 5ac4aa5307ac0119b0e74255</code></pre>
+          <figcaption>Fig 09-102</figcaption>
+        </figure>
+        <p>Here we have 24 characters where every two characters represent a byte. So essentially we
+          have 12 bytes to uniquely identify a document in MongoDB. The twelve bytes are used in the
+          following way:</p>
         <ul>
-          <li>4 bytes: timestamp The time this document was created.</li>
-          <li>3 bytes: machine identifier Two different machines will have two different identifiers.
+          <li>4 bytes: timestamp - The time this document was created.</li>
+          <li>3 bytes: machine identifier - Two different machines will have two different
+            identifiers.
           </li>
-          <li>3 bytes: process identifier If you generate two object id's on the same machine but in different processes
-            these two bytes will be different.
+          <li>3 bytes: process identifier - If you generate two object id's on the same machine but
+            in different processes these two bytes will be different.
           </li>
-          <li>3 bytes: counter If your on the same machine, in the same process at the same second but generate two
-            different documents the counter bytes will be different
+          <li>3 bytes: counter - If your on the same machine, in the same process at the same second
+            but generate two different documents the counter bytes will be different
           </li>
         </ul>
-        <p>Also, because a timestamp is included in the _id property, there is no need to create a separate property or
-          document like createdAt. By the same token, if you want to sort your documents based on the creation time you
-          can simply sort them by the id property.</p>
-        <p>So with these twelve bytes we can uniquely identify the document in MongoDB. Having said that there is a
-          very, very small chance that we will generate two object id's that are the same. Let's see how that can
-          happen.</p>
-        <p>You know that, in each byte, we have 8 bits and each bit holds either 0 or 1. So how many numbers can we
-          represent?</p>
-        - 1 byte = 8 bits - 2 ^ 8 = 256 <p>So with one byte we can store 256 different numbers. Now, as discussed, the
-        last three bytes represent a counter. This is like the counter that you have probably seen in SQL Server, MySQL
-        or other databases. So how many numbers can we store in 3 bytes: - 1 byte = 8 bits - 2 ^ 8 = 256 - 2 ^ 24 =
-        16M</p>
-        <p>So, if have the same second, on the same machine, in the same process and we generate more than 16M documents
-          the counter bytes will overflow and that's where we will end up with two documents with the same object id.
-          However, this is a very unlikely scenario for many applications out there. All we need to remember is the
-          object id is almost unique but not 100 percent.</p>
-        <p>Now you might be curious as to why we don't have a mechanism in MongoDB that guarantees uniqueness. For
-          example, in database management systems like SQL server or My SQL, in each table we have an auto incrementing
-          number that guarantees uniqueness. So next time we store a course record in our database the id of that course
-          will be the id of the course plus 1. This approach guarantees the uniqueness of this identifier but it hurts
+        <p>Also, because a timestamp is included in the _id property, there is no need to create a
+          separate property or document like createdAt. By the same token, if you want to sort your
+          documents based on the creation time you can simply sort them by the id property.</p>
+        <p>So with these twelve bytes we can uniquely identify the document in MongoDB. Having said
+          that there is a very, very small chance that we will generate two object id's that are the
+          same. Let's see how that can happen.</p>
+        <p>You know that, in each byte, we have 8 bits and each bit holds either 0 or 1. So how many
+          numbers can we represent?</p>
+        <figure>
+        <pre><code class="language-command">1 byte = 8 bits
+2 ^ 8 = 256</code></pre>
+          <figcaption>Fig 09-103</figcaption>
+        </figure>
+        <p>So with one byte we can store 256 different numbers. Now, as discussed, the last three
+          bytes represent a counter. This is like the counter that you have probably seen in SQL
+          Server, MySQL or other databases. So how many numbers can we store in 3 bytes:</p>
+        <figure>
+<pre><code class="language-command">1 byte = 8 bits
+2 ^ 8 = 256
+2 ^ 24 = 16M</code></pre>
+          <figcaption>Fig 09-104</figcaption>
+        </figure>
+        <p>So, if have the same second, on the same machine, in the same process and we generate
+          more than 16M documents the counter bytes will overflow and that's where we will end up
+          with two documents with the same object id. However, this is a very unlikely scenario for
+          many applications out there. All we need to remember is the object id is almost unique but
+          not 100 percent.</p>
+        <p>Now you might be curious as to why we don't have a mechanism in MongoDB that guarantees
+          uniqueness. For example, in database management systems like SQL server or My SQL, in each
+          table we have an auto incrementing number that guarantees uniqueness. So next time we
+          store a course record in our database the id of that course will be the id of the course
+          plus 1. This approach guarantees the uniqueness of this identifier but it hurts
           scalability.</p>
         <p>In MongoDB the id we have here:</p>
-        // _id: 5ac4aa5307ac0119b0e74255 <p>Is not generated by MongoDB itself. It is actually generated by MongoDB
-        driver. So we have the MongoDB driver that talks to MongoDB. Because the id is generated by the driver, it
-        means, we don't have to wait for MongoDB to generate a new unique identifier.</p>
-        <p>That's why applications built on top of MongoDB are highly scalable. You can have several instances of
-          MongoDB and we don't have to talk to a central place to get a unique identifier. The driver itself can
-          generate an almost unique identifier using the twelve bytes we discussed above.</p>
-        <p>So, when you build an application with Node and Express, you use Mongoose. As I told you before, Mongoose is
-          an abstraction over MongoDB driver, so when you create a new object/document Mongoose talks to MongoDB driver
-          to generate a new id, but it can also explicitly generate an id if you want to. Let's see how to do this.</p>
-        const mongoose = require('mongoose'); const id = new mongoose.Types.ObjectId(); console.log(id.getTimestamp());
-        <p>We call the getTimestamp() method that belongs to the object id. Run the application:</p>
-        2019-01-11T15:46:38.000Z <p>We also have a static method on this ObjectId class for validating object ids:</p>
-        const isValid = mongoose.Types.ObjectId.isValid('1234'); console.log(isValid); <p>Obviously this is not a valid
-        object id so when we run the application we see:</p>
-        false
+        <figure>
+          <pre><code class="language-command">_id: 5ac4aa5307ac0119b0e74255</code></pre>
+          <figcaption>Fig 09-105</figcaption>
+        </figure>
+        <p>Is not generated by MongoDB itself. It is actually generated by MongoDB driver. So we
+          have the MongoDB driver that talks to MongoDB. Because the id is generated by the driver,
+          it means, we don't have to wait for MongoDB to generate a new unique identifier.</p>
+        <p>That's why applications built on top of MongoDB are highly scalable. You can have several
+          instances of MongoDB and we don't have to talk to a central place to get a unique
+          identifier. The driver itself can generate an almost unique identifier using the twelve
+          bytes we discussed above.</p>
+        <p>So, when you build an application with Node and Express, you use Mongoose. As I told you
+          before, Mongoose is an abstraction over MongoDB driver, so when you create a new
+          object/document Mongoose talks to MongoDB driver to generate a new id, but it can also
+          explicitly generate an id if you want to. Let's see how to do this.</p>
+        <figure>
+<pre><code class="language-javascript">const mongoose = require('mongoose');
+const id = new mongoose.Types.ObjectId();
+console.log(id);</code></pre>
+          <figcaption>Fig 09-106</figcaption>
+        </figure>
+        <p>We call the getTimestamp() method that belongs to the object id:</p>
+        <figure>
+<pre><code class="language-javascript">const mongoose = require('mongoose');
+const id = new mongoose.Types.ObjectId();
+console.log(id.getTimestamp());</code></pre>
+          <figcaption>Fig 09-106</figcaption>
+        </figure>
+        <p>Run the application:</p>
+        <p>You can see the time we generated this Object Id:</p>
+        <figure>
+          <img src="./images/Fig09-107.PNG"/>
+          <figcaption>Fig 09-107</figcaption>
+        </figure>
+        <p>We also have a static method on this ObjectId class for validating object ids:</p>
+        <figure>
+<pre><code class="language-javascript">const isValid = mongoose.Types.ObjectId.isValid('1234');
+console.log(isValid);</code></pre>
+          <figcaption>Fig 09-108</figcaption>
+        </figure>
+        <p>Obviously this is not a valid object id so when we run the application we see:</p>
+        <figure>
+          <img src="./images/Fig09-109.PNG"/>
+          <figcaption>Fig 09-109</figcaption>
+        </figure>
         <h3>121 - Validating Object ID's</h3>
-        <p>Back to our vidly application. In Postman we are going to send a POST request to our rentals endpoint:</p>
-        http://localhost:3000/api/rentals
+        <p>Back to our vidly application. In Postman we are going to send a POST request to our
+          rentals endpoint:</p>
+        <figure>
+          <pre><code class="language-command">http://localhost:3000/api/rentals</code></pre>
+          <figcaption>Fig 09-110</figcaption>
+        </figure>
         <p>In the body of the request we have a valid customerId and movieId:</p>
-        { "customerId": "5ac4aa5307ac0119b0e74255", "movieId": "5ac4ebc10227194c687cd3cb" } <p>Now let see what happens
-        if we change the customerId object id in the body of the request to a value like 1234:</p>
-        { "customerId": "1234", "movieId": "5ac4ebc10227194c687cd3cb" } <p>Run the application and send the request in
-        Postman. Postman hangs and in the terminal you see the following error:</p>
-        UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside
-        of an async function without a catch block, or by rejecting a promise which was not handled with .catch().
-        (rejection id: 2) <p>This basically means we had a promise that was rejected but we didn't handle it properly.
-        Now as I told you before we have a separate section about error handling and logging in the course so let's not
-        worry about that part. Instead look at the error:</p>
-        CastError: Cast to ObjectId failed for value "1234" at path "_id" for model "Customer" <p>So let's talk through
-        the message to simplify it. We are talking about the Customer model and we are talking about the id property. In
-        the error message you see the word path which represents a chain of properties. For example, a customer can have
-        address, address can have street etc. So that's why we use path. Mongoose is complaining that it can't cast the
-        value 1234 to ObjectId. Obviously, this is because, 1234 is not a valid ObjectId.</p>
-        <p>The issue we have in our implementation is that we are not seeing a response from the POST request - We are
-          getting a message in terminal</p>
-        <p>In the situation where we send an invalid customerId we should receive a 400 error - bad request because the
-          server cannot fulfill this request.</p>
+        <figure>
+          <img src="./images/Fig09-111.PNG"/>
+          <figcaption>Fig 09-111</figcaption>
+        </figure>
+        <p>Now let see what happens if we change the customerId object id in the body of the request
+          to a value like 1234:</p>
+        <figure>
+          <img src="./images/Fig09-112.PNG"/>
+          <figcaption>Fig 09-112</figcaption>
+        </figure>
+        <p>Run the application and send the request in Postman. Postman hangs and in the terminal
+          you see the following error:</p>
+        <figure>
+          <img src="./images/Fig09-113.PNG"/>
+          <figcaption>Fig 09-113</figcaption>
+        </figure>
+        <p>This basically means we had a promise that was rejected but we didn't handle it properly.
+          Now as I told you before we have a separate section about error handling and logging in
+          the course so let's not worry about that part. Instead look at the error:</p>
+        <figure>
+          <pre><code class="language-command">CastError: Cast to ObjectId failed for value &quot;1234&quot; at path &quot;_id&quot; for model &quot;Customer&quot;</code></pre>
+          <figcaption>Fig 09-114</figcaption>
+        </figure>
+        <p>So let's talk through the message to simplify it. We are talking about the Customer model
+          and we are talking about the id property. In the error message you see the word path which
+          represents a chain of properties. For example, a customer can have address, address can
+          have street etc. So that's why we use path. Mongoose is complaining that it can't cast the
+          value 1234 to ObjectId. Obviously, this is because, 1234 is not a valid ObjectId.</p>
+        <p>The issue we have in our implementation is that we are not seeing a response from the
+          POST request - We are getting a message in terminal</p>
+        <p>In the situation where we send an invalid customerId we should receive a 400 error - bad
+          request because the server cannot fulfill this request.</p>
         <p>Back in routes/rentals.js look at the handler for creating a new rental:</p>
-        router.post('/', async (req, res) => { const { error } = validate(req.body);
-        <p>At the top we validate the request. This ensures that we have a customerId and a movieId but it doesn't check
-          if these values are valid object id's. The exception that we saw above is thrown by this line:</p>
-        const customer = await Customer.findById(req.body.customerId); <p>When we call findById on the Customer class,
-        if we pass an invalid object id we get the exception.</p>
+        <figure>
+<pre><code class="language-javascript">router.post('/', async (req, res) =&gt; {
+  const { error } = validate(req.body);</code></pre>
+          <figcaption>Fig 09-115</figcaption>
+        </figure>
+        <p>At the top we validate the request. This ensures that we have a customerId and a movieId
+          but it doesn't check if these values are valid object id's. The exception that we saw
+          above is thrown by this line:</p>
+        <figure>
+          <pre><code class="language-javascript">const customer = await Customer.findById(req.body.customerId);</code></pre>
+          <figcaption>Fig 09-116</figcaption>
+        </figure>
+        <p>When we call findById on the Customer class, if we pass an invalid object id we get the
+          exception.</p>
         <p>One way to fix the problem is to add an if statement to check the type is valid:</p>
-        if(!mongoose.Types.ObjectId.isValid(req.body.customerId)) return res.status(400).send('Invalid customer.'); <p>
-        If the customerId is not a valid ObjectId we return an error 400. We would also have to check the movieId.
-        However this is a bad implementation because earlier we defined this function to validate our request:</p>
-        validate(req.body); <p>So the logic to check for valid object id's really belongs in the function above. So we
-        would check to make sure that the customerId is a string, that has a value and is a valid ObjectId. If the input
-        is in the right shape only then should we go to the database to find the Customer.</p>
-        Go back to the validateRental function in models\rental.js: function validateRental(rental) { const schema = {
-        customerId: Joi.string().required(), movieId: Joi.string().required() }; return Joi.validate(rental, schema); }
+        <figure>
+<pre><code class="language-javascript">if(!mongoose.Types.ObjectId.isValid(req.body.customerId))
+  return res.status(400).send('Invalid customer.');</code></pre>
+          <figcaption>Fig 09-117</figcaption>
+        </figure>
+        <p>
+          If the customerId is not a valid ObjectId we return an error 400. We would also have to
+          check the movieId. However this is a bad implementation because earlier we defined this
+          function to validate our request:</p>
+        <figure>
+          <pre><code class="language-javascript">validate(req.body);</code></pre>
+          <figcaption>Fig 09-118</figcaption>
+        </figure>
+        <p>So the logic to check for valid object id's really belongs in the function above. So we
+          would check to make sure that the customerId is a string, that has a value and is a valid
+          ObjectId. If the input is in the right shape only then should we go to the database to
+          find the Customer.</p>
+        <p>Go back to the validateRental function in models\rental.js:</p>
+        <figure>
+<pre><code class="language-javascript">function validateRental(rental) {
+  const schema = {
+    customerId: Joi.string().required(),
+    movieId: Joi.string().required()
+  };
+
+  return Joi.validate(rental, schema);
+}</code></pre>
+          <figcaption>Fig 09-119</figcaption>
+        </figure>
         <p>Here we need to add validation because we need to:</p>
-        - Talk to Mongoose - Call the isValid method of ObjectId.Type <p>Now, extending the validation is a little bit
-        complex and you don't want to repeat that every time you need a validate function. There is actually an npm
-        package for adding support to validating ObjectId's in Joi. So, back in the terminal:</p>
-        npm i joi-objectid <p>The current version that get's installed is 2.0.0. Back in rental.js we need to load this
-        module:</p>
-        Joi.objectId = require('joi-objectid')(Joi); require('joi-objectid') returns a function. We call the function
-        and return a reference to the Joi module defined above: const Joi = require('joi');
-        require('joi-objectid')(Joi); <p>The result of this is a function so we can set Joi.objectId to this
-        function:</p>
-        Joi.objectId = require('joi-objectid')(Joi); <p>objectId is a method on the Joi object. Back in the
-        validateRental function we will change the definition of the customerId from Joi.string() to Joi.objectId()
-        which is the method that we defined at the top of the module. We make the same change for the movieId:</p>
-        function validateRental(rental) { const schema = { customerId: Joi.objectId().required(), movieId:
-        Joi.objectId().required() }; return Joi.validate(rental, schema); } <p>Now, back in the terminal, let's run the
-        application again:</p>
-        nodemon <p>In Postman send another POST request with an invalid customerId. You should see the following:</p>
-        "customerId" with value "1234" fails to match the required pattern: /^[0-9a-fA-F]{24}$/ <p>
-        You should also receive a 400 - Bad Request. The Terminal should now also not be showing the unhandled promise
-        rejection.</p>
+        <ul>
+          <li>Talk to Mongoose</li>
+          <li>Call the isValid method of ObjectId.Type</li>
+        </ul>
+        <p>Now, extending the validation is a little bit complex and you don't want to repeat that
+          every time you need a validate function. There is actually an npm package for adding
+          support to validating ObjectId's in Joi. So, back in the terminal:</p>
+        <figure>
+          <pre><code class="language-command">npm i joi-objectid</code></pre>
+          <figcaption>Fig 09-120</figcaption>
+        </figure>
+        <p>The current version that get's installed is 2.0.0. Back in rental.js we need to load this
+          module:</p>
+        <figure>
+          <pre><code
+            class="language-javascript">Joi.objectId = require('joi-objectid')(Joi); </code></pre>
+          <figcaption>Fig 09-121</figcaption>
+        </figure>
+        <p>require('joi-objectid') returns a function. We call the function and return a reference
+          to the Joi module defined above:</p>
+        <figure>
+<pre><code class="language-javascript">const Joi = require('joi');
+require('joi-objectid')(Joi);</code></pre>
+          <figcaption>Fig 09-122</figcaption>
+        </figure>
+        <p>The result of this is a function so we can set Joi.objectId to this function:</p>
+        <figure>
+          <pre><code class="language-javascript">Joi.objectId = require('joi-objectid')(Joi);</code></pre>
+          <figcaption>Fig 09-123</figcaption>
+        </figure>
+        <p>objectId is a method on the Joi object. Back in the validateRental function we will
+          change the definition of the customerId from Joi.string() to Joi.objectId() which is the
+          method that we defined at the top of the module. We make the same change for the
+          movieId:</p>
+        <figure>
+<pre><code class="language-javascript">function validateRental(rental) {
+  const schema = {
+    customerId: Joi.objectId().required(),
+    movieId: Joi.objectId().required()
+  };
+
+  return Joi.validate(rental, schema);
+}</code></pre>
+          <figcaption>Fig 09-124</figcaption>
+        </figure>
+        <p>Now, back in the terminal, let's run the application again:</p>
+        <figure>
+          <pre><code class="language-command">nodemon</code></pre>
+          <figcaption>Fig 09-125</figcaption>
+        </figure>
+        <p>In Postman send another POST request with an invalid customerId. You should see the
+          following:</p>
+        <figure>
+          <img src="./images/Fig09-126.PNG"/>
+          <figcaption>Fig 09-126</figcaption>
+        </figure>
+        <p>You should also receive a 400 - Bad Request. The Terminal should now also not be showing
+          the unhandled promise rejection.</p>
         <h3>122 - A Better Implementation</h3>
-        <p>Back in rental.js it is likely that we will use the Joi.objectId() method in other places in our application,
-          like in the movie module or the customer module.</p>
-        <p>We don't want to re-define this objectId method in every module. So, on top of the file, move the definition
-          of the objectId method from rental.js to index.js:</p>
-        Joi.objectId = require('joi-objectid')(Joi); <p>Now we load it once in index.js and then we can use it anywhere
-        in our application. Don't forget to also add the code to load Joi:</p>
-        const Joi = require('joi'); <p>We also need to modify models\movie.js. When creating a movie we need to pass a
-        valid genreId so we replace the call to:</p>
-        genreId: Joi.string().required(), <p>with:</p>
-        genreId: Joi.objectId().required(), <p>One last change, before we finish this lecture, in our routes folder
-        let's take a look at movies.js, specifically the route for creating a new movie:</p>
-        router.post('/', async (req, res) => { const { error } = validate(req.body); if (error) return
-        res.status(400).send(error.details[0].message); const genre = await Genre.findById(req.body.genreId); if
-        (!genre) return res.status(400).send('Invalid genre.'); let movie = new Movie({ title: req.body.title, genre: {
-        _id: genre._id, name: genre.name }, numberInStock: req.body.numberInStock, dailyRentalRate:
-        req.body.dailyRentalRate }); movie = await movie.save(); res.send(movie); }); <p>Here we create a new movie
-        object:</p>
-        let movie = new Movie({ <p>Save it to the database:</p>
-        movie = await movie.save(); <p>Then return it:</p>
-        res.send(movie); <p>In this implementation I am resetting the movie after saving it to the database. This was
-        purely to demonstrate that this save method returns a movie document. Also, I didn't want to distract with too
-        much detail about how objectId's work.</p>
-        <p>Now that you know that objectId's are actually generated by MongoDB driver, not MongoDB database, you'll also
-          know that when we create a new movie object Mongoose talks to MongoDB driver and set's the id right here:</p>
-        let movie = new Movie({ <p>Before saving this movie to the database. So technically we don't need to reset this
-        movie in order to return that id to the client. So we can remove that:</p>
-        await movie.save(); <p>and change movie from a variable:</p>
-        let movie = new Movie({ <p>to a constant:</p>
-        const movie = new Movie({ <p>The same principle applies when creating a new customer and a new genre.</p>
+        <p>Back in rental.js it is likely that we will use the Joi.objectId() method in other places
+          in our application, like in the movie module or the customer module.</p>
+        <p>We don't want to re-define this objectId method in every module. So, on top of the file,
+          move the definition of the objectId method from rental.js to index.js:</p>
+        <figure>
+          <pre><code class="language-javascript">Joi.objectId = require('joi-objectid')(Joi);</code></pre>
+          <figcaption>Fig 09-127</figcaption>
+        </figure>
+        <p>Now we load it once in index.js and then we can use it anywhere in our application. Don't
+          forget to also add the code to load Joi:</p>
+        <figure>
+          <pre><code class="language-javascript">const Joi = require('joi');</code></pre>
+          <figcaption>Fig 09-128</figcaption>
+        </figure>
+        <p>We also need to modify models\movie.js. When creating a movie we need to pass a valid
+          genreId so we replace the call to:</p>
+        <figure>
+          <pre><code class="language-javascript">genreId: Joi.string().required(),</code></pre>
+          <figcaption>Fig 09-129</figcaption>
+        </figure>
+        <p>with:</p>
+        <figure>
+          <pre><code class="language-javascript">genreId: Joi.objectId().required(),</code></pre>
+          <figcaption>Fig 09-130</figcaption>
+        </figure>
+        <p>One last change, before we finish this lecture, in our routes folder let's take a look at
+          movies.js, specifically the route for creating a new movie:</p>
+        <figure>
+<pre><code class="language-javascript">router.post('/', async (req, res) =&gt; {
+  const { error } = validate(req.body);
+  if (error) return res.status(400).send(error.details[0].message);
+
+  const genre = await Genre.findById(req.body.genreId);
+  if (!genre) return res.status(400).send('Invalid genre.');
+
+  let movie = new Movie({
+    title: req.body.title,
+    genre: {
+      _id: genre._id,
+      name: genre.name
+    },
+    numberInStock: req.body.numberInStock,
+    dailyRentalRate: req.body.dailyRentalRate
+  });
+
+  movie = await movie.save(); res.send(movie);
+});</code></pre>
+          <figcaption>Fig 09-131</figcaption>
+        </figure>
+        <p>Here we create a new movie object:</p>
+        <figure>
+          <pre><code class="language-javascript">let movie = new Movie({</code></pre>
+          <figcaption>Fig 09-132</figcaption>
+        </figure>
+        <p>Save it to the database:</p>
+        <figure>
+          <pre><code class="language-javascript">movie = await movie.save();</code></pre>
+          <figcaption>Fig 09-133</figcaption>
+        </figure>
+        <p>Then return it:</p>
+        <figure>
+          <pre><code class="language-javascript">res.send(movie);</code></pre>
+          <figcaption>Fig 09-134</figcaption>
+        </figure>
+        <p>In this implementation I am resetting the movie after saving it to the database. This was
+          purely to demonstrate that this save method returns a movie document. Also, I didn't want
+          to distract with too much detail about how objectId's work.</p>
+        <p>Now that you know that objectId's are actually generated by MongoDB driver, not MongoDB
+          database, you'll also know that when we create a new movie object Mongoose talks to
+          MongoDB driver and set's the id right here:</p>
+        <figure>
+          <pre><code class="language-javascript">let movie = new Movie({</code></pre>
+          <figcaption>Fig 09-135</figcaption>
+        </figure>
+        <p>Before saving this movie to the database. So technically we don't need to reset this
+          movie:</p>
+        <figure>
+          <pre><code class="language-javascript">movie = await movie.save(); </code></pre>
+          <figcaption>Fig 09-137</figcaption>
+        </figure>
+        <p>in order to return that id to the client. So we can remove that:</p>
+        <figure>
+          <pre><code class="language-javascript">await movie.save(); </code></pre>
+          <figcaption>Fig 09-137</figcaption>
+        </figure>
+        <p>and change movie from a variable:</p>
+        <figure>
+          <pre><code class="language-javascript">let movie = new Movie({</code></pre>
+          <figcaption>Fig 09-138</figcaption>
+        </figure>
+        <p>to a constant:</p>
+        <figure>
+          <pre><code class="language-javascript">const movie = new Movie({</code></pre>
+          <figcaption>Fig 09-139</figcaption>
+        </figure>
+        <p>The same principle applies when creating a new customer and a new genre.</p>
         <h3>123 - Recap</h3>
         <h4>Mongoose: Modelling Relationships between Connected Data</h4>
-        <p>So, in this section, you learned that:</p>
-        <p>To model relationships between connected data, we can either reference a document or embed it in another
-          document. - When referencing a document, there is really no relationship between these two documents. So, it
-          is possible to reference a non-existing document. - Referencing documents (normalization) is a good approach
-          when you want to enforce data consistency. Because there will be a single instance of an object in the
-          database. But this approach has a negative impact on the performance of your queries because in MongoDB we
-          cannot JOIN documents as we do in relational databases. So, to get a complete representation of a document
-          with its related documents, we need to send multiple queries to the database. - Embedding documents
-          (denormalization) solves this issue. We can read a complete representation of a document with a single query.
-          All the necessary data is embedded in one document and its children. But this also means we’ll have multiple
-          copies of data in different places. While storage is not an issue these days, having multiple copies means
-          changes made to the original document may not propagate to all copies. If the database server dies during an
-          update, some documents will be inconsistent. For every business, for every problem, you need to ask this
-          question: “can we tolerate data being inconsistent for a short period of time?” If not, you’ll have to use
-          references. But again, this means that your queries will be slower.</p>
-        // Referencing a document const courseSchema = new mongoose.Schema({ author: { type:
-        mongoose.Schema.Types.ObjectId, ref: ‘Author’ } }) // Embedding a document const courseSchema = new
-        mongoose.Schema({ author: { type: new mongoose.Schema({ name: String, bio: String }) } }) <p>Embedded documents
-        don’t have a save method. They can only be saved in the context of their parent.</p>
-        // Updating an embedded document const course = await Course.findById(courseId); course.author.name = ‘New
-        Name’; course.save(); <p>We don’t have transactions in MongoDB. To implement transactions, we use a pattern
-        called “Two Phase Commit”. If you don’t want to manually implement this pattern, use the Fawn NPM package:</p>
+        <p>To model relationships between connected data, we can either reference a document or
+          embed it in another document.</p>
+        <p>When referencing a document, there is really no relationship between these two documents.
+          So, it is possible to reference a non-existing document.</p>
+        <p>Referencing documents (normalization) is a good approach when you want to enforce data
+          consistency. Because there will be a single instance of an object in the database. But
+          this approach has a negative impact on the performance of your queries because in MongoDB
+          we cannot JOIN documents as we do in relational databases. So, to get a complete
+          representation of a document with its related documents, we need to send multiple queries
+          to the database.</p>
+        <p>Embedding documents (denormalization) solves this issue. We can read a complete
+          representation of a document with a single query. All the necessary data is embedded in
+          one document and its children. But this also means we’ll have multiple copies of data in
+          different places. While storage is not an issue these days, having multiple copies means
+          changes made to the original document may not propagate to all copies. If the database
+          server dies during an update, some documents will be inconsistent. For every business, for
+          every problem, you need to ask this question: “can we tolerate data being inconsistent for
+          a short period of time?” If not, you’ll have to use references. But again, this means that
+          your queries will be slower.</p>
+        <h4>Referencing a document</h4>
+        <figure>
+<pre><code class="language-javascript">const courseSchema = new mongoose.Schema({
+  author: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: &lsquo;Author&rsquo;
+  }
+})
+</code></pre>
+          <figcaption>Fig 09-140</figcaption>
+        </figure>
+        <h4>Embedding a document const</h4>
+<figure>
+<pre><code class="language-javascript">const courseSchema = new mongoose.Schema({
+  author: {
+    type: new mongoose.Schema({
+      name: String,
+      bio: String
+    })
+  }
+})</code></pre>
+<figcaption>Fig 09-141</figcaption>
+</figure>
 
-        // Implementing transactions using Fawn try { await new Fawn.Task() .save(‘rentals’, newRental)
-        .update(‘movies’, { _id: movie._id }, { $inc: numberInStock: -1 }}) .run(); } catch (ex) { // At this point, all
-        operations are automatically rolled back } <p>ObjectIDs are generated by MongoDB driver and are used to uniquely
-        identify a document. They consist of 12 bytes: - 4 bytes: timestamp - 3 bytes: machine identifier - 2 bytes:
-        process identifier - 3 byes: counter</p>
-        <p>ObjectIDs are almost unique. In theory, there is a chance for two ObjectIDs to be equal but the odds are very
-          low (1/16,000,000) for most real-world applications.</p>
-        // Validating ObjectIDs mongoose.Types.ObjectID.isValid(id); <p>To validate ObjectIDs using joi, use
-        joi-objectid NPM package.</p>
+        <p>Embedded documents don’t have a save method. They can only be saved in the context of
+          their parent.</p>
+        <h4>Updating an embedded document</h4>
+        <figure>
+<pre><code class="language-javascript">const course = await Course.findById(courseId);
+course.author.name = &lsquo;New Name&rsquo;;
+course.save();</code></pre>
+          <figcaption>Fig 09-142</figcaption>
+        </figure>
+        <p>We don’t have transactions in MongoDB. To implement transactions, we use a pattern called
+          “Two Phase Commit”. If you don’t want to manually implement this pattern, use the Fawn NPM
+          package:</p>
+        <h4>Implementing transactions using Fawn</h4>
+        <figure>
+<pre><code class="language-javascript">try {
+  await new Fawn.Task()
+    .save(&lsquo;rentals&rsquo;, newRental)
+    .update(&lsquo;movies&rsquo;, { _id: movie._id }, { $inc: numberInStock: -1 }})
+    .run();
+}
+catch (ex) {
+  // At this point, all operations are automatically rolled back
+}</code></pre>
+          <figcaption>Fig 09-143</figcaption>
+        </figure>
+        <p>ObjectIDs are generated by MongoDB driver and are used to uniquely identify a document.
+          They consist of 12 bytes:</p>
+        <ul>
+          <li>4 bytes: timestamp</li>
+          <li>3 bytes: machine identifier</li>
+          <li>2 bytes: process identifier </li>
+          <li>3 byes: counter</li>
+        </ul>
+        <p>ObjectIDs are almost unique. In theory, there is a chance for two ObjectIDs to be equal
+          but the odds are very low (1/16,000,000) for most real-world applications.</p>
+        // Validating ObjectIDs mongoose.Types.ObjectID.isValid(id); <p>To validate ObjectIDs using
+        joi, use joi-objectid NPM package.</p>
       </div>
     </div>
   </div>
-</div>
 </body>
 </html>
