@@ -892,22 +892,22 @@ await user.save();</code></pre>
           application in Json files or environment variables.</p>
         <p>In this lecture we are going to take this private key out:</p>
         <figure>
-        <pre><code class="language-javascript">const token = jwt.sign({ _id: user._id}, 'jwtPrivateKey');</code></pre>
-        <figcaption>Fig 10-080</figcaption>
+          <pre><code class="language-javascript">const token = jwt.sign({ _id: user._id}, 'jwtPrivateKey');</code></pre>
+          <figcaption>Fig 10-080</figcaption>
         </figure>
         <p>and store it in an environment variable because, as I told you before, you should never
           store secrets in your code base. Otherwise these secrets are visible to anyone who as
           access to your source code. So, back in the terminal, let's install the config module:</p>
         <figure>
-        <pre><code class="language-command">npm i config</code></pre>
-        <figcaption>Fig 10-081</figcaption>
+          <pre><code class="language-command">npm i config</code></pre>
+          <figcaption>Fig 10-081</figcaption>
         </figure>
         <p>Back in the code create a new folder called config and in that folder create a file
           called default.json to store the default configuration.</p>
         <p>Add the following simple Json object to this file:</p>
         <figure>
-        <pre><code class="language-json">{ &quot;jwtPrivateKey&quot;: &quot;&quot; }</code></pre>
-        <figcaption>Fig 10-082</figcaption>
+          <pre><code class="language-json">{ &quot;jwtPrivateKey&quot;: &quot;&quot; }</code></pre>
+          <figcaption>Fig 10-082</figcaption>
         </figure>
         <p>We just add one setting. We set this to an empty string, we don't specify the actual
           value. Here we're just defining a template for all the settings in our application.</p>
@@ -917,27 +917,27 @@ await user.save();</code></pre>
           custom-environment-variables.json. We also map the setting to an environment variable
           called jwtPrivateKey:</p>
         <figure>
-        <pre><code class="language-json">{ &quot;jwtPrivateKey&quot;: &quot;vidly_jwtPrivateKey&quot; }</code></pre>
-        <figcaption>Fig 10-083</figcaption>
+          <pre><code class="language-json">{ &quot;jwtPrivateKey&quot;: &quot;vidly_jwtPrivateKey&quot; }</code></pre>
+          <figcaption>Fig 10-083</figcaption>
         </figure>
         <p>As a best practice, as discussed before, it is better to prefix this with an application
           name so you don't end up one application setting overwriting another application setting.
           So we use vidly_jwtPrivateKey.</p>
         <p>Go back to auth.js module where we are currently referencing the secret:</p>
         <figure>
-        <pre><code class="language-javascript">const token = jwt.sign({ _id: user._id}, 'jwtPrivateKey');</code></pre>
-        <figcaption>Fig 10-084</figcaption>
+          <pre><code class="language-javascript">const token = jwt.sign({ _id: user._id}, 'jwtPrivateKey');</code></pre>
+          <figcaption>Fig 10-084</figcaption>
         </figure>
         <p>We are gong to replace this with a call to config.get method:</p>
         <figure>
-        <pre><code class="language-javascript">const config = require('config');</code></pre>
-        <figcaption>Fig 10-085</figcaption>
+          <pre><code class="language-javascript">const config = require('config');</code></pre>
+          <figcaption>Fig 10-085</figcaption>
         </figure>
         <p>Back in the post method we call config.get and pasw the name of our application
           setting:</p>
         <figure>
-        <pre><code class="language-javascript">const token = jwt.sign({ _id: user._id}, config.get('jwtPrivateKey'));</code></pre>
-        <figcaption>Fig 10-086</figcaption>
+          <pre><code class="language-javascript">const token = jwt.sign({ _id: user._id}, config.get('jwtPrivateKey'));</code></pre>
+          <figcaption>Fig 10-086</figcaption>
         </figure>
         <p>That is not a secret it's the name of our application setting. The actual value or secret
           will be in an environment variable.</p>
@@ -946,17 +946,17 @@ await user.save();</code></pre>
           authentication endpoint cannot function properly</p>
         <p>So, at the top of the file, we load the config module</p>
         <figure>
-        <pre><code class="language-javascript">const config = require('config');</code></pre>
-        <figcaption>Fig 10-087</figcaption>
+          <pre><code class="language-javascript">const config = require('config');</code></pre>
+          <figcaption>Fig 10-087</figcaption>
         </figure>
         <p>We use the config.get method again:</p>
-<figure>
+        <figure>
 <pre><code class="language-javascript">if(!config.get('jwtPrivateKey')) {
   console.error('FATAL ERROR: jwtPrivateKey is not defined.');
   process.exit(1);
 }</code></pre>
-<figcaption>Fig 10-088</figcaption>
-</figure>
+          <figcaption>Fig 10-088</figcaption>
+        </figure>
         <p>If the environment variable is not defined we log a fatal error and then exit the
           process. Earlier you learned about the process object. This is one of the global objects
           in Node. Here we have a method called exit to which we supply a code. 0 indicates success.
@@ -964,175 +964,179 @@ await user.save();</code></pre>
           case of an error.</p>
         <p>So, at this point, we have not set the environment variable. Let's run the application
           and see what happens:</p>
-<figure>
-  <img src="./images/Fig10-089.png"/>
-  <figcaption>Fig 10-089</figcaption>
-</figure>
+        <figure>
+          <img src="./images/Fig10-089.png"/>
+          <figcaption>Fig 10-089</figcaption>
+        </figure>
         <p>You might think the application is still running because nodemon has not terminated. But
           if you go to Postman and send an http request to the application, you will see our
           application is not responding.</p>
         <p>If the application crashes nodemon continues to run. To demonstrate use node to run the
           application instead:</p>
         <figure>
-        <pre><code class="language-command">node index.js</code></pre>
-        <figcaption>Fig 10-090</figcaption>
+          <pre><code class="language-command">node index.js</code></pre>
+          <figcaption>Fig 10-090</figcaption>
         </figure>
         <p>You receive the same error:</p>
-<figure>
-  <img src="./images/Fig10-091.PNG"/>
-  <figcaption>Fig 10-091</figcaption>
-</figure>
-        <p>but node terminates and we are back in the terminal.</p>
-      <p>Now let's set the environment variable. As discussed before on Mac you use export on
-        Windows you use set.</p>
-      <p>I set the environment variable on my Windows Machines to the following:
         <figure>
-        <pre><code class="language-command">vidly_jwtPrivateKey myinSecureKey</code></pre>
-        <figcaption>Fig 10-092</figcaption>
-        </figure></p>
-      <p>If you back to postman and send another request to login you should see a valid Json web
-        token that is signed with a private key that is stored in an environment variable:</p>
-<figure>
-  <img src="./images/Fig10-093.PNG"/>
-  <figcaption>Fig 10-093</figcaption>
-</figure>
-      <h4>Windows - View Environment Variables from the Command Line</h4>
-        <figure>
-        <pre><code class="language-command">SET</code></pre>
-        <figcaption>Fig 10-094</figcaption>
+          <img src="./images/Fig10-091.PNG"/>
+          <figcaption>Fig 10-091</figcaption>
         </figure>
-            <p>View all</p>
+        <p>but node terminates and we are back in the terminal.</p>
+        <p>Now let's set the environment variable. As discussed before on Mac you use export on
+          Windows you use set.</p>
+        <p>I set the environment variable on my Windows Machines to the following:
+          <figure>
+            <pre><code class="language-command">vidly_jwtPrivateKey myinSecureKey</code></pre>
+            <figcaption>Fig 10-092</figcaption>
+          </figure>
+        </p>
+        <p>If you back to postman and send another request to login you should see a valid Json web
+          token that is signed with a private key that is stored in an environment variable:</p>
         <figure>
-        <pre><code class="language-command">SET prefix </code></pre>
-        <figcaption>Fig 10-095</figcaption>
+          <img src="./images/Fig10-093.PNG"/>
+          <figcaption>Fig 10-093</figcaption>
+        </figure>
+        <h4>Windows - View Environment Variables from the Command Line</h4>
+        <figure>
+          <pre><code class="language-command">SET</code></pre>
+          <figcaption>Fig 10-094</figcaption>
+        </figure>
+        <p>View all</p>
+        <figure>
+          <pre><code class="language-command">SET prefix </code></pre>
+          <figcaption>Fig 10-095</figcaption>
         </figure>
         <p>View all variables with names starting with prefix.</>
-      <p>NOTE - doesn't seem to work from terminal in Visual Studio Code</p>
-      <h3>134 - Setting Response Headers</h3>
-      <p>So, in the current implementation when the user logs in we generate a Json web token and
-        return it in the body of the response. Now let's take this application to the next level.
-        Let's imagine when the user registers we want to assume they are logged in, so they don't
-        have to login separately.</p>
-      <p>Of course this requirement does not apply to every application. Sometimes you want to
-        enforce the user to verify their email address, so after this sign off you send them an
-        email and they click a link. So the process is different.</p>
-      <p>However, in this course, let's imagine that vidly is an application that runs locally in a
-        video store. So, people who use this application are people who work in this video store so
-        you don't need to verify their email address. So the first day that they join the store,
-        they need to create an account and boom they're logged in.</p>
-      <p>So let's go to the post method in our users module where we register a new user If you look
-        the response we're returning here, we're returning an object with three properties:</p>
-<figure>
-<pre><code class="language-javascript">res.send(_.pick(user, ['id', 'name', 'email'])</code></pre>
-<figcaption>Fig 10-096</figcaption>
-</figure>
-      <p>Now, we could add the Json web token as another property here, but that's a bit ugly
-        because it's not a property of a user. A better approach is to return the Json web token in
-        an http header.</p>
-      <p>So just like we have headers in our request we also have headers in our response. So I'm
-        going to go back to our Auth module and borrow this line of code:</p>
-<figure>
-<pre><code class="language-javascript">const token = jwt.sign({ _id: user._id}, config.get('jwtPrivateKey'));</code></pre>
-<figcaption>Fig 10-097</figcaption>
-</figure>
-      <p>for generating the token. Back in the users module before we send the response to the
-        client we generate the token then we call response.header:</p>
-      <figure>
-      <pre><code class="language-javascript">res.header('x-auth-token', token).send(_.pick(user, ['id', 'name', 'email']));</code></pre>
-      <figcaption>Fig 10-098</figcaption>
-      </figure>
-      <p>The first argument is the name of the header. Because we are sending a custom header, we
-        set the header prefix to x- and then supply an arbitrary name like auth-token. The second
-        argument is our value, which in this case is our token. With this simple change we set the
-        header and then send the response to the client.</p>
-      <p>On the line above we are using jwt:</p>
-<figure>
-<pre><code class="language-javascript">const token = jwt.sign({ _id: user._id}, config.get('jwtPrivateKey'));</code></pre>
-<figcaption>Fig 10-099</figcaption>
-</figure>
-      <p>as well as the config module. So we need to import these at the top of our module:</p>
-      <figure>
-      <pre><code class="language-javascript">const jwt = require('jsonwebtoken'); const config = require('config');</code></pre>
-      <figcaption>Fig 10-100</figcaption>
-      </figure>
-      <p>Now let's test this:</p>
-      <figure>
-      <pre><code class="language-command">nodemon</code></pre>
-      <figcaption>Fig 10-101</figcaption>
-      </figure>
-      <p>In Postman find the Register user template and modify the email in the req.body:</p>
-      <figure>
-        <img src="./images/Fig10-102.PNG"/>
-        <figcaption>Fig 10-102</figcaption>
-      </figure>
-      <p>Send this and you get the following response as you did before:</p>
-      <figure>
-        <img src="./images/Fig10-103.PNG"/>
-        <figcaption>Fig 10-103</figcaption>
-      </figure>
-      <p>Look in the headers tab and you should see a new header:</p>
-<figure>
-  <img src="./images/Fig10-104.PNG"/>
-  <figcaption>Fig 10-104</figcaption>
-</figure>
-      <p>This is set to our Json token. So in our client app, when we register the user we can read
-        this header, we can store this Json web token, on the client, and next time we go to make an
-        API call we can send this to the server.</p>
-      <h3>135 - Encapsulating Logic in Mongoose Modules</h3>
-      <p>Now there is a problem in our current implementation. In the users module this is how we
-        generate a Json web token:</p>
-      <figure>
-      <pre><code class="language-javascript">const token = jwt.sign({ _id: user._id}, config.get('jwtPrivateKey'));</code></pre>
-      <figcaption>Fig 10-105</figcaption>
-      </figure>
-      <p>We have the exact same code in the auth module:</p>
-      <figure>
-      <pre><code class="language-javascript">const token = jwt.sign({ _id: user._id}, config.get('jwtPrivateKey'));</code></pre>
-      <figcaption>Fig 10-106</figcaption>
-      </figure>
-      <p>Look at the payload of this Json object - currently we only have the id property. Chances
-        are we're going to add another property in this payload - maybe the name of the user, maybe
-        their email address, maybe their role, perhaps you want to know if they are an admin user or
-        not. With the current implementation every time we want to change this payload we have to go
-        to the other module and make the exact same change. In this lecture we will examine how to
-        encapsulate this logic in a single place.</p>
-      <p>Now, where should we move this logic to? An amateur programmer may think okay, I will
-        create a function like this:</p>
-<figure>
+        <p>NOTE - doesn't seem to work from terminal in Visual Studio Code</p>
+        <h3>134 - Setting Response Headers</h3>
+        <p>So, in the current implementation when the user logs in we generate a Json web token and
+          return it in the body of the response. Now let's take this application to the next level.
+          Let's imagine when the user registers we want to assume they are logged in, so they don't
+          have to login separately.</p>
+        <p>Of course this requirement does not apply to every application. Sometimes you want to
+          enforce the user to verify their email address, so after this sign off you send them an
+          email and they click a link. So the process is different.</p>
+        <p>However, in this course, let's imagine that vidly is an application that runs locally in
+          a video store. So, people who use this application are people who work in this video store
+          so you don't need to verify their email address. So the first day that they join the
+          store, they need to create an account and boom they're logged in.</p>
+        <p>So let's go to the post method in our users module where we register a new user If you
+          look the response we're returning here, we're returning an object with three
+          properties:</p>
+        <figure>
+          <pre><code
+            class="language-javascript">res.send(_.pick(user, ['id', 'name', 'email'])</code></pre>
+          <figcaption>Fig 10-096</figcaption>
+        </figure>
+        <p>Now, we could add the Json web token as another property here, but that's a bit ugly
+          because it's not a property of a user. A better approach is to return the Json web token
+          in an http header.</p>
+        <p>So just like we have headers in our request we also have headers in our response. So I'm
+          going to go back to our Auth module and borrow this line of code:</p>
+        <figure>
+          <pre><code class="language-javascript">const token = jwt.sign({ _id: user._id}, config.get('jwtPrivateKey'));</code></pre>
+          <figcaption>Fig 10-097</figcaption>
+        </figure>
+        <p>for generating the token. Back in the users module before we send the response to the
+          client we generate the token then we call response.header:</p>
+        <figure>
+          <pre><code class="language-javascript">res.header('x-auth-token', token).send(_.pick(user, ['id', 'name', 'email']));</code></pre>
+          <figcaption>Fig 10-098</figcaption>
+        </figure>
+        <p>The first argument is the name of the header. Because we are sending a custom header, we
+          set the header prefix to x- and then supply an arbitrary name like auth-token. The second
+          argument is our value, which in this case is our token. With this simple change we set the
+          header and then send the response to the client.</p>
+        <p>On the line above we are using jwt:</p>
+        <figure>
+          <pre><code class="language-javascript">const token = jwt.sign({ _id: user._id}, config.get('jwtPrivateKey'));</code></pre>
+          <figcaption>Fig 10-099</figcaption>
+        </figure>
+        <p>as well as the config module. So we need to import these at the top of our module:</p>
+        <figure>
+          <pre><code class="language-javascript">const jwt = require('jsonwebtoken'); const config = require('config');</code></pre>
+          <figcaption>Fig 10-100</figcaption>
+        </figure>
+        <p>Now let's test this:</p>
+        <figure>
+          <pre><code class="language-command">nodemon</code></pre>
+          <figcaption>Fig 10-101</figcaption>
+        </figure>
+        <p>In Postman find the Register user template and modify the email in the req.body:</p>
+        <figure>
+          <img src="./images/Fig10-102.PNG"/>
+          <figcaption>Fig 10-102</figcaption>
+        </figure>
+        <p>Send this and you get the following response as you did before:</p>
+        <figure>
+          <img src="./images/Fig10-103.PNG"/>
+          <figcaption>Fig 10-103</figcaption>
+        </figure>
+        <p>Look in the headers tab and you should see a new header:</p>
+        <figure>
+          <img src="./images/Fig10-104.PNG"/>
+          <figcaption>Fig 10-104</figcaption>
+        </figure>
+        <p>This is set to our Json token. So in our client app, when we register the user we can
+          read this header, we can store this Json web token, on the client, and next time we go to
+          make an API call we can send this to the server.</p>
+        <h3>135 - Encapsulating Logic in Mongoose Modules</h3>
+        <p>Now there is a problem in our current implementation. In the users module this is how we
+          generate a Json web token:</p>
+        <figure>
+          <pre><code class="language-javascript">const token = jwt.sign({ _id: user._id}, config.get('jwtPrivateKey'));</code></pre>
+          <figcaption>Fig 10-105</figcaption>
+        </figure>
+        <p>We have the exact same code in the auth module:</p>
+        <figure>
+          <pre><code class="language-javascript">const token = jwt.sign({ _id: user._id}, config.get('jwtPrivateKey'));</code></pre>
+          <figcaption>Fig 10-106</figcaption>
+        </figure>
+        <p>Look at the payload of this Json object - currently we only have the id property. Chances
+          are we're going to add another property in this payload - maybe the name of the user,
+          maybe their email address, maybe their role, perhaps you want to know if they are an admin
+          user or not. With the current implementation every time we want to change this payload we
+          have to go to the other module and make the exact same change. In this lecture we will
+          examine how to encapsulate this logic in a single place.</p>
+        <p>Now, where should we move this logic to? An amateur programmer may think okay, I will
+          create a function like this:</p>
+        <figure>
 <pre><code class="language-javascript">function generateAuthenticationToken() {
 }</code></pre>
-<figcaption>Fig 10-107</figcaption>
-</figure>
-      <p>Put this function somewhere that we can reuse, maybe in another module, that we can import
-        in both auth and user modules, and with this we have the logic in a single place. Well, that
-        is true, it works but with this approach you will end up with a lot of functions hanging
-        around all over the place.</p>
-      <p>In object oriented programming we have a principle called information expert principle.
-        That means an object that has enough information and is an expert in a given area should be
-        responsible for making decisions and performing tasks.</p>
-      <p>As a real world example, think of a chef. A chef has the knowledge of cooking. That's why
-        the act of cooking in a restaurant is done by the chef, not by the waiter. The waiter
-        doesn't have the right knowledge or information about cooking at a restaurant. So if chef is
-        an object then we leave the actual cooking to the chef.</p>
-      <p>Take this principle and apply it in this code. So here:</p>
-<figure>
-<pre><code class="language-javascript">const token = jwt.sign({ _id: user._id}, config.get('jwtPrivateKey'));</code></pre>
-<figcaption>Fig 10-108</figcaption>
-</figure>
-      <p>as part of creating the Json web token, in the payload, we need the id of the user.
-        Tomorrow we may need the name of the user or their email. All this information is
-        encapsulated where? In the user object. So it's the user object that should be responsible
-        for generating the authentication token.</p>
-      <p>So the generateAuthenticationToken function we described above should not be hanging
-        somewhere in a module, that should be a method in the user object. So we need to add the
-        generateAuthenticationToken method to the user object that we load from the database:</p>
-<figure>
-<pre><code class="language-javascript">const token = user.generateAuthenticationToken();</code></pre>
-<figcaption>Fig 10-109</figcaption>
-</figure>
-      <p>This will give us our token. How can we add this? We need to go back to our user module
-        where we defined our user model and make a simple change. So here's our user model:</p>
-<figure>
+          <figcaption>Fig 10-107</figcaption>
+        </figure>
+        <p>Put this function somewhere that we can reuse, maybe in another module, that we can
+          import in both auth and user modules, and with this we have the logic in a single place.
+          Well, that is true, it works but with this approach you will end up with a lot of
+          functions hanging around all over the place.</p>
+        <p>In object oriented programming we have a principle called information expert principle.
+          That means an object that has enough information and is an expert in a given area should
+          be responsible for making decisions and performing tasks.</p>
+        <p>As a real world example, think of a chef. A chef has the knowledge of cooking. That's why
+          the act of cooking in a restaurant is done by the chef, not by the waiter. The waiter
+          doesn't have the right knowledge or information about cooking at a restaurant. So if chef
+          is an object then we leave the actual cooking to the chef.</p>
+        <p>Take this principle and apply it in this code. So here:</p>
+        <figure>
+          <pre><code class="language-javascript">const token = jwt.sign({ _id: user._id}, config.get('jwtPrivateKey'));</code></pre>
+          <figcaption>Fig 10-108</figcaption>
+        </figure>
+        <p>as part of creating the Json web token, in the payload, we need the id of the user.
+          Tomorrow we may need the name of the user or their email. All this information is
+          encapsulated where? In the user object. So it's the user object that should be responsible
+          for generating the authentication token.</p>
+        <p>So the generateAuthenticationToken function we described above should not be hanging
+          somewhere in a module, that should be a method in the user object. So we need to add the
+          generateAuthenticationToken method to the user object that we load from the database:</p>
+        <figure>
+          <pre><code
+            class="language-javascript">const token = user.generateAuthenticationToken();</code></pre>
+          <figcaption>Fig 10-109</figcaption>
+        </figure>
+        <p>This will give us our token. How can we add this? We need to go back to our user module
+          where we defined our user model and make a simple change. So here's our user model:</p>
+        <figure>
 <pre><code class="language-javascript">const User = mongoose.model('User', new mongoose.Schema({
   name: {
     type: String,
@@ -1149,13 +1153,13 @@ await user.save();</code></pre>
     maxlength: 1024
   }
 }));</code></pre>
-<figcaption>Fig 10-110</figcaption>
-</figure>
+          <figcaption>Fig 10-110</figcaption>
+        </figure>
 
-      <p>We need to extract the definition of this schema and put it in a separate constant because
-        we're going to work with that separately. So extract the schema code from the call to
-        mongoose.model:</p>
-<figure>
+        <p>We need to extract the definition of this schema and put it in a separate constant
+          because we're going to work with that separately. So extract the schema code from the call
+          to mongoose.model:</p>
+        <figure>
 <pre><code class="language-javascript">const userSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -1176,625 +1180,690 @@ await user.save();</code></pre>
     maxlength: 1024
   }
 });</code></pre>
-<figcaption>Fig 10-111</figcaption>
-</figure>
-      <p>And now add the following code to create the user model:</p>
-      <figure>
-      <pre><code class="language-javascript">const User = mongoose.model('User', userSchema);</code></pre>
-      <figcaption>Fig 10-112</figcaption>
-      </figure>
-      <p>Now we want to add the generateAuthToken method to this schema:</p>
-      <figure>
-      <pre><code class="language-javascript">userSchema.methods.generateAuthToken = function() {}</code></pre>
-      <figcaption>Fig 10-113</figcaption>
-      </figure>
-      <p>userSchema.methods returns an object to which you can add additional key value pairs. So we
-        add a key: generateAuthToken which we set to a function.</p>
-      <p>When we do this, our use object will have a method called generateAuthToken. In this
-        function we can have parameters. So if you have a parameter then when calling this method we
-        can pass arguments. In this, we don't need any parameters. So, let's cut the logic for
-        generating the token from auth.js:</p>
-      <figure>
-      <pre><code class="language-javascript">const token = jwt.sign({ _id: user._id}, config.get('jwtPrivateKey'));</code></pre>
-      <figcaption>Fig 10-114</figcaption>
-      </figure>
-      <p>and paste it into our generateAuthToken method in the user module. So in the payload:</p>
-      <figure>
-      <pre><code class="language-javascript">{ _id: user._id}</code></pre>
-      <figcaption>Fig 10-115</figcaption>
-      </figure>
-      <p>we need the id of the user. How do we get that? Well, now our generateAuthToken method is
-        part of the user object so in order to reference the object itself we replace user with
-        this:</p>
-      <figure>
-      <pre><code class="language-javascript">{ _id: this._id}</code></pre>
-      <figcaption>Fig 10-116</figcaption>
-      </figure>
-      <p>Remember using this means we should use the regular function syntax, you cannot use an
-        arrow function:</p>
-<figure>
+          <figcaption>Fig 10-111</figcaption>
+        </figure>
+        <p>And now add the following code to create the user model:</p>
+        <figure>
+          <pre><code
+            class="language-javascript">const User = mongoose.model('User', userSchema);</code></pre>
+          <figcaption>Fig 10-112</figcaption>
+        </figure>
+        <p>Now we want to add the generateAuthToken method to this schema:</p>
+        <figure>
+          <pre><code class="language-javascript">userSchema.methods.generateAuthToken = function() {}</code></pre>
+          <figcaption>Fig 10-113</figcaption>
+        </figure>
+        <p>userSchema.methods returns an object to which you can add additional key value pairs. So
+          we add a key: generateAuthToken which we set to a function.</p>
+        <p>When we do this, our use object will have a method called generateAuthToken. In this
+          function we can have parameters. So if you have a parameter then when calling this method
+          we can pass arguments. In this, we don't need any parameters. So, let's cut the logic for
+          generating the token from auth.js:</p>
+        <figure>
+          <pre><code class="language-javascript">const token = jwt.sign({ _id: user._id}, config.get('jwtPrivateKey'));</code></pre>
+          <figcaption>Fig 10-114</figcaption>
+        </figure>
+        <p>and paste it into our generateAuthToken method in the user module. So in the payload:</p>
+        <figure>
+          <pre><code class="language-javascript">{ _id: user._id}</code></pre>
+          <figcaption>Fig 10-115</figcaption>
+        </figure>
+        <p>we need the id of the user. How do we get that? Well, now our generateAuthToken method is
+          part of the user object so in order to reference the object itself we replace user with
+          this:</p>
+        <figure>
+          <pre><code class="language-javascript">{ _id: this._id}</code></pre>
+          <figcaption>Fig 10-116</figcaption>
+        </figure>
+        <p>Remember using this means we should use the regular function syntax, you cannot use an
+          arrow function:</p>
+        <figure>
 <pre><code class="language-javascript">userSchema.methods.generateAuthToken = () =&gt; {
   const token = jwt.sign({ _id: user._id}, config.get('jwtPrivateKey'));
 }</code></pre>
-<figcaption>Fig 10-117</figcaption>
-</figure>
-      <p>because, as discussed before, arrow functions don't have their own this object. this in an
-        arrow function references the calling function.</p>
-      <p>Typically we use arrow functions for standalone functions. If you want to create a method
-        that is part of an object you should not use an arrow function.</p>
-      <p>So we have the token, you can finally return the token:</p>
-<figure>
+          <figcaption>Fig 10-117</figcaption>
+        </figure>
+        <p>because, as discussed before, arrow functions don't have their own this object. this in
+          an arrow function references the calling function.</p>
+        <p>Typically we use arrow functions for standalone functions. If you want to create a method
+          that is part of an object you should not use an arrow function.</p>
+        <p>So we have the token, you can finally return the token:</p>
+        <figure>
 <pre><code class="language-javascript">userSchema.methods.generateAuthToken = function() {
   const token = jwt.sign({ _id: user._id}, config.get('jwtPrivateKey'));
   return token;
 }</code></pre>
-<figcaption>Fig 10-118</figcaption>
-</figure>
-      <p>Back in the auth module we generate the token:</p>
-<figure>
-<pre><code class="language-javascript">const token = user.generateAuthToken();</code></pre>
-<figcaption>Fig 10-119</figcaption>
-</figure>
-      <p>and send it to the client:</p>
-<figure>
-<pre><code class="language-javascript">res.send(token);</code></pre>
-<figcaption>Fig 10-120</figcaption>
-</figure>
-      <p>We need to make the same change in our users module. So delete this line:</p>
+          <figcaption>Fig 10-118</figcaption>
+        </figure>
+        <p>Back in the auth module we generate the token:</p>
         <figure>
-        <pre><code class="language-javascript">const token = jwt.sign({ _id: user._id }, config.get('jwtPrivateKey')));</code></pre>
-        <figcaption>Fig 10-121</figcaption>
+          <pre><code
+            class="language-javascript">const token = user.generateAuthToken();</code></pre>
+          <figcaption>Fig 10-119</figcaption>
+        </figure>
+        <p>and send it to the client:</p>
+        <figure>
+          <pre><code class="language-javascript">res.send(token);</code></pre>
+          <figcaption>Fig 10-120</figcaption>
+        </figure>
+        <p>We need to make the same change in our users module. So delete this line:</p>
+        <figure>
+          <pre><code class="language-javascript">const token = jwt.sign({ _id: user._id }, config.get('jwtPrivateKey')));</code></pre>
+          <figcaption>Fig 10-121</figcaption>
         </figure>
         <p>And replace it with this:</p>
         <figure>
-        <pre><code class="language-javascript">const token = user.generateAuthToken();</code></pre>
-        <figcaption>Fig 10-122</figcaption>
+          <pre><code
+            class="language-javascript">const token = user.generateAuthToken();</code></pre>
+          <figcaption>Fig 10-122</figcaption>
         </figure>
-      <p>Remove the require statements for config and jwt from the auth module:</p>
-<figure>
+        <p>Remove the require statements for config and jwt from the auth module:</p>
+        <figure>
 <pre><code class="language-javascript">const config = require('config');
 const jwt = require('jsonwebtoken');</code></pre>
-<figcaption>Fig 10-123</figcaption>
-</figure>
-      <p>and add them to the top of the user module. Test the application by registering a new user
-        in Postman:</p>
-      <figure>
-        <img src="./images/Fig10-124.PNG"/>
-        <figcaption>Fig 10-124</figcaption>
-      </figure>
+          <figcaption>Fig 10-123</figcaption>
+        </figure>
+        <p>and add them to the top of the user module. Test the application by registering a new
+          user in Postman:</p>
+        <figure>
+          <img src="./images/Fig10-124.PNG"/>
+          <figcaption>Fig 10-124</figcaption>
+        </figure>
 
         <p>and our authentication should be visible in the headers section:</p>
+        <figure>
+          <img src="./images/Fig10-125.PNG"/>
+          <figcaption>Fig 10-125</figcaption>
+        </figure>
+        <h3>136 - Authorization Middleware</h3>
+        <p>So at the beginning of this section we decided to protect operations that modify data and
+          only make them available to users that have authenticated.</p>
+        <p>For example, in genres.js the post endpoint that creates a new genre should only be
+          available to authenticated users:</p>
+        <figure>
+<pre><code class="language-javascript">router.post('/', async (req, res) =&gt; {
+  const { error } = validate(req.body);
+  if (error) return res.status(400).send(error.details[0].message);
+
+  let genre = new Genre({ name: req.body.name });
+  genre = await genre.save();
+
+  res.send(genre);
+});</code></pre>
+          <figcaption>Fig 10-126</figcaption>
+        </figure>
+        <p>We can enforce this with some logic that reads the req header:</p>
+        <figure>
+          <pre><code
+            class="language-javascript">const token = req.header('x-auth-token');</code></pre>
+          <figcaption>Fig 10-127</figcaption>
+        </figure>
+        <p>The request object has a method called header to which we supply the name of the header
+          (x-auth-token). We expect a JWT stored in this header so we store it in token.</p>
+        <p>Next we validate the token. If the token is valid then we give access to the api endpoint
+          otherwise we return a response code 401 (the client doesnt have the authentcation
+          credentials to access this resource):</p>
+        <figure>
+<pre><code class="language-javascript">const token = req.header('x-auth-token');
+res.status(401);</code></pre>
+          <figcaption>Fig 10-128</figcaption>
+        </figure>
+        <p>We don't want to repeat this logic in every route handler that needs to modify data. So
+          we need to put this logic in a middleware function (which we discussed back in the section
+          Express - Advanced Topics)</p>
+        <p>So we put this logic in a middleware function and then we can apply that function in
+          route handlers that need to modify data.</p>
+        <p>First add a new folder called middleware then a file called auth.js</p>
+        <p>Add a function to this file called auth which accepts three parameters:</p>
+        <figure>
+          <pre><code class="language-javascript">function auth(req, res, next)</code></pre>
+          <figcaption>Fig 10-129</figcaption>
+        </figure>
+        <p>Next is used to pass control to the next middleware function in the request processing
+          pipeline. If this concept feels unfamiliar to you then go back to the section called
+          express admin topics, because we explored middleware functions in detail.</p>
+        <p>In the body of the function implement logic to attempt to get the token. If we don't have
+          a token then we return a 401 response with a message:</p>
+        <figure>
+<pre><code class="language-javascript">function auth(req, res, next) {
+  const token = req.header('x-auth-token');
+  if(!token) res.status(401).send('Access denied. No token provided');
+}</code></pre>
+          <figcaption>Fig 10-130</figcaption>
+        </figure>
+        <p>This helps the client to figure out why they cannot access this resource. If there is a
+          token we need to verify that it is valid using JWT module. On the top of the file import
+          jsonwebtoken:</p>
+        <figure>
+          <pre><code class="language-javascript">const jwt = require('jsonwebtoken');</code></pre>
+          <figcaption>Fig 10-131</figcaption>
+        </figure>
+        <p>Next call the verify method passing the token as the first argument and the private key
+          for decoding the token as the second:</p>
+        <figure>
+          <pre><code class="language-javascript">const decoded = jwt.verify(token, config.get('jwtPrivateKey'));</code></pre>
+          <figcaption>Fig 10-132</figcaption>
+        </figure>
+        <p>For the above logic to work you will need to import the config module:</p>
+        <figure>
+          <pre><code class="language-javascript">const config = require('config');</code></pre>
+          <figcaption>Fig 10-133</figcaption>
+        </figure>
+        <p>Now we call jwt.verify:</p>
+        <figure>
+          <pre><code class="language-javascript">const decoded = jwt.verify(token, config.get('jwtPrivateKey'));</code></pre>
+          <figcaption>Fig 10-134</figcaption>
+        </figure>
+        <p>As the first argument we pass a token, and as the second argument we pass the private key
+          for decoding this token. So, because we store that private key in an environment variable,
+          we need to use the config module to read it. Add a require statement for config at the top
+          of the file:</p>
+        <figure>
+          <pre><code class="language-javascript">const config = require('config');</code></pre>
+          <figcaption>Fig 10-135</figcaption>
+        </figure>
+        <p>If the supplied token is valid the verify method will return the decoded payload which we
+          assign to const called decoded.</p>
+        <p>However if the token is not valid the verify method will throw an exception. We can catch
+          this exception and return a 400 response - bad request:</p>
+        <figure>
+<pre><code class="language-javascript">try {
+  const decoded = jwt.verify(token, config.get('jwtPrivateKey'));
+} catch(ex) {
+  res.status(400).send('Invalid token.');
+}</code></pre>
+          <figcaption>Fig 10-136</figcaption>
+        </figure>
+        <p>Again, with this error message, we can troubleshoot the authentication issues. So if I'm
+          the client I cannot access a given API endpoint, we look at the error message, okay we
+          realize we sent an invalid token. Then we look at the logic on the client where we get teh
+          token and send it to the server. So this is our catch block.</p>
+        <p>Back in the try block we add our decoded payload to our req:</p>
+        <figure>
+          <pre><code class="language-javascript">req.user = decoded;</code></pre>
+          <figcaption>Fig 10-137</figcaption>
+        </figure>
+        <p>We add the user property to our request object and set this to decoded. This is different
+          to earlier when we only put the user _id property in the payload:</p>
+        <figure>
+<pre><code class="language-javascript">userSchema.methods.generateAuthToken = function() {
+  const token = jwt.sign({ _id: user._id}, config.get('jwtPrivateKey'));
+  return token;
+}</code></pre>
+          <figcaption>Fig 10-138</figcaption>
+        </figure>
+        <p>So we added a generateAuthToken method to our userSchema. We created a Json web token and
+          you can see the payload is just the user id. So when we decode the jwt the object we get
+          will just contain the id. We put this in the request ( in auth.js) as a user object.</p>
+        <figure>
+          <pre><code class="language-javascript">req.user = decoded;</code></pre>
+          <figcaption>Fig 10-139</figcaption>
+        </figure>
+        <p>So in our route handlers we can access request.user._id and so on.</p>
+        <p>Now in the try block we need to call next() to pass control to the next middleware
+          function in the request processing pipeline - in our case that's our route handler so we
+          call next:</p>
+        <figure>
+          <pre><code class="language-javascript">next();</code></pre>
+          <figcaption>Fig 10-140</figcaption>
+        </figure>
+        <p>As we discussed before, in middleware functions, we either terminate the request/
+          response life cycle or pass control to the next middleware function.</p>
+        <p>There is a small issue with the code. In the case where we don't have a token we send a
+          status 401 to the client but we should also make sure that we exit from the function:</p>
+        <figure>
+          <pre><code class="language-javascript">if(!token) return res.status(401).send('Access denied. No token provided');</code></pre>
+          <figcaption>Fig 10-141</figcaption>
+        </figure>
+        <p>The last thing to do is export the auth function:</p>
+        <figure>
+          <pre><code class="language-javascript">module.exports = auth;</code></pre>
+          <figcaption>Fig 10-142</figcaption>
+        </figure>
+        <p>Alternatively we can make this code more concise by exporting the function directly
+          instead:</p>
+        <figure>
+          <pre><code
+            class="language-javascript">module.exports = function (req, res, next) {}</code></pre>
+          <figcaption>Fig 10-143</figcaption>
+        </figure>
+        <h3>137 - Protecting Routes</h3>
+        <p>So now that we have a middleware function we could either go to index.js where we are
+          already applying middleware functions:</p>
+        <figure>
+          <pre><code class="language-javascript">app.use(express.json());</code></pre>
+          <figcaption>Fig 10-144</figcaption>
+        </figure>
+        <p>So could add our middleware function in index.js and then it would be executed before
+          every route handler. However, we don't want to do this because not all api endpoints
+          should be protected.</p>
+        <p>Some of our API endpoints should be public like registering a user or logging in, or
+          getting the list of genres or customers. So in this case we want to apply this middleware
+          function selectively to certain endpoints.</p>
+        <p>So, back to the genres module, here's our post route handler:</p>
+        <figure>
+          <pre><code
+            class="language-javascript">router.post('/', async (req, res) =&gt; {</code></pre>
+          <figcaption>Fig 10-145</figcaption>
+        </figure>
+        <p>The first argument is the route, the second is optionally middleware and the third will
+          be the actual route handler. So at the top of the genres file let's import the middleware
+          function:</p>
+        <figure>
+          <pre><code class="language-javascript">const auth = require('../middleware/auth');</code></pre>
+          <figcaption>Fig 10-146</figcaption>
+        </figure>
+        <p>Now modify the post method to pass auth as a middleware function to be executed before
+          the other middleware function which in this case is our route handler:</p>
+        <figure>
+          <pre><code
+            class="language-javascript">router.post('/', auth, async (req, res) =&gt; { }</code></pre>
+          <figcaption>Fig 10-147</figcaption>
+        </figure>
+        <p>Now let's test this in Postman by sending a POST request to the genres endpoint (make
+          sure you don't send the authentication token in the header):</p>
+        <figure>
+          <pre><code class="language-command">http://localhost:3000/api/genres</code></pre>
+          <figcaption>Fig 10-148</figcaption>
+        </figure>
+        <p>You should receive response code 401 Unauthorized and the message:</p>
+        <figure>
+          <img src="./images/Fig10-149.PNG"/>
+          <figcaption>Fig 10-149</figcaption>
+        </figure>
+        <p>Now in the Headers tab of Postman provide an invalid token by entering x-auth-token for
+          the key and 1234 for the value:</p>
+        <figure>
+          <img src="./images/Fig10-150.PNG"/>
+          <figcaption>Fig 10-150</figcaption>
+        </figure>
+        <p>You should receive response code 400 Bad Request and the message - "Invalid token":</p>
+        <figure>
+          <img src="./images/Fig10-151.PNG"/>
+          <figcaption>Fig 10-151</figcaption>
+        </figure>
+        <p>Finally let's supply a valid token (copied from our POST User method that we use to
+          register a new user):</p>
+        <figure>
+          <img src="./images/Fig10-152.PNG"/>
+          <figcaption>Fig 10-152</figcaption>
+        </figure>
+        <p>Also make sure you supply a valid Json object in the body of the request:</p>
+        <figure>
+          <img src="./images/Fig10-153.PNG"/>
+          <figcaption>Fig 10-153</figcaption>
+        </figure>
+        <p>You should receive response code 200 OK and the new JSON genre object in the body of the
+          response:</p>
+        <figure>
+          <img src="./images/Fig10-154.PNG"/>
+          <figcaption>Fig 10-154</figcaption>
+        </figure>
+        <p>As an exercise apply this middleware function can now be applied to other middleware
+          functions that modify data.</p>
+        <h3>138 - Getting the Current User</h3>
+        <p>In a lot of applications there are times when we want to get information about the
+          currently logged in user.</p>
+        <p>So in this lecture we are going to add a new api endpoint to our users.js module for
+          getting the current user.</p>
+        <p>Currently we only have 1 route handle for creating a new user in the users.js module.</p>
+        <p>We need to add another handler for get methods. Now here as the route or the path we can
+          pass a parameter:</p>
+        <figure>
+          <pre><code class="language-javascript">router.get('/:id');</code></pre>
+          <figcaption>Fig 10-155</figcaption>
+        </figure>
+        <p>But this means the client should send the id to the server. Whilst this approach is
+          perfectly fine there are times, perhaps for security reasons, you dont want to have an
+          endpoint like this because then I can send the id of another user and look at their
+          account where there may be some information that should not be visible publicly.</p>
+        <p>An often used approach to get information about the current user is to have an api
+          endpoint like me:</p>
+        <figure>
+          <pre><code class="language-javascript">router.get('/me');</code></pre>
+          <figcaption>Fig 10-156</figcaption>
+        </figure>
+        <p>With this the client is not going to send the user id - it will be obtained from the Json
+          Web Token.</p>
+        <p>It is not possible to forge someone else's Json Web Token because in order to do so I
+          would need to create a new digital signature for that Json Web Token.</p>
+        <p>Now let's add the route handler:</p>
+        <figure>
+<pre><code class="language-javascript">router.get('/me', auth, async (req, res) =&gt; {
+  const user = await User.findById(req.user._id).select('-password');
+  res.send(user);
+});</code></pre>
+          <figcaption>Fig 10-157</figcaption>
+        </figure>
+        <p>The me api endpoint should only be available to authenticated users so we need to import
+          the auth middleware:</p>
+        <figure>
+          <pre><code class="language-javascript">const auth = require('../middleware/auth');</code></pre>
+          <figcaption>Fig 10-158</figcaption>
+        </figure>
+        <p>To clarify here auth represents authorization NOT authentication because authentication
+          is about validating the username and password. In this case we want to see if the user has
+          permission to access a resource or not and that is authorization.</p>
+        <p>So the auth middleware will prevent any requests that don't provide a valid Json Web
+          Token from executing the code in the route handler. The route handler has access to the
+          req.user object which means we can access it's _id property:</p>
+        <figure>
+          <pre><code class="language-javascript">(req.user._id)</code></pre>
+          <figcaption>Fig 10-159</figcaption>
+        </figure>
+        <p>So instead of passing the _id property in the path or route we get it from req.user._id
+          which actually comes from our Json Web Token which makes it a more secure approach.</p>
+        <p>We call User.findById excluding the password (we don't want to send this back to the
+          client):</p>
+        <figure>
+          <pre><code class="language-javascript">const user = await User.findById(req.user._id).select('-password');</code></pre>
+          <figcaption>Fig 10-160</figcaption>
+        </figure>
+        <p>Finally you can send this user object to the client:</p>
+        <figure>
+          <pre><code class="language-javascript">res.send(user);</code></pre>
+          <figcaption>Fig 10-161</figcaption>
+        </figure>
+        <p>Let's test in Postman using GET request:</p>
+        <figure>
+          <pre><code class="language-command">http://localhost:3000/api/users/me</code></pre>
+          <figcaption>Fig 10-162</figcaption>
+        </figure>
+        <p>Initially dont specify a JWT and you will receive a 401 Unauthorized response with the
+          message - "Access denied. No token provided":</p>
+        <figure>
+          <img src="./images/Fig10-163.PNG"/>
+          <figcaption>Fig 10-163</figcaption>
+        </figure>
+        <p>Now add a valid JWT (you can get this from Register User) in the header:</p>
+        <figure>
+          <img src="./images/Fig10-164.PNG"/>
+          <figcaption>Fig 10-164</figcaption>
+        </figure>
+        <p>and click send. You will receive a 200 OK response and the user account details that
+          match the supplied JWT in the body of the response:</p>
+        <figure>
+          <img src="./images/Fig10-165.PNG"/>
+          <figcaption>Fig 10-165</figcaption>
+        </figure>
+        <p>Note the password has been excluded.</p>
+        <h3>139 - Logging Out Users</h3>
+        <p>In our routes/auth module we defined this route:</p>
+        <figure>
+          <pre><code class="language-javascript">router.post('/', async (req, res) =&gt; { }</code></pre>
+          <figcaption>Fig 10-165</figcaption>
+        </figure>
+        <p>For authenticating users. What about logging out users? Do we need a separate route for
+          that? No, because we are not storing this token:</p>
+        <figure>
+          <pre><code
+            class="language-javascript">const token = user.generateAuthToken();</code></pre>
+          <figcaption>Fig 10-166</figcaption>
+        </figure>
+        <p>anywhere in the server, so we don't need a separate route handler to delete this token.
+          So technically you need to implement the logging out feature on the client not on the
+          server.</p>
+        <p>So on the client application when the user wants to log out you simply delete that token
+          from the client. Now there are courses and tutorials that teach you to store the token on
+          the server in the database - this is very bad practice because these tokens are like keys
+          that give a client access to protected api endpoints. If a hacker can get access to your
+          database they can see all these tokens for authenticated users - they don't even have to
+          know the password for a user. They can simply use one of the stored tokens to execute
+          requests on the behalf of a user.</p>
+        <p>So you should not store tokens in your database. If you really want to store the token in
+          the database make sure you encrypt it.</p>
+        <p>Storing a token in plain text in the database is like getting the passport or drivers
+          licenses of all the users, putting them in a central place, and then anyone malicious or
+          otherwise, who has access to the central place can simply get the passport and drivers
+          licenses and imitate other clients.</p>
+        <p>So, once again, do not store the tokens on the server. Store them on the client. As a
+          security best practice, whenever you are sending the token from the client to the server,
+          make sure to use https. So a hacker, sitting in the middle, sniffing traffic cannot read
+          the token sent from client to the server because the data is encrypted.</p>
+        <h3>140 - Role Based Authorization</h3>
+        <p>So far we have implemented authentication and authorization successfully. Now let's take
+          this application to the next level. Let's imagine certain operations such as deleting data
+          can only be performed by admins.</p>
+        <p>Let's examine how to implement role based authourization.</p>
+        <p>In models/user.js examine the userSchema. Currently we have three properties:</p>
+        <ul>
+          <li>name</li>
+          <li>email</li>
+          <li>password</li>
+        </ul>
+        <p>We need to add another property to the userSchema called isAdmin of type Boolean:</p>
+        <figure>
+          <pre><code class="language-javascript">isAdmin: Boolean</code></pre>
+          <figcaption>Fig 10-167</figcaption>
+        </figure>
+        <p>In MongoDB Compass make one of the users an admin by editing a document and adding a
+          field after password:</p>
+        <figure>
+          <img src="./images/Fig10-168.PNG"/>
+          <figcaption>Fig 10-168</figcaption>
+        </figure>
+        <p>Don't forget to change the default type from string to Boolean. So, now we have a user
+          that is an admin.</p>
+        <p>When they login we need to include the isAdmin property in the JWT payload so next time
+          the send this JWT to the server we can extract this property directly from the token. We
+          don't have to get the id, go into the database, and see if you're an admin or not. Again,
+          as discussed previously, with a digital signature included in a Json web token, a
+          malicious user cannot change the value of isAdmin for their user account. If they make any
+          changes, they have to regenerate the digital signature - this requires knowing the private
+          key that we stored in an environment variable on the server.</p>
+        <p>Now back in the user model when we generate the token we want to add our new isAdmin
+          property in the payload:</p>
+        <figure>
+          <pre><code class="language-javascript">const token = jwt.sign({ _id: this._id, isAdmin: this.isAdmin }, config.get('jwtPrivateKey'));</code></pre>
+          <figcaption>Fig 10-169</figcaption>
+        </figure>
+        <p>This is the benefit of encapsulating this logic inside the user object. It means there is
+          a single place that we need to modify. Previously we had this logic in two different
+          places - meaning we would have had to implement this change twice.</p>
+        <p>Now on the server we need a new middleware function to check if the current user is an
+          admin or not. In the middleware folder and a new file called admin.js with the following
+          code:</p>
+        <figure>
+          <pre><code
+            class="language-javascript">module.exports = function(req, res, next) { }</code></pre>
+          <figcaption>Fig 10-170</figcaption>
+        </figure>
+        <p>We set module.exports to a middleware function that takes a request, a response and a
+          reference to the next middleware function in the request processing pipeline. So here
+          we're assuming this middleware function will be executed after the authorisation
+          middleware function. Our authorisation middleware function sets req.user which means we
+          can access that in our new function:</p>
+        <figure>
+<pre><code class="language-javascript">module.exports = function(req, res, next) {
+  if(!req.user.isAdmin)
+    return res.status(403).send('Access denied.');
+}</code></pre>
+          <figcaption>Fig 10-171</figcaption>
+        </figure>
+        <p>If req.user.isAdmin is false we return response code 403 which means forbidden. This is
+          one of the areas that a lot of developers get wrong. So we have:</p>
+        <ul>
+          <li>401 Unauthorized - the user tries to access a protected resource without a valid JWT
+          </li>
+          <li>403 Forbidden - the user sends a valid JWT but they are not authorized to access the
+            resource (e.g. non-admin)
+          </li>
+        </ul>
+        <p>So if the user isAdmin we pass control to the next middleware function:</p>
+        <figure>
+          <pre><code class="language-javascript">next();</code></pre>
+          <figcaption>Fig 10-172</figcaption>
+        </figure>
+        <p>Which in this case is the route handler. Now we are going to apply this middleware
+          function on one of our routes. In the delete api endpoint of genres we pass two middleware
+          functions using an array</p>
+        <figure>
+          <pre><code class="language-javascript">router.delete('/:id', [auth, admin], async (req, res) =&gt; { }</code></pre>
+          <figcaption>Fig 10-173</figcaption>
+        </figure>
+        <p>The first one is auth and the second is admin. These middleware functions will be
+          executed in sequence. First auth - if the client sends a valid Json web token, then we'll
+          get to the second middleware function. If the user is an admin then the third middleware
+          function or route handler will be executed. Import the admin middleware function at the
+          top of genre.js:</p>
+        <figure>
+          <pre><code
+            class="language-javascript">const admin = require(''../middleware/admin');</code></pre>
+          <figcaption>Fig 10-174</figcaption>
+        </figure>
+        <h3>141 - Testing the Authorization</h3>
+        <p>So back in MongoDB Compass, go to the genres collection and copy a valid genre id. In
+          Postman send a delete request to:</p>
+        <figure>
+          <pre><code class="language-command">http://localhost:5000/api/genres/5c43a8a94e22960a2c26ef3f</code></pre>
+          <figcaption>Fig 10-175</figcaption>
+        </figure>
+        <p>So initially I don't have a token:</p>
+        <figure>
+          <img src="./images/Fig10-175.PNG"/>
+          <figcaption>Fig 10-175</figcaption>
+        </figure>
+        <p>We receive a response status 401 Unauthorized with the message - "Access denied. No token
+          provided.":</p>
+        <p>Next use Postman to login with a user that is not an admin and copy the resulting JWT.
+          You can verify that the user is not an admin using the debugger at jwt.io - you should
+          only see the _id and _iat properties . Let's verify that this user cant delete genres.</p>
+        <p>You will receive a response status 403 Forbidden with the message:</p>
+        <figure>
+          <img src="./images/Fig10-176.PNG"/>
+          <figcaption>Fig 10-176</figcaption>
+        </figure>
+        <p>Now login at the auth endpoint with a user that IS an admin:</p>
+        <figure>
+          <img src="./images/Fig10-177.PNG"/>
+          <figcaption>Fig 10-177</figcaption>
+        </figure>
+        <p>In the response body you should receive a JWT:</p>
+        <figure>
+          <img src="./images/Fig10-178.PNG"/>
+          <figcaption>Fig 10-178</figcaption>
+        </figure>
+        <p>We can verify that this user is an admin by going to JWT debugger (jwt.io) and pasting
+          the JWT into the encoded section:</p>
+        <figure>
+          <img src="./images/Fig10-179.PNG"/>
+          <figcaption>Fig 10-179</figcaption>
+        </figure>
+        <p>Next, copy and paste this JWT in the DELETE Genre request in Postman:</p>
+        <figure>
+          <img src="./images/Fig10-180.PNG"/>
+          <figcaption>Fig 10-180</figcaption>
+        </figure>
+        <p>hit Send and you will receive a response status 200 OK and the deleted Genre object in
+          the body of the response:</p>
+        <figure>
+          <img src="./images/Fig10-181.PNG"/>
+          <figcaption>Fig 10-181</figcaption>
+        </figure>
+        <p>One last thing before we finish the lecture. In this simple application we have a single
+          isAdmin property to determine if the user is an admin or not. In your application you
+          might have multiple roles:</p>
+        <ul>
+          <li>admin</li>
+          <li>moderator</li>
+        </ul>
+        <p>In that case you would need a property like roles:</p>
+        <figure>
+          <pre><code class="language-javascript">isAdmin: Boolean, roles: []</code></pre>
+          <figcaption>Fig 10-182</figcaption>
+        </figure>
+        <p>This would be an array. This could contain strings or complex objects, that really
+          depends on the scope of your application. In a more advanced application instead of
+          managing roles you would manage operations, that is the operations that the user is
+          allowed to perform:</p>
+        <figure>
+          <pre><code
+            class="language-javascript">isAdmin: Boolean, roles: [], operations []</code></pre>
+          <figcaption>Fig 10-183</figcaption>
+        </figure>
+        <p>operations would be an array of complex objects. For example, for a given user, we would
+          say this user is allowed to delete genres, or create genres. So you would control access
+          at a more granular level. Now, irrespective or which approach you choose, the big picture
+          is still the same. You pass something that determines the level of access of the user in
+          the JWT that is generated as part of authenticating the user. Then you would add
+          middleware, where currently we are just checking the value of this boolean property:</p>
+        <figure>
+<pre><code class="language-javascript">if(!req.user.isAdmin)
+  return res.status(403).send('Access denied.');</code></pre>
+          <figcaption>Fig 10-184</figcaption>
+        </figure>
+        <p>In a more complex application we can look at the roles array or the operations array.
+          Based on that, you make a decision, you either decline access:</p>
+        <figure>
+          <pre><code class="language-javascript">return res.status(403)</code></pre>
+          <figcaption>Fig 10-185</figcaption>
+        </figure>
+        <p>or grant it:</p>
+        <figure>
+          <pre><code class="language-javascript">next();</code></pre>
+          <figcaption>Fig 10-186</figcaption>
+        </figure>
+        <h3>142 - Recap</h3>
+        <h4>Authentication and Authorization</h4>
+        <p>So, in this section, you learned that:</p>
+        <p>Authentication is the process of determining if the user is who he/she claims to be. It
+          involves validating their email/password.</p>
+        <p>Authorization is the process of determining if the user has permission to perform a given
+          operation.</p><p>To hash passwords, use bcrypt</p>
+        <h4>Hashing passwords</h4>
 <figure>
-  <img src="./images/Fig10-125.PNG"/>
-  <figcaption>Fig 10-125</figcaption>
+<pre><code class="language-javascript">const salt = await bcrypt.genSalt(10);
+const hashed = await bcrypt.hash(&lsquo;1234&rsquo;, salt);</code></pre>
+<figcaption>Fig 10-187</figcaption>
 </figure>
-      <h3>136 - Authorization Middleware</h3>
-
-      <p>So at the beginning of this section we decided to protect operations that modify data and
-        only make them available to users that have authenticated.</p>
-
-      <p>For example, in genres.js the post endpoint that creates a new genre should only be
-        available to authenticated users:</p>
-
-      router.post('/', async (req, res) => { const { error } = validate(req.body); if (error) return
-      res.status(400).send(error.details[0].message);
-
-      let genre = new Genre({ name: req.body.name }); genre = await genre.save();
-
-      res.send(genre); });
-
-      <p>We can enforce this with some logic that reads the req header:</p>
-
-      const token = req.header('x-auth-token');
-
-      <p>The request object has a method called header to which we supply the name of the header
-        (x-auth-token). We expect a JWT stored in this header so we store it in token.</p>
-
-      <p>Next we validate the token. If the token is valid then we give access to the api endpoint
-        otherwise we return a response code 401 (the client doesnt have the authentcation
-        credentials to access this resource):</p>
-
-      const token = req.header('x-auth-token'); res.status(401);
-
-      <p>We don't want to repeat this logic in every route handler that needs to modify data. So we
-        need to put this logic in a middleware function (which we discussed back in the section
-        Express - Advanced Topics)</p>
-
-      <p>So we put this logic in a middleware function and then we can apply that function in route
-        handlers that need to modify data.</p>
-
-      <p>First add a new folder called middleware then a file called auth.js</p>
-
-      <p>Add a function to this file called auth which accepts three parameters:</p>
-
-      function auth(req, res, next)
-
-      <p>Next is used to pass control to the next middleware function in the request processing
-        pipeline. If this concept feels unfamiliar to you then go back to the section called express
-        admin topics, because we explored middleware functions in detail.</p>
-
-      <p>In the body of the function implement logic to attempt to get the token. If we don't have a
-        token then we return a 401 response with a message:</p>
-
-      function auth(req, res, next) { const token = req.header('x-auth-token'); if(!token)
-      res.status(401).send('Access denied. No token provided'); }
-
-      <p>This helps the client to figure out why they cannot access this resource. If there is a
-        token we need to verify that it is valid using JWT module. On the top of the file import
-        jsonwebtoken:</p>
-
-      const jwt = require('jsonwebtoken');
-
-      <p>Next call the verify method passing the token as the first argument and the private key for
-        decoding the token as the second:</p>
-
-      const decoded = jwt.verify(token, config.get('jwtPrivateKey'));
-
-      <p>For the above logic to work you will need to import the config module:</p>
-
-      const config = require('config');
-
-      <p>Now we call jwt.verify:</p>
-
-      const decoded = jwt.verify(token, config.get('jwtPrivateKey'));
-
-      <p>As the first argument we pass a token, and as the second argument we pass the private key
-        for decoding this token. So, because we store that private key in an environment variable,
-        we need to use the config module to read it. Add a require statement for config at the top
-        of the file:</p>
-
-      const config = require('config');
-
-      <p>If the supplied token is valid the verify method will return the decoded payload which we
-        assign to const called decoded.</p>
-
-      <p>However if the token is not valid the verify method will throw an exception. We can catch
-        this exception and return a 400 response - bad request:</p>
-
-      try { const decoded = jwt.verify(token, config.get('jwtPrivateKey')); } catch(ex) {
-      res.status(400).send('Invalid token.'); }
-
-      <p>Again, with this error message, we can troubleshoot the authentication issues. So if I'm
-        the client I cannot access a given API endpoint, we look at the error message, okay we
-        realize we sent an invalid token. Then we look at the logic on the client where we get teh
-        token and send it to the server. So this is our catch block.</p>
-
-      <p>Back in the try block we add our decoded payload to our req:</p>
-
-      req.user = decoded;
-
-      <p>We add the user property to our request object and set this to decoded. This is different
-        to earlier when we only put the user _id property in the payload:</p>
-
-      userSchema.methods.generateAuthToken = function() { const token = jwt.sign({ _id: user._id},
-      config.get('jwtPrivateKey')); return token; }
-
-      <p>So we added a generateAuthToken method to our userSchema. We created a Json web token and
-        you can see the payload is just the user id. So when we decode the jwt the object we get
-        will just contain the id. We put this in the request ( in auth.js) as a user object.</p>
-
-      req.user = decoded;
-
-      <p>So in our route handlers we can access request.user._id and so on.</p>
-
-      <p>Now in the try block we need to call next() to pass control to the next middleware function
-        in the request processing pipeline - in our case that's our route handler so we call
-        next:</p>
-
-      next();
-
-      <p>As we discussed before, in middleware functions, we either terminate the request/ response
-        life cycle or pass control to the next middleware function.</p>
-
-      <p>There is a small issue with the code. In the case where we don't have a token we send a
-        status 401 to the client but we should also make sure that we exit from the function:</p>
-
-      if(!token) return res.status(401).send('Access denied. No token provided');
-
-      <p>The last thing to do is export the auth function:</p>
-
-      module.exports = auth;
-
-      <p>Alternatively we can make this code more concise by exporting the function directly
-        instead:</p>
-
-      module.exports = function (req, res, next) {}
-
-      <h3>137 - Protecting Routes</h3>
-
-      <p>So now that we have a middleware function we could either go to index.js where we are
-        already applying middleware functions:</p>
-
-      app.use(express.json());
-
-      <p>So could add our middleware function in index.js and then it would be executed before every
-        route handler. However, we don't want to do this because not all api endpoints should be
-        protected.</p>
-
-      <p>Some of our API endpoints should be public like registering a user or logging in, or
-        getting the list of genres or customers. So in this case we want to apply this middleware
-        function selectively to certain endpoints.</p>
-
-      <p>So, back to the genres module, here's our post route handler:</p>
-
-      router.post('/', async (req, res) => {
-
-      <p>The first argument is the route, the second is optionally middleware and the third will be
-        the actual route handler. So at the top of the genres file let's import the middleware
-        function:</p>
-
-      const auth = require('../middleware/auth');
-
-      <p>Now modify the post method to pass auth as a middleware function to be executed before the
-        other middleware function which in this case is our route handler:</p>
-
-      router.post('/', auth, async (req, res) => { }
-
-      <p>Now let's test this in Postman by sending a POST request to the genres endpoint (make sure
-        you don't send the authentication token in the header):</p>
-
-      http://localhost:3000/api/genres
-
-      <p>You should receive response code 401 Unauthorized and the message:</p>
-
-      Access denied. Not token provided
-
-      <p>Now in the Headers tab of Postman provide an invalid token by entering x-auth-token for the
-        key and 1234 for the value.</p>
-
-      <p>You should receive response code 400 Bad Request and the message:</p>
-
-      Invalid token.
-
-      <p>Finally let's supply a valid token (copied from our POST User method that we use to
-        register a new user). Also make sure you supply a valid JSon object in the body of the
-        request.</p>
-
-      <p>You should receive response code 200 OK and the new JSON genre object in the body of the
-        response.</p>
-
-      <p>As an exercise apply this middleware function can now be applied to other middleware
-        functions that modify data.</p>
-
-      <h3>138 - Getting the Current User</h3>
-
-      <p>In a lot of applications there are times when we want to get information about the
-        currently logged in user.</p>
-
-
-      <p>So in this lecture we are going to add a new api endpoint to our users.js module for
-        getting the current user.</p>
-
-      <p>Currently we only have 1 route handle for creating a new user in the users.js module.</p>
-
-      <p>We need to add another handler for get methods. Now here as the route or the path we can
-        pass a parameter:</p>
-
-      router.get('/:id');
-
-      <p>But this means the client should send the id to the server. Whilst this approach is
-        perfectly fine there are times, perhaps for security reasons, you dont want to have an
-        endpoint like this because then I can send the id of another user and look at their account
-        where there may be some information that should not be visible publicly.</p>
-
-      <p>An often used approach to get information about the current user is to have an api endpoint
-        like me:</p>
-
-      router.get('/me');
-
-      <p>With this the client is not going to send the user id - it will be obtained from the Json
-        Web Token.</p>
-
-      <p>It is not possible to forge someone else's Json Web Token because in order to do so I would
-        need to create a new digital signature for that Json Web Token.</p>
-
-      <p>Now let's add the route handler:</p>
-
-      router.get('/me', auth, async (req, res) => { const user = await
-      User.findById(req.user._id).select('-password'); res.send(user); });
-
-      <p>The me api endpoint should only be available to authenticated users so we need to import
-        the auth middleware:</p>
-
-      const auth = require('../middleware/auth');
-
-      <p>To clarify here auth represents authorization NOT authentication because authentication is
-        about validating the username and password. In this case we want to see if the user has
-        permission to access a resource or not and that is authorization.</p>
-
-      <p>So the auth middleware will prevent any requests that don't provide a valid Json Web Token
-        from executing the code in the route handler. The route handler has access to the req.user
-        object which means we can access it's _id property:</p>
-
-      (req.user._id)
-
-      <p>So instead of passing the _id property in the path or route we get it from req.user._id
-        which actually comes from our Json Web Token which makes it a more secure approach.</p>
-
-      <p>We call User.findById excluding the password (we don't want to send this back to the
-        client):</p>
-
-      const user = await User.findById(req.user._id).select('-password');
-
-      <p>Finally you can send this user object to the client:</p>
-
-      res.send(user);
-
-      <p>Let's test in Postman using GET request:</p>
-
-      http://localhost:3000/api/users/me
-
-      <p>Initially dont specify a JWT and you will receive a 401 Unauthorized response with the
-        message:</p>
-
-      Access denied. No token provided.
-
-      <p>Now add a valid JWT (you can get this from Register User) in the header and click send. You
-        will receive a 200 OK response and the user account details that match the supplied JWT in
-        the body of the response:</p>
-
-      { "_id": "5ad5fd6ed4b65e98dee78835", "name": "Mosh Hamedani", "email": "maxsage@gmail.com",
-      "__v": 0 }
-
-      <p>Note the password has been excluded.</p>
-
-      <h3>139 - Logging Out Users</h3>
-
-      <p>In our routes/auth module we defined this route:</p>
-
-      router.post('/', async (req, res) => { }
-
-      <p>For authenticating users. What about logging out users? Do we need a separate route for
-        that? No, because we are not storing this token:</p>
-
-      const token = user.generateAuthToken();
-
-      <p>anywhere in the server, so we don't need a separate route handler to delete this token. So
-        technically you need to implement the logging out feature on the client not on the
-        server.</p>
-
-      <p>So on the client application when the user wants to log out you simply delete that token
-        from the client. Now there are courses and tutorials that teach you to store the token on
-        the server in the database - this is very bad practice because these tokens are like keys
-        that give a client access to protected api endpoints. If a hacker can get access to your
-        database they can see all these tokens for authenticated users - they don't even have to
-        know the password for a user. They can simply use one of the stored tokens to execute
-        requests on the behalf of a user.</p>
-
-      <p>So you should not store tokens in your database. If you really want to store the token in
-        the database make sure you encrypt it.</p>
-
-      <p>Storing a token in plain text in the database is like getting the passport or drivers
-        licenses of all the users, putting them in a central place, and then anyone malicious or
-        otherwise, who has access to the central place can simply get the passport and drivers
-        licenses and imitate other clients.</p>
-
-      <p>So, once again, do not store the tokens on the server. Store them on the client. As a
-        security best practice, whenever you are sending the token from the client to the server,
-        make sure to use https. So a hacker, sitting in the middle, sniffing traffic cannot read the
-        token sent from client to the server because the data is encrypted.</p>
-
-      <h3>140 - Role Based Authorization</h3>
-
-      <p>So far we have implemented authentication and authorization successfully. Now let's take
-        this application to the next level. Let's imagine certain operations such as deleting data
-        can only be performed by admins.</p>
-
-      <p>Let's examine how to implement role based authourization.</p>
-
-      <p>In models/user.js examine the userSchema. Currently we have three properties:</p>
-
-      - name - email - password
-
-      <p>We need to add another property to the userSchema called isAdmin of type Boolean:</p>
-
-      isAdmin: Boolean
-
-      <p>In MongoDB Compass make one of the users an admin by editing a document and adding a field
-        after password. Don't forget to change the default type from string to Boolean. So, now we
-        have a user that is an admin.</p>
-
-      <p>When they login we need to include the isAdmin property in the JWT payload so next time the
-        send this JWT to the server we can extract this property directly from the token. We don't
-        have to get the id, go into the database, and see if you're an admin or not. Again, as
-        discussed previously, with a digital signature included in a Json web token, a malicious
-        user cannot change the value of isAdmin for their user account. If they make any changes,
-        they have to regenerate the digital signature - this requires knowing the private key that
-        we stored in an environment variable on the server.</p>
-
-      <p>Now back in the user model when we generate the token we want to add our new isAdmin
-        property in the payload:</p>
-
-      const token = jwt.sign({ _id: this._id, isAdmin: this.isAdmin }, config.get('jwtPrivateKey'));
-
-      <p>This is the benefit of encapsulating this logic inside the user object. It means there is a
-        single place that we need to modify. Previously we had this logic in two different places -
-        meaning we would have had to implement this change twice.</p>
-
-      <p>Now on the server we need a new middleware function to check if the current user is an
-        admin or not. In the middleware folder and a new file called admin.js with the following
-        code:</p>
-
-      module.exports = function(req, res, next) { }
-
-      <p>We set module.exports to a middleware function that takes a request, a response and a
-        reference to the next middleware function in the request processing pipeline. So here we're
-        assuming this middleware function will be executed after the authorisation middleware
-        function. Our authorisation middleware function sets req.user which means we can access that
-        in our new function:</p>
-
-      module.exports = function(req, res, next) { if(!req.user.isAdmin) return
-      res.status(403).send('Access denied.'); }
-
-      <p>If req.user.isAdmin is false we return response code 403 which means forbidden. This is one
-        of the areas that a lot of developers get wrong. So we have:</p>
-
-      401 Unauthorized - the user tries to access a protected resource without a valid JWT 403
-      Forbidden - the user sends a valid JWT but they are not authorized to access the resource
-      (e.g. non-admin)
-
-      <p>So if the user isAdmin we pass control to the next middleware function:</p>
-      next();
-      <p>Which in this case is the route handler. Now we are going to apply this middleware function
-        on one of our routes. In the delete api endpoint of genres we pass two middleware functions
-        using an array</p>
-
-      router.delete('/:id', [auth, admin], async (req, res) => { }
-
-      <p>The first one is auth and the second is admin. These middleware functions will be executed
-        in sequence. First auth - if the client sends a valid Json web token, then we'll get to the
-        second middleware function. If the user is an admin then the third middleware function or
-        route handler will be executed. Import the admin middleware function at the top of
-        genre.js:</p>
-
-      const admin = require(''../middleware/admin');
-
-      <h3>141 - Testing the Authorization</h3>
-
-      <p>So back in MongoDB Compass, go to the genres collection and copy a valid genre id. In
-        Postman send a delete request to:</p>
-
-      http://localhost:5000/api/genres/5c43a8a94e22960a2c26ef3f
-
-      <p>So initially I don't have a token.</p>
-
-      <p>We receive a response status 401 Unauthorized with the message:</p>
-
-      Access denied. No token provided.
-
-      <p>Next use Postman to login with a user that is not an admin and copy the resulting JWT. You
-        can verify that the user is not an admin using the debugger at jwt.io - you should only see
-        the _id and _iat properties . Let's verify that this user cant delete genres.</p>
-
-      <p>You will receive a response status 403 Forbidden with the message:</p>
-
-      Access denied
-
-      <p>Now login at the auth endpoint with a user that IS NOT an admin:</p>
-
-      http://localhost:3000/api/auth
-
-      <p>In the response body you should receive a JWT:</p>
-
-      eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1NDc5OTM3NDd9.LHozVfSKCYNMdXoGnZ_qcDGqbjFjHp8RuSMolDd6Ahc
-
-      <p>We can verify that this user is not an admin by going to JWT debugger (jwt.io) and pasting
-        the JWT into the encoded section:</p>
-
-      fig xx-xx
-
-      <p>If you check the payload you should see only the id property (and iat) we don't have
-        isAdmin. So, this user should not be able to delete a genre. We can verify that by using
-        Postman to send another delete request to the genres endpoint:</p>
-
-      http://localhost:5000/api/genres/5c43a8a94e22960a2c26ef3f
-
-      <p>We add the x-auth-token to the headers (make sure you are in headers NOT Params. Send this
-        request and you should get 403 - forbidden with a message in the body:</p>
-
-      Access denied.
-
-      <p>Now, in contrast, if we log in with a user that is an admin then we should be able to
-        delete the genre.</p>
-
-      <>So now login at the auth endpoint with a user that IS an admin:
-    </
-    >
-
-    http://localhost:3000/api/auth
-
-    <p>Copy the JWT (which is a little bit longer than previous JWT's) into JWT debugger. If you
-      check the payload then isAdmin should be set to true.</p>
-
-    { "_id": "5c445adddfbdc04b04613d8a", "isAdmin": true, "iat": 1547994978 }
-
-    <p>Next, copy and paste this JWT in the DELETE Genre request in Postman, hit Send and you will
-      receive a response status 200 OK and the deleted Genre object in the body of the response:</p>
-
-    { "_id": "5c43a8a94e22960a2c26ef3f", "name": "Griller", "__v": 0 }
-
-    <p>One last thing before we finish the lecture. In this simple application we have a single
-      isAdmin property to determine if the user is an admin or not. In your application you might
-      have multiple roles:</p>
-
-    admin moderator etc.
-
-    <p>In that case you would need a property like roles:</p>
-
-    isAdmin: Boolean, roles: []
-
-    <p>This would be an array. This could contain strings or complex objects, that really depends on
-      the scope of your application. In a more advanced application instead of managing roles you
-      would manage operations, that is the operations that the user is allowed to perform:</p>
-
-    isAdmin: Boolean, roles: [], operations []
-
-    <p>operations would be an array of complex objects. For example, for a given user, we would say
-      this user is allowed to delete genres, or create genres. So you would control access at a more
-      granular level. Now, irrespective or which approach you choose, the big picture is still the
-      same. You pass something that determines the level of access of the user in the JWT that is
-      generated as part of authenticating the user. Then you would add middleware, where currently
-      we are just checking the value of this boolean property:</p>
-
-    if(!req.user.isAdmin) return res.status(403).send('Access denied.');
-
-    <p>In a more complex application we can look at the roles array or the operations array. Based
-      on that, you make a decision, you either decline access:</p>
-
-    return res.status(403)
-
-    <p>or grant it:</p>
-
-    next();
-    <h3>142 - Recap</h3>
-    <h4>Authentication and Authorization</h4>
-    <p>So, in this section, you learned that:</p>
-    <p>Authentication is the process of determining if the user is who he/she claims to be. It
-      involves validating their email/password.</p>
-    <p>Authorization is the process of determining if the user has permission to perform a given
-      operation. - To hash passwords, use bcrypt</p>
-    <h4>Hashing passwords</h4>
-    const salt = await bcrypt.genSalt(10); const hashed = await bcrypt.hash(‘1234’, salt); //
-    Validating passwords const isValid = await bcrypt.compare(‘1234’, hashed);
-
-    <p>A JSON Web Token (JWT) is a JSON object encoded as a long string. We use them to identify
-      users. It’s similar to a passport or driver’s license. It includes a few public properties
-      about a user in its payload. These properties cannot be tampered because doing so requires
-      re-generating the digital signature.</p>
-
-    <p>When the user logs in, we generate a JWT on the server and return it to the client. We store
-      this token on the client and send it to the server every time we need to call an API endpoint
-      that is only accessible to authenticated users.</p>
-
-    <p>To generate JSON Web Tokens in an Express app use jsonwebtoken package.</p>
-
-    <h4>Generating a JWT</h4>
-
-    const jwt = require(‘jsonwebtoken’); const token = jwt.sign({ _id: user._id}, ‘privateKey’);
-
-    <p>Never store private keys and other secrets in your codebase. Store them in environment
-      variables. Use the config package to read application settings stored in environment
-      variables.</p>
-
-    <p>When appropriate, encapsulate logic in Mongoose models:</p>
-
-    <h4>Adding a method to a Mongoose model</h4>
-
-    userSchema.methods.generateAuthToken = function() { } const token = user.generateAuthToken();
-
-    <p>Implement authorization using a middleware function. Return a 401 error (unauthorized) if the
-      client doesn’t send a valid token. Return 403 (forbidden) if the user provided a valid token
-      but is not allowed to perform the given operation.</p>
-
-    <p>You don’t need to implement logging out on the server. Implement it on the client by simply
-      removing the JWT from the client.</p>
-
-    <p>Do not store a JWT in plain text in a database. This is similar to storing users’ passports
-      or drivers license in a room. Anyone who has access to that room can steal these passports.
-      Store JWTs on the client. If you have a strong reason for storing them on the server, make
-      sure to encrypt them before storing them in a database.</p>
-
-  </div>
-</div>
+        <h4>Validating passwords</h4>
+<figure>
+<pre><code class="language-javascript">const isValid = await bcrypt.compare(&lsquo;1234&rsquo;, hashed);</code></pre>
+<figcaption>Fig 10-188</figcaption>
+</figure>
+
+        <p>A JSON Web Token (JWT) is a JSON object encoded as a long string. We use them to identify
+          users. It’s similar to a passport or driver’s license. It includes a few public properties
+          about a user in its payload. These properties cannot be tampered because doing so requires
+          re-generating the digital signature.</p>
+
+        <p>When the user logs in, we generate a JWT on the server and return it to the client. We
+          store this token on the client and send it to the server every time we need to call an API
+          endpoint that is only accessible to authenticated users.</p>
+
+        <p>To generate JSON Web Tokens in an Express app use jsonwebtoken package.</p>
+
+        <h4>Generating a JWT</h4>
+<figure>
+<pre><code class="language-javascript">const jwt = require(&lsquo;jsonwebtoken&rsquo;);
+const token = jwt.sign({ _id: user._id}, &lsquo;privateKey&rsquo;);</code></pre>
+<figcaption>Fig 10-189</figcaption>
+</figure>
+        <p>Never store private keys and other secrets in your codebase. Store them in environment
+          variables. Use the config package to read application settings stored in environment
+          variables.</p>
+        <p>When appropriate, encapsulate logic in Mongoose models:</p>
+        <h4>Adding a method to a Mongoose model</h4>
+        <figure>
+        <pre><code class="language-javascript">userSchema.methods.generateAuthToken = function() {
+}
+const token = user.generateAuthToken();</code></pre>
+        <figcaption>Fig 10-190</figcaption>
+        </figure>
+
+        <p>Implement authorization using a middleware function. Return a 401 error (unauthorized) if
+          the client doesn’t send a valid token. Return 403 (forbidden) if the user provided a valid
+          token but is not allowed to perform the given operation.</p>
+
+        <p>You don’t need to implement logging out on the server. Implement it on the client by
+          simply removing the JWT from the client.</p>
+
+        <p>Do not store a JWT in plain text in a database. This is similar to storing users’
+          passports or drivers license in a room. Anyone who has access to that room can steal these
+          passports. Store JWTs on the client. If you have a strong reason for storing them on the
+          server, make sure to encrypt them before storing them in a database.</p>
+
+      </div>
+    </div>
 </body>
 </html>
