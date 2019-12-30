@@ -1,17 +1,12 @@
 import Home from './components/Home.vue'
 import Header from './components/Header.vue'
 
-import Javascript from './components/javascript/Javascript.vue'
-import TheCompleteJavascriptCourse from './components/javascript/TheCompleteJavascriptCourse.vue'
-
 import Nodejs from './components/nodejs/Nodejs.vue'
-import TheCompleteNodejsCourse from './components/nodejs/TheCompleteNodejsCourse.vue'
+import NodejsTheCompleteGuidetoBuildRESTfulAPIs00CourseContents from './components/nodejs/NodejsTheCompleteGuidetoBuildRESTfulAPIs00CourseContents.vue'
 
 import Vuejs from './components/vuejs/Vuejs.vue'
 
 import VuejsDeployingToHeroku from './components/vuejs/VuejsDeployingToHeroku.vue'
-
-import Vuejs2TheCompleteGuide from './components/vuejs/Vuejs2TheCompleteGuide.vue'
 
 import VuejsEssentials00CourseContents from './components/vuejs/VuejsEssentials00CourseContents.vue'
 import VuejsEssentials01AnIntroductionToVue from './components/vuejs/VuejsEssentials01AnIntroductionToVue.vue'
@@ -27,7 +22,7 @@ import Webpack from './components/webpack/Webpack.vue'
 
 import WebpackRemoveAutomaticLoaderModuleNameExtension from './components/webpack/WebpackRemoveAutomaticLoaderModuleNameExtension.vue'
 
-import Webpack2TheCompleteDevelopersGuide00CourseContents from './components/webpack/Webpack2TheCompleteDevelopersGuide.vue'
+import Webpack2TheCompleteDevelopersGuide00CourseContents from './components/webpack/Webpack2TheCompleteDevelopersGuide00CourseContents.vue'
 
 import WPF from './components/wpf/WPF.vue'
 
@@ -87,22 +82,6 @@ export const routes = [
       'header-top': Header
     }
   },
-
-  {
-    path: '/javascript',
-    components: {
-      default: Javascript,
-      'header-top': Header
-    }
-  },
-  {
-    path: '/thecompletejavascriptcourse',
-    components: {
-      default: TheCompleteJavascriptCourse,
-      'header-top': Header
-    }
-  },
-
   {
     path: '/nodejs',
     components: {
@@ -111,9 +90,9 @@ export const routes = [
     }
   },
   {
-    path: '/thecompletenodejscourse',
+    path: '/nodejsthecompleteguidetobuildrestfulapis-00-course-contents',
     components: {
-      default: TheCompleteNodejsCourse,
+      default: NodejsTheCompleteGuidetoBuildRESTfulAPIs00CourseContents,
       'header-top': Header
     }
   },
@@ -128,13 +107,6 @@ export const routes = [
     path: '/vuejsdeployingtoheroku',
     components: {
       default: VuejsDeployingToHeroku,
-      'header-top': Header
-    }
-  },
-  {
-    path: '/vuejs2thecompleteguide',
-    components: {
-      default: Vuejs2TheCompleteGuide,
       'header-top': Header
     }
   },

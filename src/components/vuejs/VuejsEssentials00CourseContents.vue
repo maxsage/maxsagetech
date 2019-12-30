@@ -7,6 +7,7 @@
                 </div>
                 <div class="panel-body">
                     <ul>
+                      <li>
                         <router-link to="/vuejsessentials-01-an-introduction-to-vue" active-class="active"><a>An Introduction to Vue</a></router-link>
                         <ol>
                             <li>How to Get Help</li>
@@ -32,6 +33,8 @@
                             <li>Coding Exercise 1 Rendering with String Templates</li>
                             <li>Coding Exercise 2 JS Expressions with String Templates</li>
                         </ol>
+                      </li>
+                      <li>
                         <router-link to="/vuejsessentials-02-moving-on-with-vue-cli" active-class="active"><a>Moving on with Vue CLI</a></router-link>
                         <ol start="23">
                             <li>App Overview</li>
@@ -43,6 +46,8 @@
                             <li>Behind the Scenes of Vue Files</li>
                             <li>Vue Components vs Vue Instances</li>
                         </ol>
+                      </li>
+                      <li>
                         <router-link to="/vuejsessentials-03-writing-effective-apps" active-class="active"><a>Writing Effective Apps</a></router-link>
                         <ol start="31">
                             <li>Starting from Scratch</li>
@@ -91,6 +96,8 @@
                             <li>Coding Exercise 4 Component Data</li>
                             <li>Coding Exercise 5 Events, Data, and Directives</li>
                         </ol>
+                      </li>
+                      <li>
                         <router-link to="/vuejsessentials-04-handling-state-with-vuex" active-class="active"><a>Handling State with Vuex</a></router-link>
                         <ol start="75">
                             <li>App Overview</li>
@@ -102,6 +109,8 @@
                             <li>Styling the Header</li>
                             <li>Imgur Overview</li>
                         </ol>
+                      </li>
+                      <li>
                         <router-link to="/vuejsessentials-05-authentication-in-vue-with-oauth2" active-class="active"><a>Authenticating in Vue with OAuth2</a></router-link>
 
                         <ol start="83">
@@ -123,6 +132,8 @@
                             <li>Initial OAuth Request</li>
                             <li>Extracting the Access Token</li>
                         </ol>
+                      </li>
+                      <li>
                         <router-link to="/vuejsessentials-06-navigation-with-vue-router" active-class="active"><a>Navigation with Vue Router</a></router-link>
                         <ol start="100">
                             <li>Wiring up Vue Router</li>
@@ -142,6 +153,8 @@
                             <li>Additional Route Config</li>
                             <li>Navigation with Router-Link</li>
                         </ol>
+                      </li>
+                      <li>
                         <router-link to="/vuejsessentials-07-design-of-vuex-modules" active-class="active"><a>Design of Vuex Modules</a></router-link>
                         <ol start="116">
                             <li>Image Module Design</li>
@@ -155,6 +168,8 @@
                             <li>Mapping the Images Getter</li>
                             <li>Listing Images</li>
                         </ol>
+                      </li>
+                      <li>
                         <router-link to="/vuejsessentials-08-handling-image-upload"
                                      active-class="active"><a>Handling Image Upload</a></router-link>
                         <ol start="126">
@@ -171,6 +186,7 @@
                             <li>Hide Images on Logout</li>
                             <li>Expanding the App</li>
                         </ol>
+                      </li>
                     </ul>
                 </div>
             </div>

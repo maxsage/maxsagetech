@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="UTF-8">
+  <title>Node:js The Complete Guide to Build RESTful APIs (2018)</title>
+  <script src="https://unpkg.com/vue"></script>
+  <link crossorigin="anonymous"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        rel="stylesheet">
+  <link href="prism.css" rel="stylesheet">
+  <script src="prism.js"></script>
+  <style>
+    img {
+      max-width: 100%;
+    }
+  </style>
+</head>
+<body>
+<div class="container" id="app">
+  <div class="panel-group">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h2>Section 7 - CRUD Operations Using MongoDB</h2>
+      </div>
+      <div class="panel-body">
+        <h3>82 - Introducing MongoDB</h3>
+        <p>Back to our Vidly application and so far we have stored the list of genres in an array in
+          memory:</p>
+        <figure>
+          <img src="images/Fig07-001.PNG"/>
+          <figcaption>Fig 07-001</figcaption>
+        </figure>
+        <p>That's not how we build real world applications because when the server restarts we will
+          lose all our data. For this reason, we will store our data in a database.</p>
+        <p>Now, as mentioned previously, when you build applications with Node and Express you have
+          a large number of options in terms of the database you want to use. In this course we will
+          use MongoDB because that's a very popular Database Management System that is quite often
+          used in applications built with Node and Express.</p>
+        <p>MongoDB is a document or no SQL database. It is different from traditional relational
+          databases like SQL Server or My SQL. In MongoDB we don't have the concept of tables,
+          schemas, views, records columns etc.</p>
+        <p>Unlike relational databases where you design your database ahead of time in MongoDB there
+          is no such thing as schema or design. You simply store JSon objects in MongoDB. So here we
+          have an array of genres. We can simply store all the objects in this array in a collection
+          in MongoDB. This also means that when we query our data we get JSon objects out of MongoDB
+          and we can simply return those objects back to the client - there is no
+          transformation.</p>
+        <h3>83 - Installing MongoDB on Mac</h3>
+        <p>In this lecture we will see how to install MongoDB on a Mac. Firstly browse to brew.sh
+          which is the website for Homebrew. Homebrew is a package manager for Mac OS - very similar
+          to npm.</p>
+        <p>To install copy this line:</p>
+        <figure>
+          <pre><code class="language-command">/usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;</code></pre>
+          <figcaption>Fig 07-002</figcaption>
+        </figure>
+        <p>into a terminal session, enter your password. This will download some binaries and
+          install Homebrew. We can now install MongoDB with the following command:</p>
+        <figure>
+          <pre><code class="language-command">brew install mongodb</code></pre>
+          <figcaption>Fig 07-003</figcaption>
+        </figure>
+        <p>Next create a directory for MongoDB to store it's data</p>
+        <figure>
+          <pre><code class="language-command">sudo mkdir -p /data/db</code></pre>
+          <figcaption>Fig 07-004</figcaption>
+        </figure>
+        <p>Now make sure that the data directory has the correct permissions:</p>
+        <figure>
+          <pre><code class="language-command">sudo chown -R `id -un` /data/db</code></pre>
+          <figcaption>Fig 07-005</figcaption>
+        </figure>
+        <p>Now we need to run Mongo Daemon:</p>
+        <figure>
+          <pre><code class="language-command">mongod</code></pre>
+          <figcaption>Fig 07-006</figcaption>
+        </figure>
+        <p>Back in the browser goto mongodb.com and click the Download button. Download MongoDB
+          Compass (make sure you select the Mac OS for platform). Open the DMG file and drag and
+          drop MongoDB Compass onto the applications folder.</p>
+        <p>Run MongoDb Compass and connect to the host on localhost 27017. You should see the admin
+          and local default databases.</p>
+        <h3>84 - Installing MongoDB on Windows</h3>
+        <p>In this lecture we will see how to install MongoDb on Windows. Browse to mongodb.com and
+          click the download button. Then select the Community Server tab, make sure Windows is
+          selected and download the .msi.</p>
+        <p>Run the installer, and perform a complete installation. Compass doesn't seem to install
+          with MongoDb even if you leave the checkbox to Install MongoDb Compass checked. Compass is
+          the client application that we can use to connect to our MongoDb Server to look at our
+          databases.</p>
+        <p>Let's now install MongoDB Compass. From mongodb.com select the Compass tab, select
+          Windows and Download. Run the installer.</p>
+        <p>Next open up C:\Program Files\MongoDB\Server\CURRENT VERSION\bin - select this path. Next
+          in the Windows Search Bar search for View Advanced System Settings. Select Environment
+          Variables. Select the Path environment variable and click Edit. Click New and paste the
+          path we copied earlier that contains the MongoDB Server.</p>
+        <p>Now open up a command prompt and run:</p>
+        <figure>
+          <pre><code class="language-command">mongod</code></pre>
+          <figcaption>Fig 07-007</figcaption>
+        </figure>
+        <p>Initially you will receive an error:</p>
+        <figure>
+                    <pre><code
+                      class="language-command">Path: Data directory C:\data\db\ not found, terminating</code></pre>
+          <figcaption>Fig 07-008</figcaption>
+        </figure>
+        <p>Create this folder and run mongod again.</p>
+        <p>You should see some output ending with something similar to this:</p>
+        <figure>
+          <pre><code class="language-command">2018-12-11T21:25:35.132+0000 I NETWORK [initandlisten] waiting for connections on port 27017</code></pre>
+          <figcaption>Fig 07-009</figcaption>
+        </figure>
+        <p>Now run MongoDB Compass, and leave the default values in the Connect to Host screen:</p>
+        <figure>
+        <pre><code class="language-command">host: localhost
+port: 27017</code></pre>
+          <figcaption>Fig 07-010</figcaption>
+        </figure>
+        <p>Click connect and you should see a couple of default databases: admin and local.</p>
+        <h3>85 - Connecting to MongoDB</h3>
+        <p>Let's create a new project for this section. Run npm init with the yes flag:</p>
+        <figure>
+          <pre><code class="language-command">npm init --yes</code></pre>
+          <figcaption>Fig 07-011</figcaption>
+        </figure>
+        <p>Now install mongoose:</p>
+        <figure>
+          <pre><code class="language-command">npm i mongoose@5.0.1</code></pre>
+          <figcaption>Fig 07-012</figcaption>
+        </figure>
+        <p>Mongoose gives a simple API to work with a MongoDB database.</p>
+        <p>Create a new file called index.js and add the following code:</p>
+        <figure>
+        <pre><code class="language-javascript">const mongoose = require('mongoose');
+
+mongoose.connect('mongodb://localhost/playground')
+  .then(() =&gt; console.log('Connected to MongoDB...'))
+  .catch(err =&gt; console.error('Could not connect to MongoDB...', err));</code></pre>
+          <figcaption>Fig 07-013</figcaption>
+        </figure>
+
+        <p>First we load the mongoose module and store it in constant. This object has method called
+          connect which we can use to connect to MongoDB. We pass a connection string of:</p>
+        <figure>
+          <pre><code class="language-command">mongodb://localhost/playground</code></pre>
+          <figcaption>Fig 07-014</figcaption>
+        </figure>
+        <p>The connection string contains the MongoDB server name followed by the database. A
+          production environment would have a different connection string that ideally would be
+          obtained from a configuration file. It doesn't matter that the database does not exist.
+          The first time we write something to the database MongoDB will automatically create this
+          database for us. The connect method returns a promise. This means we can call <code
+            class="language-javascript"> .then()</code> and write to the console that we have
+          connected. The connect method also provides a catch method that we can use to catch any
+          errors connecting to the database.</p>
+        <p>If we run the application:</p>
+        <figure>
+          <pre><code class="language-command">nodemon index.js</code></pre>
+          <figcaption>Fig 07-015</figcaption>
+        </figure>
+        <p>And you should see that your are successfully connected:</p>
+        <figure>
+        <pre><code class="language-command">[nodemon] 1.17.3 [nodemon] to restart at any time, enter `rs` [nodemon] watching: *.*
+[nodemon] starting `node index.js` Connected to MongoDB...</code></pre>
+          <figcaption>Fig 07-016</figcaption>
+        </figure>
+        <h3>86 - Schemas</h3>
+        <p>Now that we have connected to a MongoDB database the next thing we need to do is create a
+          schema. We use a schema to define the shape of documents within a collection in MongoDB.
+          To demonstrate go back to MongoDB Compass. I've created a database called playground and
+          in this database we have a collection called courses:</p>
+        <figure>
+          <img src="images/Fig07-017.PNG"/>
+          <figcaption>Fig 07-017</figcaption>
+        </figure>
+        <p>A collection in MongoDB is like a table in a relational database. The courses collection
+          contains three documents. A document in MongoDB is similar to a row in a relational
+          database.</p>
+        <p>If we take a look at the collection:</p>
+        <figure>
+          <img src="images/Fig07-018.PNG"/>
+          <figcaption>Fig 07-018</figcaption>
+        </figure>
+        <p>We see an example of a document. Each document is a container of key/value pairs. So we
+          have:</p>
+        <table class="table">
+          <tbody>
+          <tr>
+            <td>_id:</td>
+            <td>A unique identifier for each document</td>
+          </tr>
+          <tr>
+            <td>tags:</td>
+            <td>An array of key value pairs</td>
+          </tr>
+          </tbody>
+        </table>
+        <p>We also have date, name, author, isPublished and __v (version).</p>
+        <p>In mongoose we have a concept called schema which is specific to Mongoose - it is not
+          part of MongoDB. We use the schema to define the shape of documents in a MongoDB
+          collection - what are the properties we have in a document.</p>
+        <p>To create a schema add the following code:</p>
+        <figure>
+<pre><code class="language-javascript">const courseSchema = new mongoose.Schema({
+  name: String,
+  author: String,
+  tags: [ String ],
+  date: { type: Date, default: Date.now },
+  isPublished: Boolean });</code></pre>
+          <figcaption>Fig 07-019</figcaption>
+        </figure>
+        <p>We define a const called courseSchema and set it to a new mongoose.Schema class. When
+          creating an instance of this class we specify the key/value pairs that we should have in
+          course documents (name, author, tags, date, isPublished)</p>
+        <p>Each object in the tags array of strings is stored as a key/value pair. The key will be
+          the index and the value will be the string.</p>
+        <p>We add a default value to the date property of Date.now. We specify this in an
+          object.</p>
+        <p>The list of types we can use when creating a schema is:</p>
+        <ul>
+          <li>String</li>
+          <li>Number</li>
+          <li>Date</li>
+          <li>Buffer - used for storing binary data</li>
+          <li>Boolean</li>
+          <li>ObjectID - used for assigning unique identifiers</li>
+          <li>Array</li>
+        </ul>
+        <h3>87 - Models</h3>
+        <p>So here's our course schema that defines the shape of course documents in our MongoDB
+          database:</p>
+        <figure>
+          <img src="images/Fig07-020.PNG"/>
+          <figcaption>Fig 07-020</figcaption>
+        </figure>
+        <p>Now we need to compile this into a model. What is a model? Earlier in the course we
+          talked about the concept of classes and objects. As an example I said that we could have a
+          class called Human and an object like John:</p>
+        <figure>
+        <pre><code class="language-javascript">// Classes, objects
+// Human, John</code></pre>
+          <figcaption>Fig 07-021</figcaption>
+        </figure>
+        <p>An object is an instance of a class. The class is just a blueprint but an object is an
+          instance of that blueprint.</p>
+        <p>In this application we want to have a class called Course. Then we want to be able to
+          create instances of that class like Node Course:</p>
+        <figure>
+<pre><code class="language-javascript">// Classes, objects
+// Course, nodeCourse</code></pre>
+          <figcaption>Fig 07-022</figcaption>
+        </figure>
+        <p>Then we can save that Node Course to our database. To create a class like Course we need
+          to compile our Schema into a model. The mongoose object has a method called model that
+          takes two arguments. The first argument is the singular name of the collection that this
+          model is for. So, in our MongoDB database we want to have a collection called Courses so
+          here's the singular name:</p>
+        <figure>
+          <pre><code class="language-javascript">mongoose.model('Course', )</code></pre>
+          <figcaption>Fig 07-023</figcaption>
+        </figure>
+        <p>The second argument is the schema that defines the shape of the documents in this
+          collection:</p>
+        <figure>
+          <pre><code
+            class="language-javascript">mongoose.model('Course', courseSchema);</code></pre>
+          <figcaption>Fig 07-024</figcaption>
+        </figure>
+        <p>With this we get a Course class in our application. So we can set this to a const called
+          Course:</p>
+        <figure>
+          <pre><code class="language-javascript">const Course = mongoose.model('Course', courseSchema);</code></pre>
+          <figcaption>Fig 07-025</figcaption>
+        </figure>
+        <p>Note here we are using Pascal naming convention so the first letter of Course is
+          uppercase. That indicates this is a class not an object. Now we can create an object based
+          on this class:</p>
+        <figure>
+<pre><code class="language-javascript">const course = new Course({
+  name: 'Javascript Course',
+  author: 'Max Sage',
+  tags: ['javascript', 'client'],
+  isPublished: true
+});</code></pre>
+          <figcaption>Fig 07-026</figcaption>
+        </figure>
+        <p>We create a course object. Note here we use Camel case - so the first letter of the first
+          word is lowercase. So we use Camel case to name our objects and Pascal case to name our
+          classes.</p>
+        <p>We set the course object to a new Course and in the constructor function we pass an
+          object to initialize our course object. You can see the tags property is set to any array
+          of two strings. This is one interesting thing about Mongo or NoSQL databases. A document
+          in MongoDB can be a complex object. The tags property is an array of strings - you
+          wouldn't find this in a relational database. A row in a relational database has simple
+          attributes. If you want to model the above structure in a relational database you would
+          need three tables:</p>
+        <ul>
+          <li>Courses</li>
+          <li>Tags</li>
+          <li>CourseTags</li>
+        </ul>
+        <p>The CourseTags table would be an intermediary table because here we have a many to many
+          relationship between Courses and Tags.</p>
+        <p>In MongoDB or in a NoSQL database we don't have this structure. You dont have to define
+          or script the above tables. We simply create our objects and store them in a database.
+          That's why we call them schema-less - we don't have a schema.</p>
+        <p>We omit the date property to let the default value of <code
+          class="language-javascript">Date.now</code>
+          to take effect.</p>
+        <p>To recap, once we have a schema we need to compile that into a model which gives us a
+          class. Next we can create an object based on that class. This object maps to a document in
+          a MongoDB database.</p>
+        <h3>88 - Saving a Document</h3>
+        <p>Here's our course object that maps to a Course Document in MongoDB. Let's save this to
+          our database. The course object has a method called save:</p>
+        <figure>
+          <pre><code class="language-javascript">course.save();</code></pre>
+          <figcaption>Fig 07-027</figcaption>
+        </figure>
+        <p>Here we are dealing with an asynchronous operation - it's going to take some time to save
+          this course in the database because we are going to access the filesystem. The save method
+          returns a promise which we can await and get the result:</p>
+        <figure>
+          <pre><code class="language-javascript">const result = await course.save();</code></pre>
+          <figcaption>Fig 07-028</figcaption>
+        </figure>
+        <p>The result returned is the actual course object that is saved in the database. When we
+          save this course MongoDB is going to assign a unique identifier to the course
+          object/document. We log the assigned id on the console:</p>
+        <figure>
+          <pre><code class="language-javascript">console.log(result);</code></pre>
+          <figcaption>Fig 07-029</figcaption>
+        </figure>
+        <p>As mentioned previously, whenever you use await your code should be inside an async
+          function:</p>
+        <figure>
+          <pre><code class="language-javascript">async function createCourse() { }</code></pre>
+          <figcaption>Fig 07-030</figcaption>
+        </figure>
+        <p>We move our code inside the function and call the function:</p>
+        <figure>
+          <pre><code class="language-javascript">createCourse();</code></pre>
+          <figcaption>Fig 07-031</figcaption>
+        </figure>
+        <p>In terminal we will run this application using node instead of nodemon because we dont
+          want to create a new document every time we modify our code slightly:</p>
+        <figure>
+          <pre><code class="language-command">node index.js</code></pre>
+          <figcaption>Fig 07-032</figcaption>
+        </figure>
+        <p>You should see output similar to the following:</p>
+        <figure>
+          <img src="images/Fig07-033.PNG"/>
+          <figcaption>Fig 07-033</figcaption>
+        </figure>
+        <p>This output displays the document that is actually stored in MongoDB. You can see the
+          unique id that MongoDB has assigned:</p>
+        <figure>
+          <pre><code class="language-command">_id: 5c112ac86ccab44c6867a388</code></pre>
+          <figcaption>Fig 07-034</figcaption>
+        </figure>
+        <p>In MongoDB compass browse the courses collection of the playground database and you will
+          see this newly created document:</p>
+        <figure>
+          <img src="images/Fig07-035.PNG"/>
+          <figcaption>Fig 07-035</figcaption>
+        </figure>
+        <p>The beauty of MongoDB and other NoSQL databases is that we didn't have to create or
+          script the table. We simply created a document and stored it in our MongoDB database.</p>
+        <p>Back in the code, let's modify the code to create another document:</p>
+        <figure>
+<pre><code class="language-javascript">const course = new Course({
+  name: 'Angular Course',
+  author: 'Max Smith',
+  tags: ['angular', 'frontend'],
+  isPublished: true
+});</code></pre>
+          <figcaption>Fig 07-036</figcaption>
+        </figure>
+        <p>Then in the next lecture we will look at querying documents. Rerun the application
+          again:</p>
+        <figure>
+          <pre><code class="language-command">node index.js</code></pre>
+          <figcaption>Fig 07-037</figcaption>
+        </figure>
+        <p>You should see output similar to the following:</p>
+        <figure>
+          <img src="images/Fig07-038.PNG"/>
+          <figcaption>Fig 07-038</figcaption>
+        </figure>
+        <p>In MongoDB Compass you should also see the additional document has been added to the
+          collection.</p>
+        <figure>
+          <img src="images/Fig07-039.PNG"/>
+          <figcaption>Fig 07-039</figcaption>
+        </figure>
+        <h3>89 - Querying Documents</h3>
+        <p>Now let's look at retrieving documents from a MongoDB database. Let's create another
+          function:</p>
+        <figure>
+<pre><code class="language-javascript">async function getCourses() {
+  const courses = await Course .find({author: 'Mosh', isPublished: true })
+    .limit(10)
+    .sort({ name: 1 })
+        // 1 ascending order -1 descending order
+    .select({ name:1, tags: 1}); console.log(courses);
+}</code></pre>
+          <figcaption>Fig 07-040</figcaption>
+        </figure>
+        <p>The Course class (defined earlier) has a bunch of methods for querying documents:</p>
+        <ul>
+          <li>find</li>
+          <li>findById</li>
+          <li>findOne</li>
+        </ul>
+        <p>There are several other find methods available which are generally used to find a
+          document and then remove or update it. We will look at these methods later.</p>
+        <p>The find method returns a document query object:</p>
+        <figure>
+          <img src="images/Fig07-041.PNG"/>
+          <figcaption>Fig 07-041</figcaption>
+        </figure>
+        <p>The document query object is kind of like a promise. It has a then method that can be
+          used to await it then get the result:</p>
+        <figure>
+        <pre><code class="language-javascript">const courses = await Course.find();
+console.log(courses);</code></pre>
+          <figcaption>Fig 07-042</figcaption>
+        </figure>
+        <p>With this we get all the courses in our database which we write to the console. Back in
+          terminal run the application:</p>
+        <figure>
+          <pre><code class="language-command">node index.js</code></pre>
+          <figcaption>Fig 07-043</figcaption>
+        </figure>
+        <p>You should receive an array of objects something like this:</p>
+        <figure>
+          <img src="images/Fig07-044.PNG"/>
+          <figcaption>Fig 07-044</figcaption>
+        </figure>
+        <p>We can also use the find method to pass a filter which consists of an object with one or
+          more key/value pairs:</p>
+        <figure>
+          <pre><code
+            class="language-javascript">.find({author: 'Max Smith', isPublished: true })</code></pre>
+          <figcaption>Fig 07-045</figcaption>
+        </figure>
+        <p>We can also sort our documents, set a limit on the number of documents returned, select
+          specific properties within the document etc. Let's create a more complex query. Earlier we
+          saw that the find method returns a DocumentQuery object. We can customise the query:</p>
+        <figure>
+<pre><code class="language-javascript">const courses = await Course
+  .find({author: 'Max Smith', isPublished: true })
+  .limit(10)
+  .sort({ name: 1 })
+  // 1 ascending order -1 descending order
+  .select({ name: 1, tags: 1});</code></pre>
+          <figcaption>Fig 07-046</figcaption>
+        </figure>
+        <p>We can apply a limit, sort the documents by passing an object containing one or more
+          value pairs (1 for ascending, 2 for descending), select the properties we want returned.
+          You will still receive the _id property back which is assigned by MongoDB by default:</p>
+        <figure>
+          <img src="images/Fig07-047.PNG"/>
+          <figcaption>Fig 07-047</figcaption>
+        </figure>
+
+        <h3>90 - Comparison Query Operators</h3>
+        <p>Since Mongoose is built on top of the MongoDB driver the standard operators that MongoDB
+          understands are also available in Mongoose:</p>
+        <table class="table">
+          <thead>
+          <tr>
+            <td>Operator</td>
+            <td>Description</td>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>eq</td>
+            <td>equal</td>
+          </tr>
+          <tr>
+            <td>ne</td>
+            <td>not equal</td>
+          </tr>
+          <tr>
+            <td>gt</td>
+            <td>greater than</td>
+          </tr>
+          <tr>
+            <td>gte</td>
+            <td>greater than or equal to</td>
+          </tr>
+          <tr>
+            <td>lt</td>
+            <td>less than</td>
+          </tr>
+          <tr>
+            <td>lte</td>
+            <td>less than or equal to</td>
+          </tr>
+          <tr>
+            <td>in</td>
+            <td>in</td>
+          </tr>
+          <tr>
+            <td>nin</td>
+            <td>not in</td>
+          </tr>
+          </tbody>
+        </table>
+        <p>For the purpose of this lecture let's image that our courses have a price property. Let's
+          say we want to get all the courses that are $10:</p>
+        <figure>
+          <pre><code class="language-javascript">.find({ price: 10})</code></pre>
+          <figcaption>Fig 07-048</figcaption>
+        </figure>
+        <p>Now let's say we want to find all the courses where the price is more than 10. We express
+          this in Javascript using JSon objects. An object, in this context, is basically a
+          collection of key/value pairs - for the example above our key is price and our value is
+          10. With this simple value we can't express the concept of more than or greater than 10.
+          To achieve this we again pass an object containing key/value pairs. We can use one of the
+          operators described above as a key:</p>
+        <figure>
+          <pre><code class="language-javascript">.find({ price: { $gt: 10}})</code></pre>
+          <figcaption>Fig 07-049</figcaption>
+        </figure>
+        <p>What if we want to get the courses that are between 10 and 20 dollars. We can use another
+          operator for this:</p>
+        <figure>
+          <pre><code class="language-javascript">.find({ price: { $gte: 10, $lte: 20}})</code></pre>
+          <figcaption>Fig 07-050</figcaption>
+        </figure>
+        <p>Imagine we want to get courses that are $10, $15 or $20:</p>
+        <figure>
+          <pre><code class="language-javascript">.find({price: { $in: [10, 15, 20]}})</code></pre>
+          <figcaption>Fig 07-051</figcaption>
+        </figure>
+        <p>We use an array to pass the values we are interested in searching for.</p>
+        <h3>91 - Logical Query Operators</h3>
+        <p>In this lecture we will investigate how to use the logical query operators. Our original
+          query for getting all the courses by a specific author that have been published looks like
+          this:</p>
+        <figure>
+          <pre><code
+            class="language-javascript">.find({ author: 'Max Smith', isPublished: true })</code></pre>
+          <figcaption>Fig 07-052</figcaption>
+        </figure>
+        <p>Now, what if we want to get the courses that are published by Max Smith or the courses
+          that are published - regardless of the author. In this scenario we would use the or
+          operator:</p>
+        <figure>
+        <pre><code class="language-javascript">.find()
+.or([ {author: 'Max Smith'}, { isPublished: true}])</code></pre>
+          <figcaption>Fig 07-053</figcaption>
+        </figure>
+        <p>We pass an array to the or method which contains an array of key/value pairs. The and
+          logical operator uses exactly the same syntax. It is functionally similar to passing a
+          filter to the find method.</p>
+        <h3>92 - Regular Expressions</h3>
+        <p>In our original query we are getting courses who's author is exactly the string
+          specified:</p>
+        <figure>
+          <pre><code
+            class="language-javascript">.find({author: 'Max Smith', isPublished: true })</code></pre>
+          <figcaption>Fig 07-054</figcaption>
+        </figure>
+        <p>If we have courses where the author is Maxwell Smith or Max James they will not be
+          returned. If you want to have more control over filtering strings we need to use a regular
+          expression. For example, if we want to get courses who's Author starts with Max we would
+          use the following query:</p>
+        <figure>
+          <pre><code class="language-javascript">.find({author: /^Max/ })</code></pre>
+          <figcaption>Fig 07-055</figcaption>
+        </figure>
+        <p>Instead of passing a string we pass a regular expression denoted by /pattern/. In regular
+          expressions we use the caret character to represent a string that starts with something.
+          In our example we look for an author that starts with Max.</p>
+        <p>If you want to look for authors that end with a given string you use the following
+          regular expression:</p>
+        <figure>
+          <pre><code class="language-javascript">.find({author: /Sage$/i})</code></pre>
+          <figcaption>Fig 07-056</figcaption>
+        </figure>
+        <p>Dollar sign in regular expressions indicates the end of a string. If you want the query
+          to be case insensitive you add an i to the end.</p>
+        <p>If you want to get courses who's author contains a given word you use the following
+          syntax:</p>
+        <figure>
+          <pre><code class="language-javascript">.find({author: /.*Sage.*/i })</code></pre>
+          <figcaption>Fig 07-057</figcaption>
+        </figure>
+        <p>This will locate the string Sage anywhere in the author field. .* in a regular expression
+          means we can have 0 or more characters before or after the specified string. Again we use
+          i at the end of the regular expression to make it case insensitive.</p>
+        <p>We can use more complex regular expressions - google it if you want to know more.</p>
+
+        <h3>93 - Counting</h3>
+        <p>So in this query:</p>
+        <figure>
+<pre><code class="language-javascript">async function getCourses() {
+  const courses = await Course
+    .find({author: 'Mosh', isPublished: true })
+    .limit(10)
+    .sort({ name: 1 })
+    .select({ name: 1, tags: 1 });
+  console.log(courses);
+}</code></pre>
+          <figcaption>Fig 07-058</figcaption>
+        </figure>
+        <p>We are filtering our courses and picking only the name and tags properties. If we run the
+          application we get something like this:</p>
+        <figure>
+          <img src="images/Fig07-059.PNG"/>
+          <figcaption>Fig 07-059</figcaption>
+        </figure>
+        <p>Sometimes you just want to retrieve the number of documents that match your criteria. In
+          this case we can switch the select method for the count method:</p>
+        <figure>
+          <pre><code class="language-javascript">.count();</code></pre>
+          <figcaption>Fig 07-060</figcaption>
+        </figure>
+        <h3>94 - Pagination</h3>
+        <p>The method that goes hand in hand with the limit method (covered earlier) is the skip
+          method which can be used to implement pagination. First define two constants - pageNumber
+          and pageSize:</p>
+        <figure>
+        <pre><code class="language-javascript">const pageNumber = 2;
+const pageSize = 10;</code></pre>
+          <figcaption>Fig 07-061</figcaption>
+        </figure>
+        <p>Here the values have been hardcoded for simplicity but in a real world application you
+          would pass these values as query string parameters in our RESTfull API:</p>
+        <figure>
+          <pre><code class="language-command">/api/courses?pageNumber=2&amp;pageSize=10</code></pre>
+          <figcaption>Fig 07-062</figcaption>
+        </figure>
+        <p>In order to implement pagination we need to skip all the documents in the previous
+          page:</p>
+        <figure>
+          <pre><code class="language-javascript">.skip((pageNumber - 1) * pageSize)</code></pre>
+          <figcaption>Fig 07-063</figcaption>
+        </figure>
+        <p>Here we are assuming that page number starts from 1 - so more acurately this is page
+          number not page index. Next, we change limit to pageSize:</p>
+        <figure>
+          <pre><code class="language-javascript">.limit(pageSize)</code></pre>
+          <figcaption>Fig 07-064</figcaption>
+        </figure>
+        <p>With this we can get the documents in a given page.</p>
+        <h3>95 - Exercise 1</h3>
+        <p>In this exercise we use two files: exercise-data.json exercise.txt</p>
+        <p>The json file contains 7 course objects which we are going to import into a new database
+          called mongo-exercises:</p>
+        <figure>
+          <img src="images/Fig07-065.PNG"/>
+          <figcaption>Fig 07-065</figcaption>
+        </figure>
+        <p>The exercise.txt file contains a command which we can run from a terminal to import the json
+          file:</p>
+        <figure>
+          <pre><code class="language-command">mongoimport --db mongo-exercises --collection courses --file exercise-data.json --jsonArray</code></pre>
+          <figcaption>Fig 07-066</figcaption>
+        </figure>
+        <p>The flags have the following meaning:</p>
+        <table class="table">
+          <thead>
+          <tr>
+            <td>Flag</td>
+            <td>Description</td>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>--db</td>
+            <td>Specifies the database to use for the import</td>
+          </tr>
+          <tr>
+            <td>--collection</td>
+            <td>Specifies the collection to use</td>
+          </tr>
+          <tr>
+            <td>--file</td>
+            <td>Specify the file which contains the data to import</td>
+          </tr>
+          <tr>
+            <td>--jsonArray</td>
+            <td>Specifies the data to be imported is in the format of a Json Array</td>
+          </tr>
+          </tbody>
+        </table>
+        <p>Once you run this command you should be able to browse the new database and the courses
+          collection from MongoDB Compass:</p>
+        <figure>
+          <img src="images/Fig07-067.PNG"/>
+          <figcaption>Fig 07-067</figcaption>
+        </figure>
+        <p>The first exercise is to write a program to get all the published courses, sort them by
+          name, pick only the name and author properties and display them.</p>
+        <p>First we load mongoose and store it in a const:</p>
+        <figure>
+          <pre><code class="language-javascript">const mongoose = require('mongoose');</code></pre>
+          <figcaption>Fig 07-068</figcaption>
+        </figure>
+        <p>Next we connect to our MongoDb database:</p>
+        <figure>
+          <pre><code class="language-javascript">mongoose.connect('mongodb://localhost/mongo-exercises')</code></pre>
+          <figcaption>Fig 07-069</figcaption>
+        </figure>
+        <p>Next we create a schema to define the shape of documents in our courses collection:</p>
+        <figure>
+    <pre><code class="language-javascript">const courseSchema = new mongoose.Schema({
+  name: String,
+  author: String,
+  tags: [ String ],
+  date: { type: Date, default: Date.now },
+  isPublished: Boolean,
+  price: Number
+});</code></pre>
+          <figcaption>Fig 07-070</figcaption>
+        </figure>
+        <p>Next we create a model specifying the collection in singular form and the schema:</p>
+        <figure>
+          <pre><code class="language-javascript">const Course = mongoose.model('Course', courseSchema);</code></pre>
+          <figcaption>Fig 07-071</figcaption>
+        </figure>
+        <p>Now we have a model we can use it to query our courses:</p>
+        <figure>
+    <pre><code class="language-javascript">async function getCourses() {
+  return await Course
+    .find({
+      isPublished: true,
+      tags: 'backend' })
+    .sort({ name: 1 })
+    .select({name: 1, author: 1});
+}</code></pre>
+          <figcaption>Fig 07-072</figcaption>
+        </figure>
+        <p>Because we are using await we use an async function. We call the getCourses function:</p>
+        <figure>
+          <pre><code class="language-javascript">const courses = await getCourses();</code></pre>
+          <figcaption>Fig 07-073</figcaption>
+        </figure>
+        <p>As we mentioned earlier, when we decorate a function with async our JavaScript engine
+          automatically wraps the result in a promise. getCourses returns a promise of any[]. That means a promise that
+          when resolved will give us an array of objects:</p>
+        <figure>
+          <img src="images/Fig07-074.PNG"/>
+          <figcaption>Fig 07-074</figcaption>
+        </figure>
+        <p>For this reason we await the result and store it in a const. Because we use the await
+          operator we need to wrap this line in an async function which we will call run:</p>
+        <figure>
+    <pre><code class="language-javascript">async function run() {
+  const courses = await getCourses();
+  console.log(courses);
+}</code></pre>
+          <figcaption>Fig 07-075</figcaption>
+        </figure>
+        <p>Finally we call the run function:</p>
+        <figure>
+          <pre><code class="language-javascript">run();</code></pre>
+          <figcaption>Fig 07-076</figcaption>
+        </figure>
+        <p>If you now run the application you should see something similar to this:</p>
+        <figure>
+          <img src="images/Fig07-077.PNG"/>
+          <figcaption>Fig 07-077</figcaption>
+        </figure>
+        <h3>96 - Exercise 2</h3>
+        <p>For the second exercise we need to get all the published frontend and backend courses, sort
+          them by their price in a descending order, pick only their name and author, and display
+          them.</p>
+        <p>The code in this exercise is identical to exercise 1 apart from the query in getCourses:</p>
+        <figure>
+    <pre><code class="language-javascript">async function getCourses() {
+  return await Course
+    // First solution is to use the in comparison query operator
+    .find({isPublished: true, tags: {$in: ['backend', 'frontend']}})
+    .sort({ price: -1 })
+    .select({name: 1, author: 1, price: 1, tags: 1, isPublished: true}); }</code></pre>
+          <figcaption>Fig 07-078</figcaption>
+        </figure>
+        <p>So we want to get all the published frontend and backend courses. An array:</p>
+        <figure>
+          <pre><code class="language-javascript">.find({isPublished: true, tags: ['backend', 'frontend']})</code></pre>
+          <figcaption>Fig 07-079</figcaption>
+        </figure>
+        <p>wont work because this will return courses that contain both the specified tags (the logical
+          AND operator will be applied). We need to modify this query to use the in operator
+          (discussed earlier in the section on comparison operators):</p>
+        <figure>
+          <pre><code class="language-javascript">.find({isPublished: true, tags: {$in: ['backend', 'frontend']}})</code></pre>
+          <figcaption>Fig 07-080</figcaption>
+        </figure>
+        <p>We set the tags property to an object. This object contains key value pairs. The keys are
+          MongoDB operators - in this case $in. The Javascript construct we use to represent multiple
+          values is an array. We set an array of two strings: 'frontend' and 'backend'.</p>
+        <p>Next we sort by price in a descending order:</p>
+        <figure>
+          <pre><code class="language-javascript">.sort({ price: -1 })</code></pre>
+          <figcaption>Fig 07-081</figcaption>
+        </figure>
+        <p>Alternatively we can use the following syntax:</p>
+        <figure>
+          <pre><code class="language-javascript">.sort('-price')</code></pre>
+          <figcaption>Fig 07-082</figcaption>
+        </figure>
+        <p>Finally we specify that just the name, author and price properties should be returned:</p>
+        <figure>
+          <pre><code class="language-javascript">.select('name author price')</code></pre>
+          <figcaption>Fig 07-083</figcaption>
+        </figure>
+        <p>Run the application and you should see something similar to the following:</p>
+        <figure>
+    <pre><code class="language-command">[ { _id: 5c2788220a54c304a4a8b0d9,
+    name: 'Node.js Course',
+    author: 'Mosh', price: 20 },
+  { _id: 5c2788220a54c304a4a8b0da,
+    name: 'ASP.NET MVC Course',
+    author: 'Mosh', price: 15 },
+  { _id: 5c2788220a54c304a4a8b0de,
+    name: 'Angular Course',
+    author: 'Mosh', price: 15 },
+  { _id: 5c2788220a54c304a4a8b0dc,
+    name: 'Node.js Course by Jack',
+    author: 'Jack', price: 12 } ]</code></pre>
+          <figcaption>Fig 07-084</figcaption>
+        </figure>
+        <p>You can see that the most expensive course is displayed first with the other courses sorted
+          by price descending as specified.</p>
+        <p>The other way to write this query is to use the or operator instead of the in operator:</p>
+        <figure>
+    <pre><code class="language-javascript">async function getCourses() {
+  return await Course
+  // Second solution is to use the or logical query operator
+    .find({isPublished: true})
+    .or([ {tags: 'frontend'}, {tags: 'backend'}])
+    .sort({ price: -1 })
+    .select({name: 1, author: 1, price: 1, tags: 1, isPublished: true});
+}</code></pre>
+          <figcaption>Fig 07-085</figcaption>
+        </figure>
+        <p>This should return the exact same result as the first method.</p>
+        <h3>97 - Exercise 3</h3>
+        <p>For the third exercise we will get all the published courses that are $15 or more, or have
+          the word 'by' in their title.</p>
+        <p>Again, the code is the same apart from the query in getCourses:</p>
+        <figure>
+    <pre><code class="language-javascript">async function getCourses() {
+  return await Course
+    .find({ isPublished: true})
+    .or( [{ name: /.*by.*/i}, { price: {$gte: 15}}])
+    .sort({ price: -1 })
+    .select({name: 1, author: 1, price: 1}); }</code></pre>
+          <figcaption>Fig 07-086</figcaption>
+        </figure>
+        <p>We cannot use a simple value to express a concept like $15 or more:</p>
+        <figure>
+          <pre><code class="language-javascript">.or([ { price: 15 }])</code></pre>
+          <figcaption>Fig 07-087</figcaption>
+        </figure>
+        <p>So we use an object that contains key value pairs. Our keys, again, are MongoDB operators
+          ($gte in this case):</p>
+        <figure>
+          <pre><code class="language-javascript">.or([ { price: { $gte: 15 }}])</code></pre>
+          <figcaption>Fig 07-088</figcaption>
+        </figure>
+        <p>Our second filter should get the courses that have the word by in their title:</p>
+        <figure>
+          <pre><code class="language-javascript">.or( [{ name: /.*by.*/i}, { price: {$gte: 15}}])</code></pre>
+          <figcaption>Fig 07-089</figcaption>
+        </figure>
+        <p>Again we cannot use a simple value because we will then just get courses who's name is "by".
+          We replace the string with a regular expression:</p>
+        <figure>
+          <pre><code class="language-javascript">/pattern/</code></pre>
+          <figcaption>Fig 07-090</figcaption>
+        </figure>
+        <p>In regular expressions we use the period to represent a character and the * to represent 0
+          or more:</p>
+        <figure>
+          <pre><code class="language-javascript">/.*by.*/</code></pre>
+          <figcaption>Fig 07-091</figcaption>
+        </figure>
+        <p>This will return 0 or more characters before or after the search criteria "by". We add an i
+          to ensure the search is case insensitive:</p>
+        <figure>
+          <pre><code class="language-javascript">/.*by.*/i</code></pre>
+          <figcaption>Fig 07-092</figcaption>
+        </figure>
+        <p>If we run the application we should see something similar to the following:</p>
+        <figure>
+          <img src="images/Fig07-088.PNG"/>
+          <figcaption>Fig 07-088</figcaption>
+        </figure>
+        <p>We get four courses, the first three have a price that is greater than or equal to 15$. The
+          fourth course has the string "by" in the name.</p>
+
+
+        <h3>98 - Updating Documents Query First</h3>
+        <p>In this lecture we will cover how to update documents in a MongoDB database. Let's create a
+          new async function called updateCourse:</p>
+        <figure>
+            <pre><code class="language-javascript">async function updateCourse(id) { }
+        updateCourse();</code></pre>
+          <figcaption>Fig 07-089</figcaption>
+        </figure>
+        <p>This function takes a parameter of the id of the course which we want to update. There are
+          basically two ways to update a document in MongoDB:</p>
+        <ul>
+          <li>Query first</li>
+          <li>Update first</li>
+        </ul>
+        <p>Query first involves the following steps:</p>
+        <ul>
+          <li>find a document</li>
+          <li>modify it's properties</li>
+          <li>save the document</li>
+        </ul>
+        <p>Update first involves the following steps:</p>
+        <ul>
+          <li>update directly</li>
+          <li>optionally get the updated document</li>
+        </ul>
+        <p>We will look at the second approach in the next lecture. So for Query first update the
+          updateCourse function:</p>
+        <figure>
+          <pre><code class="language-javascript">Course.findById(id);</code></pre>
+          <figcaption>Fig 07-090</figcaption>
+        </figure>
+        <p>this returns a promise which we await and store in a constant:</p>
+        <figure>
+          <pre><code class="language-javascript">const course = await Course.findById(id);</code></pre>
+          <figcaption>Fig 07-091</figcaption>
+        </figure>
+        <p>We need to check that a course with that id actually exists:</p>
+        <figure>
+          <pre><code class="language-javascript">if(!course) return;</code></pre>
+          <figcaption>Fig 07-092</figcaption>
+        </figure>
+        <p>If not we return immediately. However, if a course with that id does exist, we can update
+          the course:</p>
+        <figure>
+    <pre><code class="language-javascript">course.isPublished = true;
+course.author = 'Another Author';
+</code></pre>
+          <figcaption>Fig 07-093</figcaption>
+        </figure>
+        <p>Another approach involves using the set method instead of setting multiple properties:</p>
+        <figure>
+            <pre><code class="language-javascript">course.set({
+  isPublished: true;
+  author: 'Another Author'
+});</code></pre>
+          <figcaption>Fig 07-094</figcaption>
+        </figure>
+        <p>Finally we call the save method:</p>
+        <figure>
+            <pre><code class="language-javascript">const result = await course.save();
+console.log(result);</code></pre>
+          <figcaption>Fig 07-095</figcaption>
+        </figure>
+        <p>The save method returns a promise which we await. We then log it on the console. We can use
+          MongoDB Compass to get a valid Course Id which we can paste into the call to updateCourse:</p>
+        <figure>
+          <pre><code class="language-javascript">updateCourse('5c2788220a54c304a4a8b0d9');</code></pre>
+          <figcaption>Fig 07-096</figcaption>
+        </figure>
+        <p>If we run the application you should see something similar to this:</p>
+        <figure>
+          <img src="images/Fig07-097.PNG"/>
+          <figcaption>Fig 07-097</figcaption>
+        </figure>
+
+
+        <h3>99 - Updating A Document - Update First</h3>
+        <p>In the last lecture you learned about the query first approach to update a document. This
+          approach is useful, if you receive an input from the client and you want to make sure that
+          the update is a valid operation.</p>
+        <p>For example, if the course is already published then perhaps we shouldn't be able to update
+          the Author. To implement this business rule we need to retrieve the course first. Then we
+          can add logic like this:</p>
+        <figure>
+          <pre><code class="language-javascript">if (course.isPublished) return;</code></pre>
+          <figcaption>Fig 07-098</figcaption>
+        </figure>
+        <p>However, sometimes you just want to update one or more documents directly in the database.
+          So instead of findById we use the update method:</p>
+        <figure>
+          <pre><code class="language-javascript">const course = await Course.update({ _id: id });</code></pre>
+          <figcaption>Fig 07-099</figcaption>
+        </figure>
+        <p>The first argument is a query or filter object. In the example above we pass an id which
+          should return just one document. We can pass something more generic:</p>
+        <figure>
+          <pre><code
+            class="language-javascript">const course = await Course.update({ isPublished: false });</code></pre>
+          <figcaption>Fig 07-100</figcaption>
+        </figure>
+        <p>This will update all the courses that are not published.</p>
+        <p>The second argument to the update method is the update object:</p>
+        <figure>
+    <pre><code class="language-javascript">const course = await Course.update({ _id: id }, {
+});
+</code></pre>
+          <figcaption>Fig 07-101</figcaption>
+        </figure>
+        <p>The update object uses one or more of the MongoDB update operators:</p>
+        <table class="table">
+          <thead>
+          <tr>
+            <td>Operator</td>
+            <td>Description</td>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>$currentDate</td>
+            <td>Sets the value of a field to current date, either as a Date or a Timestamp.</td>
+          </tr>
+          <tr>
+            <td>$inc</td>
+            <td>Increments the value of the field by the specified amount.</td>
+          </tr>
+          <tr>
+            <td>$min</td>
+            <td>Only update the field if the specified value is less than the existing field value</td>
+          </tr>
+          <tr>
+            <td>$max</td>
+            <td>Only update the field if the specified value is greater than the existing field value.</td>
+          </tr>
+          <tr>
+            <td>$mul</td>
+            <td>Multiplies the value of the field by the specified amount.</td>
+          </tr>
+          <tr>
+            <td>$rename</td>
+            <td>Renames a field.</td>
+          </tr>
+          <tr>
+            <td>$set</td>
+            <td>Sets the value of a field in a document.</td>
+          </tr>
+          <tr>
+            <td>$setOnInsert</td>
+            <td>Sets the value of a field if an update results in an insert of a document. Has no effect on update
+              operations that modify existing documents.
+            </td>
+          </tr>
+          <tr>
+            <td>$unset</td>
+            <td> Removes the specified field from a document.
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <p>We will use the set operator in our example:</p>
+        <figure>
+    <pre><code class="language-javascript">const result = await Course.update({ _id: id }, {
+  $set: {
+    author: 'Mosh',
+    isPublished: false
+  }
+});</code></pre>
+          <figcaption>Fig 07-101</figcaption>
+        </figure>
+        <p>With the update method we can update the document directly in the database without
+          retrieving it first.</p>
+        <p>If we run the application you should see something similar to this:</p>
+        <figure>
+          <img src="./images/Fig07-102.png"/>
+          <figcaption>Fig 07-102.png</figcaption>
+        </figure>
+        <p>We can see in the results object that we have modified one document.</p>
+        <p>Sometimes you want to get the document that was updated. For this you can use
+          findByIdAndUpdate instead of update:</p>
+        <figure>
+    <pre><code class="language-javascript">const course = await Course.findByIdAndUpdate(id , {
+  $set: {
+    author: 'Jack',
+    isPublished: true }
+});</code></pre>
+          <figcaption>Fig 07-103</figcaption>
+        </figure>
+        <p>The first argument is an id instead of a query object. We get back a course object so we rename
+          the const to course instead of result.</p>
+        <p>If we run this application you should see something like:</p>
+        <figure>
+          <img src="./images/Fig07-104.png"/>
+          <figcaption>Fig 07-104</figcaption>
+        </figure>
+        <p>The author and the isPublished properties do not reflect the new value. What we get here is
+          the original document <u>before</u> the update operation.</p>
+        <p>To get the updated document you need to pass an option:</p>
+        <figure>
+    <pre><code class="language-javascript">const course = await Course.findByIdAndUpdate(id , {
+  $set: {
+    author: 'Jason',
+    isPublished: false
+  }
+},
+{ new: true });</code></pre>
+          <figcaption>Fig 07-105</figcaption>
+        </figure>
+        <p>So we add an object with a key of new and a value of true. If we run again we should now see
+          the updated document:</p>
+        <figure>
+          <img src="images/Fig07-106.PNG"/>
+          <figcaption>Fig 07-106</figcaption>
+        </figure>
+
+        <h3>100 - Removing Documents</h3>
+        <p>Copy the code from the previous lecture and rename the updateCourse method removeCourse:</p>
+        <figure>
+    <pre><code class="language-javascript">async function removeCourse(id) {
+  const result = await Console.deleteOne({ _id: id });
+  console.log(result);
+}</code></pre>
+          <figcaption>Fig 07-107</figcaption>
+        </figure>
+        <p>The deletOne method will only ever delete one document. So if you specify a more generic
+          query then only the first document that matches the query will be deleted.</p>
+        <p>If you run the application you should see something like this:</p>
+        <figure>
+            <img src="images/Fig07-108.PNG"/>
+            <figcaption>Fig 07-108</figcaption>
+        </figure>
+        <p>The result object shows we have deleted one document.</p>
+        <p>If you want to delete multiple documents, instead of delete one use delete many:</p>
+<figure>
+    <pre><code class="language-javascript">async function removeCourse(id) {
+  const result = await Course.deleteMany({
+    isPublished: true
+  }); console.log(result); }</code></pre>
+    <figcaption>Fig 07-109</figcaption>
+</figure>
+        <p>This method also returns a result object that shows us the number of documents that were
+          deleted.</p>
+        <p>If you want to get the document that was deleted we use another method:</p>
+        <figure>
+            <pre><code class="language-javascript">const course = await Course.findByIdAndRemove(id);</code></pre>
+            <figcaption>Fig 07-110</figcaption>
+        </figure>
+        <p>If the document has already been deleted this method will return null.</p>
+        <h3>101 - Recap</h3>
+        <p>So, in this section, you learned that:</p>
+<ul>
+  <li>MongoDB is an open-source document database. It stores data in flexible, JSONlike
+    documents.</li>
+  <li>In relational databases we have tables and rows, in MongoDB we have collections
+    and documents. A document can contain sub-documents.</li>
+  <li>We don’t have relationships between documents.</li>
+</ul>
+        <h4>To connect to MongoDB:</h4>
+<figure>
+    <pre><code class="language-javascript">const mongoose = require(&lsquo;mongoose&rsquo;);
+mongoose.connect(&lsquo;mongodb://localhost/playground')
+  .then(() =&gt; console.log(&lsquo;Connected&hellip;&rsquo;))
+  .catch(err =&gt; console.error(&lsquo;Connection failed&hellip;&rsquo;));</code></pre>
+    <figcaption>Fig 07-111</figcaption>
+</figure>
+      <p>To store objects in MongoDB, we need to define a Mongoose schema first. The schema defines
+        the shape of documents in MongoDB.</p>
+      <h4>Defining a schema</h4>
+<figure>
+    <pre><code class="language-javascript">const courseSchema = new mongoose.Schema({
+  name: String,
+  price: Number });</code></pre>
+    <figcaption>Fig 07-112</figcaption>
+</figure>
+        <p>We can use a SchemaType object to provide additional details:</p>
+        <h4>Using a SchemaType object</h4>
+<figure>
+    <pre><code class="language-javascript">const courseSchema = new mongoose.Schema({
+  isPublished: { type: Boolean, default: false }
+});</code></pre>
+    <figcaption>Fig 07-113</figcaption>
+</figure>
+        <p>Supported types are:</p>
+        <ul>
+          <li>String</li>
+          <li>Number</li>
+          <li>Date</li>
+          <li>Buffer (for storing binary data)</li>
+          <li>Boolean</li>
+          <li>ObjectID</li>
+        </ul>
+        <p>Once we have a schema, we need to compile it into a model. A model is like a
+          class. It’s a blueprint for creating objects:</p>
+        <h4>Creating a model</h4>
+        <figure>
+            <pre><code class="language-javascript">const Course = mongoose.model(&lsquo;Course&rsquo;, courseSchema);</code></pre>
+            <figcaption>Fig 07-114</figcaption>
+        </figure>
+        <h4>CRUD Operations</h4>
+        <p>Saving a document:</p>
+<figure>
+    <pre><code class="language-javascript">let course = new Course({ name: &lsquo;&hellip;&rsquo; });
+course = await course.save();</code></pre>
+    <figcaption>Fig 07-115</figcaption>
+</figure>
+        <p>Querying documents:</p>
+<figure>
+    <pre><code class="language-javascript">const courses = await Course
+  .find({ author: &lsquo;Mosh&rsquo;, isPublished: true })
+  .skip(10)
+  .limit(10)
+  .sort({ name: 1, price: -1 })
+  .select({ name: 1, price: 1 });</code></pre>
+    <figcaption>Fig 07-116</figcaption>
+</figure>
+        <p>Updating a document (query first)</p>
+<figure>
+    <pre><code class="language-javascript">const course = await Course.findById(id);
+if (!course) return;
+  course.set({ name: &lsquo;&hellip;&rsquo; });
+  course.save();</code></pre>
+    <figcaption>Fig 07-117</figcaption>
+</figure>
+        <p>Updating a document (update first)</p>
+<figure>
+    <pre><code class="language-javascript">const result = await Course.update({ _id: id }, {
+  $set: { name: &lsquo;&hellip;&rsquo; } });</code></pre>
+    <figcaption>Fig 07-118</figcaption>
+</figure>
+        <p>Updating a document (update first) and return it</p>
+<figure>
+    <pre><code class="language-javascript">const result = await Course.findByIdAndUpdate({ _id: id }, {
+  $set: { name: ‘…’ }
+}, { new: true });</code></pre>
+    <figcaption>Fig 07-119</figcaption>
+</figure>
+        <p>Removing a document</p>
+<figure>
+    <pre><code class="language-javascript">const result = await Course.deleteOne({ _id: id });
+const result = await Course.deleteMany({ _id: id });
+const course = await Course.findByIdAndRemove(id);</code></pre>
+    <figcaption>Fig 07-120</figcaption>
+</figure>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

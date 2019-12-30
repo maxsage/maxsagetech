@@ -6,18 +6,11 @@
           <h2>Vue JS</h2>
         </div>
         <div class="panel-body">
-          <h3>Vuejs - Deploying to Heroku</h3>
+          <h3>Vue JS Deploying to Heroku</h3>
           <router-link to="/vuejsdeployingtoheroku" active-class="active"><a>Vuejs - Deploying to Heroku</a>
           </router-link>
-          <h3>Vue JS 2 The Complete Guide (incl. Vue Router & Vuex)</h3>
-          <a target="blank" href="https://www.udemy.com/vuejs-2-the-complete-guide/learn/v4/content">Vue JS 2 The
-            Complete Guide (incl. Vue Router & Vuex) on Udemy</a><br/>
-          <router-link to="/vuejs2thecompleteguide/" active-class="active"><a>Vue JS 2 The Complete Guide (incl. Vue Router & Vuex)</a></router-link>
-          <p>Date Completed: ??/??/????</p>
-          <p>Rating: ?/??</p>
-          <p>Course Review</p>
           <h3>Vue JS Essentials with Vuex and Vue Router</h3>
-          <a target="blank" href="https://www.udemy.com/vue-js-course/learn/v4/t/lecture/10231064">Vue JS Essentials
+          <a target="blank" href="https://www.udemy.com/vue-js-course/">Vue JS Essentials
             with Vuex and Vue Router on Udemy</a><br/>
           <router-link to="/vuejsessentials-00-course-contents/" active-class="active"><a>Vue JS Essentials with Vuex
             and Vue Router</a></router-link>

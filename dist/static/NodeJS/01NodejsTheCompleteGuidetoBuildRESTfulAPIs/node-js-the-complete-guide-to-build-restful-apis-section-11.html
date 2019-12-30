@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="UTF-8">
+  <title>Node:js The Complete Guide to Build RESTful APIs (2018)</title>
+  <script src="https://unpkg.com/vue"></script>
+  <link crossorigin="anonymous"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        rel="stylesheet">
+  <link href="prism.css" rel="stylesheet">
+  <script src="prism.js"></script>
+  <style>
+    img {
+      max-width: 100%;
+    }
+  </style>
+</head>
+<body>
+<div class="container" id="app">
+  <div class="panel-group">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h2>Section 11 - Handling and Logging Errors</h2>
+      </div>
+
+      <div class="panel-body">
+        <h3>143 - Introduction</h3>
+        <p>In our current implementation of Vidly app, we have assumed an ideal world where
+          everything works successfully. However, in the real world, there are always unexpected
+          errors. For example, it is possible that our connection to MongoDB drops out for whatever
+          reason. So, as a best practice we should count on these unexpected situations and handle
+          them properly. This means we should:</p>
+        <ul>
+          <li>send a proper error message to the client</li>
+          <li>log the exception on the server</li>
+        </ul>
+        <p>This means later we can look at the log, and see what the frequent issues are and how we
+          can improve the application.</p>
+        <p>Let's demonstrate with a real world scenario where the MongoDB server dies. So, here in
+          the terminal, we are running the application with nodemon:</p>
+        <figure>
+          <img src="images/Fig11-001.PNG"/>
+          <figcaption>Fig 11-001</figcaption>
+        </figure>
+        <p>and we also have another terminal window open running the Mongo Daemon:</p>
+        <figure>
+          <img src="images/Fig11-002.PNG"/>
+          <figcaption>Fig 11-002</figcaption>
+        </figure>
+        <p>This is the background service that is running on port 27017:</p>
+        <p>In Postman we have a tab open to send a get request to api/genres:</p>
+        <figure>
+          <img src="images/Fig11-003.PNG"/>
+          <figcaption>Fig 11-003</figcaption>
+        </figure>
+        <p>Currently if we send this request we get a 200 response and some result(s) displayed in
+          the body of the response.</p>
+        <p>Stop the process in mongoDB using Ctrl+C.</p>
+        <p>Now, let's see what happens when we use postman to send the request one more time. the
+          Send button in postman should change to Sending... and after approx 30 seconds (although I
+          got a message immediately saying):</p>
+        <figure>
+          <img src="images/Fig11-004.PNG"/>
+          <figcaption>Fig 11-004</figcaption>
+        </figure>
+        <p>This means that the connection was interrupted whilst MongoDB was being written to) you
+          will receive an error message in the terminal where your Node application is running.</p>
+        <p>By default, when you connect to MongoDB, if the connection cannot be established, MongoDB
+          driver will attempt to reconnect 30 times in 1 second intervals. Look at the warning in
+          the terminal:</p>
+        <figure>
+          <img src="images/Fig11-005.PNG"/>
+          <figcaption>Fig 11-005</figcaption>
+        </figure>
+        <p>This means in future versions of Node the application will stop running if it encounters
+          an error like this and no further clients will be served. Now in this particular
+          demonstration, yes, I shut down our MongoDB server so it wouldn't really matter if this
+          process is live or not.</p>
+        <p>Imagine a scenario where our mongodb server is going to be shutdown for one minute. With
+          the current implementation our node process will terminate and will not be able to serve
+          any other client even after mongodb restarts.</p>
+        <p>We need to properly hand these scenarios, and that's what you're going to learn in this
+          section.</p>
+        <h3>144 - Handling Rejected Promises</h3>
+        <p>Whenever you see unhandled promise rejection that means your using a promise which means
+          your dealing with asynchronous code that has thrown an error that hasn't been handled
+          properly. In genres.js in the get route you can see the find promise:</p>
+        <figure>
+<pre><code class="language-javascript">router.get('/', async (req, res) => {
+  const genres = await Genre.find().sort('name');
+  res.send(genres);
+});</code></pre>
+          <figcaption>Fig 11-006</figcaption>
+        </figure>
+        <p>Here we have a promise:</p>
+        <figure>
+          <pre><code class="language-javascript">Genre.find().sort('name');</code></pre>
+          <figcaption>Fig 11-007</figcaption>
+        </figure>
+        <p>That is awaited here:</p>
+        <figure>
+          <pre><code class="language-javascript">await Genre.find().sort('name');</code></pre>
+          <figcaption>Fig 11-008</figcaption>
+        </figure>
+        <p>There is currently no try/catch block in the code to handle rejected promises.</p>
+        <p>This implementation is the same as getting a promise, calling then but not calling catch
+          to handle rejections:</p>
+        <figure>
+<pre><code class="language-javascript">Genre.find()
+.then()
+.catch()</code></pre>
+          <figcaption>Fig 11-009</figcaption>
+        </figure>
+        <p>So if your using the promise syntax with then you should always call catch to handle
+          exceptions. If your using async and await you should always have try/catch blocks.</p>
+        <p>So add a try catch block that responds with status 500 internal server error and send a
+          message:</p>
+        <figure>
+<pre><code class="language-javascript">try {
+  const genres = await Genre.find().sort('name');
+  res.send(genres);
+}
+catch (ex) {
+  // Log the exception
+  res.status(500).send('Something failed');
+}</code></pre>
+          <figcaption>Fig 11-010</figcaption>
+        </figure>
+        <p>We will add logging later in this section. Start the mongo demon and then run the vidly
+          application, stop the mongo demon and then submit a get genres request from postman:</p>
+        <figure>
+          <img src="images/Fig11-011.PNG"/>
+          <figcaption>Fig 11-011</figcaption>
+        </figure>
+        <p>Now in Postman after about 30 seconds you should see a response status 500 and the
+          message:</p>
+        <figure>
+          <img src="images/Fig11-012.PNG"/>
+          <figcaption>Fig 11-012</figcaption>
+        </figure>
+        <p>Importantly if you look at the terminal window that you used to launch the vidly
+          application you should no longer see the UnhandledPromiseRejectionWarning which will
+          result in the termination of this process in future version of node.</p>
+        <h3>145 - Express Error Middleware</h3>
+        <p>So, in the last lecture, we took the first step to handle errors properly. But there is a
+          problem in the current implementation. Let's say, tommorow, we need to change the message
+          sent to the client:</p>
+        <figure>
+          <pre><code
+            class="language-javascript">res.status(500).send('Something failed');</code></pre>
+          <figcaption>Fig 11-013</figcaption>
+        </figure>
+        <p>With the current implementation you have to go to every route handler where we have used
+          a try/catch block to modify the message. Also if you are performing logging and further
+          down the line you want to implement it slightly differently again you will need to visit
+          every route handler.</p>
+        <p>We want to move the error handling logic to somewhere central. Goto index.js where the
+          middleware is being registered. In express there is a special kind of middleware function
+          called error middleware. We register that middleware function after all the existing
+          middleware functions. So, after the other app.use statements, we call app.use:</p>
+        <figure>
+<pre><code class="language-javascript">app.use(function(err, req, res,next){
+});</code></pre>
+          <figcaption>Fig 11-014</figcaption>
+        </figure>
+        <p>Pass a middleware function with 3 parameters - request, response and next. We also add
+          the fourth argument here at the front. That's the exception or error that we catch
+          somewhere in the application.</p>
+        <p>Now, in this function, we add all the logic for handling errors in our application Cut
+          the logic from genres.js and paste it into the error middleware function:</p>
+        <figure>
+<pre><code class="language-javascript">app.use(function(err, req, res, next){
+  // Log the exception
+  res.status(500).send('Something failed.');
+})</code></pre>
+          <figcaption>Fig 11-015</figcaption>
+        </figure>
+        <p>Now back in the catch block in genres.js add the next parameter to pass control to the
+          next middleware function in the request processing pipeline. In the catch block we also
+          call next passing the exception as an argument:</p>
+        <figure>
+<pre><code class="language-javascript">router.get('/', async (req, res, next) => {
+  try {
+    const genres = await Genre.find().sort('name');
+    res.send(genres);
+  }
+  catch(ex) {
+    next(ex);
+  }
+});</code></pre>
+          <figcaption>Fig 11-016</figcaption>
+        </figure>
+        <p>Now because in index.js we register the error middleware function AFTER all the other
+          middleware functions when we call next we will end up here:</p>
+        <figure>
+          <pre><code class="language-javascript">function(err, req, res, next)</code></pre>
+          <figcaption>Fig 11-017</figcaption>
+        </figure>
+        <p>The first argument passed to this function will be the exception. This new implementation
+          gives us a single place to handle errors.</p>
+        <p>In a real world example the logic for logging an exception might be several lines long.
+          We don't really want to put this code in index.js which is really for orchestration and
+          high level arrangement. The details should be encapsulated in a different modules. For
+          this reason we will move this middleware function to a separate module. We will add a new
+          file called error.js to the middleware folder and move the error handling and logging
+          function there:</p>
+        <figure>
+<pre><code class="language-javascript">module.exports = function(err, req, res, next) {
+  // Log the exception
+  res.status(500).send('Something failed.');
+}</code></pre>
+          <figcaption>Fig 11-018</figcaption>
+        </figure>
+        <p>Import the module in index.js</p>
+        <figure>
+          <pre><code class="language-javascript">const error = require('./middleware/error');</code></pre>
+          <figcaption>Fig 11-019</figcaption>
+        </figure>
+        <p>Now modify the app.use statement to pass in the error function.</p>
+        <figure>
+          <pre><code class="language-javascript">app.use(error);</code></pre>
+          <figcaption>Fig 11-020</figcaption>
+        </figure>
+        <p>NOTE that we don't call the function, we just pass a reference to it. Whilst we have
+          achieved a better design it is still necessary for us to wrap the other endpoints in
+          try/catch blocks. This is repetitive. In the next lecture we will look at how to improve
+          this implementation.</p>
+        <h3>146 - Removing try/catch Blocks</h3>
+        <p>So we still have a try/catch block in the genres get route handler. The problem with this
+          implementation is that we have to repeat this try/catch block in every route handler. Also
+          the try catch logic is adding noise to the code which is distracting us from the logic
+          that belongs to this route handler.</p>
+        <p>Ideally we should move this high-level code somewhere else to a single function:</p>
+        <figure>
+<pre><code class="language-javascript">function asyncMiddleware() {
+  try {
+    // ...
+  }
+  catch(ex) {
+    next(ex);
+  }
+}</code></pre>
+          <figcaption>Fig 11-021</figcaption>
+        </figure>
+        <p>So we define a function called asyncMiddleware with a try block that executes some code
+          which will vary depending on the route handler. Then we have the catch block that takes an
+          exception where we simply call next passing in the exception.</p>
+        <p>Now what if we pass a function (our route handler function) as an argument to the
+          asyncMiddleware function? It means we can call the function in the try block:</p>
+        <figure>
+<pre><code class="language-javascript">function asyncMiddleware (handler) {
+  try {
+    handler();
+  }
+  catch(ex) {
+    next(ex);
+  }
+}</code></pre>
+          <figcaption>Fig 11-022</figcaption>
+        </figure>
+        <p>This means we can simplify the code in the genres get route handler - we no longer need
+          the try block, the catch block and the next parameter:</p>
+        <figure>
+<pre><code class="language-javascript">router.get('/', async (req, res) => {
+  const genres = await Genre.find().sort('name');
+  res.send(genres);
+});</code></pre>
+          <figcaption>Fig 11-023</figcaption>
+        </figure>
+        <p>Look at the anonymous async function that you are passing in the code above. Eventually
+          we want to pass this function as an argument to the asyncMiddleware function.</p>
+        <p>Because handler is an async function we should await it and mark the function as
+          async:</p>
+        <figure>
+<pre><code class="language-javascript">async function asyncMiddleware (handler) {
+  try {
+    await handler();
+  }
+  catch(ex) {
+    next(ex);
+  }
+}</code></pre>
+          <figcaption>Fig 11-024</figcaption>
+        </figure>
+        <p>Now modify the get route handler in genres so that for the second method we call the
+          asyncMiddleware function and pass the anonymous function that is currently in the get
+          route as an argument that we call handler:</p>
+        <figure>
+<pre><code class="language-javascript">router.get('/', auth, asyncMiddleware(async (req, res) => {
+  const genres = await Genre.find().sort('name');
+  res.send(genres);
+}));</code></pre>
+          <figcaption>Fig 11-025</figcaption>
+        </figure>
+        <p>There is a slight issue here - in the asyncMiddleware function the handler function:</p>
+        <figure>
+          <pre><code class="language-javascript">await handler();</code></pre>
+          <figcaption>Fig 11-026</figcaption>
+        </figure>
+        <p>That we are calling needs access to 2 arguments - the request and response. You can see
+          the anonymous function in the get route uses these parameters:</p>
+        <figure>
+          <pre><code class="language-javascript">async(req, res)</code></pre>
+          <figcaption>Fig 11-026</figcaption>
+        </figure>
+        <p>So when calling it (as we do in asyncMiddleware) we should pass the req and res
+          objects:</p>
+        <figure>
+          <pre><code class="language-javascript">await handler(req, res);</code></pre>
+          <figcaption>Fig 11-027</figcaption>
+        </figure>
+        <p>The issue we have here is that nowhere in the asyncMiddleware function have we defined
+          req, res and next. The only parameter in asyncMiddleware is a parameter to another
+          function which we call handler.</p>
+        <p>So the question remains - how do we get access to these three objects? Before we discuss
+          that question we need to investigate a deeper issue. In the current implementation we are
+          calling the asyncMiddleware function and passing the handler as an argument:</p>
+        <figure>
+          <pre><code class="language-javascript">asyncMiddleware(...handler code...)</code></pre>
+          <figcaption>Fig 11-028</figcaption>
+        </figure>
+        <p>So we are CALLING the function. However when defining an express route we are not going
+          to call our middleware or route handler functions - we simply pass a reference to a
+          function.</p>
+        <p>To clarify we will define another temporary route as an example(delete it later):</p>
+        <figure>
+          <pre><code
+            class="language-javascript">router.get('/another', (req, res, next)) => { });</code></pre>
+          <figcaption>Fig 11-029</figcaption>
+        </figure>
+        <p>Here we are passing a route handler function that takes two arguments - req, res and
+          potentially next as well.</p>
+        <p>Note that in the code above we are passing a function reference. In other words we are
+          not calling the function and passing in arguments like this:</p>
+        <figure>
+          <pre><code class="language-javascript">router.get('/another', (req, res, next)) => { }(arg1, arg2));</code></pre>
+          <figcaption>Fig 11-030</figcaption>
+        </figure>
+        <p>It's the express framework that calls the function and passes the arguments at runtime.
+          So the problem we have is that in the current implementation we are calling
+          asyncMiddleware we are not passing a reference to a function that takes the req, res and
+          next parameters. To overcome this issue we need to make a small change to the
+          asyncMiddleware function.</p>
+        <p>When we call the asyncMiddleware function we can return a route handler function that
+          looks like this:</p>
+        <figure>
+          <pre><code class="language-javascript">(req, res, next) => {});</code></pre>
+          <figcaption>Fig 11-031</figcaption>
+        </figure>
+        <p>This will make the asyncMiddleware function like a factory function. We call it and get a
+          new function that is a route handler that looks like this:</p>
+        <figure>
+          <pre><code class="language-javascript">(req, res, next) => {});</code></pre>
+          <figcaption>Fig 11-032</figcaption>
+        </figure>
+        <p>Express can call that and pass the req, res and next arguments at runtime. So in the
+          asyncMiddleware function we need to return a route handler function:</p>
+        <figure>
+<pre><code class="language-javascript">async function asyncMiddleware(handler) {
+  return (req, res, next) =>
+  {
+  };
+}</code></pre>
+          <figcaption>Fig 11-033</figcaption>
+        </figure>
+        <p>Now we have access to the req, res and next arguments (Express is going to pass this for
+          us) So we can move the existing code inside the code block we just created:</p>
+        <figure>
+<pre><code class="language-javascript">async function asyncMiddleware(handler) {
+  return (req, res, next) => {
+    try {
+      await handler(req,res);
+    }
+    catch(ex) {
+      next(ex);
+    }
+  };
+}</code></pre>
+          <figcaption>Fig 11-034</figcaption>
+        </figure>
+        <p>Now in this function we are awaiting the call to the handler so we need to mark the
+          calling function as async:</p>
+        <figure>
+          <pre><code class="language-javascript">return async (req, res, next) => {}</code></pre>
+          <figcaption>Fig 11-035</figcaption>
+        </figure>
+        <p>This means the asyncMiddleware function no longer needs to be marked as async because
+          nowhere in the asyncMiddleware are we awaiting a promise we are simply returning a
+          function.</p>
+        <p>To review - with this new implementation we have moved the try/catch block to a single
+          place. We no longer need to repeat it in each route handler. This means the code in our
+          route handlers will be more focused. We can see the actual logic that belongs to the route
+          handler.</p>
+        <p>We achieved this be defining the asyncMiddleware function that takes a function reference
+          called handler. When we call this function:</p>
+        <figure>
+          <pre><code class="language-javascript">return async (req, res, next) => {}</code></pre>
+          <figcaption>Fig 11-036</figcaption>
+        </figure>
+        <p>So when we pass our original route handler here:</p>
+        <figure>
+<pre><code class="language-javascript">router.get('/', auth, asyncMiddleware(async (req, res) => {
+  const genres = await Genre.find().sort('name');
+  res.send(genres);
+}));</code></pre>
+          <figcaption>Fig 11-037</figcaption>
+        </figure>
+        <p>We are passing a function reference. We call that handler:</p>
+        <figure>
+          <pre><code
+            class="language-javascript">async function asyncMiddleware(handler)</code></pre>
+          <figcaption>Fig 11-038</figcaption>
+        </figure>
+        <p>When we call this function we return a standard express route handler:</p>
+        <figure>
+          <pre><code class="language-javascript">return (req, res, next) => {</code></pre>
+          <figcaption>Fig 11-039</figcaption>
+        </figure>
+        <p>This route handler is an async function with three parameters in the body of the function
+          we have a try/catch block:</p>
+        <figure>
+<pre><code class="language-javascript">try {
+  await handler(req,res);
+}
+catch(ex) {
+  next(ex);
+}</code></pre>
+          <figcaption>Fig 11-040</figcaption>
+        </figure>
+        <p>In the try block we simply call the handler that we passed as an argument:</p>
+        <figure>
+          <pre><code class="language-javascript">await handler(req, res)</code></pre>
+          <figcaption>Fig 11-041</figcaption>
+        </figure>
+        <p>Finally the asyncMiddleware function doesn't belong in the genres module so we move it to
+          a new file in the middleware folder called async.js and export the function.</p>
+        <figure>
+<pre><code class="language-javascript">module.exports = function (handler) {
+  return async (req, res, next) => {
+    try {
+      await handler(req, res);
+      }
+      catch(ex) {
+        next(ex);
+      }
+    };
+  }
+}</code></pre>
+          <figcaption>Fig 11-042</figcaption>
+        </figure>
+        <p>Now in genre.js you will need to import the module:</p>
+        <figure>
+          <pre><code class="language-javascript">const asyncMiddleware = require('../middleware/async');</code></pre>
+          <figcaption>Fig 11-043</figcaption>
+        </figure>
+        <p>Now with this new implementation we simply wrap each route handler with the
+          asyncMiddleware:</p>
+        <figure>
+<pre><code class="language-javascript">router.post('/', auth, asyncMiddleware(async (req, res) => {
+  const { error } = validate(req.body);
+  if (error)
+    return res.status(400).send(error.details[0].message);
+
+    let genre = new Genre({ name: req.body.name });
+    genre = await genre.save();
+
+    res.send(genre);
+}));</code></pre>
+          <figcaption>Fig 11-044</figcaption>
+        </figure>
+        <p>So we call asyncMiddleware and pass the existing route handler code as an argument.</p>
+        <h3>147 - Express Async Errors</h3>
+        <p>In the last lecture we defined the async middleware function. While the async middleware
+          function solves the problem of repetitive try/catch blocks the issue we have is that we
+          have to remember to call the asyncMiddleware function every time. This also makes our code
+          a little bit noisy.</p>
+        <p>In this lecture we will use an npm module to monkey patch (A monkey patch is a way for a
+          program to extend or modify supporting system software locally (affecting only the running
+          instance of the program) our route handlers at runtime. So when we send a request to an
+          endpoint that module will wrap our route handler code inside something similar to the
+          async function we created in the last lecture.</p>
+        <p>So from the terminal in the vidly application run:</p>
+        <figure>
+          <pre><code class="language-command">npm i express-async-errors@2.1.0</code></pre>
+          <figcaption>Fig 11-045</figcaption>
+        </figure>
+        <p>Next import the express-async-errors module into index.js:</p>
+        <figure>
+          <pre><code class="language-javascript">require('express-async-errors');</code></pre>
+          <figcaption>Fig 11-045</figcaption>
+        </figure>
+        <p>That's all we have to do. We don't have to get the result and store it in a constant.</p>
+        <p>Remove the call to asyncMiddleware from the route handlers that are currently using it
+          (genre GET and POST) and remove the require statement for asyncMiddleware from the top of
+          genres.js as well.</p>
+        <p>Now test by running mongod in the terminal, start the vidly application and get all the
+          genres in postman to check that endpoint is working:</p>
+        <figure>
+          <img src="images/Fig11-046.PNG"/>
+          <figcaption>Fig 11-046</figcaption>
+        </figure>
+        <p>Now stop mongodb and retry the get genres request in postman. After a fairly long period
+          of time you should receive a status 500 internal server error along with the message:</p>
+        <figure>
+          <img src="images/Fig11-047.PNG"/>
+          <figcaption>Fig 11-047</figcaption>
+        </figure>
+        <p>This verifies that the module we installed properly moved control from our route handler
+          to our error handling function.</p>
+        <p>Using express async error handling module is very easy and for this reason it is my
+          suggested approach for handling async errors in express route handlers. However if this
+          approach doesn't work for your application you can switch back and use the asyncMiddleware
+          function from the previous lecture.</p>
+        <h3>148 - Logging Errors</h3>
+        <p>So error.js is our current error middleware. Now, as discussed before, in every
+          enterprise application we need to log the exceptions that are thrown in the application.
+          Later on we can examine the log to see which areas of the application can be improved.</p>
+        <p>In this lecture we will introduce a very popular logging library called winston currently
+          on version 2.4. Install winston in the vidly application:</p>
+        <figure>
+          <pre><code class="language-command">npm i winston@2.4.0</code></pre>
+          <figcaption>Fig 11-048</figcaption>
+        </figure>
+        <p>In index.js load winston:</p>
+        <figure>
+          <pre><code class="language-javascript">const winston = require('winston');</code></pre>
+          <figcaption>Fig 11-049</figcaption>
+        </figure>
+        <p>The constant winston is the default logger that is exported from this module. We can also
+          create a logger manually but using the default logger will be sufficient for our
+          application.</p>
+        <p>The logger object has what is known as a transport. A transport is essentially a storage
+          device for our logs and winston comes with several transports built-in:</p>
+        <ul>
+          <li>
+            console - for logging messages to the console
+          </li>
+          <li>
+            file - for logging to a file
+          </li>
+          <li>
+            http - for calling an http endpoint to log messages
+          </li>
+        </ul>
+        <p>There are also plugin npm modules to log messages in both MongoDB and CouchDB as well as
+          Redis and Loggly (a popular log analysis and monitoring service for enterprise
+          applications).</p>
+        <p>So this default logger that is exported from the winston module comes with a transport
+          for logging messages to the console but in this lecture we will add another transport for
+          logging messages to a file.</p>
+        <p>In index.js after the require statements add the following code:</p>
+        <figure>
+<pre><code class="language-javascript">winston.add(winston.transports.File, { filename:
+  'logfile.log' });</code></pre>
+          <figcaption>Fig 11-050-</figcaption>
+        </figure>
+        <p>Now back in our error middleware we can log errors using winston. First import
+          winston:</p>
+        <figure>
+          <pre><code class="language-javascript">const winston = require('winston');</code></pre>
+          <figcaption>Fig 11-051</figcaption>
+        </figure>
+        <p>In the error function add the following code:</p>
+        <figure>
+          <pre><code class="language-javascript">winston.error(err.message, err);</code></pre>
+          <figcaption>Fig 11-052</figcaption>
+        </figure>
+        <p>The first argument is the logging level which determines the importance of the error we
+          are going to log:
+        <ul>
+          <li>
+            error The most severe logging message
+          </li>
+          <li>warn A warning</li>
+          <li>info For information (e.g. Connected to MongoDB)</li>
+          <li>verbose</li>
+          <li>debug</li>
+          <li>silly</li>
+        </ul>
+        <p>You can write the syntax differently to indicate the logging level with a helper
+          message:</p>
+        <figure>
+          <pre><code class="language-javascript">winston.error(err.message, err);</code></pre>
+          <figcaption>Fig 11-053</figcaption>
+        </figure>
+        <p>The second parameter is optional metadata, so we can pass the err object and every
+          property in the err object will be available in the log. To demonstrate let's throw an
+          error in the get genres route handler:</p>
+        <figure>
+          <pre><code
+            class="language-javascript">throw new Error('Could not get the genres.');</code></pre>
+          <figcaption>Fig 11-054</figcaption>
+        </figure>
+        <p>So now in our current implementation the error middleware will catch that error, log it
+          using winston and return the response code 500 to the client.</p>
+        <p>So let's run the application and get genres in postman - you should see the response code
+          500 - internal server error.</p>
+        <figure>
+          <img src="images/Fig11-055.PNG"/>
+          <figcaption>Fig 11-055</figcaption>
+        </figure>
+        <p>In the console you will see the error: Could not get the genres. You will also see the
+          stack trace below (which is part of the err object):</p>
+        <figure>
+          <img src="images/Fig11-056.PNG"/>
+          <figcaption>Fig 11-056</figcaption>
+        </figure>
+        <p>So this is the console transport which is configured on the default logger</p>
+        <p>Now in our project explorer we should see a new file logfile.log which contains a Json
+          object with several properties including:</p>
+        <figure>
+<pre><code class="language-json">{
+  &quot;level&quot;: &quot;error&quot;,
+  &quot;message&quot;:&quot;Could not get the genres.&quot;,
+  &quot;timestamp&quot;:&quot;2019-01-22T15:03:51.344Z&quot;
+}</code></pre>
+          <figcaption>Fig 11-057</figcaption>
+        </figure>
+        <p>So using the level property you could query the logfiles and extract only the errors or
+          only the information.</p>
+        <p>So this is the big picture. We simply call winston.error or one of the other helper
+          methods and, depending on the transports which we have configured, winston will log the
+          given message.</p>
+        <h3>149 - Logging to MongoDB</h3>
+        <p>Now let's look at how to log messages to mongodb. Install another winston package:</p>
+        <figure>
+          <pre><code class="language-command">npm i winston-mongodb@3.0.0</code></pre>
+          <figcaption>Fig 11-058</figcaption>
+        </figure>
+        <p>Back in index.js in the last version we added a file transport, this time round we will
+          add a mongodb transport.</p>
+        <p>After we load winston we need to load winston-mongodb:</p>
+        <figure>
+          <pre><code class="language-javascript">require('winston-mongodb');</code></pre>
+          <figcaption>Fig 11-059</figcaption>
+        </figure>
+        <p>Here we don't care about what is exported from this module - we just need to require it.
+          Next add another transport for winston under the code for the file transport:</p>
+        <figure>
+          <pre><code class="language-javascript">winston.add(winston.transports.MongoDB, {db: 'mongodb://localhost/vidly'});</code></pre>
+          <figcaption>Fig 11-060</figcaption>
+        </figure>
+        <p>We pass an options object. There are a few properties here that you can see in the
+          documentation but we just set db: It is possible to separate your logging database and
+          your application database but in this example we will keep logging in the application
+          database.</p>
+        <p>Next time there is another error in the application because we have added another
+          transport Winston will automatically store our error in mongoDB. So let's run the
+          application again and submit a get genres request in postman. If you now look in
+          MongoDBCompass if you refresh you should see a log collection with one object:</p>
+        <figure>
+          <img src="images/Fig11-061.PNG"/>
+          <figcaption>Fig 11-061</figcaption>
+        </figure>
+        <p>You can see a timestamp, an error level, a message and a meta object. The meta property
+          is the second argument that we passed to the winston.error call in error.js which was the
+          err object.</p>
+        <p>The err object has a few properties (message, name, stacktrace) all of which get stored
+          in MongoDB.</p>
+        <p>So, in compass, if you expand the meta object you can see message, name, stack etc. These
+          are all the properties of the standard error object in JavaScript.</p>
+        <p>In the last lecture we talked about logging levels. When adding a transport we can also
+          set the logging levels on a per transport basis. For example, maybe you only want to log
+          errors to MongoDB and exclude info, verbose and all the other logging levels.</p>
+        <p>To achieve this you would modify the options object in the call to winston.add for the
+          MongoDB transport by adding in a level property:</p>
+        <figure>
+<pre><code class="language-javascript">winston.add(winston.transports.MongoDB, {
+  db: 'mongodb://localhost/vidly',
+  level: 'error'
+});</code></pre>
+          <figcaption>Fig 11-062</figcaption>
+        </figure>
+        <p>If you were to set the level property to info you would receive info, warn and error
+          messages because warn and error are more severe than info:</p>
+        <ul>
+          <li>error</li>
+          <li>warn</li>
+          <li>info</li>
+          <li>verbose</li>
+          <li>debug</li>
+          <li>silly</li>
+        </ul>
+        <p>Nothing beyond info will be logged in MongoDB</p>
+        <h3>150 - Uncaught Exceptions</h3>
+        <p>The error middleware that we have added only catches errors that happen as part of the
+          request processing pipeline. So this is particular to express. If an error occurs outside
+          of the context of express the error middleware will not pick it up.</p>
+        <p>To demonstrate let's go back to index.js and after the code to for winston add the the
+          following code:</p>
+        <figure>
+          <pre><code class="language-javascript">throw new Error('Something failed during startup.');</code></pre>
+          <figcaption>Fig 11-063</figcaption>
+        </figure>
+        <p>So the above error is thrown outside the context of processing a request - outside the
+          context of express. The process will crash and winston wont log anything. To verify this,
+          you can delete everything in logfile.log, save, and run the application:</p>
+        <figure>
+          <pre><code class="language-command">node index.js</code></pre>
+          <figcaption>Fig 11-064</figcaption>
+        </figure>
+        <p>In the terminal we see our error:</p>
+        <figure>
+          <img src="images/Fig11-065.PNG"/>
+          <figcaption>Fig 11-065</figcaption>
+        </figure>
+        <p>If you check the logfile.log it will still be empty. So if you deployed this application
+          to production, it would fail and there is no way for you to know what went wrong unless
+          you have access to the console on the server. So in this lecture we will examine how to
+          properly handle unhandled exceptions in node process. So, this is at a higher level, it is
+          not tied to express.</p>
+        <p>Back in index.js earlier in the course you learned about the process object. process is
+          an event emitter which is an object which can emit or publish events. It gives a method
+          called on which you can use to subscribe or listen to events.</p>
+        <p>In node there is a standard event called uncaughtException. This event is raised when we
+          have an exception in the node process which hasn't been handled using a catch block:</p>
+        <figure>
+          <pre><code class="language-javascript">process.on('uncaughtException');</code></pre>
+          <figcaption>Fig 11-065</figcaption>
+        </figure>
+        <p>If we have an uncaughtException event then we can supply a function to handle it:</p>
+        <figure>
+<pre><code class="language-javascript">process.on('uncaughtException', (ex) =&gt; {
+  console.log('WE GOT AN UNCAUGHT EXCEPTION');
+  winston.error(ex.message, ex);
+});</code></pre>
+          <figcaption>Fig 11-066</figcaption>
+        </figure>
+        <p>Back in the terminal run the application again:</p>
+        <figure>
+          <img src="images/Fig11-067.PNG"/>
+          <figcaption>Fig 11-067</figcaption>
+        </figure>
+        <p>Notice this time the process doesn't terminate because we caught the exception. The
+          process terminates if we don't catch our exception. Check the logfile.log:</p>
+        <figure>
+<pre><code class="language-json">{
+  &quot;message&quot;:&quot;Something failed during startup&quot;,
+  &quot;stack&quot;:&quot;Error: Something failed during startup\n at Object. &lt;&gt;
+        (C:\\DevelopmentTutorials\\TheCompleteNodeJSCourse\\
+        11-handling-and-logging-errors\\150-uncaught-exceptions\\vidly\\index.js:30:7)\n at
+        Module._compile (module.js:653:30)\n at Object.Module._extensions..js (module.js:664:10)\n
+        at Module.load (module.js:566:32)\n at tryModuleLoad (module.js:506:12)\n at
+        Function.Module._load (module.js:498:3)\n at Function.Module.runMain (module.js:694:10)\n at
+        startup (bootstrap_node.js:204:16)\n at
+        bootstrap_node.js:625:3&quot;,&quot;level&quot;:&quot;error&quot;,&quot;timestamp&quot;:&quot;2019-01-22T18:58:54.281Z&quot;
+}</code></pre>
+          <figcaption>Fig 11-068</figcaption>
+        </figure>
+        <p>We can see our error message. This is how we handle uncaught exceptions In the next
+          lecture we will look at unhandled promise rejections.</p>
+        <h3>151 - Unhandled Promise Rejections</h3>
+        <p>In the last lecture we learnt how to handle uncaught exceptions. So if there is an
+          exception in your application and you have not caught that exception using a catch block
+          you can subscribe to the on uncaughtException of the process object and log the error
+          using winston.</p>
+        <p>However this approach only works with synchronous code which means if you have a promise
+          somewhere that is rejected the function you provide to uncaughtException will not be
+          executed.</p>
+        <p>Let's replace the exception we threw in the previous lecture with a rejected promise:</p>
+        <figure>
+          <pre><code class="language-javascript">const p = Promise.reject(new Error('Something failed miserably!'));</code></pre>
+          <figcaption>Fig 11-069</figcaption>
+        </figure>
+        <p>So imagine this promise represents the result of an asynchronous operation such as a call
+          to the database or a remote http service and so on.</p>
+        <p>So as discussed previously with promises we should either call .then() followed by
+          .catch() to handle rejections:</p>
+        <figure>
+          <pre><code class="language-javascript">p.then().catch();</code></pre>
+          <figcaption>Fig 11-070</figcaption>
+        </figure>
+        <p>Or if we are using the async and await syntax we await the promise but we wrap it in a
+          try/catch block.</p>
+        <p>In the code we just added to index:</p>
+        <figure>
+          <pre><code class="language-javascript">const p = Promise.reject(new Error('Something failed miserably!'));</code></pre>
+          <figcaption>Fig 11-071</figcaption>
+        </figure>
+        <p>we have a promise so I can call then():</p>
+        <figure>
+          <pre><code class="language-javascript">p.then(() =&gt; console.log('Done'));</code></pre>
+          <figcaption>Fig 11-072</figcaption>
+        </figure>
+        <p>but I wont call catch() So we will have an unhandled rejection.</p>
+        <p>So if we run the application again we will get an UnhandledPromiseRejectionWarning:</p>
+        <figure>
+          <img src="images/Fig11-073.PNG"/>
+          <figcaption>Fig 11-073</figcaption>
+        </figure>
+        <p>Currently the application will continue to run but remember that Unhandled promise
+          rejections are deprecated - so this won't be the case in the future.</p>
+        <p>So to deal with unhandled promise rejections we need to subscribe to the
+          unhandledRejection event of the process object (index.js):</p>
+        <figure>
+<pre><code class="language-javascript">process.on('unhandledRejection', (ex) =&gt; {
+  console.log('WE GOT AN UNHANDLED REJECTION');
+  winston.error(ex.message, ex);
+});</code></pre>
+          <figcaption>Fig 11-074</figcaption>
+        </figure>
+        <p>If we run the application again we will see the unhandled promise rejection:</p>
+        <figure>
+          <img src="images/Fig11-075.PNG"/>
+          <figcaption>Fig 11-075</figcaption>
+        </figure>
+        <p>The logfile.log will also show our unhandled promise rejection:</p>
+        <figure>
+          <img src="images/Fig11-076.PNG"/>
+          <figcaption>Fig 11-076</figcaption>
+        </figure>
+        <p>As a best practice whether you are dealing with an uncaught exception or an unhandled
+          rejection you should exit the process because at that point your process could be in an
+          unclean state.</p>
+        <p>So if we exit the process how can we restart it in production. Well there are tools for
+          that are called process managers which we will look at later in the course. So modify the
+          code to exit the process in both code blocks:</p>
+        <figure>
+<pre><code class="language-javascript">process.on('uncaughtException', (ex) =&gt; {
+  winston.error(ex.message, ex); process.exit(1);
+});
+
+process.on('unhandledRejection', (ex) =&gt; {
+  winston.error(ex.message, ex); process.exit(1);
+});</code></pre>
+          <figcaption>Fig 11-077</figcaption>
+        </figure>
+        <p>You can write this code in a different way by using the winston.handleExceptions
+          method:</p>
+        <figure>
+<pre><code class="language-javascript">winston.handleExceptions(
+  new winston.transports.File({ filename: 'uncaughtExceptions.log' }));</code></pre>
+          <figcaption>Fig 11-078</figcaption>
+        </figure>
+        <p>Note that when we call handleExceptions we are specifying a different transport than the
+          one we have configured with our default logger:</p>
+        <figure>
+          <pre><code class="language-javascript">winston.add(winston.transports.File, { filename: 'logfile.log' });</code></pre>
+          <figcaption>Fig 11-079</figcaption>
+        </figure>
+        <p>You can use the same filename or a different filename that is your choice. We can also
+          have multiple transports. One question you might have is whether you should log to a file
+          or to a database. My opinion is that you should use both transports (databases are good
+          for querying, filesystem is always available (as opposed to database server which might go
+          down))</p>
+        <p>At the time of writing winston.handleExceptions only works for uncaught exceptions, if
+          you have unhandled rejections they wont get logged.</p>
+        <p>I will show you a trick to get this working. First remove process.on('uncaughtException')
+          and we will just rely on winston.handleExceptions.</p>
+        <p>Next when we have an unhandledRejection we can simply throw the exception:</p>
+        <figure>
+<pre><code class="language-javascript">process.on('unhandledRejection', (ex) =&gt; {
+  throw ex;
+});</code></pre>
+          <figcaption>Fig 11-080</figcaption>
+        </figure>
+        <p>which will raise an unhandled exception that is then dealt with by
+          winston.handleExceptions that will log it in the file and terminate the process.</p>
+        <h3>152 - Error Handling Recap</h3>
+        <p>To summarize. In express we have error middleware that is basically a function with four
+          arguments:</p>
+        <ul>
+          <li>err</li>
+          <li>req</li>
+          <li>res</li>
+          <li>next</li>
+        </ul>
+        <p>This function catches any errors in the request processing pipeline. So we use winston to
+          log the error then return a response status 500 to the client. As discussed, this only
+          works for errors that occur in the request processing pipeline. Any errors that occur
+          outside the context of express will be ignored. If something goes wrong during application
+          startup this function is not going to be executed. That's why we call
+          winston.handleExceptions in index.js to get any uncaught exceptions and log them to a
+          file.</p>
+        <p>Currently this only works with uncaught exceptions, it wont work with unhandled promise
+          rejections - hopefully this will be available in the future. In the meantime you can use
+          the workaround described at the end of the previous lecture. So as a best practice when
+          you are dealing with these kind of exceptions, you should terminate the node process
+          because the process can be in an unclean state. So you should restart it in a clean state.
+          In production we use tools that we call process managers, which are responsible for
+          automatically restarting a node process.</p>
+        <p>Now if you look at code in index.js you can see it is starting to get a bit out of hand.
+          In the next few lectures we will look at how to refactor this code and tidy it up to make
+          it clean and maintainable.</p>
+        <h3>153 - Refactoring index.js Extracting the Routes</h3>
+        <p>The main issue with the code as it currently stands in index.js is lack of separation of
+          concerns. There are lots of things happening here which is why we need so many require
+          statements at the top of the file. Below that we have some for handling and logging
+          errors, then some configuration code, then the mongodb database connection logic, then we
+          setup our api endpoints and various middleware - these are all separate concerns. They
+          should not be mixed up in one module. In this module we should only orchestrate our
+          concerns.</p>
+        <p>The details of setting up routes or the details of connecting to the database should be
+          separated. So in this lecture we will focus on extracting our routes into a separate
+          module.</p>
+        <p>So create a new folder called startup with a new file called routes.js In this file we
+          should export a function:</p>
+        <figure>
+          <pre><code class="language-javascript">module.exports = function() {}</code></pre>
+          <figcaption>Fig 11-081</figcaption>
+        </figure>
+        <p>In this function we will add all the code for setting up our routes and other
+          middleware:</p>
+        <figure>
+<pre><code class="language-javascript">module.exports = function() {
+  // app.use(at);
+  // If everything required authentication
+  app.use(express.json());
+  app.use('/api/genres', genres);
+  app.use('/api/customers', customers);
+  app.use('/api/movies', movies);
+  app.use('/api/rentals', rentals);
+  app.use('/api/users', users);
+  app.use('/api/auth', auth);
+  app.use(error);
+}</code></pre>
+          <figcaption>Fig 11-082</figcaption>
+        </figure>
+        <p>So look at the dependencies here. We have a dependency to app object, express all these
+          routes etc. So in index.js on the top we create the app object like this:</p>
+        <figure>
+          <pre><code class="language-javascript">const app = express();</code></pre>
+          <figcaption>Fig 11-083</figcaption>
+        </figure>
+        <p>We should have a single instance of app in the entire application. We don't want to load
+          express then call it to create an app object in our new module. So we want to send a
+          reference to our app as an argument to the new module:</p>
+        <figure>
+          <pre><code class="language-javascript">module.exports = function(app)</code></pre>
+          <figcaption>Fig 11-084</figcaption>
+        </figure>
+        <p>Back in index.js we can load our new module:</p>
+        <figure>
+          <pre><code class="language-javascript">require('./startup/routes')(app);</code></pre>
+          <figcaption>Fig 11-085</figcaption>
+        </figure>
+        <p>this returns a function which we call it and pass the app object.</p>
+        <p>Now we can move all the routes that we have setup in index.js to our new module:</p>
+        <figure>
+<pre><code class="language-javascript">const genres = require('./routes/genres');
+const customers = require('./routes/customers');
+const movies = require('./routes/movies');
+const rentals = require('./routes/rentals');
+const users = require('./routes/users');
+const auth = require('./routes/auth');</code></pre>
+          <figcaption>Fig 11-086</figcaption>
+        </figure>
+        <p>We also need express:</p>
+        <figure>
+          <pre><code class="language-javascript">const express = require('express');</code></pre>
+          <figcaption>Fig 11-087</figcaption>
+        </figure>
+        <p>Now we will take the error middleware out of index.js:</p>
+        <figure>
+          <pre><code class="language-javascript">const error = require('./middleware/error');</code></pre>
+          <figcaption>Fig 11-088</figcaption>
+        </figure>
+        <p>index.js is starting to look a bit tidier with less require statements and a cleaner
+          implementation.</p>
+        <p>Back in routes.js we need to change the route definitions because their paths are
+          incorrect. In Visual Studio Code you can multi select by selecting some text (./) and then
+          using ctrl+d to select the additional desired instances. replace the existing text ./ with
+          ../ to fix up the route paths.</p>
+        <p>Now, as an exercise, I want you to back to index.js and move all the database
+          initialization code to a different module. You will see the solution the next lecture.</p>
+        <h3>154 - Extracting the DB logic</h3>
+        <p>Here in index.js we only have a small amount of code for database initialization. Add a
+          new file to startup called db.js. Export the function and move the database connection
+          logic to that file:</p>
+        <figure>
+<pre><code class="language-javascript">const mongoose = require('mongoose');
+const winston = require('winston');
+
+module.exports = function() {
+  mongoose.connect('mongodb://localhost/vidly')
+  .then(() => winston.info('Connected to MongoDB...'));
+}</code></pre>
+          <figcaption>Fig 11-089</figcaption>
+        </figure>
+        <p>We also loaded winston and used it to log info messages instead of console.log.</p>
+        <p>We remove the catch method that writes to the console:</p>
+        <figure>
+          <pre><code class="language-javascript">.catch(err=&gt; console.error('Could not conntect to MongoDB...'))</code></pre>
+          <figcaption>Fig 11-090</figcaption>
+        </figure>
+        <p>because if we can't connect to MongoDB we want to log that exception and terminate the
+          process but the catch statement handles the rejected promise and just displays a message
+          on the console - so we are not logging this and it is not terminating the process. We just
+          added this earlier purely for demonstration purposes. With the new implementation we don't
+          need this.</p>
+        <p>Finally We also added code to import mongoose. We can cut this from index.js:</p>
+        <figure>
+          <pre><code class="language-javascript">const mongoose = require('mongoose');</code></pre>
+          <figcaption>Fig 11-091</figcaption>
+        </figure>
+        <p>So that is our database module. You can see the code is very clean and short, we have a
+          single responsibility. We don't have too many things mixed up together.</p>
+        <p>Now back in index.js we load the db module and call the function that is returned:</p>
+        <figure>
+          <pre><code class="language-javascript">require('./startup/db')();</code></pre>
+          <figcaption>Fig 11-092</figcaption>
+        </figure>
+        <p>Here we get a function which we call.</p>
+        <p>Let's verify with our current implementation that if we can't connect to the database
+          during the application startup that the exception will be logged and the process will be
+          terminated.</p>
+        <p>So stop mongod and then run the application you should see an exception thrown in the
+          console window where the app was started:</p>
+        <figure>
+          <img src="images/Fig11-093.PNG"/>
+          <figcaption>Fig 11-093</figcaption>
+        </figure>
+        <p>You should also see that the exception has been logged in the uncaughtExceptions
+          file:</p>
+        <figure>
+          <img src="images/Fig11-094.PNG"/>
+          <figcaption>Fig 11-094</figcaption>
+        </figure>
+        <p>
+          This is why we needed to delete the catch logic in the database connection function to let
+          our global error handler deal with the rejected promise.</p>
+        <p>You're next exercise is to go back to index.js and extract all the code for logging
+          errors into a separate module called logging.js We will cover the solution in the next
+          lecture.</p>
+        <h3>155 - Extracting the Logging Logic</h3>
+        <p>In this lecture we are going to move all the code for setting up logging to a different
+          module. So anything that is related to winston and handling rejected promises.</p>
+        <p>So back in the startup folder let's add a new file logging.js and export a function:</p>
+        <figure>
+          <pre><code class="language-javascript">module.exports = function() {}</code></pre>
+          <figcaption>Fig 11-095</figcaption>
+        </figure>
+        <p>Now in index.js take the code for setting up winston:</p>
+        <figure>
+          <img src="images/Fig11-096.PNG"/>
+          <figcaption>Fig 11-096</figcaption>
+        </figure>
+        <p>and move it to logging.js within the function.</p>
+        <p>We need to import winston and winston-mongodb so move those require statements from
+          index.js as well:</p>
+<figure>
+<pre><code class="language-javascript">const winston = require('winston');
+require('winston-mongodb');
+</code></pre>
+<figcaption>Fig 11-097</figcaption>
+</figure>
+        <p>We can also move the require statement for logging express-async-errors to our new
+          logging module:</p>
+<figure>
+<pre><code class="language-javscript">require('express-async-errors');</code></pre>
+<figcaption>Fig 11-098</figcaption>
+</figure>
+        <p>Finally we need to go back to index.js and load the logging module. Put it before the
+          other require statements just in case they generate errors:</p>
+<figure>
+<pre><code class="language-javascript">require('./startup/logging');</code></pre>
+<figcaption>Fig 11-099</figcaption>
+</figure>
+        <p>That completes the logging refactoring.</p>
+        <p>In the next lecture we will move all the code for dealing with configuration to a
+          separate module.</p>
+        <h3>156 - Extracting the config Logic</h3>
+        <p>Let's add a config.js file in the startup folder that exports a function. Now move all
+          the code related to configuration settings into this new module:</p>
+<figure>
+<pre><code class="language-javascript">module.exports = function() {
+  if(!config.get('jwtPrivateKey')) {
+    console.error('FATAL ERROR: jwtPrivateKey is not defined.');
+    process.exit(1);
+  }
+}</code></pre>
+<figcaption>Fig 11-100</figcaption>
+</figure>
+        <p>This code contains a dependency for config. We can move the require statement from
+          index.js:</p>
+<figure>
+<pre><code class="language-javascript">const config = require('config');</code></pre>
+<figcaption>Fig 11-101</figcaption>
+</figure>
+        <p>Now if we don't have the jwtPrivateKey config setting we no longer want to log this to
+          the console and exit the process. Instead we should store this as a fatal error in our log
+          by throwing an exception:</p>
+        <figure>
+        <pre><code class="language-javascript">throw new Error('FATAL ERROR: jwtPrivateKey is not defined.');</code></pre>
+        <figcaption>Fig 11-102</figcaption>
+        </figure>
+        <p>Our current infrastructure will catch the exception, log it and terminate the process.
+          Note it is best practice to throw error objects instead of strings because when you throw
+          an Error object the stack trace will be available for you to view later. If, instead, you
+          throw a string with the error message the stack trace will not be available.</p>
+        <p>Finally in index.js load the config module:</p>
+<figure>
+<pre><code class="language-javascript">require('./startup/config')();</code></pre>
+<figcaption>Fig 11-103</figcaption>
+</figure>
+        <p>and it's a function so we call it.</p>
+        <p>Now, if you look at the code in index.js, you only have 12 lines of code. The last thing
+          we can move here is the configuration of Joi:</p>
+<figure>
+<pre><code class="language-javascript">const Joi = require('joi');
+Joi.objectId = require('joi-objectid')(Joi);</code></pre>
+<figcaption>Fig 11-104</figcaption>
+</figure>
+        <p>We could move this to a module like validation.js or we could call that module api.js. We
+          are using Joi on the api layer. We use it to validate the input to our api. For this
+          application, honestly, I don't have a strong opinion of what we should call that module.
+          We'll call it validation.js - and cover the refactoring in the next lecture.</p>
+        <h3>157 - Extracting the Validation Logic</h3>
+        <p>Create a new file called validation.js and export a function then move the require
+          statement that adds object id validation to Joi:</p>
+<figure>
+<pre><code class="language-javascript">module.exports = function() { Joi.objectId = require('joi-objectid')(Joi); }</code></pre>
+<figcaption>Fig 11-105</figcaption>
+</figure>
+        <p>Also at the top of validation.js add the require statement for Joi (you can move this
+          from index.js):</p>
+<figure>
+<pre><code class="language-javascript">const Joi = require('joi');</code></pre>
+<figcaption>Fig 11-106</figcaption>
+</figure>
+        <p>Next add a require statement for the validation module in index.js:</p>
+<figure>
+<pre><code class="language-javascript">require('./startup/validation.js')();</code></pre>
+<figcaption>Fig 11-107</figcaption>
+</figure>
+        <p>The code in index.js is much cleaner. Remember what we had before. There were about 60 or
+          70 lines of code with really poor separation of concerns. Now with this refactoring we are
+          doing only one thing - setting up the application. The details of logging, of routes, of
+          databases are delegate to other modules. This is single responsibility principle in
+          practice.</p>
+        <p>Finally replace the console.log statement in index.js where we configure app to listen on
+          port 3000 with winston:</p>
+<figure>
+<pre><code class="language-javascript">app.listen(port, () =&gt; winston.info(`Listening on port ${port}...`));</code></pre>
+<figcaption>Fig 11-108</figcaption>
+</figure>
+        <p>Don't forget to require winston:</p>
+<figure>
+<pre><code class="language-javascript">const winston = require('winston');</code></pre>
+<figcaption>Fig 11-109</figcaption>
+</figure>
+        <p>Run the application:</p>
+<figure>
+  <img src="images/Fig11-110.PNG"/>
+  <figcaption>Fig 11-110</figcaption>
+</figure>
+        <p>These are the two info messages coming from winston.</p>
+        <h3>158 - Showing Unhandled Exceptions on the Console</h3>
+        <p>I notice a tiny problem in the current implementation. If you take this application on a
+          different machine and run:</p>
+<figure>
+<pre><code class="language-command">node index.js</code></pre>
+<figcaption>Fig 11-111</figcaption>
+</figure>
+        <p>It terminates without telling us what happened. In the current implementation we are
+          using winston to handle exceptions with only a file transport. So if you look at
+          uncaughtExceptions.log you will see the exception detail. However if you didn't know this
+          you would have no idea what was going on.</p>
+        <p>For this reason we should add a console transport to display exceptions on the console as
+          well. So in logging.js in the winston.handleExceptions method we add a new transport:</p>
+<figure>
+<pre><code class="language-javascript">new winston.transports.Console({ colorize: true, prettyPrint: true});</code></pre>
+<figcaption>Fig 11-112</figcaption>
+</figure>
+        <p>Now if you run the application again on the new machine you will see the exception on the
+          console (in this case jwtPrivateKey is not defined)</p>
+        <figure>
+          <img src="images/Fig11-113.PNG"/>
+          <figcaption>Fig 11-113</figcaption>
+        </figure>
+        <h3>159 - Recap</h3>
+        <p>So, in this section, you learned that:</p>
+        <p>Our applications don’t run in an ideal world. Unexpected errors can happen as a result of
+          bugs in our code or issues in the running environment. For example, our MongoDB server may
+          shut down, or a remote HTTP service we call may go down.</p>
+        <p>As a good developer, you should count for these unexpected errors, log them and return a
+          proper error to the client.</p>
+        <p>Use the Express error middleware to catch any unhandled exceptions in the “request
+          processing pipeline”.</p>
+        <p>Register the error middleware after all the existing routes:</p>
+<figure>
+<pre><code class="language-javascript">app.use(function(err, req, res, next) {
+  // Log the exception and return a friendly error to the client.
+  res.status(500).send(&lsquo;Something failed&rsquo;);
+});</code></pre>
+<figcaption>Fig 11-114</figcaption>
+</figure>
+        <p>To pass control to the error middleware, wrap your route handler code in a try/ catch
+          block and call next().</p>
+<figure>
+<pre><code class="language-javascript">try {
+  const genres = await Genre.find(); &hellip;
+} catch(ex) {
+  next(ex);
+});</code></pre>
+<figcaption>Fig 11-115</figcaption>
+</figure>
+        <p>Adding a try/catch block to every route handler is repetitive and time consuming. Use
+          express-async-errors module. This module will monkey-patch your route handlers at runtime.
+          It’ll wrap your code within a try/catch block and pass unhandled errors to your error
+          middleware.
+        </p>
+        <p>To log errors use winston</p>
+        <p>Winston can log errors in multiple transports. A transport is where your log is
+          stored.</p>
+        <p>The core transports that come with Winston are Console, File and Http. There are also
+          3rd-party transports for storing logs in MongoDB, CouchDB, Redis and Loggly.</p>
+        <p>The error middleware in Express only catches exceptions in the request processing
+          pipeline. Any errors happening during the application startup (eg connecting to MongoDB)
+          will be invisible to Express.</p>
+        <p>Use process.on(‘uncaughtException’) to catch unhandled exceptions, and
+          process.on(‘unhandledRejection’) to catch rejected promises.</p>
+        <p>As a best practice, in the event handlers you pass to process.on(), you should log the
+          exception and exit the process, because your process may be in an unclean state and it may
+          result in more issues in the future. It’s better to restart the process in a clean state.
+          In production, you can use a process manager to automatically restart a Node process.
+          You’ll learn about that later in the course.</p>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

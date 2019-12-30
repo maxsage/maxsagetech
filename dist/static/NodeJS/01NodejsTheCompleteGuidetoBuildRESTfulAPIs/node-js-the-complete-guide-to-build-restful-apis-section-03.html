@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="UTF-8">
+  <title>Node:js The Complete Guide to Build RESTful APIs (2018)</title>
+  <script src="https://unpkg.com/vue"></script>
+  <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" rel="stylesheet">
+  <link href="prism.css" rel="stylesheet">
+  <script src="prism.js"></script>
+  <style>
+    img {
+      max-width: 100%;
+    }
+  </style>
+</head>
+<body>
+<div class="container" id="app">
+  <div class="panel-group">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h2>Node:js The Complete Guide to Build RESTful APIs (2018)</h2>
+      </div>
+      <div class="panel-body">
+        <div>
+          <h2>Section 3 - Node Package Manager</h2>
+          <h3>24 Introduction</h3>
+          <p>NPM or Node Package Manager is command line tool as well as a registry of third party libraries that we can
+            add to our Node applications. So for pretty much any kind of functionality that you want to add to your
+            application there is most likely a free open source library/package or node module on npmjs.com.
+          </p>
+          <p>npm gets installed when you install node.</p>
+          <p>To display the version of npm you have installed</p>
+          <figure>
+            <pre><code class="language-command">npm -v</code></pre>
+            <figcaption>Fig 03-001</figcaption>
+          </figure>
+          <p>To display the version of node you have installed</p>
+          <figure>
+            <pre><code class="language-command">node -v</code></pre>
+            <figcaption>Fig 03-002</figcaption>
+          </figure>
+          <p>To install a specific version of npm globally:</p>
+          <figure>
+            <pre><code class="language-command">npm i -g npm@5.5.1</code></pre>
+            <figcaption>Fig 03-003</figcaption>
+          </figure>
+          <h3>25 package.json</h3>
+          <p>package.json is a Json file that contains some basic information about the application or the project such
+            as:
+          </p>
+          <ul>
+            <li>name</li>
+            <li>version</li>
+            <li>authors</li>
+            <li>address of git repo</li>
+          </ul>
+          <p>You should create a package.json file before adding any packages to your application. As a best practice
+            run:
+          </p>
+          <figure>
+            <pre><code class="language-command">npm init</code></pre>
+            <figcaption>Fig 03-004</figcaption>
+          </figure>
+          <p>All node applications have a package.json file by default.</p>
+          <p>To create a package.json file without specifying any options:</p>
+          <figure>
+            <pre><code class="language-command">npm init --yes</code></pre>
+            <figcaption>Fig 03-005</figcaption>
+          </figure>
+          <h3>26 Installing a Node Package</h3>
+          <p>The underscore library is a Javascript utility menu. To install underscore use the following command:</p>
+          <figure>
+            <pre><code class="language-command">npm i underscore</code></pre>
+            <figcaption>Fig 03-006</figcaption>
+          </figure>
+          <p>This will do two things:</p>
+          <ul>
+            <li>Adds a dependencies section to pacakage.json</li>
+            <figure>
+              <img src="images/Fig03-007.PNG"/>
+              <figcaption>Fig 03-007</figcaption>
+            </figure>
+            <li>Downloads underscore into the node_modules folder</li>
+            <figure>
+              <img src="images/Fig03-008.PNG"/>
+              <figcaption>Fig 03-008</figcaption>
+            </figure>
+          </ul>
+          <p>In the node_modules/underscore folder there will be another package.json file. Every node module has a
+            package.json file just like our node application.
+          </p>
+          <p>As an aside, there is no longer a need to supply the --save flag when running npm install because the
+            dependency is written to the package.json file by default.
+          </p>
+
+          <h3>27 Using a Package</h3>
+          <p>So we have installed the underscore library as a third-party module. Now let's use it .</p>
+          <p>We create a new file called index.js. We use a require function to load the underscore module:</p>
+          <figure>
+            <pre><code class="language-javascript">var _ = require('underscore');</code></pre>
+            <figcaption>Fig 03-009</figcaption>
+          </figure>
+          <p>By convention we use an _ character when referring to the underscore library.</p>
+          <p>The require function first assumes that the module name supplied is a core module. In node we don't have a
+            core module called underscore so the require function thinks maybe underscore is a file or folder in this
+            project. Earlier in the course we learnt that in order to reference a file or folder we use ./ but our node
+            application does not contain a file or folder called underscore so the require function then moves onto the
+            third step. It assumes that the module exists inside the node_modules folder.
+          </p>
+          <p>We have loaded the module, now let's use the contains utitilty function. We pass two arguments:
+          </p>
+          <ul>
+            <li>An array</li>
+            <li>The result we are looking for in the array</li>
+          </ul>
+          <p>The result returned is a boolean. Add the following to index.js:</p>
+          <figure>
+        <pre><code class="language-javascript">var result = _.contains([1, 2, 3], 2);
+console.log(result);</code></pre>
+            <figcaption>Fig 03-010</figcaption>
+          </figure>
+          <p>If we run this in the terminal we get the following output:</p>
+          <figure>
+        <pre><code class="language-command">node index.js
+true</code></pre>
+            <figcaption>Fig 03-011</figcaption>
+          </figure>
+          <h3>28 Package Dependencies</h3>
+          <p>To install mongoose:</p>
+          <figure>
+            <pre><code class="language-command">npm i mongoose</code></pre>
+            <figcaption>Fig 03-012</figcaption>
+          </figure>
+          <p>This should update our package.json file. The node_modules folder will contain a number of new folders -
+            these are other node packages that mongoose is dependent upon:
+          </p>
+          <figure>
+            <img src="images/Fig03-013.PNG"/>
+            <figcaption>Fig 03-013</figcaption>
+          </figure>
+          <p>In the previous version of npm we had a different behaviour. All the dependencies of a given package were
+            stored inside that package folder. However this created a mess because we ended up with the same package
+            being installed multiple times.
+          </p>
+          <p>Also, in Windows, there is a limitation with the number of characters in a path. With current version of
+            npm all dependencies as well as their dependencies are stored under the main node_modules folder.
+          </p>
+          <p>The exception is that if one of the packages uses a different version of a dependency then that version
+            will be stored locally with that package.
+          </p>
+
+          <h3>29 NPM Packages and SCM</h3>
+          <p>In a real world application we will have a large number of child folders in the node_modules folder. The
+            size of the node_modules folder will be several megabytes. When checking in your source code you want to
+            exclude this folder. This prevents people from having to wait around to download this large folder.
+          </p>
+          <p>So what about all our dependencies. Well these are all stored in the package.json file. We can restore all
+            our dependencies by running:
+          </p>
+          <figure>
+            <pre><code class="language-command">npm i</code></pre>
+            <figcaption>Fig 03-014</figcaption>
+          </figure>
+          <p>This will download the relevant dependencies from npm registry.</p>
+          <p>We will describe the steps required to exclude the node_modules folder from git.</p>
+          <p>If you run:</p>
+          <figure>
+            <pre><code class="language-command">git status</code></pre>
+            <figcaption>Fig 03-015</figcaption>
+          </figure>
+          <p>You should see that the node_modules folder is listed as one of the files or folders to be uploaded to git:
+          </p>
+          <figure>
+            <img src="images/Fig03-016.PNG"/>
+            <figcaption>Fig 03-016</figcaption>
+          </figure>
+          <p>If we add a folder called .gitignore to the root folder with the following contents:</p>
+          <figure>
+            <pre><code class="language-javascript">node_modules/</code></pre>
+            <figcaption>Fig 03-017</figcaption>
+          </figure>
+          <p>and then run:</p>
+          <figure>
+            <pre><code class="language-command">git status</code></pre>
+            <figcaption>Fig 03-018</figcaption>
+          </figure>
+          <p>again you should see the node_modules folder is now excluded from the list of files or folders to be
+            uploaded to git:
+          </p>
+          <figure>
+            <img src="images/Fig03-019.PNG"/>
+            <figcaption>Fig 03-019</figcaption>
+          </figure>
+          <p>So this is how we exclude the node_modules folder from our git repository. Finally we can run:</p>
+          <figure>
+            <pre><code class="language-command">git add .</code></pre>
+            <figcaption>Fig 03-020</figcaption>
+          </figure>
+          <p>and</p>
+          <figure>
+            <pre><code class="language-command">git commit -m &quot;Our first commit&quot;</code></pre>
+            <figcaption>Fig 03-021</figcaption>
+          </figure>
+
+          <h3>30 Semantic Versioning</h3>
+          <p>Earlier we mentioned the caret character:</p>
+          <figure>
+            <pre><code class="language-command">&quot;mongoose&quot;: &quot;^4.13.6&quot;</code></pre>
+            <figcaption>Fig 03-021</figcaption>
+          </figure>
+          <p>In order to understand it's purpose we first need to understand Semantic Versioning or SemVer. In Semantic
+            Versioning the version of a node package has three components. The first number is the major version, the
+            second is the minor version, the third is the patch version:
+          </p>
+          <figure>
+            <pre><code class="language-command">Major.Minor.Patch</code></pre>
+            <figcaption>Fig 03-022</figcaption>
+          </figure>
+          <p>Consider the above mongoose dependency. If the developers of mongoose discover a bug in this version they
+            will fix the bug and release a new version incrementing the patch version:
+          </p>
+          <figure>
+            <pre><code class="language-command">4.13.7</code></pre>
+            <figcaption>Fig 03-023</figcaption>
+          </figure>
+          <p>The minor version is used for adding new features that don't break the existing API. If the mongoose team
+            add a new feature without breaking the existing API they will increase the minor version:
+          </p>
+          <figure>
+            <pre><code class="language-command">4.14.0</code></pre>
+            <figcaption>Fig 03-024</figcaption>
+          </figure>
+          <p>The patch version is 0 here because the developers have not yet found a bug. As they find and fix bugs they
+            will increase the patch version.
+          </p>
+          <p>Finally if they add a new features that could potentially break the existing applications that depend upon
+            this version of mongoose then they will increase the major version:
+          </p>
+          <figure>
+            <pre><code class="language-command">5.0.0</code></pre>
+            <figcaption>Fig 03-025</figcaption>
+          </figure>
+          <p>The caret character in the following dependency declaration:</p>
+          <figure>
+            <pre><code class="language-command">&quot;mongoose&quot;: &quot;^4.13.6&quot;</code></pre>
+            <figcaption>Fig 03-026</figcaption>
+          </figure>
+          <p>tells npm that we are interested in any version of mongoose as long as the major version is 4. So any newer
+            minor or patch versions will be downloaded and installed when you run:
+          </p>
+          <figure>
+            <pre><code class="language-command">npm i</code></pre>
+            <figcaption>Fig 03-027</figcaption>
+          </figure>
+          <p>An alternative to using the caret character is to specify the following:</p>
+          <figure>
+            <pre><code class="language-command">&quot;mongoose&quot;: &quot;4.x&quot;,</code></pre>
+            <figcaption>Fig 03-028</figcaption>
+          </figure>
+          <p>The other character used by npm is ~:</p>
+          <figure>
+            <pre><code class="language-json">&quot;underscore&quot;: &quot;~1.8.3&quot;</code></pre>
+            <figcaption>Fig 03-029</figcaption>
+          </figure>
+          <p>This example means that you are interested in any version as long as the major version is 1 and the minor
+            version is 8. This can also be written:
+          </p>
+          <figure>
+            <pre><code class="language-command">&quot;underscore&quot;: &quot;~1.8.x&quot;</code></pre>
+            <figcaption>Fig 03-030</figcaption>
+          </figure>
+          <p>If you want to ensure that an exact version of a node package is used then use:</p>
+          <figure>
+            <pre><code class="language-command">&quot;underscore&quot;: &quot;1.8.3&quot;</code></pre>
+            <figcaption>Fig 03-031</figcaption>
+          </figure>
+          <h3>31 Listing the Installed Packages</h3>
+          <p>There is a quicker way to show all the npm packages and their dependencies than browsing to each of the
+            packages folder and checking the version information in the package.json file. You can see all the installed
+            packages and their dependencies using:
+          </p>
+          <figure>
+            <pre><code class="language-command">npm list</code></pre>
+            <figcaption>Fig 03-032</figcaption>
+          </figure>
+          <p>The resulting tree displays the dependencies of your application and their dependencies:</p>
+          <figure>
+            <img src="images/Fig03-033.PNG"/>
+            <figcaption>Fig 03-033</figcaption>
+          </figure>
+          <p>To list just the dependencies of your application and not of the third party packages:
+          </p>
+          <figure>
+            <pre><code class="language-command">npm list --depth=0</code></pre>
+            <figcaption>Fig 03-034</figcaption>
+          </figure>
+          <p>This will be a shorter list:</p>
+          <figure>
+            <img src="images/Fig03-035.PNG"/>
+            <figcaption>Fig 03-035</figcaption>
+          </figure>
+          <p>Displaying only the dependencies of your application.</p>
+          <h3>32 Viewing Registry Info for a Package</h3>
+          <p>To show metadata about a package (license details, dependencies etc.)</p>
+          <figure>
+            <pre><code class="language-command">npm view mongoose</code></pre>
+            <figcaption>Fig 03-036</figcaption>
+          </figure>
+          <p>The output you see:</p>
+          <figure>
+            <img src="images/Fig03-036.PNG"/>
+            <figcaption>Fig 03-036</figcaption>
+          </figure>
+          <p>Is the package.json file for mongoose library. You see some interesting properties like dependencies. In
+            the above screenshot you can see that mongoose is dependent on async version 2.1.4
+          </p>
+          <p>To view a specific property:</p>
+          <figure>
+            <pre><code class="language-command">npm view mongoose dependencies</code></pre>
+            <figcaption>Fig 03-037</figcaption>
+          </figure>
+          <p>Will give you the following output:</p>
+          <figure>
+            <img src="images/Fig03-038.PNG"/>
+            <figcaption>Fig 03-038</figcaption>
+          </figure>
+          <p>This shows only the value of the dependencies property.</p>
+          <p>Another useful property is versions:</p>
+          <figure>
+            <pre><code class="language-command">npm view mongoose versions</code></pre>
+            <figcaption>Fig 03-039</figcaption>
+          </figure>
+          <p>This will display a subset of the information you get from npm view:</p>
+          <figure>
+            <img src="images/Fig03-040.PNG"/>
+            <figcaption>Fig 03-040</figcaption>
+          </figure>
+          <p>This information can be useful if you are looking to downgrade to an older version or upgrade to a newer
+            version.
+          </p>
+          <h3>33 Installing a Specific Version of a Package</h3>
+          <p>To install a specific version of a package use the @ character:</p>
+          <figure>
+            <pre><code class="language-command">npm i mongoose@2.4.2</code></pre>
+            <figcaption>Fig 03-041</figcaption>
+          </figure>
+          <h3>34 Update Local Packages</h3>
+          <p>To show dependencies that are out of date:</p>
+          <figure>
+            <pre><code class="language-command">npm outdated</code></pre>
+            <figcaption>Fig 03-042</figcaption>
+          </figure>
+          <figure>
+            <img src="images/Fig03-043.PNG"/>
+            <figcaption>Fig 03-043</figcaption>
+          </figure>
+          <p>npm shows the current versions of our dependencies and compares them with what is in the npm registries.
+            The wanted version shown above comes from the dependencies entry we have in the package.json:
+          </p>
+          <figure>
+            <pre><code class="language-json">&quot;mongoose&quot;: &quot;^2.4.2&quot;,</code></pre>
+            <figcaption>Fig 03-044</figcaption>
+          </figure>
+          <p>As discussed previously, in this example the caret character indicates that we can use any version as long
+            as the major version is 2. The latest version 2 release in this example is 2.9.10.
+          </p>
+          <p>The latest version of mongoose in this example has a different major release to the version we currently
+            have installed. In contrast, with underscore both current and latest version are on the same major release -
+            1
+          </p>
+          <p>To update minor and patch releases:</p>
+          <figure>
+            <pre><code class="language-command">npm update</code></pre>
+            <figcaption>Fig 03-045</figcaption>
+          </figure>
+          <p>In this example you will receive the following output:</p>
+          <figure>
+            <img src="images/Fig03-046.PNG"/>
+            <figcaption>Fig 03-046</figcaption>
+          </figure>
+          <p>You can see two updates occurred here. Underscore is updated to the latest version 1.8.3. Mongoose is
+            updated to the latest major 2 release 2.9.10
+          </p>
+          <p>To update dependencies to the very latest versions we need to install:</p>
+          <figure>
+            <pre><code class="language-command">npm i -g npm-check-updates</code></pre>
+            <figcaption>Fig 03-047</figcaption>
+          </figure>
+          <p>The -g flag indicates the package should be installed globally.</p>
+          <p>Now we have a new command line tool called npm-check-updates if you run this:</p>
+          <figure>
+            <pre><code class="language-command">npm-check-updates</code></pre>
+            <figcaption>Fig 03-048</figcaption>
+          </figure>
+          <p>You will see all the outdated packages and their new versions:</p>
+          <figure>
+            <img src="images/Fig03-049.PNG"/>
+            <figcaption>Fig 03-049</figcaption>
+          </figure>
+          <p>Now to update the package.json file</p>
+          <figure>
+            <pre><code class="language-command">ncu -u</code></pre>
+            <figcaption>Fig 03-050</figcaption>
+          </figure>
+          <p>This just updates package.json. Then to install the actual dependencies run:</p>
+          <figure>
+            <pre><code class="language-command">npm i</code></pre>
+            <figcaption>Fig 03-051</figcaption>
+          </figure>
+          <h3>35 DevDependencies</h3>
+          <p>So far all the dependencies we have installed are application dependencies such as mongoose and underscore
+            - our application needs these dependencies in order to function properly.
+          </p>
+          <p>Sometimes we use dependencies that are only required during development. For example:</p>
+            <ul>
+              <li>tools for running unit tests </li>
+              <li>tools for performing static analysis on our code </li>
+              <li>tools for bundling Javascript</li>
+            </ul>
+
+          </p>
+          <p>These dependencies should not go into the production environment where we deploy our application.</p>
+
+          <p>To install dev dependencies:</p>
+          <figure>
+            <pre><code class="language-command">npm i jshint --save-dev</code></pre>
+            <figcaption>Fig 03-052</figcaption>
+          </figure>
+          <p>The --save-dev flag indicates this is a development dependency. You should see jshint has been added to a
+            devDependencies section in package.json:
+          </p>
+          <figure>
+            <img src="images/Fig03-053.PNG"/>
+            <figcaption>Fig 03-053</figcaption>
+          </figure>
+          <p>All dependencies, whether they are application or development dependencies are stored in the
+            node_modules folder. They are only segregated in package.json </p>
+          <h3>36 Uninstalling a Package</h3>
+          <p>To uninstall a package:</p>
+          <figure>
+              <pre><code class="language-command">npm un mongoose</code></pre>
+          <figcaption>Fig 03-054</figcaption>
+          </figure>
+          <p>This will remove the dependency from package.json and the node_modules folder.</p>
+          <h3>37 Working with Global Packages</h3>
+          <p>All the packages that we have installed so far like underscore and jshint are particular to the
+        project where they are installed. There are, however, packages on the npm registry that are not specific to
+            an application. These are often command line tools that you want to access from everywhere. They are not
+          tied to a specific project. npm is an example of one of these global packages - it is a command line tool
+            that can be run from any folder. It is not specific to a given project.</p>
+          <p>Another popular command line tool is AngularCLI. We use this to install a new Angular project.
+          </p>
+          <p>To install a global package:</p>
+          <figure>
+              <pre><code class="language-command">npm i -g npm</code></pre>
+          <figcaption>Fig 03-055</figcaption>
+          </figure>
+          <p>All the commands listed so far work with the global flag. For example here is the command to list all
+            the outdated global packages you run:</p>
+          <figure>
+              <pre><code class="language-command">npm -g outdated</code></pre>
+          <figcaption>Fig 03-056</figcaption>
+          </figure>
+          <p>This lists all the global packages that have been installed:</p>
+          <figure>
+            <img src="images/Fig03-057.PNG"/>
+            <figcaption>Fig 03-057</figcaption>
+          </figure>
+          <p>To uninstall a global package:</p>
+          <figure>
+              <pre><code class="language-command">npm un -g npm</code></pre>
+          <figcaption>Fig 03-058</figcaption>
+          </figure>
+          <h3>38 Publishing a Package</h3>
+          <p>To publish an npm package to the npm registry:</p>
+            <p>Create a new directory (e.g. lion-lib). Now add a package.json by running:</p>
+          <figure>
+              <pre><code class="language-command">npm init --yes</code></pre>
+          <figcaption>Fig 03-059</figcaption>
+          </figure>
+          <p>Add a new file: index.js with the following code: </p>
+          <figure>
+              <pre><code class="language-javascript">module.exports.add = function(a, b) { return a + b }</code></pre>
+          <figcaption>Fig 03-060</figcaption>
+          </figure>
+          <p>If you don't have an account on npmjs.com you will need to run:</p>
+          <figure>
+              <pre><code class="language-command">npm add user </code></pre>
+          <figcaption>Fig 03-061</figcaption>
+          </figure>
+          <p>or if you have already got an account:</p>
+          <figure>
+              <pre><code class="language-command">npm login</code></pre>
+          <figcaption>Fig 03-060</figcaption>
+          </figure>
+          <p>Either way you will be prompted to login. When logged in issue the following command:</p>
+          <figure>
+              <pre><code class="language-command">npm publish</code></pre>
+          <figcaption>Fig 03-061</figcaption>
+          </figure>
+          <p>You will probably receive an error message saying that lion-lib is not on the registry or that you do
+            not have permissions to publish it (if it is there):</p>
+
+          <p>You will need to update the package name in package.json so that it is unique (lion-lib is already in
+            use). You can now run npm publish again.</p>
+          <p>We should now be able to use this package in another node application:</p>
+          <figure>
+              <pre><code class="language-command">npm i lion-lib</code></pre>
+          <figcaption>Fig 03-062</figcaption>
+          </figure>
+          <p>If you look in the node_modules/package.json file you should see more metadata that has been added by
+            npmjs as part of the publish process:</p>
+          <figure>
+            <img src="images/Fig03-063.PNG"/>
+            <figcaption>Fig 03-063</figcaption>
+          </figure>
+          <p>The package will also be listed under dependencies:</p>
+          <figure>
+            <img src="./images/Fig03-064.png"/>
+            <figcaption>Fig 03-064</figcaption>
+          </figure>
+          <p>And in the code (e.g. index.js):</p>
+          <figure>
+              <pre><code class="language-javascript">var lion = require('lion-lib');
+var result = lion.add(1, 2);
+console.log(result);</code></pre>
+          <figcaption>Fig 03-065</figcaption>
+          </figure>
+
+          <h3>39 Updating a Published Package</h3>
+          <p>We will start by exporting a new function from our lion-lib package. In index.js add the following
+            code:</p>
+          <figure>
+              <pre><code class="language-javascript">module.exports.multiply = function(a, b) { return a * b };</code></pre>
+          <figcaption>Fig 03-066</figcaption>
+          </figure>
+          <p>Now we want to publish this new version. If we run:</p>
+          <figure>
+              <pre><code class="language-command">npm publish </code></pre>
+          <figcaption>Fig 03-067</figcaption>
+          </figure>
+          <p>fom the lion-lib folder we receive an error:</p>
+          <figure>
+              <pre><code class="language-command">&quot;You cannot publish over the previously published version 1.0.0: lion-lib&quot;</code></pre>
+          <figcaption>Fig 03-068</figcaption>
+          </figure>
+          <p>Depending on the kind of change we have made the we need to update the version number. In this instance,
+           the change we made was a simple change, not a bug fix, but not a major new version. The API remained the
+            same - the add function was not changed. Any applications dependent on the add function will continue to
+            work. We just added a new feature in the form of the multiply function.</p>
+            <p>For this reason we  will just update the minor version. You could manually update the package.json
+              file or use the npm version command with the major, minor or patch parameters:</p>
+          <figure>
+              <pre><code class="language-command">npm version minor</code></pre>
+          <figcaption>Fig 03-069</figcaption>
+          </figure>
+          <p>then publish to npm:</p>
+          <figure>
+              <pre><code class="language-command">npm publish</code></pre>
+          <figcaption>Fig 03-068</figcaption>
+          </figure>
+          <p>Upon which you should see the following message:</p>
+          <figure>
+            <img src="./images/Fig03-069.png"/>
+            <figcaption>Fig 03-069</figcaption>
+          </figure>
+          <h3>40 Recap</h3>
+          <p>So, in this section, you learned that:</p>
+          <ul>
+            <li>Every Node application has a package.json file that includes
+              metadata about the application. This includes the name of the application, its version, dependencies, etc.</li>
+            <li>We use NPM to download and install 3rd-party packages from NPM registry:</li>
+            <li>All the installed packages and
+              their dependencies are stored under node_modules folders. This folder should be excluded from the source
+              control.</li>
+            <li>Node packages follow semantic versioning: major.minor.patch</li>
+          </ul>
+          <p>Useful NPM commands are:</p>
+          <p>Install a package</p>
+          <figure>
+              <pre><code class="language-command">npm i &lt;packageName&gt;</code></pre>
+          <figcaption>Fig 03-070</figcaption>
+          </figure>
+          <p>Install a specific version of a package</p>
+          <figure>
+              <pre><code class="language-command">npm i &lt;packageName&gt;@ &lt;version&gt;</code></pre>
+          <figcaption>Fig 03-071</figcaption>
+          </figure>
+          <p>Install a package as a development dependency</p>
+
+          <figure>
+              <pre><code class="language-command">npm i &lt;packageName&gt; &mdash;save-dev</code></pre>
+          <figcaption>Fig 03-072</figcaption>
+          </figure>
+          <p>Uninstall a package</p>
+          <figure>
+              <pre><code class="language-command">npm un &lt;packageName&gt;</code></pre>
+          <figcaption>Fig 03-073</figcaption>
+          </figure>
+          <p>List installed packages</p>
+          <figure>
+              <pre><code class="language-command">npm list —depth=0</code></pre>
+          <figcaption>Fig 03-074</figcaption>
+          </figure>
+          <p>View outdated packages</p>
+          <figure>
+              <pre><code class="language-command">npm outdated</code></pre>
+          <figcaption>Fig 03-075</figcaption>
+          </figure>
+          <p>Update packages</p>
+          <figure>
+              <pre><code class="language-command">npm update</code></pre>
+          <figcaption>Fig 03-076</figcaption>
+          </figure>
+          <p>To install/uninstall packages globally, use -g flag</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
+<script>
+import Javascript from "../../../src/components/javascript/Javascript";
+export default {
+  components: {Javascript}
+}
+</script>

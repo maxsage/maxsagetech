@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="UTF-8">
+  <title>Node:js The Complete Guide to Build RESTful APIs (2018)</title>
+  <script src="https://unpkg.com/vue"></script>
+  <link crossorigin="anonymous"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        rel="stylesheet">
+  <link href="prism.css" rel="stylesheet">
+  <script src="prism.js"></script>
+  <style>
+    img {
+      max-width: 100%;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="panel-group">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h2>Section 2: What Does Webpack Do?</h2>
+      </div>
+      <div class="panel-body">
+        <h2>Why Do We Use Build Tools?</h2>
+        <p>Hello and welcome. I'm sure you're just as excited as I am to start writing some actual code around Webpack,
+          but before we start on our first project, I want to answer a couple of quick questions that you might have
+          about Webpack in general. And that is, "what is Webpack?" What is it doing for us and why are we using Webpack
+          at all? Why are we using Webpack now when some number of years ago we seemed to get along just fine without
+          it? So why is Webpack seemingly getting so popular? Let's take a little bit of time to figure out exactly why
+          Webpack is becoming so popular in the web development world, especially around the use of very rich web
+          applications.</p>
+
+        <p>To understand why Webpack is so popular, we need to understand a little bit more about the ecosystem around
+          rich web applications. And note that when I say, "rich web applications", I'm talking about applications that
+          have a lot of dynamic features about them. So we're not just talking about static pictures and static text,
+          we're talking about really dynamic web experiences where you've got menus and buttons that create drop downs
+          and, you know, a lot of content that appears on the screen - very dynamic in nature.</p>
+        <p>So to understand why we are using Webpack, we're going to talk a little bit about server-side templating and
+          single-page applications:</p>
+        <figure>
+          <img src="./images/Fig02-001.PNG"/>
+          <figcaption>Fig 02-001</figcaption>
+        </figure>
+        <p>Server-side templating is a little bit more legacy technology for creating web applications and showing HTML
+          documents to users. In a server-side templating world, we depend on a back-end server. And it doesn't matter
+          what type of server or what language it's written in, it is just some type of server that will create an HTML
+          document and send it down to a user. This HTML document is a fully rendered HTML document - and by "fully
+          rendered", I mean to say it has all the information in it required that a user might want to see. So it'll
+          have text and images and buttons and inputs and all those kind of good things. That's in direct stark contrast
+          to a single-page application approach.</p>
+        <p>In a single-page app world, our server sends down a very bare bones or a skeleton of an HTML document. Once
+          the HTML document loads up, it then goes and grabs a couple of Javascript scripts, and that Javascript is then
+          responsible for assembling a web page to show to the user. So again, this is - you know, we're talking about
+          this stuff to give you a better idea of exactly why we are using Webpack.</p>
+        <p>
+          The takeaway is that in a server-side templating world, we rely upon our server to put together the HTML
+          document and in a single-page app sort of world, we rely upon a big old pile of Javascript code that is being
+          executed on the user's machine to put together our web document, our HTML document. So just to make sure it's
+          really clear about how these two approaches work. In a server-side templating world:</p>
+        <figure>
+          <img src="./images/Fig02-002.PNG"/>
+          <figcaption>Fig 02-002</figcaption>
+        </figure>
+        <p>a user is going to visit our page - that forms - you know, they're going to, like, literally type in an
+          address to their browser and hit enter. That's going to make an HTTP request to the server, they're going to
+          get a HTML document back, then maybe at some point in time, the user clicks a link and that issues a new HTTP
+          request to the server and they get back a new HTML document. So every time that you navigate around the web
+          page inside of a server-side templating world, you're getting back a completely new HTML document.</p>
+        <figure>
+          <img src="./images/Fig02-003.PNG"/>
+          <figcaption>Fig 02-003</figcaption>
+        </figure>
+        <p>In a single-page application world, however, a user is going to visit a page that makes a HTTP request to our
+          server, we send back an HTML document that will also include some number of Javascript scripts. We then allow
+          our front-end framework - be it react or angular, backbone, knockout.js, view.js - whatever it might be. That
+          framework will boot up and it will assemble some amount of HTML on the page to display to the user. And then
+          whenever a user clicks a link to, you know, presumably navigate to another page, we are not getting a brand
+          new HTML document from the server; we are relying upon our front-end framework to show some amount of new
+          content on the screen. So again, the big takeaway here is that we are relying upon Javascript to show some
+          amount of new content on the screen.</p>
+        <p>Now if we think about the popularity of these two frameworks or these two approaches over time:</p>
+        <figure>
+          <img src="./images/Fig02-004.PNG"/>
+          <figcaption>Fig 02-004</figcaption>
+        </figure>
+        <p>this is not an exact chart right here by any means. All I mean to say is that over time, or in the last
+          couple of years, we have started to see the rise of single-page applications. They're starting to get really
+          popular for whenever we have a very dynamic or very rich web experience. Now I do show like a decline of
+          server-side templating here; that is not necessarily true. You know, server-side templating is still
+          extraordinarily popular; it forms the vast, vast, vast majority of websites online, but as far as very dynamic
+          web pages go, we're definitely seeing a trend towards single-page applications.</p>
+        <p>Okay. So why is this all relevant? Why am I talking about this stuff? Well, here's the big takeaway. Here's
+          the really important thing - here is why we use Webpack. In a single-page application world, we are relying
+          upon Javascript code that is being executed on our user's browser to assemble the entire web application:</p>
+        <figure>
+          <img src="./images/Fig02-005.PNG"/>
+          <figcaption>Fig 02-005</figcaption>
+        </figure>
+        <p>So in a single-page application world, we have a huge pile of Javascript that is being shipped down to our
+          user's browser. A tremendous amount - tens of thousands of lines of code. Compared to the server-side
+          rendering world or server-side templating world, however, there used to be very little Javascript code that we
+          would send down to a client because the only Javascript code we would have would be stuff to, like, handle a
+          fancy event - like whenever a user clicks on a button or something like that or a fancy animation. So in the
+          server-side templating world, we didn't have very much Javascript code, but now modern web development is
+          trending towards having this big, gigantic pile of Javascript that gets shuffled down to our user's browser
+          every single time they make use of our web page. And that is starting to get us towards answering the question
+          of why we are using Webpack.</p>
+        <p>Let's take a quick break, come back and figure out exactly what Webpack does to make dealing with this
+          tremendous amount of Javascript code a little bit easier.</p>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
