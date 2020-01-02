@@ -832,68 +832,166 @@ filename: 'bundle.js'</code></pre>
           bundle.js file that was generated to figure out exactly what is going on inside of
           there.</p>
         <h2>The Bundle.js File</h2>
-        In the last section, we successfully ran Webpack over our project, but we saw that the
-        output file was relatively colossal compared to the size of the two JavaScript files that we
-        wrote and included in the actual project. So in this section, we're going to investigate the
-        bundle.js file and figure out exactly what it's doing inside of there. So this is probably
-        going to be the most important section in the whole course, or at least that's just my
-        opinion, because we're gonna get a much better idea of exactly what Webpack is doing under
-        the hood to hook up all of our modules together. So gonna flip back over to my code editor
-        and we're gonna look at that bundle.js file. You'll notice that inside of our project
-        directory, a build file or a build folder was generated, and inside that is our bundle.js
-        file. So, it is specifically called build because that is what we specified inside of our
-        Webpack config file, and it's specifically called bundle.js, again, because that's what we
-        specified in the Webpack config file. So I'm gonna open up the bundle.js file. And the
-        instant I open this thing up, you can see that, wow, there's a lot of code inside of here. A
-        lot of stuff got generated when we ran Webpack. So, rather than kind of crawl through all
-        this code, because I do want to have at least some idea of what Webpack is doing, I've taken
-        the liberty of taking all this code and really cleaning it all up, like removing all the
-        comments, renaming some of the function names, and removing entire functions altogether to
-        kind of simplify what Webpack is doing here. So, I'm going to take some alternate version of
-        this and paste it in. Okay. So, this is not like functional code right here – this is more
-        pseudocode than anything – but this is kind of what Webpack is doing behind the scenes.
-        Okay, so I just want to – we're not gonna actually run this code right here. I just want you
-        to look at it and follow me along as we try to get kind of a sense of what Webpack is doing,
-        Okay? So again, this is not exactly what Webpack is doing but it's pretty darn close. Okay,
-        let's walk through this thing and figure out what's going on. At the top of the file, an
-        array was created called myModules. And, again, I took some liberties with the naming here
-        just to make the stuff a little bit more clear. So looking at this array, it contains two
-        functions. So here is an array, and it contains two functions. And if you look at each
-        function, they both wrap the code that was inside of one of our files. So the first function
-        contains everything that was inside of sum.js, and then the second function contains
-        everything that was inside of index.js. After the array, a variable called entryPointIndex
-        is defined with the starting value of one. This entryPointIndex variable right here, excuse
-        me, points to the index of the array that contains the module that was designated to be our
-        entry point. So because our entry point was the index.js file, and the function that
-        represents that module is in index one of the myModules array – keep in mind that JavaScript
-        modules are indexed from zero. So the variable entryPointIndex is assigned a value of one
-        specifically to point out the position of index.js inside this array. So Webpack then looks
-        inside to the myModules array to get a reference to that index.js function or the function
-        that represents index.js, and then it executes it. Okay, so this statement down here, it
-        says look into the myModules array, find this function right here, and then execute that
-        function. So we can now kind of imagine that we're sitting inside of this function right
-        here. So this is where things start to get really interesting. Remember that we imported the
-        sum file into index.js. So inside of the index.js function right here or the index.js
-        module, the myModules array is referenced at the zero index, which returns a function, and
-        then that function is executed. So in other words, go and look at the sum.js function,
-        execute it, and whatever returns, assigned to the variables sum. Then, use that function. So
-        what's the takeaway here? The takeaway here is that Webpack takes all of our module's code,
-        stuffs it into individual functions, stuffs those functions into an array, and then calls
-        the different functions in that array. So the end of the day, there is no big magic going
-        on. No magic JavaScript code is being involved here – it is all plain, vanilla JavaScript
-        code that Webpack is spitting out. Because remember, everything Webpack does, eventually is
-        going to presumably run on all the browsers, right? Webpack code is not only running on
-        Chrome version 56 or Chrome version whatever was released two nights ago, it is also running
-        on Internet Explorer 8. So everything Webpack does is, at the end of the day, not using any
-        magic JavaScript code. Now of course, the code that we're looking at right here is a very
-        simplified version of this. The real stuff that you see inside of your bundle.js has a lot
-        more very fancy stuff going on, but a lot of that is mostly to handle some cases around
-        compatibility of different module systems and also handle kind of like caching of modules so
-        that we're not repeatedly calling the same module functions again and again and again. But
-        really, at the end of the day, this is essentially what's going on inside that bundle.js
-        file. Okay, so now we have a better idea of what Webpack is doing to our project, let's
-        continue in the next section.
+        <p>In the last section, we successfully ran Webpack over our project, but we saw that the
+          output file was relatively colossal compared to the size of the two JavaScript files that
+          we wrote and included in the actual project. So in this section, we're going to
+          investigate the bundle.js file and figure out exactly what it's doing inside of there. So
+          this is probably going to be the most important section in the whole course, or at least
+          that's just my opinion, because we're gonna get a much better idea of exactly what Webpack
+          is doing under the hood to hook up all of our modules together.</p>
+        <p>So gonna flip back over to my code editor and we're gonna look at that bundle.js file.
+          You'll notice that inside of our project directory, a build file or a build folder was
+          generated, and inside that is our bundle.js file. So, it is specifically called build
+          because that is what we specified inside of our Webpack config file, and it's specifically
+          called bundle.js, again, because that's what we specified in the Webpack config file.</p>
+        <p>So I'm gonna open up the bundle.js file. And the instant I open this thing up, you can
+          see that, wow, there's a lot of code inside of here:</p>
+        <figure>
+          <img src="./images/Fig02-047.PNG"/>
+          <figcaption>Fig 02-047</figcaption>
+        </figure>
+        <p>A lot of stuff got generated when we ran Webpack. So, rather than kind of crawl through
+          all this code, because I do want to have at least some idea of what Webpack is doing, I've
+          taken the liberty of taking all this code and really cleaning it all up, like removing all
+          the comments, renaming some of the function names, and removing entire functions
+          altogether to kind of simplify what Webpack is doing here. So, I'm going to take some
+          alternate version of this and paste it in:</p>
+        <figure>
+          <img src="./images/Fig02-048.PNG"/>
+          <figcaption>Fig 02-048</figcaption>
+        </figure>
+        <p>Okay. So, this is not like functional code right here – this is more pseudocode than
+          anything – but this is kind of what Webpack is doing behind the scenes. Okay, so I just
+          want to – we're not gonna actually run this code right here. I just want you to look at it
+          and follow me along as we try to get kind of a sense of what Webpack is doing, Okay? So
+          again, this is not exactly what Webpack is doing but it's pretty darn close.</p>
+        <p>Okay, let's walk through this thing and figure out what's going on. At the top of the
+          file, an array was created called myModules:</p>
+        <figure>
+          <img src="./images/Fig02-049.PNG"/>
+          <figcaption>Fig 02-049</figcaption>
+        </figure>
+        <p>And, again, I took some liberties with the naming here just to make the stuff a little
+          bit more clear. So looking at this array, it contains two functions. So here is an array,
+          and it contains two functions. And if you look at each function, they both wrap the code
+          that was inside of one of our files. So the first function contains everything that was
+          inside of sum.js, and then the second function contains everything that was inside of
+          index.js.</p>
+        <p>After the array, a variable called entryPointIndex is defined with the starting value of
+          one:</p>
+        <figure>
+          <img src="./images/Fig02-050.png"/>
+          <figcaption>Fig 02-050</figcaption>
+        </figure>
+        <p>This entryPointIndex variable right here points to the index of the array that contains
+          the module that was designated to be our entry point. So because our entry point was the
+          index.js file, and the function that represents that module is in index one of the
+          myModules array – keep in mind that JavaScript modules are indexed from zero. So the
+          variable entryPointIndex is assigned a value of one specifically to point out the position
+          of index.js inside this array.</p>
+        <p>So Webpack then looks inside to the myModules array to get a reference to that index.js
+          function or the function that represents index.js, and then it executes it:</p>
+        <figure>
+          <img src="./images/Fig02-051.PNG"/>
+          <figcaption>Fig 02-051</figcaption>
+        </figure>
+        <p>Okay, so this statement down here, it says look into the myModules array, find this
+          function right here, and then execute that function. So we can now kind of imagine that
+          we're sitting inside of this function right here. So this is where things start to get
+          really interesting.</p>
+        <p>Remember that we imported the sum file into index.js. So inside of the index.js function
+          right here or the index.js module, the myModules array is referenced at the zero
+          index:</p>
+        <figure>
+          <img src="./images/Fig02-052.PNG"/>
+          <figcaption>Fig 02-052</figcaption>
+        </figure>
+        <p>
+          which returns a function, and then that function is executed. So in other words, go and
+          look at the sum.js function, execute it, and whatever returns, assigned to the variable
+          sum. Then, use that function.</p>
+        <p>So what's the takeaway here? The takeaway here is that Webpack takes all of our module's
+          code, stuffs it into individual functions, stuffs those functions into an array, and then
+          calls the different functions in that array. So the end of the day, there is no big magic
+          going on. No magic JavaScript code is being involved here – it is all plain, vanilla
+          JavaScript code that Webpack is spitting out. Because remember, everything Webpack does,
+          eventually is going to presumably run on all the browsers, right? Webpack code is not only
+          running on Chrome version 56 or Chrome version whatever was released two nights ago, it is
+          also running on Internet Explorer 8. So everything Webpack does is, at the end of the day,
+          not using any magic JavaScript code.</p>
+        <p>
+          Now of course, the code that we're looking at right here is a very simplified version of
+          this. The real stuff that you see inside of your bundle.js has a lot more very fancy stuff
+          going on, but a lot of that is mostly to handle some cases around compatibility of
+          different module systems and also handle kind of like caching of modules so that we're not
+          repeatedly calling the same module functions again and again and again. But really, at the
+          end of the day, this is essentially what's going on inside that bundle.js file.</p>
+        <p>Okay, so now we have a better idea of what Webpack is doing to our project, let's
+          continue in the next section.</p>
         <h2>Running the App</h2>
+        <p>The lesson you want to do for our project right now is figure out how to actually run our
+          tiny app inside the browser. So we're going to very soon start adding in a couple more
+          features on the Webpack side that are very important that we will test inside the browser
+          as well. So it's really important that we figure out how to actually run this bundle.gs
+          thing inside the browser.</p>
+        <p>The first thing that I'm going to do is, I'm going to rerun Webpack over my project just
+          to overwrite all these, you know, this kind of funky change that I did inside of here. So
+          I'm going to close out this file and, you know, just me personally, I'm going to
+          rerun:</p>
+        <figure>
+          <pre><code class="language-command">npm my build</code></pre>
+          <figcaption>Fig 02-053</figcaption>
+        </figure>
+        <p>
+          Assuming you didn't change your bundle.js file you should not have to run it but, you
+          know, again I just want make sure that I show that stuff inside of here.</p>
+        <p>OK. So to run our code inside the browser we're going to create a single html file that
+          will have exactly one purpose, and that purpose is to load up the bundle.js file that is
+          created. Then we can open up that html document inside of our browser. It should load up
+          our bundle and automatically execute it. OK. So let's give it a shot.</p>
+        <p>So I'm gonna go back over to my code editor, and I'm going to make a new file inside of
+          my root project directory. Now, by convention, in Webpack projects we usually have just
+          the single html document because it is a single page application which really only
+          requires a single html document and by convention we usually call it index.html. OK. So
+          inside of index.html we're going to add the bare minimum amount of html required to get
+          this thing loaded in the browser.</p>
+        <figure>
+          <img src="./images/Fig02-053.PNG"/>
+          <figcaption>Fig 02-053</figcaption>
+        </figure>
+        <p>First, I'm going to declare a head tag. I'll put in a body tag and then inside the body
+          tag I'm going to add a script tag as well. So I'm gonna say script and we're going to
+          point this at the bundle.js file that got generated and placed inside of the build
+          directory. So we'll say source, build/bundle.js and then I'll close off the script
+          tag:</p>
+        <figure>
+            <pre><code class="language-html">&lt;head&gt;
+&lt;/head&gt;
+&lt;body&gt;
+	&lt;script src=&quot;build/bundle.js&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;</code></pre>
+          <figcaption>Fig 02-054</figcaption>
+        </figure>
+        <p>OK. So now when we should be able to open up this file in the browser and see the console
+          log statement that we had added inside of the index.js file. Remember we console.log the
+          total. So I'm going to open this file up inside of my browser. There's many different ways
+          you can do this in OSX if that's what you're running right now. You can just run open
+          index.html. If you're running on Windows you can just open up the project directory inside
+          of Windows Explorer, and just double click on the index.html file.</p>
+        <p>All right, so that should open up the index.html file. And, of course, right now we have
+          absolutely no content to show on the screen. The only thing that should really, kind of
+          evidence that we're actually loading the script tag, is a console log statement of 15 or
+          whatever your total should be:</p>
+        <figure>
+          <img src="./images/Fig02-055.PNG"/>
+          <figcaption>Fig 02-055</figcaption>
+        </figure>
+        <p>So you can open up that javascript console by right clicking anywhere on the page, and
+          then clicking inspect, and then you'll click the console tab at the top, and you should
+          see the 15 right there. So again, I just wanted to put our script tag into this html file
+          'cause now we can start looking at some ways or some of the more complex features around
+          webpack that specifically involved the browser. So let's talk about our first advanced
+          feature in the next section.</p>
       </div>
     </div>
   </div>

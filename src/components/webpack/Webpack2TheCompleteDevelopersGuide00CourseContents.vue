@@ -66,10 +66,17 @@
               <a target="_blank"
                  href="../../../static/webpack/01WebPack2TheCompleteDevelopersGuide/webpack2-the-complete-developers-guide-section-05.html" >Section 5: Applying Webpack to a Real Project</a><br />
               <ol start="29">
-                <li>Introduction to Code Splitting</li>
-                <li>Codesplitting in Practice</li>
-                <li>On Demand Code Loading</li>
-                <li>System Import Calls</li>
+                <li>A Real World Project</li>
+                <li>Setting Up Babel</li>
+                <li>Minimum Webpack Config</li>
+                <li>Vendor Asset Caching</li>
+                <li>More on Vendor Caching</li>
+                <li>Refactoring for Vendor Splitting</li>
+                <li>Effect of Code Splitting</li>
+                <li>Troubleshooting Vendor Bundles</li>
+                <li>Chunk Hashing for Cache Busting</li>
+                <li>Cache Busting Wrap up</li>
+                <li>Cleaning Project Files</li>
               </ol>
             </li>
             <li>
