@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="UTF-8">
+  <title>WebPack 2 The Complete Developers Guide</title>
+  <script src="https://unpkg.com/vue"></script>
+  <link crossorigin="anonymous"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        rel="stylesheet">
+  <link href="prism.css" rel="stylesheet">
+  <script src="prism.js"></script>
+  <style>
+    img {
+      max-width: 100%;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="panel-group">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h2>Section 4: Building for Performance with Webpack</h2>
+      </div>
+      <div class="panel-body">
+        <h2>Introduction to Code Splitting</h2>
+        <p>At this point, we've walked through some of the more basic behaviors of webpack, including some basic input
+          and output settings, a lot of loaders, and a touch of plugins. So now that we've got a better idea of the
+          basics of webpack, it is time to move on to the much more complicated and certainly more interesting parts of
+          what webpack can do for us. Chief among which is the idea of code splitting.</p>
+        <p>So code splitting is one of the big successes, it's one of the big wins around webpack, and I'm really
+          excited to start talking about it in this section. So in this section, we're gonna talk about exactly what
+          code splitting is and then we're going to wire it up on this very tiny project we have.</p>
+        <p>After we wire it up on this project, we're going to move over to a much more real life application. It's
+          going to be an actual React application complete with tons of different components. We're not going to write
+          the application ourselves, we're just going to kind of download the completed application, but we're going to
+          go back to it and implement a ton of these advanced webpack features on top of it. So, the next stretch of
+          videos is going to be really exciting, really exciting to get started right now.</p>
+        <p>So, let's talk about exactly what code splitting is. I want you to imagine for a second that you're working
+          on a new web application that consists of just two different screens:</p>
+        <figure>
+          <img src="./images/Fig04-001.PNG"/>
+          <figcaption>Fig 04-001</figcaption>
+        </figure>
+        <p>On the first screen on the left, we have a login screen where users are prompted with a login form. After
+          they successfully log in, they are then redirected to a dashboard of sorts, where they see a big collection of
+          charts and graphs, each of which has a ton of logic tied to it with a lot of data tied to it as well. So I
+          want you to think a little bit, maybe a guess, which of these two pages do you think is going to involve a lot
+          of JavaScript code? Or Which one is going to have more JavaScript code attached to it?</p>
+        <p>Well, chances are the login form is probably going to only have just a touch of JavaScript:</p>
+        <figure>
+          <img src="./images/Fig04-002.PNG"/>
+          <figcaption>Fig 04-002</figcaption>
+        </figure>
+        <p>The login form is just that, a form. So some JavaScript code might be getting used to generate a form
+          element, validate the input and send it back to the server. I would estimate, I don't know, maybe 1-300 lines
+          of code at most to put that together. And that 1-300 lines estimate is excluding any supporting libraries. So
+          say, just the form itself with code that we would write ourselves as engineers maybe, you know, 1-300 lines of
+          code.</p>
+        <p>The dashboard, however, has a bunch of charts associated with it. So that can form, who knows, several
+          thousand lines of code just to show the different charts. And then we have to add in the code needed to fetch
+          the data. And we're talking about, probably, one hefty amount of JavaScript to show those different charts on
+          the screen</p>
+        <p>So, we can certainly say that the login page probably has significantly less JavaScript code required to show
+          the login form than the dashboard does. So, think a little bit about what happens when we go to load up all
+          that JavaScript. Like, when a user actually navigates to the login screen. What's really going on there? Well,
+          when we're on the login forms screen we really only need the JavaScript code related to the form. It is not
+          until the user successfully logs in, do we have to even start thinking about loading up the JavaScript code
+          that is associated with showing a dashboard to the user:</p>
+        <figure>
+          <img src="./images/Fig04-003.PNG"/>
+          <figcaption>Fig 04-003</figcaption>
+        </figure>
+        <p>And that's how things would work in an ideal world. Right? We would wait for the user to log in and only
+          after they're logged in will we start to spend time loading up all the JavaScript associated with showing the
+          charts and graphs.</p>
+        <p>And we would take that approach just to preserve, or kind of minimize, the amount of network resources we
+          have to consume to show a login page on the screen. But everything we've looked at so far in the webpack world
+          has featured putting out a single bundle.js file. We have like no idea of division of our outputted codebase
+          just yet. So that is exactly what code splitting is meant to solve. With code splitting webpack allows us to
+          split up our bundle.js output into separate individual files, and then programmatically decide when to load up
+          different pieces of our bundle inside of our codebase. In other words, we can control exactly when we load up
+          different modules to show different code inside of our project.</p>
+        <p>In practice we would say, when a user goes to a login screen, only load up the minimum amount of code to show
+          the login form on the screen. And then once they actually log in and go to the dashboard aha, now it's time to
+          go and fetch all that additional JavaScript code that will be used to show the dashboard.</p>
+        <p>So, you might be thinking, well, Stephen, isn't that going to result in like a big delay in between logging
+          in and actually showing this page? Yes, of course, it is. You know, we are introducing some additional delay
+          in transition between these two screens. But the general thought process behind handling delays, or loading
+          screens, or anything of that sort, is that we want to minimize the amount of loading that a user sees when
+          they first come to our application. When users first come to our application that's really the key moment.
+          That's when you want your app to seem really quick and really snappy because it's going to set the tone for
+          all the rest of the time that the user is making use of your application.</p>
+        <p>Okay, so, let's take a quick break and then we're going to talk about exactly how we're going to modify our
+          existing application to take advantage of code splitting. And we're going to figure out exactly how this whole
+          code splitting system works. So let's take a quick break and we'll figure it out.</p>
+        <h2>Code splitting in Practice</h2>
+        <p>In the last section we discussed the idea of code splitting in Webpack. Webpack allows us to separate our
+          codebase into separate blocks of JavaScript and then only load up certain parts of our codebase when we decide
+          that we actually need it in some particular part of our application.</p>
+        <p>In this section, we're gonna revise our application to work with code splitting, so let's figure out exactly
+          how. So this is a mock up of exactly what our application is going to do:</p>
+        <figure>
+          <img src="./images/Fig04-004.PNG"/>
+          <figcaption>Fig 04-004</figcaption>
+        </figure>
+        <p>and, yes, it's gonna be pretty darn straightforward and simple. When a user first loads up our application,
+          it'll show the screen on the left-hand side. The user is just gonna see a button that says "Click me," and
+          when the user actually clicks it, well, then let's go ahead and show the image. Now this might sound like
+          something that's really straightforward, but this is one of the easiest situations or kinda lowest level uses
+          of code splitting around. So let's figure out exactly how we're gonna use code splitting here.</p>
+        <p>I'm gonna suggest that we're going to have two files that will be used for this whole code splitting
+          process:</p>
+        <figure>
+          <img src="./images/Fig04-005.PNG"/>
+          <figcaption>Fig 04-005</figcaption>
+        </figure>
+        <p>
+          On the one hand, we'll have our index.js file. The index.js file is going to continue to be the entry point of
+          our application. The index.js file is going to import the image_viewer only after the button that it's going
+          to render is going to get clicked on. So index.js will be responsible for showing a button on the screen, and
+          it will attach a click event handler to it. And once that button is clicked, we will only then load up the
+          code that exists inside of the image_viewer. Then the image_viewer itself will be still responsible for
+          showing an image on the screen. So that's the general plan here.</p>
+        <p>So just to make sure everything is really clear, this is kind of the idea of what's going on inside of our
+          app now, or how we're gonna change the app out to be:</p>
+        <figure>
+          <img src="./images/Fig04-006.PNG"/>
+          <figcaption>Fig 04-006</figcaption>
+        </figure>
+        <p>When a user first loads up our application, only the index.js file will be loaded up, and only after a user
+          clicks on that button, are we then going to load up this additional image_viewer file as well which will be
+          responsible for actually showing the image on the screen. So the user is gonna think that the button is
+          responsible for like, actually showing the image, but we know that the button is actually responsible for
+          loading up this additional file which is then going to take over the responsibility of rendering the image on
+          the screen. So let's get started.</p>
+        <p>I'm going to change over to my code editor and then we're gonna start off inside of the index.js file. Right
+          now, we are importing both the sum module and the image_viewer itself:</p>
+        <figure>
+          <img src="./images/Fig04-007.PNG"/>
+          <figcaption>Fig 04-007</figcaption>
+        </figure>
+        <p>So I'm going to say let's just start over from scratch inside this file. I'm gonna take everything that we
+          currently have and just delete it. So we know that if we built our project right now, there would be
+          absolutely no code inside the bundle because, remember, the index.js file is our entry point and even though
+          we have these two other JavaScript files (sum.js and image_viewer.js), they are not imported into our
+          application at any point in time. So the image_viewer and sum.js are currently not included into our
+          bundle.</p>
+        <p>
+          Inside of this index.js, we're going to add in the button creation logic. So we're going to again use some
+          very vanilla JavaScript code here to create this button and render it onto the screen:</p>
+        <figure>
+            <pre><code class="language-javascript">const button = document.createElement('button');
+button.innerText = 'Click me';
+button.onclick = () =&gt; {
+
+};
+
+document.body.appendChild(button);</code></pre>
+          <figcaption>Fig 04-008</figcaption>
+        </figure>
+        <p>This onclick right here is what makes sure that whenever a user clicks on the button, we will execute the
+          code that is gonna be located inside this function. So, in theory, inside this function right here is where
+          we're going to want to place some amount of logic that says, "Hey, go find the image_viewer module and load it
+          up."</p>
+        <p>Do make sure that you've got lowercase onclick here. If you come from a background of using React, you're
+          probably very used to writing a capital C. When we're using vanilla HTML events, we do not use a capital C, it
+          is lowercase, so onclick lowercase all the way through.</p>
+        <p>Now after creating the button and assigning the innerText and onclick properties, we make sure that this
+          thing actually ends up inside the DOM. So we'll just call document.body.appendChild and append the button to
+          it.</p>
+        <p>So this looks like a good start. Let's take a quick break and then come back and figure out how to set up
+          this whole code splitting system.</p>
+        <h2>On Demand Code Loading</h2>
+        <p>In the last section, we created a button inside of our index.js file and assigned a click event handler to it
+          and then rendered it to the DOM. Remember, our intent here is that when a user clicks on the button, we should
+          load up our image_viewer module.</p>
+        <p>So to import the image_viewer module only after the button has been clicked, we're going to add a call inside
+          of this event handler to a function called System.import, and then we're gonna pass in a reference or a path
+          reference to the file that we want to import:</p>
+        <figure>
+            <pre><code class="language-javascript">const button = document.createElement('button');
+button.innerText = 'Click me';
+button.onclick = () =&gt; {
+    System.import('./image_viewer').then(module =&gt; {
+        console.log(module);
+    });
+};
+
+document.body.appendChild(button);</code></pre>
+          <figcaption>Fig 04-009</figcaption>
+        </figure>
+        <p>So we say in the same directory, represented by './', look for image_viewer, like so. Now notice that we have
+          not imported any module into this file or any variable called System, so System is a global variable inside of
+          JavaScript. System.import is a special function that is a part of the ES2015 module spec:</p>
+        <figure>
+          <img src="./images/Fig04-010.PNG"/>
+          <figcaption>Fig 04-010</figcaption>
+        </figure>
+        <p>When we place the System.import call, we pass in the name of the module that we want to import. The button
+          will then, or simply the browser will then reach out to our server and try to find this module. So in
+          practice, once a user clicks on our button, that's going to call System.import, and then the browser is gonna
+          reach back out to the server and say, "Hey, I'm looking for that image_viewer module. Can you find it for me?
+          Like, it's got to be somewhere." The server will hopefully find the image_viewer module and send it back to
+          the client. And once it comes back to the client, we then have the opportunity to execute the image_viewer
+          module and any code inside of it.</p>
+        <p>Now keep in mind that the System.import call that we just added is only pulling in a single module of code,
+          right? We're only grabbing the image_viewer module right now. But, if the image_viewer module itself had
+          import statements of its own, those would be also pulled in as well. So even though we're only importing, to
+          us, apparently like a single JavaScript module, we could in theory be pulling in like dozens of different
+          modules that this image_viewer depends upon. Right now, just to be clear, our image does not depend on any
+          other code, but it's entirely probable or even likely that the image_viewer could have its own import
+          statements as well. And if it did, all of those additional modules would come down with the image_viewer when
+          we got that additional script.</p>
+        <p>So, let's go back over to our code. When we call System.import right here:</p>
+        <figure>
+          <pre><code class="language-javascript">System.import('./image_viewer')</code></pre>
+          <figcaption>Fig 04-011</figcaption>
+        </figure>
+        <p>it reaches out to our server, which is inherently an asynchronous call. In other words, it takes some amount
+          of time for the browser to reach out to the server and try to find that additional script. So because it is
+          some async code, the System.import call returns a Promise. So, to get access to that module when it's finally
+          been loaded up, we're going to add on a.then statement, which is a part of JavaScript Promises, and then we'll
+          pass it an arrow function to execute after the module has been loaded:</p>
+        <figure>
+            <pre><code class="language-javascript">System.import('./image_viewer').then(module =&gt; {
+  console.log(module);
+});</code></pre>
+          <figcaption>Fig 04-012</figcaption>
+        </figure>
+        <p>Notice that we're going to receive that module as a variable called module. So right now, like who knows what
+          that module is. Let's just console.log it and let's see what that thing is, you know, let's get our eyes on it
+          and get a better idea of what the module variable here actually is. Now before we actually run this code, I
+          want to make one more tiny change to our image_viewer component. So this is not a necessity at all, we're
+          going to just edit our image_viewer a little bit just to make it a little bit easier to work with or a little
+          bit easier to, like, figure out what's going on.</p>
+        <p>Okay, so, this is not a required step whatsoever, it's just something that we're going to do to make it a
+          little bit easier to figure out what's happening. Inside of the image_viewer file, we are going to only show
+          the small image, and rather than just instantly showing an image on the screen, the instant that this file is
+          executed, we are going to instead export a function that we can call to have the image appear on the screen.
+          So again, this is not a required part of setting up code splitting. This is just something we're doing to make
+          figuring out what's going on with code splitting a little bit more straightforward. So I'm gonna take out all
+          the logic having to do with the big image:</p>
+        <figure>
+          <img src="./images/Fig04-013.PNG"/>
+          <figcaption>Fig 04-013</figcaption>
+        </figure>
+        <p>So I'm gonna delete the lower couple of lines, I'm gonna take out the import big statement at the top, and
+          I'm going to wrap the logic to place an image on the screen inside of a function that we will immediately
+          export. So let's say export default. I'm gonna wrap all this logic inside of an arrow function, like so:</p>
+        <figure>
+            <pre><code class="language-javascript">export default () =&gt; {
+  const image = document.createElement('img');
+  image.src = small;
+
+  document.body.appendChild(image);
+};</code></pre>
+          <figcaption>Fig 04-014</figcaption>
+        </figure>
+        <p>
+          Okay, so, I know I've said it twice now, but again we did not have to do this, I just wanted to make sure that
+          when this actually executed in the browser, we can see that the module comes in as, like, an exported thing
+          with some amount of data on it. Let's just, let's run this inside our browser, and you'll get a better idea of
+          why we just did this. So let's take a second to change over to our Terminal to rebuild the project – so we'll
+          run:</p>
+        <figure>
+          <pre><code class="language-command">npm run build</code></pre>
+          <figcaption>Fig 04-015</figcaption>
+        </figure>
+        <p>And to make sure that this doesn't turn into too long a section, let's take a quick break and we'll come back
+          and see what this looks like inside the browser.</p>
+        <h2>System Import Calls</h2>
+        <p>In the last section, we set up some code splitting inside of our application and then refactored the
+          image_viewer to not automatically render an image to the DOM once it was loaded. Instead, the module is now
+          exporting a function that we can call to render something to the DOM.</p>
+        <p>So we just rebuilt our project. So let's flip over to the browser and see how this is working inside the
+          browser now. So I'm gonna make sure that I open up my JavaScript inspector again – so here's my console. And I
+          will go ahead and refresh the page now, and we're gonna see what happens:</p>
+        <figure>
+          <img src="./images/Fig04-016.PNG"/>
+          <figcaption>Fig 04-016</figcaption>
+        </figure>
+        <p>So when I refresh the page, I now see that button on the screen, which is exactly what I expect. Let's go
+          ahead and click it. So when we click it, doing so will trigger that system.import call to load up the
+          image_viewer module and then console log whatever that module is:</p>
+        <figure>
+          <img src="./images/Fig04-017.PNG"/>
+          <figcaption>Fig 04-017</figcaption>
+        </figure>
+        <p>So here's the console log right here. If we expand that thing and take a look at what it contains, you'll
+          notice that it has a single accessible property on it called default. So default right here is that function
+          that we just created and exported from the image_viewer file.</p>
+        <p>So in practice, inside of our callback on that button handler, if we call module.default like so:</p>
+        <figure>
+          <img src="./images/Fig04-018.PNG"/>
+          <figcaption>Fig 04-018</figcaption>
+        </figure>
+        <p>that should execute our image_viewer function and place an image on the screen. Now before we do that,
+          there's one other thing that I want you to see really quick to get a better idea of what's going on behind the
+          scenes with all of this code splitting business.</p>
+        <p>Inside of my Chrome console over here, I'm going to change over to the Network tab and I'm going to filter my
+          network request to only show JavaScript files that have been loaded up. Now I'm going to refresh the browser.
+          Okay, so, the instant I refresh the browser, you'll notice that at this point we have only loaded up a single
+          file called bundle.js:</p>
+        <figure>
+          <img src="./images/Fig04-019.PNG"/>
+          <figcaption>Fig 04-019</figcaption>
+        </figure>
+        <p>which for us is totally expected. That is completely what I would expect at this point. But when we click the
+          button, we get a second JavaScript file that comes back from the server:</p>
+        <figure>
+          <img src="./images/Fig04-020.PNG"/>
+          <figcaption>Fig 04-020</figcaption>
+        </figure>
+        <p>So, clearly, there are now, seemingly, two different bundle.js files. Let's look back over to our code editor
+          and take a look at the contents of both of them and figure out what's going on. So we're gonna go back over to
+          my code editor, and inside of my build directory, I'm gonna first open up that bundle.js file:</p>
+        <figure>
+          <img src="./images/Fig04-021.PNG"/>
+          <figcaption>Fig 04-021</figcaption>
+        </figure>
+        <p>So when I open this thing up, you're gonna see that there is a lot more code inside of this file than what
+          there was before, when we had previously looked at the bundle.js. Inside of here, the first thing that I see –
+          maybe it's slightly different for you, it may or may not – but you'll see that there is some stuff in here
+          about a Jsonp callback for chunk loading. So when you enable code splitting inside of your application,
+          Webpack is not like it is not magic that is going on here. The browser is not just kind of inherently figuring
+          out, oh, they've got some System.import calls. No, not at all. When you enable code splitting, which is done
+          just by adding a System.import call, Webpack is going to automatically change the code that is exported from
+          your application, and in some cases, inject some additional amount of code as well.</p>
+        <p>So in this case, because we are making use of code splitting in our application, Webpack has added in a bunch
+          of logic to figure out how to go and fetch modules off the server, and that's what all this Jsonp stuff that
+          you see is right here. Now if we scroll down again, and you'll find if we keep scrolling down, you'll see some
+          stuff in here about handling script tags:</p>
+        <figure>
+          <img src="./images/Fig04-022.PNG"/>
+          <figcaption>Fig 04-022</figcaption>
+        </figure>
+        <p>This is some amount of logic to say, hey, create a new script tag, go and try to find this additional chunk
+          or this additional script off the server, and try to load it up off the server. So if we keep scrolling down
+          though, we'll eventually come across – ah, here we go. So here is the list of all the modules under the – you
+          know, if you recall we had zero and one and all that kind of good stuff. So inside of here, this is the
+          index.js module:</p>
+        <figure>
+          <img src="./images/Fig04-023.PNG"/>
+          <figcaption>Fig 04-023</figcaption>
+        </figure>
+        <p>So clearly, index.js module is still inside of bundle.js. Let's now take a look at the 0.bundle.js file. And
+          so when we open this one up, you can scroll down just a little bit. And now inside of here, you'll find all
+          the logic around creating our image:</p>
+        <figure>
+          <img src="./images/Fig04-024.PNG"/>
+          <figcaption>Fig 04-024</figcaption>
+        </figure>
+        <p>So here is everything from the image_viewer.js file. So it's pretty much it – like the code that we write
+          inside of our application is quite literally being split off into two separate bundle.js files.</p>
+        <p>Now the last thing that I want to say about what Webpack is doing with our code here is that there is not a
+          whole lot of magic around the System.import call itself:</p>
+        <figure>
+          <img src="./images/Fig04-025.PNG"/>
+          <figcaption>Fig 04-025</figcaption>
+        </figure>
+        <p>And what I mean by that is that you kind of notice that just by calling System.import, Webpack decided to do
+          all this bundle.js stuff differently. So when we add in any System.import call into our code and Webpack
+          processes it, Webpack is going to automatically search through our codebase for any calls to System.import. So
+          in that regard, it's kind of like a very kind of stupid system in some respects. Like, Webpack is quite
+          literally looking for calls to System.import, and if it sees a call to System.import, it's going to add in all
+          that additional code.</p>
+        <p>Okay, so I think that's quite a bit for right now on code splitting. The last thing we're going to do is make
+          sure that when our module is actually loaded up, we're going to call module.default, which is gonna call our
+          image_viewer function and show our image inside the browser. So let's replace the console log call with
+          module.default, then we'll save it:</p>
+        <figure>
+          <img src="./images/Fig04-026.PNG"/>
+          <figcaption>Fig 04-026</figcaption>
+        </figure>
+        <p>Let's rebuild our project:</p>
+        <figure>
+          <pre><code class="language-command">npm run build </code></pre>
+          <figcaption>Fig 04-027</figcaption>
+        </figure>
+        <p>We'll change over to the browser again. Let's refresh the page, and again we see that we get just bundle.js
+          here:</p>
+        <figure>
+          <img src="./images/Fig04-028.PNG"/>
+          <figcaption>Fig 04-028</figcaption>
+        </figure>
+        <p>And now when we click the button, we're going to fetch that additional script. Once the script has been
+          fetched, our index.js is going to call the function that it exports and show the image on the screen:</p>
+        <figure>
+          <img src="./images/Fig04-029.PNG"/>
+          <figcaption>Fig 04-029</figcaption>
+        </figure>
+        <p>Okay, so this has been the simplest possible example of code splitting. In the later section, we're gonna
+          walk through a much more realistic application that uses React and React Router, and we're gonna figure out
+          how to implement code splitting in a much more realistic application.</p>
+        <p>So, let's continue with our next Webpack topic in the next section, and eventually we'll come back to code
+          splitting and talk about how we apply it in the React world. So I'll see you in the next section.</p>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

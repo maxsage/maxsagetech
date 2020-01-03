@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="UTF-8">
+  <title>WebPack 2 The Complete Developers Guide</title>
+  <script src="https://unpkg.com/vue"></script>
+  <link crossorigin="anonymous"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        rel="stylesheet">
+  <link href="prism.css" rel="stylesheet">
+  <script src="prism.js"></script>
+  <style>
+    img {
+      max-width: 100%;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="panel-group">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h2>Section 5: Applying Webpack to a Real Project</h2>
+      </div>
+      <div class="panel-body">
+        <h2>A Real World Project</h2>
+        <p>Now that we've had a look at code splitting on a small scale, let's move up to a larger application and work
+          on, not only code splitting, but many other advanced features of Webpack as well. In this section, we're going
+          to download and set up a test project built with React that will allow us to figure out many of the more
+          advanced features of Webpack that we can't quite effectively test on a project as small as the one that we've
+          been working on. Many of these features will really only make sense on larger projects so rather than build a
+          whole app from scratch ourselves, we're going to use an existing completed one. Again, this is a course about
+          Webpack, not building React apps so we're going to focus mostly on the Webpack side of things. OK. So the web
+          project that we're going to work with is hosted on github already. I'm going to open up my browser and we're
+          going to go check out the repo that it's hosted in. So I'm going to navigate to github.com, then my name which
+          is Steven Grider and the repository name which is Webpack project, like so. Now, once here, we can download or
+          clone the repository so find the green button on the right hand side. I'm going to click it and we can either
+          download it as a zip file or clone it directly. I'm going to go with cloning it directly by using git. So I'm
+          going to copy the link that's right here and I'm going to change back over to my terminal. Now I'm going to
+          make sure, either way, either if you're cloning this or downloading it as a zip file, I do not want to place
+          it in my js modules directory which is the project that we've been working on all this time. So I want make
+          sure I do not put it inside of here. So I'm going to go up one directory and go back into my workspace
+          directory which for me I call prod. And then inside of here we can download the repository or clone it by
+          running git clone--. Oops, not prod. Let me grab the link one more time. Sorry. There we go, "get clone" and
+          then the link. Which essentially is going to be the github link and dot git on the end. OK. So we will run
+          this and after cloning it, I'm then going to change into that directory and then we'll start installing
+          dependencies. So I've already got a tremendous number of dependencies set up inside this application. Really,
+          when I say it's like a complete app, it really is a complete app. So we can install all the dependencies that
+          are tied to this project by running the command npminstall. Now, there's definitely a handful of dependencies
+          here so it's going to take a little bit to install. Let's pause for a moment and let these things install and
+          I'll see you in just a second after the installation is complete.</p>
+        <h2>Setting Up Babel</h2>
+        <p>In the last section, we cloned a new project that we're going to experiment upon with some different Webpack
+          concepts. So we cloned the project and then we installed all the dependencies related with it. I'm now going
+          to open up my code editor inside of the project directory. And let's take a minute to kind of walk through it
+          and see what we're working with here. You'll notice that a lot of the folders and files on the left-hand side,
+          or inside of the project, are very similar to the ones we've been working with so far. So we've got a source
+          folder, a style folder, we've got an index HTML, package JSON, and Webpack config file. You'll also notice
+          that there is a database folder in here; this is tied to some of the data that is included inside this
+          project. And you'll see why this database folder is in here in just a moment. Let's open up the Webpack config
+          file and the package.json file and see what we have to work with. So inside the package.json file, you'll
+          notice that we've already got a script in here for building the project. So underneath the script section,
+          yep, build Webpack is already inside of here. If we scroll down a little bit more and go down to the
+          devDependencies section, you'll see that we've already got a lot of dependencies related to Webpack in
+          handling CSS and a bunch of stuff for handling babel as well. So, already have all the dependencies there as
+          well. Let's look at the Webpack config file now. So inside the Webpack config file, there is very little code
+          inside of here right now. There is absolutely nothing having to do with loaders, even though this project
+          definitely needs babel and a CSS loader tied to it. So our first order of business is going to be to fix up
+          this Webpack config file and add in both babel and styling in the pipeline. So let's get started on that in
+          this section. After we kind of get this Webpack config file up to the absolute basics, we'll then be able to
+          talk about some of the other aspects of this application that will be changing over time. OK, so let's get to
+          it. We'll start off by first adding in our babel loader. Remember the process for this: we first define a
+          module section of our config file, we'll add the babel loader, and then we'll add in a.babel RCFile into our
+          project to tell babel exactly what presets to use. So we'll first start off with our module section. Inside of
+          here, we have the rules property, which will be an array of different rules. So our first rule is going to be
+          using the babel loader. Don't forget, we're going to assign the test property in here as well, and that test
+          property is going to be used to decide whether or not babel needs to run on a particular file. So we'll pass
+          in the regex, remember the one? dot, forward slash, dot, js, dollar sign, forward slash - like so. We're also
+          going to add one more property around this time that we have not spoken about previously. And I'm sorry to
+          kind of spring this on you, you know, to come back to the topic of rules and spring this additional property
+          on you, but I'll tell you exactly what we're doing with it. So we're gonna add in another property called
+          exclude, and we're going to give it a regex that looks for the string node modules. So we've got forward
+          slash, node modules and then forward slash. The purpose of exclude right here is to say do not try to apply
+          babel to any files that are located inside of the node modules directory. So our assumption here is that all
+          the files that are inside the node modules directory that we might be importing have already been transpiled
+          to be ES5 code. And so the assumption is that we do not have to run babel on them. Now we absolutely can. We
+          can very safely run babel on all the files that are inside of there. No issues will come up. The reason that
+          we're not going to is that it would just be a waste of resources. Right? If we assume that babel is - or
+          excuse me - if we assume that all the files inside of there are already in ES5 format, then running babel on
+          there, which is designed to transpile code to ES5, is not gonna do anything for us. OK. So that should be it
+          for our babel loader. Let's take a quick break and continue with our babel RCFile inside the next section.</p>
+        <h2>Minimum Webpack Config</h2>
+        <p>In the last section, we started working on a new project by setting up some bare minimum amount of Webpack
+          configuration. We just set up the Babel configuration and now we need to finish it off by creating the.babelrc
+          file. Remember, this is the file that instructs Babel on which pieces of syntax it should try to transform
+          inside of our codebase. So inside of our root project directory, we're going to make our new file
+          called.babelrc - like so. Then inside of it, we're going to tell it to make use of the preset called
+          babel-preset-env - like so. Now this time around, we're also going to add in one additional preset in here as
+          well, called react. So as I had mentioned, this is a react-based application. The babel-preset-env preset
+          right here only takes care of ES6 to ES5 transpolation and also handles a couple of pieces of syntax from
+          ES2016 and 2017. And just to be clear, whenever I say ES6, it is solely out of habit - it is officially now
+          called ES2015. Anyways, the one thing that these presets do not do is handle the transpolation of JSX over to
+          raw JavaScript. And so that is the purpose of this react preset right here. The react preset has already been
+          installed into our project. If we open up the package.json file and scroll down to the devDependencies
+          section, you'll see the babel-preset-react inside of here. So again, that preset is inside of here solely to
+          handle the react code inside this codebase. Okay. I think that just about wraps up our babel pipeline. The
+          last thing we have to do is now add in an additional loader to handle the CSS and style loaders for all the
+          CSS that this project has. We can find some of that styling inside of the style directory of the project. So
+          inside of here, you'll find materialize, react-range and style.css. So rather than using the extract tag
+          plugin, this time around we're going to rely solely upon the style loader and the CSS loader. And there's a
+          very good reason for that, which we will talk about in just a little bit after we finish our next topic or
+          three. So let's add in our additional loader for handling the CSS as well. I am going to make sure I place a
+          comma after our existing rule and then we will add in our rule for handling the CSS. So we'll say use
+          style-loader and css-loader. Remember, css.loader allows Webpack to understand and read the contents of CSS
+          files that are imported into our project structure. And then this style-loader takes all those CSS modules and
+          sticks them into a style tag inside of our index.html document. We will also remember to add on the test
+          property to make sure that we only run this on CSS files and dollar sign. There we go. All right. So that
+          should be it - everything we need to get our project running. So remember how we build our project - NPM run
+          build. I am going to change back over to my terminal and we will run "npm run build" on this project. Now this
+          is a much larger project. There is much, much more code inside this codebase. So when we run this step right
+          here, it's actually to take a fair amount of time for Webpack to actually build something for us to use.
+          You'll notice that when Webpack finishes running, we start to get a lot of yellow warnings inside of here
+          about general size limits. So it's telling you here that recommended size limit is 250 kilobytes and the
+          bundle that we have generated is a whopping gigantic 3.28 megabytes. That is gigantic in the context of a
+          react application. So in this section, the primary goal that we're going to run through is figuring out all
+          the different ways that we can use Webpack to minimize the size of our built bundle.js. So 3.28 - way too
+          large, we need something smaller than that. So let's now open up our application inside the browser. We're
+          going to take a look at what this application does and then we're going to continue in the next section and
+          think about how we can reduce the size of this output file. So I'm going to open up the index.html document
+          and we'll take a look at what this thing does. So the instant we open up the index.html document, you're going
+          to see a little bit from what's going on. You'll notice that there's a big list of apparently people on here.
+          This application is meant to kind of be like a music management application of sorts. So all the people in
+          here represent an artist of sorts or like a singer or musician of some sort. And so we can look at the number
+          of albums they've released. We can also look at details about each individual artist. So like the years old,
+          they're net worth and some albums they've worked on. We can edit each individual artist if we so choose. We
+          can delete them if we want to. We can do search, filtering, random artists - all this different stuff. So all
+          inside this single application. The functionality of this application - again, not really important. It's not
+          what we really care about. The reason we're using this app is that there are clearly distinctly different
+          pages of content that are going on here, like distinctly different areas of the application. And so any time
+          that you have different pages inside your application, you might be thinking hmm, maybe code splitting would
+          be appropriate here. And so that's why we're going to use this app in particular as we start to think about
+          code splitting inside of our application. Okay. So we've now got a better idea of what this application does
+          and more importantly, we can successfully build and run it inside of our browser. So let's continue in the
+          next section and start thinking about how we can improve the build performance and the output - the size of
+          the outputted bundle.js file inside of this application using Webpack. So I'll see you in the next
+          section.</p>
+        <h2>Vendor Asset Caching</h2>
+        <p>In the last section, we got a basic Webpack configuration put together for our application but when we saw it
+          built, we saw a lot of output complaining about the final size of our project. It said that the final size was
+          really large and it could impact the performance of our project. So in this section, we're gonna start
+          thinking about some different strategies that we can use with Webpack to improve the bundle size of our app.
+          Now the first thing I want to mention here is that optimizations with Webpack have nothing to do with the
+          runtime performance of our application. So Webpack doesn't make like, say, fetching data faster or rendering a
+          chart faster or anything like that. Instead, Webpack is all about helping us with the amount of time that it
+          takes to load up our JavaScript dependencies of our application. Remember, in modern web applications, we are
+          starting to end up with big piles of JavaScript, and so these are going to be some techniques that have been
+          developed to help us deal with the end size of this whole bundle.js file. So, let's talk about the first
+          technique that we're going to use to reduce the size of our output bundle.js file. The first technique that
+          we're going to look at will revolve around splitting up our codebase into two big separate chunks of files, or
+          JavaScript, using code splitting. So we had just looked at code splitting previously and we saw that we can
+          use it to kind of delay the load-up of certain modules inside our application. Using code splitting, we are
+          going to look at taking all of the code that we are writing for our project and separating it out from all of
+          the vendor-related code or third-party module code. And so, in this vendor code over here, we might place,
+          say, React.js or Lodash or Redux or Redux Form or Angular or any other third-party type of library. And then
+          this other bucket will place all the code that we write, so like Index.js or SearchList, you know, this is
+          just a random file out of the application that we're working on right now, but you can imagine any other
+          JavaScript file inside of our codebase. So, we're going to take all of our code, all of the code we write,
+          we're gonna put in this one bucket. We're going to take all of our vendor-related code and put it in this
+          other bucket. So, what impact is that gonna have on our application? What is that really gonna do for us when
+          we go to load up our app? Well, let's think about it a little bit. To understand how that is going to help us
+          with the load time of our application, we need to first understand how browser caching of assets work. So, I
+          want to walk through the process of when a user first visits our application and then visits our application
+          again at some point in the future. When a user first visits our application and they make a reference or
+          request for a single JavaScript file, like we'll call it file_a, or it could be bundle.js or any asset that
+          our application is trying to load up, the browser will automatically ask the question, "Hey, have I ever
+          downloaded this exact file before?" So the browser will reach out to our server and say, "Hey, have I ever
+          gotten file_a.js?" If it has or, excuse me, I should say if it hasn't, the browser will say, "OK, I've never
+          received this file before. I've never grabbed it before. So, you know what? I'm gonna go ahead and download
+          it." Then, any time in the future that the user comes back to our application, their browser will
+          automatically attempt to ask the question, "Hey, have I ever tried to receive file_a.js before?" And in this
+          case, yes, we have fetched it, and perhaps the browser still has a local copy of that file downloaded. And so,
+          the browser says, "Yep, I've downloaded this before. Great. I'm not gonna download anything whatsoever." So
+          this is how asset caching works in your browser. If you've ever heard the classic technical advice or
+          troubleshooting advice of "Hey, clear your cookies and your cache inside your browser," this is the caching
+          system that is being described. So again, the browser is automatically making use of caching for us, and this
+          is across all different major browser vendors. So we can exploit this system right here a little bit to get
+          some much faster loading of data inside our application. Let's take a quick break and then come back in the
+          next section and figure out how we're going to combine code splitting and this file caching system to greatly
+          improve the load time of our application.</p>
+        <h2>More on Vendor Caching</h2>
+        <p>In the last section, we spoke a little bit about how the browser's caching system works, and we had said that
+          we will combine that with this idea of code splitting of our code versus our vendor code to get some
+          performance increase. So in this section, we're gonna figure out exactly how we're going to combine these two
+          concepts to get some performance benefits in our application. I want to ask you a question for a second. I
+          want you to think in your head: if you have included, say ReactJS or AngularJS, like the actual source code
+          for React or Angular or any other library inside of your application, how often do you think you're going to
+          be bumping the version of your dependency? So maybe in January, you start off your project, and in January you
+          first installed ReactJS inside of your module bundle. You know, you install it as a dependency and you import
+          it into your project. So maybe in January, you pull ReactJS into your application. And then time goes on, and
+          time goes on, time goes on, and finally off in May, you finally say, "Hey, you know what? I think it's time to
+          do a little bit of update for React." And so in May, you do your very first update of ReactJS. And the same
+          might be true of all of your other dependencies as well, like say, Redux or Angular or Angular Form or, you
+          know, any other third-party library that you might be making use of. The point is that updates or changes to
+          your vendor dependencies will happen somewhat infrequently. But, how often do you think you update your code?
+          How often do you update the application logic that you, yourself, are writing? Well, updates to our codebase
+          might happen far, far more frequently, like daily or hourly, and we want to update our production bundle, or
+          we want to update our application very frequently. So we can see that, clearly, our codebase is being updated
+          far more frequently than our vendor dependencies are. So this is what is going to lead to some big savings in
+          load time when we start to use code splitting between our application or our personal JavaScript code and our
+          third-party dependencies. So here's what we're going to do. We're going to use some code splitting to create a
+          bundle.js file that represents all of our code, like our application-specific code, and then we'll use some
+          code splitting to generate a vendor.js or this completely separate bundle of JavaScript that represents all
+          the dependencies of our project. Then the first time that a user visits, they're going to grab this vendor.js
+          file and the bundle.js file. And in both cases, because the user has never been to our website before, the
+          browser is gonna say, "Nope, never downloaded this before. I'm gonna download it right now." Now the key is,
+          if the user visits our website like one week from now, you know, like one week, or one month, or whatever it
+          might be – so, whatever next visit that is – when the user comes back, they're gonna look at the bundle.js
+          file and presumably we will have updated our application code. And so we're gonna tell the user's browser,
+          "Hey, yeah, maybe you downloaded this old version of bundle.js but we have updated it since then, like, we
+          deployed some new code like three times since then. And so, although you might have an older copy of
+          bundle.js, we have this fantastic new copy that has a bunch of new features inside of it. So, technically, no,
+          you haven't really downloaded this copy yet so you should really download this new copy." Then the browser is
+          gonna say, ask the same question about vendor.js or this bundle of all of our model dependencies. And in
+          theory, this is updated far, far less frequently. So when a user comes back to our website, you know, one week
+          later, they're gonna say, "Hey, in like the last week, has vendor.js changed?" And the answer is going to be,
+          "Well, no. It hasn't. You've already downloaded this thing before." So, crap, I got the text backwards. Let's
+          flip it. All right. There we go. So, when the browser says, "Have I downloaded this before?" the question's
+          gonna be, "Yes, great. We don't need to download anything." So, that's how we're going to use code splitting
+          along with the browser's caching system to decrease the frequency at which the user needs to re-download this
+          vendor.js file again and again and again. So, yes, the first time the user comes to our website, they're still
+          gonna have to grab this entire big bundle of JavaScript, both our application-specific code and our
+          dependencies, but on every subsequent visit to our website, the user should only have to update the bundle.js
+          file assuming that we have actually changed it. They will sometimes have to re-download this vendor.js file
+          but only when we've actually made an update to our dependencies, so where we've, say, included a new one or
+          deleted one. So, let's figure out how are we going to split up our application and use a little bit of code
+          splitting into these two very specific separate files. Let's take care of that or get started on it in the
+          next section.</p>
+        <h2>Refactoring for Vendor Splitting</h2>
+        <p>In the last section, we spoke a little bit about how we can use code splitting together with browser caching
+          to significantly decrease the amount of time that it takes to load up our application on subsequent visits. So
+          let's flip over to our Webpack config file, and start making some changes to implement this new system. So I'm
+          going to change over to my code editor, and I'm inside of my Webpack config file. Now, one thing I want to
+          make clear before we start changing any coding here, is that I've been talking about code splitting, code
+          splitting. And as we just saw, with our last example on code splitting, that made heavy use of that
+          system.import call. Right? Like, that's how we did code splitting. When we do code splitting with our vendor
+          dependencies, the system is going to work just a little bit differently. Okay? And what I mean by that, is
+          that rather than spitting out a single bundle.js file from this, we're going to very specifically tell Webpack
+          before it starts to parse any of our code, that we want it to split up our codebase into two separate
+          sections. So although we've already done code splitting using that system.import kind of deal, we're going to
+          do code splitting this time around at a little bit higher up the chain. We can refer to both of these systems
+          as being code splitting, because that's what we're doing. We're separating our codebase out in two separate
+          chunks. But the implementation of each is going to look just a little bit differently. You'll want to use that
+          system.import code splitting whenever you are splitting off your specific bits of code. So like, your
+          application. And we can use code splitting inside of our Webpack config file. So again, like higher up the
+          chain, whenever we're working with these vendor dependencies. Okay. So let's walk through this update. You
+          know, let's do the refactor, and we'll see exactly how it works. The first thing we're going to do is delete
+          the string that we're currently passing to the entry property. So I'm going take out the entire string, I'm
+          going to replace it with an object, like so. Do make sure that you still have the comma after that object. So
+          by passing an object to the entry property, that means that we no longer have one single entry point for
+          application. By passing an object, we can have multiple entry points. And so, in practice for us, that gives
+          us the ability to say, "Hey, we've got a couple of different entry points, so I want to peruse a couple of
+          different bundles out of my codebase." Well, first of all, define a key value pair of bundle and we'll pass it
+          the exact same string that we had before. So this key value pair right here says, "I want to produce a
+          bundle.js file." And it's specifically going to be called bundle, because the key right here is called bundle.
+          I know that we've got the output property down here as well but we're going to change that in just a second.
+          So, the output will be called bundle, and we want to specifically start inside of index.js. Now, this right
+          here, if we currently ran "npm run build" we would end up with the exact same output that we currently have.
+          So it's just slightly different syntax for exactly what we were doing before. So here's the update. Here's
+          like the big new thing. We're going to say "vendor" "VENDOR". There we go. "_LIBS" like so. And then we're
+          going to define our top const VENDOR_LIBS, and it's going to be an array. Okay. So this is the weird part.
+          This is like kind of going out on a limb here, this is the new material. By passing in a second key value
+          pair, that tells Webpack, "I want to produce a new bundle file." Like, a separate bundle file, like, something
+          distinctly different from this bundle file right here. And I want to call it vendor.js. Then as the value of
+          the key value pair, I'm going to pass in this array. And this array right here, is going to be an array of
+          strings where each string is the name of the library that we want to include in the separate vendor file.
+          Okay? So, in practice it's like what does that really do for us? Well, in this array, we can pass the exact
+          NPM module name of each module that we want to be split off into the separate vendor file. So, let's kind of
+          get a better idea of how, you know, what strings we might put in there. I'm going to open up my package.js
+          file. And if I scroll down a little bit, I'll go to my dependencies section. So these dependencies section
+          right here, these are all the dependencies that my project currently relies upon as a third party library. So
+          in theory, these are all the modules right here that might be changing very infrequently, and so would be a
+          good candidate to place into this separate bundle file, the separate vendor.js. So I'm going to copy all these
+          different modules right here, all the different module names, and place them inside that array of strings. So
+          I'll say faker, lodash, redux, react-redux, react-dom, faker, react-input-range, redux-form and redux-thunk.
+          Now, when Webpack runs, it's going to say, "Okay. I see that they want me to build a bundle.js file based off
+          of index.js, and everything that index.js depends upon. After I do that, I will then build a separate bundle,
+          which will be called vendor.js out of all of these libraries right here. So the benefit of this or what
+          Webpack is going to do, is create one bundle that has all of our applications-specific code, and then a
+          separate bundle that has all of our module dependencies. Like, all these libraries that we're depending upon.
+          Do note that there is absolutely no requirement for us to list every single dependency inside of here. So if
+          we said, "Well, you know what, I'm going to be updating the version of "react input range" really often, and
+          so I'd kind of rather have that inside of my bundle.js, because, you know, I'm going to update it all the
+          time." No problem, we can just take it right out. We can say, "I don't want to include that dependency." You
+          might do that if you expect to be updating the version of many different libraries over time. And you know, I
+          just realized I made a little bit of a typo. I put faker in here twice, the first one should be react not
+          faker. So react, lodash, redux, react-dom, faker, my mistake. Okay. Now the last thing you have to do inside
+          of here, and then we'll actually run this and see what we get. Last thing we have do is update the output
+          section. So right now we're saying, "Hey, no matter what..." out of these two separate bundles that I want to
+          create, we're saying, always name it bundle.js. And so, we're going to run into a little bit of naming
+          collision there. To kind of dynamically update the name, we're going to replace bundle with square brackets
+          and name like so. So this says, "Go and build this bundle.js file, starting with index.js." When the bundle is
+          completely created, save the output as bundle.js. So the square brackets with name gets replaced with the key
+          from the entry section. Then Webpack will go and build the vendor bundle and we'll call it vendor.js. Again,
+          replacing the square bracket name with the key from the entry section. Okay. So, this change right here might
+          look like a little bit strange, but again, you know, with Webpack, running Webpack and then inspecting the
+          output, does so much to help you understand what is going on. So, let's run Webpack, you know, let's build our
+          project, let's see what the output is, and hopefully that's going to give us a better idea of what's going on.
+          So I'm going over to my terminal. And once here, we'll do "npm run build". So we'll let it run, and hey, let's
+          see what happens. Any second now. I think in general takes me about 16 or 15 seconds to run. Your machine
+          might be slightly faster or slower. Okay. So here's our output, and we can see, let's go up just a little bit.
+          Oh, let's not scroll all the way to the top. You can see in at least the warning message. If you don't see a
+          warning message here, because, you know, again, Webpack does change frequently and these warning messages
+          might be eventually removed by default. So if you don't see the yellow messages here, you could always scroll
+          all the way to the top of this list, like right here. So we can see bundle.js and vendor.js, but there's
+          something a little bit off here. Bundle.js is 3.28 megabytes, which is what we saw before. You know, before we
+          did this refactor, we saw the same thing. And it looks like the separate file of vendor.js has been generated
+          as well, but it contains 2.88 megabytes. So bundle js is unchanged, and now we have vendor in here as well.
+          And in total, we've got just about six megabytes of javascript, whereas before, we had 3.28. So, clearly, you
+          know, something is going right because we've got vendor in here but something is also going wrong because this
+          is significantly larger than what we had before. So let's take a quick break, come back and figure out what
+          the heck is going wrong here? Why is our end result not smaller than what we would expect? Okay? So let's take
+          a quick break and then figure that out.</p>
+        <h2>Effect of Code Splitting</h2>
+        <p>In the last section, we saw that after we built our project, we ended up with a bundle.js file that was
+          really large and a vendor.js file that was also really large. Certainly, way more than the sum of its parts.
+          So let's figure out exactly what's going on here. Why do we end up with separate vendor.js file that is so
+          large? Let's take a look at a diagram that's gonna help us figure out what's happening. So this is kind of a
+          crude diagram of the two separate files that we just generated. On the left-hand side, we've got bundle, and
+          on the right-hand side, we've got vendor. Now I want to open up the index.js file inside of our project, which
+          is the entry point. So I'm gonna come back over to my project directory, I'm gonna find source and then open
+          up index.js. So now at the very top, we've got a ton of different import statements inside of here. We don't
+          really need to understand what all the import statements are doing; I just want you to kind of get a sense of
+          what they are. The first couple that we have are tied to React, ReactDOM, Redux, React Redux, and ReduxThunk.
+          All five of these are dependencies or third-party modules that we've installed. The next two are from this
+          reducers file and router file, which presumably are a part of our application. So this is code that we wrote
+          ourselves. So with that in mind, let's go look at our diagram again. So here's the index.js file. It depends
+          upon our router file and reducers file; like that is code that we wrote. So because it's code that we wrote,
+          we would want it to be included inside of our bundle.js file, right? That makes sense. However, the index.js
+          file also depends upon React and Redux. By default, Webpack has decided that because index.js depends upon
+          those two files, it'll grab them and include them in the output bundle. So just because we specified this
+          separate bundle here – just because we said oh, yeah, make this other vendor bundle over here and make sure
+          you pull in Redux and React into that vendor bundle – just because we did that does not mean that Webpack is
+          going to automatically find all the common modules between the two and make sure they're only included one
+          time, because that's what we really want, right? We want to only have React and Redux included inside of the
+          vendor bundle. We don't want it inside of our bundle.js file. So to make sure that that actually happens, to
+          make sure we don't get these duplicate include statements of these third-party libraries, we're going to use a
+          little plugin – remember plugins? – called the CommonsChunkPlugin. So let's wire it up and see how it works.
+          I'm gonna go back over to my Webpack config file and we'll scroll down to the bottom and we're gonna add in a
+          plugins section. Remember the purpose of plugins. Plugins are like loaders, but they are more about looking at
+          the total sum of input or the total sum of output that is going through Webpack as opposed to loaders, which
+          are more about working with individual files. So the plugin that we're going to add in here will be new
+          webpack.optimize. It says optimize so you know this is probably gonna be good, and then we're going to look
+          for CommonsChunkPlugin. Do take very good notice; this is Commons with an "s" – not Common,
+          CommonsChunkPlugin. And then we're gonna pass in an object with a name of vendor. So what this does is it
+          tells Webpack to look at the total sum of all of our project files between both our bundle input or bundle
+          entry point and our vendor entry point. It'll say if any modules included in those trees or those dependency
+          structures are identical or if there are copies or duplicates between the two, pull them out and only add them
+          to the vendor entry point. So this is going to solve the issue of double-including like all of our ReactJS and
+          Redux and all these other dependencies in both the bundle output and the vendor output. So let's now run
+          Webpack again with this plugin in place and see how things go. So we're gonna come back over. We'll run npm
+          run build again. And again, we're gonna wait 15 or 20 seconds or so. Again, hopefully your machine is just a
+          little bit faster than mine. I'm running a 2015 MacBook Pro. So if you're on a desktop, I bet it'll be a
+          little bit faster. OK. So now we've got a bundle.js and a vendor.js. bundle this time around only has 401
+          kilobytes, vendor has 2.89. Awesome. OK, so this is gonna go a long way to improving our load speed. This
+          bundle.js file will presumably be updated very frequently. Remember, that's the idea. bundle.js might be
+          getting updated just all the time, like once a week or even daily. And every time the user comes back to our
+          site, we might want to make them have to re-grab or re-download this file. On the other hand, we expect that
+          the code inside of vendor.js not to change very often; we expect it to only change like maybe once a month or
+          once every three weeks or once every six months. And so the first time the user comes to our website, they're
+          going to download the entire three megabyte chunk, but then every single time that they come back, they will
+          not have to download the additional three megabytes because they should have it cached on their system. Now of
+          course, if they ever dump their cache, you know, if they ever clear cache in the browser, they will have to
+          re-download vendor.js. But in general, we can kind of imagine that the user is probably going to, at least
+          some very good majority of the time, enjoy some cached version of vendor.js instead of having to re-download
+          it all the time. Awesome. So this is step one: improving our load process or improving the download speed or
+          bundle size of our project. So we've currently split it out into two separate bundles. However, the total size
+          of the project is still really large, so I think that we can still find a couple of optimizations to include
+          in our project. Let's take care of that and you'll start looking into how we're gonna approach that in the
+          next section.</p>
+        <h2>Troubleshooting Vendor Bundles</h2>
+        <p>In the last section, we finished up our refactor to move over to having separate bundle.js and vendor.js
+          files. We finished the refactor, but you may have noticed that if you now open up your index.html file, it
+          appears that the application isn't working at all. And if I open up my console, I get an error message that
+          says webpackJsonp is not defined. Hmm. So it looks like something is not quite working correctly. Well, let's
+          open up our code editor and see if we can't figure out what's going on. Inside of our dist folder, we
+          currently have our bundle.js and vendor.js files. Now if I open up my index.html document - remember, the
+          index.html document in our root project directory - you may recall that inside of here, we have that bundle.js
+          script reference, but we never added in an additional reference to pick up that new vendor.js file. So the
+          error message that we're seeing is essentially saying hey, you kind of forgot to remember that other script
+          tag. Remember that bundle.js? Yeah, you got that one, but you did not include the vendor.js as well. So this
+          is getting us into kind of an interesting world. We've now got these separate JavaScript files of which - I
+          don't know, maybe there's many, right? We might be doing some additional amount of code splitting where we end
+          up with additional JavaScript files in here beyond just these simple two right here, but we've got this
+          index.html file where we need to make sure that we have a single script tag for every script file that's
+          generated. Now I don't know about you, but definitely it seems like this - the number of scripts we have here
+          - might be variable over time. And I don't really want to change my index.html manually to accommodate for
+          that. And maybe you do; personally, I would hate to have to remember every time we change our Webpack file, we
+          have to also go to the index.html and add in additional script tags as well. So to solve this issue, we're
+          going to add in another little plugin to our webpack.config file called html webpack plugin. The purpose of
+          this plugin is to replace or kind of obsolete the need to manually maintain the script tags inside of this
+          document - inside of our HTML document. So our Webpack process is going to run. It will spit out some number
+          of scripts and then this plugin is going to automatically generate an HTML document for us that has the
+          correct script tags inside of it. And so this really saves us from the hassle of having to look at our output
+          up here - you know, the number of scripts we have - and then update the index.html document to accommodate for
+          it. So let's install this plugin and figure out how it works. We first need to install it as an NPM package.
+          To do so, we'll flip over to our terminal and run npminstall --save-dev html webpack plugin. While that's
+          installing, let's do a little bit of setup. I'm going to change back over to my webpack.config file and at the
+          top, we're going to require, in that html webpack plugin module that we just installed - so at the top, we'll
+          say HtmlWebpackPlugin - require html-webpack-plugin. And then down at the bottom, we'll add it to our plugin
+          section. So we'll go down to the bottom of the file and underneath our existing CommonsChunkPlugin, we'll also
+          add in a new HtmlWebpackPlugin. And we're going to pass some amount of configuration to this thing. The first
+          thing that we're going to pass in here is a reference to a html template for our webpack plugin to use. So if
+          we just ran npm-run-build right now, it would automatically generate this HTML document for us with some
+          script tags inside of it. But when you don't provide a template in here, it's going to just do the best job it
+          can. It's going to say well, you know, I don't know what setup you have inside of your HTML document, but I
+          assume that you probably have, like, an HTML tag, a head tag, a body tag and then the script tags. But as you
+          can see, inside of this upstart music file, we've got the title already set, we've got a link to some icon
+          family in here and we've also got in a custom div. So clearly there is some customization to our HTML document
+          that we want to use. To make sure that our plugin takes that initial configuration into account, we're going
+          to tell it to use our existing HTML document as a template of sorts when it is generating the HTML document
+          with the finalized script tags. Because our HTML document is now a part of the, kind of, configuration of our
+          project, I think it makes a lot of sense to move it into the source directory now that we're kind of treating
+          it as a template of sorts. So we will move our HTML document into the source directory in just a second, but
+          for right now, we'll just say yeah, look into that source directory to find the HTML document to start off
+          with. Then inside the source directory, I'm going to make a new file called index.html and then inside of
+          here, we're going to copy all of the markup from our existing top level index.html documents. I'm just going
+          to copy everything. I'm going to change over to the new one that we just created and then paste it all. And
+          then finally, last step, I'm going to make sure that I delete the old one inside the root project directory.
+          And I'm just deleting it to make sure that I don't have any dangling references to the old HTML document. Now
+          inside of here, last thing I'm going to do is find my script tag - here it is - and I'm going to delete this
+          existing script tag. Remember, the purpose of that plugin that we just installed is to say for every
+          JavaScript document we have that was generated by Webpack, it is going to automatically add a script tag into
+          this HTML document for us so we don't have to manually maintain the script tags. So now when we run Webpack,
+          that plugin will run. After Webpack finishes generating all the script files that it is going to work with,
+          the plugin that we just installed will take this index.html template, it will manually add in a script tag in
+          here for every JavaScript file we just added and then it will take - or it will output a new HTML document
+          into our dist directory. So let's give this a shot. Let's run our project - let's build our project and see
+          what happens. At the terminal, I'll run npm run start - or excuse me, npm run build, my mistake. And if you
+          see a warning message in here, by the way, don't sweat it; everything will work fine regardless. Sorry, error
+          message around the installation of my HtmlWebpackPlugin. All right. So we'll build our project. Again, about
+          15 seconds or so goes by and now you'll see some new markup down here at the bottom, some new reporter that
+          says okay, well, you know I did something with index.html. So let's now flip over to our code editor. I'm
+          going to close out the existing HTML template that we have. I'm just going to close it out and I'm going to go
+          into my dist directory and let's look at this new index.html file that was just generated. So now inside of
+          here, underneath that div tag that we had - so there is a div in here. Remember, I wanted that div as some,
+          like, initial template for my HTML document. It was a part of what made the react application actually work.
+          You'll notice that there are two additional script tags that have been injected inside of my document. And at
+          the very end, we got the body closing it off. Inside of here, you'll notice that we've got the script tag
+          references for both bundle.js and vendor.js as well. So now, as we start to add in more entry points or more
+          code splitting or more anything related to output from Webpack, the HTML plugin will automatically inject it
+          into our HTML document for us. So now the last thing we have to do is open up the new index HTML document that
+          we have inside of our dist directory and just make sure that everything works. So I'm going to flip back over
+          to my code editor and then I'll manually open up dist/index.html. Chrome opens up. You'll notice that we are
+          inside the dist directory. It grabs the index HTML document and ta-da! We've got our application still working
+          and showing up on the screen. And if we open up the elements tab - yep, still got vendor.js and bundle.js in
+          here and we didn't have to do a single darn manual thing related to the script tags. Okay. So this definitely
+          works out for automatically generating our index HTML document for us. Again, just one more time, just to make
+          sure it's really clear why we did this, we did it because over time, we might change the number of script tags
+          or even the names of the script tags that are outputted by Webpack. By using this plugin, it will
+          automatically find all the script tags that were generated - or all the scripts I should say - and add script
+          tags to our index.html document. In addition, we chose to use a template index.html file, which we placed
+          inside of our script directory because there was some amount of, kind of, initial markup that I wanted to have
+          inside of my HTML document - like the link tag here, the title and the div that's in here as well. Awesome. So
+          that's another step forward on our application. Let's continue in the next section. Video course Teach the
+          world online Create an online video course, reach students across the globe, and earn money</p>
+        <h2>Chunk Hashing for Cache Busting</h2>
+        <p>There's one last update we need to take care of related to that vendor code splitting and the HTML Webpack
+          plugin that we just wired up as well. I want to remind you that the entire idea behind code-splitting our
+          vendor libraries out is that the vendor libs do not update that often and so we can enjoy some amount of
+          caching by the browser. Here's the thing. When we were talking about the differences between the first visit
+          and the next visit and how the browser decides whether or not it has downloaded a file, we never really
+          specified how it's answering the question whether or not it has downloaded that file before. So by default,
+          what your browser does – and again, this is all modern browsers – is it will look at the exact filename of the
+          file and also specifically, like bundle.js. If the filename has not changed, your browser will use the cached
+          version. So by default, right now we're spitting out bundle.js again and again and again. Your browser is
+          thinking, "Aha, it's still called bundle.js. Nothing changed. I don't need to download this file again." So
+          right now, as we're spitting out our output filenames, the caching probably won't quite work the way we
+          expect. Now, in our case, given that we're developers, we very likely – or at least I very likely, you may or
+          may not – have a setting enabled in your browser related to caching. So if you open up your DevTools in Chrome
+          or any browser that you choose to be using – I don't know exactly where the setting is in other browsers, but
+          I can point you directly to it in Chrome, at least. If I open up the settings in the console and then scroll
+          down a little bit, we can find a little setting that is just nested away in here it called Disable cache while
+          DevTools is open. So by default, I usually have this checked because I want to make sure that as I'm
+          developing my project, I never get a cached version of my bundle.js file. For most users, however, they are
+          number one, probably not gonna have this checked, and number two, they're probably not gonna have their
+          DevTools open as well. So, what this means is that we need to somehow figure out a way to – quote, unquote,
+          this is the term for it – bust our cache or do cache busting. We need to somehow figure out a way to rename
+          our output bundle.js file and our vendor.js files to make sure the browser is really clear on when the file's
+          contents have actually changed. So by renaming the file that gets outputted here in some fashion, by renaming
+          it, we will give the browser the ability to really answer the question whether or not it has downloaded that
+          file before. So, that's our goal. To make this happen, we have to do just relatively a small little tweak on
+          our Webpack side. So I'm gonna open up my Webpack config file, and inside the output section, I'm gonna find
+          the filename specifier. So here's filename right here. We've already seen the instance of one kind of like
+          interpolated variable in here – the square brackets with name. We saw that Webpack would take the entry point
+          name and place it in here for the square bracket name. There's another property that we can reference in here
+          that will help uniquely identify each file when it's generated, and that's called the chunkhash. So after
+          name, I'm gonna put another dot and then square brackets chunkhash like so. So chunkhash right here is a
+          hashed string of characters, or I should say it is a hash of the contents of the file. When we say hash, I
+          mean specifically like a long string of numbers and letters. Every single time that our bundle or vendor file
+          is updated or changed in some fashion, Webpack will automatically hash the contents of that file and then spit
+          it out as the chunkhash. Essentially, you can think of this chunkhash right here as just being a unique string
+          of characters. And for our purposes, that is exactly what we need. So every single time that we make a change
+          to either our bundle or our vendor, the name of the file – like the ultimate final name of the file – will
+          slightly change, and that will tell the browser or that will inform the browser that hey, like this file's
+          name is different, chances are the contents of it is different as well, so let's go and download that updated
+          file. Now there's one other little gotcha in here, one other little setting that we have to change as well. If
+          you recall, we had wired up that CommonsChunkPlugin at the bottom here. And we had said, hey, if there's any
+          common modules, stick them in vendor. So the gotcha is that as a part of this process right here, Webpack
+          doesn't quite know when we've actually necessarily, like, really made a change to vendor. And so, very often,
+          if we change our bundle.js file, like our application code, Webpack will mistakenly think that our vendor file
+          is updated as well. So to fix that little gotcha, we're going to change the name of this property right here
+          to names and we're gonna have it be an array where the first entry is vendor and the second is manifest, like
+          so. So this creates a third JavaScript file in our output directory – in our disk directory – called
+          manifest.js. The purpose of this manifest.js file is to better tell the browser or kind of better give
+          everything involved a little bit more understanding on whether or not the vendor file actually got changed. So
+          let's now run Webpack again. We'll look at our output and see how we're doing. So I'm at my Terminal, I'm
+          gonna run npm run build. And just to make sure that this section doesn't run too long, because we still have
+          to do some other stuff, let's take a break right here and we'll come right back after this build has
+          finished.</p>
+        <h2>Cache Busting Wrap up</h2>
+        <p>In the last section, we added in the chunk hash of every output file into the individual files name. So I'm
+          looking at the output right here from the rebuild that we just did two seconds go in the last section and
+          you'll notice that I've got the file name. So vendor then a dot and then some string of characters. So the
+          string of characters in here is the chunk hash, it is the hash version of the contents of the vendor.js file.
+          And the last part is the really important part. The hash right here depends on the contents of the file. So if
+          we modify even one character inside of any of these files, you know one character inside a vendor or one
+          character inside a bundle, the entire chunk hash right here is going to change. When the chunk hash changes,
+          the browser is going to think, "aha! Different filename? Must be a different javascript file. I need to
+          redownload it." And so that's going to serve the purpose of busting the cache in the browser. It's going to
+          make sure that as long as that file got updated in any way shape or form, the browser will attempt to
+          redownload it. Now of course, we're going to expect to see separate hashes or different hashes for both the
+          vendor file and the bundle file. Let's make a quick change to our bundle.js file. After we change it, we will
+          rebuild our project and after the rebuild is complete, we should expect to see a different chunk hash for the
+          bundle.js file, but still have the same one for the vendor file. The effect of that will be that the vendor
+          file will be interpreted as being unchanged by the browser but the browser will think that bundle has updated
+          in some fashion and so will need to be redownloaded. Okay? That's our goal. We're going to make a change to
+          bundle. We're going to rebuild and then we're going to make sure that it has a hash different than b544 blah
+          blah blah blah blah. So to make a change in that file, I'm going to open up my code editor and we can change
+          any individual file inside of the source directory. That's all we got to do. Just have to change one of the
+          javascript files in there and the hash should end up being different. So I'm going to look at my source
+          directory and find the index.js file. And then once inside of here, I'm going to just console.log "hi! " like
+          so. Because we made a change to this file, we can now reasonably expect the hash to be different. So let's now
+          make sure the file is saved, then go back toward terminal and we're going to rebuild the project. Remember,
+          the goal is to just see something different than b544. So let's run npm run build. You're going to wait or 10
+          seconds or so. I wish this was just slightly faster. Once we include some of the more advanced ways of
+          building our project including live reload, the rebuild is going to be lightning fast but until we get there
+          we've got to deal with it for a little bit. OK. The rebuild is now complete. Let's go and look at the chunk
+          hash for the bundle file. So now the bundle rather than the b544 that we saw before, the chunk hash is 39247
+          which is distinctly different, exactly what we want and the vendor hash is still c12c. Let's make sure that
+          that vendor hash actually is different. So I'm going to scroll up a little bit more all the way to our
+          previous output. So here's the previous output and it looks like the vendor output was... had a chunk hash of
+          c12c previously. So perfect! That is exactly the behavior we would expect. We made a change to the application
+          logic. We made a change that would affect our bundle file. The file name was then updated which tells the
+          browser, "hey! You need to re download me because I changed in some fashion," but the vendor file remains
+          unchanged. So this is 2.88 megabytes that the user is not going to have to redownload. Perfect! Last thing, we
+          need to do is make sure that our index file reflects the proper script name. Luckily, this is part of the deal
+          that it's taken care of by that html-webpack-plugin. So I'm going to open up my webpack.config file. If you
+          recall at the very bottom, we just set up that html-webpack-plugin whose purpose was in part to make sure that
+          the script tags from whatever came out of webpack was automatically added into our index.html document. So if
+          I go into my dist directory, here's dist and then open up my index.html file, you'll notice that in here my
+          script tags have now automatically been updated to include the chunk hash as well. So here is the manifest, we
+          can scroll over to the vendor. And then we can scroll over a little bit more to bundle, which now has the
+          correct 39247. So this right here is an extremely important part of the cache busting and build process. I
+          don't know about you, but I definitely would not want to have to update my script tag every time I rebuilt my
+          project to update the hash inside of here to make sure that cache was taken care of correctly. So this is
+          another part of that plug in that we just added that is a huge tremendous timesaver. Okay. So this is
+          fantastic. I think that we're pretty much all finished with the code splitting and caching of our project.
+          Let's see what else we have to talk about in the next section.</p>
+        <h2>Cleaning Project Files</h2>
+        <p>In the last section, we finished up our discussion about code splitting with vendor bundles. Everything from
+          cache busting to actually creating the separate vendor bundle as well. Now there's one tertiary topic that I
+          want to talk about – just gonna take a second – but it's something that is a real quality-of-life thing. I
+          want to open up my dist directory inside of my project bundle-- project folder, excuse me. Inside of here,
+          you'll notice that I currently have two bundle files and two manifest files. So every single time that I make
+          a change to my project and then rebuild it, I'm getting additional JavaScript build files put inside of here.
+          And every single time that I generate the project after a change, I'm gonna end up with a brand new bundle
+          file because the previous version is not overwritten because we've now got this little chunk cache in here as
+          well. Now you can imagine that after we rebuild the project once or twice, eh, not such a big deal. But as we
+          start to rebuild the project many times, we're gonna end up with a ton of duplicate files inside of this disk
+          directory. So it's a little bit of kinda convenience or a little bit of quality of life. We're going to modify
+          our build script just a little bit to make sure that we clear out the contents of this disk directory after
+          every build that we do. To do so, we're going to first install a helper module called rimraf. At my terminal,
+          we're going to run "npm install --safe-dev rim-raf" like so. Now the purpose of this package that we're
+          installing right here is a little bit of compatibility. And excuse me, I made a typo. It's rimraf without the
+          dash. Let's get that all in one line just to make sure it's legible. OK, "save-dev rimraf". All one word, not
+          two words. The purpose of this module right here is to handle some inconsistencies in commands between Windows
+          and OSX. So on OSX or kind of Unix-based system, you get access to a tiny program that can delete files or
+          folders off your hard drive called "rm". On Windows, that same command is not available. And so, if we want to
+          have an operating-system-agnostic scripts, we can use packages like rimraf that has the exact same effect as
+          the rm command but it will do the correct thing depending on whether or not it is on Windows or OSX. So again,
+          this is really just a compatibility module for helping clean out directories on either Windows or Unix-based
+          systems. So going back to my code editor, I'm gonna open up my package.json file. I'm gonna find my script
+          section, and inside of here, we're going to add in another command which we're going to call "clean". Inside
+          of the clean command, we'll say "rimraf dist" like so. So now if we run npm run clean, it will run the rimraf
+          package that we just installed on the directory dist which should have the effect of deleting the contents of
+          that directory. The next thing that we'll do is make sure that we call this script whenever we build our
+          project. So I'm gonna update the build script to say "npm run clean &&" like so. So this will have the effect
+          of, first, deleting all the files inside of our dist directory and then running Webpack to build our project.
+          Let's give it a little test to make sure it's working as we'd expect. In the Terminal, I'm going to run "npm
+          run build" again. That should, first, delete the contents of the disk directory and then start to build
+          process. So it's gonna take a little bit because it is gonna rebuild our project entirely which again takes
+          about 10 seconds or so, depending on how fast your computer is. But when it eventually finishes up, there we
+          go. We should now be able to go into our dist directory. And we're down to just our project files, the bare
+          minimum for actually running our project. So now we don't have to deal with any crazy duplicates between our
+          bundle or manifest or vendor files in here as well. Again, just a little bit of quality-of-life thing to help
+          us out when we are repeatedly building our project. Let's go ahead and continue in the next section.</p>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

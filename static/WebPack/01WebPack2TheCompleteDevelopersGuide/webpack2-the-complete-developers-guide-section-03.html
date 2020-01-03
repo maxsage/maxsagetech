@@ -25,53 +25,45 @@
       </div>
       <div class="panel-body">
         <h2>Introduction to Loaders</h2>
-        <p>We've got a basic Webpack configuration file put together, and we've been able to see
-          firsthand the module-bundling process. Webpack takes some number of input modules,
-          determines the dependencies of each, and then places all these connected modules together
-          in a single bundle.js file.</p>
-        <p>Now this is the core purpose of Webpack. Webpack, of course, also has many more features,
-          so from here on out, we'll be exploring a lot of the additional capabilities of Webpack
-          and what it can really do for us.</p>
-        <p>So the first topic we're going to be discussing is module loaders. Module loaders are
-          used to do some pre-processing on files before they are added to our bundle.js file. So
-          before they get stuffed into that bundle.js, we're gonna do some amount of pre-processing
-          on them. Loaders are commonly used to implement transpiling for ES2015 code, so like the
-          use of Babel if you ever worked with or heard of Babel before. They could also be used to
-          handle CSS, handle images, all different types of files can be enabled for use with
-          Webpack by the use of these module loaders. So in the next series of videos, we're going
-          to figure out how to define loaders and add a couple of different loaders to our project
-          here, and we'll get a better sense of how each of them work.</p>
-        <p>Now this is where Webpack starts to get a little bit interesting because we're going to
-          start pulling in a ton of different libraries for use with Webpack, and this is where the
-          ecosystem, like, really kind of opens up and things get a little bit dicey. But we'll walk
-          through it step by step and I'll make sure that it's nice and clear. So we're gonna walk
-          through our first loader. After we walk through the first one, we'll then cover several
-          other very common loaders that you'll use very likely in your own projects.</p>
-        <p>So the first loader we're gonna be working with is the Babel loader. Babel is used for
-          transpiling JavaScript, usually from ES2015 to 5, but also has support for all different
-          types of transpilations down to ES5 code:</p>
+        <p>We've got a basic Webpack configuration file put together, and we've been able to see firsthand the
+          module-bundling process. Webpack takes some number of input modules, determines the dependencies of each, and
+          then places all these connected modules together in a single bundle.js file.</p>
+        <p>Now this is the core purpose of Webpack. Webpack, of course, also has many more features, so from here on
+          out, we'll be exploring a lot of the additional capabilities of Webpack and what it can really do for us.</p>
+        <p>So the first topic we're going to be discussing is module loaders. Module loaders are used to do some
+          pre-processing on files before they are added to our bundle.js file. So before they get stuffed into that
+          bundle.js, we're gonna do some amount of pre-processing on them. Loaders are commonly used to implement
+          transpiling for ES2015 code, so like the use of Babel if you ever worked with or heard of Babel before. They
+          could also be used to handle CSS, handle images, all different types of files can be enabled for use with
+          Webpack by the use of these module loaders. So in the next series of videos, we're going to figure out how to
+          define loaders and add a couple of different loaders to our project here, and we'll get a better sense of how
+          each of them work.</p>
+        <p>Now this is where Webpack starts to get a little bit interesting because we're going to start pulling in a
+          ton of different libraries for use with Webpack, and this is where the ecosystem, like, really kind of opens
+          up and things get a little bit dicey. But we'll walk through it step by step and I'll make sure that it's nice
+          and clear. So we're gonna walk through our first loader. After we walk through the first one, we'll then cover
+          several other very common loaders that you'll use very likely in your own projects.</p>
+        <p>So the first loader we're gonna be working with is the Babel loader. Babel is used for transpiling
+          JavaScript, usually from ES2015 to 5, but also has support for all different types of transpilations down to
+          ES5 code:</p>
         <figure>
           <img src="./images/Fig03-001.PNG"/>
           <figcaption>Fig 03-001</figcaption>
         </figure>
-        <p>So the first thing that I want to talk to you about is to make sure that it's really
-          clear what the relationship between Babel and Webpack is. So Babel is all about turning
-          ES2015 code or ES2016,17, presumably 18 at some point, code into ES5. Webpack, on the
-          other hand, is used for taking a big old pile of JavaScript modules and merging them all
-          together. So this might seem like something that, now, it seems really clear but, you
-          know, this is something where a lot of people I talked to it's not always kind of clear
-          where Babel starts and Webpack begins. So I just want to make sure that is nice and
-          clear.</p>
-        <p>OK, so let's get started with adding Babel to our project and wiring it up as a module
-          loader. Now there's three separate modules that we're going to install to get Babel set up
-          inside of our project. And yeah, I did just tell you this is where things get a little bit
-          dicey. So, yes, three separate modules just to get Babel working. Let's talk about what
-          they are.</p>
-        <p>So Babel is somewhat famous as a very modularized project. So the overall Babel project,
-          like the entire Babel project, all the different repositories that are under management by
-          Babel is probably several dozen. So there's probably several dozen different libraries
-          associated with Babel. For our case, we are going to be installing Babel in three separate
-          modules, so we're gonna take three modules that they publish:</p>
+        <p>So the first thing that I want to talk to you about is to make sure that it's really clear what the
+          relationship between Babel and Webpack is. So Babel is all about turning ES2015 code or ES2016,17, presumably
+          18 at some point, code into ES5. Webpack, on the other hand, is used for taking a big old pile of JavaScript
+          modules and merging them all together. So this might seem like something that, now, it seems really clear but,
+          you know, this is something where a lot of people I talked to it's not always kind of clear where Babel starts
+          and Webpack begins. So I just want to make sure that is nice and clear.</p>
+        <p>OK, so let's get started with adding Babel to our project and wiring it up as a module loader. Now there's
+          three separate modules that we're going to install to get Babel set up inside of our project. And yeah, I did
+          just tell you this is where things get a little bit dicey. So, yes, three separate modules just to get Babel
+          working. Let's talk about what they are.</p>
+        <p>So Babel is somewhat famous as a very modularized project. So the overall Babel project, like the entire
+          Babel project, all the different repositories that are under management by Babel is probably several dozen. So
+          there's probably several dozen different libraries associated with Babel. For our case, we are going to be
+          installing Babel in three separate modules, so we're gonna take three modules that they publish:</p>
         <p>
         <ul>
           <li>babel-loader</li>
@@ -83,87 +75,78 @@
           <img src="./images/Fig03-002.PNG"/>
           <figcaption>Fig 03-002</figcaption>
         </figure>
-        <p>Now this loader library is to just tell Babel how to work with Webpack. It's kind of like
-          a compatibility layer. Babel officially has support for over a dozen different build
-          systems. It's not just limited to working with Webpack, so Babel has support for many
-          different build systems. Rather than shipping a single library that has some code knowing
-          how to deal with each one of these different dozen build systems, the authors of Babel
-          have decided to create separate libraries to teach Babel how to work exactly with each
-          build system. So in short, babel-loader teaches Babel how to deal with Webpack. It is a
-          compatibility layer.</p>
-        <p>Second, babel-core. This is really the heart of Babel. It's what knows how to take some
-          input code, like the code that we write, transform it in some fashion, and then spit
-          individual output files back to whoever invoked it. So the real secret of babel-core,
-          however, is that it doesn't actually do anything. It doesn't actually transpile or change
-          or transform any code. It's the real secret of babel-core right here. babel-core by itself
-          has no idea how to take ES6 code and turn it into ES5. To actually tell babel-core to
-          change our code in some fashion, to tell it to say, "Hey, take the ES2016 code or ES2015
-          code and turn into ES5," that is the purpose of the babel-preset-env library.</p>
-        <p>So this library, the last one, contains dozens of different individual rules to tell
-          Babel how to transform our code. So it tells Babel to specifically look for things like,
-          "Hey, look for the const keyword, look for the let keyword, and turn them into vars." It
-          tells Babel to look for arrow functions and turn them into function keyword calls and then
-          how to handle class statements as well. So in other words, this preset library is the
-          actual brains, the actual kind of like recipe for here's how we take some ES6 code and
-          turn it into ES5.</p>
-        <p>OK. So at the end of day, three separate modules that each form one distinct piece of the
-          puzzle. So let's install all them real quick. I'm gonna change over to my Terminal, and
-          we're going to install all three of them in one go by running:</p>
+        <p>Now this loader library is to just tell Babel how to work with Webpack. It's kind of like a compatibility
+          layer. Babel officially has support for over a dozen different build systems. It's not just limited to working
+          with Webpack, so Babel has support for many different build systems. Rather than shipping a single library
+          that has some code knowing how to deal with each one of these different dozen build systems, the authors of
+          Babel have decided to create separate libraries to teach Babel how to work exactly with each build system. So
+          in short, babel-loader teaches Babel how to deal with Webpack. It is a compatibility layer.</p>
+        <p>Second, babel-core. This is really the heart of Babel. It's what knows how to take some input code, like the
+          code that we write, transform it in some fashion, and then spit individual output files back to whoever
+          invoked it. So the real secret of babel-core, however, is that it doesn't actually do anything. It doesn't
+          actually transpile or change or transform any code. It's the real secret of babel-core right here. babel-core
+          by itself has no idea how to take ES6 code and turn it into ES5. To actually tell babel-core to change our
+          code in some fashion, to tell it to say, "Hey, take the ES2016 code or ES2015 code and turn into ES5," that is
+          the purpose of the babel-preset-env library.</p>
+        <p>So this library, the last one, contains dozens of different individual rules to tell Babel how to transform
+          our code. So it tells Babel to specifically look for things like, "Hey, look for the const keyword, look for
+          the let keyword, and turn them into vars." It tells Babel to look for arrow functions and turn them into
+          function keyword calls and then how to handle class statements as well. So in other words, this preset library
+          is the actual brains, the actual kind of like recipe for here's how we take some ES6 code and turn it into
+          ES5.</p>
+        <p>OK. So at the end of day, three separate modules that each form one distinct piece of the puzzle. So let's
+          install all them real quick. I'm gonna change over to my Terminal, and we're going to install all three of
+          them in one go by running:</p>
         <figure>
-          <pre><code class="language-command">npm install --save-dev babel-loader babel-core  babel-preset-env</code></pre>
+          <pre><code
+            class="language-command">npm install --save-dev babel-loader babel-core  babel-preset-env</code></pre>
           <figcaption>Fig 03-003</figcaption>
         </figure>
-        <p>Let's make that just a little bit bigger. That's better. OK, so let's let that go. We'll
-          take a quick break while this is installing and we'll pick back up in the next
-          section.</p>
+        <p>Let's make that just a little bit bigger. That's better. OK, so let's let that go. We'll take a quick break
+          while this is installing and we'll pick back up in the next section.</p>
         <h2>Babel Setup for ES2015</h2>
-        <p>In the last section we started talking about loaders in Webpack. Remember, loaders are
-          used to enhance the behavior of Webpack in some fashion. They are individual libraries
-          that can run on different files in our project. One of the most popular loaders is Babel
-          which we're going to continue setting up inside the section.</p>
-        <p>So now that we've Babel installed, let's figure out exactly how to tell Webpack to make
-          use of it. Let's take a look at the diagram really quick:</p>
+        <p>In the last section we started talking about loaders in Webpack. Remember, loaders are used to enhance the
+          behavior of Webpack in some fashion. They are individual libraries that can run on different files in our
+          project. One of the most popular loaders is Babel which we're going to continue setting up inside the
+          section.</p>
+        <p>So now that we've Babel installed, let's figure out exactly how to tell Webpack to make use of it. Let's take
+          a look at the diagram really quick:</p>
         <figure>
           <img src="./images/Fig03-004.PNG"/>
           <figcaption>Fig 03-004</figcaption>
         </figure>
-        <p>OK. To wire up the loader we are first going to add it inside of our Webpack config file.
-          Then we'll tell Webpack exactly what files it should use that loader on. So the second
-          part there is kind of important - telling Webpack which files the loader needs to actually
-          operate on. Eventually, we're going to add support for our Webpack process to make sure
-          that it can also handle CSS files as well. Loaders can be applied to any type of file we
-          wish but sometimes it only makes sense to apply a loader to a very specific type of
-          file.</p>
-        <p>So, like case in point, if we are using Babel, we probably don't want to try to make
-          Babel transpile like maybe a CSS file. If there ends up being a CSS file inside of our
-          project as well. That would almost certainly result in an error. So, to make sure that
-          this doesn't happen, we're going to ensure that Webpack only tries to apply Babel to
-          Javascript files inside of our project. We're not going to allow Babel to get applied to
-          CSS files, or images, or HTML docs, anything else like that.</p>
-        <p>Ok. So, let's wire this thing up inside of our Webpack config file. So, I'm going to open
-          up the Webpack config file inside of our project and then once inside, we're going to add
-          on a new property called 'module':</p>
+        <p>OK. To wire up the loader we are first going to add it inside of our Webpack config file. Then we'll tell
+          Webpack exactly what files it should use that loader on. So the second part there is kind of important -
+          telling Webpack which files the loader needs to actually operate on. Eventually, we're going to add support
+          for our Webpack process to make sure that it can also handle CSS files as well. Loaders can be applied to any
+          type of file we wish but sometimes it only makes sense to apply a loader to a very specific type of file.</p>
+        <p>So, like case in point, if we are using Babel, we probably don't want to try to make Babel transpile like
+          maybe a CSS file. If there ends up being a CSS file inside of our project as well. That would almost certainly
+          result in an error. So, to make sure that this doesn't happen, we're going to ensure that Webpack only tries
+          to apply Babel to Javascript files inside of our project. We're not going to allow Babel to get applied to CSS
+          files, or images, or HTML docs, anything else like that.</p>
+        <p>Ok. So, let's wire this thing up inside of our Webpack config file. So, I'm going to open up the Webpack
+          config file inside of our project and then once inside, we're going to add on a new property called
+          'module':</p>
         <figure>
             <pre><code class="language-javascript">module: {
 
  }</code></pre>
           <figcaption>Fig 03-005</figcaption>
         </figure>
-        <p>Now, pay attention, you want to make sure that you're calling this 'module' not
-          'modules'. There's no 's' in here, it's just module by itself.</p>
-        <p>Now, you'll notice I've been saying the word loaders a lot but now we're defining
-          something in here called 'module'. Well, this is a little bit of a transition period
-          between Webpack 1 and 2. So in Webpack 1 we referred to these pre-processing steps as
-          "loaders" but in Webpack 2 they're officially called part of the module system and each
-          individual loader is referred to as a rule. Personally, I think that the whole loader
-          syntax is like way more clear. It makes a lot more sense to say like "oh, yeah, my Babel
-          loader is going to load up this Javascript file and do some amount of pre-processing on
-          it" as opposed to like "oh, yeah, I've got this rule to tell Webpack that it needs to run
-          this like loader on my code". You know, it's kind of the terminology is a little bit rough
-          but we're kind of use the term 'rule' and 'loader' a little bit interchangeably throughout
-          this course.</p>
-        <p>So, we define this module rule right here assuming this module property inside of it
-          we're going to define a 'rules array':</p>
+        <p>Now, pay attention, you want to make sure that you're calling this 'module' not 'modules'. There's no 's' in
+          here, it's just module by itself.</p>
+        <p>Now, you'll notice I've been saying the word loaders a lot but now we're defining something in here called
+          'module'. Well, this is a little bit of a transition period between Webpack 1 and 2. So in Webpack 1 we
+          referred to these pre-processing steps as "loaders" but in Webpack 2 they're officially called part of the
+          module system and each individual loader is referred to as a rule. Personally, I think that the whole loader
+          syntax is like way more clear. It makes a lot more sense to say like "oh, yeah, my Babel loader is going to
+          load up this Javascript file and do some amount of pre-processing on it" as opposed to like "oh, yeah, I've
+          got this rule to tell Webpack that it needs to run this like loader on my code". You know, it's kind of the
+          terminology is a little bit rough but we're kind of use the term 'rule' and 'loader' a little bit
+          interchangeably throughout this course.</p>
+        <p>So, we define this module rule right here assuming this module property inside of it we're going to define a
+          'rules array':</p>
         <figure>
             <pre><code class="language-javascript">module: {
     rules: [
@@ -173,16 +156,14 @@
 }</code></pre>
           <figcaption>Fig 03-006</figcaption>
         </figure>
-        <p>So, inside this rules array is where we're going to define each of our separate loaders
-          or our separate rules. The rules in here specify each different loader or different rule
-          that we want to run on our project. Because we can have many different rules or many
-          different loaders we designate this as an array. So, we might have several different rules
-          inside of here. Inside of the array, we're going to add an object to designate our first
-          rule or our first loader. So this is where we're going to designate a little bit of set up
-          or a little bit of configuration about Babel in particular. So, inside of here we're going
-          to tell this thing that it needs to use the Babel loader that we've just installed. So,
-          the first property that we're going to add on here is the "use property". And we're going
-          to say specifically "use the Babel loader" like so:</p>
+        <p>So, inside this rules array is where we're going to define each of our separate loaders or our separate
+          rules. The rules in here specify each different loader or different rule that we want to run on our project.
+          Because we can have many different rules or many different loaders we designate this as an array. So, we might
+          have several different rules inside of here. Inside of the array, we're going to add an object to designate
+          our first rule or our first loader. So this is where we're going to designate a little bit of set up or a
+          little bit of configuration about Babel in particular. So, inside of here we're going to tell this thing that
+          it needs to use the Babel loader that we've just installed. So, the first property that we're going to add on
+          here is the "use property". And we're going to say specifically "use the Babel loader" like so:</p>
         <figure>
     <pre><code class="language-javascript">module: {
   rules: [
@@ -193,18 +174,17 @@
 }</code></pre>
           <figcaption>Fig 03-007</figcaption>
         </figure>
-        <p>So, this option right here tells Webpack exactly what loader we want it to run. For us,
-          Babel loader. Now, there's two other properties that we're going to find in this object as
-          well. Let's take a quick break and then come back and fill in the rest.</p>
+        <p>So, this option right here tells Webpack exactly what loader we want it to run. For us, Babel loader. Now,
+          there's two other properties that we're going to find in this object as well. Let's take a quick break and
+          then come back and fill in the rest.</p>
         <h2>Babel Configuration</h2>
-        <p>In the last section we started talking about the loader system in Webpack, which is more
-          recently known as the module or rules system. By defining loaders or rules, we can tell
-          Webpack to take a pre-processing step on every file that it includes into our bundle.js
-          file. We are now in the middle of defining some configuration for the babel loader, so
-          let's keep working on it.</p>
-        <p>Now we specify the loader to use in the rule that we just created and there's a handful
-          of other properties we're going to define in here as well. The first is the test property.
-          So let's add in test inside of here:</p>
+        <p>In the last section we started talking about the loader system in Webpack, which is more recently known as
+          the module or rules system. By defining loaders or rules, we can tell Webpack to take a pre-processing step on
+          every file that it includes into our bundle.js file. We are now in the middle of defining some configuration
+          for the babel loader, so let's keep working on it.</p>
+        <p>Now we specify the loader to use in the rule that we just created and there's a handful of other properties
+          we're going to define in here as well. The first is the test property. So let's add in test inside of
+          here:</p>
         <figure>
             <pre><code class="language-json">module: {
   rules: [
@@ -216,114 +196,100 @@
 }</code></pre>
           <figcaption>Fig 03-008</figcaption>
         </figure>
-        <p>Now test gets assigned a regex expression or a regular expression so I'm going to. So
-          this is a regular expression. Any regular expression we pass to this test property will be
-          taken by Webpack and applied to the file name of every file that we import into our
-          project. This regex expression right here specifically looks to see if the file ends
-          with.js. If the file ends with.js, babel will be applied. Otherwise it will not. So this
-          is how we make sure that babel only gets applied to the files that we want to apply it to
-          inside of our project. Again, the classic example is that if we have a CSS file or an
-          image or any other type of file inside of our project, we want to make sure that we do not
-          attempt to throw babel loader at it.</p>
-        <p>Okay, so test will make sure that we only use babel on a javascript file that we add to
-          our project. Now the last thing we have to do, as a part of our babel configuration, is
-          tell babel that once it's loaded up and once it's operating on some file, we need to make
-          sure that it knows exactly what it is supposed to do to each file. And so this is going
-          back to the topic of that preset we had spoken about a little bit ago. Remember that
-          babel-preset-env, so that babel-preset-env is what tells babel to actually do something or
-          actually make some changes to our code once it goes through babel.</p>
-        <p>To instruct babel on how to do this, we are going to create a new file inside of our
-          project directory called .babelrc, like so:</p>
+        <p>Now test gets assigned a regex expression or a regular expression so I'm going to. So this is a regular
+          expression. Any regular expression we pass to this test property will be taken by Webpack and applied to the
+          file name of every file that we import into our project. This regex expression right here specifically looks
+          to see if the file ends with.js. If the file ends with.js, babel will be applied. Otherwise it will not. So
+          this is how we make sure that babel only gets applied to the files that we want to apply it to inside of our
+          project. Again, the classic example is that if we have a CSS file or an image or any other type of file inside
+          of our project, we want to make sure that we do not attempt to throw babel loader at it.</p>
+        <p>Okay, so test will make sure that we only use babel on a javascript file that we add to our project. Now the
+          last thing we have to do, as a part of our babel configuration, is tell babel that once it's loaded up and
+          once it's operating on some file, we need to make sure that it knows exactly what it is supposed to do to each
+          file. And so this is going back to the topic of that preset we had spoken about a little bit ago. Remember
+          that babel-preset-env, so that babel-preset-env is what tells babel to actually do something or actually make
+          some changes to our code once it goes through babel.</p>
+        <p>To instruct babel on how to do this, we are going to create a new file inside of our project directory called
+          .babelrc, like so:</p>
         <figure>
           <img src="./images/Fig03-009.PNG"/>
           <figcaption>Fig 03-009</figcaption>
         </figure>
-        <p>Notice that there is no file extension on here. No file extension. It's just.babelrc.
-          Then inside of here, we're going to define an object with a single key of presets:</p>
+        <p>Notice that there is no file extension on here. No file extension. It's just.babelrc. Then inside of here,
+          we're going to define an object with a single key of presets:</p>
         <figure>
             <pre><code class="language-json">{
   &quot;presets&quot;:
 }</code></pre>
           <figcaption>Fig 03-010</figcaption>
         </figure>
-        <p>and also notice that I'm wrapping pre-sets with double quotes. So we need to have double
-          quotes on both sides of this thing. Inside of an array then, we're going to specify, we
-          expect babel to run babel-preset-env:</p>
+        <p>and also notice that I'm wrapping pre-sets with double quotes. So we need to have double quotes on both sides
+          of this thing. Inside of an array then, we're going to specify, we expect babel to run babel-preset-env:</p>
         <figure>
             <pre><code class="language-json">{
   &quot;presets&quot;: [&quot;babel-preset-env&quot;]
 }</code></pre>
           <figcaption>Fig 03-011</figcaption>
         </figure>
-        <p>So now whenever babel loads up, it's going to look at this babelrc file, it's going to
-          see that, oh, okay, I'm supposed to run babel-preset-env. It will look to see that we have
-          that module installed and then it will run the set of rules that that thing contains over
-          all the javascript files inside of our codebase.</p>
-        <p>Okay, so I think we're at a spot where we can start to test out these changes to our
-          Webpack build file. Before we run it, I want to open up the sum.js file and inside of
-          here, I want to remind you that we use the const keyword in here along with an arrow
-          function:</p>
+        <p>So now whenever babel loads up, it's going to look at this babelrc file, it's going to see that, oh, okay,
+          I'm supposed to run babel-preset-env. It will look to see that we have that module installed and then it will
+          run the set of rules that that thing contains over all the javascript files inside of our codebase.</p>
+        <p>Okay, so I think we're at a spot where we can start to test out these changes to our Webpack build file.
+          Before we run it, I want to open up the sum.js file and inside of here, I want to remind you that we use the
+          const keyword in here along with an arrow function:</p>
         <figure>
             <pre><code class="language-javascript">const sum = (a, b) =&gt; a + b;
 
 module.exports = sum;</code></pre>
           <figcaption>Fig 03-012</figcaption>
         </figure>
-        <p>Those are both little bits of es2015 code, so my expectation would be that if babel
-          correctly runs over our project, we should see no longer an arrow function on here or the
-          const keyword. Instead we should see the es5 equivalent. So that's how we're going to know
-          is babel actually worked or not.</p>
-        <p>All right, so I'm going to change back over to my terminal and I will run babel
-          again:</p>
+        <p>Those are both little bits of es2015 code, so my expectation would be that if babel correctly runs over our
+          project, we should see no longer an arrow function on here or the const keyword. Instead we should see the es5
+          equivalent. So that's how we're going to know is babel actually worked or not.</p>
+        <p>All right, so I'm going to change back over to my terminal and I will run babel again:</p>
         <figure>
           <pre><code class="language-command">npm run build</code></pre>
           <figcaption>Fig 03-013</figcaption>
         </figure>
-        <p>Looks like it does its thing. There were no errors, which is always a good sign. I'm
-          going to open up the bundle.js that just got generated and I'll scroll all the way down to
-          find the sum section. So here's sum:</p>
+        <p>Looks like it does its thing. There were no errors, which is always a good sign. I'm going to open up the
+          bundle.js that just got generated and I'll scroll all the way down to find the sum section. So here's sum:</p>
         <figure>
           <img src="./images/Fig03-014.PNG"/>
           <figcaption>Fig 03-014</figcaption>
         </figure>
-        <p>Looks like we've got the var key word in there and we've got function with a function
-          keyword. So clearly babel did do something on our project Awesome! Okay, this is great.
-          Let's continue in the next section.</p>
+        <p>Looks like we've got the var key word in there and we've got function with a function keyword. So clearly
+          babel did do something on our project Awesome! Okay, this is great. Let's continue in the next section.</p>
         <h2>Refactor to ES2015 Modules</h2>
-        <p>In the last section, we successfully added babel into our build process. Now if you
-          recall, we had previously discussed the use of different JavaScript modules systems inside
-          of our project. Right now, we're making use of CommonJS, and one of the other modules
-          systems we had discussed was ES2015 modules. Now that we've got babel in place inside of
-          our project, I think this will be a really good time to do a refactor from CommonJS over
-          to using ES2015 modules.</p>
-        <p>So let's get a better idea of how our syntax is going to change for importing and
-          exporting code:</p>
+        <p>In the last section, we successfully added babel into our build process. Now if you recall, we had previously
+          discussed the use of different JavaScript modules systems inside of our project. Right now, we're making use
+          of CommonJS, and one of the other modules systems we had discussed was ES2015 modules. Now that we've got
+          babel in place inside of our project, I think this will be a really good time to do a refactor from CommonJS
+          over to using ES2015 modules.</p>
+        <p>So let's get a better idea of how our syntax is going to change for importing and exporting code:</p>
         <figure>
           <img src="./images/Fig03-015.PNG"/>
           <figcaption>Fig 03-015</figcaption>
         </figure>
-        <p>In the CommonJS world, we have been importing modules or importing code through the use
-          of require statements and then we export a code through the use of module.exports
-          statements. In the ES2015 world, we really get a kind of one to one mapping of these
-          statements. So it's really a direct line for line translation from going from CommonJS
-          over to ES2015. So in effect, it's really a painless refactor and there is kind of no good
-          reason for us not to kind of experiment with these two module systems so long as we're
-          playing with Webpack anyways.</p>
-        <p>So in the ES2015 world, to import sum amount of code into our file, we'll write import
-          sum from sum. So that will take whatever exported code there is from the sum file and
-          assign it to the variable of sum. Likewise, we can refactor our export statements by going
-          from module that export sum over to export default sum.</p>
-        <p>So it's pretty much it. Let's do our refactor starting inside of the sum.js file. So I'm
-          going to open up sum.js. Here we go. And rather than the module.exports at the bottom,
-          let's change this out to be export default sum:</p>
+        <p>In the CommonJS world, we have been importing modules or importing code through the use of require statements
+          and then we export a code through the use of module.exports statements. In the ES2015 world, we really get a
+          kind of one to one mapping of these statements. So it's really a direct line for line translation from going
+          from CommonJS over to ES2015. So in effect, it's really a painless refactor and there is kind of no good
+          reason for us not to kind of experiment with these two module systems so long as we're playing with Webpack
+          anyways.</p>
+        <p>So in the ES2015 world, to import sum amount of code into our file, we'll write import sum from sum. So that
+          will take whatever exported code there is from the sum file and assign it to the variable of sum. Likewise, we
+          can refactor our export statements by going from module that export sum over to export default sum.</p>
+        <p>So it's pretty much it. Let's do our refactor starting inside of the sum.js file. So I'm going to open up
+          sum.js. Here we go. And rather than the module.exports at the bottom, let's change this out to be export
+          default sum:</p>
         <figure>
             <pre><code class="language-javascript">const sum = (a, b) =&gt; a + b;
 
 export default sum;</code></pre>
           <figcaption>Fig 03-016</figcaption>
         </figure>
-        <p>So there is our export statement. Then we'll change over to the index.js file, and rather
-          than the require statement at the top, we'll refactor it to be import sum from sum:</p>
+        <p>So there is our export statement. Then we'll change over to the index.js file, and rather than the require
+          statement at the top, we'll refactor it to be import sum from sum:</p>
         <figure>
             <pre><code class="language-javascript">import sum from './sum';
 
@@ -331,346 +297,714 @@ const total =  sum(10, 5);
 console.log(total);</code></pre>
           <figcaption>Fig 03-017</figcaption>
         </figure>
-        <p>All right, so, now let's rebuild our project with npm run build. And looks like we don't
-          get any errors, which is terrific. Let's test out our application inside the browser
-          again. Remember to make sure that everything works right now all we got to do is make sure
-          we see the number 15. So I can refresh this and yeah, saw the number 15 here:</p>
+        <p>All right, so, now let's rebuild our project with npm run build. And looks like we don't get any errors,
+          which is terrific. Let's test out our application inside the browser again. Remember to make sure that
+          everything works right now all we got to do is make sure we see the number 15. So I can refresh this and yeah,
+          saw the number 15 here:</p>
         <figure>
           <img src="./images/Fig03-018.PNG"/>
           <figcaption>Fig 03-018</figcaption>
         </figure>
-        <p>Just to be clear, we did this reactor from CommonJS over to ES2015 just because ES2015 is
-          definitely the much more modern way of doing JavaScript modules in front end web
-          development. We started off with the CommonJS module system because it's a little bit more
-          kind of the legacy system that you'll see with a lot of the older code prior to the
-          modules of ES2015 modules pack being released.</p>
-        <p>Okay, so this is great, our refactor is complete. Let's move on to the next loader that
-          we're going to discuss and talk about how we're going to wire it up inside of our
-          application.</p>
+        <p>Just to be clear, we did this reactor from CommonJS over to ES2015 just because ES2015 is definitely the much
+          more modern way of doing JavaScript modules in front end web development. We started off with the CommonJS
+          module system because it's a little bit more kind of the legacy system that you'll see with a lot of the older
+          code prior to the modules of ES2015 modules pack being released.</p>
+        <p>Okay, so this is great, our refactor is complete. Let's move on to the next loader that we're going to
+          discuss and talk about how we're going to wire it up inside of our application.</p>
         <h2>Handling CSS with WebPack</h2>
-        <p>The next loader that we're going to look at is another one that is nearly indispensable
-          for the vast majority of web projects, so I definitely expect you to making use of these
-          two loaders on your own projects. So we're going to be talking about the style and CSS
-          loaders. These are two separate loaders that will allow us to make use of CSS styling
-          inside of our Webpack project. So let's look at the diagram to kind of figure out how this
+        <p>The next loader that we're going to look at is another one that is nearly indispensable for the vast majority
+          of web projects, so I definitely expect you to making use of these two loaders on your own projects. So we're
+          going to be talking about the style and CSS loaders. These are two separate loaders that will allow us to make
+          use of CSS styling inside of our Webpack project. So let's look at the diagram to kind of figure out how this
           is going to work:</p>
         <figure>
           <img src="./images/Fig03-019.PNG"/>
           <figcaption>Fig 03-019</figcaption>
         </figure>
-        <p>Now the benefit of using Webpack to handle our CSS is that we can make use of a bunch of
-          different CSS files. We can import the CSS files into each of the files that we actually
-          care about to make use of them inside of our project. So, for example, if we have a new
-          file, which I'm gonna call image_viewer, and maybe it produces some amount of HTML, we can
-          create an accompanying image_viewer CSS file and then import that into the image_viewer
-          file. The benefit of this is that it makes a very clear relationship between this JS file
-          and the CSS file. Now do note, however, that when I say a clear relationship, I really
-          mean a clear relationship for the purpose of us, the developers.</p>
-        <p>Importing CSS into a file does not actually scope the CSS in any fashion, so there's not
-          like any magic happening to the CSS rules. It's just solely for us, as developers, we can
-          know that if we have an image_viewer file and it produces some amount of HTML, all the
-          accompanying CSS tied to it should probably be inside of the image_viewer.css file.</p>
-        <p>So this is really a tool that we can use to make development or styling of our
-          applications a lot more straightforward. Okay. I'm gonna suggest that we create a new file
-          in our project called image_viewer.js. The purpose of this file will be to render an image
-          on the screen of our HTML document. So then we will add in a CSS file to style the img tag
-          that gets created by this image_viewer. Okay, so we're basically gonna make an img tag,
-          put it on the screen, style it in some fashion. In the process, we're gonna figure out how
-          to use this style and CSS loader; we're gonna figure out how they work as we wire them up.
-          Okay, so that's the plan, let's get to it.</p>
+        <p>Now the benefit of using Webpack to handle our CSS is that we can make use of a bunch of different CSS files.
+          We can import the CSS files into each of the files that we actually care about to make use of them inside of
+          our project. So, for example, if we have a new file, which I'm gonna call image_viewer, and maybe it produces
+          some amount of HTML, we can create an accompanying image_viewer CSS file and then import that into the
+          image_viewer file. The benefit of this is that it makes a very clear relationship between this JS file and the
+          CSS file. Now do note, however, that when I say a clear relationship, I really mean a clear relationship for
+          the purpose of us, the developers.</p>
+        <p>Importing CSS into a file does not actually scope the CSS in any fashion, so there's not like any magic
+          happening to the CSS rules. It's just solely for us, as developers, we can know that if we have an
+          image_viewer file and it produces some amount of HTML, all the accompanying CSS tied to it should probably be
+          inside of the image_viewer.css file.</p>
+        <p>So this is really a tool that we can use to make development or styling of our applications a lot more
+          straightforward. Okay. I'm gonna suggest that we create a new file in our project called image_viewer.js. The
+          purpose of this file will be to render an image on the screen of our HTML document. So then we will add in a
+          CSS file to style the img tag that gets created by this image_viewer. Okay, so we're basically gonna make an
+          img tag, put it on the screen, style it in some fashion. In the process, we're gonna figure out how to use
+          this style and CSS loader; we're gonna figure out how they work as we wire them up. Okay, so that's the plan,
+          let's get to it.</p>
         <p>
           Inside of my src directory, I'm gonna make a new file called image_viewer:</p>
         <figure>
           <img src="./images/Fig03-020.PNG"/>
           <figcaption>Fig 03-020</figcaption>
         </figure>
-        <p>And inside of here, we'll place some logic to create a new img tag – so, like a raw HTML
-          element – and append it to the DOM. So we're gonna use a little bit of very vanilla
-          JavaScript code in here, no use for any frameworks or anything like that – we're just
-          gonna use raw JavaScript. So we'll create an image tag by saying
-          document.createElement('img'). So this creates a HTML element of type img and assigns it
-          to the variable image. We'll then assign a source to this img tag by saying image
-          .src:</p>
+        <p>And inside of here, we'll place some logic to create a new img tag – so, like a raw HTML element – and append
+          it to the DOM. So we're gonna use a little bit of very vanilla JavaScript code in here, no use for any
+          frameworks or anything like that – we're just gonna use raw JavaScript. So we'll create an image tag by saying
+          document.createElement('img'). So this creates a HTML element of type img and assigns it to the variable
+          image. We'll then assign a source to this img tag by saying image .src:</p>
         <figure>
     <pre><code class="language-javascript">const image = document.createElement('img');
 image.src = 'http://lorempixel.com/400/400/';</code></pre>
           <figcaption>Fig 03-021</figcaption>
         </figure>
-        <p>So this source property that we're going to assign here, this says, hey, when you show up
-          in the browser and you show up in the DOM, try to load up an image from this URL. So we
-          are gonna specify a URL right here that will be used to show an image on the screen. We're
-          going to use an image from http://lorempixel.com and then we're gonna add on /400/400. If
-          I take this URL right here and I put it into the browser:</p>
+        <p>So this source property that we're going to assign here, this says, hey, when you show up in the browser and
+          you show up in the DOM, try to load up an image from this URL. So we are gonna specify a URL right here that
+          will be used to show an image on the screen. We're going to use an image from http://lorempixel.com and then
+          we're gonna add on /400/400. If I take this URL right here and I put it into the browser:</p>
         <figure>
           <img src="./images/Fig03-022.PNG"/>
           <figcaption>Fig 03-022</figcaption>
         </figure>
-        <p>lorempixel is just a nice website for giving you fake random images. Every single time
-          you refresh the page, you'll get a different image. The 400-by-400 on here specifically
-          means the image is gonna be 400-by-400 pixels. So it's just a really nice service for
-          getting some fake images to show on the screen. Cool.</p>
-        <p>So now that we've got the image property assigned, we will then take that image and
-          append it to the DOM</p>
+        <p>lorempixel is just a nice website for giving you fake random images. Every single time you refresh the page,
+          you'll get a different image. The 400-by-400 on here specifically means the image is gonna be 400-by-400
+          pixels. So it's just a really nice service for getting some fake images to show on the screen. Cool.</p>
+        <p>So now that we've got the image property assigned, we will then take that image and append it to the DOM</p>
         <figure>
           <pre><code class="language-javascript">document.body.appendChild(image);</code></pre>
           <figcaption>Fig 03-023</figcaption>
         </figure>
-        <p>So this takes the img tag and just appends it to the body of the HTML document. Cool. So
-          now the last step is to change over to our index.js file and we want to make sure that we
-          import it into this file. So up to the top, we'll write import, and you'll notice I'm
-          gonna make the import statement a little bit different. So I'm gonna say import and I'm
-          gonna pass in image_viewer like so:</p>
+        <p>So this takes the img tag and just appends it to the body of the HTML document. Cool. So now the last step is
+          to change over to our index.js file and we want to make sure that we import it into this file. So up to the
+          top, we'll write import, and you'll notice I'm gonna make the import statement a little bit different. So I'm
+          gonna say import and I'm gonna pass in image_viewer like so:</p>
         <figure>
           <pre><code class="language-javascript">import './image_viewer';</code></pre>
           <figcaption>Fig 03-024</figcaption>
         </figure>
-        <p>So, why did I do this? We were just talking about how simple import statements were, but
-          now I throw on this mystery syntax right here. Well, we don't actually import any code
-          from image_viewer that we can execute. Like, take a look at image_viewer – we're not
-          exporting anything from this. The only thing that image_viewer has to do inside of our
-          project is run. That's the only thing it has to do because it does not export any code, it
-          just runs; it automatically puts something on the DOM, and that's it – no export of code.
-          So because that file does not export any code, we can simply import it with an import
-          statement like this, and that just makes sure that the file just, boom, gets executed
-          inside of our project.</p>
-        <p>The other thing to keep in mind here is that, whenever we add a file to our project,
-          Webpack will not just kind of automatically reach out and grab every JS file that exists
-          inside of our project. To make sure that a file actually gets included in our bundle.js,
-          like the actual output, we have to make sure that it gets imported into at least one
-          file.</p>
+        <p>So, why did I do this? We were just talking about how simple import statements were, but now I throw on this
+          mystery syntax right here. Well, we don't actually import any code from image_viewer that we can execute.
+          Like, take a look at image_viewer – we're not exporting anything from this. The only thing that image_viewer
+          has to do inside of our project is run. That's the only thing it has to do because it does not export any
+          code, it just runs; it automatically puts something on the DOM, and that's it – no export of code. So because
+          that file does not export any code, we can simply import it with an import statement like this, and that just
+          makes sure that the file just, boom, gets executed inside of our project.</p>
+        <p>The other thing to keep in mind here is that, whenever we add a file to our project, Webpack will not just
+          kind of automatically reach out and grab every JS file that exists inside of our project. To make sure that a
+          file actually gets included in our bundle.js, like the actual output, we have to make sure that it gets
+          imported into at least one file.</p>
         <p>
           So if we didn't have this statement right here:</p>
         <figure>
           <pre><code class="language-javascript">import './image_viewer';</code></pre>
           <figcaption>Fig 03-025</figcaption>
         </figure>
-        <p>and then we ran Webpack over our project, because image_viewer is not imported into
-          either index or sum.js, it would have not ended up inside of our bundle. So we just need
-          to make sure that we import it in at least one location.</p>
-        <p>Okay, let's build this project again and then we'll test this out in the browser. By the
-          way, I'm sure you're getting really tired of running npm run build manually every time.
-          There are an array of commands for automatically rebuilding our project with Webpack. The
-          reason that we're not using any is that we're making so frequent changes to the Webpack
-          config file, and none of those watch commands or none of those, like, automated commands
-          actually reload the configuration that's in this file. So that's why we keep on doing this
+        <p>and then we ran Webpack over our project, because image_viewer is not imported into either index or sum.js,
+          it would have not ended up inside of our bundle. So we just need to make sure that we import it in at least
+          one location.</p>
+        <p>Okay, let's build this project again and then we'll test this out in the browser. By the way, I'm sure you're
+          getting really tired of running npm run build manually every time. There are an array of commands for
+          automatically rebuilding our project with Webpack. The reason that we're not using any is that we're making so
+          frequent changes to the Webpack config file, and none of those watch commands or none of those, like,
+          automated commands actually reload the configuration that's in this file. So that's why we keep on doing this
           build manually, just to make sure we pick up those configuration changes.</p>
         <p>Okay, so here's our Webpack output:</p>
         <figure>
           <img src="./images/Fig03-026.PNG"/>
           <figcaption>Fig 03-026</figcaption>
         </figure>
-        <p>You'll notice that, now, image_viewer is successfully being included into the bundle. So
-          let's test this out. I'll refresh the page. And now I should see an image appear on the
-          screen:</p>
+        <p>You'll notice that, now, image_viewer is successfully being included into the bundle. So let's test this out.
+          I'll refresh the page. And now I should see an image appear on the screen:</p>
         <figure>
           <img src="./images/Fig03-027.PNG"/>
           <figcaption>Fig 03-027</figcaption>
         </figure>
-        <p>Perfect. All right, let's start adding some CSS to style this image in the next section
-          and then figure out how that CSS and style loader works.</p>
+        <p>Perfect. All right, let's start adding some CSS to style this image in the next section and then figure out
+          how that CSS and style loader works.</p>
         <h2>The Style and CSS Loaders</h2>
-        <p>We now have a module in our project that creates an image and puts it into our HTML
-          document. In this section, we're gonna add in a CSS file to style this image and then
-          figure out how to add the CSS file to our project using Webpack.</p>
+        <p>We now have a module in our project that creates an image and puts it into our HTML document. In this
+          section, we're gonna add in a CSS file to style this image and then figure out how to add the CSS file to our
+          project using Webpack.</p>
         <p>So remember, this is going to be in our project structure:</p>
         <figure>
           <img src="./images/Fig03-028.PNG"/>
           <figcaption>Fig 03-028</figcaption>
         </figure>
-        <p>We're gonna have our image_viewer JS file and it's gonna have an accompanying
-          image_viewer CSS file. Then we're gonna go back into the JS file and make sure we import
-          the CSS file into there. So yes, we are gonna be importing a CSS file. It does eventually
-          make sense. At first, it's a little bit weird, but trust me, it makes sense eventually
-          .</p>
-        <p>So let's flip back over to our code editor. I'm gonna make a new directory called styles
-          inside of my project. And then inside of that folder, I'm gonna make a new file called
-          image_viewer.css:</p>
+        <p>We're gonna have our image_viewer JS file and it's gonna have an accompanying image_viewer CSS file. Then
+          we're gonna go back into the JS file and make sure we import the CSS file into there. So yes, we are gonna be
+          importing a CSS file. It does eventually make sense. At first, it's a little bit weird, but trust me, it makes
+          sense eventually .</p>
+        <p>So let's flip back over to our code editor. I'm gonna make a new directory called styles inside of my
+          project. And then inside of that folder, I'm gonna make a new file called image_viewer.css:</p>
         <figure>
           <img src="./images/Fig03-029.PNG"/>
           <figcaption>Fig 03-029</figcaption>
         </figure>
-        <p>Now note that if you personally like to have your CSS files in the same directory as your
-          actual source – and this is, you know, particularly I'm talking about React – absolutely,
-          feel free to take this file and put it into the source directory. You'll just need to
-          update the path when we reference the file or when we import it into the image viewer, so
-          totally up to you.</p>
-        <p>So inside of this image_viewer.css file, we'll add in just a little bit of styling to
-          give the images a little bit more, I don't know, pizzaz. So, we'll say img. It's gonna
-          have a border of, well, 10 px solid black:</p>
+        <p>Now note that if you personally like to have your CSS files in the same directory as your actual source – and
+          this is, you know, particularly I'm talking about React – absolutely, feel free to take this file and put it
+          into the source directory. You'll just need to update the path when we reference the file or when we import it
+          into the image viewer, so totally up to you.</p>
+        <p>So inside of this image_viewer.css file, we'll add in just a little bit of styling to give the images a
+          little bit more, I don't know, pizzaz. So, we'll say img. It's gonna have a border of, well, 10 px solid
+          black:</p>
         <figure>
             <pre><code class="language-css">img {
   border: 10px solid black;
 }</code></pre>
           <figcaption>Fig 03-030</figcaption>
         </figure>
-        <p>We'll just make it really prominent, just very visible. So, now we need to configure
-          Webpack to make sure that it can handle import statements for our actual CSS. Let's first,
-          before I forget of course, we need to import the actual CSS file inside of image_viewer.js
-          . So we'll say import, and again, we do not actually have to provide a reference for this
-          thing. We don't actually have to say like 'Ok, import the CSS file and assign it to this
-          property.' All we have to do is import it into our project structure and Webpack should
-          take it from there. So we'll say import up one directory into styles and then
-          image_viewer.css:</p>
+        <p>We'll just make it really prominent, just very visible. So, now we need to configure Webpack to make sure
+          that it can handle import statements for our actual CSS. Let's first, before I forget of course, we need to
+          import the actual CSS file inside of image_viewer.js . So we'll say import, and again, we do not actually have
+          to provide a reference for this thing. We don't actually have to say like 'Ok, import the CSS file and assign
+          it to this property.' All we have to do is import it into our project structure and Webpack should take it
+          from there. So we'll say import up one directory into styles and then image_viewer.css:</p>
         <figure>
           <pre><code class="language-javascript">import '../styles/image_viewer.css'</code></pre>
           <figcaption>Fig 03-031</figcaption>
         </figure>
         <p>
-          Notice that when we are importing CSS files or anything that is not ending in.js, we do
-          have to specify the file extension at the end. So for anything non-JS, just make sure you
-          include that file extension.</p>
-        <p>All right, so I think everything on the CSS side is good to go. Now it's time to work on
-          our Webpack configuration to make sure that it can recognize the CSS file and do the right
-          thing when it sees it. So to configure Webpack to handle CSS, we're going to install two
-          new modules:</p>
+          Notice that when we are importing CSS files or anything that is not ending in.js, we do have to specify the
+          file extension at the end. So for anything non-JS, just make sure you include that file extension.</p>
+        <p>All right, so I think everything on the CSS side is good to go. Now it's time to work on our Webpack
+          configuration to make sure that it can recognize the CSS file and do the right thing when it sees it. So to
+          configure Webpack to handle CSS, we're going to install two new modules:</p>
         <figure>
           <img src="./images/Fig03-032.PNG"/>
           <figcaption>Fig 03-032</figcaption>
         </figure>
-        <p>The first is called css-loader and the second is style-loader. The purpose of css-loader
-          is to just to teach Webpack how to import and parse CSS files. Once it is included into
-          Webpack, however, Webpack doesn't really know what to do with it. So css-loader just says,
-          'Hey, here's how you open up a CSS file and read the contents.' Once it's open and Webpack
-          has read that contents, it just doesn't know what to do with it. So to teach CSS where to
-          place this file or what to actually do to handle it once it's inside of our bundle.js,
+        <p>The first is called css-loader and the second is style-loader. The purpose of css-loader is to just to teach
+          Webpack how to import and parse CSS files. Once it is included into Webpack, however, Webpack doesn't really
+          know what to do with it. So css-loader just says, 'Hey, here's how you open up a CSS file and read the
+          contents.' Once it's open and Webpack has read that contents, it just doesn't know what to do with it. So to
+          teach CSS where to place this file or what to actually do to handle it once it's inside of our bundle.js,
           we're going to use this style-loader.</p>
-        <p>style-loader will take any imported CSS file and inject it into a style tag in our HTML
-          document. But we'll talk about a little bit more about exactly how that works in just a
-          minute. The truth here is that there is a tremendous amount going on in these two loaders.
-          So once we hook them both up, we're gonna have a much easier time of figuring out exactly
-          what each of them is doing. So let's just do the installation and then we'll really get a
-          good idea of how they're working.</p>
-        <p>So the first thing we need to do is install them as npm modules. I'm gonna change over to
-          my Terminal, and we'll run:</p>
+        <p>style-loader will take any imported CSS file and inject it into a style tag in our HTML document. But we'll
+          talk about a little bit more about exactly how that works in just a minute. The truth here is that there is a
+          tremendous amount going on in these two loaders. So once we hook them both up, we're gonna have a much easier
+          time of figuring out exactly what each of them is doing. So let's just do the installation and then we'll
+          really get a good idea of how they're working.</p>
+        <p>So the first thing we need to do is install them as npm modules. I'm gonna change over to my Terminal, and
+          we'll run:</p>
         <figure>
           <pre><code class="language-command">npm install --save-dev style-loader css-loader</code></pre>
           <figcaption>Fig 03-033</figcaption>
         </figure>
-        <p>So we can let this do the little install. While that's going, we'll flip back over to our
-          Webpack config file and add in a little bit of configuration to hook them up. All right,
-          so under our module rules section, we're gonna add another rule. Webpack rules have
-          support to specify multiple loaders in a single step, and that is what we're gonna do
-          here. We want to make sure that any file ending with.css is going to be sent through both
-          the style-loader and the css-loader. So, inside of here, we're going to define use and
-          we're gonna assign it an array this time around to say, 'Hey, pass this any file that
-          matches this type to both the style-loader and css-loader.'</p>
+        <p>So we can let this do the little install. While that's going, we'll flip back over to our Webpack config file
+          and add in a little bit of configuration to hook them up. All right, so under our module rules section, we're
+          gonna add another rule. Webpack rules have support to specify multiple loaders in a single step, and that is
+          what we're gonna do here. We want to make sure that any file ending with.css is going to be sent through both
+          the style-loader and the css-loader. So, inside of here, we're going to define use and we're gonna assign it
+          an array this time around to say, 'Hey, pass this any file that matches this type to both the style-loader and
+          css-loader.'</p>
         <figure>
           <pre><code class="language-javascript">use: ['style-loader', 'css-loader']</code></pre>
           <figcaption>Fig 03-034</figcaption>
         </figure>
-        <p>So we'll say style-loader and css-loader. Now, do make sure that your order is the same
-          as mine. You want to make sure you have style-loader and then css-loader. These loaders
-          are applied from right to left. So, first, css-loader will be applied and then the output
-          from that will then be sent on to style-loader.</p>
-        <p>Next, we need to make sure that we specify that Webpack should apply these loaders to any
-          file ending with.css. So I'll add on our test rule and pass in a regex again:</p>
+        <p>So we'll say style-loader and css-loader. Now, do make sure that your order is the same as mine. You want to
+          make sure you have style-loader and then css-loader. These loaders are applied from right to left. So, first,
+          css-loader will be applied and then the output from that will then be sent on to style-loader.</p>
+        <p>Next, we need to make sure that we specify that Webpack should apply these loaders to any file ending
+          with.css. So I'll add on our test rule and pass in a regex again:</p>
         <figure>
             <pre><code class="language-javascript">use: ['style-loader', 'css-loader'],
         test: /\.css$/</code></pre>
           <figcaption>Fig 03-035</figcaption>
         </figure>
-        <p>There we go. So now anything ending with.css is gonna be sent to both these loaders.
-          Cool. Let's now run npm build on our project and see what happens:</p>
+        <p>There we go. So now anything ending with.css is gonna be sent to both these loaders. Cool. Let's now run npm
+          build on our project and see what happens:</p>
         <figure>
           <pre><code class="language-command">npm run build</code></pre>
           <figcaption>Fig 03-036</figcaption>
         </figure>
-        <p>OK. Well, definitely looks like our output is a little bit different this time around,
-          which is probably good. Let's take a quick break and then come back and figure out exactly
-          what the css- and style-loaders have done with our CSS file.</p>
+        <p>OK. Well, definitely looks like our output is a little bit different this time around, which is probably
+          good. Let's take a quick break and then come back and figure out exactly what the css- and style-loaders have
+          done with our CSS file.</p>
         <h2>Loaders are Tricky!</h2>
         <p>
-          In the last section, we wired up the CSS and style loaders and then ran Webpack. We'll
-          continue now by figuring out exactly what those two loaders did to our project's output.
-          So, we'll first start off by looking at our app in the browser and then we'll check out
-          our code that was generated inside of the bundle.js file.</p>
-        <p>So, I'm going to change over to the browser and I'm going to refresh the page and when I
-          do, you'll notice that we now have a big black border around the exterior of the
-          image:</p>
+          In the last section, we wired up the CSS and style loaders and then ran Webpack. We'll continue now by
+          figuring out exactly what those two loaders did to our project's output. So, we'll first start off by looking
+          at our app in the browser and then we'll check out our code that was generated inside of the bundle.js
+          file.</p>
+        <p>So, I'm going to change over to the browser and I'm going to refresh the page and when I do, you'll notice
+          that we now have a big black border around the exterior of the image:</p>
         <figure>
           <img src="./images/Fig03-037.PNG"/>
           <figcaption>Fig 03-037</figcaption>
         </figure>
-        <p>So, clearly our CSS is correctly being loaded up into this page. But, you know what? I'm
-          a little bit curious. I want to see exactly where that style is inside of our document,
-          like, is it in HTML document? Did it get loaded up onto the image tag itself? Where
-          exactly is that CSS living?</p>
-        <p>I'm going to right click on the screen and then select inspect down at the bottom. So
-          this brings up the tree or the DOM browser on the right hand side. And on the right hand
-          side, I'm going to find the head tag and expand it. And inside of here, you'll see a style
-          tag that contains our CSS:</p>
+        <p>So, clearly our CSS is correctly being loaded up into this page. But, you know what? I'm a little bit
+          curious. I want to see exactly where that style is inside of our document, like, is it in HTML document? Did
+          it get loaded up onto the image tag itself? Where exactly is that CSS living?</p>
+        <p>I'm going to right click on the screen and then select inspect down at the bottom. So this brings up the tree
+          or the DOM browser on the right hand side. And on the right hand side, I'm going to find the head tag and
+          expand it. And inside of here, you'll see a style tag that contains our CSS:</p>
         <figure>
           <img src="./images/Fig03-038.PNG"/>
           <figcaption>Fig 03-038</figcaption>
         </figure>
-        <p>So, here's image. Now, it's a border of 10 pixel black. That's exactly what we added. So,
-          the style loader in CSS loaders apparently have taken our CSS and injected it into the
-          head tag of this document. But wait a second, it's kind of interesting. If you recall, we
-          created this index HTML document ourselves and we have not yet ever instructed Webpack
-          about this HTML document. There's like absolutely no tie between Webpack and the HTML
-          document. So, how could webpack have modified the contents of the head tag? That's what
-          the real question here is. How did Webpack somehow modify the HTML structure of our
-          document?</p>
-        <p>Well, let's open up our bundle.js file and figure out, if we can figure out, exactly how
-          this is happening. So, you know, open up bundle.js, and then once inside of here, I'm
-          going to do a search for border. Once I search for border, taken immediately down to a
-          result on a line that appears to have the exact contents of our CSS file inside of
-          here:</p>
+        <p>So, here's image. Now, it's a border of 10 pixel black. That's exactly what we added. So, the style loader in
+          CSS loaders apparently have taken our CSS and injected it into the head tag of this document. But wait a
+          second, it's kind of interesting. If you recall, we created this index HTML document ourselves and we have not
+          yet ever instructed Webpack about this HTML document. There's like absolutely no tie between Webpack and the
+          HTML document. So, how could webpack have modified the contents of the head tag? That's what the real question
+          here is. How did Webpack somehow modify the HTML structure of our document?</p>
+        <p>Well, let's open up our bundle.js file and figure out, if we can figure out, exactly how this is happening.
+          So, you know, open up bundle.js, and then once inside of here, I'm going to do a search for border. Once I
+          search for border, taken immediately down to a result on a line that appears to have the exact contents of our
+          CSS file inside of here:</p>
         <figure>
           <img src="./images/Fig03-039.PNG"/>
           <figcaption>Fig 03-039</figcaption>
         </figure>
         <p>
-          So, it looks like what the CSS loader does, is it takes the contents of our CSS file and
-          injects it into our bundle.js as raw text. So it ends up in here as a raw string. And it
-          looks like, ok, there's some formatting so like, you know, there's a new line character in
-          here. But, essentially, it is the raw contents of our CSS file.</p>
-        <p>Now, I'm going to scroll down just a little bit more. And down here we're going to start
-          to see some additional code that got injected into this bundle.js file as well. And you'll
-          see some names like styles and dom. Some stuff like getHeadElements. Some stuff like
-          addStylesToDom. Ha, looking at this stuff, it definitely looks like what the style loader
-          does, is it takes the modules inside of this bundle.js that has CSS inside of them. It
-          takes that CSS, and then it manually injects that into the HTML document after the page
-          loads up.</p>
-        <p>So Webpack is not necessarily modifying the index.html file that we're using. It is
-          taking the bundle.js and adding some code inside of that to tell the bundle.js how to
-          update the HTML document after the script is actually loaded up.</p>
-        <p>That's pretty weird so let's walk this flow one more time. So, over the top, we've got
-          our image_viewer file. The image_viewer file imports a CSS file:</p>
+          So, it looks like what the CSS loader does, is it takes the contents of our CSS file and injects it into our
+          bundle.js as raw text. So it ends up in here as a raw string. And it looks like, ok, there's some formatting
+          so like, you know, there's a new line character in here. But, essentially, it is the raw contents of our CSS
+          file.</p>
+        <p>Now, I'm going to scroll down just a little bit more. And down here we're going to start to see some
+          additional code that got injected into this bundle.js file as well. And you'll see some names like styles and
+          dom. Some stuff like getHeadElements. Some stuff like addStylesToDom. Ha, looking at this stuff, it definitely
+          looks like what the style loader does, is it takes the modules inside of this bundle.js that has CSS inside of
+          them. It takes that CSS, and then it manually injects that into the HTML document after the page loads up.</p>
+        <p>So Webpack is not necessarily modifying the index.html file that we're using. It is taking the bundle.js and
+          adding some code inside of that to tell the bundle.js how to update the HTML document after the script is
+          actually loaded up.</p>
+        <p>That's pretty weird so let's walk this flow one more time. So, over the top, we've got our image_viewer file.
+          The image_viewer file imports a CSS file:</p>
         <figure>
           <img src="./images/Fig03-040.PNG"/>
           <figcaption>Fig 03-040</figcaption>
         </figure>
-        <p>This CSS loader notices that we have imported a CSS file, and so it takes the contents of
-          that file and sticks it into a long string inside of our bundle.js document. So, here's
-          the CSS right here:</p>
+        <p>This CSS loader notices that we have imported a CSS file, and so it takes the contents of that file and
+          sticks it into a long string inside of our bundle.js document. So, here's the CSS right here:</p>
         <figure>
           <img src="./images/Fig03-041.PNG"/>
           <figcaption>Fig 03-041</figcaption>
         </figure>
-        <p>Then the style loader looks at the string right here, and adds some code to the bundle.js
-          file to take that string and append it to the head tag in its own individual style
-          tag.</p>
-        <p>So this is a very interesting process because it really shows off the power and the
-          funkiness of Webpack. Yes, both of them. On the one hand, I personally think this is like
-          a pretty cool little bit of tooling. But at the same time, it is violating so many
-          expectations that you might have of your tooling system.</p>
-        <p>For example, when I include CSS into any other type of build system I have ever used,
-          I've expected that all of that CSS, essentially should, at the end of the day, probably
-          get merged into a single standalone CSS file, as the output. But clearly that is not the
-          case here. The output here is,"hey let's like just toss into the javascript and let the
-          javascript world deal with it".</p>
-        <p>So, it's really up to you, whether or not you want to load your CSS in this fashion. It
-          certainly bucks a lot of trends on standards around handling CSS so, you know. Personally,
-          I feel like I'm really on the fence about this type of approach right here.</p>
-        <p>So, let's continue the next section and figure out how we can tweak our loader pipeline
-          to generate a separate CSS file, rather than including our CSS into the actual bundle.js,
-          and injecting all this additional code to add a style tag to our HTML document. So, let's
-          investigate that alternative approach in the next section.</p>
+        <p>Then the style loader looks at the string right here, and adds some code to the bundle.js file to take that
+          string and append it to the head tag in its own individual style tag.</p>
+        <p>So this is a very interesting process because it really shows off the power and the funkiness of Webpack.
+          Yes, both of them. On the one hand, I personally think this is like a pretty cool little bit of tooling. But
+          at the same time, it is violating so many expectations that you might have of your tooling system.</p>
+        <p>For example, when I include CSS into any other type of build system I have ever used, I've expected that all
+          of that CSS, essentially should, at the end of the day, probably get merged into a single standalone CSS file,
+          as the output. But clearly that is not the case here. The output here is,"hey let's like just toss into the
+          javascript and let the javascript world deal with it".</p>
+        <p>So, it's really up to you, whether or not you want to load your CSS in this fashion. It certainly bucks a lot
+          of trends on standards around handling CSS so, you know. Personally, I feel like I'm really on the fence about
+          this type of approach right here.</p>
+        <p>So, let's continue the next section and figure out how we can tweak our loader pipeline to generate a
+          separate CSS file, rather than including our CSS into the actual bundle.js, and injecting all this additional
+          code to add a style tag to our HTML document. So, let's investigate that alternative approach in the next
+          section.</p>
         <h2>The Extract Text Plugin</h2>
+        <p>In the last section, we hooked up CSS support to our build process. But we noticed that Webpack was handling
+          our CSS in a pretty funky manner. It ended up injecting all of our CSS into a style tag in the html document
+          itself. Now this approach certainly has some downsides. In particular, loading CSS in a separate file is a lot
+          faster than loading up all of our JavaScript and CSS in a single file because of how the browser handles
+          parallel download requests. So in this section, we're going to tweak our build process a little bit to make it
+          spit out a separate CSS file.</p>
+        <p> To do so, we're going to use yet another library in our build process. So I really hope you're getting used
+          to the general idea of Webpack tooling right now. It is a complex field of different plugins and libraries
+          which is definitely one of the larger complaints about Webpack in general. So let's install this new library
+          and talk a little bit about what it does.</p>
+        <p>At the terminal, we will install this thing with:</p>
+        <figure>
+          <pre><code
+            class="language-command">npm install --save-dev extract-text-webpack-plugin@2.0.0-beta.4</code></pre>
+          <figcaption>Fig 03-042</figcaption>
+        </figure>
+        <p>All right. So this library called extract-text-webpack-plugin will take a reference to a loader. It will run
+          Webpack with it and it will take any text that was generated by that loader and save it into a separate file
+          in our output directory. Now if that's confusing, well I suspect once you see it in action you're going to
+          have a better idea of what's going on so let's get this thing hooked up.</p>
+        <p>Now this library is wired up a little bit differently than some of the existing loaders that we've already
+          seen. So to start off at the top of this file, we're going to first require the plugin at the top. So we'll
+          say:</p>
+        <figure>
+          <pre><code
+            class="language-javascript">const ExtractTextPlugin = require('extract-text-webpack-plugin');</code></pre>
+          <figcaption>Fig 03-043</figcaption>
+        </figure>
+        <p>Next we're going to update the CSS section of our Webpack config file. So I'm going to take out the entire
+          "use" section:</p>
+        <figure>
+          <pre><code class="language-javascript">use: ['style-loader', 'css-loader'],</code></pre>
+          <figcaption>Fig 03-044</figcaption>
+        </figure>
+        <p>I'm going to take out the entire thing. Now this next part is a little bit nasty. I'm going to tell you that
+          right now rather than using the "use property" here we're going to use the "loader property". Officially, use
+          and loader are the same thing in the Webpack world but Webpack is still in running development, so is a little
+          bit of an offshoot. You know, again all I'm trying to say here is use and loaders really identical in the
+          Webpack world but because of the way extract text plugin is written, we have to fall back to using the more
+          legacy property name of loader right here.</p>
+        <p>So we're going to say:</p>
+        <figure>
+            <pre><code class="language-javascript">loader: ExtractTextPlugin.extract({
+    loader: 'css-loader'
+}),
+test: /\.css$/</code></pre>
+          <figcaption>Fig 03-045</figcaption>
+        </figure>
+        <p>We make sure we're going to get comma right afterwards as well. So you'll notice I've used the term plugin
+          rather than loader more than once now. So plugins are a different system from loaders in the Webpack world.
+          Remember loaders are used for some amount of pre-processing before a file is included into the Webpack bundle.
+          Plugins however, work a little bit somewhat outside of the Webpack pipeline and they have the ability to keep
+          files from ending up inside the bundle.js output. So that's exactly what we want inside of our case. We want
+          to have a separate file rather than letting each CSS file getting snatched up by Webpack and stuck into the
+          final bundle output.</p>
+        <p>After updating that rule right there there's one last bit of configuration we have to do. At the very bottom
+          of the config object, we're going to add another property in here. So note that I'm still inside the config
+          object. Right, I'm still inside of it. Just another property we're adding underneath the modules section and
+          this next property we're going to add is called plugins:</p>
+        <figure>
+            <pre><code class="language-javascript">plugins: [
+  new ExtractTextPlugin('style.css')
+]</code></pre>
+          <figcaption>Fig 03-046</figcaption>
+        </figure>
+        <p>It's going to be an array that's going to take a single argument of new ExtractTextPlugin and we're going to
+          pass an argument of style.css This line right here tells the extract text library to find any files that were
+          transformed by its loader earlier up inside of here. So anything that this loader caught is going to get
+          grabbed by this plugin right here and then saves into a file called style.css. If we have multiple CSS files
+          inside of our project, they will all be combined and stuffed into a single style.css file.</p>
+        <p>So let's change over to our terminal now and run our build process and see if what happens. So back at the
+          terminal:</p>
+        <figure>
+          <pre><code class="language-command">npm run build</code></pre>
+          <figcaption>Fig 03-047</figcaption>
+        </figure>
+        <p>And in the output, we can now see that there is a style.css included in there, which is definitely good I'll
+          say. So let's open up our index.html file and rather than looking at the contents of style.css I want to just
+          add a link tag inside of our html document just to try to load up the css. OK we're going assume that
+          everything worked as expected. So add a link tag:</p>
+        <figure>
+          <pre><code
+            class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;build/style.css&quot; /&gt;</code></pre>
+          <figcaption>Fig 03-048</figcaption>
+        </figure>
+        <p>So this should grab that css file and import it or make use of it inside of the index html file. So let's
+          test this out inside the browser now. I'll flip back over and OK. Inside the head tag we now have a linked tag
+          instead of a style tag:</p>
+        <figure>
+          <img src="./images/Fig03-049.PNG"/>
+          <figcaption>Fig 03-049</figcaption>
+        </figure>
+        <p>So it definitely appears that this thing did what we expected it to. It took all of our CSS and extracted it
+          to this separate style.css file.</p>
+        <p>Let's continue the next section and talk about another loader that is very commonly used inside of the
+          Webpack world.</p>
         <h2>Handling Images with Webpack</h2>
+        <p>Our application certainly works well right now, but it does have one unexpected aspect to it. The image
+          viewer is relying upon an outside source for the images that we're displaying to the user. And you'll notice
+          that that outside source is pretty laggy. So every single time we refresh the page, it takes a pretty decent
+          amount of time for the image to actually load up. So the downside to this approach of using these outside
+          images is exactly that – it takes a lot longer to load up the image. It would certainly be much faster if we
+          hosted the image locally ourselves and somehow included that image inside of our build pipeline.</p>
+        <p>So in this section, we're going to figure out how to use another loader to add the ability for Webpack to
+          process images in our project. Dealing with images will be another big lesson on the minefield of different
+          packages that exist in the Webpack world. So, in particular, we're gonna make use of two separate loaders to
+          handle images inside of our application. So let's get a better idea of what those two are. So, all right,
+          crazy diagram:</p>
+        <figure>
+          <img src="./images/Fig03-050.PNG"/>
+          <figcaption>Fig 03-050</figcaption>
+        </figure>
+        <p>Don't worry, it's gonna be fun. So whenever we attempt to import an image into a file, we're going to send it
+          down into two separate loaders. The first is image-webpack-loader and the second is url-loader. The first
+          loader inside of here will resize the image for us automatically – maybe resize is not a good word, I'll say
+          compress the image. So if we take a really gigantic image that's really big, this image-webpack-loader loader
+          – duplicate term anyways – will take that image and it will compact it down to reduce the file size for us
+          automatically.</p>
+        <p>So that's part of the benefit of using images inside of our Webpack pipeline. We can set up these automated
+          steps to automatically compress images for us which is definitely terrific. We'll then take the result from
+          image-webpack-loader, so that compacted image, and we'll look at the image itself and we'll say, "How big is
+          this thing? Like how large is the image itself?" The url-loader behaves differently depending on the size of
+          the image. If the image is small and we're talking about like the file size, so maybe like 10 kilobytes or
+          smaller, then it will be included inside of our bundle.js file as the raw data that that image consists of. On
+          the other hand, if the image is really big, then the whole image will be saved into our build directory. In
+          either case, it'll then be up to us to figure out how to reference that image inside of our code.</p>
+        <p>And just to be clear, the approach here where we're looking at the image size and deciding whether or not to
+          include it inside the bundle.js or as a separate image, there's definitely some performance benefits or
+          performance gains to be had when we include it inside of our bundle.js file. So, we'll, you know, check that
+          out in due time.</p>
+        <p>Let's install both these loaders and then figure out how to wire them up into our project. So back at the
+          command line, we'll install them both with:
+          <figure>
+            <pre><code class="language-command">npm install --save-dev image-webpack-loader url-loader</code></pre>
+            <figcaption>Fig 03-051</figcaption>
+          </figure>
+        <p>So while these start to install, let's get working in on our Webpack config file. So this is going to be
+          another rule that we're gonna add, so I'm gonna find the module, rules section, and after our ExtractText one
+          for css, we're gonna add another rule inside of here:</p>
+        <figure>
+            <pre><code class="language-javascript">{
+  test: /\.(jpe?g|png|gif|svg)$/
+}</code></pre>
+          <figcaption>Fig 03-052</figcaption>
+        </figure>
+        <p>So the first thing we do to this rule is add a type property that is going to specify which file types this
+          loader is gonna look for. So we add in test. This time around, the test regex is much more complicated. So it
+          says, "Hey, is this thing either ending in jpg or jpeg". And then we'll also look for pngs, gifs, and svg
+          images. And we'll close it off with the dollar sign again.</p>
+        <p>So clearly this image pipeline handles a whole range of different image file types, so jpegs, pngs, gifs, and
+          svgs – definitely fantastic pipeline to use.</p>
+        <p>We're now going to tell Webpack what to do with these files when they are found. So once they're found, we're
+          gonna send these files through both the url-loader and the image-loader by specifying a use property:</p>
+        <figure>
+            <pre><code class="language-javascript">{
+  test: /\.(jpe?g|png|gif|svg)$/,
+  use: [
+    'url-loader',
+    'image-webpack-loader'
+  ]
+}</code></pre>
+          <figcaption>Fig 03-053</figcaption>
+        </figure>
+        <p>Now the first element inside of here will be the url-loader and then we'll place image-webpack-loader. Now
+          notice that I'm placing these on two separate lines just because we're going to expand one of them in just a
+          moment. Also, remember that the order in which we pass these matter. The loader that's on the far right is the
+          first one to be applied to any given file.</p>
+        <p>All right, so here's the tough part. We need to pass some additional configuration into the url-loader right
+          here. OK. We have to add some configuration to this thing. Remember, the url-loader is gonna behave
+          differently depending on the size of the image that we're passing to it. So we need to specify what size image
+          we want it to do or we want it to look at when deciding whether or not is an image that is large enough to
+          include separately or small enough to stick into the bundle. So to add in some configuration to a loader when
+          we are specifying multiple loaders inside of an application, we're gonna take out that string entirely and we
+          replace it with an object:</p>
+        <figure>
+            <pre><code class="language-javascript">{
+  test: /\.(jpe?g|png|gif|svg)$/,
+  use: [
+      {
+          loader: 'url-loader',
+          options: { limit: 40000 }
+      },
+      'image-webpack-loader'
+  ]
+}</code></pre>
+          <figcaption>Fig 03-054</figcaption>
+        </figure>
+        <p>And then this thing is gonna have a loader property – we'll specify the loader, which is url-loader – and
+          then we'll also give it some options, which will be a limit of 40,000, like so. OK. So this is essentially
+          doing the same thing as the syntax we just had. We're still saying, "Hey, apply this loader," but we expanded
+          it out to be an object just so we can pass in some options, especially to the url-loader. So the options
+          object that we passed in here is defining this limit property, and we passed in a value of 40,000. This 40,000
+          right here means look for any images that are 40,000-bytes large. So if a image is greater than 40 kilobytes,
+          then save it as a separate file. Otherwise, if it's smaller than 40 kilobytes, include it into our bundle.js
+          output.</p>
+        <p>OK. Let's take a quick break because we've gone through a lot of configuration in this section. Let's take a
+          quick break. We'll come back, we'll get some test images to use, and then we'll run this new build
+          process.</p>
         <h2>Automatic Image Compression</h2>
+        <p>We've now got some configuration in place for handling images inside of our Webpack file, so it's time to get
+          some images to test with. So we need to actually make sure we grab some images and include them inside of our
+          project, so Webpack actually has something to run over. I'm gonna make a new folder inside of my project
+          directory called just assets:</p>
+        <figure>
+          <img src="./images/Fig03-055.PNG"/>
+          <figcaption>Fig 03-055</figcaption>
+        </figure>
+        <p>and we'll place our images inside of this assets directory. Now, of course we do need some images. Luckily,
+          we can continue to use that lorempixel service to give us some really easy default images to work with that
+          are pretty predictable in size. So, we're going to grab two images off of lorempixel and save them into that
+          assets directory. To do so, I'm gonna first open up Finder based on my project directory, and I can do this
+          from the command line with open., like so. Do note that if you're on Windows, that command will not work. If
+          you're on Windows, just open up Windows Explorer and navigate to your project directory and find that assets
+          folder.</p>
+        <p>So, I'm going to also open up my web browser, and I'm going to open up a new tab, and I'm gonna navigate
+          manually to <a href="lorempixel.com/1200/1200">lorempixel.com/1200/1200</a>
+        <p>So this is gonna give us a nice large image to work with, and chances are, it's probably about 120 kilobytes
+          or so. That's what these larger ones usually average out at. So I'm just going to click and drag this image
+          into my assets directory. So here is that image that I just saved. In this case, OK, it looks like it's a
+          little bit smaller at 95 kilobytes, but that's definitely on the large side of our cutoff of 40 kilobytes.
+          Because this is the large image that we're being working with, I'm going to just rename it as big. So, I've
+          now got an image of big.jpg inside of my assets directory. We're now gonna do the same thing but for a much
+          smaller image as well.</p>
+        <p>So back inside of Chrome, I'm going to update the URL to be /200/200. So this should give me a much smaller
+          image that's probably gonna be much smaller in size. So I'm gonna drag this into my assets directory as well.
+          This one is 12 kilobytes. OK, definitely beneath that 40 kilobyte cutoff. I'm gonna rename this one as small.
+          So now I've got a big image and a small image, very aptly named. So let's now import these into our
+          image_viewer file.</p>
+        <p>So I'm gonna go back to our code editor. Inside of my source directory, I'm gonna find the image_viewer file
+          that we had just put together. So we're going to make sure that we import these into this image_viewer file so
+          that they get picked up by our build process. At the very top, we will first import big from up one directory
+          and then into assets and then we're gonna get big.jpg, like so:</p>
+        <figure>
+          <pre><code class="language-html">import big from '../assets/big.jpg'</code></pre>
+          <figcaption>Fig 03-056</figcaption>
+        </figure>
+        <p>And then we'll also import small from../assets/small.jpg:</p>
+        <figure>
+          <pre><code class="language-javascript">import small from '../assets/small.jpg';</code></pre>
+          <figcaption>Fig 03-057</figcaption>
+        </figure>
+        <p>So I know that was a little bit quick, but the takeaway from that is we've got a new directory of assets, and
+          it has a big image, a small image, and we have made sure to introduce both those images into our build process
+          by importing them both into the image_viewer file.</p>
+        <p>Let's now run Webpack over our project and take a look at the build output and just, you know, let's see what
+          happens. So back at my Terminal, we will run Webpack with:</p>
+        <figure>
+          <pre><code class="language-command">npm run build</code></pre>
+          <figcaption>Fig 03-058</figcaption>
+        </figure>
+        <p>And let's make sure that everything runs successfully. OK. Looks like we got some output. And you'll notice
+          that we've got some additional very long filename inside this output as well. So let's look at our build
+          directory and see what we have. Inside the build directory, you'll notice that we now have this real long
+          filename. And if we open it up, it is the large image:</p>
+        <figure>
+          <img src="./images/Fig03-059.PNG"/>
+          <figcaption>Fig 03-059</figcaption>
+        </figure>
+        <p>So clearly, the image loader that we got correctly interpreted this thing or correctly processed it in some
+          fashion, and then the URL loader correctly interpreted it as being larger than that 40-kilobyte cutoff and so
+          it saved it as a separate file into our build directory.</p>
+        <p>Now let's open up the bundle.js file and see what happened to the smaller image. So inside the bundle.js,
+          we'll scroll on down to the bottom. Inside of here, somewhere, we should probably see something that looks
+          like, aha, here we go:</p>
+        <figure>
+          <img src="./images/Fig03-060.PNG"/>
+          <figcaption>Fig 03-060</figcaption>
+        </figure>
+        <p>So for me, it's number four; for you it may or may not be number four. But what I'm specifically looking for
+          is this data:image/jpeg;base64. So this is the smaller of the two images but encoded as a Base64 string. So if
+          you scroll onto the right-hand side, this is all the raw data that forms the image that we were just looking
+          at. So this is an example of the data URL loader deciding that this image is small enough to turn into a
+          Base64 string and inject directly into our bundle.js file.</p>
+        <p>So, now is the last step. We need to figure out how to actually make use of both these images inside of our
+          application. So we did import them inside of our application, but what does that actually do for us, right?
+          Like, what is the variable big? What is the variable small? Well, the variable small is a little bit more
+          obvious. Small right here is the actual Base64 string, so it's the actual, like, data representation of the
+          image. We can take this variable right here in image_viewer.js:</p>
+        <figure>
+          <pre><code class="language-javascript">import small from '../assets/small.jpg';</code></pre>
+          <figcaption>Fig 03-061</figcaption>
+        </figure>
+        <p>and replace:</p>
+        <figure>
+          <pre><code class="language-javascript">image.src = 'http://lorempixel.com/400/400</code></pre>
+          <figcaption>Fig 03-062</figcaption>
+        </figure>
+        <p>with:</p>
+        <figure>
+          <pre><code class="language-javascript">image.src = small;</code></pre>
+          <figcaption>Fig 03-063</figcaption>
+        </figure>
+        <p>So for HTML image tags, we can assign data URLs to their source property and that will cause the image to
+          render properly inside the browser.</p>
+        <p>Now, let's also make use of the big image here as well. So I'm going to duplicate all the code that we have
+          right here, gonna take everything from const image down to document.body. We'll paste it down here, and then
+          we're gonna rename image to be, how about, big image. We'll replace it in all three locations. And I'll make
+          sure that the bigImage is going to use big instead:</p>
+        <figure>
+            <pre><code class="language-javascript">const bigImage = document.createElement('img');
+bigImage.src = big;
+
+document.body.appendChild(bigImage);</code></pre>
+          <figcaption>Fig 03-064</figcaption>
+        </figure>
+        <p>So let's see what happens when we just reference big because, in this case, it's a little bit more unclear
+          what the value of big will be when we import it into this file.</p>
+        <p>Let's run:</p>
+        <figure>
+          <pre><code class="language-command">npm run build</code></pre>
+          <figcaption>Fig 03-065</figcaption>
+        </figure>
+        <p>again and open up our index.html file and see what happened. So there's our build process. Let's now go over
+          to our index.html file. Here we go, and we'll refresh the document. So when I refresh it, we can instantly see
+          this small image appear on the screen, but you'll notice that the big image appears to not be displaying at
+          all:</p>
+        <figure>
+          <img src="./images/Fig03-066.PNG"/>
+          <figcaption>Fig 03-066</figcaption>
+        </figure>
+        <p>And if I look at my console, you'll see an error message on here that says FILE_NOT_FOUND. Now, if I look at
+          the string that it's using, it is looking inside of my project directory and it's trying to get access to that
+          long hash of the file name, so the faa6. Yours will be named slightly differently, but you should see at least
+          something in here that says.jpg. So looking at this string, it looks like it has the correct image name but it
+          has the incorrect directory. So it's looking inside of the js_modules directory for this image but you and I
+          know that the image is actually located inside of the build directory.</p>
+        <p>So, how are we gonna fix this? We might be thinking, hey, let's just append, like, build onto this string
+          right here. Right? If big right here is just the filename, let's just put on, like, build manually in front of
+          it:</p>
+        <figure>
+          <pre><code class="language-javascript">bigImage.src = 'build/'big;</code></pre>
+          <figcaption>Fig 03-067</figcaption>
+        </figure>
+        <p>You know what, I'm gonna say that's actually not the best approach because we don't actually know when this
+          variable right here is a data URL or the name of an image that is sitting inside of our output directory. So
+          we can't just go around to every single image we have and prepend build onto it because then, that would start
+          to mess with the images that use the data URL format, so we need to come up with some little bit more
+          intelligent fix or approach to this problem.</p>
+        <p>Let's take a quick breather and then figure out how to solve this image or how to solve this problem in the
+          next section.</p>
         <h2>Public Paths</h2>
+        <p>In the last section, we successfully got one of our two images to show up on the screen and we noticed a big
+          red error message about loading up the larger image. So when checking out that error a little bit more
+          closely, we notice that it appeared that Webpack was trying to fetch the larger image from the incorrect
+          directory. So it's looking inside of my node.js modules folder, and then right inside there is looking for
+          that image rather than going into the build directory where it is actually located. To fix this, we're going
+          to add in some more configuration to our Webpack config file.</p>
+        <p>In the Webpack config file find the output section, and in here, we're going to add another property called
+          publicPath:</p>
+        <figure>
+            <pre><code class="language-javascript">const  config = {
+  entry: './src/index.js',
+  output: {
+      path: path.resolve(__dirname, 'build') ,
+      filename: 'bundle.js',
+      publicPath: 'build/'
+  },</code></pre>
+          <figcaption>Fig 03-068</figcaption>
+        </figure>
+        <p>Now the publicPath property is probably one of the tougher properties to explain, kinda one of the tougher
+          ones to understand. Let's first rebuild our project, run it in the browser – we run our app in the browser –
+          and then figure out exactly what this property is doing for us. So we'll first rebuild our project with npm
+          run build. After it finishes building, we'll refresh it in the browser. Okay, so I'll go back over to the
+          browser. And, on refreshing, you'll notice, Okay, well, hey, it looks like it loaded this thing up:</p>
+        <figure>
+          <img src="./images/Fig03-069.PNG"/>
+          <figcaption>Fig 03-069</figcaption>
+        </figure>
+        <p>So what the heck does publicPath actually do for us? Well, let's check the diagram:</p>
+        <figure>
+          <img src="./images/Fig03-070.PNG"/>
+          <figcaption>Fig 03-070</figcaption>
+        </figure>
+        <p>So as we've learned, the URL Loader's purpose is to take the image that we have included inside of our
+          project and copy it over to our build folder. So, go from the dev folder, the assets folder which is where we
+          had actually placed the actual image, and copy it over to the build folder.</p>
+        <p>When this is done, the URL Loader then goes back to the import statement that we had placed inside of the
+          image_viewer file. So let's go find that really quick. We're gonna go into my image_viewer file, and here's
+          the import statement for the big image right here:</p>
+        <figure>
+          <img src="./images/Fig03-071.PNG"/>
+          <figcaption>Fig 03-071</figcaption>
+        </figure>
+        <p>So the URL Loader comes back to this import statements and assigns the name of the new image, as it was
+          copied into the build directory with that really long string, and it assigns it to this big variable right
+          here. If we define the output.publicPath property in our Webpack config file as we just did, the URL Loader
+          will take that property, it will take that string that we defined, and prepend it to the URL that gets passed
+          back from that import statement. Now, that might not sound like the most confusing thing in the world, or
+          maybe it does – I don't know – but I personally find this behavior a little bit unexpected because,
+          essentially, our loader is reaching into the Webpack config file to find that publicPath property and it uses
+          that property when generating its output.</p>
+        <p>Now to me, that's a little bit unexpected. It might have been a little bit more predictable if we had to,
+          say, add a property to our URL Loader – so here is the URL Loader right here:</p>
+        <figure>
+          <img src="./images/Fig03-072.PNG"/>
+          <figcaption>Fig 03-072</figcaption>
+        </figure>
+        <p>It would have been a little bit more predictable for me, personally, if we passed this thing a additional
+          property that said, hey, when you put the image into the build folder and you return a URL into any place
+          where it got imported, make sure you add on build in front of that URL. So you kind of would expect that
+          option and pass directly to the URL Loader, but that is not the case. The URL Loader right here goes back up
+          to that output section and finds the publicPath and uses that went it's constructing the URL.</p>
+        <p>So, again, little bit unexpected but that's part of the game that Webpack is playing here, so to speak. Now
+          to be clear, this publicPath property is not only used by the URL Loader, it will also be used by any other
+          loader that produces a direct file path reference to a file in our output directory. So, in essence, the good
+          thing about this approach right here is that we only have to define it one time and that will be good to go
+          for everything in the future, so pros and cons to this approach.</p>
+        <p>Anyways, we've now got both images loading up on the screen. This definitely looks good, even though one
+          image is way too large but, hey, we just wanted to load it up, right? So this looks good. Let's continue in
+          the next section.</p>
       </div>
     </div>
   </div>
