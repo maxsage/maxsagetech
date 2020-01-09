@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="UTF-8">
+  <title>WebPack 2 The Complete Developers Guide</title>
+  <script src="https://unpkg.com/vue"></script>
+  <link crossorigin="anonymous"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        rel="stylesheet">
+  <link href="prism.css" rel="stylesheet">
+  <script src="prism.js"></script>
+  <style>
+    img {
+      max-width: 100%;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="panel-group">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h2>Section 8: Web-Based Deployment for Static Sites</h2>
+      </div>
+      <div class="panel-body">
+        <h2>Deployment Options</h2>
+        <p>We've covered a lot of different topics in the world of Webpack so far, but all focused on the development
+          side of things. In this section, we're gonna start talking about how to use Webpack to deploy actual
+          applications so that your friends and family can make use of them.</p>
+        <p>First, let's talk a little bit about Webpack's role in a modern web application. By default, Webpack pumps
+          out static assets only:</p>
+        <figure>
+          <img src="./images/Fig08-001.PNG"/>
+          <figcaption>Fig 08-001</figcaption>
+        </figure>
+        <p>So when we say static asset, that mostly refers to anything that is not served by a dynamic web server. So
+          something that you can make, say, an API request to and get back some information from a database or another
+          API or anything like that. In other words, what you see is what you get with a Webpack project.</p>
+        <p>A Webpack project produces a built application which consists of our index.html, any JavaScript files that
+          we've included as well. So the entire application is running inside of the user's browser — there is no
+          corresponding back-end to make any type of API request to. Now of course, we could make request to an
+          third-party API, but if you are intending to build an application that makes use of its own personalized
+          database, you might not be looking to make only a static project.</p>
+        <p>In comparison to that is something that has our static assets plus our own custom server:</p>
+        <figure>
+          <img src="./images/Fig08-002.PNG"/>
+          <figcaption>Fig 08-002</figcaption>
+        </figure>
+        <p>So in this sort of world, we have some intermediary server, be it node, rails,.net, django with Python, any
+          type of server you can possibly imagine. This middle server right here can serve up all of these pre-built
+          assets that Webpack has produced, but the middle server right here can also handle things like accessing your
+          own private database or authentication, anything like that.</p>
+        <p>A user's web browser will interface with that intermediate server to get information from the server itself
+          or the actual static assets. So essentially, when we think about Webpack deployment, we think about whether or
+          not we are serving up a static application and the words "front-end assets only", or if we have both a
+          front-end application and a back-end as well.</p>
+        <p>In this course, we're gonna walk through both processes. So we're gonna go through the process of deploying a
+          static application; we're also gonna go through the process of deploying a much more back-end focused
+          application as well.</p>
+        <p>Now, here's a list of just kind of like general providers of hosting for both static assets and server-based
+          providers as well:</p>
+        <figure>
+          <img src="./images/Fig08-003.PNG"/>
+          <figcaption>Fig 08-003</figcaption>
+        </figure>
+        <p>On the left-hand side, we've got very common services like Github Pages, which is completely free. Amazon S3,
+          so S3 is primarily for data storage and can be used for serving static assets. Digital Ocean, which you can
+          really use on either side. So Digital Ocean is a very cheap, very inexpensive service, and it really is
+          well-suited for either application. Got Microsoft Azure, which is equivalent to Amazon AWS — they have their
+          own static hosting service. And then, also one that we'll be using on the static asset side as well, and by
+          far the easiest deployment process around — surge, which is short for — surge.sh is their actual domain</p>
+        <p>If you have some type of back-end, so if you're thinking, "OK, I want to deploy my app and I want to have
+          like an express application behind it with MongoDB or Postgres or something like that", then you'll probably
+          be looking more towards this server-based provider side, in which case you can have everything from the very
+          low-level Amazon EC2 instance to Amazon Elastic Beanstalk or ELB. Amazon ELB sits on top of EC2, but ELB is
+          generally a little bit easier for handling deployments. Again, we have Digital Ocean, which is pretty famous
+          for being quite flexible. Heroku — again, very famous for being pretty fairly cheap, reasonably cheap with a
+          reasonable free tier and also very easy deployments or I should say relatively easy. And again, Microsoft
+          Azure which is again very similar to AWS as well.</p>
+        <p>So, in this course, we're gonna be walking through both sides here, both serving up just our Webpack assets
+          and having an express application backing up our app as well. So let's continue in the next section and start
+          walking through the prepackaging process for all the deployments that we'll be doing.</p>
+        <h2>Getting Production Ready</h2>
+        <p>The remainder of this section is going to be focused on deploying to several different targets. So, we're
+          going to walk through deployment to a couple of static asset vendors and a couple of server-based providers,
+          as well. Before we get to those, we need to make a couple quick changes to our webpack project. So, please
+          continue on this section, I beg you, continue on this section. Once we're done with this section, then you can
+          jump to the very specific deployment version or very specific deployment target that you want to focus on. So,
+          start here and then jump to wherever you want to go.</p>
+        <p>So, let's make a couple of quick changes to our webpack config. These changes are designed to get our webpack
+          configuration a little bit more in line with deployment-based or production-based practices. The first thing
+          we're going to do is open up our webpack config file and go down to the plugin section all the way at the
+          bottom, so we'll go all the way to the bottom. Now, we've already got two plug ins in here:</p>
+        <figure>
+          <img src="./images/Fig08-004.PNG"/>
+          <figcaption>Fig 08-004</figcaption>
+        </figure>
+        <p>one about our Commons Chunk Plug in and one for our Html webpack Plug in, as well. We're going to add in one
+          additional plug in. Let's put the code down and we'll talk about exactly what it's doing. So we're going to
+          say 'new webpack.DefinePlugin' and make sure you get the comma right before that, as well. And then inside,
+          we're going to add a little bit of repetitive statements in here so bear with me. In a string, we'll start off
+          by saying 'process.env.NODE_ENV' and then colon 'JSON.stringify(process.env.NODE_ENV)':</p>
+        <figure>
+          <img src="./images/Fig08-005.PNG"/>
+          <figcaption>Fig 08-005</figcaption>
+        </figure>
+        <p>Okay. So, I encourage you to please double check, make sure you have the comma, make sure you've got the
+          correct capitalization on DefinePlugin, make sure you've got string around or semi-quotes around the key and
+          then double check your spelling on process on either side. Make sure you don't have two Cs in their, common
+          typo. Okay. Let's talk about what this thing does.</p>
+        <p>There's several libraries that we have installed to our project, chief among which is ReactJS that make use
+          of this NODE_ENV flag. Whenever React runs, it looks for a window scoped variable of process.env.NODE_ENV. So,
+          in your, like literally in your browser, when your react boots up, it's going to look for this variable on
+          Windows scope. If it finds this variable and it is equal to the string production, then react is going to
+          behave a little bit differently.</p>
+        <p>In particular, react is not going to do quite so many error checking procedures while it runs and renders
+          your application. This is beneficial because in production, it assumes that maybe you don't want quite so much
+          error checking and the thought there is that in your development environment, you want a lot more error
+          checking so you can catch a lot of different errors before they get pushed to production. All that error
+          checking takes some amount of time to do, so it's a performance concern. And by adding in this global variable
+          right here, it makes sure that NODE or simply it makes sure that react doesn't take all that error checking
+          into consideration.</p>
+        <p>To make this or to make this global variable available in the Window, on the Windows scope, we make use of
+          this DefinePlugin. So webpack's Defineplugin is used to define Windows scope variables that will be define
+          within our bundle.js file, or really our javascript output files. On the left hand side, we define the
+          variable that we want defined:</p>
+        <figure>
+          <img src="./images/Fig08-006.PNG"/>
+          <figcaption>Fig 08-006</figcaption>
+        </figure>
+        <p>And on the right hand side, we define the value that we want it to be assigned:</p>
+        <figure>
+          <img src="./images/Fig08-007.PNG"/>
+          <figcaption>Fig 08-007</figcaption>
+        </figure>
+        <p>Now, do notice the JSON stringify statement in here, that just makes sure that when we pass in this NODE_ENV
+          variable, it will be handled appropriately. Now, this process.env.NODE_ENV is talking about the NODE_ENV
+          environment variable running on our machine. So, the assumption here is that we will set the correct variable,
+          like you and I will set the correct variable for this thing whenever we build our project.</p>
+        <p>So let's take care of that right now, just to make sure it's really clear how it's done. I'm going to change
+          over to my package.JSON file, I'm going to find my build script, and right before we run the script, we're
+          going to set an environment variable by running or by adding NODE_ENV=production, like so:</p>
+        <figure>
+          <img src="./images/Fig08-009.PNG"/>
+          <figcaption>Fig 08-009</figcaption>
+        </figure>
+        <p>So by adding in NODE_ENV=production, it makes sure or ensures that when node runs are clean and webpack
+          scripts, webpack will be ran in the node environment of production. So that is where this process.env.NODE_ENV
+          variable is going to come from. Do know that if we build our project without defining this production
+          environment variable right here, then webpack will assume that we are not running in production and we don't
+          have to worry about all these additional checks.</p>
+        <p>Okay, so that's change number one. We're making sure that when react runs, it is running correctly, it's
+          running in the proper environment. The next change that we're going to make is around webpack script. So, I'm
+          still in the package.JSON file, still in the build script, we're looking at the webpack command. There's one
+          additional switch that we can pass to the webpack command line. So I'm going to put a space and then dash
+          p:</p>
+        <figure>
+          <img src="./images/Fig08-010.PNG"/>
+          <figcaption>Fig 08-010</figcaption>
+        </figure>
+        <p>Adding in the -p right here tells webpack that we want a production version of our output. When webpack runs
+          in production mode, it will automatically minify all of our javascript code. When it minifies our javascript
+          code, webpack will automatically rename some of our variables and it will automatically compact down all of
+          our code into the minimum amount of code possible. So, all extraneous spaces, all extraneous tabs, all kind of
+          characters like that, all comments will get script out or extracted out of our code base for the production
+          version of our bundle. The end result is a version of our production assets that is significantly smaller. And
+          I'm talking like 20 to 30% smaller than when we build webpack in development mode. </p>
+        <p>Now if you want to, you can change over to your terminal right now and run:</p>
+        <figure>
+          <pre><code class="language-command">npm run build</code></pre>
+          <figcaption>Fig 08-011</figcaption>
+        </figure>
+        <p>And I kind of encourage you to pause the video right now and do so. When you do this, you'll notice that it
+          takes significantly longer to build your project. So, I'm not going to it right now because it takes me 30
+          seconds, and I'm not going to make you sit here and watch me do it. But when you run npm run build, it's going
+          to take significantly longer to build your project but you'll also notice that your output is significantly
+          smaller than when you run without the -p flag.</p>
+        <p>Okay. So that is the two big changes that we wanted to make to our code base to get it ready for production:
+          so the webpack -p flag, and also correctly setting the NODE_ENV environment variable, as well. Now that we've
+          made our project ready for production, let's continue on and go ahead and pick out any of the following
+          sections, and in the following videos, pick out the deployment target that you want to go to and give it a
+          shot.</p>
+        <p>If you don't really have a lot of concern and you just kind of like want to give it a shot like the easiest
+          way possible, I really encourage you to just go to the straight to the next video, which is on surge. And with
+          surge, by far the easiest deployment there is. So, if you just want to kind of get something out of line, just
+          go to the next video. It only takes about three minutes or so to get started with surge. So again, I really
+          encourage you to give that a shot.</p>
+        <p>But anyways, go onto the next video, whichever deployment target you want, and I'll catch you there.</p>
+        <h2>Deployment with Surge (Easiest!)</h2>
+        <p>In this section, we're gonna walk through a deployment using surge.sh. Surge bills itself as being one of the
+          best static website publishing tools around. And in my experience, it definitely lives up to that. So if
+          you're just looking to get your website online using Webpack and you don't really have any super involved back
+          end, surge is unequivocally where you want to go. So let's give it a shot. I think you're gonna be surprised
+          at how quickly we've put this together with surge. So this is really gonna be a pretty darn fast section.
+          Let's give it a shot.</p>
+        <p>At my command line, we're first going to install the surge CLI by running:</p>
+        <figure>
+          <pre><code class="language-command">npm install -g surge</code></pre>
+          <figcaption>Fig 08-012</figcaption>
+        </figure>
+        <p>Now I've already taken the liberty of installing surge locally, just to save us some time of having to watch
+          the progress bar as this thing installs. But go ahead, hit enter and install this thing. After surge is
+          installed, deployment is, again, just kind of shockingly easy. So here's what we're gonna do. I'm inside of my
+          project directory. I'm going to first make sure that I've got an up-to-date build of my project put together
+          by running npm run build. Now it takes me about 30 seconds to run the build process here, so I've already
+          taken the liberty of running this for myself. I encourage you to run the build process again just to make sure
+          you've got a fully up-to-date version of your code base.</p>
+        <p>After you run build, we're going to deploy with just one simple command. We'll write:</p>
+        <figure>
+          <pre><code class="language-command">surge -p dist</code></pre>
+          <figcaption>Fig 08-013</figcaption>
+        </figure>
+        <p>The -p says I'm about to give you the directory that I want deployed, and then we'll say dist because
+          remember, when we build our project all of our static assets get dumped into the dist directory. So we'll run
+          this command. For you, you're probably going to get a prompt asking you to enter an email and then enter a
+          password. I've already gone through that process, so you can see I am prompted with an email or I am told
+          like, hey, that's your email and here is some authentication token. And it'll appear that you're kind of like
+          frozen in space. You're not actually frozen. It is waiting for you to hit enter to confirm that this is the
+          domain that you want to deploy to. So we'll just hit enter to say, yep, go ahead and do it.</p>
+        <p>And that's pretty much it. Yeah, believe it or not, I know, it was shocking to me too the first time I used
+          surge, really just a fantastic service. So our website is now available at your pre-generated URL, which
+          you'll find down here at the bottom right:</p>
+        <figure>
+          <img src="./images/Fig08-014.PNG"/>
+          <figcaption>Fig 08-014</figcaption>
+        </figure>
+        <p>So I'm gonna copy that URL, I'm gonna go over to Chrome, and I'm gonna visit it:</p>
+        <figure>
+          <img src="./images/Fig08-015.PNG"/>
+          <figcaption>Fig 08-015</figcaption>
+        </figure>
+        <p>And ta-da, there we go. That's pretty much it. So again, surge, without a doubt, the easiest way to get your
+          product online. Again, this is really only applicable for using static assets, but because our website right
+          now, as it stands, is not making use of any type of server, it makes the use of surge absolutely
+          applicable.</p>
+        <p>
+          Now you will note that the URL is a little bit ugly. It's on delicate-turn.surge.sh. Surge has support for
+          getting your own custom domain. If you go to surge.sh and then click on help, just about every common question
+          that you could possibly have is added on here. And so in fact, this second at link on here on the left is,
+          hey, how do I add a custom domain? And so you can walk through this process right here and go ahead and add
+          your own custom domain. We're not going to go through that process because it really gets a little bit
+          different depending on where you buy your domain from, but you can definitely follow this tutorial. Plus, it's
+          referencing some documentation by your domain provider to figure out how to add your own custom domain.</p>
+        <p>OK, that's pretty much it for surge. Every other deployment opportunity or option that we're gonna go through
+          is significantly more challenging than this. So if you're happy with surge, hey, fantastic. Just stick with
+          it.</p>
+        <p>Let's continue with our next deployment target in the next section.</p>
+        <h2>Deployment with Github Pages</h2>
+        <p>In this section, we're going to walk through the process of deploying to GitHub Pages. GitHub Pages is
+          fantastic as a deployment target because it's free, first off - which is always fantastic; it is quite stable;
+          it is backed by a very majorly and very well-funded company; and it's relatively easy, compared to some of the
+          other methods of deployment that we're going to look at.</p>
+        <p>So let's get started by first figuring out how we serve webpages by using GitHub. Do note that I'm going to
+          assume that you've got at least some knowledge of Git when we get started here. If you don't have any
+          knowledge of Git, but you still want to walk through this process, certainly go through it. We're not going to
+          do anything so crazy that you'll get lost. And most of this will come down to some commands that you can
+          certainly copy/paste along with. So let's get started.</p>
+        <p>So how do we serve a webpage using GitHub? When you first create a GitHub repository, you'll usually end up
+          with a branch called "master":</p>
+        <figure>
+          <img src="./images/Fig08-016.PNG"/>
+          <figcaption>Fig 08-016</figcaption>
+        </figure>
+        <p>And that will be the central repository, the central branch of all of your code. Now GitHub makes use of a
+          very specially-named branch called "gh-pages". If you push a branch to gh-pages and you push it up to GitHub,
+          all the content that is on that branch will be automatically served at a URL equal to HTTPS, then your GitHub
+          username.github.io, and then the repository name at the end.</p>
+        <p>So our process of deployment is somewhat straightforward. The setup is going to be a little bit involved, but
+          deploying is really straightforward. Essentially, all we have to do is build our project and then push our
+          dist directory or, you know, our distribution directory, up to the GitHub Pages branch. And the instant we do
+          that, poof! All of our code is going to appear online at this URL.</p>
+        <p>Now, GitHub Pages also supports automatically applying custom domain names as well. So if you don't like this
+          domain name right here, you can certainly add on the custom domain as well. So let's give this a shot.</p>
+        <p>We're going to go from absolute square one. Well, almost square one. I'm going to assume that you at least
+          have a GitHub account. So in my browser, I'm going to make sure that I'm signed in - yes, you do need an
+          account - and I'm going to create a new repository. So at the top right, I'll click create new and then
+          repository:</p>
+        <figure>
+          <img src="./images/Fig08-017.PNG"/>
+          <figcaption>Fig 08-017</figcaption>
+        </figure>
+        <p>Then once here, I need to enter a name for my repository. Note that the name you put in there is going to be
+          what your repository - or it's going to affect how your URL looks. So ideally, you want it to be something at
+          least somewhat related to your project or your - you know, whatever you're hosting, if you plan on using this
+          URL to distribute it to other people.</p>
+        <p>So for my case, I'm going to use WebpackSampleDeploy:</p>
+        <figure>
+          <img src="./images/Fig08-018.PNG"/>
+          <figcaption>Fig 08-018</figcaption>
+        </figure>
+        <p>Not the prettiest URL, but certainly anyone is going to be able to, you know, get to it pretty easily. I
+          don't have to customize anything else in here, but what is important is to make sure that I do not set it to
+          be a private repository. If you have a free GitHub account, you probably won't even see this setting. I have a
+          paid account, so I have the option to make it private. So let's go ahead and create the repository.</p>
+        <p>Then we get our GitHub link right here:</p>
+        <figure>
+          <img src="./images/Fig08-019.PNG"/>
+          <figcaption>Fig 08-019</figcaption>
+        </figure>
+        <p>I'm going to use my SSH link. I can only use this because I've set up my machine to use SSH with GitHub. If
+          you've not set up an SSH key, then you'll want to use HTTPS instead. And if you're not sure, you can always
+          just default to HTTPS and you'll be A-okay. So I'm going to take the link right here, I'm going to copy it,
+          I'm going to go back over to my project directory. So here I am. You'll notice that I have not yet initialized
+          a Git repository in here just yet. So I'm going to create a Git repository by running:</p>
+        <figure>
+          <pre><code class="language-command">git init</code></pre>
+          <figcaption>Fig 08-020</figcaption>
+        </figure>
+        <p>I'll then add all of my code and commit it:</p>
+        <figure>
+          <img src="./images/Fig08-021.PNG"/>
+          <figcaption>Fig 08-021</figcaption>
+        </figure>
+        <p>Next, I'm going to add my GitHub Pages, or - I assume - I'm going to add my GitHub repository as a remote
+          target for this repo by running the command:</p>
+        <figure>
+          <img src="./images/Fig08-022.PNG"/>
+          <figcaption>Fig 08-022</figcaption>
+        </figure>
+        <p>and then I'll paste the link that I just copied. So this says, "Add a remote called origin using this URL."
+          So we'll add that. Next, we'll check out our branch gh-pages.</p>
+        <figure>
+          <img src="./images/Fig08-023.PNG"/>
+          <figcaption>Fig 08-023</figcaption>
+        </figure>
+        <p>So this checks out a branch called github-pages or gh-pages. So we're on the branch right now and so all you
+          have to do is push this branch up to GitHub and that's pretty much it.</p>
+        <p>To automate the process of pushing just our dist directory -- because do note we don't want to push our
+          entire codebase, we want to push just the dist directory and the files that are inside of it - we're going to
+          use a little bit of fancy command. We're going to say:</p>
+        <figure>
+          <img src="./images/Fig08-024.PNG"/>
+          <figcaption>Fig 08-024</figcaption>
+        </figure>
+        <p>What this does is it says, "I acknowledge that I've got a full git repository of code here - like many files,
+          many different folders. I only want to push the folder called dist to my origin which is GitHub, and I want to
+          push it to the branch called GitHub Pages."</p>
+        <p>So I'll run this command. It's going to take all of my output from my projects or all of our built files and
+          it will push it up to GitHub. So now, I should be able to go directly to my GitHub URL, or like my designated
+          repository URL and see my project appear on the screen. So let's give it a shot. To get to the GitHub Pages
+          URL, again, it's going to be HTTPS, then your GitHub username. So for me, it's Steven Grider. Whatever yours
+          is, you want to put it in there instead. Then github.io and then your repository name. So for me, I just added
+          a repository name of WebpackSampleDeploy.</p>
+        <p>If you used a different repository name, you'll make sure that you want to put that different repo name in
+          there. So we'll go, we'll visit it and ta-da:</p>
+        <figure>
+          <img src="./images/Fig08-025.PNG"/>
+          <figcaption>Fig 08-025</figcaption>
+        </figure>
+        <p>Here's our project. Fantastic. Not too - or not too bad, right? Just takes a little bit of setup and that's
+          it. To make sure that we can deploy in the future very quickly whenever we want to, it usually ends up being a
+          pretty good idea to add in a NPM script to automatically deploy our project for us. So inside of my
+          package.json file, I'm going to find my scripts directory and I'm going to add on a new script of deploy:</p>
+        <figure>
+          <img src="./images/Fig08-026.PNG"/>
+          <figcaption>Fig 08-026</figcaption>
+        </figure>
+        <p>And in deploy, we will first "npm run build" - so I'm going to first build my project - and then after I have
+          built my project, I'll run "git subtree push --prefix dist origin gh-pages." So that is the exact command that
+          we just ran at the command line. So now, for my command line, whenever I want to build and deploy my project
+          automatically to GitHub Pages, I can flip over to the command line and all I have to do is run:</p>
+        <figure>
+          <pre><code class="language-command">npm run deploy</code></pre>
+          <figcaption>Fig 08-027</figcaption>
+        </figure>
+        <p>like so. And now from the terminal I can run:</p>
+        <figure>
+          <pre><code class="language-command">npm run deploy</code></pre>
+          <figcaption>Fig 08-028</figcaption>
+        </figure>
+        <p>And so that will go through the process of building my project. It will build it automatically. It will clean
+          my disk directory ahead of time too. It will build the project and then it automatically deploys it off to
+          GitHub Pages.</p>
+        <p>Again, you can set up GitHub Pages to use a custom URL you don't have to stick with the ugly domain that you
+          get by default. So this is just a fantastic way to do your deployments. It is so cheap. It is free on GitHub,
+          up to a limit. They recently imposed some bandwidth limits, but it's relatively free, nearly free. The only
+          thing you really have to pay for is a custom domain name if you want one. So definitely a fantastic way to
+          handle your deployments.</p>
+        <p>Okay. That's pretty much it. Let's talk about the next method of deployment in the next section.</p>
+        <h2>Deployment with AWS S3</h2>
+        <p>In this section, we're going to walk through the process of deploying our application to Amazon Web Services
+          via the S3 service. The S3 service can be thought of as like a big data directory, or a big folder that is
+          sitting out on some server. It is perfect for hosting static websites, because there's absolutely no logic
+          involved on it. Like, no logic is running on that server whatsoever. All it does, is serve up folders, serve
+          up files. That's all it does. So let's get started with AWS, and give this a shot. Just to throw a quick kind
+          of disclaimer out there right now, using AWS can potentially cost money, for what we're doing we're going be
+          far below the free tier. So, unless you've got any other services already running on AWS this should be
+          absolutely free. The other thing that I want to mention, is that we're going to be making use of some AWS
+          access keys or API keys that are extremely security sensitive. So sometimes in my courses, I use API keys for
+          say like, firebase or for a weather API. And it's not a big deal if you share those with anybody at the end of
+          the day. But in the case of your AWS keys, they are extremely security sensitive. So, in this video, we're
+          going to create a new set of API keys. We're going to use them one time, and then we're going to immediately
+          disable and delete them, just to make sure that nothing goes wrong. Even if you get stuck somewhere in this
+          video, and you say like, "Hey, I don't really want to... " you know, "continue on," or anything like that, I
+          really encourage you to go ahead and delete your keys just to do very safe cleanup. Okay? So, I hope that
+          didn't scare you away too much. Let's go through the process. In general, it's pretty quick, pretty easy, so
+          it'll be a quick thing to go through. The first thing that we're going to do, is flip over to our command line
+          and install a little helper module or a little library that's going to help us automatically create and deploy
+          our application on AWS. So, at the command line, I'm going to run "npm install -g s3-website", like so. Now,
+          do note that we are installing this as a global module. I know that I've said several times throughout this
+          course that we don't want to install modules globally, wherever possible, but in the case of a tool that we're
+          using for deployment, it's really not a dependency of our project. It's really not a dependency of the
+          project, so, I feel okay installing it as a global module. This S3 website tool that we just installed, works
+          by automatically creating a deployment bucket on AWS for us, and then automatically deploys our website to it.
+          So really, it abstracts away just about all the difficulty. The only thing we have to do, is make sure it has
+          access to our AWS account by providing it with our API keys. So we need to first create some API keys, give
+          them to this tool, and that's pretty much going to be it. So, let's give it a shot. Over in Chrome, I've
+          already got AWS account. Yes, you do need an AWS account to do this. And I've already logged into my console.
+          On the top right, I'm going to click my name, and I'm going to find my security credentials. Now, once over
+          here, I'm going to find the section called Access Keys. I'll expand it, and scroll down a little bit until I
+          see the button that says, "Create new access key." So I'm going to click that button, and then I'll click on,
+          "Show access key." So these keys right here, again, this is the very sensitive stuff. If you're using Git to
+          follow along with this project or follow along with this course, I highly really, really urge you, make sure
+          you do not accidentally commit these keys. If these keys end up on GitHub, you can almost, I can almost
+          promise you that someone's going to find them and make use of them. So, again, please do not publish these
+          keys, do not commit them, do not do anything like that. And, as soon as we're done using them, we immediately
+          delete them. So now we've got these access keys, we need to make sure that we can provide them to the S3
+          website tool. Back in my code editor, I'm going to create a new file inside of my root project directory
+          called ".env". When we run that S3 website tool, it will automatically look into this file to find our access
+          keys that we just generated. So, we're going to define two variables inside this file, and then the S3 website
+          tool will make use of those two keys for us. First, we'll define AWS_ACCESS_KEY_ID and then put equals. And
+          then AWS_SECRET_ACCESS_KEY equals. Do make sure that you spell access correctly in both locations, it is a
+          word that is always vulnerable for typos. Okay. So now we're going to copy-paste our keys directly into this
+          file. So I'm going to go back over to Chrome, I'm going to find my access key first, I'm going to highlight it
+          all or copy it and then paste it over here. Then we'll repeat the same thing for our secret access key as
+          well. Flip back over, grab the secret access key. I'm going to copy it, go back over, and paste it. Okay.
+          That's pretty much it. So now we can make use of the S3 website tool and deploy our application. Back at the
+          command line, we're first going to use the S3 website tool to create a bucket that we can deploy to. We'll do
+          so by running the command, "s3 website create" and then the name of the bucket that we want to use. The name
+          of the bucket will end up inside the URL that you end up accessing. So you want make sure that's something at
+          least somewhat reasonable. In my case, I think I'm going to call it "webpack deploying". I think that S3
+          buckets might be uniquely named. So, if you get any error messages about, "Hey, this name is in use," or
+          anything like that, you can always add on some numbers or something. I could be completely wrong about whether
+          or not it's unique. So we'll run that command, and S3 website is pretty much going to take it from there. When
+          we first run the command, it's going to automatically create the bucket for us. After creating the bucket, we
+          then need to actually deploy our application. So we only just created the bucket, we have not yet deployed it.
+          To deploy it, or to deploy our application, we'll run "s3" dash "website deploy", and then the directory that
+          we want to deploy, which in our case is the dist directory. So we'll run that. It's going to upload our files,
+          and that's what got uploaded. Fantastic. Definitely looks good. Let's now copy this link right here. I'm going
+          to copy it, we'll go over to Chrome, I'm going to open up a new tab, paste the link, and let's give it a shot.
+          So we go there, and ta-da! Our application loads up. Fantastic. And it's pretty darn lightning fast I would
+          say, reasonably fast. Yeah, reasonably fast. Okay. So that's pretty much deployment to S3. So any time that we
+          want to make changes to our project in the future, and redeploy it, we would run "npm run build" again. And
+          then we would run "s3-website deploy dist", again. So that's pretty much it. That is deployment with S3 when
+          we're using a static site. Now of course, the URL that we got right here is pretty darn ugly. But you can
+          certainly find a hefty number of tutorials or resources online, on how to assign a custom domain name to a
+          bucket or to an S3 bucket, excuse me. If you want to go that route, absolutely you can find a lot of material
+          out there for how to do that. And, of course, it is also a paid service on AWS as well. All right. So now that
+          we've gone through this process, the last thing I want to do is clean up after ourselves. So we're going to go
+          and clean up. When we clean up after ourselves, our ability to deploy and this website itself is going to go
+          away. So just to be clear. Like, once we just clean up, everything is going to go away. If you want to leave
+          your project up, and you want to continue making use of these access keys, you can definitely Google a
+          fantastic number of tutorials online on exactly how to secure your access keys. So if you want to keep this in
+          place, I encourage you to just Google, "How do I keep AWS access keys safe?" Or, "Assign access keys to
+          environment variable?". But anyways, let's do the cleanup. I'm going to go back over to our management
+          console. I'm going to close this dialogue that I had open, and then on the right hand side under actions, I'm
+          going to click delete. So this is going to immediately delete my access key for that bucket, and it's just
+          going to go away, and that's it. Nobody can make use of it anymore. And I'm also going to delete the S3 bucket
+          that was just automatically created as well, to make sure that I never get billed for it in any way, shape, or
+          form in the future. So I'm going to click services up at the top left, I'm going to search for S3, and I
+          should find S3 scalable cloud storage. Then once here, on the left hand side, I'm going to find the server or
+          the bucket that I just created, webpack deploy. I'm going to click it, and then on the top left, I'll go to
+          actions and then delete bucket. And then it just asked me for the name of the bucket that I want to deploy,
+          I'm just going to confirm with "webpack" dash "deploy". I'll click delete, and there we go. So now, absolutely
+          no chance of getting billed or anything like that for this bucket again. Again, if you want to use S3 as a
+          deployment target, I am pretty darn sure that it will always going to fit underneath the free tier under AWS,
+          if you have no other services running. But I would encourage you to look in the AWS just to double check on
+          how the billing works. All right. So that's deploying with S3. And I hope you enjoyed it, and let's continue
+          in the next section.</p>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

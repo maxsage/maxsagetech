@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="UTF-8">
+  <title>WebPack 2 The Complete Developers Guide</title>
+  <script src="https://unpkg.com/vue"></script>
+  <link crossorigin="anonymous"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        rel="stylesheet">
+  <link href="prism.css" rel="stylesheet">
+  <script src="prism.js"></script>
+  <style>
+    img {
+      max-width: 100%;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="panel-group">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h2>Section 6: Webpack Dev Server</h2>
+      </div>
+      <div class="panel-body">
+        <h2>Introduction to Webpack Dev Server</h2>
+        <p>We've been making some good progress on our test project here by splitting off a vendor bundle from our
+          application-specific code. There is still some more optimizations that we can put into place in this project,
+          but some of those are dependent upon React specifically. I'm going to assume that you've got maybe some
+          interest in React, but I'm also going to assume maybe you don't. So we're going to cover some other very
+          interesting topics around Webpack first and then we're gonna circle back to talking about some more of the
+          React-specific optimization around this very particular project.</p>
+        <p>So right now, a little bit aside, and we're gonna come back and talk more about optimization. This next topic
+          that we're gonna discuss is one of the most important in the world of Webpack and that is how does Webpack fit
+          into our overall application architecture. And we are currently running Webpack, we're spitting out some files
+          here, but we are running Webpack manually every single time that we run or we make a change to our project. So
+          surely, we don't really want to run Webpack manually in development and, absolutely, we don't want to even
+          think about doing that in production, right? So we're gonna learn a little bit more about how Webpack works in
+          a server-based world.</p>
+        <p>The first thing we're gonna do is get a little bit of a better idea of what Webpack is currently doing and
+          some of the different ways that we can use it in which we'll start to explore in the coming sections. So this
+          is the general idea behind what we are currently doing with Webpack:</p>
+        <figure>
+          <img src="./images/Fig06-001.PNG"/>
+          <figcaption>Fig 06-001</figcaption>
+        </figure>
+        <p>We run Webpack; we spit out some index HTML and Javascript files; we then manually open up our index.html
+          file – that's the first file to be shoved into the browser – and then once that file is loaded up, the HTML
+          documents says, "I've got some script tags, I should probably go and load those." And so the browser reaches
+          out to our project folder and finds the vendor file and the bundle file in there as well, and so those are
+          loaded up just generally in second place.</p>
+        <p>So the key characteristics of our kind of workflow right now is that we are manually running Webpack, our
+          files are being spit out to a single directory, and then we manually load all that stuff up into the browser.
+          So, perhaps there's a little bit better way to go about this; maybe there's a little bit better way.</p>
+        <p>So in this section, we're gonna start talking about another library called webpack-dev-server:</p>
+        <figure>
+          <img src="./images/Fig06-002.PNG"/>
+          <figcaption>Fig 06-002</figcaption>
+        </figure>
+        <p>The purpose of webpack-dev-server is to act as an intermediary between our browser and our Webpack output.
+          With webpack-dev-server, we only have to start our server up one time. This webpack-dev-server is then
+          responsible for watching all of our project code - so like all of our project files - and automatically
+          rebuilding our project whenever one of our files change. The real key aspect of webpack-dev-server is that it
+          only updates the individual JavaScript modules that are changed when we save our projects – when we save any
+          individual file.</p>
+        <p>So rather than waiting for a 10-second rebuild time, we're going to make a change to a file, we'll save the
+          file, and expect the entire project to be ready to go in a fraction of a second because Webpack will only
+          update that one individual file in the vendor or bundle output.</p>
+        <p>The next key difference about webpack-dev-server is that when we open up our web browser, we will no longer
+          be manually loading up our index HTML document. Instead, we are going to make connection or get access to this
+          webpack-dev-server, which will automatically feed us the index HTML and otherwise all the other development
+          assets. So we will no longer be manually opening up index HTML, we will rely upon this development server to
+          serve it back to us. And there's some definite advantages to putting that kind of the burden of that on
+          webpack-dev-server that we'll figure out in just a little bit.</p>
+        <p>Now on this topic, there's one other very important that I want to discuss, one other topic that I want to
+          discuss. It's very important as well. We've looked at two different setups of Webpack, right? The kind of do
+          it very manually ourselves and we will start to look at this little bit more advanced webpack-dev-server
+          setup. There's one more topic that I want to discuss that is kind of something that's a little bit of a blind
+          topic in the community, like it's something that people don't really discuss that often.</p>
+        <p>What I just told you was that we are gonna use webpack-dev-server as our development server of sorts, so our
+          browser will connect directly to webpack-dev-server. This server right here is something that we don't really
+          have access to a lot of the guts of. So webpack-dev-server is really just about developing a client-side
+          application, like single-page application with zero server-side logic. And that's the key part. We don't
+          really get the opportunity to add any logic to webpack-dev-server.</p>
+        <p>So what happens when we want to, say, access a database or take care of user authentication or web sockets or
+          any of these other capabilities that would be traditionally handled by the server? Well that's something I
+          want to make sure that we discuss a lot about as well. How do we combine together a traditional Node
+          server:</p>
+        <figure>
+          <img src="./images/Fig06-003.PNG"/>
+          <figcaption>Fig 06-003</figcaption>
+        </figure>
+        <p>
+          and I said Node API in here, let's just say Node server by itself, it's a little bit more clear. So how do we
+          combine a traditional Node server that not only deals with Webpack, but also does other things that we would
+          really expect a server to do as well? So, I want to make sure there's a little bit of a distinction between
+          this type of very traditional setup that you're probably expecting to be running in, like you're probably
+          expecting to build an app that has a traditional server that you can add logic to. And there's a big
+          difference between running that and this webpack-dev-server. So we'll first talk about webpack-dev-server and
+          then we will also come back and talk about how to integrate this entire tooling process with a very
+          traditional server as well.</p>
+        <p>So let's take a break, continue the next section, and start talking about how we set up
+          webpack-dev-server.</p>
+        <h2>Gotchas with Webpack Dev Server</h2>
+        <p>In this section, we're going to install a webpack dev server. We will then run it and we'll get a little bit
+          of a better idea of how it works and some of the gotchas around it, as well. The first thing we're going to
+          do, is install webpack dev server as an NPM dependency.</p>
+        <p>So in my terminal, we will run:</p>
+        <figure>
+          <pre><code class="language-command">npm install --save-dev webpack-dev-server@~2.2.0-rc.0</code></pre>
+          <figcaption>Fig 06-004</figcaption>
+        </figure>
+        <p>So let's install that. And while this is going, we will also add a new command to our package.json file to
+          instruct webpack-dev-server to start running on our project. So I'm going to change back over to my code
+          editor, and open up my package.json directory. I'm going to find my script section and will add a new script
+          inside of here called 'serve':</p>
+        <figure>
+          <img src="./images/Fig06-005.PNG"/>
+          <figcaption>Fig 06-005</figcaption>
+        </figure>
+        <p>And when we run the serve command, we start the module web pack dev server. Do make sure that you also get
+          the comma on the build line, as well. So, we've got comma, double quote serve and then webpack server.</p>
+        <p>Now, you're probably looking at this and thinking, "Steven, why are we making a command for this single- like
+          single command right here, right? Or just aliasing or less webpack-dev-server." Well, think back to when we
+          put together the command for build, as well. The purpose behind running these single line commands or these
+          single statement commands is to avoid having to install these modules globally, which can have a little bit of
+          an impact when you're working on many different projects that might have different versions of these
+          otherwise, very common globally installed modules.</p>
+        <p>So once we have got this command added in, I'm going to save the file. Let's go back to the terminal and it
+          looks like the installation was successful:</p>
+        <figure>
+          <img src="./images/Fig06-006.PNG"/>
+          <figcaption>Fig 06-006</figcaption>
+        </figure>
+        <p>If you see anything about unmet peer dependency or any warnings, those are totally fine.Warnings are fine, if
+          you have anything that says error, an error is a problem. So if you see a warning, no problem. Error, we need
+          to do some trouble shooting. So now, we can start up webpack-dev-server inside of our project directory
+          with:</p>
+        <figure>
+          <pre><code class="language-command">npm run serve</code></pre>
+          <figcaption>Fig 06-009</figcaption>
+        </figure>
+        <p>When we start up webpack-dev-server, the npm run serve, you'll see a little bit of output here right of away.
+          Something that says, your project is running at local host: 8080:</p>
+        <figure>
+          <img src="./images/Fig06-010.PNG"/>
+          <figcaption>Fig 06-010</figcaption>
+        </figure>
+        <p>So this is the default port that our server is going to be running on on our local machine. Once
+          webpack-dev-server is finish starting up, we'll see some very familiar output here. Whenever you run
+          webpack-dev-server, it immediately tries to build our project and so we see all the output related to what
+          we'd usually see when we build a project. Let's now get access to the server directly.</p>
+        <p>I'm going to open up chrome, and then I will manually navigate to localhost:8080. And lo and behold, we see
+          our application pop up on the screen:</p>
+        <figure>
+          <img src="./images/Fig06-011.PNG"/>
+          <figcaption>Fig 06-011</figcaption>
+        </figure>
+        <p>Cool. Now, let's do a little bit of investigation and figure out exactly how webpack-dev-server works. It's
+          clear that it probably you know, builds our application for us and now we can go to the server to load
+          everything up. It still feels like everything is kind of the same as it was before though, right? Surely,
+          there's something a little bit different about this. Well of course, there is something a little bit
+          different. I'm going to open up my console and we'll see a little bit of warning is in here about performance
+          stuff. Again, that's totally fine:</p>
+        <figure>
+          <img src="./images/Fig06-012.PNG"/>
+          <figcaption>Fig 06-012</figcaption>
+        </figure>
+        <p>You might see a 403 here about an image, totally fine, just a little bit of development messages being sent
+          to us.</p>
+        <p>Now, I want to make a change to one of our javascript files and then see what happens. Does our project
+          automatically rebuild or you know, what happens in general? So I'm going to go back over to my code editor,
+          I'm going to find my source directory and open up the index.js file. Then inside of here, you'll notice that I
+          have already removed that console log statement, so you probably still have a console log it says 'Hi there or
+          Hey there'. I'm going to add mine back in:</p>
+        <figure>
+          <img src="./images/Fig06-013.PNG"/>
+          <figcaption>Fig 06-013</figcaption>
+        </figure>
+        <p>Like so, I'm going to save this file. Whenever we save this file, webpack-dev-server will watch for any
+          changes that we make to our project files and when it sees a change, it will automatically rebuild our project
+          for us. But the big key to this is that it doesn't rebuild the whole project. Let me make sure it'a a little
+          bit more legible. There we go. When I make that change, webpack-dev-server will automatically rebuild our
+          project, but you'll notice that it decided to only rebuild one individual file:</p>
+        <figure>
+          <img src="./images/Fig06-014.PNG"/>
+          <figcaption>Fig 06-014</figcaption>
+        </figure>
+        <p>So the only file that got changed was the index.js file. And so, webpack-dev-server said, "Well, if that's
+          the only thing that changed, I'm going to only take care of that one file". So it doesn't rebuild our entire
+          project, it just takes care of that very small change. The result of which, is that the rebuild time is
+          dramatically shortened, which is a very good thing. </p>
+        <p>Let's make sure that it actually did rebuild. So I'm going to go back over to my browser. It looks like the
+          browser has already automatically refreshed and I can see a console log of 'Hey there' inside the console:</p>
+        <figure>
+          <img src="./images/Fig06-015.PNG"/>
+          <figcaption>Fig 06-015</figcaption>
+        </figure>
+        <p>If you don't see its message, you can always manually refresh the page by hitting command r or refreshing it
+          manually and then you should see the 'hey there' message appear on the screen.</p>
+        <p>So, as we are doing development with webpack-dev-server, this is clearly the preferable way to running
+          webpack over manually building the project every single time. Again, we were using npm run build constantly,
+          because we were making a ton of changes to our webpack config file. If you change your webpack config file,
+          you have to restart the webpack-dev-server. So webpack-dev-server will not watch for changes to the webpack
+          config file. And so, since we were making so many changes to this file, we would have had to rerun our build
+          process anyways and so, it didn't feel like it was quite the right time to introduce the build server just
+          yet.</p>
+        <p>
+          Now, the very last thing that I want to talk about related to webpack-dev-server, I want you to go back over
+          to your command line. I want to close out the running server by hitting control C, so you can hit it a couple
+          of times that will kill the server. And I want to manually build our project again. Now, I know that we've
+          done this several times but I want to do it just one more time:</p>.
+        <figure>
+          <pre><code class="language-command">npm run build</code></pre>
+          <figcaption>Fig 06-016</figcaption>
+        </figure>
+        <p>We'll wait our 10 seconds or so. 10 seconds or so. Hopefully, only another second or so. It always seems to
+          take just slightly longer than you'd think. Okay. There we go. Very good. So, here's our output. Now if I go
+          to my project directory, you'll notice that I've got the disk folder in here:</p>
+        <figure>
+          <img src="./images/Fig06-017.PNG"/>
+          <figcaption>Fig 06-017</figcaption>
+        </figure>
+        <p>Right? And that's exactly what we would expect, exactly what we'd expect. The disk folder is here, nothing
+          has changed. Everything is behaving as we would expect. Now, I want to do something a little interesting,
+          gonna do something little interesting. I'm going to go back over to my terminal and we're going to run:</p>
+        <figure>
+          <pre><code class="language-command">npm run clean</code></pre>
+          <figcaption>Fig 06-018</figcaption>
+        </figure>
+        <p>If you recall, we set up this command to automatically delete our 'dist directory'. So now, if I go back over
+          to my code editor 'dist directory', 100 percent gone, totally gone. We could no longer manually run our
+          application, like there's no index.html file for us to execute. Right? We're in total agreement on that.
+          Surely, like there's no disk structure here, no index.html.</p>
+        <p>So with that in mind, with that in mind- we're going to start our development server back up with:</p>
+        <figure>
+          <pre><code class="language-command">npm run serve</code></pre>
+          <figcaption>Fig 06-019</figcaption>
+        </figure>
+        <p>Okay, let's start it back up. We will again wait those awkward 10 or 15 seconds or so. It's not that awkward
+          right? I got to get some jokes that I can tell during these little pauses. It's a little like 10 second jokes,
+          that will be fantastic. Something to just fill the time. But I'm dry right now. Okay. There we go. Here's our
+          output. So, when we run webpack-dev-server, let's go back over to our project directory and you'll notice that
+          the dist directory was not created:</p>
+        <figure>
+          <img src="./images/Fig06-020.PNG"/>
+          <figcaption>Fig 06-020</figcaption>
+        </figure>
+        <p>Hmm, that's interesting. Well, let's go back over to Chrome. I'm going to make sure I'm on local host 8080.
+          I'm going to refresh the page and our application still boots u:</p>
+        <figure>
+          <img src="./images/Fig06-021.PNG"/>
+          <figcaption>Fig 06-021</figcaption>
+        </figure>
+        <p>So, what in the world is happening? Our application still boots up but it looks like our dist directory
+          wasn't made, so our project was never built. So what is going on? Well, here's the catch; When we run
+          webpack-dev-server, it internally will execute webpack but it stops webpack from actually saving any files to
+          our project directory. When you run webpac-dev-server and webpack executes, nothing is saved to your hard
+          drive.</p>
+        <p>If you want to get a portable version of your application, and by portable I mean, like the raw development
+          assets, you have to run webpack, just webpack by itself as we have been doing throughout this entire course.
+          When you run webpack-dev-server and it relies upon web pack internally to build our project, those files are
+          only saved in memory. So the files exist in memory as a part of the server itself.</p>
+        <p>When we navigate to localhost 8080 then, the project files are served directly out of memory, not directly
+          from our hard drive. So this is something that's very important to keep in mind whenever you're making use of
+          webpack-dev-server. Dev server is only for development, it is not for production use.</p>
+        <p>Okay. So, little bit the intricacies and gotchas behind webpack-dev-server. In general, we're going to
+          continue going forward with webpack-dev-server because it gives us access to a couple of other tools that are
+          really fantastic for dealing with really live development.</p>
+        <p>So, let's take a quick break. We'll come back and we'll figure out some of the more advanced features around
+          webpack-dev-server.</p>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
