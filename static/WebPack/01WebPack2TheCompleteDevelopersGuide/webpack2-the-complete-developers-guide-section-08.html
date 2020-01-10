@@ -383,91 +383,175 @@
           via the S3 service. The S3 service can be thought of as like a big data directory, or a big folder that is
           sitting out on some server. It is perfect for hosting static websites, because there's absolutely no logic
           involved on it. Like, no logic is running on that server whatsoever. All it does, is serve up folders, serve
-          up files. That's all it does. So let's get started with AWS, and give this a shot. Just to throw a quick kind
-          of disclaimer out there right now, using AWS can potentially cost money, for what we're doing we're going be
-          far below the free tier. So, unless you've got any other services already running on AWS this should be
-          absolutely free. The other thing that I want to mention, is that we're going to be making use of some AWS
-          access keys or API keys that are extremely security sensitive. So sometimes in my courses, I use API keys for
-          say like, firebase or for a weather API. And it's not a big deal if you share those with anybody at the end of
-          the day. But in the case of your AWS keys, they are extremely security sensitive. So, in this video, we're
-          going to create a new set of API keys. We're going to use them one time, and then we're going to immediately
-          disable and delete them, just to make sure that nothing goes wrong. Even if you get stuck somewhere in this
-          video, and you say like, "Hey, I don't really want to... " you know, "continue on," or anything like that, I
-          really encourage you to go ahead and delete your keys just to do very safe cleanup. Okay? So, I hope that
-          didn't scare you away too much. Let's go through the process. In general, it's pretty quick, pretty easy, so
-          it'll be a quick thing to go through. The first thing that we're going to do, is flip over to our command line
-          and install a little helper module or a little library that's going to help us automatically create and deploy
-          our application on AWS. So, at the command line, I'm going to run "npm install -g s3-website", like so. Now,
-          do note that we are installing this as a global module. I know that I've said several times throughout this
-          course that we don't want to install modules globally, wherever possible, but in the case of a tool that we're
-          using for deployment, it's really not a dependency of our project. It's really not a dependency of the
-          project, so, I feel okay installing it as a global module. This S3 website tool that we just installed, works
-          by automatically creating a deployment bucket on AWS for us, and then automatically deploys our website to it.
-          So really, it abstracts away just about all the difficulty. The only thing we have to do, is make sure it has
-          access to our AWS account by providing it with our API keys. So we need to first create some API keys, give
-          them to this tool, and that's pretty much going to be it. So, let's give it a shot. Over in Chrome, I've
-          already got AWS account. Yes, you do need an AWS account to do this. And I've already logged into my console.
-          On the top right, I'm going to click my name, and I'm going to find my security credentials. Now, once over
-          here, I'm going to find the section called Access Keys. I'll expand it, and scroll down a little bit until I
-          see the button that says, "Create new access key." So I'm going to click that button, and then I'll click on,
-          "Show access key." So these keys right here, again, this is the very sensitive stuff. If you're using Git to
-          follow along with this project or follow along with this course, I highly really, really urge you, make sure
-          you do not accidentally commit these keys. If these keys end up on GitHub, you can almost, I can almost
-          promise you that someone's going to find them and make use of them. So, again, please do not publish these
-          keys, do not commit them, do not do anything like that. And, as soon as we're done using them, we immediately
-          delete them. So now we've got these access keys, we need to make sure that we can provide them to the S3
-          website tool. Back in my code editor, I'm going to create a new file inside of my root project directory
-          called ".env". When we run that S3 website tool, it will automatically look into this file to find our access
-          keys that we just generated. So, we're going to define two variables inside this file, and then the S3 website
-          tool will make use of those two keys for us. First, we'll define AWS_ACCESS_KEY_ID and then put equals. And
-          then AWS_SECRET_ACCESS_KEY equals. Do make sure that you spell access correctly in both locations, it is a
-          word that is always vulnerable for typos. Okay. So now we're going to copy-paste our keys directly into this
-          file. So I'm going to go back over to Chrome, I'm going to find my access key first, I'm going to highlight it
-          all or copy it and then paste it over here. Then we'll repeat the same thing for our secret access key as
-          well. Flip back over, grab the secret access key. I'm going to copy it, go back over, and paste it. Okay.
-          That's pretty much it. So now we can make use of the S3 website tool and deploy our application. Back at the
-          command line, we're first going to use the S3 website tool to create a bucket that we can deploy to. We'll do
-          so by running the command, "s3 website create" and then the name of the bucket that we want to use. The name
-          of the bucket will end up inside the URL that you end up accessing. So you want make sure that's something at
-          least somewhat reasonable. In my case, I think I'm going to call it "webpack deploying". I think that S3
-          buckets might be uniquely named. So, if you get any error messages about, "Hey, this name is in use," or
-          anything like that, you can always add on some numbers or something. I could be completely wrong about whether
-          or not it's unique. So we'll run that command, and S3 website is pretty much going to take it from there. When
-          we first run the command, it's going to automatically create the bucket for us. After creating the bucket, we
-          then need to actually deploy our application. So we only just created the bucket, we have not yet deployed it.
-          To deploy it, or to deploy our application, we'll run "s3" dash "website deploy", and then the directory that
-          we want to deploy, which in our case is the dist directory. So we'll run that. It's going to upload our files,
-          and that's what got uploaded. Fantastic. Definitely looks good. Let's now copy this link right here. I'm going
-          to copy it, we'll go over to Chrome, I'm going to open up a new tab, paste the link, and let's give it a shot.
-          So we go there, and ta-da! Our application loads up. Fantastic. And it's pretty darn lightning fast I would
-          say, reasonably fast. Yeah, reasonably fast. Okay. So that's pretty much deployment to S3. So any time that we
-          want to make changes to our project in the future, and redeploy it, we would run "npm run build" again. And
-          then we would run "s3-website deploy dist", again. So that's pretty much it. That is deployment with S3 when
-          we're using a static site. Now of course, the URL that we got right here is pretty darn ugly. But you can
-          certainly find a hefty number of tutorials or resources online, on how to assign a custom domain name to a
-          bucket or to an S3 bucket, excuse me. If you want to go that route, absolutely you can find a lot of material
-          out there for how to do that. And, of course, it is also a paid service on AWS as well. All right. So now that
-          we've gone through this process, the last thing I want to do is clean up after ourselves. So we're going to go
-          and clean up. When we clean up after ourselves, our ability to deploy and this website itself is going to go
-          away. So just to be clear. Like, once we just clean up, everything is going to go away. If you want to leave
-          your project up, and you want to continue making use of these access keys, you can definitely Google a
-          fantastic number of tutorials online on exactly how to secure your access keys. So if you want to keep this in
-          place, I encourage you to just Google, "How do I keep AWS access keys safe?" Or, "Assign access keys to
-          environment variable?". But anyways, let's do the cleanup. I'm going to go back over to our management
-          console. I'm going to close this dialogue that I had open, and then on the right hand side under actions, I'm
-          going to click delete. So this is going to immediately delete my access key for that bucket, and it's just
-          going to go away, and that's it. Nobody can make use of it anymore. And I'm also going to delete the S3 bucket
-          that was just automatically created as well, to make sure that I never get billed for it in any way, shape, or
-          form in the future. So I'm going to click services up at the top left, I'm going to search for S3, and I
-          should find S3 scalable cloud storage. Then once here, on the left hand side, I'm going to find the server or
-          the bucket that I just created, webpack deploy. I'm going to click it, and then on the top left, I'll go to
-          actions and then delete bucket. And then it just asked me for the name of the bucket that I want to deploy,
-          I'm just going to confirm with "webpack" dash "deploy". I'll click delete, and there we go. So now, absolutely
-          no chance of getting billed or anything like that for this bucket again. Again, if you want to use S3 as a
-          deployment target, I am pretty darn sure that it will always going to fit underneath the free tier under AWS,
-          if you have no other services running. But I would encourage you to look in the AWS just to double check on
-          how the billing works. All right. So that's deploying with S3. And I hope you enjoyed it, and let's continue
-          in the next section.</p>
+          up files. That's all it does. So let's get started with AWS, and give this a shot.</p>
+        <p>Just to throw a quick kind of disclaimer out there right now, using AWS can potentially cost money, for what
+          we're doing we're going be far below the free tier. So, unless you've got any other services already running
+          on AWS this should be absolutely free. The other thing that I want to mention, is that we're going to be
+          making use of some AWS access keys or API keys that are extremely security sensitive. So sometimes in my
+          courses, I use API keys for say like, firebase or for a weather API. And it's not a big deal if you share
+          those with anybody at the end of the day. But in the case of your AWS keys, they are extremely security
+          sensitive. So, in this video, we're going to create a new set of API keys. We're going to use them one time,
+          and then we're going to immediately disable and delete them, just to make sure that nothing goes wrong. Even
+          if you get stuck somewhere in this video, and you say like, "Hey, I don't really want to... " you know,
+          "continue on," or anything like that, I really encourage you to go ahead and delete your keys just to do very
+          safe cleanup. Okay? So, I hope that didn't scare you away too much.</p>
+        <p> Let's go through the process. In general, it's pretty quick, pretty easy, so it'll be a quick thing to go
+          through. The first thing that we're going to do, is flip over to our command line and install a little helper
+          module or a little library that's going to help us automatically create and deploy our application on AWS. So,
+          at the command line, I'm going to run:</p>
+        <figure>
+          <pre><code class="language-command">npm install -g s3-website</code></pre>
+          <figcaption>Fig 08-029</figcaption>
+        </figure>
+        <p>like so. Now, do note that we are installing this as a global module. I know that I've said several times
+          throughout this course that we don't want to install modules globally, wherever possible, but in the case of a
+          tool that we're using for deployment, it's really not a dependency of our project. It's really not a
+          dependency of the project, so, I feel okay installing it as a global module.</p>
+        <p>This S3 website tool that we just installed, works by automatically creating a deployment bucket on AWS for
+          us, and then automatically deploys our website to it. So really, it abstracts away just about all the
+          difficulty. The only thing we have to do, is make sure it has access to our AWS account by providing it with
+          our API keys. So we need to first create some API keys, give them to this tool, and that's pretty much going
+          to be it. So, let's give it a shot.</p>
+        <p>Over in Chrome, I've already got AWS account. Yes, you do need an AWS account to do this. And I've already
+          logged into my console. On the top right, I'm going to click my name, and I'm going to find my security
+          credentials:</p>
+        <figure>
+          <img src="./images/Fig08-027.PNG"/>
+          <figcaption>Fig 08-027</figcaption>
+        </figure>
+        <p>Now, once over here, I'm going to find the section called Access Keys. I'll expand it, and scroll down a
+          little bit until I see the button that says, "Create new access key." So I'm going to click that button, and
+          then I'll click on, "Show access key.":</p>
+        <figure>
+          <img src="./images/Fig08-028.PNG"/>
+          <figcaption>Fig 08-028</figcaption>
+        </figure>
+        <p>So these keys right here, again, this is the very sensitive stuff. If you're using Git to follow along with
+          this project or follow along with this course, I highly really, really urge you, make sure you do not
+          accidentally commit these keys. If these keys end up on GitHub, you can almost, I can almost promise you that
+          someone's going to find them and make use of them. So, again, please do not publish these keys, do not commit
+          them, do not do anything like that. And, as soon as we're done using them, we immediately delete them.</p>
+        <p>So now we've got these access keys, we need to make sure that we can provide them to the S3 website tool.
+          Back in my code editor, I'm going to create a new file inside of my root project directory called ".env":</p>
+        <figure>
+          <img src="./images/Fig08-029.PNG"/>
+          <figcaption>Fig 08-029</figcaption>
+        </figure>
+        <p>When we run that S3 website tool, it will automatically look into this file to find our access keys that we
+          just generated. So, we're going to define two variables inside this file, and then the S3 website tool will
+          make use of those two keys for us:</p>
+        <figure>
+          <img src="./images/Fig08-030.PNG"/>
+          <figcaption>Fig 08-030</figcaption>
+        </figure>
+        <p>First, we define AWS_ACCESS_KEY_ID and then put equals. And then AWS_SECRET_ACCESS_KEY equals. Do make sure
+          that you spell access correctly in both locations, it is a word that is always vulnerable for typos. Okay. So
+          now we're going to copy-paste our keys directly into this file. So I'm going to go back over to Chrome, I'm
+          going to find my access key first, I'm going to highlight it all or copy it and then paste it over here:</p>
+        <figure>
+          <img src="./images/Fig08-031.PNG"/>
+          <figcaption>Fig 08-031</figcaption>
+        </figure>
+        <p>Then we'll repeat the same thing for our secret access key as well. Flip back over, grab the secret access
+          key. I'm going to copy it, go back over, and paste it:</p>
+        <figure>
+          <img src="./images/Fig08-032.PNG"/>
+          <figcaption>Fig 08-032</figcaption>
+        </figure>
+        <p>Okay. That's pretty much it. So now we can make use of the S3 website tool and deploy our application. Back
+          at the command line, we're first going to use the S3 website tool to create a bucket that we can deploy to.
+          We'll do so by running the command:</p>
+        <figure>
+          <pre><code class="language-command">s3 website create webpack deploy</code></pre>
+          <figcaption>Fig 08-033</figcaption>
+        </figure>
+        <p>and then the name of the bucket that we want to use. The name of the bucket will end up inside the URL that
+          you end up accessing. So you want make sure that's something at least somewhat reasonable. In my case, I think
+          I'm going to call it "webpack deploy". I think that S3 buckets might be uniquely named. So, if you get any
+          error messages about, "Hey, this name is in use," or anything like that, you can always add on some numbers or
+          something. I could be completely wrong about whether or not it's unique.</p>
+        <p>So we'll run that command, and S3 website is pretty much going to take it from there. When we first run the
+          command, it's going to automatically create the bucket for us:</p>
+        <figure>
+          <img src="./images/Fig08-034.PNG"/>
+          <figcaption>Fig 08-034</figcaption>
+        </figure>
+        <p>After creating the bucket, we then need to actually deploy our application. So we only just created the
+          bucket, we have not yet deployed it. To deploy it, or to deploy our application, we'll run:</p>
+        <figure>
+          <pre><code class="language-command">s3-website deploy dist</code></pre>
+          <figcaption>Fig 08-035</figcaption>
+        </figure>
+        <p>and then the directory that we want to deploy, which in our case is the dist directory. So we'll run that.
+          It's going to upload our files:</p>
+        <figure>
+          <img src="./images/Fig08-035.PNG"/>
+          <figcaption>Fig 08-035</figcaption>
+        </figure>
+        <p>and that's what got uploaded. Fantastic. Definitely looks good. Let's now copy this link right here. I'm
+          going to copy it, we'll go over to Chrome, I'm going to open up a new tab, paste the link, and let's give it a
+          shot. So we go there, and ta-da!:</p>
+        <figure>
+          <img src="./images/Fig08-036.PNG"/>
+          <figcaption>Fig 08-036</figcaption>
+        </figure>
+        <p>Our application loads up. Fantastic. And it's pretty darn lightning fast I would say, reasonably fast. Yeah,
+          reasonably fast. Okay. So that's pretty much deployment to S3. So any time that we want to make changes to our
+          project in the future, and redeploy it, we would run:</p>
+        <figure>
+          <pre><code class="language-command">npm run build</code></pre>
+          <figcaption>Fig 08-037</figcaption>
+        </figure>
+        <p>again. And then we would run:</p>
+        <figure>
+          <pre><code class="language-command">s3-website deploy dist</code></pre>
+          <figcaption>Fig 08-038</figcaption>
+        </figure>
+        <p>again. So that's pretty much it. That is deployment with S3 when we're using a static site. Now of course,
+          the URL that we got right here is pretty darn ugly. But you can certainly find a hefty number of tutorials or
+          resources online, on how to assign a custom domain name to a bucket or to an S3 bucket, excuse me. If you want
+          to go that route, absolutely you can find a lot of material out there for how to do that. And, of course, it
+          is also a paid service on AWS as well.</p>
+        <p>All right. So now that we've gone through this process, the last thing I want to do is clean up after
+          ourselves. So we're going to go and clean up. When we clean up after ourselves, our ability to deploy and this
+          website itself is going to go away. So just to be clear. Like, once we just clean up, everything is going to
+          go away. If you want to leave your project up, and you want to continue making use of these access keys, you
+          can definitely Google a fantastic number of tutorials online on exactly how to secure your access keys. So if
+          you want to keep this in place, I encourage you to just Google, "How do I keep AWS access keys safe?" Or,
+          "Assign access keys to environment variable?". But anyways, let's do the cleanup.</p>
+        <p>I'm going to go back over to our management console. I'm going to close this dialogue that I had open, and
+          then on the right hand side under actions, I'm going to click delete:</p>
+        <figure>
+          <img src="./images/Fig08-039.PNG"/>
+          <figcaption>Fig 08-039</figcaption>
+        </figure>
+        <p>So this is going to immediately delete my access key for that bucket, and it's just going to go away, and
+          that's it. Nobody can make use of it anymore. And I'm also going to delete the S3 bucket that was just
+          automatically created as well, to make sure that I never get billed for it in any way, shape, or form in the
+          future. So I'm going to click services up at the top left:</p>
+        <figure>
+          <img src="./images/Fig08-040.PNG"/>
+          <figcaption>Fig 08-040</figcaption>
+        </figure>
+        <p>I'm going to search for S3, and I should find S3 scalable cloud storage. Then once here, on the left hand
+          side, I'm going to find the server or the bucket that I just created, webpack deploy:</p>
+        <figure>
+          <img src="./images/Fig08-041.PNG"/>
+          <figcaption>Fig 08-041</figcaption>
+        </figure>
+        <p>I'm going to click it, and then on the top left, I'll go to actions and then delete bucket. And then it just
+          asked me for the name of the bucket that I want to deploy, I'm just going to confirm with "webpack" dash
+          "deploy":</p>
+        <figure>
+          <img src="./images/Fig08-042.PNG"/>
+          <figcaption>Fig 08-042</figcaption>
+        </figure>
+        <p>I'll click delete, and there we go. So now, absolutely no chance of getting billed or anything like that for
+          this bucket again. Again, if you want to use S3 as a deployment target, I am pretty darn sure that it will
+          always going to fit underneath the free tier under AWS, if you have no other services running. But I would
+          encourage you to look in the AWS just to double check on how the billing works.</p>
+        <p>All right. So that's deploying with S3. And I hope you enjoyed it, and let's continue in the next
+          section.</p>
       </div>
     </div>
   </div>
