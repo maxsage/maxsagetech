@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="UTF-8">
+  <title>WebPack 2 The Complete Developers Guide</title>
+  <script src="https://unpkg.com/vue"></script>
+  <link crossorigin="anonymous"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        rel="stylesheet">
+  <link href="prism.css" rel="stylesheet">
+  <script src="prism.js"></script>
+  <style>
+    img {
+      max-width: 100%;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="panel-group">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h2>Section 2: What Does Webpack Do?</h2>
+      </div>
+      <div class="panel-body">
+        <h2>Why Do We Use Build Tools?</h2>
+        <p>Hello and welcome. I'm sure you're just as excited as I am to start writing some actual
+          code around Webpack, but before we start on our first project, I want to answer a couple
+          of quick questions that you might have about Webpack in general. And that is, "what is
+          Webpack?" What is it doing for us and why are we using Webpack at all? Why are we using
+          Webpack now when some number of years ago we seemed to get along just fine without it? So
+          why is Webpack seemingly getting so popular? Let's take a little bit of time to figure out
+          exactly why Webpack is becoming so popular in the web development world, especially around
+          the use of very rich web applications.</p>
+        <p>To understand why Webpack is so popular, we need to understand a little bit more about
+          the ecosystem around rich web applications. And note that when I say, "rich web
+          applications", I'm talking about applications that have a lot of dynamic features about
+          them. So we're not just talking about static pictures and static text, we're talking about
+          really dynamic web experiences where you've got menus and buttons that create drop downs
+          and, you know, a lot of content that appears on the screen - very dynamic in nature.</p>
+        <p>So to understand why we are using Webpack, we're going to talk a little bit about
+          server-side templating and single-page applications:</p>
+        <figure>
+          <img src="./images/Fig02-001.PNG"/>
+          <figcaption>Fig 02-001</figcaption>
+        </figure>
+        <p>Server-side templating is a little bit more legacy technology for creating web
+          applications and showing HTML documents to users. In a server-side templating world, we
+          depend on a back-end server. And it doesn't matter what type of server or what language
+          it's written in, it is just some type of server that will create an HTML document and send
+          it down to a user. This HTML document is a fully rendered HTML document - and by "fully
+          rendered", I mean to say it has all the information in it required that a user might want
+          to see. So it'll have text and images and buttons and inputs and all those kind of good
+          things. That's in direct stark contrast to a single-page application approach.</p>
+        <p>In a single-page app world, our server sends down a very bare bones or a skeleton of an
+          HTML document. Once the HTML document loads up, it then goes and grabs a couple of
+          Javascript scripts, and that Javascript is then responsible for assembling a web page to
+          show to the user. So again, this is - you know, we're talking about this stuff to give you
+          a better idea of exactly why we are using Webpack.</p>
+        <p>
+          The takeaway is that in a server-side templating world, we rely upon our server to put
+          together the HTML document and in a single-page app sort of world, we rely upon a big old
+          pile of Javascript code that is being executed on the user's machine to put together our
+          web document, our HTML document. So just to make sure it's really clear about how these
+          two approaches work. In a server-side templating world:</p>
+        <figure>
+          <img src="./images/Fig02-002.PNG"/>
+          <figcaption>Fig 02-002</figcaption>
+        </figure>
+        <p>a user is going to visit our page - that forms - you know, they're going to, like,
+          literally type in an address to their browser and hit enter. That's going to make an HTTP
+          request to the server, they're going to get a HTML document back, then maybe at some point
+          in time, the user clicks a link and that issues a new HTTP request to the server and they
+          get back a new HTML document. So every time that you navigate around the web page inside
+          of a server-side templating world, you're getting back a completely new HTML document.</p>
+        <figure>
+          <img src="./images/Fig02-003.PNG"/>
+          <figcaption>Fig 02-003</figcaption>
+        </figure>
+        <p>In a single-page application world, however, a user is going to visit a page that makes a
+          HTTP request to our server, we send back an HTML document that will also include some
+          number of Javascript scripts. We then allow our front-end framework - be it react or
+          angular, backbone, knockout.js, view.js - whatever it might be. That framework will boot
+          up and it will assemble some amount of HTML on the page to display to the user. And then
+          whenever a user clicks a link to, you know, presumably navigate to another page, we are
+          not getting a brand new HTML document from the server; we are relying upon our front-end
+          framework to show some amount of new content on the screen. So again, the big takeaway
+          here is that we are relying upon Javascript to show some amount of new content on the
+          screen.</p>
+        <p>Now if we think about the popularity of these two frameworks or these two approaches over
+          time:</p>
+        <figure>
+          <img src="./images/Fig02-004.PNG"/>
+          <figcaption>Fig 02-004</figcaption>
+        </figure>
+        <p>this is not an exact chart right here by any means. All I mean to say is that over time,
+          or in the last couple of years, we have started to see the rise of single-page
+          applications. They're starting to get really popular for whenever we have a very dynamic
+          or very rich web experience. Now I do show like a decline of server-side templating here;
+          that is not necessarily true. You know, server-side templating is still extraordinarily
+          popular; it forms the vast, vast, vast majority of websites online, but as far as very
+          dynamic web pages go, we're definitely seeing a trend towards single-page
+          applications.</p>
+        <p>Okay. So why is this all relevant? Why am I talking about this stuff? Well, here's the
+          big takeaway. Here's the really important thing - here is why we use Webpack. In a
+          single-page application world, we are relying upon Javascript code that is being executed
+          on our user's browser to assemble the entire web application:</p>
+        <figure>
+          <img src="./images/Fig02-005.PNG"/>
+          <figcaption>Fig 02-005</figcaption>
+        </figure>
+        <p>So in a single-page application world, we have a huge pile of Javascript that is being
+          shipped down to our user's browser. A tremendous amount - tens of thousands of lines of
+          code. Compared to the server-side rendering world or server-side templating world,
+          however, there used to be very little Javascript code that we would send down to a client
+          because the only Javascript code we would have would be stuff to, like, handle a fancy
+          event - like whenever a user clicks on a button or something like that or a fancy
+          animation. So in the server-side templating world, we didn't have very much Javascript
+          code, but now modern web development is trending towards having this big, gigantic pile of
+          Javascript that gets shuffled down to our user's browser every single time they make use
+          of our web page. And that is starting to get us towards answering the question of why we
+          are using Webpack.</p>
+        <p>Let's take a quick break, come back and figure out exactly what Webpack does to make
+          dealing with this tremendous amount of Javascript code a little bit easier.</p>
+        <h2>Javascript Modules</h2>
+        <p>In the last section, we spoke about the differences between server-side rendering and
+          single-page applications. The takeaway was that in modern JavaScript applications, we are
+          trending towards having much more JavaScript code involved than with traditional web apps.
+          But still, what does this all really have to do with Webpack?</p>
+        <p>In this section, we're going to figure out what types of problems arise when we have a
+          lot of JavaScript tied to a single-page application and what Webpack does to solve these
+          problems.</p>
+        <p>So first, what types of problems arise when we have a lot of JavaScript code? I want you
+          to imagine for a second that you just got at your job or you just got a job as an engineer
+          to work on a really large JavaScript application. You show up to work on day one and you
+          finally gets to take a look at the codebase and see what is going on with this gigantic
+          JavaScript web application. Upon looking at the source code, you suddenly find that they
+          have tens of thousands of lines of code split between just three different files: main.js,
+          util.js, and home.js:</p>
+        <figure>
+          <img src="./images/Fig02-006.PNG"/>
+          <figcaption>Fig 02-006</figcaption>
+        </figure>
+        <p>So each of these we can imagine is several thousand lines of code long. Now of course,
+          this is a very extreme case but you know this is the point I'm making. So let's imagine
+          that now your new manager says to you, "Hey, go find the code for the header inside a web
+          app – you know, like the header the top section on the page – and change the way that some
+          navigation menu up there works."</p>
+        <p>Now I don't know about you, but that would be one of my worst nightmares. Working on
+          large codebases that is distributed between just a handful of files and I'm talking about
+          hundreds or thousands of lines inside of a single file ends up being a real challenge.
+          It's a bad experience. Just finding the code that you're trying to update is a challenge.
+          Whenever you're bringing on new engineers to that project, it's always a challenge to get
+          them just up to speed with the code base.</p>
+        <p>The point that I'm trying to make here is that clearly having a huge project distributed
+          between just several large files can be extremely hard to make changes to and it really
+          hard to navigate, and this is doubly true for new engineers working on the project. Now,
+          engineers in the JavaScript community, and really the programming community at large, have
+          identified this as a problem that starts to arise in apps where the amount of JS code
+          starts growing. So to address the issue of very large codebases, the idea of JavaScript
+          modules was born:</p>
+        <figure>
+          <img src="./images/Fig02-007.PNG"/>
+          <figcaption>Fig 02-007</figcaption>
+        </figure>
+        <p>A JavaScript module is a single JavaScript file that contains some small amount of code.
+          In a module-based world, rather than having a few very large files of JavaScript, we
+          strive towards having many, many smaller files. The benefit of this approach is that it
+          gets a lot more clear where code is located in our project.</p>
+        <p>So lets say that you show up to work on the first day of this new job, you know, and say
+          you quit your old one, and you come to this new job now and you come to a codebase that
+          looks a little bit like Fig 02-007 above.</p>
+        <p>
+          Maybe they've got a components folder and an API folder and then each of these folders
+          have some number of files inside of them. If your new manager now tells you, "Hey, go find
+          the code for the header and update some navigational menu," you're gonna have a very
+          reasonable expectation that if you go into this components folder and open up this header
+          file, chances are you're gonna find some code related to the header inside of there.</p>
+        <p>So clearly, working with many smaller files to some degree makes life a little bit easier
+          especially when you're working on new projects. Now of course, there is a middle line
+          between this, between these two approaches. Having really large files or having way too
+          many small files, at either extreme, there can be challenges, so of course there's
+          probably some likely middle ground that is a great place to be.</p>
+        <p>Now splitting your project up into many separate files is not free, per se. Let's
+          continue in the next section and discuss what problems start to crop up when we have many
+          small JavaScript files inside our application.</p>
+        <h2>The Purpose of Webpack</h2>
+        <p>In the last section, we spoke about the benefits of splitting up our javascript code base
+          into many separate files, which we generally referred to as "modules". So, organizing our
+          code into smaller files is something of a benefit. But what problems start to arise with
+          separating our code into separate files? Let's figure out what some of those problems
+          might be.</p>
+        <p>First, if our code is all spread out into separate modules, we need to start thinking
+          about... a lot about the order in which our code is executed:</p>
+        <figure>
+          <img src="./images/Fig02-008.PNG"/>
+          <figcaption>Fig 02-008</figcaption>
+        </figure>
+        <p>So, if our project has several files like the four that's shown here on the screen, it
+          makes sense that chances are that there are some files that are going to rely upon code
+          that is written inside of other files. So this example may be "index.js" relies upon both
+          "store.js" and "util.js". And in turn, "store.js" relies upon some amount of code that is
+          written inside of "api.js".</p>
+        <p>So, there are some very particular load order that we would want to have with this
+          application. We would want to make sure that "api" executes first, and then "store", and
+          "util", and then "index.js". And we need to make sure that every single time that our
+          application runs, that order is exactly the same. So, it's a very codified, very distinct
+          order of loading different files into our application.</p>
+        <figure>
+          <img src="./images/Fig02-009.PNG"/>
+          <figcaption>Fig 02-009</figcaption>
+        </figure>
+        <p>The second big issue that we run into with having many small files inside of our
+          application, is that having many javascript files and loading them over an HTTP connection
+          is generally considered to be a bad idea from a performance standpoint. So, the more files
+          we have, the slower load time for our page. And this is especially true on mobile
+          devices.</p>
+        <p>
+          Fig 02-009 is a screenshot from a popular news site that loads up several dozen different
+          javascript files. Each of these javascript files takes time to download and this can be a
+          big issue on a mobile connection. Here is a screenshot of the different javascript files
+          that are loaded up on a different web app:</p>
+        <figure>
+          <img src="./images/Fig02-010.PNG"/>
+          <figcaption>Fig02-010</figcaption>
+        </figure>
+        <p>one where the developers are a little bit more responsible with the amount of javascript
+          files that they load up. In this case, they've got about a total of five different
+          javascript files that have been loaded. Each one is definitely larger than the ones that
+          we saw in the screenshot, but because there are fewer requests going on, we would
+          generally associate this with greater performance, again, especially on mobile
+          devices.</p>
+        <p>
+          Okay. So, that's the two big reasons, or the two big concerns that we have when we are
+          splitting our code up into multiple files. First, we have to be really concerned about the
+          order in which our code is executed. And number two, we're very concerned about
+          performance over loading many different files up. So, clearly there are some
+          considerations or some issues with having multiple javascript files in our project. So, as
+          you might imagine, this is exactly where webpack comes into play. So let's figure out
+          exactly what webpack does to solve all these issues related to having multiple javascript
+          files.</p>
+        <p>So this right here is a diagram:</p>
+        <figure>
+          <img src="./images/Fig02-011.PNG"/>
+          <figcaption>Fig 02-011</figcaption>
+        </figure>
+        <p>that we will be seeing many variations of over time throughout this entire course. The
+          purpose of webpack is to take our big collection of tiny little javascript modules and
+          merge them all into one big javascript file while also ensuring that each module is
+          executed in the correct order. So, that's it. That is the core of what webpack does.</p>
+        <p>If you used webpack in the past and you found that it also seems to handle CSS or handle
+          turning ES2015 code into ES5 compatible code. All that stuff is a side effect. It's a nice
+          benefit to running web pack. Webpack's primary purpose is to take a big old pile of
+          javascript modules and merge them all together. By merging all these files together, we
+          solve the two issues mentioned earlier.</p>
+        <ul>
+          <li>The final output will deal with the load order of a bunch of different modules</li>
+          <li>It will also solve the issue of loading up a ton of tiny javascript modules over a
+            network connection.
+          </li>
+        </ul>
+        <p>Now, webpack of course has the ability to do many other things as well but again, this is
+          its core purpose.</p>
+        <p>Alright. So now that we have a better idea of the environment that webpack sits in and
+          what its purpose is. Let's continue in the next section and discuss javascript modules
+          just a little bit more. And then we're going to start working on our first project to
+          really demonstrate what webpack does, be building our own little project. So let's
+          continue in the next section.</p>
+        <h2>Webpack in Action</h2>
+        <p>Now, of course, I can lecture about Webpack all day, but certainly it's a lot more fun to
+          work on a real project and get our hands dirty with some code.</p>
+        <p>In this section, we're gonna start working on a tiny JavaScript application that will get
+          us familiar with some of the basic settings of Webpack. For our first project, we're gonna
+          make two tiny JavaScript modules, we're going to link them together with Webpack, and then
+          we're going to look at what Webpack does to our project.</p>
+        <p>So let's get started by looking at a list of tasks that we're going to have to do to make
+          all this stuff happen:</p>
+        <figure>
+          <img src="./images/Fig02-012.PNG"/>
+          <figcaption>Fig 02-012</figcaption>
+        </figure>
+        <p>And so this is gonna be our guide, our general guide for the next couple of sections.</p>
+        <p>First, we're gonna generate a new npm project. This npm project will allow us to install
+          some different npm modules as dependencies, Webpack in particular. Webpack itself is
+          traditionally installed as an npm dependency to a project.</p>
+        <p>Next, we're going to create two separate JavaScript files by making two small files
+          inside of our project. When we do this, we're also going to learn a lot more about the
+          module system inside of JavaScript, which is a really important topic as well around
+          Webpack.</p>
+        <p>Third, we're going to install Webpack and configure it. So Webpack itself requires some
+          amount of minimum configuration to work properly. We have to specify some very basic
+          settings before Webpack can run at all on our project and that's what we're gonna focus on
+          in step three.</p>
+        <p>Finally, we will run Webpack on our project and then take a detailed look at exactly what
+          it does. So the step number four right here is really the important step. I really suspect
+          that once we look at the file that Webpack spits out, and once we look at the actual
+          contents of it, you're gonna have a much better sense of exactly what Webpack does. OK? So
+          this is the four steps.</p>
+        <p>Let's get started right now. I'm going to open up my Terminal. And we're going to make a
+          new project directory to work out of. So I'm going to create a new project directory, and
+          I'm gonna call this one simply 06-webpack-in-action, and of course you can name it
+          whatever you please. After I create this project directory, I'm then gonna change into it
+          and then we're going to create our npm project. So this is done by running the command npm
+          init:</p>
+        <figure>
+          <img src="./images/Fig02-013.PNG"/>
+          <figcaption>Fig 02-013</figcaption>
+        </figure>
+        <p>Once we run this command, we'll be prompted with a couple of different questions down
+          here at the bottom the screen. We don't really need to put in anything particular for any
+          of these questions, so we can just hit enter, go all the way through until it says, "Are
+          you sure this is OK?" We'll say, "Yup, that's totally fine." OK. After this command
+          finishes, the only change to our project at this point is that a package.json file has
+          been generated inside of our project directory:</p>
+        <figure>
+          <img src="./images/Fig02-014.PNG"/>
+          <figcaption>Fig 02-014</figcaption>
+        </figure>
+        <p>This file right here is used to record any dependencies that our project might have, and
+          we'll also use it to create a couple of different scripts to build and execute our project
+          as well. But we'll definitely get around to those. OK, so that's it for step number one.
+          Not too bad, right? Let's move on to step number two.</p>
+        <p>We're gonna create two separate files that will serve as our two JavaScript modules. So
+          I'm going to open up my project directory inside of my code editor. Now I choose to use
+          the code editor Atom. So you can see that I ran atom. right here, that opens up Atom
+          inside of my current directory. Atom is not required for this course whatsoever. You can
+          use absolutely any code editor that you would like to use; it's totally up to you. All
+          right. So inside of Atom, I'm now inside my project directory, and again, I've only got
+          that package.json file inside of here right now.</p>
+        <p>Inside of my root project directory, I'm gonna make a new folder to house these two
+          JavaScript modules that we're about to create. So I'm gonna make a new folder and I'm
+          gonna call it src:</p>
+        <figure>
+          <img src="./images/Fig02-015.PNG"/>
+          <figcaption>Fig 02-015</figcaption>
+        </figure>
+        <p>which is short for source. The purpose of this directory is to hold all the JavaScript
+          code for my project. I really like to have a separate directory for this just to separate
+          the code in there from the rest of the configuration or setup or whatever else I have
+          inside of my project. Now inside of this folder, we're going to make our two separate
+          files to serve as JavaScript modules. I'm gonna make one file called index.js, and I'm
+          gonna make one other file which is going to be called sum.js:</p>
+        <figure>
+          <img src="./images/Fig02-016.PNG"/>
+          <figcaption>Fig 02-016</figcaption>
+        </figure>
+        <p>Inside of these two files, we're gonna add some JavaScript code and then we will somehow
+          specify the load order or the relationship or the dependency, whatever you want to call
+          it, between the two files. So let's take a quick break and then come back and do that in
+          the next section.</p>
+        <h2>Javascript Module Syntax</h2>
+        <p>In the last section, we created a new project and then created two separate JavaScript
+          files inside of it; index.js and sum.js. Now, before we start adding any code to these
+          files, I want to remind you that this is really a course about Webpack, not necessarily
+          about building fancy JavaScript applications. So the amount of logic that we're going to
+          stuff into both these files is going to be, like, very compact, really small just because
+          we are mostly focused on the Webpack side of things. Okay? So just reminder there. Anyway,
+          let's keep going.</p>
+        <p>Let's explore the purpose of both the files that we've just created. So I've got a little
+          bit of a diagram here:</p>
+        <figure>
+          <img src="./images/Fig02-017.PNG"/>
+          <figcaption>Fig 02-017</figcaption>
+        </figure>
+        <p>The first file we're going to be working with is called sum.js. And we're going to say
+          that this file is going to have a utility function or some utility functions for working
+          with mathematical calculation. So you know, just like probably at the end of the day, a
+          function that adds two numbers together. Again, you know, we're focused on the Webpack
+          side of things here. So we're just gonna have some amount of arbitrary code inside of
+          sum.js.</p>
+        <p>Index.js, on the other hand, is going to call some number of functions from - let me fix
+          that name - sum.js and then console.log or otherwise print the result. So let's take a
+          second to kind of picture the dependencies between these two files; like which file
+          depends on the other to run? Well, I would probably say that because the index file makes
+          use of some amount of code that the sum file has, we can consider the index file to depend
+          upon the sum file:</p>
+        <figure>
+          <img src="./images/Fig02-018.PNG"/>
+          <figcaption>Fig 02-018</figcaption>
+        </figure>
+        <p>So we can say sum file is required to be loaded before the index.js file can be executed.
+          We might also say that the index file needs to import or require the sum file. Let's keep
+          that terminology - import and require - let's keep that terminology in mind, by the way.
+          Okay. So let's work on the sum file, let's put together some of the actual logic inside of
+          it.</p>
+        <p>So I'm gonna open up my code editor, I'm going to make sure I'm inside of the sum.js file
+          and inside of here, let's write a function that's just going to take two numbers and
+          return the sum of them:</p>
+        <p>So I'll make a function called sum and we'll say that's going to take two arguments, a
+          and b and then add them together like so:</p>
+        <figure>
+          <pre><code class="language-javascript">const sum = (a, b) =&gt; a + b;</code></pre>
+          <figcaption>Fig 02-019</figcaption>
+        </figure>
+        <p>Now note that throughout this entire course, we are going to be making use of ES2015
+          code, so you're going to see a lot of const, a lot of error functions and great stuff like
+          that.</p>
+        <p>So now that we have declared a function this file, we will want to somehow call it or
+          somehow get access to it from the index file. So this is where things start to get really
+          interesting.</p>
+        <p>In the world of JavaScript modules, each module - or each file that we create - has its
+          own separate scope. That is, code that we want to add or access inside of one file, like -
+          as we've done right here, is not inherently accessible from any other file. So I can't
+          just flip over to index.js and call:</p>
+        <figure>
+          <pre><code class="language-javascript">sum(1,2); </code></pre>
+          <figcaption>Fig 02-020</figcaption>
+        </figure>
+        <p>I can't do that. It is not in the same scope as index.js over here. So to somehow get
+          access to that sum function, we must form an explicit link between index.js and
+          sum.js.</p>
+        <p>So to form this explicit link between the two, we're going to have to learn a little bit
+          more about how JavaScript modules behave and the rules governing them. So believe it or
+          not, the JavaScript world has several different rule sets for determining how JavaScript
+          modules behave. And in this course alone, we're going to be having a very in-depth
+          discussion about two of these different rule sets. So again, different rule sets for
+          determining how JavaScript modules behave.</p>
+        <p>Depending on the environment you're working in, like say whether or not you're working
+          with Node js or you're working in the browser, you might have to use a different module
+          system just to link these different modules or these different files together and share
+          some code between them. So if this sounds confusing or a little bit overly complicated -
+          yeah, it kind of is. The differing module systems in the world of JavaScript are certainly
+          a rough spot for many people and it's definitely a sore spot in the community. So let's
+          take a little bit of time to look at some of the module systems that are in use:</p>
+        <figure>
+          <img src="./images/Fig02-021.PNG"/>
+          <figcaption>Fig 02-021</figcaption>
+        </figure>
+        <p>Okay. Here we go. So this is just three of the several different module systems that are
+          out there. Again, you know, this is just a slice of the possible ones and not necessarily
+          an exhaustive list. So first, let me remind you that these module systems are the rules
+          and the syntax that we're going to use to somehow link together our sum and index files.
+          Three of the more common systems that you'll see in the wild - like in industry - are
+          inside this diagram right here; CommonJS, AMD and ES2015 modules. So let's talk a little
+          bit about each of them.</p>
+        <p>CommonJS is the module system that is implemented by Node JS. So whenever you write Node
+          JS code or code that is executed essentially outside of the browser, chances are that
+          you're using the CommonJS module system. You can recognize the use of CommonJS by the
+          syntax that is used to exchange code between the different files. So in particular, you're
+          going to want to be looking for require statements - require statements and module.exports
+          statements.</p>
+        <p>The next module system that's in existence is AMD, which is an acronym for asynchronous
+          module definition. AMD is more commonly used in front-end applications, where different
+          modules of code can be loaded up asynchronously. And that's something that we'll talk
+          about in great detail later on. You can recognize the use of AMD by looking - or by seeing
+          keywords like define and require.</p>
+        <p>Finally, the ES2015 module spec. So this is the direction where a lot of JavaScript is
+          headed towards, especially in the module world. With ES 2015 spec, they - the developers
+          of ES2015 have kind of taken their own take on how JavaScript modules should be
+          implemented and how they should behave. So you can recognize this module system by looking
+          for words like export and import statements.</p>
+        <p>Now certainly again, modern web development is really headed towards ES2015 code. In the
+          short term - so for this first project we're going to work on, we're going to put
+          everything together using CommonJS. And then over time, in just a little bit after that,
+          we're going to migrate our code base to using ES2015 as well. So we're going to get a
+          really good comparison on the differences between the CommonJS world and the ES2015 world.
+          And we will also figure out, kind of like in a little bit, what is required to make use of
+          ES2015 modules today, like in the modern world.</p>
+        <p>Okay. So that's it. A lot of modules right now. Let's continue in the next section and
+          figure out how to link together our two files, sum.js and index.js, by using this CommonJS
+          module system.</p>
+        <h2>Linking Files with CommonJS</h2>
+        <p>In the last section, we spoke about some of the different module systems in the
+          JavaScript world. The takeaway was that the module systems are rule sets for defining how
+          different files should be linked together inside of an application. In this course, we'll
+          first make use of CommonJS and then we'll migrate over towards using ES2015 modules a
+          little bit later. And when we migrate over there, we'll also talk about why we had to kind
+          of defer making use of ES2015 modules.</p>
+        <p>OK, so we need to somehow use CommonJS modules to link together our sum and index files.
+          Let's take a look at a diagram. That's gonna help us understand exactly how this is going
+          to work:</p>
+        <figure>
+          <img src="./images/Fig02-022.PNG"/>
+          <figcaption>Fig 02-022</figcaption>
+        </figure>
+        <p>So this diagram models relationship between our sum and index.js files. At present, our
+          sum file has a single function that we want to get access to inside of the index.js file.
+          Two other or important items to note inside of here are that the sum file itself has no
+          dependencies, so it doesn't depend on any other file, it doesn't import any other code
+          from any other file, and the index.js file doesn't make any code available to any other
+          files as well. So it's just this one single location or one single connection between the
+          two.</p>
+        <p>When deciding how to link files together, we want to think in terms of code that we want
+          to expose to other parts of our application. So if we have some amount of code in a file
+          like a function, an object, array, string, whatever it is that we want to get access to
+          from other locations, we'll place a line of code inside that same file that explicitly
+          exports it, explicitly makes it available in other locations.</p>
+        <p>So inside of our sum.js file, we're going to locate a statement that is specifically
+          going to make this sum function available in other parts of our codebase. Then, likewise,
+          when we want to get access to a piece of code inside of a file from somewhere else, as is
+          the case with index.js, we need to add a statement inside that file that specifically
+          requires or imports it into that line.</p>
+        <p>So index.js needs a line of code that specifically says, "Hey, give me access to sum.js."
+          Traditionally, we place statements that require or import code at the very top of the file
+          while statements that export code are placed at the bottom.</p>
+        <p>So let's now change back over to our code editor and add in these statements to link our
+          files together. So I'm gonna go back over to my code editor; I'm gonna find my sum.js
+          file. At the bottom of the file, so underneath the existing function declaration, we'll
+          add module.exports equals sum:</p>
+        <figure>
+          <pre><code class="language-javascript">module.exports = sum;</code></pre>
+          <figcaption>Fig 02-023</figcaption>
+        </figure>
+        <p>So this is the CommonJS system in action. If we were using a different module system,
+          this statement right here would have had a slightly different syntax. module.exports means
+          take this variable, whatever it is, a function, string, object, array, number – doesn't
+          matter what it is – and make it available to other modules inside of my project.</p>
+        <p>So now that we've added in this export statement, we can now import it into the index
+          file. So I'm gonna change over to index.js and inside of here, we will add in the
+          following:</p>
+        <figure>
+          <pre><code class="language-javascript">const sum = require('./sum');</code></pre>
+          <figcaption>Fig 02-024</figcaption>
+        </figure>
+        <p>So the require function right is a little bit of magic for us. We call require and we
+          pass in a relative path reference to the module that we want to import code from, so in
+          this case, the sum file. Note the ./ in front of sum right here. This means look in the
+          current directory for a file called sum. So the key here is it is a relative file
+          reference. If the sum file was inside of some other directory in our project, we would
+          have to give the path to get from index.js over to wherever sum is located.</p>
+        <p>OK. So that's pretty much it from module importing right now. Again, we're going to
+          revisit this topic in the future and have a look at it with some of these different module
+          systems that we might make use of. We'll also check out a couple different pieces of
+          syntax for importing and exporting code at that time as well.</p>
+        <p>So last thing we have to do inside of our index.js file is call this sum function and
+          then print out the result. So first, we will add two numbers together using the sum
+          function and assign it to a variable. So let's just say const total equals sum and we'll
+          pass in 10 and 5:</p>
+        <figure>
+          <pre><code class="language-javascript">const total = sum(10, 5);</code></pre>
+          <figcaption>Fig 02-027</figcaption>
+        </figure>
+        <p>And then we'll console log the total, like so:</p>
+        <figure>
+          <pre><code class="language-javascript">console.log(total);</code></pre>
+          <figcaption>Fig 02-026</figcaption>
+        </figure>
+        <p>All right. So that's it first step two of our process. We have now implemented our sum
+          and index files, and we've also set up some import statements between the two. So let's
+          now move on to step number three which is installing and configuring Webpack.</p>
+        <h2>Webpack Installation and Configuration</h2>
+        <p>In the last section, we finished linking together the sum and index files. We'll now
+          install Webpack as a dependency to our project and configure it to run on our codebase. To
+          install Webpack, I'm gonna change over to my terminal. I'm gonna make sure I'm still
+          inside of my project directory, and I'm going to run a command to install Webpack, which
+          is:</p>
+        <figure>
+          <pre><code class="language-command">npm install --save-dev webpack@2.2.0-rc.0</code></pre>
+          <figcaption>Fig 02-027</figcaption>
+        </figure>
+        <p>we install a very specific version of webpack@2.2.0-rc.0, like so. So once you got that
+          in there, go ahead and hit enter to start the installation process. So this is gonna reach
+          out to the npm registry and install Webpack as a project dependency. While the
+          installation is going on, let's talk a little bit about what we have to do next. So after
+          the module has finished installing, we are going to create a file to customize exactly how
+          Webpack behaves when we run it inside of our project.</p>
+        <p>So by default, Webpack doesn't really know a lot about what to do in our project, we have
+          to instruct it on exactly which files we expect it to process and join together into a
+          single bundle. So this configuration is done inside of a file that we usually call
+          "webpack.config.js":</p>
+        <figure>
+          <img src="./images/Fig02-028.PNG"/>
+          <figcaption>Fig 02-028</figcaption>
+        </figure>
+        <p>Let's change over to our code editor, not our project directory. So inside of our root
+          project directory, I'm gonna make a new file, and we're going to call it
+          webpack.config.js:</p>
+        <figure>
+          <img src="./images/Fig02-029.PNG"/>
+          <figcaption>Fig 02-029</figcaption>
+        </figure>
+        <p>So when we run Webpack, it will automatically look for a file with this exact name inside
+          of our project. So webpack.config.js, it is a very special name for our file. Webpack is
+          going to read the contents of this file, and based on the instructions that we provide
+          inside of it, takes some operation on our codebase. So in this section, we're going to
+          place the bare minimum amount of configuration required to get Webpack to run on our
+          project. Inside of webpack.config.js, we're gonna start off by creating an object called
+          config:</p>
+        <figure>
+            <pre><code class="language-javascript">const config = {
+
+};</code></pre>
+          <figcaption>Fig 02-030</figcaption>
+        </figure>
+        <p>that's going to be an empty object right now. And then we're going to export this
+          statement at the bottom of this file:</p>
+        <figure>
+          <pre><code class="language-javascript">module.exports = config</code></pre>
+          <figcaption>Fig 02-031</figcaption>
+        </figure>
+        <p>OK, let's flip back over to our Terminal really quick. I'm gonna verify that Webpack
+          finished installing without any errors. And yup, looks like it did:</p>
+        <figure>
+          <img src="./images/Fig02-032.PNG"/>
+          <figcaption>Fig 02-032</figcaption>
+        </figure>
+        <p>Fantastic! All right, so that looks good. There's now two pieces of configuration that
+          must be provided to Webpack to get it to run properly on our project. So if we ran Webpack
+          right now, it would throw us an error and it would say, hey, you didn't provide me this
+          bare minimum configuration. So there's these two minimum properties that we have to define
+          inside of this config object right here. So let's talk about the first of these two, which
+          is called the entry property. So let's figure out what this entry property is. If we think
+          about our project structure right now, it looks a little bit like this. Right?</p>
+        <figure>
+          <img src="./images/Fig02-033.PNG"/>
+          <figcaption>Fig 02-033</figcaption>
+        </figure>
+        <p>We have an index.js file which requires or depends upon or imports this sum.js file. The
+          index.js file is responsible for actually running our application. It's the thing that
+          actually kinda kicks the application off – it's like the bootstrap file. Because it is the
+          file that actually, like, really does something, that actually serves up as the root of
+          our application, we would refer to it as the entry point of our application.
+          Traditionally, in a Webpack project, we'd call the entry file of our application index.js.
+          So I didn't necessarily pick this name out of a hat, it really is a convention for calling
+          the entry point of our application.</p>
+        <p>Let's think about a little bit more complex case, something with just a couple more
+          files:</p>
+
+        <p>Imagine that we had several different files inside of our project:</p>
+        <figure>
+          <img src="./images/Fig02-034.PNG"/>
+          <figcaption>Fig 02-034</figcaption>
+        </figure>
+        <p>the top file is still called index.js, and then we've got the store and the util being
+          required into that, and then api, again, is being required in to store. Because the
+          index.js file only imports code to it and doesn't export anything else and is not depended
+          upon by anything else, we refer to it as the entry point of our application.</p>
+        <p>So by telling Webpack that this is the entry file for application, two things are going
+          to happen. First, it's going to instruct Webpack on the first file that it should execute
+          when our application starts up in the browser. So we're gonna see that in process very
+          soon. As soon as we make our actual bundle.js file and we look at the contents, we're
+          gonna see, in action, that that index.js file, which is our entry point, is the first one
+          to be executed. Second the index.js file forms the start, or I should say the entry file
+          forms the start of the module-building process. So Webpack will look at what our entry
+          point file imports and then look at what those file import and look at what those file
+          import and you kind of can imagine this tree structure that forms as Webpack starts at the
+          entry point and then starts crawling through all the associated require statements.</p>
+        <p>So let's update our Webpack config file to specify our entry point to be that index.js
+          file. Inside the Webpack config file, we are going to enter in the entry property. So the
+          value of this is going to be the path to our entry point file relative to our root project
+          directory:</p>
+        <figure>
+            <pre><code class="language-javascript">const config = {
+	entry: './src/index.js'
+};</code></pre>
+          <figcaption>Fig 02-035</figcaption>
+        </figure>
+        <p>So, in other words, starting from inside of js_modules. So we'll say './' to represent in
+          the current directory, go into the source directory, so src, and then find the index.js
+          file, so index.js, like so. OK, so looks good.</p>
+        <p>So that's the entry point property for our Webpack configuration.Again, this is one of
+          the two required inputs for Webpack to run successfully. So let's continue with the other
+          property inside the next section.</p>
+        <h2>More on Webpack Configuration</h2>
+        <p>In the last section we specify the entry point of our application inside of our
+          webpack.config.js file. So remember, whenever webpack runs, it's going to look for a
+          webpack.config.js file inside of our project directory, to figure out exactly what it's
+          supposed to do to our project. In this section, we're going to continue with the second
+          required property which is called the output property.</p>
+        <p>Now, the output property tells webpack where to take this big all bundle.js that is
+          formed up out of all of our separate javascript modules, and where to save that file to
+          and not only where to save it to but also what to name it. So let's define this output
+          property. I am going to make sure that I place a comma right after the entry up here:</p>
+        <figure>
+            <pre><code class="language-javascript">output: {
+ path: ,
+ filename:
+ }</code></pre>
+          <figcaption>Fig 02-036</figcaption>
+        </figure>
+        <p>
+          So, unlike the entry property, the output property is going to be an object with two
+          further nested properties inside of it. Inside of here, we're going to specify both a path
+          - I'm going to place a comma right now and we're going to come back and fill out the value
+          in just a second - and we also specify the filename as well. The path property is a
+          reference to the directory that the output file should be saved to. While the filename is
+          what webpack should call the actual file that gets created. The file name is 100 percent
+          up to you. You can decide whatever you want to call it, but by convention we usually call
+          this thing bundle.js, and certainly throw out just about all the documentation, tutorials,
+          blog posts that you'll see, usually the output from webpack we refer to as bundle.js. And
+          certainly, all the drawing diagrams you've seen from me so far also refer to it as
+          bundle.js as well.</p>
+        <p>So now, the path property. Again, the path property is a reference to the directory that
+          we want to save this bundle.js file too. But there is one little gotcha, one little tricky
+          part to it. If we look back at the entry property up here, it was a relative file
+          reference. Right? However, for this output path, we must specify an absolute file
+          reference so the entire fully qualified file path on our hard drive.</p>
+        <p>To generate this, we're going to use this, like, generate this actual fully qualified
+          path right here. We're going to use a helper from node.js. Ok. So we're not going to,
+          like, just guess and we're going to say like hey, currently it's on, for me, workspace,
+          blah blah blah, webpack config, all that stuff. We're going to use a helper in here to
+          generate the path for us.</p>
+        <p>So, this helper is called the path module and it is a part of Node JS. So we can access
+          this path module by requiring it into the webpack config file at the top. So at the very
+          top, we're going to say:</p>
+        <figure>
+          <pre><code class="language-javascript">const path = require('path');</code></pre>
+          <figcaption>Fig 02-037</figcaption>
+        </figure>
+        <p>So yes, even webpack config files can have require statements. So, do note that this
+          requirement, required statement right here is going to be handled by the node.js runtime
+          itself, not by webpack. When we run webpack it runs in the node.js environment. So we can
+          make use of any piece of node.js technology that we'd like inside of our tooling
+          pipeline.</p>
+        <p>
+          Anyways, back to the path module. So the path module has a function on it called
+          resolve:</p>
+        <figure>
+          <pre><code class="language-javascript">path: path.resolve(),</code></pre>
+          <figcaption>Fig 02-038</figcaption>
+        </figure>
+        <p>
+          This result function will take in the path to a file and make sure that the file path is
+          correctly specified no matter which operating system run, be it Windows or OSX. So really
+          the true reason that we're using path.resolve right here is to make sure that our webpack
+          config file can safely be executed on Windows, or OSX, or Linux. Whatever the operating
+          system is, node is going to make sure that the correct path is generated here.</p>
+        <p>So, to specify the current working directory, we're going to say underscore underscore.
+          So that's two underscores right there. Dirname. Underscore underscore is a constant in
+          node.js and it is a reference to the current working directory. Then, as the second
+          argument, I'm going to pass a string of build. Like so:</p>
+        <figure>
+          <pre><code
+            class="language-javascript">path: path.resolve(__dirname, 'build'),
+filename: 'bundle.js'</code></pre>
+          <figcaption>Fig 02-039</figcaption>
+        </figure>
+        <p>So this says, whenever webpack runs, save the file, call it bundle.js inside of a path of
+          our project directory in a folder called build. So again, this is another thing that's
+          kind of by convention, usually we don't just save the output of our webpack process to the
+          project directory itself. Normally, we do it inside of a nested directory. And so, there's
+          a lot of different choices you can use for that. I see like dist. I see build. I see
+          underscore build, a lot of different conventions out in the community. I personally like
+          saving it to a folder called build.</p>
+        <p>OK. So, that's it for configuration inside of our webpack file. So, we've now told
+          webpack where to start inside of our project with the entry property, and we've also told
+          it where to stash the output file as well. So, now onto our last step. Step 4. We're going
+          to install and run webpack over our project. So let's do that in the next section.
+        <h2>Running Webpack</h2>
+        <p>OK. This is it, the moment of truth. Time to run Webpack over our project. To run
+          Webpack, we're going to create a script to run Webpack inside of our package.json file. So
+          I'm gonna open up my package.json file, I'm gonna find the section marked scripts, I'm
+          going to delete the existing command that's inside of there – so I'm gonna take it out
+          entirely – and I'm going to replace it with build and webpack like so:</p>
+        <figure>
+            <pre><code class="language-json">&quot;scripts&quot;: {
+ &quot;build&quot;: &quot;webpack&quot;
+ },</code></pre>
+          <figcaption>Fig 02-040</figcaption>
+        </figure>
+        <p>Now it's extremely important that you use double quotes on both sides of these things.
+          Make sure you've got just double quotes across the board in this. So by adding in this
+          command, we have now enabled the ability to run the command npm run build at our Terminal,
+          so we could run:</p>
+        <figure>
+          <pre><code class="language-javascript">npm run build</code></pre>
+          <figcaption>Fig 02-041</figcaption>
+        </figure>
+        <p>But before I do, I thought you might be curious as to why we are creating a script to
+          just run this one command. Like why don't we just call Webpack ourselves, right? So,
+          that's actually a really good question. Let's do a quick aside and figure out why we're
+          making a separate script for this.</p>
+        <p>OK, so you might have seen other tutorials or blog posts, whatever, around Webpack where
+          they advise you to install Webpack using the command:</p>
+        <figure>
+          <pre><code class="language-command">npm install -g webpack</code></pre>
+          <figcaption>Fig 02-042</figcaption>
+        </figure>
+        <p>
+          When you use that -g, you are installing Webpack globally. And when that happens, it gives
+          you the ability to just run Webpack at the command line. So again, to kind of put words to
+          that or put text, I suppose, some tutorials will say, "Hey, do this." You know, npm
+          install -g webpack, and then that gives the ability to just run Webpack like so:</p>
+        <figure>
+          <img src="./images/Fig02-043.PNG"/>
+          <figcaption>Fig 02-043</figcaption>
+        </figure>
+        <p>OK, so like what's the pros and cons of that approach:</p>
+        <figure>
+          <img src="./images/Fig02-044.PNG"/>
+          <figcaption>Fig 02-044</figcaption>
+        </figure>
+        <p>Well, I kind of like to argue that that's a bad approach or not the best one to take. So,
+          when you install Webpack globally on your computer and then run Webpack at the command
+          line, your computer will look at all of your globally installed modules. It will find one
+          called Webpack and run it, right? Yeah, it makes sense.</p>
+        <p>On the other hand, when you set up a script like we just did and you install Webpack just
+          to that particular project, like we did, and we run npm install --save-dev, so we've now
+          saved it specifically to our project. And when we did that, it got saved inside of our
+          node_modules directory just for this project right here.</p>
+        <p>When we created that script of build and then run it with npm run build, rather than
+          looking to the global node_modules directory on our computer, npm will look inside of our
+          node_modules directory and then run the file inside of there or the module in there that
+          is called Webpack.</p>
+        <p>So the reason this is such a big deal is that when you install a module globally, you can
+          only have one version of a module installed at a time. So, if we wanted to make sure that,
+          say, maybe one project that we are working on uses Webpack version two, but the other uses
+          Webpack version 1, we would have a pretty tough time juggling these versions using global
+          modules.</p>
+        <p>So that problem can instead be easily solved by just installing these modules locally and
+          then depending upon the locally installed version of Webpack, as we're doing right now.
+          And the way that you use the locally installed version is setting up an npm script for it.
+          OK, so enough of that tangent, but I thought you might be curious why we're taking that
+          approach.</p>
+        <p>So let's now run Webpack over our project and, I guess, see what happens. All right? So
+          at my terminal, I'm going to run:</p>
+        <figure>
+          <pre><code class="language-command">npm run build</code></pre>
+          <figcaption>Fig 02-045</figcaption>
+        </figure>
+        <p>So this is going to run the Webpack tool over our project. So Webpack is gonna look at
+          webpack.config.js, and it's gonna figure out what it needs to do and then it's gonna
+          execute. So after it runs, we get this nice output on the screen right here; and if you've
+          ever ran Webpack before, this probably looks pretty familiar:</p>
+        <figure>
+          <img src="./images/Fig02-046.PNG"/>
+          <figcaption>Fig 02-046</figcaption>
+        </figure>
+        <p>The output right here tells us the version of Webpack that was used, the time that it
+          took for Webpack to build this bundle, and then some stats about the bundle.js file that
+          was created, and also some stats about the two individual files that were actually used
+          inside that bundle. Now, there is something that is actually pretty interesting in this
+          output right here.</p>
+        <p>Notice that the files, the two that we created, are 52 bytes and then 77 bytes, but the
+          actual bundle.js that got generated was 2.72 kilobytes which is clearly far, far larger
+          than the sum of the two files that we put into it.</p>
+        <p>So, clearly, Webpack must be doing something really funny by adding in a ton of extra
+          code to our output bundle. So, in other words, this bundle.js file right here must be more
+          than just the sum of its parts, just the sum of these two files right here.</p>
+        <p>So let's take a quick break and then continue in the next section and investigate the
+          bundle.js file that was generated to figure out exactly what is going on inside of
+          there.</p>
+        <h2>The Bundle.js File</h2>
+        <p>In the last section, we successfully ran Webpack over our project, but we saw that the
+          output file was relatively colossal compared to the size of the two JavaScript files that
+          we wrote and included in the actual project. So in this section, we're going to
+          investigate the bundle.js file and figure out exactly what it's doing inside of there. So
+          this is probably going to be the most important section in the whole course, or at least
+          that's just my opinion, because we're gonna get a much better idea of exactly what Webpack
+          is doing under the hood to hook up all of our modules together.</p>
+        <p>So gonna flip back over to my code editor and we're gonna look at that bundle.js file.
+          You'll notice that inside of our project directory, a build file or a build folder was
+          generated, and inside that is our bundle.js file. So, it is specifically called build
+          because that is what we specified inside of our Webpack config file, and it's specifically
+          called bundle.js, again, because that's what we specified in the Webpack config file.</p>
+        <p>So I'm gonna open up the bundle.js file. And the instant I open this thing up, you can
+          see that, wow, there's a lot of code inside of here:</p>
+        <figure>
+          <img src="./images/Fig02-047.PNG"/>
+          <figcaption>Fig 02-047</figcaption>
+        </figure>
+        <p>A lot of stuff got generated when we ran Webpack. So, rather than kind of crawl through
+          all this code, because I do want to have at least some idea of what Webpack is doing, I've
+          taken the liberty of taking all this code and really cleaning it all up, like removing all
+          the comments, renaming some of the function names, and removing entire functions
+          altogether to kind of simplify what Webpack is doing here. So, I'm going to take some
+          alternate version of this and paste it in:</p>
+        <figure>
+          <img src="./images/Fig02-048.PNG"/>
+          <figcaption>Fig 02-048</figcaption>
+        </figure>
+        <p>Okay. So, this is not like functional code right here – this is more pseudocode than
+          anything – but this is kind of what Webpack is doing behind the scenes. Okay, so I just
+          want to – we're not gonna actually run this code right here. I just want you to look at it
+          and follow me along as we try to get kind of a sense of what Webpack is doing, Okay? So
+          again, this is not exactly what Webpack is doing but it's pretty darn close.</p>
+        <p>Okay, let's walk through this thing and figure out what's going on. At the top of the
+          file, an array was created called myModules:</p>
+        <figure>
+          <img src="./images/Fig02-049.PNG"/>
+          <figcaption>Fig 02-049</figcaption>
+        </figure>
+        <p>And, again, I took some liberties with the naming here just to make the stuff a little
+          bit more clear. So looking at this array, it contains two functions. So here is an array,
+          and it contains two functions. And if you look at each function, they both wrap the code
+          that was inside of one of our files. So the first function contains everything that was
+          inside of sum.js, and then the second function contains everything that was inside of
+          index.js.</p>
+        <p>After the array, a variable called entryPointIndex is defined with the starting value of
+          one:</p>
+        <figure>
+          <img src="./images/Fig02-050.png"/>
+          <figcaption>Fig 02-050</figcaption>
+        </figure>
+        <p>This entryPointIndex variable right here points to the index of the array that contains
+          the module that was designated to be our entry point. So because our entry point was the
+          index.js file, and the function that represents that module is in index one of the
+          myModules array – keep in mind that JavaScript modules are indexed from zero. So the
+          variable entryPointIndex is assigned a value of one specifically to point out the position
+          of index.js inside this array.</p>
+        <p>So Webpack then looks inside to the myModules array to get a reference to that index.js
+          function or the function that represents index.js, and then it executes it:</p>
+        <figure>
+          <img src="./images/Fig02-051.PNG"/>
+          <figcaption>Fig 02-051</figcaption>
+        </figure>
+        <p>Okay, so this statement down here, it says look into the myModules array, find this
+          function right here, and then execute that function. So we can now kind of imagine that
+          we're sitting inside of this function right here. So this is where things start to get
+          really interesting.</p>
+        <p>Remember that we imported the sum file into index.js. So inside of the index.js function
+          right here or the index.js module, the myModules array is referenced at the zero
+          index:</p>
+        <figure>
+          <img src="./images/Fig02-052.PNG"/>
+          <figcaption>Fig 02-052</figcaption>
+        </figure>
+        <p>
+          which returns a function, and then that function is executed. So in other words, go and
+          look at the sum.js function, execute it, and whatever returns, assigned to the variable
+          sum. Then, use that function.</p>
+        <p>So what's the takeaway here? The takeaway here is that Webpack takes all of our module's
+          code, stuffs it into individual functions, stuffs those functions into an array, and then
+          calls the different functions in that array. So the end of the day, there is no big magic
+          going on. No magic JavaScript code is being involved here – it is all plain, vanilla
+          JavaScript code that Webpack is spitting out. Because remember, everything Webpack does,
+          eventually is going to presumably run on all the browsers, right? Webpack code is not only
+          running on Chrome version 56 or Chrome version whatever was released two nights ago, it is
+          also running on Internet Explorer 8. So everything Webpack does is, at the end of the day,
+          not using any magic JavaScript code.</p>
+        <p>
+          Now of course, the code that we're looking at right here is a very simplified version of
+          this. The real stuff that you see inside of your bundle.js has a lot more very fancy stuff
+          going on, but a lot of that is mostly to handle some cases around compatibility of
+          different module systems and also handle kind of like caching of modules so that we're not
+          repeatedly calling the same module functions again and again and again. But really, at the
+          end of the day, this is essentially what's going on inside that bundle.js file.</p>
+        <p>Okay, so now we have a better idea of what Webpack is doing to our project, let's
+          continue in the next section.</p>
+        <h2>Running the App</h2>
+        <p>The lesson you want to do for our project right now is figure out how to actually run our
+          tiny app inside the browser. So we're going to very soon start adding in a couple more
+          features on the Webpack side that are very important that we will test inside the browser
+          as well. So it's really important that we figure out how to actually run this bundle.gs
+          thing inside the browser.</p>
+        <p>The first thing that I'm going to do is, I'm going to rerun Webpack over my project just
+          to overwrite all these, you know, this kind of funky change that I did inside of here. So
+          I'm going to close out this file and, you know, just me personally, I'm going to
+          rerun:</p>
+        <figure>
+          <pre><code class="language-command">npm my build</code></pre>
+          <figcaption>Fig 02-053</figcaption>
+        </figure>
+        <p>
+          Assuming you didn't change your bundle.js file you should not have to run it but, you
+          know, again I just want make sure that I show that stuff inside of here.</p>
+        <p>OK. So to run our code inside the browser we're going to create a single html file that
+          will have exactly one purpose, and that purpose is to load up the bundle.js file that is
+          created. Then we can open up that html document inside of our browser. It should load up
+          our bundle and automatically execute it. OK. So let's give it a shot.</p>
+        <p>So I'm gonna go back over to my code editor, and I'm going to make a new file inside of
+          my root project directory. Now, by convention, in Webpack projects we usually have just
+          the single html document because it is a single page application which really only
+          requires a single html document and by convention we usually call it index.html. OK. So
+          inside of index.html we're going to add the bare minimum amount of html required to get
+          this thing loaded in the browser.</p>
+        <figure>
+          <img src="./images/Fig02-053.PNG"/>
+          <figcaption>Fig 02-053</figcaption>
+        </figure>
+        <p>First, I'm going to declare a head tag. I'll put in a body tag and then inside the body
+          tag I'm going to add a script tag as well. So I'm gonna say script and we're going to
+          point this at the bundle.js file that got generated and placed inside of the build
+          directory. So we'll say source, build/bundle.js and then I'll close off the script
+          tag:</p>
+        <figure>
+            <pre><code class="language-html">&lt;head&gt;
+&lt;/head&gt;
+&lt;body&gt;
+	&lt;script src=&quot;build/bundle.js&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;</code></pre>
+          <figcaption>Fig 02-054</figcaption>
+        </figure>
+        <p>OK. So now when we should be able to open up this file in the browser and see the console
+          log statement that we had added inside of the index.js file. Remember we console.log the
+          total. So I'm going to open this file up inside of my browser. There's many different ways
+          you can do this in OSX if that's what you're running right now. You can just run open
+          index.html. If you're running on Windows you can just open up the project directory inside
+          of Windows Explorer, and just double click on the index.html file.</p>
+        <p>All right, so that should open up the index.html file. And, of course, right now we have
+          absolutely no content to show on the screen. The only thing that should really, kind of
+          evidence that we're actually loading the script tag, is a console log statement of 15 or
+          whatever your total should be:</p>
+        <figure>
+          <img src="./images/Fig02-055.PNG"/>
+          <figcaption>Fig 02-055</figcaption>
+        </figure>
+        <p>So you can open up that javascript console by right clicking anywhere on the page, and
+          then clicking inspect, and then you'll click the console tab at the top, and you should
+          see the 15 right there. So again, I just wanted to put our script tag into this html file
+          'cause now we can start looking at some ways or some of the more complex features around
+          webpack that specifically involved the browser. So let's talk about our first advanced
+          feature in the next section.</p>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

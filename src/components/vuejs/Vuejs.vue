@@ -25,9 +25,9 @@
 </template>
 
 <script>
-  export default {
-    name: 'Vuejs'
-  }
+export default {
+  name: 'Vuejs'
+}
 </script>
 
 <style scoped>

@@ -6,8 +6,6 @@ import { routes } from './routes'
 
 Vue.use(VuePrism)
 
-//import './prism.css'
-
 Vue.use(VueRouter)
 
 const router = new VueRouter({

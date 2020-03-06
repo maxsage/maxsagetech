@@ -1998,7 +1998,7 @@ export default {
           <p>So, at this point, the VideoList component has communicated the selected video up to the App component. Now
             the App is going to pass that selected video down into the VideoDetail component. Remember, anytime a parent
             communicates with a child we do that using the props system which involves two separate steps. First we
-            setup the parent component to make sure that it uses a <code class=">language-"v-bind</code> expression
+            setup the parent component to make sure that it uses a <code class="language-">v-bind=</code> expression
             inside of it's template. We also need to get our child component to understand what props it should expect
             to receive - in this case the selected video. In VideoDetail add a props object:</p>
           <figure>
