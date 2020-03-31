@@ -109,7 +109,7 @@
           <div class="example">
             <div class="input-group">
               <input id="Ex07-002" type="text" class="form-control"
-                     value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 7\after\DesignTimeData\DesignTimeData.sln">
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 7\after\DesignTimeData\DesignTimeData.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex07-002"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
             </div>
           </div>
@@ -305,7 +305,7 @@ using (ZzaDbContext context = new ZzaDbContext())
           <div class="example">
             <div class="input-group">
               <input id="Ex07-004" type="text" class="form-control"
-                     value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 7\after\DesignTimeData\DesignTimeData.sln">
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 7\after\DesignTimeData\DesignTimeData.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex07-004"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
             </div>
           </div>
@@ -463,7 +463,7 @@ using (ZzaDbContext context = new ZzaDbContext())
           <div class="example">
             <div class="input-group">
               <input id="Ex07-006" type="text" class="form-control"
-                     value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 7\after\DesignTimeData\DesignTimeData.sln">
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 7\after\DesignTimeData\DesignTimeData.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex07-006"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
             </div>
           </div>
@@ -561,7 +561,7 @@ using (ZzaDbContext context = new ZzaDbContext())
           <div class="example">
             <div class="input-group">
               <input id="Ex07-008" type="text" class="form-control"
-                     value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 7\after\DesignTimeData\DesignTimeData.sln">
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 7\after\DesignTimeData\DesignTimeData.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex07-008"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
             </div>
           </div>
@@ -692,7 +692,7 @@ using (ZzaDbContext context = new ZzaDbContext())
           <div class="example">
             <div class="input-group">
               <input id="Ex07-010" type="text" class="form-control"
-                     value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 7\after\DesignTimeData\DesignTimeData.sln">
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 7\after\DesignTimeData\DesignTimeData.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex07-010"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
             </div>
           </div>
@@ -873,7 +873,7 @@ using (ZzaDbContext context = new ZzaDbContext())
           <div class="example">
             <div class="input-group">
               <input id="Ex07-012" type="text" class="form-control"
-                     value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 7\after\DesignTimeData\DesignTimeData.sln">
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 7\after\DesignTimeData\DesignTimeData.sln">
  <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex07-012"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
             </div>
           </div>
@@ -1174,14 +1174,14 @@ using (ZzaDbContext context = new ZzaDbContext())
           <div class="example">
             <div class="input-group">
               <input id="Ex07-013" type="text" class="form-control"
-                     value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 7\before\DesignTimeSampleData\DesignTimeSampleData.sln">
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 7\before\DesignTimeSampleData\DesignTimeSampleData.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex07-013"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
             </div>
           </div>
           <div class="example">
             <div class="input-group">
               <input id="Ex07-014" type="text" class="form-control"
-                     value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 7\after\DesignTimeSampleData\DesignTimeSampleData.sln">
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 7\after\DesignTimeSampleData\DesignTimeSampleData.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex07-014"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
             </div>
           </div>
@@ -1474,14 +1474,14 @@ xmlns:mc=&quot;https://schemas.openxmlformats.org/markup-compatibility/2006&quot
           <div class="example">
             <div class="input-group">
               <input id="Ex07-015" type="text" class="form-control"
-                     value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 7\before\DesignTimeData\DesignTimeData.sln">
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 7\before\DesignTimeData\DesignTimeData.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex07-015"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
             </div>
           </div>
           <div class="example">
             <div class="input-group">
               <input id="Ex07-016" type="text" class="form-control"
-                     value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 7\after\DesignTimeData\DesignTimeData.sln">
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 7\after\DesignTimeData\DesignTimeData.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex07-016"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
             </div>
           </div>

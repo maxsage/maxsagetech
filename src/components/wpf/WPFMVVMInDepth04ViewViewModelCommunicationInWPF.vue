@@ -72,14 +72,14 @@
           <div class="example">
             <div class="input-group">
               <input id="Ex04-001" type="text"
-                     value="C:\Development Tutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 4\MVVMCommsDemo-Commands-Start\MVVMCommsDemo.sln">
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 4\MVVMCommsDemo-Commands-Start\MVVMCommsDemo.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex04-001"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
             </div>
           </div>
           <div class="example">
             <div class="input-group">
               <input id="Ex04-002" type="text"
-                     value="C:\Development Tutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 4\MVVMCommsDemo-Commands-End\MVVMCommsDemo.sln">
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 4\MVVMCommsDemo-Commands-End\MVVMCommsDemo.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex04-002"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
             </div>
           </div>
@@ -392,14 +392,14 @@ private bool CanDelete()
           <div class="example">
             <div class="input-group">
               <input id="Ex04-003" type="text"
-                     value="C:\Development Tutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 4\MVVMCommsDemo-Behaviors-Start\MVVMCommsDemo.sln">
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 4\MVVMCommsDemo-Behaviors-Start\MVVMCommsDemo.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex04-003"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
             </div>
           </div>
           <div class="example">
             <div class="input-group">
               <input id="Ex04-004" type="text"
-                     value="C:\Development Tutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 4\MVVMCommsDemo-Behaviors-End\MVVMCommsDemo.sln">
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 4\MVVMCommsDemo-Behaviors-End\MVVMCommsDemo.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex04-004"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
             </div>
           </div>
@@ -524,14 +524,14 @@ private bool CanDelete()
           <div class="example">
             <div class="input-group">
               <input id="Ex04-005" type="text"
-                     value="C:\Development Tutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 4\MVVMCommsDemo-Behaviors-Start\MVVMCommsDemo.sln">
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 4\MVVMCommsDemo-Behaviors-Start\MVVMCommsDemo.sln">
               <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex04-005"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
             </div>
           </div>
           <div class="example">
             <div class="input-group">
               <input id="Ex04-006" type="text"
-                     value="C:\Development Tutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 4\MVVMCommsDemo-Behaviors-End\MVVMCommsDemo.sln">
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 4\MVVMCommsDemo-Behaviors-End\MVVMCommsDemo.sln">
               <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex04-006"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
             </div>
           </div>
@@ -625,14 +625,14 @@ xmlns:ei=&quot;http://schemas.microsoft.com/expression/2010/interactions&quot;</
           <div class="example">
             <div class="input-group">
               <input id="Ex04-008" type="text"
-                     value="C:\Development Tutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 4\MVVMCommsDemo-PropertyChanged-Start\MVVMCommsDemo.sln">
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 4\MVVMCommsDemo-PropertyChanged-Start\MVVMCommsDemo.sln">
               <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex04-008"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
             </div>
           </div>
           <div class="example">
             <div class="input-group">
               <input id="Ex04-009" type="text"
-                     value="C:\Development Tutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 4\MVVMCommsDemo-PropertyChanged-End\MVVMCommsDemo.sln">
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 4\MVVMCommsDemo-PropertyChanged-End\MVVMCommsDemo.sln">
               <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex04-009"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
             </div>
           </div>
@@ -752,14 +752,14 @@ xmlns:ei=&quot;http://schemas.microsoft.com/expression/2010/interactions&quot;</
           <div class="example">
             <div class="input-group">
               <input id="Ex04-010" type="text"
-                     value="C:\Development Tutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 4\MVVMCommsDemo-CustomBehavior-Start\MVVMCommsDemo.sln">
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 4\MVVMCommsDemo-CustomBehavior-Start\MVVMCommsDemo.sln">
               <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex04-010"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
             </div>
           </div>
           <div class="example">
             <div class="input-group">
               <input id="Ex04-011" type="text"
-                     value="C:\Development Tutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 4\MVVMCommsDemo-CustomBehavior-End\MVVMCommsDemo.sln">
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 4\MVVMCommsDemo-CustomBehavior-End\MVVMCommsDemo.sln">
               <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex04-011"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
             </div>
           </div>

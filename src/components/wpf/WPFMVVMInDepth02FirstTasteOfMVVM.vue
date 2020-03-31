@@ -47,7 +47,7 @@
           <div class="example">
             <div class="input-group">
               <input id="Ex02-001" type="text"
-                     value="C:\Development Tutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 2\ZzaDashboard-NoDataBinding\ZzaDashboard.sln">
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 2\ZzaDashboard-NoDataBinding\ZzaDashboard.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex02-001"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
             </div>
           </div>
@@ -270,7 +270,7 @@
           <div class="example">
             <div class="input-group">
               <input id="Ex02-002" type="text"
-                     value="C:\Development Tutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 2\ZzaDashboard-DataBindingNoMVVM\ZzaDashboard.sln">
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 2\ZzaDashboard-DataBindingNoMVVM\ZzaDashboard.sln">
               <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex02-002"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
             </div>
           </div>
@@ -340,7 +340,7 @@ private async void OnSave(object sender, RoutedEventArgs e)
           <div class="example">
             <div class="input-group">
               <input id="Ex02-003" type="text"
-                     value="C:\Development Tutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 2\ZzaDashboard-SimpleMVVM\ZzaDashboard.sln">
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 2\ZzaDashboard-SimpleMVVM\ZzaDashboard.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex02-001"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
             </div>
           </div>

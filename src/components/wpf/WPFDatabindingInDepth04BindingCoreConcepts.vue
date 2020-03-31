@@ -66,14 +66,14 @@
         <div class="example">
           <div class="input-group">
             <input id="Ex04-001" type="text" class="form-control"
-                   value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 4\before\BindingSources\BindingSources.sln">
+                   value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 4\before\BindingSources\BindingSources.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex04-001"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
           </div>
         </div>
         <div class="example">
           <div class="input-group">
             <input id="Ex04-002" type="text" class="form-control"
-                   value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 4\after\BindingSources\BindingSources.sln">
+                   value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 4\after\BindingSources\BindingSources.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex04-002"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
           </div>
         </div>
@@ -509,14 +509,14 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
         <div class="example">
           <div class="input-group">
             <input id="Ex04-003" type="text" class="form-control"
-                   value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 4\before\BindingSources\BindingSources.sln">
+                   value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 4\before\BindingSources\BindingSources.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex04-003"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
           </div>
         </div>
         <div class="example">
           <div class="input-group">
             <input id="Ex04-004" type="text" class="form-control"
-                   value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 4\after\BindingSources\BindingSources.sln">
+                   value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 4\after\BindingSources\BindingSources.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex04-004"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
           </div>
         </div>
@@ -654,14 +654,14 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
         <div class="example">
           <div class="input-group">
             <input id="Ex04-005" type="text" class="form-control"
-                   value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 4\before\BindingSources\BindingSources.sln">
+                   value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 4\before\BindingSources\BindingSources.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex04-005"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
           </div>
         </div>
         <div class="example">
           <div class="input-group">
             <input id="Ex04-006" type="text" class="form-control"
-                   value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 4\after\BindingSources\BindingSources.sln">
+                   value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 4\after\BindingSources\BindingSources.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex04-006"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
           </div>
         </div>
@@ -827,14 +827,14 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
         <div class="example">
           <div class="input-group">
             <input id="Ex04-007" type="text" class="form-control"
-                   value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 4\before\BindingSources\BindingSources.sln">
+                   value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 4\before\BindingSources\BindingSources.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex04-007"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
           </div>
         </div>
         <div class="example">
           <div class="input-group">
             <input id="Ex04-008" type="text" class="form-control"
-                   value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 4\after\BindingSources\BindingSources.sln">
+                   value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 4\after\BindingSources\BindingSources.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex04-008"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
           </div>
         </div>
@@ -988,14 +988,14 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
         <div class="example">
           <div class="input-group">
             <input id="Ex04-009" type="text" class="form-control"
-                   value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 4\before\BindingProperties\BindingProperties.sln">
+                   value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 4\before\BindingProperties\BindingProperties.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex04-009"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
           </div>
         </div>
         <div class="example">
           <div class="input-group">
             <input id="Ex04-010" type="text" class="form-control"
-                   value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 4\after\BindingProperties\BindingProperties.sln">
+                   value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 4\after\BindingProperties\BindingProperties.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex04-010"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
           </div>
         </div>
@@ -1168,14 +1168,14 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
         <div class="example">
           <div class="input-group">
             <input id="Ex04-011" type="text" class="form-control"
-                   value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 4\before\BindingProperties\BindingProperties.sln">
+                   value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 4\before\BindingProperties\BindingProperties.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex04-011"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
           </div>
         </div>
         <div class="example">
           <div class="input-group">
             <input id="Ex04-012" type="text" class="form-control"
-                   value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 4\after\BindingProperties\BindingProperties.sln">
+                   value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 4\after\BindingProperties\BindingProperties.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex04-012"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
           </div>
         </div>

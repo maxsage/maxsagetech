@@ -99,14 +99,14 @@
           <div class="example">
             <div class="input-group">
               <input id="Ex03-001" type="text"
-                     value="C:\Development Tutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 3\MVVMHookupDemo-XAMLHookup-Start\MVVMHookupDemo.sln">
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 3\MVVMHookupDemo-XAMLHookup-Start\MVVMHookupDemo.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex03-001"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
             </div>
           </div>
           <div class="example">
             <div class="input-group">
               <input id="Ex03-002" type="text"
-                     value="C:\Development Tutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 3\MVVMHookupDemo-XAMLHookup-End\MVVMHookupDemo.sln">
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 3\MVVMHookupDemo-XAMLHookup-End\MVVMHookupDemo.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex03-002"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
             </div>
           </div>
@@ -332,14 +332,14 @@ public CustomerListView()
           <div class="example">
             <div class="input-group">
               <input id="Ex03-003" type="text"
-                     value="C:\Development Tutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 3\MVVMHookupDemo-ViewModelLocator-Start\MVVMHookupDemo.sln">
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 3\MVVMHookupDemo-ViewModelLocator-Start\MVVMHookupDemo.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex03-003"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
             </div>
           </div>
           <div class="example">
             <div class="input-group">
               <input id="Ex03-004" type="text"
-                     value="C:\Development Tutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 3\MVVMHookupDemo-ViewModelLocator-End\MVVMHookupDemo.sln">
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 3\MVVMHookupDemo-ViewModelLocator-End\MVVMHookupDemo.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex03-004"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
             </div>
           </div>
@@ -614,14 +614,14 @@ var viewModelType = Type.GetType(viewModelTypeName);</pre>
           <div class="example">
             <div class="input-group">
               <input id="Ex03-005" type="text"
-                     value="C:\Development Tutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 3\MVVMHookupDemo-DataBinding-Start\MVVMHookupDemo.sln">
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 3\MVVMHookupDemo-DataBinding-Start\MVVMHookupDemo.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex03-005"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
             </div>
           </div>
           <div class="example">
             <div class="input-group">
               <input id="Ex03-006" type="text"
-                     value="C:\Development Tutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 3\MVVMHookupDemo-DataBinding-End\MVVMHookupDemo.sln">
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 3\MVVMHookupDemo-DataBinding-End\MVVMHookupDemo.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex03-006"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
             </div>
           </div>
@@ -916,14 +916,14 @@ public ObservableCollection&lt;Customer&gt; Customers
           <div class="example">
             <div class="input-group">
               <input id="Ex03-006" type="text"
-                     value="C:\Development Tutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 3\MVVMHookupDemo-DataTemplates-Start\MVVMHookupDemo.sln">
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 3\MVVMHookupDemo-DataTemplates-Start\MVVMHookupDemo.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex03-006"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
             </div>
           </div>
           <div class="example">
             <div class="input-group">
               <input id="Ex03-007" type="text"
-                     value="C:\Development Tutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 3\MVVMHookupDemo-DataTemplates-End\MVVMHookupDemo.sln">
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 3\MVVMHookupDemo-DataTemplates-End\MVVMHookupDemo.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex03-007"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
             </div>
           </div>
@@ -1062,14 +1062,14 @@ public ObservableCollection&lt;Customer&gt; Customers
           <div class="example">
             <div class="input-group">
               <input id="Ex03-008" type="text"
-                     value="C:\Development Tutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 3\MVVMHookupDemo-DataTemplates-Start\MVVMHookupDemo.sln">
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 3\MVVMHookupDemo-DataTemplates-Start\MVVMHookupDemo.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex03-008"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
             </div>
           </div>
           <div class="example">
             <div class="input-group">
               <input id="Ex03-009" type="text"
-                     value="C:\Development Tutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 3\MVVMHookupDemo-DataTemplates-End\MVVMHookupDemo.sln">
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 3\MVVMHookupDemo-DataTemplates-End\MVVMHookupDemo.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex03-009"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
             </div>
           </div>

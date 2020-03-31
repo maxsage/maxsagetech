@@ -79,14 +79,14 @@
             <div class="example">
               <div class="input-group">
                 <input id="Ex03-001" type="text" class="form-control"
-                       value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\before\EntityDataBinding\EntityDataBinding.sln">
+                       value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\before\EntityDataBinding\EntityDataBinding.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex03-001"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
               </div>
             </div>
             <div class="example">
               <div class="input-group">
                 <input id="Ex03-002" type="text" class="form-control"
-                       value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\after\EntityDataBinding\EntityDataBinding.sln">
+                       value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\after\EntityDataBinding\EntityDataBinding.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex03-002"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
               </div>
             </div>
@@ -407,14 +407,14 @@ private void OnCustomerSelected(object sender, SelectionChangedEventArgs e)
             <div class="example">
               <div class="input-group">
                 <input id="Ex03-003" type="text" class="form-control"
-                       value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\before\EntityDataBinding\EntityDataBinding.sln">
+                       value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\before\EntityDataBinding\EntityDataBinding.sln">
                 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex03-003"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
               </div>
             </div>
             <div class="example">
               <div class="input-group">
                 <input id="Ex03-004" type="text" class="form-control"
-                       value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\after\EntityDataBinding\EntityDataBinding.sln">
+                       value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\after\EntityDataBinding\EntityDataBinding.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex03-004"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
               </div>
             </div>
@@ -651,14 +651,14 @@ public string LastName
             <div class="example">
               <div class="input-group">
                 <input id="Ex03-005" type="text" class="form-control"
-                       value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\before\EntityDataBinding\EntityDataBinding.sln">
+                       value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\before\EntityDataBinding\EntityDataBinding.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex03-005"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
               </div>
             </div>
             <div class="example">
               <div class="input-group">
                 <input id="Ex03-006" type="text" class="form-control"
-                       value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\after\EntityDataBinding\EntityDataBinding.sln">
+                       value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\after\EntityDataBinding\EntityDataBinding.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex03-006"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
               </div>
             </div>
@@ -849,14 +849,14 @@ public static readonly DependencyProperty CustomersProperty =
             <div class="example">
               <div class="input-group">
                 <input id="Ex03-007" type="text" class="form-control"
-                       value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\before\EntityDataBinding\EntityDataBinding.sln">
+                       value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\before\EntityDataBinding\EntityDataBinding.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex03-007"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
               </div>
             </div>
             <div class="example">
               <div class="input-group">
                 <input id="Ex03-008" type="text" class="form-control"
-                       value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\after\EntityDataBinding\EntityDataBinding.sln">
+                       value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\after\EntityDataBinding\EntityDataBinding.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex03-008"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
               </div>
             </div>
@@ -1233,14 +1233,14 @@ public static readonly DependencyProperty OrderStatusesProperty =
             <div class="example">
               <div class="input-group">
                 <input id="Ex03-009" type="text" class="form-control"
-                       value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\before\EntityDataBinding\EntityDataBinding.sln">
+                       value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\before\EntityDataBinding\EntityDataBinding.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex03-009"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
               </div>
             </div>
             <div class="example">
               <div class="input-group">
                 <input id="Ex03-010" type="text" class="form-control"
-                       value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\after\EntityDataBinding\EntityDataBinding.sln">
+                       value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\after\EntityDataBinding\EntityDataBinding.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex03-010"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
               </div>
             </div>
@@ -1552,14 +1552,14 @@ public void EndEdit()
             <div class="example">
               <div class="input-group">
                 <input id="Ex03-011" type="text" class="form-control"
-                       value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\before\EntityDataBinding\EntityDataBinding.sln">
+                       value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\before\EntityDataBinding\EntityDataBinding.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex03-011"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
               </div>
             </div>
             <div class="example">
               <div class="input-group">
                 <input id="Ex03-012" type="text" class="form-control"
-                       value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\after\EntityDataBinding\EntityDataBinding.sln">
+                       value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\after\EntityDataBinding\EntityDataBinding.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex03-012"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
               </div>
             </div>
@@ -1882,14 +1882,14 @@ private void OnMoveUp(object sender, RoutedEventArgs e)
             <div class="example">
               <div class="input-group">
                 <input id="Ex03-013" type="text" class="form-control"
-                       value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\before\DataSetDataBinding\DataSetDataBinding.sln">
+                       value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\before\DataSetDataBinding\DataSetDataBinding.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex03-013"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
               </div>
             </div>
             <div class="example">
               <div class="input-group">
                 <input id="Ex03-014" type="text" class="form-control"
-                       value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\after\DataSetDataBinding\DataSetDataBinding.sln">
+                       value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\after\DataSetDataBinding\DataSetDataBinding.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex03-014"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
               </div>
             </div>
@@ -2134,14 +2134,14 @@ public static readonly DependencyProperty SelectedCustomerProperty =
             <div class="example">
               <div class="input-group">
                 <input id="Ex03-015" type="text" class="form-control"
-                       value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\before\XmlDataBinding\XmlDataBinding.sln">
+                       value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\before\XmlDataBinding\XmlDataBinding.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex03-015"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
               </div>
             </div>
             <div class="example">
               <div class="input-group">
                 <input id="Ex03-016" type="text" class="form-control"
-                       value="C:\Development Tutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\after\XmlDataBinding\XmlDataBinding.sln">
+                       value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 3\after\XmlDataBinding\XmlDataBinding.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex03-016"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
               </div>
             </div>

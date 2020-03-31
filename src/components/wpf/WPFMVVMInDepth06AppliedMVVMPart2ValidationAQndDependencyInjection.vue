@@ -38,14 +38,14 @@
           <div class="example">
             <div class="input-group">
               <input id="Ex06-001" type="text"
-                     value="C:\Development Tutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 6\ZzaDesktop-Start\ZzaDesktop.sln">
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 6\ZzaDesktop-Start\ZzaDesktop.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex06-001"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
             </div>
           </div>
           <div class="example">
             <div class="input-group">
               <input id="Ex06-002" type="text"
-                     value="C:\Development Tutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 6\ZzaDesktop-End\ZzaDesktop.sln">
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 6\ZzaDesktop-End\ZzaDesktop.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex06-002"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
             </div>
           </div>
@@ -142,14 +142,14 @@
           <div class="example">
             <div class="input-group">
               <input id="Ex06-003" type="text"
-                     value="C:\Development Tutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 6\ZzaDesktop-Start\ZzaDesktop.sln">
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 6\ZzaDesktop-Start\ZzaDesktop.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex06-003"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
             </div>
           </div>
           <div class="example">
             <div class="input-group">
               <input id="Ex06-004" type="text"
-                     value="C:\Development Tutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 6\ZzaDesktop-End\ZzaDesktop.sln">
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 6\ZzaDesktop-End\ZzaDesktop.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex06-004"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
             </div>
           </div>
@@ -262,14 +262,14 @@ private void CopyCustomer(Customer source, SimpleEditableCustomer target)
           <div class="example">
             <div class="input-group">
               <input id="Ex06-005" type="text"
-                     value="C:\Development Tutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 6\ZzaDesktop-Start\ZzaDesktop.sln">
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 6\ZzaDesktop-Start\ZzaDesktop.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex06-005"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
             </div>
           </div>
           <div class="example">
             <div class="input-group">
               <input id="Ex06-006" type="text"
-                     value="C:\Development Tutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 6\ZzaDesktop-End\ZzaDesktop.sln">
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 6\ZzaDesktop-End\ZzaDesktop.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex06-006"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
             </div>
           </div>
@@ -543,14 +543,14 @@ private bool CanSave()
           <div class="example">
             <div class="input-group">
               <input id="Ex06-007" type="text"
-                     value="C:\Development Tutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 6\ZzaDesktop-Start\ZzaDesktop.sln">
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 6\ZzaDesktop-Start\ZzaDesktop.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex06-007"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
             </div>
           </div>
           <div class="example">
             <div class="input-group">
               <input id="Ex06-008" type="text"
-                     value="C:\Development Tutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 6\ZzaDesktop-End\ZzaDesktop.sln">
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 6\ZzaDesktop-End\ZzaDesktop.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex06-008"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
             </div>
           </div>
@@ -913,14 +913,14 @@ private void RaiseCanExecuteChanged(object sender, EventArgs e)
           <div class="example">
             <div class="input-group">
               <input id="Ex06-009" type="text"
-                     value="C:\Development Tutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 6\ZzaDesktop-Start\ZzaDesktop.sln">
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 6\ZzaDesktop-Start\ZzaDesktop.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex06-009"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
             </div>
           </div>
           <div class="example">
             <div class="input-group">
               <input id="Ex06-010" type="text"
-                     value="C:\Development Tutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 6\ZzaDesktop-End\ZzaDesktop.sln">
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 6\ZzaDesktop-End\ZzaDesktop.sln">
               <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex06-010"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
             </div>
           </div>
@@ -1093,14 +1093,14 @@ _addEditViewModel = ContainerHelper.Container.Resolve&lt;AddEditCustomerViewMode
           <div class="example">
             <div class="input-group">
               <input id="Ex06-011" type="text"
-                     value="C:\Development Tutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 6\ZzaDesktop-Start\ZzaDesktop.sln">
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 6\ZzaDesktop-Start\ZzaDesktop.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex06-011"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
             </div>
           </div>
           <div class="example">
             <div class="input-group">
               <input id="Ex06-012" type="text"
-                     value="C:\Development Tutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 6\ZzaDesktop-End\ZzaDesktop.sln">
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 6\ZzaDesktop-End\ZzaDesktop.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex06-012"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
             </div>
           </div>
