@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="UTF-8">
+  <title>WebPack 2 The Complete Developers Guide</title>
+  <script src="https://unpkg.com/vue"></script>
+  <link crossorigin="anonymous"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        rel="stylesheet">
+  <link href="prism.css" rel="stylesheet">
+  <script src="prism.js"></script>
+  <style>
+    img {
+      max-width: 100%;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="panel-group">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h2>Section 8: Web-Based Deployment for Static Sites</h2>
+      </div>
+      <div class="panel-body">
+        <h2>Deployment of Servers</h2>
+        <p>Now that we've gone through deployment of some applications solely as static sites, let's move on over to
+          figuring out how to deploy applications that are backed by a server of some sort. So remember, the idea here
+          is that we're going to have some type of highly intelligent server that will be serving up our application.
+          This server might also connect to a database or handle authentication or make internal requests to some other
+          service that we're running. If you're looking to build your own app that maintains a database, chances are
+          that you're going to want to follow this type of setup as opposed to the static deployment that we were
+          looking at just a moment ago.</p>
+        <p>In the world of using an intelligent central server, there are two general ways that we can structure our
+          deployment. Ok, so two different ways, so we're going to talk about both of them right now. So the first way
+          in which we might structure our application, or kind of the general architecture, is to put together two
+          separate addresses:</p>
+        <figure>
+          <img src="./images/Fig08-043.PNG"/>
+          <figcaption>Fig 08-043</figcaption>
+        </figure>
+        <p>One address with, that the user might visit would be something like www.app.com. and if the user visits that
+          address they'll get back the build application, which in other words means our index html file and any
+          supporting javascript documents. That application will be sent back to the user's browser. It will be loaded
+          up or booted up inside the browser and then the javascript application we just wrote can make some API
+          requests to this outside server that we're maintaining.</p>
+        <p>So you can, kind of, imagine this as somewhat being similar to having a static application but it's also got
+          the ability to make requests to this outside API. So in the idea or, kind of, by token of the fact that we've
+          got this statically built asset or this statically built application, it is somewhat similar to the deployment
+          method that we were just looking at. The only difference this time around is that I'm saying very clearly,
+          hey, we can also make API requests to this outside server.</p>
+        <p>This is how many very large applications work and when I say very large I'm talking about applications that
+          serve hundreds or millions of different users. Larger applications will follow this type of pattern because
+          there are some very definite possibilities of getting performance gains out of separation of our static assets
+          and our more dynamic assets.</p>
+        <p>Now the second type of architecture that we can use when we've got this intelligence server that we want to
+          include looks like this:
+          <figure>
+            <img src="./images/Fig08-044.PNG"/>
+            <figcaption>Fig 08-044</figcaption>
+          </figure>
+        <p>So this is the second type of architecture that we might use. In this world, we'll put together a single
+          server which is responsible both for serving up our application assets and also might contain some API
+          handling logic, like say, allowing a user to sign up to our application or creating a to-do that gets stored
+          in a database. So, in this type of world or this type of approach, we'll have the node server be responsible
+          for both serving up the application and also some business logic as well. This approach is more common for
+          smaller applications because deployment is significantly easier as well because there's only one server that
+          we'd ever have to worry about.</p>
+        <p>In this course and in all the deployments that we're going to be talking about here, we're going to follow
+          this type of architecture where we've got the single monolithic server that will both serve up our app and
+          then also have the ability to have some very specialized API or server based logic in here as well.</p>
+        <p>The thing to keep in mind here is that we want our node server to be a 100 percent in charge of everything
+          related to our application. So, from handling the user's requests to log in to creating the to-do all the way
+          back to serving up our static assets, everything is being handled by node. So this ends up being just a little
+          bit of a pain with webpack. I'm going to ask you, can you guess why. Can you guess why that might be the case,
+          like making webpack work together with node.</p>
+        <p>Well everything that we've been doing with webpack has revolved around making webpack the center of our
+          little development universe. So, when we transition now to saying that all of a sudden node is going to be the
+          center of everything, it means we have to put together some compatibility layer together to make sure that web
+          pack and node work together well. In the past whenever we built our application, we would just open up our
+          index html file directly, right, like that was easy. We can just open up the index html file directly off our
+          hard disk but now we're seeing that when we visit our node server, we expect the node server to somehow reach
+          over to web pack and serve up our application bundle both in a development environment and production
+          environment. So we're going need to spend a little bit of time thinking about how we're going to make node and
+          webpack work together nicely.</p>
+        <p>So let's continue with the next section and figure out exactly how we're going to make the two technologies
+          play together.</p>
+        <h2>Node and Webpack Integration</h2>
+        <p>In the last section, we discussed some architecture combining a NodeJS server with Webpack and eventually
+          came to the realization that making Webpack work nicely with Node might be a little bit of a challenge. So in
+          the section, we're gonna figure out exactly how we're going to make the two work together nicely. Now,
+          integrating Webpack with Node is going to be a little bit different depending on whether or not we are on our
+          local development machine or our application has been deployed to some outside service provider, so like AWS
+          or Heroku or something like that. In other words, our Node server is gonna be behaving differently depending
+          on its environment.</p>
+        <p>So in this section, we're gonna look at the two different ways in which we're going to set up Node and how
+          it's gonna behave differently depending on whether or not it's in a development or production type of world.
+          So let's first look at how Node is going to behave when we are running on our local machine:</p>
+        <figure>
+          <img src="./images/Fig08-045.PNG"/>
+          <figcaption>Fig 08-045</figcaption>
+        </figure>
+        <p>In the development world, we are gonna set up Node so that it automatically passes request through to our
+          Webpack build process. OK, so whenever a browser loads up and we try to access our Node server and say, "Hey,
+          I just want to look at the application, like give me my index HTML file and any accompanying JavaScript files
+          as well." In the development world, we're going to make use of something called a Webpack middleware. So when
+          the incoming request comes to our server and says, "Hey, give me that index page HTML." Express or Node, it's
+          just going to say, "Aha, they want that index HTML. I'm gonna pass it straight through to this other Webpack
+          process that's running over here." This will allow us to take advantage of Webpack without having this instead
+          start up a separate Webpack server. So it's all gonna be running internally toward NodeJS server.</p>
+        <p>Now in the production world, things are gonna behave just a little bit differently:</p>
+        <figure>
+          <img src="./images/Fig08-046.PNG"/>
+          <figcaption>Fig 08-046</figcaption>
+        </figure>
+        <p>The thing to keep in mind is that in a production world, we don't want to run Webpack at all because it is a
+          huge resource hog. Instead, we want to build our application one time. Like the instant we deploy our
+          application, we want to build our application, we want to save the generated assets inside of our disk
+          directory or our distribution directory, and then whenever a user navigates to our server in a browser, we're
+          gonna to tell the Node server to just go ahead and serve out these statically built assets from this very
+          particular directory.</p>
+        <p>Now, getting this split in environments between production and development, you know, getting the split in
+          here, it's a little bit annoying in my opinion, and it's annoying because it means that our Node server is
+          going to have some amount of logic in it that's going to change how it behaves, depending on the development
+          environment. In my opinion, that's not really super fun to see in a server. I would rather have a server that
+          behaves identically in both production and development just because it allows us to catch errors much more
+          easily. So, this is a little bit of a nitpick of mine but we're still gonna, of course, we're gonna go through
+          the process of deployment.</p>
+        <p>OK. So now we've seen these two different kind of general set-ups, and I know that at this point it probably
+          looks really vague but don't worry we're gonna, you know, really go into the details on this. So, let's get
+          started with implementing this server and then we're going to figure out how to deploy it to a couple of
+          different targets.</p>
+        <p>So we're gonna start by creating a standalone Node server and hooking up Webpack into it. So we're going to
+          do that kind of development environment first, and then we're gonna go and implement the production version
+          after that.</p>
+        <p>So the first thing we're going to do is install ExpressJS, which is a server framework that sits on top of
+          Node. Express is really incredibly common in many Node applications. So, let's install it as an npm module and
+          start putting our server together. I'm gonna change over to my Terminal. And once over here, we will install
+          express with:</p>
+        <figure>
+          <pre><code class="language-command">npm install--save express</code></pre>
+          <figcaption>Fig 08-047</figcaption>
+        </figure>
+        <p>While that's installing, I'm gonna pull up my code editor. And inside of my root project directory, I'm going
+          to make a file called server.js:</p>
+        <figure>
+          <img src="./images/Fig08-047.PNG"/>
+          <figcaption>Fig 08-047</figcaption>
+        </figure>
+        <p>Now, I wanted to remind you right now that this is really a course about Webpack, not quite so much about
+          Express. So, on the Express side of things, we're gonna kinda speed through it just a little bit. You know, I
+          will explain what's going on but we're just gonna kind of try to put the code up there just to get everything
+          working:</p>
+        <figure>
+          <img src="./images/Fig08-048.PNG"/>
+          <figcaption>Fig 08-048</figcaption>
+        </figure>
+        <p>So inside of our server.js file, we'll first require an express. We'll use express to make an app object and
+          then we will tell that app to listen for incoming HTTP requests on port 3050. And after, after it starts
+          listening on port 3050, we'll console log out just Listening to tell us or give us a little bit of status
+          update of, hey, everything is running as expected.</p>
+        <p>I'll then save this file. I'm gonna go back over to the command line and we'll now start this tiny little
+          server up. So back at the command line, and you'll notice that my npm install finished here. If you see
+          anything about warnings or unmet peer dependencies, don't sweat it. Totally fine, totally fine. So, back at
+          server or extending back at the Terminal, we'll start up our server with:</p>
+        <figure>
+          <pre><code class="language-command">node server.js</code></pre>
+          <figcaption>Fig 08-049</figcaption>
+        </figure>
+        <p>and then we see the message right here:</p>
+        <figure>
+          <img src="./images/Fig08-050.PNG"/>
+          <figcaption>Fig 08-050</figcaption>
+        </figure>
+        <p>OK, so that looks good.</p>
+        <p>
+          Let's continue in the next section and figure out our Webpack and Node integration in the development
+          environment.</p>
+        <h2>Webpack Middleware in Development</h2>
+        <p>In the last section, we discussed some of the challenges of making Node and Webpack work together,
+          specifically the fact that we want to configure Webpack to work slightly differently depending on whether or
+          not we are running in a production or development environment. The key idea is that if we were just in a
+          development environment, we want to run Webpack and make sure that it watches over our files for changes and
+          rebuilds the project as required. But in production, we want to just serve up the compiled application or the
+          built application.</p>
+        <p>We'll now continue inside of our server.js file by wiring up Webpack to make sure that it works correctly in
+          development:</p>
+        <figure>
+          <img src="./images/Fig08-051.PNG"/>
+          <figcaption>Fig 08-051</figcaption>
+        </figure>
+        <p>So remember, the idea here is that we're gonna have this thing called a Webpack middleware to help us serve
+          up our application. Middlewares are used to intercept and modify incoming request to our server, and they're
+          really a part of ExpressJS, not really having anything to do with Node specifically and not having anything to
+          do specifically with Webpack. It's really a part of Express and how Express works. This middleware works, this
+          middleware that we're about to wire up works by intercepting incoming request for our application. And when I
+          say for application, I'm talking about our index HTML file. It's gonna intercept those requests for
+          application and respond with the compiled JavaScript application.</p>
+        <p>So you can kind of imagine this Webpack middleware right here as watching for incoming requests:</p>
+        <figure>
+          <img src="./images/Fig08-052.PNG"/>
+          <figcaption>Fig 08-052</figcaption>
+        </figure>
+        <p>If it sees one that it thinks it needs to take care of, it's gonna snatch it and respond with our application
+          assets. So we're going to first install this Webpack middleware as a module and then we're gonna wire it up to
+          Express. So over at the Terminal, we will first install the module itself or the library itself. I'm going to
+          close out the running NodeJS server, by hitting control-C. And then we will install the middleware with:</p>
+        <figure>
+          <pre><code class="language-command">npm install --save-dev webpack-dev-middleware</code></pre>
+          <figcaption>Fig 08-053</figcaption>
+        </figure>
+        <p>
+          like so. Make sure you get the dashes in there, and also double check your spelling on middleware. I've always
+          seem to make the same typo of leaving out the e in there. So, we'll let it do its thing, and while it's
+          installing, let's flip back over to our code editor.</p>
+        <p>Inside of server.js, we're going to import or require in that middleware, and we're also going to require in
+          a couple of other files as well. So underneath Express, we're gonna do a little bit of typing here, I'll tell
+          you right now. We're gonna say webpackMiddleware is going to come from webpack-dev-middleware. We're going to
+          import webpack, and then we're also going to import our Webpack config file:</p>
+        <figure>
+          <img src="./images/Fig08-054.PNG"/>
+          <figcaption>Fig 08-054</figcaption>
+        </figure>
+        <p>So, webpack.config.js, like so. Now, the Webpack middleware that we just required in, that's the middleware
+          that we're talking about here. The webpack object is the actual Webpack library, and then the webpackConfig
+          file is the config file that we put together.</p>
+        <p>So the kind of idea here in importing all three of these is that the webpackMiddleware only serves to
+          intercept incoming requests and hand it off to Webpack. webpack exists to compile all of our application
+          assets, and webpackConfig is what instructs webpack on how to run correctly. So you might be thinking thinking
+          like, "Hey, I should only have to really require in the webpackMiddleware." Well, no, unfortunately that's not
+          the case; we really need all three pieces of the puzzle. </p>
+        <p>So now that we've got all three pieces of the puzzle, we will tell our Express application to use this
+          webpackMiddleware. OK, so this is where things start to get a little bit hairy. So we're gonna say app.use,
+          then we're going to pass in webpackMiddleware. Again, make sure you get the e there – easy to make typos.
+          We're going to pass to webpackMiddleware webpack, and to that we're gonna pass webpackConfig:</p>
+        <figure>
+          <img src="./images/Fig08-055.PNG"/>
+          <figcaption>Fig 08-055</figcaption>
+        </figure>
+        <p>Yeah, that's a pretty nasty little line of code. We've got app.use on the outside, we've got the middleware,
+          we've got webpack, and then webpackConfig. So again, now it looks a little bit more, I don't know, somewhat
+          more clear maybe on kind of the dependency tree between all these different pieces of code. We've got our
+          configuration that instructs webpack how to behave. We've got the webpack module getting passed to the
+          middleware, which tells the middleware what to do when there's some incoming requests looking for our
+          production assets, and then we're taking that middleware and telling our Express application to use it as a
+          middleware. A lot going on there. So that's pretty much it for a development environment.</p>
+        <p>Let's save this file, and then we're go back over to the Terminal. It looks like our middleware installed
+          correctly:</p>
+        <figure>
+          <img src="./images/Fig08-056.PNG"/>
+          <figcaption>Fig 08-056</figcaption>
+        </figure>
+        <p>so that's good. And we'll start up our server, again with:</p>
+        <figure>
+          <pre><code class="language-command">node server.js</code></pre>
+          <figcaption>Fig 08-057</figcaption>
+        </figure>
+        <p>like so. So it looks like we're listening again:</p>
+        <figure>
+          <img src="./images/Fig08-058.PNG"/>
+          <figcaption>Fig 08-058</figcaption>
+        </figure>
+        <p>Let's open up our browser, and we're going to try navigating to local host 3050. And remember it's 3050
+          specifically because that's what we told our application to listen to for our port. So I'm gonna pull up my
+          browser and go to local host 3050:</p>
+        <figure>
+          <img src="./images/Fig08-059.PNG"/>
+          <figcaption>Fig 08-059</figcaption>
+        </figure>
+        <p>And OK, cool, it looks like everything worked correctly. If I go back over to my Terminal, you'll notice some
+          of the output that we would expect to get from Webpack appear in our server logs here:</p>
+        <figure>
+          <img src="./images/Fig08-060.PNG"/>
+          <figcaption>Fig 08-060</figcaption>
+        </figure>
+        <p>So Webpack is internally running inside of our Node server right now. Just to be really clear on exactly why
+          we are wiring up Webpack this way, this allows us to make changes to our project, like, you know, the
+          individual project files. Webpack will automatically rerun over our project and we can just refresh the page
+          and see our changes appear live on the screen.</p>
+        <p>This has the big benefit of meaning that we don't have to manually run Webpack, you know, the webpack command
+          all the time like that npm run build. We don't have to keep rerunning that over and over again. Just to make
+          sure that it's behaving as we expect, let's make a quick change to our application and just, you know, refresh
+          the page and make sure everything actually gets updated.</p>
+        <p>So inside my code editor, I'm gonna open up my src directory, I'm gonna find the components folder, and I'm
+          gonna open up the header.js file. And there's a lot of code in here, a lot of code, but let's scroll down just
+          a little bit. And I'm gonna find an anchor tag:</p>
+        <figure>
+          <img src="./images/Fig08-061.PNG"/>
+          <figcaption>Fig 08-061</figcaption>
+        </figure>
+        <p>here it is, on about line 27 that says UpStar Music. So, let's just change this out – let's just delete
+          UpStar, how about that. So I'm just gonna delete that. I'm gonna save the file. And now if I go back over to
+          my browser and refresh the page, I should see only Music appear in the header up here:</p>
+        <figure>
+          <img src="./images/Fig08-062.PNG"/>
+          <figcaption>Fig 08-062</figcaption>
+        </figure>
+        <p>So, clearly, Webpack is watching over our project files and rebuilding our project whenever we make a little
+          change in here. OK, so that definitely works out. We've got our NodeJS server set up to work inside of a
+          development environment.</p>
+        <p>Now I'm going to undo that little change we just made – I'm gonna leave UpStar Music in there – just 'cause I
+          want to see the full header. Cool.</p>
+        <p>All right, so let's continue that in the next section and figure out how we're now going to adjust our server
+          a little bit to make sure that it only runs Webpack when it's running inside of a development sort of
+          environment. So let's take care of that in the next section.</p>
+        <h2>Webpack Middleware in Production</h2>
+        <p>Our server functions correctly in a development environment but it still needs a little bit more work to
+          function properly in production. So remember, the idea here is that we want to build our production assets
+          exactly one time and stick them into our disk directory:</p>
+        <figure>
+          <img src="./images/Fig08-063.PNG"/>
+          <figcaption>Fig 08-063</figcaption>
+        </figure>
+        <p>Then, any time that a user comes to our server, if they say, if they want our index.html file or any of our
+          javascript files, we'll send them back the resources that are contained inside that disk directory, so having
+          nothing to do inside of here with webpack whatsoever.</p>
+        <p>So let's flip on over to our server.js file. The first thing we need to do is make sure that this
+          webpackMiddleware line of code right here is only executed when we are not in the production environment. So
+          let's add in an "if" statement to look at the process.env.NODE_ENV variable and decide whether or not we are
+          currently running in production. So add in an "if" statement and say process.env.NODE_ENV. If we are not in
+          production, then I want to go ahead and use the webpackMiddleware to serve up all of our assets:</p>
+        <figure>
+          <img src="./images/Fig08-064.PNG"/>
+          <figcaption>Fig 08-064</figcaption>
+        </figure>
+        <p>So this line of code right here, just, are we running in production or not? That's it. And if we are not in
+          production, go ahead and use webpack. One thing I want to mention to you, because this is a little bit of a
+          gotcha, is we previously used this NODE_ENV variable, and we set its value directly inside of our package.js
+          file, if you recall.</p>
+        <p>Whenever we are deploying to remote servers like AWS or Digital Ocean or Heroku, the value of the NODE_ENV
+          variable is not necessarily set for us. And so, the way in which we set the NODE_ENV variable is going to
+          differ based on our deployment target or where we are deploying our application to. So, all I really mean to
+          say that is, do not take this value right here for granted. You might have to do a little bit of research and
+          make sure that it's being set appropriately.</p>
+        <p>For all the deployment targets that we're going to talk about, I will be sure to tell you exactly where this
+          variable is getting set or make sure that we actually set it ourselves if required. Now outside the "if"
+          statement, we are currently loading up the webpack modules up at the top here:</p>
+        <figure>
+          <img src="./images/Fig08-065.PNG"/>
+          <figcaption>Fig 08-065</figcaption>
+        </figure>
+        <p>We probably don't want to have to load this up if we are in production. Right? So, if we're in production I
+          don't even want to think about this webpack module whatsoever, because we're not using it. I don't want to
+          think about the webpack config file, I don't want to think about the express middleware. So I'm going to take
+          these three require statements and we're going to move them down directly into the "if" statement. So I'm
+          going to cut, we'll go into the "if" statement and paste:</p>
+        <figure>
+          <img src="./images/Fig08-066.PNG"/>
+          <figcaption>Fig 08-066</figcaption>
+        </figure>
+        <p>So now, only in the case that we are not in production will we load up all these development resources and
+          make use of webpack. Now we need to handle the "else" case as well, so the case in which we are running in
+          production. So if we are running in production, we need to make sure that we have the ability to send back the
+          correct files to our users. So we're going to add a little bit of code in here to make sure that all of the
+          resources that we have inside of our disk directory are freely available to our users.</p>
+        <p>We're going to achieve that with two separate lines of code. And this is, kind of, getting into the weeds a
+          little bit with Express. You know, again, we really want to focus on the webpack stuff and not quite so much
+          the Express stuff. But, I'll definitely tell you what these two lines of code are going to be doing for us. So
+          the first thing we going to put down is:</p>
+        <figure>
+          <img src="./images/Fig08-067.PNG"/>
+          <figcaption>Fig 08-067</figcaption>
+        </figure>
+        <p>This line of code right here tells Express that it should make everything inside of the dist directory freely
+          available for use, to anyone who asks for it. So, if someone says, "Hey, give me that bundle.js file or that
+          vendor.js file." Just go ahead and let the user have access to it. So this code is what specifically opens up
+          the dist directory for the wide world to see.</p>
+        <p>Now, one little more line of code here:</p>
+        <figure>
+          <img src="./images/Fig08-068.PNG"/>
+          <figcaption>Fig 08-068</figcaption>
+        </figure>
+        <p>
+          We say, app.get, and pass in an asterisk as a string. Then we pass in an arrow function, it takes the
+          arguments "req" and "res", and the body of the function says res.sendFile. We say path.join as the first
+          argument, __dirname and then 'dist/index.html'. And then, you'll notice that we made use of the path modules
+          here again.</p>
+        <p>Before we forget, let's make sure we require that at the top of this file:</p>
+        <figure>
+          <img src="./images/Fig08-069.PNG"/>
+          <figcaption>Fig 08-069</figcaption>
+        </figure>
+        <p>So if this dist folder right here opens up the dist directory to everyone who's asking for javascript files,
+          the second line here has a very similar but somewhat distinctly purpose that is really handling an edge case
+          for us. So this line of code right here:</p>
+        <figure>
+          <img src="./images/Fig08-070.PNG"/>
+          <figcaption>Fig 08-070</figcaption>
+        </figure>
+        <p>it says that if anyone makes a get request to any route on our server, go ahead and send them back the
+          index.html file. This statement is used specifically for compatibility with React Router specifically with the
+          browser history module. If you're not familiar with React Router, don't sweat this line of code right here at
+          all. Just don't sweat it. If you are familiar with React Router, this is what makes sure that the browser
+          history library works correctly. So, for our application, this is not really strictly necessary, but I'm going
+          to just kind of make the assumption that if you're taking this course, you probably at least have some
+          interest in React Router and so this is, kind of, future proofing our application for us right here.</p>
+        <p>So, very good. Okay. So last thing we need to do is just test our application inside the browser. Let's first
+          start up our application and make sure that we specify the correct node environment. So I'm going to change
+          over to the terminal,and we'll say:</p>
+        <figure>
+          <pre><code class="language-command">NODE_ENV=production node server.js</code></pre>
+          <figcaption>Fig 08-071</figcaption>
+        </figure>
+        <p>Now this time around you'll notice that we don't see anything about webpack here:</p>
+        <figure>
+          <img src="./images/Fig08-072.PNG"/>
+          <figcaption>Fig 08-072</figcaption>
+        </figure>
+        <p>Let's make a request to our server and we should just instantly see our application pop up without anything
+          having to do with webpack because webpack should not be getting executed or touched whatsoever. So I'm going
+          to flip over to my browser. I'm still on localhost:3050. I'm going to refresh the page:</p>
+        <figure>
+          <img src="./images/Fig08-073.PNG"/>
+          <figcaption>Fig 08-073</figcaption>
+        </figure>
+        <p>It looks like I still get everything I would expect. And back at the terminal, still don't have any output
+          here about webpack:</p>
+        <figure>
+          <img src="./images/Fig08-074.PNG"/>
+          <figcaption>Fig 08-074</figcaption>
+        </figure>
+        <p>So this is great. This means that our application is being served solely from our static assets. Now the one,
+          kind of, gotcha that I want to throw out here, is that if we ever make changes to our project, like any
+          changes whatsoever, and we go to redeploy our project, because our server is serving everything directly from
+          the disk directory, we will want to make sure that we compile or build our application before we actually push
+          it out to the wide world or before we actually deploy it.</p>
+        <p>All right. So this definitely looks great. We're all set for production-based deployments in addition to
+          running our application locally in development. There's two more topics I want to talk about very quickly
+          before we start looking at deploying to AWS and Heroku. The first is, how do we expand the server.js file from
+          what we've got right here? Like, how to actually add in some logic for handling authentication or working with
+          the database or anything like that.</p>
+        <p>To do that you would add additional routes above, above. Very important, very important. Above all this
+          existing webpack information or configuration we have right here. So I might add in some number of server
+          routes right above our webpack configuration stuff. You know, maybe we make a route handler at 'hello', and
+          respond with like a, "Hi there". You know, a classic "Hi there":</p>
+        <figure>
+          <img src="./images/Fig08-075.PNG"/>
+          <figcaption>Fig 08-075</figcaption>
+        </figure>
+        <p>Very important to make sure that we define these route handlers above all of our webpack configuration.
+          Specifically, this line of code right here, the app.get('*'):</p>
+        <figure>
+          <img src="./images/Fig08-076.PNG"/>
+          <figcaption>Fig 08-076</figcaption>
+        </figure>
+        <p>If we define our server routes after all of our webpack configuration, then this line right here, this route
+          handler that we defined, will always take precedence and Express will never get to these other route handlers
+          that we define. So, Express is really all about the order in which you define the route handlers. So, again,
+          just make sure you do it before the webpack stuff. That's pretty much it.</p>
+        <p>Now the other thing I want to mention to you is the port that we use down here at the bottom. By default,
+          many different service providers, like AWS and especially Heroku, will not allow you to define your own port
+          here:</p>
+        <figure>
+          <img src="./images/Fig08-077.PNG"/>
+          <figcaption>Fig 08-077</figcaption>
+        </figure>
+        <p>and instead, they will want you to bind to a port specified by the server. To make sure that we handle that
+          appropriately, we're going to change our port definition here to be process.env.PORT, port, like so. And then
+          we'll say, "or 3050":</p>
+        <figure>
+          <img src="./images/Fig08-078.PNG"/>
+          <figcaption>Fig 08-078</figcaption>
+        </figure>
+        <p>So this allows us to say, "Hey, if our production provider, whoever it is, if they provide a port environment
+          variable, go ahead and use that. Otherwise, just fall back to using port 3050, which would mean that we
+          connect to port 3050 whenever we are running inside of development environment.</p>
+        <p>Okay. So that's the last two items. This is pretty much all we need for getting our server to work in
+          production. So now we've done all this configuration, now that's all done, let's continue on to deployment in
+          the next section. Again, if you want to look at deployment to a very specific provider like Heroku or AWS,
+          feel free to skip to that very particular server, or, excuse me, that very particular section. No need to take
+          all these following sections about deployment in order. So just skip directly to where you want to go.</p>
+        <p>All right, let's get to it. I'll see you in the coming sections.</p>
+        <h2>Deployment to Heroku</h2>
+        <p>In this section we're going to walk through the deployment of our application over to Heroku. Heroku is
+          definitely one of the most popular service providers around especially because they have both a free tier and
+          because they're definitely one of the easiest providers to deploy applications to. We're going to start off by
+          doing one tiny piece of configuration for our project to make sure that works nicely over on Heroku.</p>
+        <p>Inside my root project directory I'm going to make a new file called Procfile. Notice that it has a capital P
+          for Procfile and it has no extension whatsoever so it's not Procfile.js. It is just Procfile with a capital
+          P:</p>
+        <figure>
+          <img src="./images/Fig08-079.PNG"/>
+          <figcaption>Fig 08-079</figcaption>
+        </figure>
+        <p>
+          This Procfile right here is automatically executed by Heroku and depending on the code that we add in here it
+          will tell Heroku what command it should run whenever we want to start up our server. To start up our server we
+          want to run the command node server.js. Right? Then like we want to run that server.js file. So inside of the
+          Procfile, we will say:</p>
+        <figure>
+          <img src="./images/Fig08-080.PNG"/>
+          <figcaption>Fig 08-080</figcaption>
+        </figure>
+        <p>This tells Heroku that when it is starting up our server for use as a web server just go ahead and run this
+          command and that should start everything up for us automatically. So we can save this. Close it. That's pretty
+          much it.</p>
+        <p>Now, and it's still a little bit more set up, so let's keep going through this. Heroku deployments work by
+          use of Git repositories:</p>
+        <figure>
+          <img src="./images/Fig08-081.PNG"/>
+          <figcaption>Fig 08-081</figcaption>
+        </figure>
+        <p>So right now we've got our code. We're going to add all of our code to a Git repository and note that I'm not
+          saying GitHub here, I'm saying just Git, like just version control by itself. We don't have anything to do
+          with GitHub whatsoever right now, just Git by itself. We're going to add all of our code to a Git repository
+          and then to deploy it we push that depository over to Heroku and Heroku will then read all of our code. It'll
+          take all of the code that's sitting inside of our repository and it will execute it and run it, start it up as
+          a server.</p>
+        <p>So, the first thing we're going to do is create a Git repository and add all of our code to it. Now you may
+          have already started up a Git repository depending on how you originally downloaded and installed this
+          project. No matter what, you can just go ahead and run:</p>
+        <figure>
+          <img src="./images/Fig08-082.PNG"/>
+          <figcaption>Fig 08-082</figcaption>
+        </figure>
+        <p>If you have already cloned this or if you already have a Git repository in here you're going to get a message
+          that says something like, hey, you've already got a Git repository in here. If you see that - no problem
+          whatsoever. Okay, no problem.</p>
+        <p>So now that's created, a Git repository, I'm going to add all the code inside of my project with Git add. and
+          then I'll run get commit initial commit like so:</p>
+        <figure>
+          <img src="./images/Fig08-083.PNG"/>
+          <figcaption>Fig</figcaption>
+        </figure>
+        <p>So that's going to take all the code inside of my project directory and add it directly to the Git
+          repository. So that's pretty much it on the application side. Now, we need to go and sign up for a Heroku
+          account and get started on that site as well.</p>
+        <p>So inside my browser, I'm going to navigate to Heroku.com. Once over here I'm going to find the sign up link
+          on the top right hand side, go ahead and go to the sign up. I already have an account so I'm going to flip
+          over here in one second to my, the account that I've already got created. All you gotta do is fill in all this
+          very basic information:</p>
+        <figure>
+          <img src="./images/Fig08-084.PNG"/>
+          <figcaption>Fig 08-084</figcaption>
+        </figure>
+        <p>I do not recall whether or not they require e-mail authentication or, you know, require you to go click link
+          in your email but if it asks you do that, of course, you know, make sure you take care of that as well.</p>
+        <p>After you have created your Heroku account we will install a Heroku CLI or command line tools. These command
+          line tools allow us to deploy code to Heroku incredibly easily and it's really our main interface for working
+          with Heroku. So to get the CLI installed I'm going to do a search for Heroku CLI. The installation process is
+          slightly different depending on whether or not you're on Windows, Linux or OS X. Let's find the first results
+          on here and inside of here you'll get some directions on how to download and install it based on your
+          operating system:</p>
+        <figure>
+          <img src="./images/Fig08-085.PNG"/>
+          <figcaption>Fig 08-085</figcaption>
+        </figure>
+        <p>So you've got the three options inside of here. I already have the CLI installed but, you know, if I didn't I
+          would go ahead and download that thing and install it. Once you have installed the CLI you can open up your
+          terminal and run just the command Heroku:</p>
+        <figure>
+          <img src="./images/Fig08-086.PNG"/>
+          <figcaption>Fig 08-086</figcaption>
+        </figure>
+        <p>Now when you run it for the first time it should say, hey, do you want to log in and it will prompt you for
+          your e-mail and password. So go ahead and enter your email and password just to start up your application, or
+          excuse me, to start, to log into your Heroku instance Now that we've got the Heroku command line installed,
+          from here it is basically as easy as it gets.</p>
+        <p>Inside of my project directory, we're going to run the command Heroku create:</p>
+        <figure>
+          <img src="./images/Fig08-087.PNG"/>
+          <figcaption>Fig 08-087</figcaption>
+        </figure>
+        <p>That's going to reach out to Heroku and create a application for us. This is the URL of our application. It's
+          also going to automatically add a remote target to our Git repository. So if you run:</p>
+        <figure>
+          <img src="./images/Fig08-088.PNG"/>
+          <figcaption>Fig 08-088</figcaption>
+        </figure>
+        <p>you'll notice that we now have a place that we could push our code to, which is called Heroku. So to do the
+          actual deployment all we have to do is run:</p>
+        <figure>
+          <img src="./images/Fig08-089.PNG"/>
+          <figcaption>Fig 08-089</figcaption>
+        </figure>
+        <p>So it's going to take all of our project code and push it out to this Heroku server. So we'll run that and
+          the deployment process is always very surprisingly very fast. So it should only take a moment to get going.
+          You'll notice in some of the output that we get here:</p>
+        <figure>
+          <img src="./images/Fig08-090.PNG"/>
+          <figcaption>Fig 08-090</figcaption>
+        </figure>
+        <p>there's a line that says creating runtime environment and one of the very specific lines that is in here is
+          NODE_ENV=production. So our project code will be automatically executed with a node environment of production.
+          So Heroku is one of the deployment targets where we don't really have to worry about manually setting this
+          variable, but for some others, we do have to manually make sure that it says production.</p>
+        <p>So Heroku is going to automatically install all of our project dependencies and then launch the project. If
+          you get any type of error message, you can always run the command Heroku logs:</p>
+        <figure>
+          <img src="./images/Fig08-091.PNG"/>
+          <figcaption>Fig 08-091</figcaption>
+        </figure>
+        <p>like so, and that will fetch whatever output has been generated by our server. When I run Heroku logs it
+          looks like everything worked correctly and you'll notice I see the console log of listening:</p>
+        <figure>
+          <img src="./images/Fig08-092.PNG"/>
+          <figcaption>Fig 08-092</figcaption>
+        </figure>
+        <p>and that's our console log. That is the log from the server that we had added in. Now to open up our server
+          inside the browser, we can write Heroku open:</p>
+        <figure>
+          <img src="./images/Fig08-093.PNG"/>
+          <figcaption>Fig 08-093</figcaption>
+        </figure>
+        <p>and that will launch our web browser and take us directly to our application. So here's our automatically
+          generated URL and we get our application:</p>
+        <figure>
+          <img src="./images/Fig08-094.PNG"/>
+          <figcaption>Fig 08-094</figcaption>
+        </figure>
+        <p>Fantastic, cool, so this is great. This is Heroku deployment. If we now make any other changes to our
+          application, like, you know, let's say we edit the header again to take that into account or to, kind of,
+          redeploy, we would rerun our build script, so we'd say npm run build. We would then add our changes with Git
+          add . We would commit our changes and then we would redeploy our application with git push heroku master:</p>
+        <figure>
+          <img src="./images/Fig08-095.PNG"/>
+          <figcaption>Fig 08-095</figcaption>
+        </figure>
+        <p>So the whole deployment process with Heroku, pretty darn straightforward, very enjoyable personally. I think
+          it's very enjoyable and quite easy. So Heroku, again, really fantastic place to deploy to. The only downside
+          to it is that once you get off the free tier, things start to get just like a little bit expensive sometimes,
+          but it's still, in general, is pretty darn cheap. I personally run one Heroku instance and I pay only $7 a
+          month for it, which is, you know, pretty darn cheap, pretty darn inexpensive. So it definitely works for
+          me.</p>
+        <p>
+          Cool, hope you enjoyed this. Let's continue on to our next deployment target in the next section.</p>
+        <h2>Deployment to AWS</h2>
+        <p>In this section, we're gonna walk through the deployment of our application to AWS's Elastic Beanstalk
+          service. Elastic Beanstalk is one of my favorite things about AWS because it actually encapsulates several
+          other services as well. So if you are familiar with Amazon EC2 or RDS or Load Balancers, all that stuff is
+          automatically encapsulated in Elastic Beanstalk for us. Elastic Beanstalk is really great for applications
+          where you expect that your app might get popular over time and you want to be able to automatically scale to
+          meet some increased amount of demand.</p>
+        <p>If you are fitting underneath the free tier, then Elastic Beanstalk doesn't cost a thing as long as you're
+          fitting underneath the free tier. So this is a great place to start off, and as your app starts to get more
+          popular, then you can worry about paying a little bit of money to get things running. So let's get to it.
+          Let's walk through the installation process and do the deployment.</p>
+        <p>The first thing we need to do is install the Elastic Beanstalk CLI or command line interface. The CLI is the
+          main way of doing deployments to Elastic Beanstalk. The installation process is gonna be a little bit
+          different depending on your operating system:</p>
+        <figure>
+          <img src="./images/Fig08-096.PNG"/>
+          <figcaption>Fig 08-096</figcaption>
+        </figure>
+        <p>I've got the links to both the OS X installation and Windows installation on the screen. And if you just skip
+          over to the next section, I've got both the links in the next section you can directly click on. So feel free
+          to jump over there and walk through the installation process.</p>
+        <p>
+          I'm going to visit the installation guide for OS X really quick. If you're on OS X, you're in for a big treat
+          because the installation is about as easy as it gets. All you have to do is run this brew install command
+          right here and you're gonna be good to go. So if you're still watching this tutorial, I'm going to assume you
+          have the CLI installed. Otherwise, feel free to pause it right now and go through the installation.</p>
+        <p>After you've installed the CLI, you can run the command eb --version and you should see the version pop up on
+          the screen:</p>
+        <figure>
+          <img src="./images/Fig08-097.PNG"/>
+          <figcaption>Fig 08-097</figcaption>
+        </figure>
+        <p>Now if you've got a slightly newer version, that's totally fine, don't sweat it. OK, let's get to it. Inside
+          of my root project directory, I'm going to run the command eb init:</p>
+        <figure>
+          <img src="./images/Fig08-098.PNG"/>
+          <figcaption>Fig 08-098</figcaption>
+        </figure>
+        <p>Now we immediately get asked a question about the region that we want to deploy our application to:</p>
+        <figure>
+          <img src="./images/Fig08-099.PNG"/>
+          <figcaption>Fig 08-099</figcaption>
+        </figure>
+        <p>AWS has a variety of physical data centers, and so when we get prompted for a region, it is asking us what
+          actual physical data center do we want to deploy our application to. I recommend that you deploy your
+          application close to wherever you expect your user base to be. So, I find the point something where I expect
+          my app to be mostly used by customers or consumers in the U.S., I would want to pick one of the U.S.-based
+          deployment centers. In my case, I'm just gonna pick the US East. Again, you can pick any of these and have
+          good success.</p>
+        <p>So I'm gonna say one. Next, we're gonna get prompted for our security credentials:</p>
+        <figure>
+          <img src="./images/Fig08-100.PNG"/>
+          <figcaption>Fig 08-100</figcaption>
+        </figure>
+        <p>So this is essentially our log-in information for our AWS account. We can fetch these credentials from the
+          online console. So I'll go back to Chrome; I'm on AWS, I'm going to sign into the console. Once I'm signed in,
+          I am gonna click on my username on the top right and go to My Security Credentials:</p>
+        <figure>
+          <img src="./images/Fig08-101.PNG"/>
+          <figcaption>Fig 08-101</figcaption>
+        </figure>
+        <p>And then on the list that pops up, I will find Access Keys, right here in the center. I'll expand that
+          section and then I'm going to create a brand new access key. Then I'll click on Show Access Key:</p>
+        <figure>
+          <img src="./images/Fig08-102.PNG"/>
+          <figcaption>Fig 08-102</figcaption>
+        </figure>
+        <p>and these are the two keys that we need to make use of:</p>
+        <figure>
+          <img src="./images/Fig08-103.PNG"/>
+          <figcaption>Fig 08-103</figcaption>
+        </figure>
+        <p>Note that the secret access key on here is very much a secret. So you want to make sure that nobody else gets
+          a hold of this. If you are making use of Git and GitHub to deploy your application, you don't have to worry
+          about accidentally committing and posting these keys up to AWS. The keys are not stored up to GitHub. The keys
+          are not stored inside of your project, they are just saved directly to your hard drive.</p>
+        <p>So I'm gonna take this access key, I'm gonna copy it, and then I'll paste it directly over to the Terminal
+          and hit enter. I'm gonna repeat the same thing for the secret key as well. I am gonna take the key, copy it,
+          and paste it:</p>
+        <figure>
+          <img src="./images/Fig08-104.PNG"/>
+          <figcaption>Fig 08-104</figcaption>
+        </figure>
+        <p>Now I'll tell you right now, I have already deleted the keys, my keys that you see on the screen by the time
+          you see this. So, don't bother trying to take my keys.</p>
+        <p>All right. After entering those two keys, we will now get asked for our application name and we can
+          definitely use the default here. We get asked if we are using Node JS, that is correct. So I'll use yes. We
+          then get asked if we want to use AWS's CodeCommit, which is something similar to GitHub. We don't need to use
+          that so I'll say no. We get asked if we want to set up SSH:</p>
+        <figure>
+          <img src="./images/Fig08-105.PNG"/>
+          <figcaption>Fig 08-105</figcaption>
+        </figure>
+        <p>This is something that we're not gonna use in this tutorial, but we might use at some point in the future. So
+          I'm gonna say yes. When I do that, I get asked if I want to create a new key pair. I'm going to assume that
+          you do not have a list here at all, so I'm gonna say four to create a new key. I then get prompted for a name,
+          we can just use the default. And we do not need a passphrase on here, so I'll hit enter and enter:</p>
+        <figure>
+          <img src="./images/Fig08-106.PNG"/>
+          <figcaption>Fig 08-106</figcaption>
+        </figure>
+        <p>OK, so that's pretty much it for initializing our AWS account or Elastic Beanstalk account. The next thing we
+          need to do is create an application environment. So this is what is going to be like the actual kind of
+          workspace that is sitting up at Amazon EB. We'll do this by running command eb create:</p>
+        <figure>
+          <img src="./images/Fig08-107.PNG"/>
+          <figcaption>Fig 08-107</figcaption>
+        </figure>
+        <p>Now we get asked a couple of questions about our very specific project. So we get asked for an environment
+          name, we will use the default. We get asked for DNS CNAME, which is our essentially domain name, we'll just
+          skip that. And then we get asked for a Load Balancer type:</p>
+        <figure>
+          <img src="./images/Fig08-108.PNG"/>
+          <figcaption>Fig 08-108</figcaption>
+        </figure>
+        <p>So this is getting kind of into the weeds on exactly how Elastic Beanstalk works for us, we're going to
+          select the classic Load Balancer type. If you want to, you can certainly feel free to look up some
+          documentation on the difference.</p>
+        <p>Now I've got a message that says Git could not find the HEAD:</p>
+        <figure>
+          <img src="./images/Fig08-109.PNG#"/>
+          <figcaption>Fig 08-109</figcaption>
+        </figure>
+        <p>That means that I created a new Git repository, but I did not actually commit any code here. So I am gonna
+          fix that by very quickly adding everything inside this project and committing it. Chances are you did not just
+          see that message, which is totally fine. I'm gonna go through the create process again. OK, so there we
+          go.</p>
+        <p>So now we get some information about how Elastic Beanstalk has bundled up our project into a single zip
+          file:</p>
+        <figure>
+          <img src="./images/Fig08-110.PNG"/>
+          <figcaption>Fig 08-110</figcaption>
+        </figure>
+        <p>
+          and it's starting to go through the development process or deployment process. Now this deployment process
+          takes quite a bit of time to get through the very first time, so I'm going to pause the video right now and
+          we'll come back in just a moment and take a look at our project. I do want to tell you that I do not expect
+          that project to work right now. OK? Do not expect it to work.</p>
+        <p>There's still one last thing that we have to do very quickly so just let this go through the deployment, and
+          then once it's all done, we'll continue in the next section.</p>
+        <h2>More on AWS Deployment</h2>
+        <p>In the last section we went through the process of deploying to Elastic Beanstalk. We finished up the initial
+          EB deploy command and now we can open up our application in the browser by running the command eb open:</p>
+        <figure>
+          <img src="./images/Fig08-111.PNG"/>
+          <figcaption>Fig 08-111</figcaption>
+        </figure>
+        <p>When we do this we're going to see something a little bit unexpected. Specifically, a big error message that
+          says 502 Bad Gateway:</p>
+        <figure>
+          <img src="./images/Fig08-112.PNG"/>
+          <figcaption>Fig 08-112</figcaption>
+        </figure>
+        <p>So, what's going wrong here? Well, let's do a little bit of research. I'm going to change over to my AWS
+          console. Here it is right here. I'm going to make sure that I'm in my correct region so I deploy to US
+          East:</p>
+        <figure>
+          <img src="./images/Fig08-113.PNG"/>
+          <figcaption>Fig 08-113</figcaption>
+        </figure>
+        <p>
+          If you used a different region, you'll want to make sure that you select your particular region. I will then
+          open up the Elastic Beanstalk service. Here it is right here:</p>
+        <figure>
+          <img src="./images/Fig08-114.PNG"/>
+          <figcaption>Fig 08-114</figcaption>
+        </figure>
+        <p>and then once here I will be able to see the deployment that we just did including the application that we
+          just added. So here is my application right here:</p>
+        <figure>
+          <img src="./images/Fig08-115.PNG"/>
+          <figcaption>Fig 08-115</figcaption>
+        </figure>
+        <p>and it's red to signal, hey, something really went wrong. If I click on it you can see, hey, health is
+          degraded:</p>
+        <figure>
+          <img src="./images/Fig08-116.PNG"/>
+          <figcaption>Fig 08-116</figcaption>
+        </figure>
+        <p>Well, all right, that's interesting. But how do we actually figure out what's going wrong? If I go over to
+          the left hand side and click on Logs I can then open up the latest batch of log files from the application by
+          clicking on download:</p>
+        <figure>
+          <img src="./images/Fig08-117.PNG"/>
+          <figcaption>Fig 08-117</figcaption>
+        </figure>
+        <p>So these logs right here are the actual log files out of our server and they're going to tell us exactly what
+          went wrong. You'll see in here, cannot find module webpack-dev server and it gets repeated quite a little
+          bit:</p>
+        <figure>
+          <img src="./images/Fig08-118.PNG"/>
+          <figcaption>Fig 08-118</figcaption>
+        </figure>
+        <p>
+          Well, that's definitely pretty interesting. If you recall, we have the webpack-dev server require statement
+          inside of our server.js file, so inside a server.js. Okay, here is our web pack-dev server require statement
+          right here:</p>
+        <figure>
+          <img src="./images/Fig08-119.PNG"/>
+          <figcaption>Fig 08-119</figcaption>
+        </figure>
+        <p>Of course, we shouldn't be hitting that line if the correct environment variable was being set. So clearly
+          AWS is not automatically setting the NODE_ENV variable for us. It is something that we have to set manually
+          ahead of time. Once that is correctly set this entire code block right here should be getting skipped over and
+          once had used the production version of our server.</p>
+        <p>So let's manually set that environment. Very well. And then our application should work as expected. Back at
+          the command line, we'll use the EB CLI again to set an environment variable. We'll do so by saying eb setenv
+          NODE_NV=production:</p>
+        <figure>
+          <img src="./images/Fig08-120.PNG"/>
+          <figcaption>Fig 08-120</figcaption>
+        </figure>
+        <p>like so. Now the instant we run this command right here our application will automatically reboot for us. So
+          it's going to be probably a little bit to get restarted here. While that's running I want to explore the
+          portal over here a little bit more. Okay, so we took a look at the log section. You'll notice that there's
+          also a lot of other settings in here:</p>
+        <figure>
+          <img src="./images/Fig08-121.PNG"/>
+          <figcaption>Fig 08-121</figcaption>
+        </figure>
+        <p>as well for getting a really good handle on exactly what's going on with the Elastic Beanstalk application.
+          We can check out configuration, which has a little bit of information about how our application will
+          automatically scale up. The scaling command right here:</p>
+        <figure>
+          <img src="./images/Fig08-122.PNG"/>
+          <figcaption>Fig 08-122</figcaption>
+        </figure>
+        <p>will instruct Elastic Beanstalk on how we want our application to be expanded or scaled up or open up new
+          additional servers once it comes under increased load. We also have the ability to set the default instance
+          type. The instance type, which is by default T2 micro, is a reference to how much resources the virtual
+          machines that we're using will get allocated. The T2 micro is one of the smallest that are available and it is
+          what fits underneath the free tier on AWS. If we want to, we can use larger virtual machines, but add a
+          increased amount of cost.</p>
+        <p>There's also some other settings in here, Gzip compression, which is something that's fantastic for us. It
+          decreases the size of any requests sent from our servers. We can see the environment variable that we just
+          manually set and then there's also some information about some other, you know, network tier stuff in
+          here:</p>
+        <figure>
+          <img src="./images/Fig08-123.PNG"/>
+          <figcaption>Fig 08-123</figcaption>
+        </figure>
+        <p>and also allows us the ability to set up a connected database by using the integrated RDS or, what is that,
+          relational database system, relational database something service on AWS.</p>
+        <p>Some of the other items in here are the logs, which we just saw, the health of our server has a bunch of
+          information about requests that are being made to our app:</p>
+        <figure>
+          <img src="./images/Fig08-124.PNG"/>
+          <figcaption>Fig 08-124</figcaption>
+        </figure>
+        <p>We've got some stuff about monitoring:</p>
+        <figure>
+          <img src="./images/Fig08-125.PNG"/>
+          <figcaption>Fig 08-125</figcaption>
+        </figure>
+        <p>So CPU utilization, this is especially helpful for deciding whether or not you want to increase the power of
+          your virtual machines. You can look at the latency, the sum requests, you know, all these very valuable
+          variables that are just very easy to get an eye on inside of Elastic Beanstalk.</p>
+        <p>Okay, let's see how we're doing. It looks like we've got the environment correctly updated and has been
+          successfully redeployed. So let's try eb open again:</p>
+        <figure>
+          <img src="./images/Fig08-126.PNG"/>
+          <figcaption>Fig 08-126</figcaption>
+        </figure>
+        <p>That should open up our browser once again. There we go. And this time it looks like our application
+          successfully booted up:</p>
+        <figure>
+          <img src="./images/Fig08-127.PNG"/>
+          <figcaption>Fig 08-127</figcaption>
+        </figure>
+        <p>Awesome. Okay. So this has been Elastic Beanstalk deployment. The last thing I want to remind you about if
+          you do not intend to keep this application around, you can terminate this environment and make sure that you
+          are, no longer pay for it by running the command eb terminate:</p>
+        <figure>
+          <img src="./images/Fig08-128.PNG"/>
+          <figcaption>Fig 08-128</figcaption>
+        </figure>
+        <p>So, only use this if you want to completely shut down the server, like completely kill it. I, in my case, do
+          because I don't want to pay for it. I very much exceed the free tier on AWS so I want to make sure I don't end
+          up paying for anything. So by running EB terminate that's going to kill the entire environment and I know that
+          I won't have to pay for this in the future. Cool. That's AWS Elastic Beanstalk deployment.</p>
+        <p>git add I hope you enjoyed it and let's continue on.</p>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
+
