@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="UTF-8">
+  <title>maxsagetech - Vue JS Fundamentals</title>
+  <script src="https://unpkg.com/vue"></script>
+  <!--<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"-->
+  <!--integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">-->
+  <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" rel="stylesheet">
+  <link href="prism.css" rel="stylesheet">
+  <script src="prism.js"></script>
+  <style>
+
+    img {
+      max-width: 100%;
+      width: 100%
+    }
+  </style>
+</head>
+<body>
+<div class="container" id="app">
+  <div class="panel-group">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h2>Vue JS Fundamentals</h2>
+      </div>
+      <div class="panel-body">
+        <div class="course-transcript">
+        <div><h2>Routing from Page to Page</h2>
+          <div><h3>Introduction</h3>
+            <p>All modern front-end frameworks provide some sort of routing mechanism for defining routes and navigating
+              between pages in your single-page app. Vue. js, of course, is no different. In this module, we'll explore
+              how to do this with Vue. This will include:</p>
+            <ul>
+              <li>Adding routing to our app</li>
+              <li>Linking to routed pages</li>
+              <li>Styling links based on the active route</li>
+              <li>Navigating from code</li>
+              <li>Working with route params</li>
+              <li>Using nested routes</li>
+              <li>Using named views</li>
+              <li>Enabling HTML5 History Mode</li>
+              <li>Preventing navigation with navigation guards</li>
+            </ul>
+            <p>Our build-a-bot app really needs some routing love, so let's go check it out.
+            </p>
+          </div>
+          <div><h3>Adding Routing to Your App</h3>
+            <p>
+              If we take a look at our App component, you can see we're importing the HomePage component and
+              RobotBuilder component down here:</p>
+            <figure>
+              <img src="images/Fig04-001.png"/>
+              <figcaption>Fig 04-001</figcaption>
+            </figure>
+            <p>but without routing the only way we've been able to see each of these pages is by replacing this element
+              up here:</p>
+            <figure>
+              <img src="images/Fig04-002.png"/>
+              <figcaption>Fig 04-002</figcaption>
+            </figure>
+            <p>What we really want do is make it so that we can get each of these pages and others by changing the URL
+              or by clicking on links. In order to do that, we'll need to install routing.</p>
+            <p>If you remember, when we first created our project with the Vue CLI, we had the option to select routing,
+              but we opted not to. However, adding routing to an existing project is really quite easy.</p>
+            <p>First, we just need to install the vue-router package. So over in my terminal, I'm going to stop my
+              server from running, and then I'm going to type:</p>
+            <figure>
+              <pre><code class="language-command-line">npm install vue-router --save</code></pre>
+              <figcaption>Fig 04-003</figcaption>
+            </figure>
+            <p>and then I'm going to save that. Okay, and then let's go ahead and start up our server again:</p>
+            <figure>
+              <pre><code class="language-command-line">npm run serve</code></pre>
+              <figcaption>Fig 04-004</figcaption>
+            </figure>
+            <p>And then back over in our app, we just need to have a place where we can define all of the routes for our
+              application, so let's create a new router folder, and inside there we'll create a new index.js file:</p>
+            <figure>
+              <img src="images/Fig04-005.png"/>
+              <figcaption>Fig 04-005.png</figcaption>
+            </figure>
+            <p>
+              Okay, now inside here we're just going to import Vue, and then we just need to import the router, and
+              we'll import that from vue-router that we just installed:</p>
+            <figure>
+              <img src="images/Fig04-006.png"/>
+              <figcaption>Fig 04-006</figcaption>
+            </figure>
+            <p>And now we just need to tell Vue to use the router like this:</p>
+            <figure>
+              <img src="images/Fig04-006A.png"/>
+              <figcaption>Fig 04-006A</figcaption>
+            </figure>
+            <p>So now Vue is aware of the fact that our application is going to use routing. And then we just need to
+              export a new router:</p>
+            <figure>
+              <img src="images/Fig04-007.png"/>
+              <figcaption>Fig 04-007</figcaption>
+            </figure>
+            <p>And then we just need to define the routes in here, so we pass into this a router configuration object,
+              and then it has a routes property, which is an array:</p>
+            <figure>
+              <img src="images/Fig04-008.png"/>
+              <figcaption>Fig 04-008</figcaption>
+            </figure>
+            <p>Okay, now we're ready to add our first route. This will be a route to our HomePage, and it will look like
+              this:</p>
+            <figure>
+              <img src="images/Fig04-009.png"/>
+              <figcaption>Fig 04-009</figcaption>
+            </figure>
+            <p>So it's an object that has a path property, and this is the URL that when Vue sees that this is the URL
+              in the browser it should navigate to this route. And we'll give this route a name; we'll call it Home:</p>
+            <figure>
+              <img src="images/Fig04-010.png"/>
+              <figcaption>Fig 04-010</figcaption>
+            </figure>
+            <p>
+              And then we need to tell it which component to load when this route is navigated to. So we're going to
+              tell it to load our HomePage component. And then we'll just have to import that up here:</p>
+            <figure>
+              <img src="images/Fig04-010.png"/>
+              <figcaption>Fig 04-010</figcaption>
+            </figure>
+            <p>Okay, so this is our first route. This just says when I navigate to this URL:</p>
+            <figure>
+              <img src="images/Fig04-011.png"/>
+              <figcaption>Fig 04-011</figcaption>
+            </figure>
+            <p>then display this component:</p>
+            <figure>
+              <img src="images/Fig04-012.png"/>
+              <figcaption>Fig 04-012</figcaption>
+            </figure>
+            <p>And then this:</p>
+            <figure>
+              <img src="images/Fig04-013.png"/>
+              <figcaption>Fig 04-013</figcaption>
+            </figure>
+            <p>is just the name that we're giving to our route, and we can use that in various places in our code. So
+              this is pretty simple. And while we're in here, let's go ahead and create a route to our RobotBuilder
+              too.</p>
+            <p>
+              So let's copy this, and we'll add another one, paste that in here. And the route for our RobotBuilder is
+              /build, and we'll name this route Build, and then we just need it to render the RobotBuilder component.
+              And we'll just have to import that:</p>
+            <figure>
+              <img src="images/Fig04-014.png"/>
+              <figcaption>Fig 04-014</figcaption>
+            </figure>
+            <p>Okay, so this is our routes file all built out for the two pages that we currently have in our
+              application. Now we just need to pull these routes in when we create our Vue instance so that Vue is aware
+              of them. So let's import our new router:</p>
+            <figure>
+              <img src="images/Fig04-015.png"/>
+              <figcaption>Fig 04-015</figcaption>
+            </figure>
+            <p>and then we just need to add that to our Vue configuration object here:</p>
+            <figure>
+              <img src="images/Fig04-016.png"/>
+              <figcaption>Fig 04-016</figcaption>
+            </figure>
+            <p>Okay, so now our Vue instance is aware of our routes. The last thing we need to do is tell our app where
+              to display routed components. So over here in our App component, right here:</p>
+            <figure>
+              <img src="images/Fig04-017.png"/>
+              <figcaption>Fig 04-017</figcaption>
+            </figure>
+            <p>where we've been hardcoding the component that we want to display, what we really want to do instead is
+              display the component that matches our current route. We can do that by replacing the hardcoded component
+              name with the router-view tag:</p>
+            <figure>
+              <img src="images/Fig04-018.png"/>
+              <figcaption>Fig 04-018</figcaption>
+            </figure>
+            <p>So now Vue will display the component that matches the current route right. We don't need these imports
+              anymore:</p>
+            <figure>
+              <img src="images/Fig04-019.png"/>
+              <figcaption>Fig 04-019</figcaption>
+            </figure>
+            <p>and we don't need this components property anymore:</p>
+            <figure>
+              <img src="images/Fig04-020.png"/>
+              <figcaption>Fig 04-020</figcaption>
+            </figure>
+            <p>Okay, cool, let's go check this out. So if we come over to our browser and put in this URL, we're
+              navigating to the root of the website, you can see that it loads the home page:</p>
+            <figure>
+              <img src="images/Fig04-021.png"/>
+              <figcaption>Fig 04-021</figcaption>
+            </figure>
+            <p>You may notice, however, that it also added a hash tag to the URL, and the part of the URL after the hash
+              tag is currently what Vue is looking at for matching the routes. And we'll talk later in this module about
+              how to get rid of that hashtag using the HTML5 history mode.</p>
+            <p>But for now, I can navigate to my pages by changing the route here, so now I want to navigate to
+              /build:</p>
+            <figure>
+              <img src="images/Fig04-022.png"/>
+              <figcaption>Fig 04-022</figcaption>
+            </figure>
+            <p>and you can see that takes me to my robot builder page.</p>
+            <p>Okay, awesome. So our routes are working great, but the only way we have to get around is by manually
+              changing the URL. Let's go see how to create links to these routes.
+            </p>
+          </div>
+          <div><h3>Linking to Routed Pages</h3>
+            <p>Now that we have a couple of routed pages, let's see how to link between them. We'll start with this Get
+              started link right here:</p>
+            <figure>
+              <img src="images/Fig04-023.png"/>
+              <figcaption>Fig 04-023</figcaption>
+            </figure>
+            <p>So over in our HomePage component, you can see that we have this Get started link right here:</p>
+            <figure>
+              <img src="images/Fig04-024.png"/>
+              <figcaption>Fig 04-024</figcaption>
+            </figure>
+            <p>and it's just an anchor tag. In order to link to a route, we instead need to use Vue's router-link
+              element like this:</p>
+            <figure>
+              <img src="images/Fig04-025.png"/>
+              <figcaption>Fig 04-025</figcaption>
+            </figure>
+            <p>And then instead of an href attribute, we use a to attribute, so we're going to route to this URL, or
+              this route, and I'm going to just say /build here. So I can put in a string here that represents the URL
+              for one of the routes that we've added, and then I just need to add the correct closing tag.</p>
+            <p> And now if we go check this out, I can now click on this Get started link, and there we go, it navigated
+              me to the build page:</p>
+            <figure>
+              <img src="images/Fig04-026.png"/>
+              <figcaption>Fig 04-026</figcaption>
+            </figure>
+            <p>So that's working now, but how do we get back to the home page? Let's make this logo and text here:</p>
+            <figure>
+              <img src="images/Fig04-027.png"/>
+              <figcaption>Fig 04-027</figcaption>
+            </figure>
+            <p>a link to the home page. This will give us chance to look at a little bit different syntax. So this is
+              going to be in our App component, and that's up here in our nav section. So you can see here, here is my
+              logo, and here is the Build-a-Bot text:</p>
+            <figure>
+              <img src="images/Fig04-028.png"/>
+              <figcaption>Fig 04-028</figcaption>
+            </figure>
+            <p>so let's go ahead and add a router-link around the logo and text:</p>
+            <figure>
+              <img src="images/Fig04-029.png"/>
+              <figcaption>Fig 04-029</figcaption>
+            </figure>
+            <p>And then in our last example, we just used to, and we bound that to a URL like this:</p>
+            <figure>
+              <img src="images/Fig04-030.png"/>
+              <figcaption>Fig 04-030</figcaption>
+            </figure>
+            <p>Instead of using this syntax, let's actually use a binding here, and we're going to pass into it an
+              object. And in this object, I'm going to specify the name of a route, so I want to navigate to the home
+              route here:</p>
+            <figure>
+              <img src="images/Fig04-031.png"/>
+              <figcaption>Fig 04-031</figcaption>
+            </figure>
+            <p>And if you remember, over in our router index file:</p>
+            <figure>
+              <img src="images/Fig04-032.png"/>
+              <figcaption>Fig 04-032</figcaption>
+            </figure>
+            <p>each of our routes we gave a name, and so we're routing to the route that has a name of home, which is
+              going to be the route highlighted in Fig 04-032.</p>
+            <figure>
+              <img src="images/Fig04-033.png"/>
+              <figcaption>Fig 04-033</figcaption>
+            </figure>
+            <p>So let's go check that out. So over here, you can see that we have a link now for our text up here, and
+              the logo, it's also a link. So if I click on that, you can see it takes me to the home page:</p>
+            <figure>
+              <img src="images/Fig04-034.png"/>
+              <figcaption>Fig 04-034</figcaption>
+            </figure>
+            <p>The only problem is that we don't want this link styling that we have here:</p>
+            <figure>
+              <img src="images/Fig04-035.png"/>
+              <figcaption>Fig 04-035</figcaption>
+            </figure>
+            <p>so let's go add a class for that. So back over here on our router-link object, let's add a class, and
+              that class will be nav-link:</p>
+            <figure>
+              <img src="images/Fig04-036.png"/>
+              <figcaption>Fig 04-036</figcaption>
+            </figure>
+            <p>So notice that I can put a class on a router-link element just like I can any other element. And then
+              down here in the styles, let's just add that nav-link class:</p>
+            <figure>
+              <img src="images/Fig04-037.png"/>
+              <figcaption>Fig 04-037</figcaption>
+            </figure>
+            <p>and we'll set text-decoration to none, and we'll tell the color to be inherited. So this will avoid
+              changing the color of the link. Okay, so if we come back over here, there we go:</p>
+            <figure>
+              <img src="images/Fig04-038.png"/>
+              <figcaption>Fig 04-038</figcaption>
+            </figure>
+            <p>now our link is styled so I can go back to the build page and then back again to the home page. And this
+              looks great. So now that we know how to link to our routes, let's go see how to style the currently active
+              link based on the current URL.
+            </p>
+          </div>
+          <div><h3>Styling Links Based on the Active Route</h3>
+            <p>It's really easy in Vue to set up a style that will be used on links that match the current route. It'll
+              be helpful to demonstrate this if we have a couple of links up here in our nav bar:</p>
+            <figure>
+              <img src="images/Fig04-039.png"/>
+              <figcaption>Fig 04-039</figcaption>
+            </figure>
+            <p>Right now we only have one for the home page, so let's add another one up here that goes to the build
+              page, in addition to that Get started link.</p>
+            <p>So in our App component, let's duplicate this list item:</p>
+            <figure>
+              <img src="images/Fig04-040.png"/>
+              <figcaption>Fig 04-040</figcaption>
+            </figure>
+            <p>and paste it below, and we'll change its router link to link to the build route:</p>
+            <figure>
+              <img src="images/Fig04-041.png"/>
+              <figcaption>Fig 04-041</figcaption>
+            </figure>
+            <p>and then we can get rid of this image here:</p>
+            <figure>
+              <img src="images/Fig04-042.png"/>
+              <figcaption>Fig 04-042</figcaption>
+            </figure>
+            <p>and we will just call this Build:</p>
+            <figure>
+              <img src="images/Fig04-043.png"/>
+              <figcaption>Fig 04-043</figcaption>
+            </figure>
+            <p>Okay, so now we have two links in our navigation area, a link that goes to the home page, and a link that
+              goes to the build page. And you can see those here:</p>
+            <figure>
+              <img src="images/Fig04-044.png"/>
+              <figcaption>Fig 04-044</figcaption>
+            </figure>
+            <p>so we have one that goes to the build page, and one that takes us back home. Now let's make it so that
+              the link that corresponds to the current URL shows up in a different color.</p>
+            <p>So we can easily do that over here in our template by adding a class down here in our styles. So I'm just
+              going to add a router-link-active class:</p>
+            <figure>
+              <img src="images/Fig04-045.png"/>
+              <figcaption>Fig 04-045</figcaption>
+            </figure>
+            <p>And this is a special class used by Vue, and I'm going to just tell it to change the color to white:</p>
+            <figure>
+              <img src="images/Fig04-046.png"/>
+              <figcaption>Fig 04-046</figcaption>
+            </figure>
+            <p>So this is a class that Vue applies to any links that match the current route. So let's see how that's
+              looking. So over here:</p>
+            <figure>
+              <img src="images/Fig04-047.png"/>
+              <figcaption>Fig 04-047</figcaption>
+            </figure>
+            <p>you can see that the Build-a-Bot link, which links to the home route, is currently white because we are
+              on the home page, but if I click on Build here:</p>
+            <figure>
+              <img src="images/Fig04-048.png"/>
+              <figcaption>Fig 04-048</figcaption>
+            </figure>
+            <p>you can see that Build turned white. However, we have a small problem in that these are both white, and
+              the home page one should not be white anymore. That's because Vue by default is using an inclusive match
+              on the route. If you look at the URL, technically it includes both the HomePage route, which is just the
+              slash, and the build route, which is /build, so they're both white.</p>
+            <p>What we really want for this is for it to be an exact match on the full URL. We can do that back over in
+              our template by adding an exact attribute to our router-link:</p>
+            <figure>
+              <img src="images/Fig04-049.png"/>
+              <figcaption>Fig 04-049</figcaption>
+            </figure>
+            <p>So I'm going to add that on both of our router-links, and now over here that should be fixed:</p>
+            <figure>
+              <img src="images/Fig04-050.png"/>
+              <figcaption>Fig 04-050</figcaption>
+            </figure>
+            <p>There we go. So now only the exact route that matches the URL is being highlighted, so that's working
+              great.</p>
+            <p>Now you might be wondering, what if I don't want my class name to be called router-link-active? So down
+              here we called this router-link-active:</p>
+            <figure>
+              <img src="images/Fig04-051.png"/>
+              <figcaption>Fig 04-051</figcaption>
+            </figure>
+            <p>which is required in order for this to work, but we can use our own class name here. So I'm going to use
+              foo here:</p>
+            <figure>
+              <img src="images/Fig04-052.png"/>
+              <figcaption>Fig 04-052</figcaption>
+            </figure>
+            <p>and then back up here I could add an active-class attribute here and set that to foo:</p>
+            <figure>
+              <img src="images/Fig04-053.png"/>
+              <figcaption>Fig 04-053</figcaption>
+            </figure>
+            <p>So now it will use this as the active-class, and I will put that in the other router-link also. And that
+              should be working just fine. But we don't really have a need for that; I kind of like just using the
+              built-in router-link-active class, so we'll change it back to use that.</p>
+            <p> Next, let's take a look at how to navigate to a route from JavaScript code.
+            </p>
+          </div>
+          <div><h3>Navigating from Code</h3>
+            <p>In order to demonstrate how to navigate to a route from within our JavaScript code, let's create a new
+              page, and we'll use this page in the next few clips too, in order to demonstrate route params. But
+              basically, we're going to create a page that, if we click on one of these parts like the head or this
+              arm:</p>
+            <figure>
+              <img src="images/Fig04-054.png"/>
+              <figcaption>Fig 04-054</figcaption>
+            </figure>
+            <p>
+              it will take you to a page where it describes that part. So let's start by creating a parts folder, and
+              then inside that folder we'll create a new component called PartInfo.</p>
+            <figure>
+              <img src="images/Fig04-055.png"/>
+              <figcaption>Fig 04-055</figcaption>
+            </figure>
+            <p>And for that, we'll just have a basic template that looks like this:</p>
+            <figure>
+              <img src="images/Fig04-056.png"/>
+              <figcaption>Fig 04-056</figcaption>
+            </figure>
+            <p>If you're following along, go ahead and pause this and type that in. And we'll have a pretty basic script
+              section also that looks like this:</p>
+            <figure>
+              <img src="images/Fig04-057.png"/>
+              <figcaption>Fig 04-057</figcaption>
+            </figure>
+            <p>So notice that we have a PartInfo component and that the data function is returning a part object, and
+              that object has a title and a description.</p>
+            <p>So this is just hardcoded to display this fixed text right now. We'll fix this later. Until then, let's
+              go ahead and create a route for this and then update the PartSelector to navigate to this page</p>
+            <p> So over in our routes file, by the way, you may have noticed that I'm navigating by, on Windows I can
+              hit Ctrl+P and then type in the name of a file to navigate to. So let's add another route down here, and
+              that will be the parts route, and it will load our new PartInfo component.</p>
+            <figure>
+              <img src="images/Fig04-058.png"/>
+              <figcaption>Fig 04-058</figcaption>
+            </figure>
+            <p>So let's import that component up here:</p>
+            <figure>
+              <img src="images/Fig04-059.png"/>
+              <figcaption>Fig 04-059</figcaption>
+            </figure>
+            <p>Okay, so now that we have a route for this, let's go ahead and go navigate to it from code. So in our
+              PartSelector component, let's add a click handler on our img component:</p>
+            <figure>
+              <img src="images/Fig04-060.png"/>
+              <figcaption>Fig 04-060</figcaption>
+            </figure>
+            <p>so @click, and we could use a router-link here. There's no reason not use a router-link here, but we're
+              going to navigate from code in order to demonstrate this. And you'll find better use cases for this where
+              you might want to do some sort of processing or something before you navigate, but this will work to
+              demonstrate it.</p>
+            <p>So we're going to have that call a showPartInfo function:</p>
+            <figure>
+              <img src="images/Fig04-061.png"/>
+              <figcaption>Fig 04-061</figcaption>
+            </figure>
+            <p>which we'll add down here in the methods. And here's where we'll tap into Vue's router in order to
+              navigate. Because we injected a router into our Vue instance in our main.js file, we have a router
+              available to us here like this:</p>
+            <figure>
+              <img src="images/Fig04-062.png"/>
+              <figcaption>Fig 04-062</figcaption>
+            </figure>
+            <p>And all we need to do in order to navigate is call push and pass in the URL of the route to navigate
+              to:</p>
+            <figure>
+              <img src="images/Fig04-063.png"/>
+              <figcaption>Fig 04-063</figcaption>
+            </figure>
+            <p>
+              And just like the router-link element, I can either pass in a URL string here, or I can pass in an object.
+              We'll leave this as a string for now, and we'll change it to an object when we explore how to pass route
+              parameters.</p>
+            <p>Okay, let's check this out. So back over here, at first it seems like this is not clickable because my
+              cursor hasn't changed, but if I go ahead and click on this, you can see that it did navigate me to the
+              parts page:</p>
+            <figure>
+              <img src="images/Fig04-064.png"/>
+              <figcaption>Fig 04-064</figcaption>
+            </figure>
+            <p>And this is happening via our programmatic navigation. Okay, cool, let's just change our pointer styling
+              so that it looks like this is clickable. So back in our PartSelector, you can see up here that we already
+              have a class on here on this div that is surrounding the img, and it's class=part:</p>
+            <figure>
+              <img src="images/Fig04-065.png"/>
+              <figcaption>Fig 04-065</figcaption>
+            </figure>
+            <p>So down here, we should find that class, a class that targets that already, right here, part img. So in
+              here let's just add cursor: pointer:</p>
+            <figure>
+              <img src="images/Fig04-066.png"/>
+              <figcaption>Fig 04-066</figcaption>
+            </figure>
+            <p>So now you can see I'm getting a pointer here:</p>
+            <figure>
+              <img src="images/Fig04-067.png"/>
+              <figcaption>Fig 04-067</figcaption>
+            </figure>
+            <p>and when I click on it, it takes me to this page, but it's still displaying hardcoded information:</p>
+            <figure>
+              <img src="images/Fig04-068.png"/>
+              <figcaption>Fig 04-068</figcaption>
+            </figure>
+            <p>
+              This is not displaying information about the part that I click on. For that, we'll need to pass some route
+              params to our parts component.</p>
+            <p>So in the next clip, we'll start exploring working with router params.
+            </p>
+          </div>
+          <div><h3>Working with Route Params</h3>
+            <p>
+              Our PartInfo component is just currently hardcoding the title and description here on the page. What we'd
+              like to do is to be able to specify the part type, like heads:</p>
+            <figure>
+              <img src="images/Fig04-069.png"/>
+              <figcaption>Fig 04-069</figcaption>
+            </figure>
+            <p>and the part index, and then use that information to look up that part and display its info. In order to
+              do that, we're going to have to update our route to expect those parameters, and then we need to grab
+              those parameters off of the route in our component.</p>
+            <p>So let's update the route first. So first, we need to update the URL for this route to add the params and
+              use a colon here followed by a variable name, so partType, and then :id</p>
+            <figure>
+              <img src="images/Fig04-070.png"/>
+              <figcaption>Fig 04-070</figcaption>
+            </figure>
+            <p>So this route now expects a part type like head, arm, torso, etc., and then a part id. With this
+              information, we'll be able to look up our part from our parts list and display its information. So now
+              let's go over to our PartInfo component and update it to grab these route parameters.</p>
+            <p>So first we'll import our parts data. We'll import parts from data/parts:</p>
+            <figure>
+              <img src="images/Fig04-071.png"/>
+              <figcaption>Fig 04-071</figcaption>
+            </figure>
+            <p>And now we'll need a computed prop, so let's add computed, and we'll have a part property that is a
+              computed prop:</p>
+            <figure>
+              <img src="images/Fig04-072.png"/>
+              <figcaption>Fig 04-072</figcaption>
+            </figure>
+            <p>So we'll return an object here, and that will look like the one down here in data. I'm just going to cut
+              this out of here and paste it into here:</p>
+            <figure>
+              <img src="images/Fig04-073.png"/>
+              <figcaption>Fig 04-073</figcaption>
+            </figure>
+            <p>and now we can get rid of data:</p>
+            <figure>
+              <img src="images/Fig04-074.png"/>
+              <figcaption>Fig 04-074</figcaption>
+            </figure>
+            <p>we don't need that anymore. And then this:</p>
+            <figure>
+              <img src="images/Fig04-075.png"/>
+              <figcaption>Fig 04-075</figcaption>
+            </figure>
+            <p>is what we want to do the lookup for us from the params. So we want to look up the part and get the title
+              and description for that part based on the params that are passed in on the URL. So the route params are
+              available to us on the component's route property, so we can get the partType, for example, like this:</p>
+            <figure>
+              <img src="images/Fig04-076.png"/>
+              <figcaption>Fig 04-076</figcaption>
+            </figure>
+            <p>
+              We're going to say this. $route. params. partType. And then this partType right here:</p>
+            <figure>
+              <img src="images/Fig04-077.png"/>
+              <figcaption>Fig 04-077</figcaption>
+            </figure>
+            <p>needs to match the parameter name over here:</p>
+            <figure>
+              <img src="images/Fig04-078.png"/>
+              <figcaption>Fig 04-078</figcaption>
+            </figure>
+            <p>So with that information, Vue can parse the partType off of the URL, and then we can get the ID in the
+              same way. So id = this.$route.params. id:</p>
+            <figure>
+              <img src="images/Fig04-079.png"/>
+              <figcaption>Fig 04-079</figcaption>
+            </figure>
+            <p>Okay, and this is red because our linter is telling us that we should prefer destructuring here, and so I
+              can change this to look like this, set partType and id using destructuring, and we'll set it to
+              this.$route.params.:</p>
+            <figure>
+              <img src="images/Fig04-080.png"/>
+              <figcaption>Fig 04-080</figcaption>
+            </figure>
+            <p>
+              Okay, so now I can use this to look up the parts, so instead of returning this hardcoded object:</p>
+            <figure>
+              <img src="images/Fig04-081.png"/>
+              <figcaption>Fig 04-081</figcaption>
+            </figure>
+            <p>I'm going to do a lookup on the parts array where the partType is the partType that I get off of the
+              params:</p>
+            <figure>
+              <img src="images/Fig04-082.png"/>
+              <figcaption>Fig 04-082</figcaption>
+            </figure>
+            <p>So remember that the parts object that we're getting, that we're importing, is a keyed object where the
+              partType is the key, and then that returns an array of that partType, so then I'm going to do a find, and
+              I'm going to find where the part.id equals the id from params:</p>
+            <figure>
+              <img src="images/Fig04-083.png"/>
+              <figcaption>Fig 04-083</figcaption>
+            </figure>
+            <p>But actually, there's a problem here, and that's because the params that are pulled off a URL are always
+              strings, whereas the id's on the parts in our data are integers. And so this triple equals actually isn't
+              going to work because it's not going to find a part with an id that is a string.</p>
+            <p>So we can fix that by casting id to be a number here.</p>
+            <figure>
+              <img src="images/Fig04-084.png"/>
+              <figcaption>Fig 04-084</figcaption>
+            </figure>
+            <p>Okay, so now we have our router set up with params, and we have our component set up to use those params.
+              The last thing that we need to do now is just pass the params from the PartSelector component. So over
+              here in our PartSelector, down here in our showPartInfo function, we want to pass the URL parameters here
+              for PartType and id:</p>
+            <figure>
+              <img src="images/Fig04-085.png"/>
+              <figcaption>Fig 04-085</figcaption>
+            </figure>
+            <p>but we can't pass part params using the string syntax; we actually need to use the object syntax in order
+              to pass parameters. So I'm going to change this to an object and use a named route where the name is
+              Parts, and then I can pass params. And then I'm going to specify that the id param is this. selectedPart.
+              id, and the part type is this. selectedPart. type.</p>
+            <figure>
+              <img src="images/Fig04-086.png"/>
+              <figcaption>Fig 04-086</figcaption>
+            </figure>
+            <p>Okay, so now we are saying navigate to the parts route and pass in the params id and partType, and we're
+              going to get those off of the currently selected part. Okay, let's go check that out.</p>
+            <p> So back over here, now if I click on one of these parts:</p>
+            <figure>
+              <img src="images/Fig04-087.png"/>
+              <figcaption>Fig 04-087</figcaption>
+            </figure>
+            <p>there we go. Now we are navigating to parts/head/1, and we get a description of that part, a Large
+              Cyclops:</p>
+            <figure>
+              <img src="images/Fig04-088.png"/>
+              <figcaption>Fig 04-088</figcaption>
+            </figure>
+            <p>And if I change this to this part:</p>
+            <figure>
+              <img src="images/Fig04-089.png"/>
+              <figcaption>Fig 04-089</figcaption>
+            </figure>
+            <p>now it is the Friendly Bot head:</p>
+            <figure>
+              <img src="images/Fig04-090.png"/>
+              <figcaption>Fig 04-090</figcaption>
+            </figure>
+            <p>Okay, before we wrap up on this, let's just demonstrate that this is also possible using links instead of
+              code navigation by changing this link:</p>
+            <figure>
+              <img src="images/Fig04-091.png"/>
+              <figcaption>Fig 04-091</figcaption>
+            </figure>
+            <p>to be a router-link rather than navigating from code. So back in our PartSelector up here, let's get rid
+              of this click binding:</p>
+            <figure>
+              <img src="images/Fig04-092.png"/>
+              <figcaption>Fig 04-092</figcaption>
+            </figure>
+            <p>and then let's wrap this img in a router-link:</p>
+            <figure>
+              <img src="images/Fig04-093.png"/>
+              <figcaption>Fig 04-093</figcaption>
+            </figure>
+            <p>and then we'll use a to binding. And let's grab the route expression down here from this function:</p>
+            <figure>
+              <img src="images/Fig04-094.png"/>
+              <figcaption>Fig 04-094</figcaption>
+            </figure>
+            <p>I'm going to cut this out of there, and then we don't need this function anymore:</p>
+            <figure>
+              <img src="images/Fig04-095.png"/>
+              <figcaption>Fig 04-095</figcaption>
+            </figure>
+            <p>And then I'm just going to paste that expression in here. And I'm just missing a closing bracket here,
+              there we go:</p>
+            <figure>
+              <img src="images/Fig04-096.png"/>
+              <figcaption>Fig 04-096</figcaption>
+            </figure>
+            <p>Okay, so this is just the same as when we were navigating with code, so I can click on the links and go
+              to the parts page with the params.</p>
+            <p>Awesome. So this is working great, and we're passing parameters between components using router-link. But
+              next we'll see how to decouple our PartInfo component from the router by passing the route params as props
+              instead.
+            </p>
+          </div>
+          <div><h3>Passing Params as Props</h3>
+            <p>
+              One downside of using this route expression:</p>
+            <figure>
+              <img src="images/Fig04-097.png"/>
+              <figcaption>Fig 04-097</figcaption>
+            </figure>
+            <p>is that it couples this component to the router. What if we wanted to use this component as a child
+              component somewhere else and pass the partType and id as props instead of pulling it off of the route
+              params? Well, we can make this work both as a routed component and as a child component by updating the
+              route for this component to pass the params as props. </p>
+            <p>So we can do that over in the route simply by setting the props property to true on this route:</p>
+            <figure>
+              <img src="images/Fig04-098.png"/>
+              <figcaption>Fig 04-098</figcaption>
+            </figure>
+            <p>So now Vue will pass the route params that it identifies on the path for this route as props instead of
+              as route params. And with that simple change, we can come over to our PartInfo component and add props for
+              the partType and id:</p>
+            <figure>
+              <img src="images/Fig04-099.png"/>
+              <figcaption>Fig 04-099</figcaption>
+            </figure>
+            <p>and now instead of getting partType and id off of this.$route.params:</p>
+            <figure>
+              <img src="images/Fig04-100.png"/>
+              <figcaption>Fig 04-100</figcaption>
+            </figure>
+            <p>we can just get it off of this:</p>
+            <figure>
+              <img src="images/Fig04-101.png"/>
+              <figcaption>Fig 04-101</figcaption>
+            </figure>
+            <p>which is where the props are. And it's that easy to decouple our component from the route. You can see
+              over here that that is still working just fine:</p>
+            <figure>
+              <img src="images/Fig04-102.png"/>
+              <figcaption>Fig 04-102</figcaption>
+            </figure>
+            <p>But let's add a little bit of validation to these props. So we'll change the props to an object, and it
+              will have a partType, and we want it to be of type: String, and it will have an id, which will be of type:
+              Number:</p>
+            <figure>
+              <img src="images/Fig04-103.png"/>
+              <figcaption>Fig 04-103</figcaption>
+            </figure>
+            <p>But the problem with this is that when this component is used as a routed component, this id will still
+              be passed in as a string, so we need to allow either a number or a string:</p>
+            <figure>
+              <img src="images/Fig04-104.png"/>
+              <figcaption>Fig 04-104</figcaption>
+            </figure>
+            <p>But just to be sure that nobody passes in an invalid value here, let's also add a validator. And then
+              we'll just verify that this is a number:</p>
+            <figure>
+              <img src="images/Fig04-105.png"/>
+              <figcaption>Fig 04-105</figcaption>
+            </figure>
+            <p>so we'll call Number. isInteger, and then we will cast the value to a Number. Okay, so now we have some
+              validation around our props, and if we come back over to our RobotBuilder page, the routing should still
+              be working just fine.</p>
+            <p>Great, now we know how to use route params and how to pass those parameters in as props. Now let's
+              explore nested routes.
+            </p>
+          </div>
+          <div><h3>Using Nested Routes</h3>
+            <p>
+              In order to understand what we're going to build in order to look at nested routes, let's take a look at
+              the final result. So we're going to be building this Browse Parts page:</p>
+            <figure>
+              <img src="images/Fig04-106.png"/>
+              <figcaption>Fig 04-106</figcaption>
+            </figure>
+            <p>and notice up here the URL is parts/browse. And when we navigate to that, it shows us a list of all the
+              different parts. But then as I click on each of the different part types, you can see that the bottom part
+              of this page here is changing, but this top part that includes this menu:</p>
+            <figure>
+              <img src="images/Fig04-107.png"/>
+              <figcaption>Fig 04-107</figcaption>
+            </figure>
+            <p>is not changing. And notice the URL at the top as I click on each of these is also changing. And so the
+              URL is changing, but really all Vue is replacing is this bottom section.</p>
+            <p>That is possible because of nested routes, so let's go take a look at how to build this. To get started,
+              we'll create a new BrowseParts component:</p>
+            <figure>
+              <img src="images/Fig04-108.png"/>
+              <figcaption>Fig 04-108</figcaption>
+            </figure>
+            <p>So I've created that here in the parts folder. Let's go grab the contents from that from our GitHub repo.
+              So in the src folder, in the parts folder, there is the BrowseParts.vue file:</p>
+            <figure>
+              <img src="images/Fig04-109.png"/>
+              <figcaption>Fig 04-109</figcaption>
+            </figure>
+            <p>So let's grab that and paste that into our BrowseParts.vue component. So there's not a lot going on here.
+              We have a bit of CSS, and then up here:</p>
+            <figure>
+              <img src="images/Fig04-110.png"/>
+              <figcaption>Fig 04-110</figcaption>
+            </figure>
+            <p>we have a menu for the different parts. And then I'm going to need a new page for each of the different
+              types of parts, so I'm going to create a new RobotHeads.vue and a new RobotArms component, and a
+              RobotTorsos, and finally a RobotBases:</p>
+            <figure>
+              <img src="images/Fig04-111.png"/>
+              <figcaption>Fig 04-111</figcaption>
+            </figure>
+            <p>
+              And then I'm going to get the contents for each of these out of our GitHub repo from their corresponding
+              files also:</p>
+            <figure>
+              <img src="images/Fig04-112.png"/>
+              <figcaption>Fig 04-112</figcaption>
+            </figure>
+            <p>So here's RobotArms, and I'll paste that into RobotArms here, RobotBases, paste that in here, and then
+              RobotHeads, and finally, RobotTorsos.</p>
+            <p>And each one of these is really quite similar where you have a title and a description of the type of
+              parts that we're dealing with on this page. And then you can see here:</p>
+            <figure>
+              <img src="images/Fig04-113.png"/>
+              <figcaption>Fig 04-113</figcaption>
+            </figure>
+            <p>that we have a v-for that is looping over all of the, in this case, all of the arms and displaying the
+              title and description, whereas here, we're looping over bases and torsos and heads. And then in each one,
+              you can see that there is a data function that's returning the corresponding part, so we have a heads
+              property on the RobotHeads component:</p>
+            <figure>
+              <img src="images/Fig04-114.png"/>
+              <figcaption>Fig 04-114</figcaption>
+            </figure>
+            <p>and we have an arms property on the RobotArms component, etc.</p>
+            <p>So now the trick is how do we get each one of these pages to be viewed on the browse page underneath this
+              menu:</p>
+            <figure>
+              <img src="images/Fig04-115.png"/>
+              <figcaption>Fig 04-115</figcaption>
+            </figure>
+            <p>whenever we click each one of the links for the different part types? Well, it starts with adding another
+              router-view. You'll remember that we have a router-view already in our App component, and so we're adding
+              a second one here:</p>
+            <figure>
+              <img src="images/Fig04-116.png"/>
+              <figcaption>Fig 04-116</figcaption>
+            </figure>
+            <p>And now we can add routes for each one of these individual pages, RobotArms, RobotBases, etc. This is
+              going to consist of a parent route for the BrowseParts page and child routes for each of the
+              PartTypes.</p>
+            <p>So in our routes in index.js we're going to create a BrowseParts route, and it's important that this goes
+              above the existing parts route. I'll explain that in a second here. So right here I'm going to create a
+              new route, and it's going to have a path of /parts/browse and a name of BrowseParts. And the component is
+              going to be the BrowseParts component:</p>
+            <figure>
+              <img src="images/Fig04-117.png"/>
+              <figcaption>Fig 04-117</figcaption>
+            </figure>
+            <p>and we'll need to import that:</p>
+            <figure>
+              <img src="images/Fig04-118.png"/>
+              <figcaption>Fig 04-118</figcaption>
+            </figure>
+            <p>And that has to have the. vue extension on it. Okay, now back to why it was important where this goes.
+              Notice that this parts path where we're navigating to a particular part that it has parts followed by a
+              partType:</p>
+            <figure>
+              <img src="images/Fig04-119.png"/>
+              <figcaption>Fig 04-119</figcaption>
+            </figure>
+            <p>Vue has no idea when we type in browse here:</p>
+            <figure>
+              <img src="images/Fig04-120.png"/>
+              <figcaption>Fig 04-120</figcaption>
+            </figure>
+            <p>
+              that we're not trying to type in a partType. So if we had put the BrowseParts route below the PartInfo
+              route it would've got picked up first by the PartInfo route, and so the order is important.</p>
+            <p>Okay, so now we have this BrowseParts route, and we're going to need to add the child routes now for the
+              individual part types. We do that by adding a children array like this:</p>
+            <figure>
+              <img src="images/Fig04-121.png"/>
+              <figcaption>Fig 04-121</figcaption>
+            </figure>
+            <p>So the BrowseParts route now has child routes, and then we just need to specify the child route for each
+              part type:</p>
+            <figure>
+              <img src="images/Fig04-122.png"/>
+              <figcaption>Fig 04-122</figcaption>
+            </figure>
+            <p>So we're going to have BrowseHeads, and that's going to have a path of heads, and resolve to the
+              component RobotHeads. And one for BrowseArms, the path will be arms. Notice that this path is relative to
+              the browse path, so the full path for arms is parts/browse/arms:</p>
+            <figure>
+              <img src="images/Fig04-123.png"/>
+              <figcaption>Fig 04-123</figcaption>
+            </figure>
+            <p>And that will use the RobotArms component, and then we have BrowseTorsos, and the RobotTorsos component,
+              and then finally BrowseBases. That's the bases path and the RobotBases component. So now let's go ahead
+              and import each of those:</p>
+            <figure>
+              <img src="images/Fig04-124.png"/>
+              <figcaption>Fig 04-124</figcaption>
+            </figure>
+            <p>Okay, so now we've created our nested routes, so we have our BrowseParts that has child routes for each
+              one of the parts pages. Now all we have to do is create links for each one of these on the browse
+              page.</p>
+            <p>So back over here in the BrowseParts page, I just need to add a router-link around each one of these menu
+              items. So, have a router-link, and then I'm going to use a to binding, and here I'm just going to specify
+              the name of a route.</p>
+            <figure>
+              <img src="images/Fig04-125.png"/>
+              <figcaption>Fig 04-125</figcaption>
+            </figure>
+            <p>
+              And notice here that I can just provide the name of the child route. Okay, now we just want to do a
+              similar thing around the rest of these:</p>
+            <figure>
+              <img src="images/Fig04-126.png"/>
+              <figcaption>Fig 04-126</figcaption>
+            </figure>
+            <p>Okay, so we should be good to go. So we added a BrowseParts route, and it had child routes, and then we
+              linked to each of the child routes here.</p>
+
+            <p>Okay, so let's take a look. So instead of build here, we're going to navigate to parts/browse, and here
+              we go:</p>
+            <figure>
+              <img src="images/Fig04-127.png"/>
+              <figcaption>Fig 04-127</figcaption>
+            </figure>
+            <p>So now I can go to Heads and Arms and Torsos and Bases, and you can see that the data for the correct
+              corresponding parts is loading down below:</p>
+            <figure>
+              <img src="images/Fig04-128.png"/>
+              <figcaption>Fig 04-128</figcaption>
+            </figure>
+            <p>Awesome. So pretty simple to add child routes. Now let's go take a look at one more place where we can
+              use a router-view, and that's with named views.
+            </p>
+          </div>
+          <div><h3>Using Named Views</h3>
+            <p>We just looked at nested child routes; now let's take a look at named views. You can almost think of
+              named views as sibling routes. Whereas nested routes have a parent-child relationship, named views allow
+              you to have multiple router-views on a single component, and the route for the component specifies which
+              two or more views to display. </p>
+            <p>To demonstrate that, let's add a sidebar to our app that will show up here on the left of every page:</p>
+            <figure>
+              <img src="images/Fig04-129.png"/>
+              <figcaption>Fig 04-129</figcaption>
+            </figure>
+            <p>
+              And each route in our app will be able to specify a different sidebar to display. Right now in our App
+              component we have this main section down here that as a router-view in it:</p>
+            <figure>
+              <img src="images/Fig04-130.png"/>
+              <figcaption>Fig 04-130</figcaption>
+            </figure>
+            <p>Let's also add an aside that we'll show to the left of this main section. So we'll give that a class of
+              aside. And we'll wrap both of these in a container div:</p>
+            <figure>
+              <img src="images/Fig04-131.png"/>
+              <figcaption>Fig 04-131</figcaption>
+            </figure>
+            <p>And let's go ahead and add those classes, so we have a container, and it's going to be display: flex with
+              a margin of 10px auto 0 auto. And we will set justify-content to center:</p>
+            <figure>
+              <img src="images/Fig04-132.png"/>
+              <figcaption>Fig 04-132</figcaption>
+            </figure>
+            <p>And then we need an aside class, and it's going to have a 30-pixel padding a background-color that is
+              gray, 100-pixel width, and a min-height of 300 pixels, which matches the min-height of our main content
+              area</p>
+            <figure>
+              <img src="images/Fig04-133.png"/>
+              <figcaption>Fig 04-133</figcaption>
+            </figure>
+            <p> Okay, as we add these asides to our site, we're going to have to make a couple of other small CSS
+              adjustments in order to fit those in. So on our main element we're going to remove the margin auto, and
+              we're going to change its width to 964 pixels:</p>
+            <figure>
+              <img src="images/Fig04-134.png"/>
+              <figcaption>Fig 04-134</figcaption>
+            </figure>
+            <p>And then we're going to change the width of the header to 1184 pixels:</p>
+            <figure>
+              <img src="images/Fig04-135.png"/>
+              <figcaption>Fig 04-135</figcaption>
+            </figure>
+            <p>Okay, that should take care of the styling. So now up here in the aside, we'll go ahead and add another
+              router-view:</p>
+            <figure>
+              <img src="images/Fig04-136.png"/>
+              <figcaption>Fig 04-136</figcaption>
+            </figure>
+            <p>However, so that we can target this router-view, let's give it a name. So we're going to add a name
+              attribute, and we will name it sidebar:</p>
+            <figure>
+              <img src="images/Fig04-137.png"/>
+              <figcaption>Fig 04-137</figcaption>
+            </figure>
+            <p>And we can leave the other one without a name which by default, if we don't give it a name, it has the
+              name default.</p>
+            <p>Okay, now we need some content to display in this sidebar. So let's create a sidebars folder, and in
+              here, I will create a SidebarStandard component, and I will also create a SidebarBuild component:</p>
+            <figure>
+              <img src="images/Fig04-138.png"/>
+              <figcaption>Fig 04-138</figcaption>
+            </figure>
+            <p>So the build page will have its own sidebar. And our standard sidebar is just going to look like
+              this:</p>
+            <figure>
+              <img src="images/Fig04-139.png"/>
+              <figcaption>Fig 04-139</figcaption>
+            </figure>
+            <p>So if you're following along, go ahead and pause this, if you'd like to type it in. And the only content
+              up here is just the text, Standard Sidebar, and we have a sidebar class here that is giving it a font size
+              of 50 pixels and rotating it 90 degrees. And that's really all that's going on here. And then let's copy
+              and paste this into the build sidebar:</p>
+            <figure>
+              <img src="images/Fig04-140.png"/>
+              <figcaption>Fig 04-140</figcaption>
+            </figure>
+            <p>and we'll just change this to say Build Sidebar, and we will name it Build. And just to make it stand out
+              a little bit, let's give it a green font color.</p>
+            <p>Okay, now let's come over to our routes, and up here on the route for our HomePage, we're going to change
+              this component property to components, plural, and then we'll change that from a simple property to a
+              keyed object. And this will have two properties, default and sidebar:</p>
+            <figure>
+              <img src="images/Fig04-141.png"/>
+              <figcaption>Fig 04-141</figcaption>
+            </figure>
+            <p>Remember that these names now correspond to the names of our router views. This one has a name of
+              sidebar, and this one has a name of default. So when our home page is displayed, we want the default
+              router-view to display our home page. And then we want the sidebar router-view to display our standard
+              sidebar, and we'll need to import that up here:</p>
+            <figure>
+              <img src="images/Fig04-142.png"/>
+              <figcaption>Fig 04-142</figcaption>
+            </figure>
+            <p>And then let's do the same thing for our build route, except that the default router-view will display
+              the RobotBuilder, and in this case, we want to display the build sidebar:</p>
+            <figure>
+              <img src="images/Fig04-143.png"/>
+              <figcaption>Fig 04-143</figcaption>
+            </figure>
+            <p>so let's import that also:</p>
+            <figure>
+              <img src="images/Fig04-144.png"/>
+              <figcaption>Fig 04-144</figcaption>
+            </figure>
+            <p>Okay, cool. So now because our main App component has two router-views, we have to specify them both, or
+              we can specify them both, and we can indicate in the route which content to display in each one. So let's
+              go take a look at this. And it looks like we have an error in our CSS:</p>
+            <figure>
+              <img src="images/Fig04-145.png"/>
+              <figcaption>Fig 04-145</figcaption>
+            </figure>
+            <p>so let's go back to our App component, and down here in the styles I'm missing a colon right here:</p>
+            <figure>
+              <img src="images/Fig04-146.png"/>
+              <figcaption>Fig 04-146</figcaption>
+            </figure>
+            <p>it looks like. Okay, let's check this out:</p>
+            <figure>
+              <img src="images/Fig04-147.png"/>
+              <figcaption>Fig 04-147</figcaption>
+            </figure>
+            <p>Okay, there we go. So we are on the build page and notice that on the build route that I have my robot
+              builder, and I have the green build sidebar. And yet, if I go home, I have a different sidebar:</p>
+            <figure>
+              <img src="images/Fig04-148.png"/>
+              <figcaption>Fig 04-148</figcaption>
+            </figure>
+            <p>This is the standard sidebar. And notice that if I go to the parts/browse page:</p>
+            <figure>
+              <img src="images/Fig04-149.png"/>
+              <figcaption>Fig 04-149</figcaption>
+            </figure>
+            <p>that there actually is no sidebar here, or I should say there is no content in that sidebar. So this gray
+              background is coming from the aside in our App component, which exists right here:</p>
+            <figure>
+              <img src="images/Fig04-150.png"/>
+              <figcaption>Fig 04-150</figcaption>
+            </figure>
+            <p>So we have the aside here, and that has a gray background. But there is no content in it because we
+              didn't give it a router-view on that page. So our route is not specifying a component for the sidebar
+              router-view, and so it's blank.</p>
+            <p>So it is optional to provide data here, but this is how you use named views in order to specify different
+              content for different parts of the same page.</p>
+            <p>Next let's go take a look at how to get rid of this hash sign in our URLs.
+            </p>
+          </div>
+          <div><h3>Enabling HTML5 History Mode</h3>
+            <p>
+              All of our URLs so far have had this hashtag in them. That's because we're not yet using HTML5 history
+              mode. So let's turn that on, and then we'll talk about a challenge that is presented by using it. So all
+              we have to do to turn it on is to come over to our routes, and in our router configuration object we just
+              need to set the mode to history:</p>
+            <figure>
+              <img src="images/Fig04-151.png"/>
+              <figcaption>Fig 04-151</figcaption>
+            </figure>
+            <p>And that's it. Now if we come over here and start navigating around our site, you can see that there are
+              no longer any hash signs in our URL:</p>
+            <figure>
+              <img src="images/Fig04-152.png"/>
+              <figcaption>Fig 04-152</figcaption>
+            </figure>
+            <p>I really like this approach because the URLs look more professional, but there is one consequence to this
+              that you need to be aware of.</p>
+            <p>Imagine somebody comes to this part/heads/1 URL, and then they bookmark it. And then they come back, they
+              close their browser, and they come back later, and the click on that bookmark. Or let's just say they open
+              a new browser and they type in this URL. Well, this works locally in development because behind the scenes
+              we're using web pack DevServer in order to serve this, and it can handle this.</p>
+            <p>But imagine you have this running on your server, and a user types in this URL or clicks on a bookmark to
+              this URL, it's going to request this full URL from your server, so it's going to request /parts/heads/1
+              from your server. And your server doesn't actually have a document at that location. It has an index.html
+              and some other files that are used for serving up your Vue.js single-page application, and your Vue.js
+              application knows how to serve this URL, but your server doesn't actually know how to use it. And so you
+              would actually get a 404 when you try to run this if you have not configured your server correctly.</p>
+            <p>And that is not the case if you're using hashtag routing because only the part before the hashtag is sent
+              to the server. Everything after the hashtag is handled client side. And so this is a problem only when you
+              turn on history mode routing. So if you don't configure your server correctly, all of these URLs that
+              people deep-link to will 404 when they try to hit them.</p>
+            <p>Basically, you need to set up your server to always return the main index.html file whenever you load any
+              URL like this. The way to do this varies depending on which webserver you're using. So the Vue
+              documentation contains some instructions for some popular webservers. I'll talk more about this later in
+              the Deploying to Production module in the clip on handling deep linking. I'll demonstrate how to do this
+              with Express. But just be aware that when you turn on the HTML5 history mode that this is a concern that
+              you have to take care of on the server.</p>
+            <p>Next, we're going to take a look at navigation guards and how we can prevent users from navigating to or
+              away from certain pages.
+            </p>
+          </div>
+          <div><h3>Preventing Pages from Loading with Navigation Guards</h3>
+            <p>
+              Navigation guards allow you to either prevent a page from loading or prevent a user from leaving a page
+              based on specific criteria. We'll take a look at both of these scenarios. Let's start with a beforeEnter
+              guard. To demonstrate this, let's prevent this PartInfo page from loading if the id that's passed in is
+              :</p>
+            <figure>
+              <img src="images/Fig04-153.png"/>
+              <figcaption>Fig 04-153</figcaption>
+            </figure>
+            <p>You might think that we've already taken care of this when we added a prop validator that required the
+              prop to be numeric, but this doesn't prevent the page from loading; it is more of a dev time warning that
+              just throws errors in the console if the id isn't valid. We'd like to actually prevent navigation from
+              happening.</p>
+
+            <p>Notice that if we come over to our PartSelector and change id so that instead of passing in a valid id,
+              it's just passing in a string:</p>
+            <figure>
+              <img src="images/Fig04-154.png"/>
+              <figcaption>Fig 04-154</figcaption>
+            </figure>
+            <p>You can see that if I then try to navigate to this that it actually does navigate:</p>
+            <figure>
+              <img src="images/Fig04-155.png"/>
+              <figcaption>Fig 04-155</figcaption>
+            </figure>
+            <p>You can see my URL has changed, but I just have a blank page. This is not ideal. What I'd like to do is
+              to prevent the navigation from occurring completely. So let's go back here and change that back:</p>
+            <figure>
+              <img src="images/Fig04-156.png"/>
+              <figcaption>Fig 04-156</figcaption>
+            </figure>
+            <p>and let's add a route guard to prevent this. So we can add that on a component or on a route. Let's see
+              how to add one on a route.</p>
+            <p>So we'll come over here, and right here in our PartInfo route:</p>
+            <figure>
+              <img src="images/Fig04-157.png"/>
+              <figcaption>Fig 04-157</figcaption>
+            </figure>
+            <p>I'm going to add a beforeEnter function. And that takes three parameters, the route being navigated to,
+              the route being navigated from, and a next function:</p>
+            <figure>
+              <img src="images/Fig04-158.png"/>
+              <figcaption>Fig 04-158</figcaption>
+            </figure>
+            <p>And if we want to allow the navigation to proceed, we call this next function with a value of true. If we
+              want to prevent the navigation, then we call it with false. So inside the beforeEnterFunction, we want to
+              prevent navigation if the id is not numeric. So to get the id, we can get that off of the to route, and
+              then on there, there is a params object, and that should contain the id parameter:</p>
+            <figure>
+              <img src="images/Fig04-159.png"/>
+              <figcaption>Fig 04-159</figcaption>
+            </figure>
+            <p>So basically, if this is a valid integer, we want to allow the route to proceed. So I'm going to set a
+              variable where const isValidId equal to true if the number is a valid integer. So we can do that like
+              this, Number.isInteger, and we cast this to a Number. And now isValidId will be true is the id param is a
+              valid integer.</p>
+            <figure>
+              <img src="images/Fig04-160.png"/>
+              <figcaption>Fig 04-160</figcaption>
+            </figure>
+            <p>So now we just need to call next, and we need to call it with false if the id is not a valid integer. So
+              we can just pass in isValidId here, and then if that's false, it will prevent the navigation. Otherwise,
+              it will allow it:</p>
+            <figure>
+              <img src="images/Fig04-161.png"/>
+              <figcaption>Fig 04-161</figcaption>
+            </figure>
+            <p>So this should still be working normally now:</p>
+            <figure>
+              <img src="images/Fig04-162.png"/>
+              <figcaption>Fig 04-162</figcaption>
+            </figure>
+            <p>I should be able to navigate to each of the parts:</p>
+            <figure>
+              <img src="images/Fig04-163.png"/>
+              <figcaption>Fig 04-163</figcaption>
+            </figure>
+            <p>and that's working fine.</p>
+            <p>But if we come back over to our PartSelector and change this again to a string:</p>
+            <figure>
+              <img src="images/Fig04-164.png"/>
+              <figcaption>Fig 04-164</figcaption>
+            </figure>
+            <p>and then try to navigate, when you click on the various Robot Part, nothing is happening, and that's
+              because our route guard is stepping in and preventing the navigation because the id is not valid.</p>
+            <p>So before we forget, let's go undo this and put that back how it was.</p>
+            <figure>
+              <img src="images/Fig04-165.png"/>
+              <figcaption>Fig 04-165</figcaption>
+            </figure>
+            <p>And you can see how creating this route guard was super easy, and it can be really handy. We could've
+              defined this on the component instead, or we could even define it globally.</p>
+            <p>In the next clip, we'll create a beforeLeave navigation guard to prevent the user from leaving a page,
+              and we'll do that in the component so you can see how that works.
+            </p>
+          </div>
+          <div><h3>Preventing Navigation Away from Pages with Navigation Guards</h3>
+            <p>Sometimes we want to prevent or warn a user before they leave a page. For example, imagine I spent some
+              time configuring the perfect robot that I want here:</p>
+            <figure>
+              <img src="images/Fig04-166.png"/>
+              <figcaption>Fig 04-166</figcaption>
+            </figure>
+            <p>and then I click the home link up here to navigate away. This could cause me to lose all of my progress
+              on the robot I've built, so I may want to warn the user before they lose their progress. Let's create a
+              beforeLeave route guard to handle this.</p>
+            <p>This route guard is going to need some information from the component, so we'll create this one inside of
+              the component rather than on the route like we did with the beforeEnter guard in the last clip.</p>
+            <p>So over here in the RobotBuilder, we're going to add a beforeRouteLeave function right here:</p>
+            <figure>
+              <img src="images/Fig04-167.png"/>
+              <figcaption>Fig 04-167</figcaption>
+            </figure>
+            <p>and notice that this has the word route in it. So we could add a beforeRouteEnter here:</p>
+            <figure>
+              <img src="images/Fig04-168.png"/>
+              <figcaption>Fig 04-168</figcaption>
+            </figure>
+
+            <p>but you may remember that when we were adding this on a route as opposed to in a component, we actually
+              didn't have the word route in here.</p>
+            <p>So this is different when you're adding it on a component. So we want a beforeRouteLeave guard, and
+              again, this has the to, from, and next parameters:</p>
+            <figure>
+              <img src="images/Fig04-169.png"/>
+              <figcaption>Fig 04-169</figcaption>
+            </figure>
+            <p>And basically, we want to warn the user if they try to leave the page without adding the robot to the
+              cart first.</p>
+            <p>So let's add a property in our data function down here that will track whether they've added it to the
+              cart. So we'll create an addedToCart property, and we will default that to false:</p>
+            <figure>
+              <img src="images/Fig04-170.png"/>
+              <figcaption>Fig 04-170.png</figcaption>
+            </figure>
+            <p>And now up here in our route guard, we will check to see if that's true, so if this. addedToCart. And if
+              it is true, we will allow them to leave the page:</p>
+            <figure>
+              <img src="images/Fig04-171.png"/>
+              <figcaption>Fig 04-171</figcaption>
+            </figure>
+            <p>So we'll call next, passing in true, which will allow the navigation. Otherwise, we'll use a confirm
+              dialog to ask them if they want to leave or not. So I'm going to set, I'm going to say const response
+              equals, and then we're going to use confirm, and here we're going to say You have not added your robot to
+              your cart, are you sure you want to leave?</p>
+            <p>So if you're not familiar with confirm, it'll pop up a dialog kind of like an alert, but it has an OK and
+              a cancel button. If they click OK, it returns true. Otherwise, it returns false. So if they click OK, then
+              they're saying that they want to leave, and so we will pass response into next:</p>
+            <figure>
+              <img src="images/Fig04-172.png"/>
+              <figcaption>Fig 04-172</figcaption>
+            </figure>
+            <p>And this is all we need. However, our linter is getting angry because it doesn't like us using confirm.
+              Generally, alerts and confirms are not a great idea, but this is good for demoing this. And it's not bad
+              to use it in the cases where it makes sense. And we're also getting an error because we're using a global
+              function, so we're just going to disable those alerts here:</p>
+            <figure>
+              <img src="images/Fig04-173.png"/>
+              <figcaption>Fig 04-173</figcaption>
+            </figure>
+            <p>So I'll just put in these two ESLint directives here, and now it's stopped complaining. There's just one
+              last thing that we need to do here. Remember, we're checking to see if adddedToCart is true, and it's
+              always going to be false right now because that's what we defaulted it to. So down in the addToCart
+              function, once they've added to their cart, then we're going to set this. addedToCart = true:</p>
+            <figure>
+              <img src="images/Fig04-174.png"/>
+              <figcaption>Fig 04-174</figcaption>
+            </figure>
+            <p>Okay, let's go check this out. So when I first load this page, if I try to navigate away, I should get a
+              warning:</p>
+            <figure>
+              <img src="images/Fig04-175.png"/>
+              <figcaption>Fig 04-175</figcaption>
+            </figure>
+            <p>There we go. You have not added your robot to your cart. Are you sure that you want to leave? And if I
+              say Cancel, then it does not navigate away, but if I say OK, then it does navigate away, so that's working
+              great.</p>
+            <p> And if we go ahead and configure a robot and add it to our cart, then addedToCart is set to true, and
+              now we can navigate away without a warning.</p>
+            <p>Great, so now we know how to use route guards to prevent users from leaving a page.
+            </p>
+          </div>
+          <div><h3>Summary</h3>
+            <p>In this module, we learned all about routing in Vue, including adding routing to our app, linking to
+              routed pages, styling links based on the active route, navigating from code, working with route params,
+              using nested routes, using named views, enabling HTML5 history mode, and preventing navigation with
+              navigation guards.</p>
+            <p>In the next module, we'll learn how to manage state with Vuex.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

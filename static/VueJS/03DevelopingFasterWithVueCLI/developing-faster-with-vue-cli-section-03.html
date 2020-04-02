@@ -1,0 +1,281 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="UTF-8">
+  <title>maxsagetech - Developing Faster with the Vue CLI</title>
+  <script src="https://unpkg.com/vue"></script>
+  <!--<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"-->
+  <!--integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">-->
+  <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" rel="stylesheet">
+  <link href="prism.css" rel="stylesheet">
+  <script src="prism.js"></script>
+  <style>
+    img {
+      max-width: 100%;
+    }
+  </style>
+</head>
+<body>
+<div class="container" id="app">
+  <div class="panel-group">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h2>Developing Faster with the Vue CLI</h2>
+      </div>
+      <div class="panel-body">
+          <h2>Setting up the Vue CLI</h2>
+          <div>
+            <h3>Setting up the Vue CLI</h3>
+            <p>
+              Before we kick it into high gear, it's important to know how to set up the Vue CLI so you can be set up
+              for success. So in this module, we'll talk about what you need to set up the Vue CLI, which of course
+              includes installing the prerequisites. We'll go through what those are and then we'll check how you can
+              make sure that you installed the right versions, which is also important in case new versions come out so
+              you can make sure you know how to look at those versions to then update them to the latest versions.</p>
+            <p>Once we verify the versions, we'll then check out if the setup actually works for us, and we'll do that
+              by creating a Vue application. We'll do this twice actually in a couple different ways just so we can make
+              sure everything is working properly. Once we do that, we can have high confidence that we are ready to
+              roll.
+            </p></div>
+          <div>
+            <h3>Installing the Vue CLI</h3>
+            <p>The first step with installing the CLI is of course to make sure you have the prerequisites. Here we're
+              going to use Node, and you'll go to the nodejs. org URL to get this:</p>
+            <figure>
+              <img src="images/Fig02-001.PNG"/>
+              <figcaption>Fig 02-001</figcaption>
+            </figure>
+            <p>I recommend downloading the LTS version for your particular operating system. LTS stands for long-term
+              support. And then once you get that, you can then install Node locally on your machine.</p>
+            <p>Next, we want to install the Vue CLI itself:</p>
+            <figure>
+              <pre><code class="language-command-line">npm install, -g @vue/cli.</code></pre>
+              <figcaption>Fig 02-002</figcaption>
+            </figure>
+            <p>@Vue is the scope for the view packages. This will put the package globally on our machine using npm. If
+              you happen to roll with Yarn, you could use Yarn to do the same thing by doing:</p>
+            <figure>
+              <pre><code class="language-command-line">yarn global add @vue/cli.</code></pre>
+              <figcaption>Fig 02-003</figcaption>
+            </figure>
+            <p>Now depending upon your network connection to npm and the world, this may take a few seconds or up to a
+              minute. Once you get that, I highly recommend you verify your installation works. There's a couple things
+              you can do. The most simplest is to do:</p>
+            <figure>
+              <pre><code class="language-command-line">vue --version</code></pre>
+              <figcaption>Fig 02-004</figcaption>
+            </figure>
+            <p>This will tell you the version of the CLI that you just installed. When I recorded this course, it was 3.
+              2. 1. Now the version is important, but also obviously if I can do vue --version, that means that the Vue
+              CLI is there. Make sure that you've got the latest version of the CLI, and you can check the Vue docs to
+              look at that.</p>
+            <p>Then check the version of Node, make sure that we installed the version that you thought you installed by
+              doing:</p>
+            <figure>
+              <pre><code class="language-command-line">node --version</code></pre>
+              <figcaption>Fig 02-005</figcaption>
+            </figure>
+            <p>The current minimum at the time of recording this course is 8. 9, but you'll always want to check the Vue
+              docs for updated information. You can find that link right here. And finally, I like to just make sure
+              that I've got a version of npm that I'm aware of:</p>
+            <figure>
+              <pre><code class="language-command-line">npm --version</code></pre>
+              <figcaption>Fig 02-006</figcaption>
+            </figure>
+            <p>and currently that is 6. 4. 1. When you get Node by default, it brings npm with you for now. That could
+              change in the future, you never know. If you're using Yarn, make sure you've got the most recent version
+              of Yarn as well. Well now it's time to actually walk through and install and verify those same things.
+              Let's do this together. </p></div>
+          <div>
+            <h3>Install and Verify</h3>
+            <p>
+              Before getting started in installing, I've mentioned the Vue CLI docs a few times. So let's go to that
+              page and make sure we know what we're installing because we always want to check to see what the latest
+              versions are.</p>
+            <p>So here I go to <a href="cli.vuejs.org">cli.vuejs.org</a> and there's a big button down here called Get
+              Started:</p>
+            <figure>
+              <img src="images/Fig02-007.PNG"/>
+              <figcaption>Fig 02-007</figcaption>
+            </figure>
+            <p>When I click on that, we're brought right to the overview. We want to go to Installation, which we'll
+              click on here in the left, and the first thing is a nice warning that we should make sure we're using the
+              proper version of CLI:</p>
+            <figure>
+              <img src="images/Fig02-008.PNG"/>
+              <figcaption>Fig 02-008</figcaption>
+            </figure>
+            <p>The Vue CLI 3, version 3, was refactored and renamed using the scoping, and that's what we're using here
+              in this course. So moving forward, all the versions of the CLI will be @vue/cli. So make sure that's the
+              one you're installing.</p>
+            <p>It also mentions here the Node version requirement:</p>
+            <figure>
+              <img src="images/Fig02-009.PNG"/>
+              <figcaption>Fig 02-009</figcaption>
+            </figure>
+            <p>I imagine as this evolves this will also be updated, so always check here to make sure you have the
+              proper version of Node. Then below we see how we can install with npm and Yarn and then check the version.
+              Now let's go take a look at Node. We could click on this button here or I've already got it opened. This
+              is the main page of Node:</p>
+            <figure>
+              <img src="images/Fig02-010.PNG"/>
+              <figcaption>Fig 02-010</figcaption>
+            </figure>
+            <p>and we can see that it recognizes I'm using a Mac, and I'm going to click on the LTS button here to
+              download that version. Once it downloads that, I can then double-click it and then install Node on my
+              machine and follow the prompts that it gives you.</p>
+            <p>Once installed, we can flip over to a terminal and we can run commands like:</p>
+            <figure>
+              <pre><code class="language-command-line">node --version</code></pre>
+              <figcaption>Fig 02-011</figcaption>
+            </figure>
+            <p>We can see the version there. And we can also check out our npm version:</p>
+            <figure>
+              <pre><code class="language-command-line">npm --version</code></pre>
+              <figcaption>Fig 02-012</figcaption>
+            </figure>
+            <p>Now both of these also support -v to just check the version as well.</p>
+            <p>Next, we want to install the Vue CLI:
+              <figure>
+                <pre><code class="language-command-line">npm install -g @vue/cli</code></pre>
+                <figcaption>Fig 02-013</figcaption>
+              </figure>
+            <p>And then we'll install the Vue CLI together. Once installed, we'll type:
+              <figure>
+                <pre><code class="language-command-line">vue --version</code></pre>
+                <figcaption>Fig 02-014</figcaption>
+              </figure>
+            <p>and there we go. And that's all you need to do to make sure the CLI is installed along with Node as its
+              prerequisite.
+            </p></div>
+          <>
+          <h3>Creating Apps with the Vue CLI</h3>
+          <p>Before we can confidently say that we've got the Vue CLI set up correctly, we want to make sure we can
+            create an application and it works. So let's do this together. What we're going to do is create and serve an
+            app. So we'll run the vue create command, specify the name to be hello-cli, and then use the default
+            options:</p>
+          <figure>
+            <pre><code class="language-command-line">vue create hello-cli -d</code></pre>
+            <figcaption>Fig 02-015</figcaption>
+          </figure>
+          <p>so we just avoid the prompts for now that the CLI would give us and give us a default application. We're
+            just testing this out.</p>
+          <p>We'll change the directory to go to the new folder we created:</p>
+          <figure>
+            <pre><code class="language-command-line">cd hello-cli</code></pre>
+            <figcaption>Fig 02-016</figcaption>
+          </figure>
+          <p>and then we'll run:</p>
+          <figure>
+            <pre><code class="language-command-line">npm run serve</code></pre>
+            <figcaption>Fig 02-017</figcaption>
+          </figure>
+          <p>and then browse to the location where it opens our application inside of our browser.</p>
+          <p>Once we do this for the CLI, we'll also use the Vue CLI's UI to do the same thing to make sure both of them
+            work properly. Now grab your keyboards and let's try this out together.</p>
+          <p>Inside of a terminal, we can then check to make sure we have the right version of Vue. I like to do that
+            just to make sure I've got it installed here. We'll type:</p>
+          <figure>
+            <pre><code class="language-command-line">vue create hello-cli -d</code></pre>
+            <figcaption>Fig 02-018</figcaption>
+          </figure>
+          <p>Like this, and I'll put the -d on there for the default options.</p>
+          <p>Once the CLI is completed, it gives us the instructions at the bottom and tells us to go into the hello-cli
+            folder, we'll do that now:
+            <figure>
+              <pre><code class="language-command-line">cd hello-cli</code></pre>
+              <figcaption>Fig 02-019</figcaption>
+            </figure>
+          <p>then type</p>
+          <figure>
+            <pre><code class="language-command-line">npm run serve</code></pre>
+            <figcaption>Fig 02-020</figcaption>
+          </figure>
+          <p>Once we do that, it builds the application, and it then will tell us where to launch the browser, right
+            here at localhost 8080, and then I'll open that up inside my browser and here is our application:</p>
+          <figure>
+            <img src="images/Fig02-011.PNG"/>
+            <figcaption>Fig 02-011</figcaption>
+          </figure>
+          <p>Perfect. Next, I'm going to cancel out of here and we're going to back out to a new folder again, and this
+            time I'm going to create a different project. And to do that I'm going to type:</p>
+          <figure>
+            <pre><code class="language-command-line">vue ui</code></pre>
+            <figcaption>Fig 02-012</figcaption>
+          </figure>
+          <p>So now it's going to start the GUI for the Vue CLI right here in the browser, and notice hello-cli if I
+            come back to it and I refresh, it's not running anymore:</p>
+          <figure>
+            <img src="images/Fig02-013.PNG"/>
+            <figcaption>Fig 02-013</figcaption>
+          </figure>
+          <p>And let's go full screen. Then I'm going to click on the Home button in the bottom left. Now here we can
+            see we already had one called hello-world:</p>
+          <figure>
+            <img src="images/Fig02-014.PNG"/>
+            <figcaption>Fig 02-014</figcaption>
+          </figure>
+          <p>You may have others on your machine as well. I'm going to click Create up here in the middle. It's then
+            asking where do you want to create this. I don't want to create it in hello-world, I want to create it
+            inside my play vue folder. So I'll click on that folder:</p>
+          <figure>
+            <img src="images/Fig02-015.PNG"/>
+            <figcaption>Fig 02-015</figcaption>
+          </figure>
+          <p>Now I'm going to click on Create a new project. We want to type the name of the project. In this case we're
+            going to type hello-cli-ui, and then we're going to keep all the defaults and click on Next:</p>
+          <figure>
+            <img src="images/Fig02-016.PNG"/>
+            <figcaption>Fig 02-016</figcaption>
+          </figure>
+          <p>
+            Notice now we can start selecting our options:</p>
+          <figure>
+            <img src="images/Fig02-017.PNG"/>
+            <figcaption>Fig 02-017</figcaption>
+          </figure>
+          <p>We're going to choose Default again, which is basically the same as doing the -d flag like we did from the
+            terminal. Now we're clicking on Create Project. Once the project has been completely installed, we can now
+            see a Welcome page:</p>
+          <figure>
+            <img src="images/Fig02-018.PNG"/>
+            <figcaption>Fig 02-018</figcaption>
+          </figure>
+          <p>and it tells us over on the left there's additional things that we can do.</p>
+          <p>We'll run over to the Tasks right here in this icon, and then we can click on serve, and we'll just click
+            on the defaults for running it:</p>
+          <figure>
+            <img src="images/Fig02-019.PNG"/>
+            <figcaption>Fig 02-019</figcaption>
+          </figure>
+          <p>and it's going to run this serve task, same thing as when we do npm run serve in the command line. We can
+            also click on the Open app button over here once it's done. We know it's done because it's been idle for 2
+            seconds and it's running and everything is green, and there is our default app:</p>
+          <figure>
+            <img src="images/Fig02-020.PNG"/>
+            <figcaption>Fig 02-020</figcaption>
+          </figure>
+          <p>And now we have a high level of confidence that we can create Vue apps from the CLI and the CLI's UI. </p>
+        </div>
+        <div>
+          <h3>Summary and Next Steps</h3>
+          <p>
+            Congratulations, you just verified and set up the Vue CLI. Now you're ready to roll. To recap, we installed
+            Node. js, our prerequisite for running the Vue CLI. Then installed the Vue CLI either using npm or Yarn, and
+            then we verified our setup and of course created our first two apps, hello-cli and hello-cli-ui.</p>
+          <figure>
+            <img src="images/Fig02-021.PNG"/>
+            <figcaption>Fig 02-021</figcaption>
+          </figure>
+          <p>And this module was left intentionally short so we can show how simple it is to install the different tools
+            that we need to run the Vue CLI. In the next module, we'll take a look at some other development tools that
+            we can use to enhance the Vue development experience along with the Vue CLI.
+          </p></div>
+                </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

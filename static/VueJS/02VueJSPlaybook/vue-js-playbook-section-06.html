@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="UTF-8">
+  <title>Vue.js Playbook</title>
+  <script src="https://unpkg.com/vue"></script>
+  <!--<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"-->
+  <!--integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">-->
+  <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" rel="stylesheet">
+  <link href="prism.css" rel="stylesheet">
+  <script src="prism.js"></script>
+  <style>
+    img {
+      max-width: 100%;
+    }
+    .example {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+<div class="container" id="app">
+  <div class="panel-group">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h2>Vue.js Playbook</h2>
+      </div>
+
+      <div class="panel-body">
+        <div>
+          <h2>Rendering Lists and Conditional Rendering in Vue.js</h2>
+          <div>
+            <h3>
+              Conditional Rendering and Rendering of Lists
+            </h3>
+            <p>
+              The last module showed you how to respond to user events in Vue. That discussion gave me the opportunity
+              to show you how to handle things like button clicks and pressing keys. These types of interactions are
+              used in most apps. In fact, in Growler, if you click the Search button or press the Enter key, you would
+              expect a search to run. Once run, you would expect that query to return a list of results.</p>
+            <p>In this module, I'm going to show you how to render those results. In this module, we're going to look at
+              a number of directives in Vue that deal with rendering. This module will begin with a discussion on
+              rendering elements conditionally. From there, we'll dive into rendering lists of items. As part of this,
+              you'll see how to create item templates and react to list changes. Growler will really take shape in this
+              module. For that reason, I'm really excited for this module. I think you should be too.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Rendering Elements Conditionally
+            </h3>
+            <p>
+              Vue has several directives to help you show and hide elements when certain conditions are met. These
+              directives relate to development concepts like if/else statements. Vue's conditional directives are best
+              used in different situations. Some of these directives are better used when an app is loaded, while others
+              are better used at runtime.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Rendering Conditionally on Load
+            </h3>
+            <p>
+              As apps grow in size, they can take longer to load. In this situation, you should strive to create a great
+              loading experience in your app. You can do this by rendering elements after they've loaded. This can be
+              useful if your app is coming from a slower network connection, or if you need to wait for additional
+              JavaScript object initialization.</p>
+            <p>To demonstrate what a poor experience could look like, I've created an example which looks like this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-001.png"/>
+              <figcaption>Fig 05-001</figcaption>
+            </figure>
+            <p class="example">Module 05 - simulation with poor load time</p>
+            <p class="example">Module 05 - v-cloak in action</p>
+            <p>This example is part of the sample repo that's part of this course. That repo can be found here:</p>
+            <a href="https://github.com/ecofic/course-vue-getting-started">https://github.com/ecofic/course-vue-getting-started</a>
+            <p>Still, in this example, the load of Growler is intentionally delayed by 3 seconds. This is to simulate a
+              slow network connection. Notice how the area on the left shows the binding syntax. This happens because
+              nothing is hiding the content while the Growler view is being created. If a user sees this, they may think
+              that the app is broken. However, the area on the right is a bit cleaner. The user doesn't see anything
+              until Growler has been created. This is made possible by the cloak directive.</p>
+            <p>The cloak directive hides elements until a view is compiled. In module 1, we discussed that compilation
+              happens right after a view has been created. To use the cloak directive, you add it to an element, like
+              this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-002.png"/>
+              <figcaption>Fig 05-002</figcaption>
+            </figure>
+            <p>As you can see, I simply added the cloak directive to the header element. You can probably imagine that
+              cloak can be used with a loading indicator in an app. Still, you should probably be aware that you can't
+              just apply the cloak directive to hide content while an app is loading. In fact, to actually hide content,
+              you must also include this CSS in your app:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-003.png"/>
+              <figcaption>Fig 05-003</figcaption>
+            </figure>
+            <p>This CSS sets the display property of an element that includes the cloak directive. I typically place
+              this CSS definition in a shared CSS file so that it's widely available in my app. In fact, this CSS
+              definition is in the public/css/app. css file in the sample repo for this project. If you look at it,
+              you'd see the code above, which sets the display property to none. The none value on the display property
+              hides the element, however, this property value doesn't impact layout, it only impacts the visibility.
+              This behavior helps prevent a jerky experience when an app is transitioning from the loading state to the
+              running state. Once your app is running, you may want to conditionally show and hide elements at runtime.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Rendering Conditionally During Runtime
+            </h3>
+            <p>
+              Vue provides several directives that empower you to conditionally render elements during runtime. One of
+              these directives is a familiar if/else construct. There's also an additional directive called show. These
+              directives serve unique purposes. For that reason, I'm going to cover these directives in detail in this
+              section.</p>
+            <p>The if/else directives let you conditionally render content based on an expression. If an expression
+              returns a truthy value, the condition will be met, and the element will render. If the expression does not
+              evaluate as truthy, the element will not be rendered. For example, look at the following sample:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-004.png"/>
+              <figcaption>Fig 05-004</figcaption>
+            </figure>
+            <p>In this example, I'm showing the number of beers returned on a search in Growler. The cloak directive is
+              used to hide any bindings until Growler is created. Once Growler has been created, these if/else
+              directives determine what to render based on the number of beers found. If no beers were found, this
+              descriptive block of text is shown:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-005.png"/>
+              <figcaption>Fig 05-005</figcaption>
+            </figure>
+            <p>If a single beer was found, this block of text is shown:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-006.png"/>
+              <figcaption>Fig 05-006</figcaption>
+            </figure>
+            <p>
+              Finally, if more than a single beer was found, this block of text is shown:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-007.png"/>
+              <figcaption>Fig 05-007</figcaption>
+            </figure>
+            <p>If you get the exercise files for this course and run this sample for yourself, you'll see a screen that
+              looks like this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-008.png"/>
+              <figcaption>Fig 05-008</figcaption>
+            </figure>
+            <p class="example">Module 05 - if/else directives</p>
+            <p>Each time you click the Search button, a random collection of beers will be generated. This could cause a
+              different block in the if/else statement to get rendered. I bring this up, because each time the value
+              changes, the elements and all of their children will be destroyed and reconstructed. It's not a big deal
+              in this small example, but it's something to keep in mind from a performance perspective for more complex
+              user interfaces. If you need to toggle something regularly, you may want to consider the show
+              directive.</p>
+            <p>The show directive is another option to conditionally show content at runtime. As shown in the following
+              example:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-009.png"/>
+              <figcaption>Fig 05-009</figcaption>
+            </figure>
+            <p class="example">Module 05 - v-show directive</p>
+            <p>The show directive is similar to the if directive. Earlier, I used the if/else directive to conditionally
+              show information. Those directives were appropriate in that case because I wanted to show a grammatically
+              correct phrase. In this example, though, I'm using the show directive because I'm showing or hiding a
+              block of elements. This approach is slightly different, because in this case only the display css property
+              is changed.</p>
+            <p>The show directive is a way to conditionally set the CSS display property at runtime. If the expression
+              on this directive evaluates as falsy, the elements display property will be set to none. This also means
+              that when you use the show directive, it will always render the element. The show directive is used to
+              simply show or hide an HTML block.</p>
+            <p>At this point, you may think the show and if directive are pretty similar. You might want to know what
+              makes them differ from each other. While the if and show directives are similar, there are some important
+              differences.</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-010.png"/>
+              <figcaption>Fig 05-010</figcaption>
+            </figure>
+            <p> First, the if/else directives are better for more complex logic, while the show directive is better for
+              basic logic. That's why the if/else directives were used when showing the count of beer results. If it
+              wasn't for the need to handle the case where a single beer was returned, a show directive would have been
+              better. The reason why is because of rendering.</p>
+            <p>The show directive always renders an element, however, the if directive only renders the content if an
+              expression is truthy. In other words, the if directive conditionally renders elements. From this behavior,
+              we can draw two conclusions. First, the if directive has higher toggling costs at runtime than the show
+              directive. At runtime, the if directive destroys and recreates the virtual DOM as conditions change. On
+              the other hand, the show directive just toggles the CSS display property, which is faster at runtime.</p>
+            <p>The second conclusion is that if something is unlikely to change after a rendering, it's better to use an
+              if directive. The show and if directives are important to keep in mind when rendering content
+              conditionally at runtime. For the smoothest experience, use the cloak directive while your view is
+              loading. Still, rendering individual items are one thing, rendering lists of items are another.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Rendering Lists of Items
+            </h3>
+            <p>
+              Vue provides one directive that's focused on lists of items. That directive is called for. The for
+              directive can be used in a number of ways. You can use the for directive to loop a specific number of
+              times through an object, or through a list. I'm going to show you how to use the for directive to tackle
+              each of these scenarios. I'm also going to show you what happens when you use the for directive and the if
+              directive together.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Looping a Specific Number of Times
+            </h3>
+            <p>
+              In some situations, you know the exact number of times that you want to loop. For example, in Growler, we
+              know the number of pages of search results that are returned by a search. This information, and the for
+              directive, could be used to create a search results pager like this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-011.png"/>
+              <figcaption>Fig 05-011</figcaption>
+            </figure>
+            <p class="example">Module 05 - example 01</p>
+            <p>In this code snippet, I'm using an HTML unordered list to house a list of pages. Notice that the for
+              directive isn't placed on the ul tag, though. Instead, I've placed it on the list item element, because
+              that's the element that needs to be repeated. This template will repeat until the limit is reached. In
+              total, the number of list item elements created will match pageCount. That's because when looping to a
+              number, like pageCount, Vue automatically iterates by an interval of 1.</p>
+            <p>Notably, the alias itself also starts at 1. The alias is a variable used in the context before a
+              directive. This variable represents the current item that's being iterated on. When looping through a
+              range of numbers, like in our paging example, this value starts at 1. This may surprise you if you've
+              worked with other programming languages. In other languages, this value would likely start at 0, however,
+              when working with numbers, Vue automatically starts this value at 1, not 0. This lets you bind the page
+              alias in the template to get what you want.</p>
+            <p>Next to the alias is a delimiter called in. The delimiter helps make the for directive more readable. In
+              this case, the delimiter is the word in, however, you have the choice to use the term of instead:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-012.png"/>
+              <figcaption>Fig 05-012</figcaption>
+            </figure>
+            <p>The decision to choose in or of comes down to personal preference. The reason that of is an option is
+              because of is more consistent with JavaScript's iterator syntax. Either way, we'll be using the in
+              delimiter in this course.</p>
+            <p>To the right of the delimiter is the source data. The source is what's being iterated over. You can
+              iterate over a range of integers, however, you cannot iterate over a range of floating-point numbers. You
+              can only use whole integer values in a for directive when looping a specific number of times. If you try
+              to use a floating-point number, you'll get an error in your view. For that reason, when you need to loop a
+              specific number of times, you need to use integers. The for directive is useful for other scenarios,
+              though, including traversing object properties.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Traversing Object Properties
+            </h3>
+            <p>
+              The for directive can be used to traverse object properties. The cool thing is, you don't even have to use
+              a different syntax. In fact, if you use a JavaScript object as the source for a for directive, like
+              this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-013.png"/>
+              <figcaption>Fig 05-013</figcaption>
+            </figure>
+            <p class="example">Module 05 - getting property values</p>
+            <p>You'll get a list of the property values in the object. In this example, each property value of
+              currentUser would appear as a list item in the view, meaning this HTML would get rendered like this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-014.png"/>
+              <figcaption>Fig 05-014</figcaption>
+            </figure>
+            <p>From this rendering, you can see that if a property is a string or a number, the value simply appears,
+              however, if a property is an array or another object, it will be rendered in a string representation.
+              Using a for directive to get property values is pretty straightforward. You can also use the for directive
+              to get the property names. To get each property's name and value, you can loop through an object like
+              this.</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-015.png"/>
+              <figcaption>Fig 05-015</figcaption>
+            </figure>
+            <p class="example">Module 05 - getting property keys</p>
+            <p>If you look closely at the for directive, you'll notice that I added the k parameter. This parameter
+              represents the key or property name for the current property. So if this code were rendered, you'd see
+              this.</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-016.png"/>
+              <figcaption>Fig 05-016</figcaption>
+            </figure>
+            <p>The for directive's flexibility doesn't stop there, though. You can also get the current index while
+              looping.</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-017.png"/>
+              <figcaption>Fig 05-017</figcaption>
+            </figure>
+            <p class="example">Module 05 - getting property index</p>
+            <p>In this example, I've added the i parameter to the for directive. This parameter represents the current
+              iteration index. With each iteration, I'm using the value, key, and index of each property. Now, if this
+              view was rendered, you'd actually see all three of these components as shown on the screen:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-018.png"/>
+              <figcaption>Fig 05-018</figcaption>
+            </figure>
+            <p>While not surprising, there is an interesting detail here. Earlier, while showing the for directive loop
+              a specific number of times, I mentioned that the alias starts at 1. Here on the screen, though, you can
+              see that 0 is shown. The reason for this is because when looping over a range, the alias starts at 1. This
+              is just a nice little thing that Vue does. But in the context of properties, the alias starts at 0, not 1.
+              This is consistent with many programming languages, including JavaScript. There is one detail that is not
+              consistent across JavaScript engine implementations, though.</p>
+            <p>To iterate over an object, Vue gets the list of keys using the JavaScript Object. keys function. This
+              function returns an array of enumerable properties in a JavaScript object. I'm mentioning this, because
+              different JavaScript engines return these properties in different orders. For that reason, if you need to
+              list the properties in a consistent order, you will need to create the array of properties yourself. In
+              either case, the for directive can be helpful when you're traversing object properties. It can also be
+              helpful when iterating through arrays.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Iterating Through Arrays
+            </h3>
+            <p>
+              You can use the for directive to iterate through JavaScript arrays. You can iterate over arrays of values,
+              arrays of objects, and even arrays of arrays. To demonstrate, let's assume in Growler that we wanted to
+              create the search results pager. This time, though, the number of pages aren't in a numeric property, like
+              this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-019.png"/>
+              <figcaption>Fig 05-019</figcaption>
+            </figure>
+            <p class="example">Module 05 - iterating through an array of values</p>
+            <p>Instead, they'll be created in an array like this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-020.png"/>
+              <figcaption>Fig 05-020</figcaption>
+            </figure>
+            <p class="example">Module 05 - iterating through an array of objects</p>
+            <p>This slide shows a pre-defined JavaScript array called pages. The HTML template loops through the array
+              and creates a list item with a link for each page. This for directive syntax has already been shown
+              several times, however, this time we're iterating through an array of values. If we wanted to loop through
+              an array of objects, we could by doing some like this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-021.png"/>
+              <figcaption>Fig 05-021</figcaption>
+            </figure>
+            <p>In this example, we're creating the pager by using an array of objects called pages. Each object in this
+              array contains a number and a URL. These two properties are bound in the template during rendering. In
+              this case, we're using the attribute binding syntax and the semantic binding approach described in module
+              2. In some situations, you may want the index of the current item in the array. You could get that index
+              using an approach similar to the one used earlier, like this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-022.png"/>
+              <figcaption>Fig 05-022</figcaption>
+            </figure>
+            <p class="example">Module 05 - getting the index of an array object</p>
+            <p>In this example, I've added the indexer parameter i. Beyond that, everything else is the same. While
+              you've seen the indexer approach, you haven't seen how to iterate through nested arrays. Let's pretend
+              that each page object in our pages array has a property called sections. This property may be used to
+              divide a result page into multiple groups. This updated array may look something like this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-023.png"/>
+              <figcaption>Fig 05-023</figcaption>
+            </figure>
+            <p class="example">Module 05 - iterating through an array of arrays</p>
+            <p>On this slide, I'm looping through each page in pages using the for directive again. While working with
+              each page, though, I also loop through the nested array named sections using an inner for directive:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-024.png"/>
+              <figcaption>Fig 05-024</figcaption>
+            </figure>
+
+            <p>In my semantic binding, I'm referencing data from the outer for directive here:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-025.png"/>
+              <figcaption>Fig 05-025</figcaption>
+            </figure>
+            <p>and data from the inner for directive here:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-026.png"/>
+              <figcaption>Fig 05-026</figcaption>
+            </figure>
+            <p>When items are associated with groups, you often need to use conditional logic, which raises the
+              question, what happens if an element uses both an if directive and a for directive?
+            </p>
+          </div>
+          <div>
+            <h3>
+              Using v-for and v-if Together
+            </h3>
+            <p>
+              When a for directive and an if directive are used on the same element, the for directive has higher
+              precedence. This means that while a for directive is iterating, it will run first on each iteration. Then,
+              the if directive will get run separately. This is handy if you only want to render specific items in a
+              list.</p>
+            <p>For example, in Growler, let's pretend that you wanted to let the user filter the beer results based on
+              the alcohol by volume level. That might look something like this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-027.png"/>
+              <figcaption>Fig 05-027</figcaption>
+            </figure>
+            <p class="example">Module 05 - using v-for and v-if together</p>
+            <p>This approach may be used with search results to filter out beers that have more alcohol than you prefer.
+              You can see that as I slide the slider, the list of beers changes.</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-028.png"/>
+              <figcaption>Fig 05-028</figcaption>
+            </figure>
+            <p>This is happening because each beer in the underlying array is getting rendered conditionally at runtime.
+              This rendering is happening via the HTML template shown on this slide:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-029.png"/>
+              <figcaption>Fig 05-029</figcaption>
+            </figure>
+            <p>
+              Here on the left, you can see an array of hard-coded beers. Each beer has a name and an alcohol by volume
+              value. By default, we're setting the maximum alcohol by volume level at 7%:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-030.png"/>
+              <figcaption>Fig 05-030</figcaption>
+            </figure>
+            <p>This property is bound to the slider in the HTML template:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-031.png"/>
+              <figcaption>Fig 05-031</figcaption>
+            </figure>
+            <p>The array of beers is bound as list items using the for directive:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-032.png"/>
+              <figcaption>Fig 05-032</figcaption>
+            </figure>
+            <p>While iterating, Vue will decide whether or not to render each beer, by comparing the current beer's abv
+              to the maxAbv value.</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-033.png"/>
+              <figcaption>Fig 05-033</figcaption>
+            </figure>
+            <p>This works because the iteration happens before the comparison. In other words, the for directive takes
+              precedence over the if directive. Using if directives on the same line as a for directive can help you
+              create compact templates. Creating a compact template can help you keep your code clean if you're
+              rendering lists of items. While the items I've shown up to this point have been static, that's not always
+              the case. In fact, to deliver a smoother experience, you may need to change an array at runtime.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Detecting Array Changes
+            </h3>
+            <p>
+              In module 2, I explained how templates can automatically react to property changes. This is possible due
+              to the change notification and dependency tracking features that happen behind the scenes. However, I also
+              mentioned that these features do not automatically happen on native JavaScript arrays. Instead, you must
+              use a different approach if an array changes or is replaced.</p>
+            <p>When an array changes, it mutates. Vue has seven baked-in mutation functions to change an array as
+              needed. These seven functions are:</p>
+            <ul>
+              <li>sort</li>
+              <li>reverse</li>
+              <li>push</li>
+              <li>pop</li>
+              <li>shift</li>
+              <li>unshift</li>
+              <li>splice</li>
+            </ul>
+            <p>Each of these functions are wrappers around the standard JavaScript array functions of the same names.
+              The reason these wrapper functions are needed is to trigger Vue updates. If you're unfamiliar with these
+              functions, don't worry, I'm going to go through each of them. If you are familiar with these JavaScript
+              functions, I encourage you to at least watch the first one, so you can see the syntax used in Vue.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Using the Sort Function
+            </h3>
+            <p>
+              The sort function puts elements in an array in order. For example, let's pretend that I have an array of
+              beer names defined like this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-034.png"/>
+              <figcaption>Fig 05-034</figcaption>
+            </figure>
+            <p class="example">Module 05 - Sorting an array of strings</p>
+            <p>If I applied the sort function like this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-035.png"/>
+              <figcaption>Fig 05-035</figcaption>
+            </figure>
+            <p>The array would be sorted in ascending order. This happens because, by default, the sort function treats
+              each element in the array as a string, and orders elements in ascending order. Now, imagine the array were
+              a list of alcohol by volume values:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-036.png"/>
+              <figcaption>Fig 05-036</figcaption>
+            </figure>
+            <p class="example">Module 05 - Sorting an array of numbers</p>
+            <p> If that were the case, you would see a slightly different result. In fact, let's imagine there's an
+              array called abv, which contains these values. Now, if I applied the sort function to this array, I would
+              get this result:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-037.png"/>
+              <figcaption>Fig 05-037</figcaption>
+            </figure>
+            <p>Notice that the numbers are not in numerical order. This is because, by default, the sort function treats
+              each element in the array as a string, even if it's another type. to overcome this behavior, you must
+              customize the sort function like this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-038.png"/>
+              <figcaption>Fig 05-038</figcaption>
+            </figure>
+            <p>On this slide, I'm using an override of the sort function. This override accepts a comparison function.
+              During the sort operation, this function determines how two array elements should be ordered in relation
+              to each other. These elements are passed in as the parameters. It is your responsibility to return a
+              negative, 0 or positive value when comparing the elements.</p>
+            <p>A negative value means that the first parameter should be in the array before the second parameter. A
+              value of 0 means that there should be no change in the order. Finally, if a positive value is returned,
+              the first parameter should be in the array after the second parameter. In the context of this slide:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-039.png"/>
+              <figcaption>Fig 05-039</figcaption>
+            </figure>
+            <p>All of this was condensed down to this single line of code. At this point, you've seen how to use the
+              sort function to arrange an array in ascending order. Now, imagine you wanted to show things in descending
+              order. In that situation, you may want to use the reverse function.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Using the Reverse Function
+            </h3>
+            <p>
+              The reverse function rearranges an array into the opposite direction. Put simply, the reverse function
+              reverses an array. To demonstrate, let's revisit the array of beer names.</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-040.png"/>
+              <figcaption>Fig 05-040</figcaption>
+            </figure>
+            <p class="example">Module 05 - Reversing a sorted Array</p>
+            <p>
+            <p>This array has already been sorted in ascending order. If I apply the reverse function, the beer names
+              will now appear in descending order:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-041.png"/>
+              <figcaption>Fig 05-041</figcaption>
+            </figure>
+            <p>This isn't just for changing the direction of a sort, though. Let's take a smaller, unsorted array:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-042.png"/>
+              <figcaption>Fig 05-042</figcaption>
+            </figure>
+            <p class="example">Module 05 - Reversing an unsorted Array</p>
+            <p>
+              If the reverse function were to be applied, it would appear like this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-043.png"/>
+              <figcaption>Fig 05-043</figcaption>
+            </figure>
+            <p>Notice in this example that the elements in the array are reversed. No sorting was applied before the
+              arranging happened. Once again, the reverse function is purely for changing the direction of an array. If
+              you need to manage elements in an array, you might consider the push and pop functions.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Pushing and Popping Array Items
+            </h3>
+            <p>
+              The push function adds items to the end of an array. After an item is added to the array, the push
+              function returns the updated length of the array. Let's revisit the list of beer names for a second:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-044.png"/>
+              <figcaption>Fig 05-044</figcaption>
+            </figure>
+            <p class="example">Module 05 - Push items onto an Array</p>
+            <p>I could add a beer named Pope Lick Porter to this list with the push function, like this</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-045.png"/>
+              <figcaption>Fig 05-045</figcaption>
+            </figure>
+            <p>Once added, the beers array becomes this.</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-046.png"/>
+              <figcaption>Fig 05-046</figcaption>
+            </figure>
+            <p>As you can see, the Pope Lick Porter was added to the end of the list. If I wanted to remove this beer, I
+              could look to the pop function. The pop function removes the last element from an array. Once removed, the
+              pop function returns the item that was removed from the array. Notice that this differs from the push
+              function, which returned the array length. So if I took the array from the last slide, and then called the
+              pop function, this would be the result:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-047.png"/>
+              <figcaption>Fig 05-047</figcaption>
+            </figure>
+            <p class="example">Module 05 - Pop items off an Array</p>
+            <p>In addition, the pop function would return this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-048.png"/>
+              <figcaption>Fig 05-048</figcaption>
+            </figure>
+            </figure><p>For use, if you needed it. The pop and push functions are useful for working with the end of an
+            array. If you need to work with items at the beginning of an array, you may consider the shift and unshift
+            functions.
+          </p>
+          </div>
+          <div>
+            <h3>
+              Using the Shift and Unshift Function
+            </h3>
+            <p>
+              To add items to the beginning of an array, you can use the unshift function. Personally, the name of this
+              function has always made me do a double-take. The idea that I need to call a function name with the prefix
+              of un to add something has always thrown me off. Still, just like the push function, once the item is
+              added to the array, the unshift function will return the new length of the array.</p>
+            <p>An example of adding a beer name to the beginning of an array would look like this.</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-049.png"/>
+              <figcaption>Fig 05-049</figcaption>
+            </figure>
+            <p class="example">Module 05 - Unshift items onto an Array</p>
+            <p>In this example, I'm adding the Pope Lick Porter to the start of the beers array:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-050.png"/>
+              <figcaption>Fig 05-050</figcaption>
+            </figure>
+            <p>Once added, the beers array has a length of 4:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-051.png"/>
+              <figcaption>Fig 05-051</figcaption>
+            </figure>
+            <p>That new length would get returned by the unshift function call. If I chose to remove the Pope Lick
+              Porter that I just added, I could use the shift function.</p>
+            <p>The shift function removes the first item of an array. Once removed, this function will return that item.
+              This is similar to the pop function, except that instead of removing the last item, the shift function
+              removes the first item. So if you wanted to remove the Pope Lick Porter from the array that was shown on
+              the previous slide, you could, like this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-052.png"/>
+              <figcaption>Fig 05-052</figcaption>
+            </figure>
+            <p class="example">Module 05 - Shift items off an Array</p>
+            <p>As visible on this slide, the shift function removes the first item from the beers array. You've also
+              seen how to remove items from the end of an array. If you need to remove items from the middle of an
+              array, you need to do some splicing.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Splicing an Array
+            </h3>
+            <p>
+              When it comes to array management, the splice function is the Swiss Army knife of array functions. The
+              splice function lets you add and remove items to and from an array. You can add or remove items to or from
+              the start, middle or end of an array.</p>
+            <p>Since I've already shown you how to add and remove items from the start and end of an array, let's talk
+              about the middle of an array. Let's once again visit a list of beers.</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-053.png"/>
+              <figcaption>Fig 05-053</figcaption>
+            </figure>
+            <p class="example">Module 05 - Removing a specific number of items with splice</p>
+            <p>In this list, we have four beers. Now, imagine that we wanted to remove the middle two beers. To remove
+              the Hyote Chocolate Stout and the Ahool Ale, you could use the splice function like this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-054.png"/>
+              <figcaption>Fig 05-054</figcaption>
+            </figure>
+            <p>In this example, I'm using the splice function to remove two beers from the beers array. The first
+              parameter is a required integer. This integer specifies where in the array to begin adding or removing
+              items. The second parameter is optional, however, on this slide it means that I want to remove the two
+              beers beginning at the first index. Had I not included it, all beers beginning with the first index would
+              have been removed from the array.</p>
+            <p class="example">Module 05 - Removing remaining items with splice</p>
+            <p>In either case, the splice function would return the removed items into their own array. The beers array
+              itself would get updated to this.</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-055.png"/>
+              <figcaption>Fig 05-055</figcaption>
+            </figure>
+            <p>The splice function isn't just for removing items, though. You can actually use the splice function to
+              insert items into an array. For example, let's take our updated list of beers and add the removed beers
+              back into the array. We could do that like this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-056.png"/>
+              <figcaption>Fig 05-056</figcaption>
+            </figure>
+            <p class="example">Module 05 - Inserting items with splice</p>
+            <p>In this code snippet, I'm looping through the list of beers that were previously removed. The splice
+              function is responsible for adding each beer back to the list:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-057.png"/>
+              <figcaption>Fig 05-057</figcaption>
+            </figure>
+            <p>The first parameter specifies that I want to begin adding beers after the first item in the array:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-058.png"/>
+              <figcaption>Fig 05-058</figcaption>
+            </figure>
+            <p>When adding items with the splice function, the second parameter is required:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-059.png"/>
+              <figcaption>Fig 05-059</figcaption>
+            </figure>
+            <p>Since we don't want to remove any beers, I've set it to 0. Then, I'm passing in the name of the beer to
+              add it to the list:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-060.png"/>
+              <figcaption>Fig 05-060</figcaption>
+            </figure>
+            <p>Once completed, we get the following list of beers:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-061.png"/>
+              <figcaption>Fig 05-061</figcaption>
+            </figure>
+            <p>Splicing is a great way to add and remove elements to an array, however, you can also use the splice
+              function to update existing elements in an array.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Updating an Array Element
+            </h3>
+            <p>
+              Up to this point, I've shown you how to update an array using a variety of mutations functions, however,
+              in some situations you may want to update an individual item in an array. For example, we've been changing
+              a list of beers. Now, imagine that in this array we discovered that the Ahool Ale wasn't just an ale.</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-062.png"/>
+              <figcaption>Fig 05-062</figcaption>
+            </figure>
+            <p>
+              Instead, we learned that it should be a pale ale. In that case, we could update the Ahool Ale item like
+              this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-063.png"/>
+              <figcaption>Fig 05-063</figcaption>
+            </figure>
+            <p class="example">Module 05 - Updating an array item</p>
+            <p>In this snippet, I'm using a function that's baked in to Vue. This utility function is necessary,
+              because Vue cannot detect updates to individual array elements. This is due to the limitations of
+              JavaScript explained at the start of module 2.</p>
+            <p>Still, Vue provides a utility function named set to help you get past this limitation. In this example,
+              the first parameter is the array that's getting updated:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-064.png"/>
+              <figcaption>Fig 05-064</figcaption>
+            </figure>
+            <p>
+              The second parameter is the index of the item in the array that we want to update</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-065.png"/>
+              <figcaption>Fig 05-065</figcaption>
+            </figure>
+            <p>Finally, the third parameter is the new value:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-066.png"/>
+              <figcaption>Fig 05-066</figcaption>
+            </figure>
+            <p>When executed, this line tells Vue to update the UI. This will result in the following:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-067.png"/>
+              <figcaption>Fig 05-067</figcaption>
+            </figure>
+            <p>If you prefer to stay closer to JavaScript APIs, you can by using the splice function:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig05-068.png"/>
+              <figcaption>Fig 05-068</figcaption>
+            </figure>
+            <p>If you prefer to use the splice approach, this example becomes this. Everything on this slide is the
+              same, except for the code used to update the Ahool Pale Ale. This line of code is exactly one character
+              longer than vue. set approach. For that reason, it's a marginal change if you prefer to use splice over
+              the vue. set function. There's no difference here, it comes down to personal preference.</p>
+            <p>Still, that's how you can update an array element. You also saw how to add and remove elements from an
+              array. You also saw how to rearrange arrays with the sort and reverse options. This module was about more
+              than that, though. In this module, you learned how to handle array changes. This is important because
+              arrays are often the data source for lists of items in a view. For that reason, you also saw how to render
+              lists of items. In addition, you learned how to conditionally render elements.</p>
+            <p>While these features help you display exactly what you want, there are ways to do it even better. In the
+              next module, I'm going to show you how to react to data changes to get even better performance in your
+              view.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>8

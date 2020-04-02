@@ -1,0 +1,1744 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="UTF-8">
+  <title>maxsagetech - Vue JS Fundamentals</title>
+  <script src="https://unpkg.com/vue"></script>
+  <!--<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"-->
+  <!--integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">-->
+  <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" rel="stylesheet">
+  <link href="prism.css" rel="stylesheet">
+  <script src="prism.js"></script>
+  <style>
+
+    img {
+      max-width: 100%;
+      width: 100%
+    }
+  </style>
+</head>
+<body>
+<div class="container" id="app">
+  <div class="panel-group">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h2>Vue JS Fundamentals</h2>
+      </div>
+      <div class="panel-body">
+        <div class="course-transcript">
+          <div><h2>Creating Vue.js Components and Using Template Syntax</h2>
+            <div><h3>Introduction</h3>
+              <p>
+                In this module, we're going to explore all the fundamentals of creating Vue. js components and working
+                with component syntax. This includes creating components, using bindings to display data and handle
+                events, conditionally displaying elements with v-if and v-show, showing elements with v-for, styling
+                components, working with component livecycle hooks, and reducing duplication with mixins. There's a lot
+                here, so let's get started.
+              </p>
+            </div>
+            <div><h3>Global Components vs. Single-file Components</h3>
+              <p>
+                Before we jump into coding, we should understand the difference between global components and
+                single-file components:</p>
+              <figure>
+                <img src="images/Fig02-001.png"/>
+                <figcaption>Fig 02-001</figcaption>
+              </figure>
+              <p>In this course, we'll be working only with single-file components, but in the wild, you'll likely run
+                into Vue code that is using global components, so let's briefly talk about each of them and why you
+                might use one over the other.</p>
+              <p>First of all, it's good to understand that a component is really just another Vue instance. In fact,
+                the easiest way to just get something to render in Vue would be to just create a Vue instance like
+                this:</p>
+              <figure>
+                <img src="images/Fig02-002.png"/>
+                <figcaption>Fig 02-002</figcaption>
+              </figure>
+              <p>
+                You can see here that we're creating a new instance of Vue, and then we're passing in an options object
+                that has a simple Hello World template:</p>
+              <figure>
+                <img src="images/Fig02-003.png"/>
+                <figcaption>Fig 02-003</figcaption>
+              </figure>
+              <p> This line of code tells Vue which element on the page to mount this template in:</p>
+              <figure>
+                <img src="images/Fig02-004.png"/>
+                <figcaption>Fig 02-004</figcaption>
+              </figure>
+              <p>So this is a really simple Vue application. In fact, you can hardly call it an application. But with
+                this syntax, what if I want to get more complex, for example, if I want to break things up into smaller,
+                reusable components? Well, we can do that with global components.</p>
+              <p>To demonstrate this, let's pull this part of the template out into a separate component.</p>
+              <figure>
+                <img src="images/Fig02-005.png"/>
+                <figcaption>Fig 02-005</figcaption>
+              </figure>
+              <p>So just above this, we'll create a new component, and notice here that we're calling Vue.component:</p>
+              <figure>
+                <img src="images/Fig02-006.png"/>
+                <figcaption>Fig 02-006</figcaption>
+              </figure>
+              <p>
+                and then we're passing in the name of the component here. And this last line should look a little
+                familiar:</p>
+              <figure>
+                <img src="images/Fig02-007.png"/>
+                <figcaption>Fig 02-007</figcaption>
+              </figure>
+              <p>This is the options object, and it is the same type of object that we're passing into our Vue instance
+                down here:</p>
+              <figure>
+                <img src="images/Fig02-008.png"/>
+                <figcaption>Fig 02-008</figcaption>
+              </figure>
+              <p>except that we're just not specifying an element property. This should help underscore the fact that
+                components are really just Vue instances. With just one or two exceptions, the options object that you
+                pass into a new component has the exact same properties available as the one you pass in to a Vue
+                instance.</p>
+              <p>So anyhow, notice that our new World component is assigned to this World variable:</p>
+              <figure>
+                <img src="images/Fig02-009.png"/>
+                <figcaption>Fig 02-009</figcaption>
+              </figure>
+              <p>So now we can replace this part of our component:</p>
+              <figure>
+                <img src="images/Fig02-010.png"/>
+                <figcaption>Fig 02-010</figcaption>
+              </figure>
+              <p>with that component like this:</p>
+              <figure>
+                <img src="images/Fig02-011.png"/>
+                <figcaption>Fig 02-011</figcaption>
+              </figure>
+              <p>This World component:</p>
+              <figure>
+                <img src="images/Fig02-012.png"/>
+                <figcaption>Fig 02-012</figcaption>
+              </figure>
+              <p>is a global component. It's just a global constant that I could use anywhere I want. This type of
+                component is great for fairly small applications and especially great for prototyping, but it's not a
+                great option for full, single-page applications at larger scale for a few reasons.</p>
+              <p>First of all, in larger applications, global variables inevitably cause problems because they can be
+                hard to locate, but more importantly, it's easy to run into naming conflicts.</p>
+              <p>Secondly, global components use string templates. That means all of your HTML has to be defined inside
+                a JavaScript string, which means you don't get any syntax highlighting, and you end up doing lots of
+                escaping.</p>
+              <p>
+                Another limitation of global components is that while they nicely encapsulate your HTML template and
+                component logic, CSS is completely left out of the encapsulation, requiring you to rely on global CSS
+                styling.</p>
+              <p>And finally, global components have no build-time compilation support, meaning, for example, you can't
+                do any sort of preprocessing with things like Babel. Single-file components help us with all these
+                limitations.</p>
+              <p>A single-file component is a file with a Vue extension. There are typically three sections in a Vue
+                file, including a template section, a script section, and a style section:</p>
+              <figure>
+                <img src="images/Fig02-013.png"/>
+                <figcaption>Fig 02-013</figcaption>
+              </figure>
+              <p>The template and script sections are required, whereas the style section is optional. We'll dig deeper
+                into everything you can do in these sections throughout the course, but basically the template section
+                is where we define our HTML template. The script section is where we define the JavaScript functionality
+                of our component and where we export it so that it can be exported elsewhere. And finally, the style
+                section is where we define the CSS classes used by our template.</p>
+              <p>Of course, if you look at this file:</p>
+              <figure>
+                <img src="images/Fig02-014.png"/>
+                <figcaption>Fig 02-014</figcaption>
+              </figure>
+              <p>no browser is going to be able to render a file like this, so Vue files are compiled by webpack at
+                build time to generate HTML, JavaScript, and CSS files that the browser can work with. This compilation
+                comes for free, already configured for us when we start the project with the CLI. This all makes using
+                single-file components a no-brainer when building full-featured web applications with Vue.</p>
+              <p>So we'll be using single- file components throughout our course. And you may remember that this is what
+                our App.vue component looks like that was generated by the CLI.</p>
+              <figure>
+                <img src="images/Fig02-015.png"/>
+                <figcaption>Fig 02-015</figcaption>
+              </figure>
+              <p>The App.vue component is a single-file component and so is the HelloWorld component that the CLI
+                created that we renamed to our HomePage component. Cool. So now that we understand a bit about the
+                different types of components, let's jump into creating our first component from scratch.
+              </p>
+            </div>
+            <div><h3>Creating Your First Component</h3>
+              <p>All right, now the real fun begins. Let's start creating our own components. We already have a HomePage
+                component; now we want to create a page where we can build our custom robots. A new page means a new Vue
+                components, and I could just put that new component right here:</p>
+              <figure>
+                <img src="images/Fig02-016.png"/>
+                <figcaption>Fig 02-016</figcaption>
+              </figure>
+              <p>in the components directory, but I don't think that scales very well as applications get larger. I
+                prefer to structure my apps by feature areas, so let's make that change now. We'll start by creating a
+                new home folder, and then we'll move the HomePage component into that folder:</p>
+              <figure>
+                <img src="images/Fig02-017.png"/>
+                <figcaption>Fig 02-017</figcaption>
+              </figure>
+              <p>And now I can delete this empty components folder:</p>
+              <figure>
+                <img src="images/Fig02-018.png"/>
+                <figcaption>Fig 02-018</figcaption>
+              </figure>
+              <p>All right, now we just need to update the reference to our HomePage component over here in our app
+                component. It's now in the home folder:</p>
+              <figure>
+                <img src="images/Fig02-019.png"/>
+                <figcaption>Fig 02-019</figcaption>
+              </figure>
+              <p>And that should be rendering fine, so let's go take a look at that:</p>
+              <figure>
+                <img src="images/Fig02-020.png"/>
+                <figcaption>Fig 02-020</figcaption>
+              </figure>
+              <p>Okay, yep, that's working just fine. Now let's create our new component. So this is going to be a robot
+                builder component, so let's create a new area for building. We'll call that the build folder. And then
+                in here we'll create a new single-file component called RobotBuilder:</p>
+              <figure>
+                <img src="images/Fig02-021.png"/>
+                <figcaption>Fig 02-021</figcaption>
+              </figure>
+              <p>Remember, component names should be two words. Okay, so let's create our three sections in here, so
+                we'll have a template section and a script section and a style section.</p>
+              <figure>
+                <img src="images/Fig02-022.png"/>
+                <figcaption>Fig 02-022</figcaption>
+              </figure>
+              <p>All right, our template's complaining just because we don't have a root element in here yet. We'll fix
+                that in just a minute.</p>
+              <p>First, we'll go ahead and create out component element and export it. So we're just going to export an
+                object, and we'll give it a name, so this is our RobotBuilder:</p>
+              <figure>
+                <img src="images/Fig02-023.png"/>
+                <figcaption>Fig 02-023</figcaption>
+              </figure>
+              <p>And notice that ESLint ran when I saved it, and it just removed some extraneous spaces at the
+                beginning. So ESLint will run every time I save.</p>
+              <p>Okay, now for the HTML and CSS. I don't want to bore you with typing in a bunch of HTML that isn't
+                really Vue specific, so let's copy this from our GitHub repo. So back over here in the this src folder
+                in the build folder, you can see I've created an HTML and CSS file for this component:</p>
+              <figure>
+                <img src="images/Fig02-024.png"/>
+                <figcaption>Fig 02-024</figcaption>
+              </figure>
+              <p>so let's click on the HTML file, and then we'll click on Raw and copy this:</p>
+              <figure>
+                <img src="images/Fig02-025.png"/>
+                <figcaption>Fig 02-025</figcaption>
+              </figure>
+              <p>and then we'll paste that back into our template. Okay, so you can see that we just have a bunch of
+                HTML in here. There's nothing specific about Vue here, but you can see that we have a top section, a
+                middle row section, and a bottom row section. And you can see the part selectors here:</p>
+              <figure>
+                <img src="images/Fig02-026.png"/>
+                <figcaption>Fig 02-026</figcaption>
+              </figure>
+              <p>They basically are comprised of an image and buttons for left and right or up and down for changing the
+                selected part.</p>
+              <p>Just as a reminder of what we're actually building here, it's this Build page here:</p>
+              <figure>
+                <img src="images/Fig02-027.png"/>
+                <figcaption>Fig 02-027</figcaption>
+              </figure>
+              <p>So this is our top section, our middle section, and our bottom section, and then here are the part
+                selectors, what I'm calling part selectors, which consist of an image and buttons to select the
+                individual parts. And so that's what all this HTML is here.</p>
+              <figure>
+                <img src="images/Fig02-028.png"/>
+                <figcaption>Fig 02-028</figcaption>
+              </figure>
+              <p>And these buttons are not wired up to do anything yet, but you can see I have a lot of classes here, so
+                let's go grab the styles for this file also.</p>
+              <p>So back over here in our repository, we'll go back and back again, and I'm going to click on this
+                RobotBuilder. css file and grab the content out of here:</p>
+              <figure>
+                <img src="images/Fig02-029.png"/>
+                <figcaption>Fig 02-029</figcaption>
+              </figure>
+              <p>And then we're going to go ahead and paste that into the style section down here:</p>
+              <figure>
+                <img src="images/Fig02-030.png"/>
+                <figcaption>Fig 02-030</figcaption>
+              </figure>
+              <p>So this is just all the styles for positioning each of those part selectors and the buttons and
+                everything. And again, there's nothing really Vue specific here with regards to what I pasted in. This
+                is all just CSS styling. The only thing that's Vue specific here is that I put the CSS inside this style
+                tag in our single-file component.</p>
+              <p>Okay, and then you can see these image tags are pointing to images that we haven't downloaded yet, so
+                let's go grab those. And back over in our GitHub repo, you can see inside the build folder, there's an
+                images folder, and there's a lot of images here:</p>
+              <figure>
+                <img src="images/Fig02-031.png"/>
+                <figcaption>Fig 02-031</figcaption>
+              </figure>
+              <p>I could just click on each one of these and download them one at a time, but it will be easier to just
+                clone this repo and then copy them locally.</p>
+              <p>So I'm going to go back over to my terminal and stop my server, and then I'm going to move back a
+                directory. And then I'm going to git clone this repo here. Okay, let's go ahead and clone that:</p>
+              <figure>
+                <img src="images/Fig02-032.png"/>
+                <figcaption>Fig 02-032</figcaption>
+              </figure>
+              <p>Okay, now that that's there, I can go back into my build-a-bot directory, and then we'll change into
+                the src/build directory, and we'll make a images directory here. And we'll move into that directory.</p>
+              <figure>
+                <img src="images/Fig02-033.png"/>
+                <figcaption>Fig 02-033</figcaption>
+              </figure>
+              <p>
+                Okay, now I can just copy those images from the cloned helper repo like this. So we'll just grab
+                everything out of the images directory and copy it into this directory:</p>
+              <figure>
+                <img src="images/Fig02-034.png"/>
+                <figcaption>Fig 02-034</figcaption>
+              </figure>
+              <p>Okay, so now you can see we have all those images in here. All right, now that we have those, let's
+                move back to our application directory, and we'll go ahead and start the server:</p>
+              <figure>
+                <img src="images/Fig02-035.png"/>
+                <figcaption>Fig 02-035</figcaption>
+              </figure>
+              <p>All right, now let's go take a look at what our new page looks like. Of course, how are we going to get
+                to this page? We don't have routing set up yet, and so how are we going to view this RobotBuilder
+                instead of the home page? Well, for now, we'll just have to import it over here also:</p>
+              <figure>
+                <img src="images/Fig02-036.png"/>
+                <figcaption>Fig 02-036</figcaption>
+              </figure>
+              <p>And then we'll just go ahead and render this here instead of the HomePage component, and we'll comment
+                this out for now:</p>
+              <figure>
+                <img src="images/Fig02-037.png"/>
+                <figcaption>Fig 02-037</figcaption>
+              </figure>
+              <p>And then we just need to use this up in our template here:</p>
+              <figure>
+                <img src="images/Fig02-038.png"/>
+                <figcaption>Fig 02-038</figcaption>
+              </figure>
+              <p>Okay, so now this should be showing our RobotBuilder instead of the HomePage, so let's go check that
+                out. Okay, perfect. So you can see that we have our new RobotBuilder component rendering here:</p>
+              <figure>
+                <img src="images/Fig02-039.png"/>
+                <figcaption>Fig 02-039</figcaption>
+              </figure>
+              <p>but these buttons don't do anything yet. But this is awesome. We have a new component, and it's just
+                got some really basic HTML and CSS, and all we're doing so far with the component is just exporting it
+                and then using it here in our main App component:</p>
+              <figure>
+                <img src="images/Fig02-040.png"/>
+                <figcaption>Fig 02-040</figcaption>
+              </figure>
+              <p>So let's make this page more interesting next by adding some bindings so that we can start selecting
+                the individual parts.
+              </p>
+            </div>
+            <p>
+            <h3>Binding Attributes to Data with v-bind</h3>
+            <p>In order to make our new Build page a little more dynamic, we need to start by binding it to data from
+              the component instead of these images being hardcoded in the HTML template:</p>
+            <figure>
+              <img src="images/Fig02-041.png"/>
+              <figcaption>Fig 02-041</figcaption>
+            </figure>
+            <p>In order to provide data to our component, we need to update our component options to have a data
+              function. So down here, we'll add that right here:</p>
+            <figure>
+              <img src="images/Fig02-042.png"/>
+              <figcaption>Fig 02-042</figcaption>
+            </figure>
+            <p>So this is just going to be a function, and right now we'll just return an empty object. If we look at
+              our Build page, we have all these different parts, heads, arms, torsos, and bases:</p>
+            <figure>
+              <img src="images/Fig02-043.png"/>
+              <figcaption>Fig 02-043</figcaption>
+            </figure>
+            <p>And eventually, when we click these buttons, the corresponding part will be swapped out for another one.
+              We're not going to wire up these buttons just yet, but let's get the images wired up to a list of
+              parts.</p>
+            <p>First, we need some data. Eventually we'll get the data for the parts from an API, but for now, we'll
+              just create a file with all the data in it. So let's create a data folder inside our src folder, and
+              inside that folder, we'll create a new parts. js file. And this folder is also going to contain our
+              images, so let's move that images folder from our build folder into the data folder:</p>
+            <figure>
+              <img src="images/Fig02-044.png"/>
+              <figcaption>Fig 02-044</figcaption>
+            </figure>
+            <p>Okay, now we need our parts data, so let's go back to our GitHub repo, let's go into the data folder, and
+              grab this parts.js content:</p>
+            <figure>
+              <img src="images/Fig02-045.png"/>
+              <figcaption>Fig 02-045</figcaption>
+            </figure>
+            <p>and we'll paste that into here. So this is mostly just JSON data, but you can see up here, this first
+              line, there's some web pack goodness here:</p>
+            <figure>
+              <img src="images/Fig02-046.png"/>
+              <figcaption>Fig 02-046</figcaption>
+            </figure>
+            <p>So we're using web pack's require.context here to make web pack aware of the image URLs so that we can
+              just use them throughout this JSON data as relative URLs. So down here on line 10, you can see that we're
+              calling images function and passing in a relative URL:</p>
+            <figure>
+              <img src="images/Fig02-047.png"/>
+              <figcaption>Fig 02-047</figcaption>
+            </figure>
+            <p>When this is compiled by web pack, this will point to the relative URL of this image file. So other than
+              that, this is all just JSON, and you can see that we have this parts variable up here:</p>
+            <figure>
+              <img src="images/Fig02-048.png"/>
+              <figcaption>Fig 02-048</figcaption>
+            </figure>
+            <p>our constant, and that we're exporting it down here:</p>
+            <figure>
+              <img src="images/Fig02-049.png"/>
+              <figcaption>Fig 02-049</figcaption>
+            </figure>
+            <p>And just so we understand the shape of our data a little bit, if I collapse each of these sections, you
+              can see that the parts object is an object with properties for heads, arms, torsos, and bases:</p>
+            <figure>
+              <img src="images/Fig02-050.png"/>
+              <figcaption>Fig 02-050</figcaption>
+            </figure>
+            <p>Each one of those is an array of parts. So this data is perfect for what we need. So let's jump back over
+              to our RobotBuilder, and then let's import that data here. So we will import availableParts from
+              data/parts:</p>
+            <figure>
+              <img src="images/Fig02-051.png"/>
+              <figcaption>Fig 02-051</figcaption>
+            </figure>
+            <p>So the ESLint plugin for Visual Studio Code is a little bit funny. You might notice that I hit Save
+              multiple times there, and it reformatted according to my linting rules a couple of times.</p>
+            <p>Okay, so now we just want to return these available parts as part of our data object, so we can just
+              return it like this:</p>
+            <figure>
+              <img src="images/Fig02-052.png"/>
+              <figcaption>Fig 02-052</figcaption>
+            </figure>
+            <p>So now our data object is an object with an availableParts property that is set to that JSON data. Now
+              let's see how we can use this data in our template.</p>
+            <p>At the top of our template here, we have this image that is displaying currently the head image for a
+              robot, and instead of setting the src to a hardcoded string like this:</p>
+            <figure>
+              <img src="images/Fig02-053.png"/>
+              <figcaption>Fig 02-053</figcaption>
+            </figure>
+            <p>we want to bind it to an expression. We can do that like this:</p>
+            <figure>
+              <img src="images/Fig02-054.png"/>
+              <figcaption>Fig 02-054</figcaption>
+            </figure>
+            <p>So this says bind the source attribute of this image element to this expression in the quotes. And inside
+              that expression, we can access availableParts:</p>
+            <figure>
+              <img src="images/Fig02-055.png"/>
+              <figcaption>Fig 02-055</figcaption>
+            </figure>
+            <p>So this is the availableParts object that we exposed in our data function. And then availableParts has a
+              heads property which is an array, and we'll grab the first head and then grab the src property:</p>
+            <figure>
+              <img src="images/Fig02-056.png"/>
+              <figcaption>Fig 02-056</figcaption>
+            </figure>
+            <p>So the src property, thanks to web pack, and we talked about this just a minute ago, this is the relative
+              URL to the image for this head. Okay, so let's copy this expression down to each of the other parts. So
+              we'll set these to v-bind also. And for now, we'll just bind them all to the heads:</p>
+            <figure>
+              <img src="images/Fig02-057.png"/>
+              <figcaption>Fig 02-057</figcaption>
+            </figure>
+            <p>Okay, so if we look at this, we now have a robot with all heads:</p>
+            <figure>
+              <img src="images/Fig02-058.png"/>
+              <figcaption>Fig 02-058</figcaption>
+            </figure>
+            <p>not a very useful robot, so let's just update each one of these to point to the correct part type. So
+              here instead of heads, this is going to be arms, and this is going to be torsos:</p>
+            <figure>
+              <img src="images/Fig02-059.png"/>
+              <figcaption>Fig 02-059</figcaption>
+            </figure>
+            <p>and this one is also arms, and then this is bases:</p>
+            <figure>
+              <img src="images/Fig02-060.png"/>
+              <figcaption>Fig 02-060</figcaption>
+            </figure>
+            <p>Now if we refresh, there we go, now we have a functional robot again:</p>
+            <figure>
+              <img src="images/Fig02-061.png"/>
+              <figcaption>Fig 02-061</figcaption>
+            </figure>
+            <p>And that's all thanks to the v-bind syntax, which is binding the source attribute of the image element to
+              these expressions. Of course, you can bind any attribute of any element using v-bind.</p>
+            <p>So now our image source attributes are all bound, but we can't change them. We still are not changing the
+              image when we click these selector buttons. To do that, we're going to have to bind to the click event.
+              Let's see how to do that next.
+            </p>
+          </div>
+          <div><h3>Binding to Events with v-on</h3>
+            <p>
+              In order to react to actions by the user such as clicking on these buttons, we need to bind to the events
+              of those elements. That's just as easy as binding to data was. All we need to do is use the v-on syntax.
+              So on this button, I'm going to add a v-on binding to the click event:</p>
+            <figure>
+              <img src="images/Fig02-062.png"/>
+              <figcaption>Fig 02-062</figcaption>
+            </figure>
+            <p>So now whenever this button is clicked, the expression inside these quotes would be called. So what I
+              want to do here is I want to call a function:</p>
+            <figure>
+              <img src="images/Fig02-063.png"/>
+              <figcaption>Fig 02-063</figcaption>
+            </figure>
+            <p>So I'm going to call selectNextHead. So this is the next button for the head image, so when the user
+              clicks on this button, we're going to call this selectNextHead function. And that function needs to exist
+              on our component. To do that, we're going to introduce a new property on our component called methods:</p>
+            <figure>
+              <img src="images/Fig02-064.png"/>
+              <figcaption>Fig 02-064</figcaption>
+            </figure>
+            <p>and that's an object, and then you define each of the functions inside of here that you're going to call
+              from your template. So we need selectNextHead:</p>
+            <figure>
+              <img src="images/Fig02-065.png"/>
+              <figcaption>Fig 02-065</figcaption>
+            </figure>
+            <p>and for now, let's just console.log selectNextHead called. So let's go see if that works. So over here,
+              let's open our console and then click this button:</p>
+            <figure>
+              <img src="images/Fig02-066.png"/>
+              <figcaption>Fig 02-066</figcaption>
+            </figure>
+            <p>There you go; you can see each time I click it, this selectNextHead called gets logged. So our v-on click
+              binding is working.</p>
+            <p>But what we really want to do is have it select the next head instead of just console. logging. So we're
+              going to have to track some index and increment and decrement it when the buttons are clicked. To do that,
+              let's add a selectedHeadIndex to our data object:</p>
+            <figure>
+              <img src="images/Fig02-067.png"/>
+              <figcaption>Fig 02-067</figcaption>
+            </figure>
+            <p>and we'll initialize that initially to 0. And then in our selectNextHead function, we'll increment that
+              like this:</p>
+            <figure>
+              <img src="images/Fig02-068.png"/>
+              <figcaption>Fig 02-068</figcaption>
+            </figure>
+            <p>And then to make that work up here in our template, instead of hardcoding this to 0, we're going to use
+              our new selectedHeadIndex:</p>
+            <figure>
+              <img src="images/Fig02-069.png"/>
+              <figcaption>Fig 02-069</figcaption>
+            </figure>
+            <p>So now this will grab the head that matches that index and bind the source property to the URL of that
+              head. Okay, let's go check this out:</p>
+            <figure>
+              <img src="images/Fig02-070.png"/>
+              <figcaption>Fig 02-070</figcaption>
+            </figure>
+            <p>Cool, so now as I click on this button, you can see that Vue is calling our selectNextHead function,
+              which is incrementing the index, which updates the binding for that image. Okay, let's do the same thing
+              for selectPreviousHead:</p>
+            <figure>
+              <img src="images/Fig02-071.png"/>
+              <figcaption>Fig 02-071</figcaption>
+            </figure>
+            <p>So we need, on this previous selector, we need a v-on click binding, and that will call
+              selectPreviousHead. So now let's go create that function down here:</p>
+            <figure>
+              <img src="images/Fig02-072.png"/>
+              <figcaption>Fig 02-072</figcaption>
+            </figure>
+            <p>and that will decrement that index. Now let's go check that out. All right, cool, now I can move back and
+              forth between the heads. Of course, we have a slight problem here. If I open the console, clicking on this
+              next button, you can see that at some point I start getting an error:</p>
+            <figure>
+              <img src="images/Fig02-073.png"/>
+              <figcaption>Fig 02-073</figcaption>
+            </figure>
+            <p>This is because we are incrementing that index out of range. So basically, we need to make it so that
+              when we get to the end of the heads, then when you click the next button, it resets the index back to
+              0.</p>
+            <p>So to fix that, I'm going to create a couple of helper functions up here at the top of my script
+              block:</p>
+            <figure>
+              <img src="images/Fig02-074.png"/>
+              <figcaption>Fig 02-074</figcaption>
+            </figure>
+            <p>
+              Okay, so we have a getPreviousValidIndex function and a getNextValidIndex function. And if you're
+              following along, go ahead and type this in, but you can see it's just going to, when you're clicking
+              getPrevious, it will deprecate it until it gets to 0, and then it will set it to the last head, and then
+              vice-versa with the getNextValidIndex function.</p>
+            <p>And then notice that these functions take in the index to increment and the length of the current parts
+              array. So down here:</p>
+            <figure>
+              <img src="images/Fig02-075.png"/>
+              <figcaption>Fig 02-075</figcaption>
+            </figure>
+            <p>instead of incrementing this, we're going to call getNextValidIndex, and we will pass in
+              this.selectedHeadIndex, and the length of the heads array:</p>
+            <figure>
+              <img src="images/Fig02-076.png"/>
+              <figcaption>Fig 02-076</figcaption>
+            </figure>
+            <p>Okay, and then we'll do the same sort of thing for getPreviousHeadIndex. Okay, so that should fix this
+              problem:</p>
+            <figure>
+              <img src="images/Fig02-077.png"/>
+              <figcaption>Fig 02-077</figcaption>
+            </figure>
+            <p>And then these functions don't mutate the index; they just return a new index, so I need to set the
+              selectedHeadIndex to whatever's returned from these. And our linter is complaining because these lines are
+              too long, so let's just wrap them, format them a little bit better:</p>
+            <figure>
+              <img src="images/Fig02-078.png"/>
+              <figcaption>Fig 02-078</figcaption>
+            </figure>
+            <p>Okay, let's go check this out. So now as I increment, you can see that it is wrapping around, and we're
+              not getting any errors and same for going to the previous heads:</p>
+            <figure>
+              <img src="images/Fig02-079.png"/>
+              <figcaption>Fig 02-079</figcaption>
+            </figure>
+            <p>Awesome. So now we know how to bind to the click events. And, of course, we could bind to any event that
+              is fired by any element. So we've updated the head, but we have not yet updated the other parts, so let's
+              go fix those bindings.</p>
+            <p>So if we go back up to our template, I'm basically going to need to copy these bindings:</p>
+            <figure>
+              <img src="images/Fig02-080.png"/>
+              <figcaption>Fig 02-080</figcaption>
+            </figure>
+            <p>down to all the other buttons. So there's the previous binding and then the next binding. And then this
+              will have to call, this is the left arm, so I'm going to call selectPreviousLeftArm and
+              selectNextLeftArm:</p>
+            <figure>
+              <img src="images/Fig02-081.png"/>
+              <figcaption>Fig 02-081</figcaption>
+            </figure>
+            <p>
+              Okay, I'm going to go ahead and do the same thing for all of the rest of the parts, but I'm going to go
+              ahead and do that off-screen because it's not too interesting to follow along.</p>
+            <p>Okay, so you can see here that I've updated the bindings for selectPreviousTorso and NextTorso:</p>
+            <figure>
+              <img src="images/Fig02-082.png"/>
+              <figcaption>Fig 02-082</figcaption>
+            </figure>
+            <p>
+              RightArm:</p>
+            <figure>
+              <img src="images/Fig02-083.png"/>
+              <figcaption>Fig 02-083</figcaption>
+            </figure>
+            <p>and Base:</p>
+            <figure>
+              <img src="images/Fig02-084.png"/>
+              <figcaption>Fig 02-084</figcaption>
+            </figure>
+            <p>And then notice also that in the v-bind source bindings, I've updated the hardcoded 0 to the
+              selectedBaseIndex, RightArmIndex, and TorsoIndex, and same thing for LeftArmIndex:</p>
+            <figure>
+              <img src="images/Fig02-085.png"/>
+              <figcaption>Fig 02-085</figcaption>
+            </figure>
+            <p>And then you can see down here that I've initialized them all to 0 here in our data function:</p>
+            <figure>
+              <img src="images/Fig02-086.png"/>
+              <figcaption>Fig 02-086</figcaption>
+            </figure>
+            <p>and then I've added methods for each one of them, selectNextHead and PreviousHead, LeftArm:</p>
+            <figure>
+              <img src="images/Fig02-087.png"/>
+              <figcaption>Fig 02-087</figcaption>
+            </figure>
+            <p>Torso:</p>
+            <figure>
+              <img src="images/Fig02-088.png"/>
+              <figcaption>Fig 02-088</figcaption>
+            </figure>
+            <p>RightArm, and Base:</p>
+            <figure>
+              <img src="images/Fig02-089.png"/>
+              <figcaption>Fig 02-089</figcaption>
+            </figure>
+            <p>So if you're following along, go ahead and copy and paste all those and update them appropriately. Okay,
+              so let's go check this out. So now we can move to the next and previous head, and left arm, torso, right
+              arm, and base:</p>
+            <figure>
+              <img src="images/Fig02-090.png"/>
+              <figcaption>Fig 02-090</figcaption>
+            </figure>
+            <p>Awesome. We have a functioning robot builder. In the next clip, we'll take a look at an abbreviated
+              syntax for these v-bind and v-on bindings:</p>
+            <figure>
+              <img src="images/Fig02-091.png"/>
+              <figcaption>Fig 02-091</figcaption>
+            </figure>
+          </div>
+          <div><h3>Using Shorthand Bindings</h3>
+            <p>We just created all of these bindings in our RobotBuilder HTML, and I just wanted to take a second to
+              call out a more abbreviated syntax that's really nice. Anywhere we use this v-bind syntax, we can replace
+              it with just a colon, so this is a shorthand syntax for v-bind. And then anywhere we use v-on, we can
+              replace that with an at sign:</p>
+            <figure>
+              <img src="images/Fig02-092.png"/>
+              <figcaption>Fig 02-092</figcaption>
+            </figure>
+            <p>so no colon here. I really like this syntax because it's very non-obtrusive, but it's also really clear
+              that we're creating bindings. So let's replace all of these with a search and replace. So I'm going to
+              search for v-bind and replace it with just colon, so I'm replacing v-bind: with just a colon. And I'll
+              just replace all of those. And then I'm going to search for v-on: and replace it with just an @ sign.
+              Let's replace all of those. And our RobotBuilder should still be working. Let's check it out. There we go.
+              We can still see our image are, bindings are working, and our button bindings are all working.</p>
+            <p>So from here on out in the course, we'll be using this abbreviated binding syntax. Next, let's take a
+              look at how we can create and bind to computed properties.
+            </p>
+          </div>
+          <div><h3>Binding to Computed Properties</h3>
+            <p>Sometimes you want to be able to easily bind to something in your HTML template that involves a complex
+              calculation. Doing complex calculations in your HTML template isn't really a great idea. We can solve that
+              and move the complexity into the component with computed properties. All of these expressions are a little
+              ugly:</p>
+            <figure>
+              <img src="images/Fig02-093.png"/>
+              <figcaption>Fig 02-093</figcaption>
+            </figure>
+            <p>What would be nice is if we had a selected robot property on our component that we can use. So if we come
+              down to our component, we can add a computed property here:</p>
+            <figure>
+              <img src="images/Fig02-094.png"/>
+              <figcaption>Fig 02-094</figcaption>
+            </figure>
+            <p>And like the methods property, this contains methods. So I'm going to add a selectedRobot function, and
+              this will return an object that represents our selected robot. And then that object will have a property
+              for each part like this:</p>
+            <figure>
+              <img src="images/Fig02-095.png"/>
+              <figcaption>Fig 02-095</figcaption>
+            </figure>
+            <p>So there's the left arm, and then we'll do the torso, and then the right arm, and finally the bases. So
+              now selectedRobot. head will return the currently selected head and so forth. So now up here:</p>
+            <figure>
+              <img src="images/Fig02-096.png"/>
+              <figcaption>Fig 02-096</figcaption>
+            </figure>
+            <p>instead of these expressions, we can just replace these with selectedRobot.head.src:</p>
+            <figure>
+              <img src="images/Fig02-097.png"/>
+              <figcaption>Fig 02-097</figcaption>
+            </figure>
+            <p>So let's copy this down to each one of these img tags. So there's the leftArm, and then here is the
+              torso, and now the rightArm, and finally the base.</p>
+            <p>Okay, so that should be working great. So if we come over to our robot builder, now we can still use our
+              robot builder, but our code is a lot more simple in our template where we don't have this complex
+              expression, but we are just binding to the head of the selected robot.</p>
+            <p>So this is better, and while this one just helps simplify our template a little bit, there are cases
+              where it can simplify them a lot. You really want to be careful not to do too much logic in your
+              templates, and computed properties make that easy.
+            </p>
+          </div>
+          <div><h3>Displaying Data with Interpolation</h3>
+            <p>Our robot builder is looking pretty good, and we've learned how to bind to attributes and events, but we
+              haven't yet learned how to simply just display raw data on the page. We do that with interpolation. To
+              demonstrate that, let's display the name of our robot just above the robot head.</p>
+            <p>If we take a look at the parts data over here, you can see that each part has a title:</p>
+            <figure>
+              <img src="images/Fig02-098.png"/>
+              <figcaption>Fig 02-098</figcaption>
+            </figure>
+            <p>And the names of the heads actually make for a pretty good name for our robots. So let's display the name
+              of the currently selected head above our robot. Because of our computed property, this is going to be
+              really easy. So let's add a new div right here:</p>
+            <figure>
+              <img src="images/Fig02-099.png"/>
+              <figcaption>Fig 02-099</figcaption>
+            </figure>
+            <p>and we'll give it a class of robot-name. And let's add that class down here in our styles:</p>
+            <figure>
+              <img src="images/Fig02-100.png"/>
+              <figcaption>Fig 02-100</figcaption>
+            </figure>
+            <p>And I'm going to position this absolute. And I want to position it about 25 pixels above the top of the
+              head, and then we'll align the text to the center, and then we'll set the width to 100%.</p>
+            <p>Okay, now for the interpolation part. Back up here inside our div, we're just going to add an expression
+              like this:</p>
+            <figure>
+              <img src="images/Fig02-101.png"/>
+              <figcaption>Fig 02-101</figcaption>
+            </figure>
+            <p>So the double brackets is used for interpolation, and inside there, we'll just put an expression. So we
+              just want to use selectedRobot.head.title:</p>
+            <figure>
+              <img src="images/Fig02-102.png"/>
+              <figcaption>Fig 02-102</figcaption>
+            </figure>
+            <p>And this is it. That's all there is to interpolation, and you can put any valid expression in here.
+              Although, again, it's recommended that you only use simple expressions in your template. Okay, let's go
+              check this out:</p>
+            <figure>
+              <img src="images/Fig02-103.png"/>
+              <figcaption>Fig 02-103</figcaption>
+            </figure>
+            <p>All right, awesome, you can see here that our robot has a name, and then you can see, as I click through
+              the robot heads, that the robot name up here is changing due to that interpolation expression:</p>
+            <figure>
+              <img src="images/Fig02-104.png"/>
+              <figcaption>Fig 02-104</figcaption>
+            </figure>
+            <p>So interpolation is really simple. Before we wrap up on interpolation though, let me mention one more
+              performance option. We can add a v-once tag to any element like this:</p>
+            <figure>
+              <img src="images/Fig02-105.png"/>
+              <figcaption>Fig 02-105</figcaption>
+            </figure>
+            <p>and when you do this, any bindings inside that element will be evaluated once and then never again. This
+              is handy for performance reasons if you have a page with a lot of bindings that are going to render once
+              and then you don't expect the data to change. In our case though, this isn't what we want.</p>
+            <p>If I come over now to our robot builder and cycle through the robot heads, you can see that the binding
+              isn't updated:</p>
+            <figure>
+              <img src="images/Fig02-106.png"/>
+              <figcaption>Fig 02-106</figcaption>
+            </figure>
+            <p>It updated once when the page was rendered, and then it's not being updated anymore. So we don't want
+              that here, so let's remove it. But it's good to know about for performance reasons. Now that should be
+              updating again.</p>
+            <p>Okay, cool. So next, we're going to take a look at ways to dynamically show and hide our content on our
+              page.
+            </p>
+          </div>
+          <div><h3>Conditionally Displaying Content with v-if and v-show</h3>
+            <p>
+              Vue supplies two directives that we can use to conditionally show or hide content, v-if and v-show. Let's
+              check them both out and talk about when to use each one.</p>
+            <p>To demonstrate this, let's add an indicator next to this title right here:</p>
+            <figure>
+              <img src="images/Fig02-107.png"/>
+              <figcaption>Fig 02-107</figcaption>
+            </figure>
+            <p>that indicates whether the robot is on sale. If we look at our parts data again, you can see that some of
+              the parts have an onSale attribute:</p>
+            <figure>
+              <img src="images/Fig02-108.png"/>
+              <figcaption>Fig 02-108</figcaption>
+            </figure>
+            <p>So we'll bind to the onSale property for the heads, and if the head shows that it's onSale, we'll
+              indicate that the robot is on sale.</p>
+            <p>So back in our RobotBuilder, right here next to the interpolation expression that's showing the title,
+              we'll add a span with a class of sale:</p>
+            <figure>
+              <img src="images/Fig02-109.png"/>
+              <figcaption>Fig 02-109</figcaption>
+            </figure>
+            <p>And then we'll just add the text Sale! inside here. Okay, let's go add that class to our CSS down
+              here.</p>
+            <figure>
+              <img src="images/Fig02-110.png"/>
+              <figcaption>Fig 02-110</figcaption>
+            </figure>
+            <p>
+              Okay, so if we go look at this right now, it appears that all of the heads are on sale, but that is not
+              accurate. There is actually only one head that's on sale, and it's our Friendly Bot, so let's use v-if to
+              only show this sale span if the head is on sale.</p>
+            <p>So right here I'm going to add a v-if binding:</p>
+            <figure>
+              <img src="images/Fig02-111.png"/>
+              <figcaption>Fig 02-111</figcaption>
+            </figure>
+            <p>and then the expression inside of the v-if just needs to be a Boolean. If the expression evaluates to
+              true, the element is shown, so we'll just put selectedRobot.head.onSale:</p>
+            <figure>
+              <img src="images/Fig02-112.png"/>
+              <figcaption>Fig 02-112</figcaption>
+            </figure>
+            <p>Okay, so now if this onSale element exists on the head and it's set to true, then this span element will
+              be displayed. Otherwise, it will not be displayed. So let's check that out. Okay, cool, that's working
+              better. Now only our Friendly Bot appears to be on sale:</p>
+            <figure>
+              <img src="images/Fig02-113.png"/>
+              <figcaption>Fig 02-113</figcaption>
+            </figure>
+            <p>which is correct. Okay, so that's v-if. Now let's check out v-show. It's actually works identically. So I
+              could change v-if to v-show, and then if we go look at this, it's still working just the same. So you
+              might wonder, well, what's the point? Well, the difference is what's happening behind the scenes.</p>
+            <p>If we take a look at this element, we'll inspect it here, and then let's navigate to one that is not on
+              sale. Okay, you can see that the element is actually still here:</p>
+            <figure>
+              <img src="images/Fig02-114.png"/>
+              <figcaption>Fig 02-114</figcaption>
+            </figure>
+            <p>but it has an inline style now that says display: none. And so that is how Vue is showing and hiding this
+              element when we're using v-show. It does so by adding style=display: none.</p>
+            <p>However, if we change this to v-if again, and then look at this again, you can see that actually the
+              element isn't even here:</p>
+            <figure>
+              <img src="images/Fig02-115.png"/>
+              <figcaption>Fig 02-115</figcaption>
+            </figure>
+            <p>It's been removed completely from the DOM. And as I move through this, if I hit the one that is on sale,
+              then the element shows up again:</p>
+            <figure>
+              <img src="images/Fig02-116.png"/>
+              <figcaption>Fig 02-116</figcaption>
+            </figure>
+            <p>And so v-if actually adds and removes elements from the DOM, whereas v-show leaves the elements there and
+              just styles them differently.</p>
+            <p>So the question is, when should we use v-if, and when should we use v-show? Basically, if the content
+              that you are showing and hiding is expensive to generate, and it's going to be shown and hidden
+              frequently, then you should use v-show because Vue won't have to go through the expensive rendering
+              process each time it's redisplayed.</p>
+            <p>But if your content is not expensive to render like our current example, or if it's not going to be
+              hidden and redisplayed frequently, then v-if is perfect.</p>
+            <p>
+              Right now we're just showing and hiding a span element, but imagine if this was a Vue component that we
+              were showing and hiding, and imagine that that component had a child component which also had child
+              components. You can see how that can get really expensive to rerender. In that case, v-show would be
+              better. In our case, v-if is perfect because it's just a span; it's not expensive to render at all, so
+              we'll leave it with a v-if.</p>
+            <p>Next, let's take a look at how to repeat elements using v-for.
+            </p>
+          </div>
+          <div><h3>Repeating Elements with v-for</h3>
+            <p>Let's take a look now at how to repeat an element based on repeating data such as an array. A great use
+              case for that would be a shopping cart which would list all of the robots that we've added to our cart.
+              But before we can really have a functional cart page, we need to still learn about routing and state
+              management. So for now, let's just add a cart section to this page, and later we can move it to its own
+              cart page. That way, we can add multiple robots to our cart and then see how to use the v-for directive in
+              order to list them all on the page.</p>
+            <p>Let's start by adding an add-to-cart button. So we'll just put this here at the top. We're actually going
+              to absolute position it. So I'm going to add a button here, and the class for this button is going to be
+              add-to-cart. And we'll add a click binding, which will call an addToCart function:</p>
+            <figure>
+              <img src="images/Fig02-117.png"/>
+              <figcaption>Fig 02-117</figcaption>
+            </figure>
+            <p>All right, and we'll just have this button say Add to Cart. Okay, and since we're going to absolute
+              position this button, we need to have a class on that's container div that's positioned relative. So we'll
+              add a class, and this will just be content:</p>
+            <figure>
+              <img src="images/Fig02-118.png"/>
+              <figcaption>Fig 02-118</figcaption>
+            </figure>
+            <p>It's the content of this component. And then down here in our styles, we will add a content class:</p>
+            <figure>
+              <img src="images/Fig02-119.png"/>
+              <figcaption>Fig 02-119</figcaption>
+            </figure>
+            <p>and set it to position: relative. And then we're going to add our add-to-cart class, and we will position
+              that, absolute, 30 pixels from the right with a width of 220 pixels and a little bit of padding, and we'll
+              set the font size to 16 pixels.</p>
+            <p>Okay, so our button is going to call an addToCart method that we need to add still, so down here in
+              methods we will add an addToCart function:</p>
+            <figure>
+              <img src="images/Fig02-120.png"/>
+              <figcaption>Fig 02-120</figcaption>
+            </figure>
+            <p>Okay, and then when we add a robot to the cart, we will be basically adding it to an array. But a cart
+              needs to know the cost. So let's calculate the cost and add that to the robot.</p>
+            <p>So each of the parts already has cost data associated with it, so we'll calculate the cost like this.
+              We'll create a new variable, cost, and set that to the sum of the cost of all the parts, so let's create a
+              variable up here for the robot so we don't have to keep saying this.selectedRobot. And then here we will
+              set the cost to robot.head.cost + robot.leftArm.cost + torso.cost + rightArm.cost, and finally, plus the
+              base.cost:</p>
+            <figure>
+              <img src="images/Fig02-121.png"/>
+              <figcaption>Fig 02-121</figcaption>
+            </figure>
+            <p>Okay, so we now have a cost variable that represents the cost of our robot. Now we can add it to our
+              cart. So up here in our data function, let's add a cart property, and we'll default it to an empty
+              array:</p>
+            <figure>
+              <img src="images/Fig02-122.png"/>
+              <figcaption>Fig 02-122</figcaption>
+            </figure>
+            <p>
+              And it's important that we initialize this variable here in the data function. If we don't do it here, Vue
+              won't notice that the data is changing. Vue's change detection works by hooking into the getters and
+              setters of properties in the data function.</p>
+            <p>And so even if we were to add a cart variable below by saying this.cart=newArray, Vue wouldn't even
+              notice it because it never hooked into it. And so any data that you are going to want to bind to that's
+              going to change, that you need to make sure to initialize it in the data function. Otherwise, Vue won't be
+              able to notice when it's changing.</p>
+            <p>So we've initialized that up there, and now down here we can just push our robot onto that array. So
+              we'll say this.cart.push:</p>
+            <figure>
+              <img src="images/Fig02-123.png"/>
+              <figcaption>Fig 02-123</figcaption>
+            </figure>
+            <p>and then just for immutability purposes, I want to use Object.assign here so that the robot that is in
+              the array isn't the same instance as the selected robot property. This isn't really a Vue thing; this is
+              more of a good programming practice in JavaScript to make sure that you don't have inadvertent pointers to
+              the same object in your code. So I'm just going to do an Object.assign and start with an empty object and
+              assign robot, and then I'll assign the cost:</p>
+            <figure>
+              <img src="images/Fig02-124.png"/>
+              <figcaption>Fig 02-124</figcaption>
+            </figure>
+            <p>So the result here is that we will have our robot object plus the cost property on that robot, and then
+              we're pushing that onto the cart.</p>
+            <p>Okay, so if we go look at our page, we now have an Add to Cart button:</p>
+            <figure>
+              <img src="images/Fig02-125.png"/>
+              <figcaption>Fig 02-125</figcaption>
+            </figure>
+            <p>and when we click it, it will calculate the cost of the robot and add that robot with its cost to an
+              array. But of course, clicking that does nothing right now because we're not displaying anything.
+              Actually, it is doing some behind the scenes; we just can't see that it is. So let's go display the
+              contents of our cart.</p>
+            <p>For that, we'll need v-for. So back up in our template here at the bottom, let's create a new div, and
+              that's just going to have a header in here that says Cart. And then also inside this div we'll create a
+              table:</p>
+            <figure>
+              <img src="images/Fig02-126.png"/>
+              <figcaption>Fig 02-126</figcaption>
+            </figure>
+            <p>So this table will display the contents of our cart, so we'll have a table header with a single row and
+              just two columns, one that is the name of the robot and another one will have a class on this one for the
+              cost so that we can align it to the right:</p>
+            <figure>
+              <img src="images/Fig02-127.png"/>
+              <figcaption>Fig 02-127</figcaption>
+            </figure>
+            <p>Okay, so there's our header row, and then we're going to have a tbody, and then we'll have a table row
+              here:</p>
+            <figure>
+              <img src="images/Fig02-128.png"/>
+              <figcaption>Fig 02-128</figcaption>
+            </figure>
+            <p>And this is where we want to start repeating data. So basically, we want a new table row here for every
+              robot in our cart. So we can do that with v-for. Okay, so now we have the v-for directive. And the binding
+              here is an interesting type of binding that is specific to v-for. We're going to add a binding like
+              this:</p>
+            <figure>
+              <img src="images/Fig02-129.png"/>
+              <figcaption>Fig 02-129</figcaption>
+            </figure>
+            <p>
+              So this is basically saying, for each robot in the cart, and then robot is actually a variable that we can
+              use within this element. So we'll get a new table row element for each robot in the cart, and the down
+              here inside the table row we can create a table data element, and we can say robot.head.title:</p>
+            <figure>
+              <img src="images/Fig02-130.png"/>
+              <figcaption>Fig 02-130</figcaption>
+            </figure>
+            <p>So this robot here is the same robot here, and then we'll add another table data for the cost, and then
+              will also have class equal to cost, and then that will bind to robot.cost:</p>
+            <figure>
+              <img src="images/Fig02-131.png"/>
+              <figcaption>Fig 02-131</figcaption>
+            </figure>
+            <p>Okay, so for each robot, it's going to create a new table row element with all of this content inside of
+              each table row element and the bindings specific to each robot. There's just one caveat here. Whenever
+              you're repeating data, Vue needs to be able to, for performance reasons, identify each element in there
+              for updates. And so we need to add a unique key attribute to our repeated table row element:</p>
+            <figure>
+              <img src="images/Fig02-132.png"/>
+              <figcaption>Fig 02-132</figcaption>
+            </figure>
+            <p>So we can do that like this. We'll just set a key attribute equal to an expression. But what unique value
+              can we provide here for the key? The value needs to be unique for each repeated element. So to make that
+              easy, we can just access the zero-based index of each of the items like this:</p>
+            <figure>
+              <img src="images/Fig02-133.png"/>
+              <figcaption>Fig 02-133</figcaption>
+            </figure>
+            <p>Up in our v-for expression, instead of just grabbing robot, we also grab an index. So this is a
+              zero-based index for each item in the array. And now I can, on the key here, I can set the key to
+              index:</p>
+            <figure>
+              <img src="images/Fig02-134.png"/>
+              <figcaption>Fig 02-134</figcaption>
+            </figure>
+            <p>
+              And actually, this key attribute, right now as it is, we're just setting it to the string index. We're not
+              binding, and so we need to add a binding:</p>
+            <figure>
+              <img src="images/Fig02-135.png"/>
+              <figcaption>Fig 02-135</figcaption>
+            </figure>
+            <p>So this is a v-bind binding, binding key to the index expression. Okay, so this v-for should work
+              perfectly now. And for each robot in the cart, we will get a new row. We just need some styles for this,
+              so let's come down here to the bottom, and we're going to add some styles around table data and table
+              header and we just want to, by default, text-align: left and have some padding and a little extra padding
+              on the right:</p>
+            <figure>
+              <img src="images/Fig02-136.png"/>
+              <figcaption>Fig 02-136</figcaption>
+            </figure>
+            <p>And then we need our cost class, and we're going to text-align it to the right:</p>
+            <figure>
+              <img src="images/Fig02-137.png"/>
+              <figcaption>Fig 02-137</figcaption>
+            </figure>
+            <p>Okay, let's go take a look at this. Okay, so here we have our robot, we have our Add to Cart button up
+              here, and down here we have our cart:</p>
+            <figure>
+              <img src="images/Fig02-138.png"/>
+              <figcaption>Fig 02-138</figcaption>
+            </figure>
+            <p>So I'm going to go ahead and add this robot to the cart, and we now have a Large Cyclops in our cart, and
+              then let's also add a Small Cyclops, and we'll change some of the parts on this, and then add that to the
+              cart. Okay, so now you can see we have a Large Cyclops and a Small Cyclops, each with a different
+              cost:</p>
+            <figure>
+              <img src="images/Fig02-139.png"/>
+              <figcaption>Fig 02-139</figcaption>
+            </figure>
+            <p>So our v-for directive is working, and it's repeating over each robot that we've added to our cart
+              array.</p>
+            <p>
+              Okay, one last thing I want to mention is a performance warning that you should never use v-if and v-for
+              on the same element. So up here on our v-for, right here, I should not ever do a v-if here also:</p>
+            <figure>
+              <img src="images/Fig02-140.png"/>
+              <figcaption>Fig 02-140</figcaption>
+            </figure>
+            <p>If you need to hide and show data on the same element that's using v-for, you need to use some other
+              mechanism such as using an internal element or something like that so that it's not on the same element as
+              this v-for. This is just a performance warning that you'll see in the Vue docs, so it's just good to be
+              aware of that.</p>
+            <p>All right, next, we'll take a look at a number of considerations around styling our components.
+            </p>
+          </div>
+          <div><h3>Styling Components</h3>
+            <p>By now, you've probably gotten used to the idea that we can style our components down here in the style
+              section:</p>
+            <figure>
+              <img src="images/Fig02-141.png"/>
+              <figcaption>Fig 02-141</figcaption>
+            </figure>
+            <p>Although we haven't talked about this directly, as we've proceeded this far in the course, we've been
+              adding to these styles, and you've seen how it immediately affects the component. But we haven't really
+              explored what's actually happening here or how far-reaching these styles are. To explore this a little
+              more, let's jump over to our App component. Notice in the styles of our App component that we're styling
+              things like this main tag and the header tag:</p>
+            <figure>
+              <img src="images/Fig02-142.png"/>
+              <figcaption>Fig 02-142</figcaption>
+            </figure>
+            <p>and you can see those main and header tags up here in our template. But what about this body tag:</p>
+            <figure>
+              <img src="images/Fig02-143.png"/>
+              <figcaption>Fig 02-143</figcaption>
+            </figure>
+            <p>That main tag does not show up at all up here in our template. And yet, if we look at our app, the
+              gradient that we're adding to he body tag is showing up here in the background of our app:</p>
+            <figure>
+              <img src="images/Fig02-144.png"/>
+              <figcaption>Fig 02-144</figcaption>
+            </figure>
+            <p>So how is it that the body style that we're adding here is getting applied to a body tag that's not part
+              of this component? The body tag is actually part of this index.html file that was generated by the CLI. So
+              notice we have a body tag here:</p>
+            <figure>
+              <img src="images/Fig02-145.png"/>
+              <figcaption>Fig 02-145</figcaption>
+            </figure>
+            <p>So this index.html file is what is actually loaded when our app first loads, and it has a body tag. And
+              then you can see down here on line 14 that we have this app element:</p>
+            <figure>
+              <img src="images/Fig02-146.png"/>
+              <figcaption>Fig 02-146</figcaption>
+            </figure>
+            <p>and this is what the render function is binding to, and so this is where the rest of our app is
+              displayed. But it's concerning that we have a style in our app.vue component that is styling something
+              outside of that component. But not to worry, there's an easy solution to this.</p>
+            <p>Back here in our App component, on the style tag right here, we can add a scoped attribute:</p>
+            <figure>
+              <img src="images/Fig02-147.png"/>
+              <figcaption>Fig 02-147</figcaption>
+            </figure>
+            <p>And if we go back now to our page, you can see we've lost our gradient:</p>
+            <figure>
+              <img src="images/Fig02-148.png"/>
+              <figcaption>Fig 02-148</figcaption>
+            </figure>
+            <p>So we just essentially scoped all of the styles inside this style element to only this App component.
+              That's pretty awesome, but how does Vue accomplish it?</p>
+            <p>Let's take a look at the source of our page in the browser. So I'm going to inspect this:</p>
+            <figure>
+              <img src="images/Fig02-149.png"/>
+              <figcaption>Fig 02-149</figcaption>
+            </figure>
+            <p>and then notice on this header element that it has a data attribute with a hash after it. And if I go
+              back over here and remove this scoped attribute:</p>
+            <figure>
+              <img src="images/Fig02-150.png"/>
+              <figcaption>Fig 02-150</figcaption>
+            </figure>
+            <p>and then refresh, notice that the randomized hash has disappeared:</p>
+            <figure>
+              <img src="images/Fig02-151.png"/>
+              <figcaption>Fig 02-151</figcaption>
+            </figure>
+            <p>So first of all, the scoped attribute is adding those data attributes. So if we putthe scoped attribute
+              back, and then take note of the header styles that are being applied here:</p>
+            <figure>
+              <img src="images/Fig02-152.png"/>
+              <figcaption>Fig 02-152</figcaption>
+            </figure>
+            <p>the background-color, the width, and the margin. Now if we go look at the source again and refresh, take
+              a look over here in the inspector that is showing the styles for header:</p>
+            <figure>
+              <img src="images/Fig02-153.png"/>
+              <figcaption>Fig 02-153</figcaption>
+            </figure>
+            <p>Notice that it's not just being applied to any header element; it's actually only being applied to header
+              elements with this data attribute. So that's how Vue handles scoping styles. It puts these randomized
+              hashes on scoped elements and then targets them specifically with that hash. So a header element on
+              another component would either not have this data attribute at all, or it would have a different data
+              attribute because it's in a different scope.</p>
+            <p>And the same concept applies to child components, as we'll see in the next clip. With some exceptions, if
+              you add the scoped element to a parent component, its styles won't bleed into the child component. We'll
+              take a closer look at this in a minute. But first, let's talk a bit about scoped versus global styles
+              .</p>
+            <p>As a general rule, you should not have global styles in any component other than your top-level app
+              component. So let's go fix our RobotBuilder so that it has scoped styles.</p>
+            <p>So over here in the style element, we'll add the scoped attribute:</p>
+            <figure>
+              <img src="images/Fig02-154.png"/>
+              <figcaption>Fig 02-154</figcaption>
+            </figure>
+            <p>and so now we don't have global styles in our RobotBuilder. But the App component is a good place to have
+              some global styles, so let's do that. And the interesting thing is that in our App component, we want some
+              global styles, but we also want some styles that apply only to the App component. But that's okay; you can
+              do that. You can have multiple style blocks, and one can be scoped and the other not:</p>
+            <figure>
+              <img src="images/Fig02-155.png"/>
+              <figcaption>Fig 02-155</figcaption>
+            </figure>
+            <p>So now we have a global style block here and a scoped style block down here. And let's move this body
+              style up here to our global style:</p>
+            <figure>
+              <img src="images/Fig02-156.png"/>
+              <figcaption>Fig 02-156</figcaption>
+            </figure>
+            <p>And the rest of these styles are specific to the App component, and so we want to leave those in the
+              scoped style block.</p>
+            <p>So now if we go back and refresh, and let's close our console, you can see that we have our gradient
+              background again:</p>
+            <figure>
+              <img src="images/Fig02-157.png"/>
+              <figcaption>Fig 02-157</figcaption>
+            </figure>
+            <p>And so the body style is being applied globally, whereas the rest of these are only being applied to this
+              component. Okay, cool. So now we'll take a look at how this all affects child components.
+            </p>
+          </div>
+          <div><h3>Styling Child Components</h3>
+            <p>
+              It's important to understand what it means when you add the scoped attribute to a parent component and how
+              that affects child components. Right now, our RobotBuilder is a child component of our App component, and
+              if we take a look at our RobotBuilder, you can see right here we have this robot-name class:</p>
+            <figure>
+              <img src="images/Fig02-158.png"/>
+              <figcaption>Fig 02-158</figcaption>
+            </figure>
+            <p>Let's add an element in our App component with that same class. So right here just above our
+              RobotBuilder, we're going to create a div element with a class of robot-name:</p>
+            <figure>
+              <img src="images/Fig02-159.png"/>
+              <figcaption>Fig 02-159</figcaption>
+            </figure>
+            <p>which happens to match the robot name class inside our RobotBuilder.</p>
+            <p>And then down here in the scoped style, we will add that robot-name class with color: red:</p>
+            <figure>
+              <img src="images/Fig02-160.png"/>
+              <figcaption>Fig 02-160</figcaption>
+            </figure>
+            <p>Okay, so if we go take a look at this:</p>
+            <figure>
+              <img src="images/Fig02-161.png"/>
+              <figcaption>Fig 02-161</figcaption>
+            </figure>
+            <p>you can see that the robot-name styles got applied to the element in the App component but not to the
+              element with the matching class name in the child component. So this is what we would expect; it is scoped
+              to our parent component.</p>
+            <p>But I want to point out something. Watch what happens if I come up here and wrap this div around the
+              RobotBuilder:</p>
+            <figure>
+              <img src="images/Fig02-162.png"/>
+              <figcaption>Fig 02-162</figcaption>
+            </figure>
+            <p>So now this div is wrapping the RobotBuilder. So let's see if that changed anything:</p>
+            <figure>
+              <img src="images/Fig02-163.png"/>
+              <figcaption>Fig 02-163</figcaption>
+            </figure>
+            <p>Ah, now you can see that both the parent component and the child component got styled. So it appears that
+              the parent component's styles are bleeding into the child component. And this is sort of true, but not
+              really. At least, it's not true as far as Vue is concerned. Let's see what happens if we also add a border
+              to this style. So down here, I'm going to also add border, and we'll add a 2px solid blue border:</p>
+            <figure>
+              <img src="images/Fig02-164.png"/>
+              <figcaption>Fig 02-164</figcaption>
+            </figure>
+            <p>So now if we come back over here, notice that we do have a border that is wrapping the div in the App
+              component:</p>
+            <figure>
+              <img src="images/Fig02-165.png"/>
+              <figcaption>Fig 02-165</figcaption>
+            </figure>
+            <p>and that div stretches across this because the RobotBuilder is wrapped by this div. But the interesting
+              thing is that even though the border is being applied to the robot-name class, it is not bleeding down
+              into the child component's robot-name class. Otherwise, we would see a border around this robot title
+              here:</p>
+            <figure>
+              <img src="images/Fig02-166.png"/>
+              <figcaption>Fig 02-166</figcaption>
+            </figure>
+            <p>So it seems that the font color is bleeding into the child component, but the border is not. So when Vue
+              says that its styles are scoped, what it means is that it's not going to apply that style directly to
+              classes or elements outside of the scope, but that doesn't mean that the child elements won't be affected
+              due to CSS inheritance. That's just the nature of CSS.</p>
+            <p>In CSS, there are a number of CSS properties that get inherited. Font color, for example, is inherited,
+              whereas border is not. That's why you see a difference here.</p>
+            <p>So know that when you style something in a parent component that wraps a child component, traditional CSS
+              inheritance will still be at play. But Vue won't specifically target elements outside of the component if
+              the style is scoped. So it's important to understand that difference between Vue targeting an element or
+              applying classes to an element in a child, versus styles just getting inherited because they are applied
+              to a parent element by CSS.</p>
+            <p>But what if you do want to be able to style a child component from the parent? Vue does allow a parent to
+              style a child component within the bounds of scoped CSS, so let's take a look at how to do that. The
+              easiest way to think about this is to consider the root element of a child component part of the parent's
+              scope.</p>
+            <p>So over here in our RobotBuilder:</p>
+            <figure>
+              <img src="images/Fig02-167.png"/>
+              <figcaption>Fig 02-167</figcaption>
+            </figure>
+            <p>this element is the root component, or the root element of our RobotBuilder. And notice that it has a
+              content class. So if we go to its parent component, the App component, and let's remove this test div:</p>
+            <figure>
+              <img src="images/Fig02-168.png"/>
+              <figcaption>Fig 02-168</figcaption>
+            </figure>
+            <p>we don't need this anymore:</p>
+            <figure>
+              <img src="images/Fig02-169.png"/>
+              <figcaption>Fig 02-169</figcaption>
+            </figure>
+            <p>And now down here, instead of robot-name here, let's change this to just content:</p>
+            <figure>
+              <img src="images/Fig02-170.png"/>
+              <figcaption>Fig 02-170</figcaption>
+            </figure>
+            <p>So now we are applying these styles to the content class. And there is no content class in our App
+              component; it's only in our RobotBuilder. So let's go back over here, and there, now you can see that the
+              red text and blue border are being applied to the content class in our child component:</p>
+            <figure>
+              <img src="images/Fig02-171.png"/>
+              <figcaption>Fig 02-171</figcaption>
+            </figure>
+            <p>This is only because that content class is on the root component of the child:</p>
+            <figure>
+              <img src="images/Fig02-172.png"/>
+              <figcaption>Fig 02-172</figcaption>
+            </figure>
+            <p>and so you can use the root component of a child component to allow a parent to apply styles to the child
+              component. But what if we want to access this robot-name:</p>
+            <figure>
+              <img src="images/Fig02-173.png"/>
+              <figcaption>Fig 02-173</figcaption>
+            </figure>
+            <p>from our parent and style it? So over in our App.vue, we could add .content .robot-name:</p>
+            <figure>
+              <img src="images/Fig02-174.png"/>
+              <figcaption>Fig 02-174</figcaption>
+            </figure>
+            <p>So generally, you can target things in CSS like this where you can target a robot-name class that's
+              contained within the content class. And since we're able to target the content class from the parent, the
+              question is, are we able to target elements inside of that content class? So we would expect to now to see
+              a blue border and red text around the robot name. So if we come take a look at this, yeah, you can see
+              that our style's not getting applied anywhere:</p>
+            <figure>
+              <img src="images/Fig02-175.png"/>
+              <figcaption>Fig 02-175</figcaption>
+            </figure>
+            <p>If you want to be able to do deep targeting like this, you need to use the deep selector that looks like
+              this:</p>
+            <figure>
+              <img src="images/Fig02-176.png"/>
+              <figcaption>Fig 02-176</figcaption>
+            </figure>
+            <p>And now if we take a look at it, there, now you can see that we can target it:</p>
+            <figure>
+              <img src="images/Fig02-177.png"/>
+              <figcaption>Fig 02-177</figcaption>
+            </figure>
+            <p>So you can target child elements within scoped styles like this by starting with the class of the root
+              element and then using the deep selector to select other items within the child component. But you need to
+              be aware that this deep component is truly deep. It is not just the child component, but this will also
+              affect child components of your child component, so it will keep going down the chain. And it's possible
+              that this won't work with some CSS preprocessors, and so in that case, there is also the deep
+              selector:</p>
+            <figure>
+              <img src="images/Fig02-178.png"/>
+              <figcaption>Fig 02-178</figcaption>
+            </figure>
+            <p>
+              and that has the same effect. Okay, we don't want to keep this here:</p>
+            <figure>
+              <img src="images/Fig02-179.png"/>
+              <figcaption>Fig 02-179</figcaption>
+            </figure>
+            <p>so let's delete that. That covers everything for styling child components. Next, let's take a look at
+              conditionally applying styles to elements.
+            </p>
+          </div>
+          <div><h3>Conditionally Applying Styles with Style Bindings</h3>
+            <p>
+              Sometimes we want to apply a style to an element based upon a certain condition. That's quite easy to do
+              with Vue. Let's use a style binding to make it so that the border around the head turns red if it's on
+              sale.</p>
+            <p>So over here in our template, we're going to style this div right here:</p>
+            <figure>
+              <img src="images/Fig02-180.png"/>
+              <figcaption>Fig 02-180</figcaption>
+            </figure>
+            <p>It's the one that contains the head. So a style binding looks like this:</p>
+            <figure>
+              <img src="images/Fig02-181.png"/>
+              <figcaption>Fig 02-181</figcaption>
+            </figure>
+            <p>And really, this is just binding to the style attribute. And you provide an object, and we're going to
+              set the border to a 3px solid red border:</p>
+            <figure>
+              <img src="images/Fig02-182.png"/>
+              <figcaption>Fig 02-182</figcaption>
+            </figure>
+            <p>And this should be working, if we go over here and take a look at it:</p>
+            <figure>
+              <img src="images/Fig02-183.png"/>
+              <figcaption>Fig 02-183</figcaption>
+            </figure>
+            <p>However, it's not yet conditional. So every head has a red border, not just the ones that are on sale. So
+              we'll get to conditional in just a second, but first I want to mention that there are some CSS attributes
+              that have hyphens in them. For example, background-color. But this isn't valid JavaScript. For this to be
+              valid JavaScript, you have to add brackets around this because this is object notation here:</p>
+            <figure>
+              <img src="images/Fig02-184.png"/>
+              <figcaption>Fig 02-184</figcaption>
+            </figure>
+            <p>But Vue actually makes this easier by allowing you to use camel case for CSS attribute names that have
+              hyphens in them:</p>
+            <figure>
+              <img src="images/Fig02-185.png"/>
+              <figcaption>Fig 02-185</figcaption>
+            </figure>
+            <p>so just keep that in mind. We don't need this though, so we'll just change this back to border:</p>
+            <figure>
+              <img src="images/Fig02-186.png"/>
+              <figcaption>Fig 02-186</figcaption>
+            </figure>
+            <p>So for this to be conditional, we need to not just have it be hardcoded to a string, so we can just
+              change that to bind to a computer property on the component. So instead of this object here, we're just
+              going to bind this to headBorderStyle:</p>
+            <figure>
+              <img src="images/Fig02-187.png"/>
+              <figcaption>Fig 02-187</figcaption>
+            </figure>
+            <p>Now the style binding will be set to whatever object is returned by headBorderStyle. So let's go add a
+              computed property for that:</p>
+            <figure>
+              <img src="images/Fig02-188.png"/>
+              <figcaption>Fig 02-188</figcaption>
+            </figure>
+            <p>So that's a method, and it's just going to, for now we'll have it just return border, and we'll hardcode
+              that again to 3px solid red:</p>
+            <figure>
+              <img src="images/Fig02-189.png"/>
+              <figcaption>Fig 02-189</figcaption>
+            </figure>
+            <p>Okay, so this still isn't dynamic. We still are just getting a red border on everything:</p>
+            <figure>
+              <img src="images/Fig02-190.png"/>
+              <figcaption>Fig 02-190</figcaption>
+            </figure>
+            <p>But now, because this is a computed property, we could just use a ternary here. So let's bring this down
+              onto a separate line, and instead of always setting border to this string, we'll set it to a ternary
+              statement. We'll say if this.selectedRobot.head is onSale, then return 3px solid red:</p>
+            <figure>
+              <img src="images/Fig02-191.png"/>
+              <figcaption>Fig 02-191</figcaption>
+            </figure>
+            <p>Otherwise, return 3px solid gray. Okay, let's go check that out. Okay, it looks like this is working
+              great now. So now only the items that's on sale has a red border:</p>
+            <figure>
+              <img src="images/Fig02-192.png"/>
+              <figcaption>Fig 02-192</figcaption>
+            </figure>
+            <p>Okay, one last thing to be aware of is up here in our style binding, sometimes it's necessary to apply
+              styles based on multiple calculations. In that case, we could add an array, or bind this to an array
+              instead. And this could be a second calculated property so that it applies these styles, the
+              headBorderStyle first, and then moreStyles second.</p>
+            <figure>
+              <img src="images/Fig02-193.png"/>
+              <figcaption>Fig 02-193</figcaption>
+            </figure>
+            <p>And moreStyles will override headBorderStyle, so the second one overrides the first if there are any
+              conflicts. We don't have a need for that, though, so we'll just go with the simple object syntax:</p>
+            <figure>
+              <img src="images/Fig02-194.png"/>
+              <figcaption>Fig 02-194</figcaption>
+            </figure>
+            <p>Of course, it's better to use classes than inline styles, so now let's take a look at how to
+              conditionally apply CSS classes.
+            </p>
+          </div>
+          <div><h3>Conditionally Applying Classes with Class Bindings</h3>
+            <p>Let's see how to replace this style binding with a class binding so that we can use classes instead of
+              inline styles. First, let's start by adding a class down here. We'll call it sale-border, and that will
+              just have a border that is 3px solid red:</p>
+            <figure>
+              <img src="images/Fig02-195.png"/>
+              <figcaption>Fig 02-195</figcaption>
+            </figure>
+            <p>And then back up here where our style binding is, instead of this we'll use a class binding:</p>
+            <figure>
+              <img src="images/Fig02-196.png"/>
+              <figcaption>Fig 02-196</figcaption>
+            </figure>
+            <p>And then a class binding is basically an object where the keys are the names of the classes that you
+              would like to toggle. So in this case, we have a sale-border class. And then you just set that to a
+              Boolean expression that will evaluate to true when you want this class to be applied. So in this case we
+              want it to be applied when the selectedRobot.head is onSale:</p>
+            <figure>
+              <img src="images/Fig02-197.png"/>
+              <figcaption>Fig 02-197</figcaption>
+            </figure>
+            <p>So this is just saying apply the sale-border class when the onSale property is true.</p>
+            <figure>
+              <img src="images/Fig02-198.png"/>
+              <figcaption>Fig 02-198</figcaption>
+            </figure>
+            <p>And if we wanted to toggle multiple classes, we would just add more properties to this object. So this
+              should be working just like the style binding was. So the Friendly Bot is on sale, and the rest are not on
+              sale. Perfect.</p>
+            <p>Now one thing that you might not have noticed, if we inspect this, this div where we applied the sale
+              border, also has the classes top and part:</p>
+            <figure>
+              <img src="images/Fig02-199.png"/>
+              <figcaption>Fig 02-199</figcaption>
+            </figure>
+            <p>If we go over and take a look at our template, you can see that this element has both a class binding and
+              a class attribute on it:</p>
+            <figure>
+              <img src="images/Fig02-200.png"/>
+              <figcaption>Fig 02-200</figcaption>
+            </figure>
+            <p>so the top and part classes are going to always be applied, and the sale-border property is going to be
+              applied conditionally, so you can combine them like this. Of course, this class object could get fairly
+              complex if you were toggling lots of classes. So you could always move this expression to a computed
+              property like we did with the style binding.</p>
+
+            <p>But like style bindings, there's another syntax that we could use here, an array syntax. So I could just
+              provide an array here, and that array contains the classes that I would like to apply.</p>
+            <figure>
+              <img src="images/Fig02-201.png"/>
+              <figcaption>Fig 02-201</figcaption>
+            </figure>
+            <p>So this is not conditional; this will always apply a class, so we should be seeing that everywhere:</p>
+            <figure>
+              <img src="images/Fig02-202.png"/>
+              <figcaption>Fig 02-202</figcaption>
+            </figure>
+            <p>But we could then take this and, let's undo a little bit and grab this expression:</p>
+            <figure>
+              <img src="images/Fig02-203.png"/>
+              <figcaption>Fig 02-203</figcaption>
+            </figure>
+            <p>and with this array syntax, let's put in a, let's use a computed property like we did with our style
+              bindings. So I'm going to create a computed property called saleBorderClass:</p>
+            <figure>
+              <img src="images/Fig02-204.png"/>
+              <figcaption>Fig 02-204</figcaption>
+            </figure>
+            <p>and we will add the value of that to our array. So now down in our computed properties, I can change this
+              to saleBorderClass. And then this is just going to return the saleBorder string if the robot head is on
+              sale, so we'll just use a ternary like this. So if it's on sale, then return sale-border. Otherwise it'll
+              return an empty string:</p>
+            <figure>
+              <img src="images/Fig02-205.png"/>
+              <figcaption>Fig 02-205</figcaption>
+            </figure>
+            <p>Okay, so that should be conditional again:</p>
+            <figure>
+              <img src="images/Fig02-206.png"/>
+              <figcaption>Fig 02-206</figcaption>
+            </figure>
+            <p>There we go. And now that we have that using the array syntax, we could actually collapse these class
+              expressions into a single expression. So I'm going to take these out of here:</p>
+            <figure>
+              <img src="images/Fig02-207.png"/>
+              <figcaption>Fig 02-207</figcaption>
+            </figure>
+            <p>and make them strings in here. And then I can get rid of this class attribute:</p>
+            <figure>
+              <img src="images/Fig02-208.png"/>
+              <figcaption>Fig 02-208</figcaption>
+            </figure>
+
+            <p>and now it's all taken care of in our class binding. Cool, I like that final syntax, so let's go with
+              that.</p>
+            <p>And next, we'll take a look at using CSS preprocessors like Sass.
+            </p>
+          </div>
+          <div><h3>Using SASS and Other CSS Pre-processors</h3>
+            <p>Vue. js fully supports using CSS preprocessors if, for example, you want to use something like Sass
+              instead of plain old CSS. In fact, the zero-config web pack configuration that comes with the basic CLI
+              includes all of the web pack config to support Sass, Less, and Stylus. All you have to do is npm install
+              the appropriate loaders if you want to use them.</p>
+            <p>So here in our terminal, I'm going to just type :</p>
+            <figure>
+              <pre><code class="language-command-line">npm install node-sass and sass-loader --save-dev</code></pre>
+              <figcaption>Fig 02-209</figcaption>
+            </figure>
+            <p>
+              Let's go ahead and install that. And since the built-in web pack config is already set up to handle the
+              Sass loader, we can just jump in using that in our project. So all we have to do to support Sass is come
+              down to the style section, and up here at the top where we define our style tag, all we need to do is
+              specify the language used here, so I can say lang=scss:</p>
+            <figure>
+              <img src="images/Fig02-210.png"/>
+              <figcaption>Fig 02-210</figcaption>
+            </figure>
+            <p>And now I can start using Sass syntax in here, so I could, for example, wrap this inside of the part
+              class:</p>
+            <figure>
+              <img src="images/Fig02-211.png"/>
+              <figcaption>Fig 02-211</figcaption>
+            </figure>
+            <p>and then if we come back over here and start our server again:</p>
+            <figure>
+              <pre><code class="language-command-line">npm run serve</code></pre>
+              <figcaption>Fig 02-212</figcaption>
+            </figure>
+            <p>and then come back over to our browser and refresh:</p>
+            <figure>
+              <img src="images/Fig02-213.png"/>
+              <figcaption>Fig 02-213.png</figcaption>
+            </figure>
+            <p>you can see that all our styles, so these images, are still the correct size, even though we added the
+              Sass syntax for sizing them.</p>
+            <p>So that was surprisingly easy, and you can see how the zero-config environment made that really simple.
+              Of course, if you wanted to use a CSS preprocessor other than Sass, Less, or Stylus, you could do that,
+              but you would have to go in and modify the webpack.config, and we'll talk about that in the deploying to
+              production module. But out of the box, those three are already supported. And now our robot builder is
+              using Sass.</p>
+            <p>This wraps up our discussion of styling our components. We're going to next take a look at the different
+              component lifecyle hooks that we can tap into.
+            </p>
+          </div>
+          <div><h3>Using Component Lifecycle Hooks</h3>
+            <p>
+              There are several lifecycle hooks that we can tap into to take an action based on the various lifecycle
+              states of a component. Let's take a look at the created lifecycle hook. A typical use case for lifecycle
+              hooks is to fetch data from a API when a component is first created, but we're not ready to do that just
+              yet. We'll implement that exact use case later in the module about state management when we start using an
+              API.</p>
+            <p>For now, let's just make it so that whenever this RobotBuilder component is created, we log something
+              into the console. So all we need to do is add a created function like this. And then we can just console.
+              log in here:</p>
+            <figure>
+              <img src="images/Fig02-214.png"/>
+              <figcaption>Fig 02-214</figcaption>
+            </figure>
+            <p>And tapping into a lifecyle hook is that easy. Let's go check this out over in our browser. So let's open
+              our console and clear it, and then I'm going to refresh this. And when this page loaded, the RobotBuilder
+              component was created:</p>
+            <figure>
+              <img src="images/Fig02-215.png"/>
+              <figcaption>Fig 02-215</figcaption>
+            </figure>
+            <p>And then you can see down here we got this component created message. And again, this isn't a great use
+              case, obviously, but it's pretty common that you'll do things in here like fetch data from an API that's
+              needed for this component.</p>
+            <p>There are a handful of lifecycle hooks, but covering all of them is beyond the scope of this course. If
+              you want to explore more about lifecyle hooks, you can check it out here in the Vue documentation:</p>
+            <figure>
+              <img src="images/Fig02-216.png"/>
+              <figcaption>Fig 02-216</figcaption>
+            </figure>
+            <p>They provide this lifecyle diagram that shows all of the different lifecycle hooks, beforeCreate,
+              created, beforeMount, mounted, beforeUpdate, updated, and beforeDestroy, and finally, destroyed. And it
+              shows you in this diagram here where in the lifecycle of a component each of these hooks gets called.</p>
+            <p>
+              And again, we'll touch on this more later in the course. If you want to look at it right now, to explore
+              lifecycle states further, you can check it out in the Passing Data to Parent Components clip, which is
+              inside the Enabling Intercomponent Communication module, or you can also look at it in the State
+              Management module when we start talking about making API calls.</p>
+            <p>For now, let's move on and take a look at mixins.
+            </p>
+          </div>
+          <div><h3>Reducing Duplication with Mixins</h3>
+            <p>
+              Mixins are a way to share functionality across multiple components. Basically, any component option can be
+              extracted out into a mixin file, and then when you import the mixin, it will be merged into the rest of
+              your component options.</p>
+            <p>Let's see how to do that. Let's take this created lifecycle hook and move it into a mixin. So we'll grab
+              it from here:</p>
+            <figure>
+              <img src="images/Fig02-217.png"/>
+              <figcaption>Fig 02-217</figcaption>
+            </figure>
+            <p>and then let's create a new file called created-hook-mixin.js:</p>
+            <figure>
+              <img src="images/Fig02-218.png"/>
+              <figcaption>Fig 02-218</figcaption>
+            </figure>
+            <p>And then here we'll just export an object:</p>
+            <figure>
+              <img src="images/Fig02-219.png"/>
+              <figcaption>Fig 02-219</figcaption>
+            </figure>
+            <p>So basically, we're just export a component configuration object here, and whatever is in this object
+              will be merged in with any components that you use it in.</p>
+            <p>So to use it, let's go back into our RobotBuilder, and we're going to import our createdHookMixin from
+              created-hook-mixin</p>
+            <figure>
+              <img src="images/Fig02-220.png"/>
+              <figcaption>Fig 02-220</figcaption>
+            </figure>
+            <p> And then we're just going to use this down here in a mixin property, so mixins, and then this is just an
+              array of mixins, and we're only going to have one, the createdHookMixin:</p>
+            <figure>
+              <img src="images/Fig02-221.png"/>
+              <figcaption>Fig 02-221</figcaption>
+            </figure>
+            <p>Cool. Now this mixin can be used in multiple components. Right now, we're just going to be using it in
+              this one. And if we come back over to our web app and open our console and refresh, you can see our
+              component created messages still getting logged:</p>
+            <figure>
+              <img src="images/Fig02-222.png"/>
+              <figcaption>Fig 02-222</figcaption>
+            </figure>
+            <p>And so our created hook is still working, but it is now extracted out into a mixin that could be reused.
+              Again, our application isn't quite mature enough yet for a great example for mixins. If you want to see a
+              better example of this, in the Managing State with Vuex module, we talk about it when we have a few
+              components that all need the same data, so we'll create a mixin in order to share the logic that will be
+              used to fetch that data across multiple components. You can find that in the clip on Using Actions to Work
+              with APIs and Asynchronous Data.</p>
+            <p>I just wanted to talk about it a little bit here in the components section so that you knew about it. And
+              just be aware, you can use a mixin to share any component option across multiple components including
+              lifecycle hooks, props, computed properties, etc.
+            </p>
+          </div>
+          <div><h3>Summary</h3>
+            <p>In this module, we learned about the following component concepts, creating components, using bindings to
+              display data and handle events, conditionally displaying elements with v-if and v-show, repeating elements
+              with v-for, the various ways to style components, working with component lifecycle hooks, and using
+              mixins.</p>
+            <p>In the next module, we'll export various ways to communicate between components.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

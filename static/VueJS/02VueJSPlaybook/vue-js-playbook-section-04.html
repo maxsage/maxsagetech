@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="UTF-8">
+  <title>Vue.js Playbook</title>
+  <script src="https://unpkg.com/vue"></script>
+  <!--<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"-->
+  <!--integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">-->
+  <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" rel="stylesheet">
+  <link href="prism.css" rel="stylesheet">
+  <script src="prism.js"></script>
+  <style>
+    img {
+      max-width: 100%;
+    }
+    .example {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+<div class="container" id="app">
+  <div class="panel-group">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h2>Vue.js Playbook</h2>
+      </div>
+
+      <div class="panel-body">
+        <div>
+          <h2>Binding with Forms in Vue.js </h2>
+          <div>
+            <h3>
+              An Introduction to Binding with Forms
+            </h3>
+            <p>
+              Let me begin by saying, I'm really happy you've stuck with this course thus far. From this module forward,
+              the fictional beer search engine is going to take shape much faster. In the last module, I showed you how
+              to display data in a template. Showing data is a valuable part of any user interface. Collecting data is
+              often just as important. The main way to collect data in a web page is through forms.
+            </p>
+            <p>In this module, I'm going to show you how to bind to forms in Vue. This module will begin by showing you
+              how to use input bindings to collect data. When collecting data, you occasionally need to change the
+              values input, like remove the whitespace, or perform other utility-type tasks on the input. For that
+              reason, I'll also show you how to modify bound values.
+            </p>
+            <p>Finally, this module will conclude with a discussion on how to defer binding values to a later point in
+              time. If you've been watching this course straight through, I encourage you to take a moment and stretch,
+              perhaps grab a drink, or a snack, or take this opportunity to follow me on Twitter. Either way, I want you
+              to get as much out of this course as you can. For that reason, make sure you're mentally fresh before
+              starting the first section, Using Input Bindings.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Using Input Bindings
+            </h3>
+            <p>
+              When you're ready to collect data, you need to create a two-way binding. Two-way bindings can be created
+              using the model directive. This directive can be used with input tags, textarea tags, and select tags.
+              This is a technical way of saying you can use the model directive with text fields, checkboxes, radio
+              buttons, and dropdown lists. To ensure you know how to collect data in Vue, I'm going to cover each of
+              these scenarios in detail.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Binding to Text Fields
+            </h3>
+            <p>
+              In HTML, a text field is usually created using one of two tags. First, there's the input tag, second
+              there's the textarea tag, I'll cover binding with both of these in this section. Most search engines have
+              a way to enter a search query. In Growler, this role is filled with an HTML input element. In Vue, you can
+              bind to an input element using the model directive, like this.
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig03-001.png"/>
+              <figcaption>Fig 03-001</figcaption>
+            </figure>
+
+            <p>This snippet shows how to bind to an HTML input element, Specifically, this snippet assumes there is a
+              property in the data scope called query. The query property bridges the UI and the data with help from the
+              model directive. In fact, if I take the information discussed in module 2 and expand on this example, like
+              this:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig03-002.png"/>
+              <figcaption>Fig 03-002</figcaption>
+            </figure>
+            <p class="example">Module 03 - Binding to a "text" input field</p>
+            <p>things begin to get interesting. This code sample binds the query property to the input element in the
+              HTML template. To show why this is interesting, I'm going to switch over to Google Chrome. With Growler
+              loaded, I'm going to start typing a query in the search field. Notice how this part of the UI is
+              automatically updated as I type:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig03-003.png"/>
+              <figcaption>Fig 03-003</figcaption>
+            </figure>
+            <p>This is the magic of two-way binding. This shows how change notifications, discussed in module 2, can
+              impact your UI. If you had to wire this up by yourself, you'd have to track the value of the query, listen
+              for the input event, and manually update the text shown in the UI. With Vue, all of this is handled for
+              you. In the context of input fields that collect text input, Vue works with these types:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig03-004.png"/>
+              <figcaption>Fig 03-004</figcaption>
+            </figure>
+            <p class="example">Module 03 - Text field binding with different input types</p>
+            <p>You're probably familiar with some of these. Some of the less familiar ones were added with the HTML5
+              spec. You can see how each of these work by running the code provided in this course's exercise files,
+              which are available here:
+            </p>
+            <a href="https://github.com/ecofic/course-vue-getting-started">https://github.com/ecofic/course-vue-getting-started</a>
+            <p>Either way, binding to input elements lets you focus on the problems you're trying to solve. In addition,
+              your code is just cleaner and easier to maintain. This approach also works with text areas. A text area is
+              used to collect multi-line text input. For example, in an email, the subject line is often implemented as
+              a standard text input, however, the body of an email usually needs multiple lines of text. For that
+              reason, it would be best to implement this feature using a textarea like this:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig03-005.png"/>
+              <figcaption>Fig 03-005</figcaption>
+            </figure>
+            <p class="example">Module 03 - Binding to a textarea field</p>
+            <p>In this example, I'm using the concept of an email because search engines, like Growler, rarely need
+              multi-line text fields, but I didn't want to use that as an excuse to skip over text areas. I wanted to
+              give you the full tour of the input bindings available to you. Either way, notice in this example that the
+              model directive is once again used for binding.
+            </p>
+            <p>At first glance, you may consider skipping the model directive and using mustaches for binding. It's
+              natural to think that that would work, considering the textarea element has a closing tag, however, Vue
+              doesn't support using mustaches in this context. Instead, you should continue to use the model directive
+              for binding in a text area. Beyond that, there's not really anything else to know about binding to text
+              areas. There is a bit more involved with binding to checkboxes, though.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Binding to Checkboxes
+            </h3>
+            <p>
+              An HTML checkbox lets a user pick one value or another. In reality, there are two situations where using
+              checkboxes should be considered. The first scenario is when you want the user to choose a single value, in
+              other words, you want the user to make a yes or no, or either/or choice. The other situation is when you
+              want a user to make multiple choices by creating a checkbox list. Either way, I'll show you how to bind to
+              checkboxes in both of these situations, in this section.
+            </p>
+            <p>To bind a single value, just use the model directive. For example, by default, when the Growler beer
+              search engine sees a query, it reads it as a simple query. If you were building a search engine, though,
+              you might want to accept more complex queries. More complex queries are known as full or power queries in
+              the search engine world. The details of these types of queries are beyond the scope of this course,
+              however, they're explained in one of my other Pluralsight courses called Adding Search Abilities to your
+              Apps with Azure Search. In that course, and more importantly, this course, a checkbox is used in the user
+              interface to let the user switch between these two types of queries. The code for this looks like this.
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig03-006.png"/>
+              <figcaption>Fig 03-006</figcaption>
+            </figure>
+            <p class="example">Module 03 - Binding to a "checkbox" input field</p>
+            <p>This code snippet looks almost identical to the query input field discussed earlier. There are only two
+              differences. First, the type has been explicitly set to checkbox. This is to ensure the input element
+              renders as a checkbox instead of a text field. This isn't a Vue thing, as much as it's an HTML thing.
+              Beyond that, the only other difference is that this time we're binding to a property named
+              isPowerSyntaxEnabled. The differences grow if you need to bind to multiple values, though.
+            </p>
+            <p>Binding to multiple values is useful if you want to let a user make multiple related choices. In Growler,
+              a search is performed against a single searchIndex by default. A searchIndex is something like an entity.
+              In the case of Growler, the searchIndexes are named beers and breweries. To let the user choose multiple
+              search indexes at once, you could do something like this:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig03-007.png"/>
+              <figcaption>Fig 03-007</figcaption>
+            </figure>
+            <p class="example">Module 03 - Binding to a checkbox list</p>
+            <p>This code sample binds the selected checkbox values to an array. When a user selects a checkbox, the
+              value of the checkbox gets added to the searchIndexes array. The value is always pushed onto the array.
+              This means that the value always gets added to the end of the array. If a user deselects a checkbox, the
+              value gets removed from the array.
+            </p>
+
+            <p>To demonstrate how this works, I'm going to open one of the examples from the exercise files. As you can
+              see, as I select and deselect the checkboxes, items are added and removed from the array.
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig03-008.png"/>
+              <figcaption>Fig 03-008</figcaption>
+            </figure>
+            <p>Now this is great for binding to values, but you might be looking at this hard-coded HTML and wonder if
+              there's a way to dynamically generate the checkboxes themselves. There is, and we will discuss it later,
+              in module 5. For now, I want to stay focused on binding to values and look at radio buttons.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Binding to Radio Buttons
+            </h3>
+            <p>
+              HTML radio buttons are used to let someone choose one of several options. For example, the checkbox
+              approach just discussed would let the user signal that they want to search beers and breweries, however,
+              the user may really want to search only for beers or breweries. To accomplish this, you could use radio
+              buttons, like this:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig03-009.png"/>
+              <figcaption>Fig 03-009</figcaption>
+            </figure>
+            <p class="example">Module 03 - Binding to radio buttons</p>
+            <p>In this snippet, the model directive is once again being used for binding. It's used to bind the radio
+              buttons to the searchIndex property in the data model. The searchIndex property is a string that's
+              explicitly set to the value beers. If I run this example, you can see that the Beers radio button is
+              selected when the app starts.
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig03-010.png"/>
+              <figcaption>Fig 03-010</figcaption>
+            </figure>
+            <p>If I had left the searchIndex property empty or null, neither of these radio buttons would have been
+              selected when the app started. Still, since both radio buttons bind to the searchIndex property, the
+              property changes whenever one of the radio buttons is selected. Radio buttons are great in this scenario
+              because Growler only has two searchIndexes. However, for situations where you have more choices, a
+              different input field may be appropriate. For longer lists of choices, you might want to consider using a
+              dropdown list.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Binding to Drop Down Lists
+            </h3>
+            <p>
+              Dropdown lists in HTML can be created with a select element. This element is useful for two main
+              scenarios. First, the select element can be used to let someone make a single choice. In other situations,
+              the select element can be used to let someone make multiple choices. Both of these scenarios will be
+              covered in this section.
+            </p>
+            <p>If you need to bind to a single choice in a dropdown list, you, once again, use the model directive, like
+              this:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig03-011.png"/>
+              <figcaption>Fig 03-011</figcaption>
+            </figure>
+            <p class="example">Module 03 - Binding to Drop-Down Lists</p>
+            <p>In this example, the beers searchIndex is selected by default. This code is similar to the approach used
+              when binding to radio buttons and checkboxes. In fact, the only real difference is in the HTML itself. In
+              my opinion, this is a testament to the simplicity of learning Vue. This consistency appears whether you're
+              binding to a single selection, or multiple selections.
+            </p>
+            <p>If you need to bind to multiple choices, you can simply follow the rules of HTML. This means that you add
+              the multiple attribute to the select element, like this.
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig03-012.png"/>
+              <figcaption>Fig 03-012</figcaption>
+            </figure>
+            <p class="example">Module 03 - Binding to Drop-Down Lists</p>
+            <p>In this example, I'm binding the selected options to the selectedSearchIndexes array. Earlier, when
+              discussing checkboxes, I used an empty array, however, this time I'm initializing the array with two
+              options. Now when the app starts, the beers and pubs choices will be preselected.
+            </p>
+            <p>This approach works with select elements in checkboxes. And that's really all there is to binding to
+              dropdown lists. If you wanted to dynamically create the list of options, you can. Once again, I'll be
+              covering that later, in module 5. For now, I want to continue discussing binding with form data,
+              specifically, I want to discuss how to modify values bound to a form.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Modifying Bound Values
+            </h3>
+            <p>
+              By default, Vue synchronizes a value input by the user with the data, whenever an input event is fired.
+              Input events are triggered when an HTML input or select element collects user input. This occurs after the
+              keypress HTML DOM event, but before the keyup event.
+            </p>
+            <p class="example">Module 03 - Modifying Bound Values</p>
+            <p>Once the input event is fired, the value input by the user may go through one of several modifications.
+              Out of the box, Vue provides two modifiers to lighten your development load. One modifier lets you trim
+              string values as they're being input. The other modifier lets you automatically convert input values to
+              numbers.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Using the Trim Modifier
+            </h3>
+            <p>
+              The trim modifier automatically removes whitespace added while input. This modifier removes both leading
+              and trailing whitespace. This includes spaces, tabs, and line breaks:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig03-013.png"/>
+              <figcaption>Fig 03-013</figcaption>
+            </figure>
+            <p>To use the trim modifier, append a.trim to the model directive, like this:</p>
+            <figure>
+              <pre><code class="language-html">&lt;input v-model.trim=&quot;query&quot; placeholder=&quot;Search...&quot;&gt;</code></pre>
+              <figcaption>Fig 03-014</figcaption>
+            </figure>
+            <p class="example">Module 03 - Trimming String Values</p>
+            <p>This line of code will take the search phrase input by a user and remove any whitespace. Under the
+              covers, Vue uses JavaScript's standard trim method to remove the whitespace. Once the whitespace has been
+              removed, the modified search phrase is set to the query property in the Vue's data.
+            </p>
+            <p>As you can imagine, removing whitespace from strings at runtime can be really handy. Sometimes, though,
+              it can be just as handy to convert input values to numbers.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Using the Number Modifier
+            </h3>
+            <p>
+              The number modifier automatically tries to cast user input to a number. This modifier is helpful, because
+              HTML input elements always return values as strings. This modifier tries to get a number object for you:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig03-015.png"/>
+              <figcaption>Fig 03-015</figcaption>
+            </figure>
+            <p>
+              To use the number modifier, just append. number to the model directive, like this:
+            </p>
+            <figure>
+              <pre><code class="language-html">&lt;input v-model.number=&quot;result&quot; placeholder=&quot;2+3&quot;&gt;</code></pre>
+              <figcaption>Fig 03-016</figcaption>
+            </figure>
+            <p class="example">Module 03 - Converting Values to Numbers</p>
+
+            <p>This line of code will take a value input by a user, and try to cast it to a floating-point number. This
+              attempt will be performed by JavaScript's built-in parseFloat function. The reason why is because when Vue
+              sees the number modifier, it passes the value to the parseFloat function. That means that the property in
+              your data model will either be a number or a string.
+            </p>
+            <p>The property in your data model will be a number if at least the first character in the input value is a
+              number. It should be noted that the leading and trailing whitespace is ignored. For that reason, you don't
+              have to worry about using a trim modifier with the number modifier.
+            </p>
+            <p>Still, if the leading character can't be identified as a number, the leading value will be interpreted as
+              a string. That's all there is to using the number modifier. You also saw how to use the trim modifier.
+              These two modifiers can be very helpful when using input bindings. As of the time of writing this course,
+              there wasn't a way to create custom modifiers, however, there is one other modifier that was available.
+              That modifier lets you lazily bind values.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Lazily Binding Values (Lazy Binding)
+            </h3>
+            <p>
+              In the last section, I mentioned that Vue synchronizes user input whenever the onInput event is fired. As
+              a general rule, this means any time a user presses a key, Vue will synchronize the user input with the
+              data model. Sometimes, though, these continuous updates can be overkill. For example, in Growler, we
+              wouldn't want to do a full search for beers every time a user entered a letter. That could be taxing on a
+              server, and could lead to performance issues or additional cost, but it might make sense to do a full
+              search when the input has changed.
+            </p>
+            <p>In addition to the onInput event, the HTML DOM has an onchange event. The onchange event fires when an
+              input element's value is modified. This may sound identical to the onInput event, however, the difference
+              lies in the fact that the onchange event fires after an input event has lost the focus. The impact is
+              quite significant. For example, look at the following:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig03-017.png"/>
+              <figcaption>Fig 03-017</figcaption>
+            </figure>
+            <p class="example">Module 03 - The default binding approach (input event)</p>
+            <p>In this example, the default binding behavior of the model directive is being used. As I type, notice how
+              the query appears as I type it. If I change the binding to use the onchange approach, though, the behavior
+              changes. Now, the query doesn't make it to the data model as I type. Instead, the data model updates after
+              the input field loses focus:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig03-018.png"/>
+              <figcaption>Fig 03-018</figcaption>
+            </figure>
+            <p class="example">Module 03 - The lazy binding approach (change event)</p>
+            <p>At that point, the query property is changed in the data model. This deferred approach is known as lazy
+              binding, and this is how you implement it:
+            </p>
+            <figure>
+              <pre><code class="language-html">&lt;input v-model.lazy=&quot;query&quot; placeholder=&quot;Search...&quot;&gt;</code></pre>
+              <figcaption>Fig 03-019</figcaption>
+            </figure>
+
+            <p>In this example, I added the lazy modifier to the model directive. That's it. By appending the lazy
+              modifier to the model directive, I described the behavior of the binding. That's really what modifiers do,
+              they describe the behavior of a binding. The really cool part is that you can actually chain modifiers
+              together.
+            </p>
+            <p>You might be thinking, waiting for a search query to complete before running a full search makes a lot of
+              sense, but what if I need to remove the whitespace from a user's query. There are several ways you could
+              do this. One way is to chain the trim modifier to the lazy modifier, like this:
+            </p>
+            <figure>
+              <pre><code class="language-html">&lt;input v-model.lazy.trim=&quot;query&quot; placeholder=&quot;Search...&quot;&gt;</code></pre>
+              <figcaption>Fig 03-020</figcaption>
+            </figure>
+
+            <p>In this example, the trim modifier removes the whitespace after the query has changed. At this point, you
+              might be wondering if the order of the modifiers matters. While testing the behavior while creating this
+              course, I did not notice a difference. In my opinion, I suspect this might change. When I'm using
+              modifiers in Vue, I order them assuming they get applied in order from left to right, meaning the lazy
+              modifier would get applied, and then the trim modifier. This chaining approach also works with the number
+              modifier.
+            </p>
+            <p>In this section, I explained how to lazily bind to form values. In this module, you also saw how to
+              modify bound values. All of this was done within the context of using input bindings in forms within Vue.
+              While binding to user input is important, it's also important to understand how to respond to user events.
+              That's the topic of the next module.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

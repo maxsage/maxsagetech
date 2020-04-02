@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="UTF-8">
+  <title>maxsagetech - Developing Faster with the Vue CLI</title>
+  <script src="https://unpkg.com/vue"></script>
+  <!--<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"-->
+  <!--integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">-->
+  <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" rel="stylesheet">
+  <link href="prism.css" rel="stylesheet">
+  <script src="prism.js"></script>
+  <style>
+    img {
+      max-width: 100%;
+    }
+  </style>
+</head>
+<body>
+<div class="container" id="app">
+  <div class="panel-group">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h2>Developing Faster with the Vue CLI</h2>
+      </div>
+
+      <div class="panel-body">
+        <div><h2>Creating Vue Apps with Vue CLI's UI</h2>
+          <div>
+            <h3>Overview of the Vue CLI UI</h3>
+            <p>You've learned how to interact with the Vue CLI through the terminal commands, but sometimes it's super
+              helpful to be able to use a graphical user interface. This is why the Vue CLI's UI was created.</p>
+            <p>The Vue CLI has a UI. It's a graphical user interface that allows us to create, develop, and manage
+              projects through a UI. It's designed for interacting directly with the Vue CLI. So we can do things
+              through the terminal or we can use the Vue CLI's UI. We've already seen a few glimpses of the Vue CLI's UI
+              throughout this course. In this module, we're going to take a deeper look at the Vue CLI's UI and tour the
+              different features so we can get a feel for how to navigate through the Vue UI. </p>
+          </div>
+          <div>
+            <h3>Touring the Vue CLI UI</h3>
+            <p>Let's open up a terminal and we'll run the command:</p>
+            <figure>
+              <pre><code class="language-command-line">vue ui</code></pre>
+              <figcaption>Fig 08-001</figcaption>
+            </figure>
+            <p>When we do this, the Vue UI will launch inside your browser, and there we go. First let's start by taking
+              a quick tour of what's available here. And we'll start in the lower right. First we have a button to
+              refresh the plugins AP:</p>
+            <figure>
+              <img src="images/Fig08-002.png"/>
+              <figcaption>Fig 08-002</figcaption>
+            </figure>
+            <p>we can click on that, and when go look at our plugins, that'll actually refresh it. Then right next that,
+              we can do translations:</p>
+            <figure>
+              <img src="images/Fig08-003.png"/>
+              <figcaption>Fig 08-003</figcaption>
+            </figure>
+            <p>If we click on that, you can see there's information about localization:</p>
+            <figure>
+              <img src="images/Fig08-004.png"/>
+              <figcaption>Fig 08-004</figcaption>
+            </figure>
+            <p>We can file a bug right next to that:</p>
+            <figure>
+              <img src="images/Fig08-005.png"/>
+              <figcaption>Fig 08-005</figcaption>
+            </figure>
+            <p>This is really cool because if we find a bug in the UI, it helps you kind of get started in reporting it
+              in a good and constructive way. And then this button right here is for the dark mode to light mode:</p>
+            <figure>
+              <img src="images/Fig08-006.png"/>
+              <figcaption>Fig 08-006</figcaption>
+            </figure>
+            <p>The default is light mode. I happen to prefer the dark mode, so that's what I use.</p>
+            <p>Now, moving over to the left, we can see Ready on http://localhost:8000:</p>
+            <figure>
+              <img src="images/Fig08-007.png"/>
+              <figcaption>Fig 08-007</figcaption>
+            </figure>
+            <p>If we click on it, we can see the logs for the program, and we click again and it disappears. Next, right
+              next to that, we see the current working folder:</p>
+            <figure>
+              <img src="images/Fig08-008.png"/>
+              <figcaption>Fig 08-008</figcaption>
+            </figure>
+            <p>That will be whatever folder you open it up in or are looking at, and then there's a little home
+              icon:</p>
+            <figure>
+              <img src="images/Fig08-009.png"/>
+              <figcaption>Fig 08-009</figcaption>
+            </figure>
+            <p>
+              This is the Project Manager. If we click on that:</p>
+            <figure>
+              <img src="images/Fig08-010.png"/>
+              <figcaption>Fig 08-010</figcaption>
+            </figure>
+            <p>you'll see a list of all the projects that you've already opened. Yours might be blank. In that case, you
+              can either create one or import one. And you can also favorite projects here:</p>
+            <figure>
+              <img src="images/Fig08-011.png"/>
+              <figcaption>Fig 08-011</figcaption>
+            </figure>
+            <p>If we click on the home again, we go back to our dashboard. Right above that, we see three dots:</p>
+            <figure>
+              <img src="images/Fig08-012.png"/>
+              <figcaption>Fig 08-012</figcaption>
+            </figure>
+            <p>That goes to the Vue Project Manager, same place we just were, and there's an About screen. In the About
+              screen, there's a bunch of useful links and a message from the creator of the Vue UI:</p>
+            <figure>
+              <img src="images/Fig08-013.png"/>
+              <figcaption>Fig 08-013</figcaption>
+            </figure>
+            <p>And we can go back. And up here are some of the most useful links inside the dashboard. We'll start at
+              the top left, the dashboard itself:</p>
+            <figure>
+              <img src="images/Fig08-014.png"/>
+              <figcaption>Fig 08-014</figcaption>
+            </figure>
+            <p>that's what we're on. This little puzzle piece is the plugins icon:</p>
+            <figure>
+              <img src="images/Fig08-015.png"/>
+              <figcaption>Fig 08-015</figcaption>
+            </figure>
+            <p>That lets us go look at the project installed plugins. And we can add plugins to it from up here:</p>
+            <figure>
+              <img src="images/Fig08-016.png"/>
+              <figcaption>Fig 08-016</figcaption>
+            </figure>
+            <p>
+              and we also have three dots next to that to update the plugins:</p>
+            <figure>
+              <img src="images/Fig08-017.png"/>
+              <figcaption>Fig 08-017</figcaption>
+            </figure>
+            <p>Then back on the left we've got our dependencies in our project:</p>
+            <figure>
+              <img src="images/Fig08-018.png"/>
+              <figcaption>Fig 08-018</figcaption>
+            </figure>
+            <p>and then we can install dependencies with a button in the upper right:</p>
+            <figure>
+              <img src="images/Fig08-019.png"/>
+              <figcaption>Fig 08-019</figcaption>
+            </figure>
+            <p>If we go down again in the icons, we can see the Configuration on the left:</p>
+            <figure>
+              <img src="images/Fig08-020.png"/>
+              <figcaption>Fig 08-020</figcaption>
+            </figure>
+            <p>That's the configuration for our project. If we click on those, you can see the CLI's configuration:</p>
+            <figure>
+              <img src="images/Fig08-021.png"/>
+              <figcaption>Fig 08-021</figcaption>
+            </figure>
+            <p>or ESLint, whatever happens to be installed in our project. Then the next icon are the Tasks:</p>
+            <figure>
+              <img src="images/Fig08-022.png"/>
+              <figcaption>Fig 08-022</figcaption>
+            </figure>
+            <p>For the project we have serve, build, and lint. They're almost always going to be there, but you also can
+              see any npm scripts that you have installed in your project. Mine has a few others. If we click on serve
+              and then you can see it can run the task over here.</p>
+            <figure>
+              <img src="images/Fig08-023.png"/>
+              <figcaption>Fig 08-023</figcaption>
+            </figure>
+            <p>And that's a quick tour of the Vue UI. </p>
+          </div>
+          <div>
+            <h3>Creating New Projects with the Vue CLI UI</h3>
+            <p>Let's learn how to use the Vue UI to create a new project. If we click on the home button in the bottom
+              left, you want to get back to the Vue Project Manager. In the top middle, we're going to click on
+              Create:</p>
+            <figure>
+              <img src="images/Fig08-024.png"/>
+              <figcaption>Fig 08-024</figcaption>
+            </figure>
+            <p>
+              then we're going to select the folder:</p>
+            <figure>
+              <img src="images/Fig08-025.png"/>
+              <figcaption>Fig 08-025</figcaption>
+            </figure>
+            <p>and we're going to create our project and click the button Create new project here</p>
+            <figure>
+              <img src="images/Fig08-026.png"/>
+              <figcaption>Fig 08-026</figcaption>
+            </figure>
+            <p>Now, in the Project folder, we'll type the name of that project.</p>
+            <figure>
+              <img src="images/Fig08-027.png"/>
+              <figcaption>Fig 08-027</figcaption>
+            </figure>
+            <p>We'll call this vue-hello-ui. We can then change our Package manager if you like, from npm to yarn or
+              back:</p>
+            <figure>
+              <img src="images/Fig08-028.png"/>
+              <figcaption>Fig 08-028</figcaption>
+            </figure>
+            <p>and my default is npm. And by default, it initializes a Git repository. That's what I want to do. I could
+              put an initial commit message in here. Let's do that now. We'll just call it init-ing, and we hit Next.
+              Now notice it's giving us all these prompts for how do we want to create the project:</p>
+            <figure>
+              <img src="images/Fig08-029.png"/>
+              <figcaption>Fig 08-029</figcaption>
+            </figure>
+            <p>I could choose default or manual or preset or any preset that I created earlier. Let's choose, in this
+              case, the default preset for babel and eslint:</p>
+            <figure>
+              <img src="images/Fig08-030.png"/>
+              <figcaption>Fig 08-030</figcaption>
+            </figure>
+            <p>Now, we click Create a Project and it's going to install the plugins and pull down our npm modules and
+              set the whole project up. And that's how we create a new project through the Vue UI. </p></div>
+          <div>
+            <h3>Managing Plugins and Dependencies with the Vue CLI UI</h3>
+            <p>Now I'm back at our dashboard. Let's take a closer look at how we can configure plugins and dependencies.
+              First, plugins on the left:</p>
+            <figure>
+              <img src="images/Fig08-031.png"/>
+              <figcaption>Fig 08-031</figcaption>
+            </figure>
+            <p>We'll click on that and we can see that we've got the vue/cli-service, babel, and the eslint plugins:</p>
+            <figure>
+              <img src="images/Fig08-032.png"/>
+              <figcaption>Fig 08-032</figcaption>
+            </figure>
+            <p>We can add the vue-router or vuex:</p>
+            <figure>
+              <img src="images/Fig08-033.png"/>
+              <figcaption>Fig 08-033</figcaption>
+            </figure>
+            <p>they're right here up top. For example, let's click on vuex and Continue. And then the Vue UI does its
+              thing where it's going to go out and get vuex:</p>
+            <figure>
+              <img src="images/Fig08-034.png"/>
+              <figcaption>Fig 08-034</figcaption>
+            </figure>
+            <p>and then hook it up to our project. If I want to add a plugin, I can click on the Add plugin and up comes
+              a list of some popular ones:</p>
+            <figure>
+              <img src="images/Fig08-035.png"/>
+              <figcaption>Fig 08-035</figcaption>
+            </figure>
+            <p>Let's say I wanted the pwa, I can click on that:</p>
+            <figure>
+              <img src="images/Fig08-036.png"/>
+              <figcaption>Fig 08-036</figcaption>
+            </figure>
+            <p>and then Install in the bottom right hand corner. Once that's complete, we can then choose any
+              configuration there might be:</p>
+            <figure>
+              <img src="images/Fig08-037.png"/>
+              <figcaption>Fig 08-037</figcaption>
+            </figure>
+            <p>in this case the plugin has no configuration, and then we can finish the installation. Now it's pulling
+              the plugin into the project so we can have our pwa plugin. Once that's complete, some of the files may
+              have changed in the project, so it's showing us those changes, basically doing a git-diff:</p>
+            <figure>
+              <img src="images/Fig08-038.png"/>
+              <figcaption>Fig 08-038</figcaption>
+            </figure>
+            <p>There were 20 files and we can see what those changes are, and we can commit those changes if we want.
+              This one does a lot of changes because the pwa adds a lot of icon files, as you can see here. It also adds
+              an svg, and if we scroll all the way down, we can start seeing we added a store for vuex:</p>
+            <figure>
+              <img src="images/Fig08-039.png"/>
+              <figcaption>Fig 08-039</figcaption>
+            </figure>
+            <p>If we want to commit all these changes, we can click this button:</p>
+            <figure>
+              <img src="images/Fig08-040.png"/>
+              <figcaption>Fig 08-040</figcaption>
+            </figure>
+            <p>and then enter a message. We can say adding vuex and pwa</p>
+            <figure>
+              <img src="images/Fig08-041.png"/>
+              <figcaption>Fig 08-041</figcaption>
+            </figure>
+            <p>And then we commit them. We could've skipped it as well if we hit the Skip button. Next, let's take a
+              look at the Dependencies over here on the left:</p>
+            <figure>
+              <img src="images/Fig08-042.png"/>
+              <figcaption>Fig 08-042</figcaption>
+            </figure>
+            <p>It's looking at our package.json to see the main dependencies and the development dependencies right
+              here:</p>
+            <figure>
+              <img src="images/Fig08-043.png"/>
+              <figcaption>Fig 08-043</figcaption>
+            </figure>
+            <p>We can add new ones by clicking on the upper right-hand corner, Install dependency:</p>
+            <figure>
+              <img src="images/Fig08-044.png"/>
+              <figcaption>Fig 08-044</figcaption>
+            </figure>
+            <p>And then we can search here for ones we might want. Let's say we wanted axios. We could click on it there
+              or we could choose it as a development dependency right there:</p>
+            <figure>
+              <img src="images/Fig08-045.png"/>
+              <figcaption>Fig 08-045</figcaption>
+            </figure>
+            <p>Let's choose it as a main dependency, we'll click on axios:</p>
+            <figure>
+              <img src="images/Fig08-046.png"/>
+              <figcaption>Fig 08-046</figcaption>
+            </figure>
+            <p>and then at the bottom of the screen, we can see Install, we'll click on that:</p>
+            <figure>
+              <img src="images/Fig08-047.png"/>
+              <figcaption>Fig 08-047</figcaption>
+            </figure>
+            <p>and now it's pulling in axios into our projects so we can make HTTP calls with our new application.</p>
+            <p>One last thing to look at the for dependencies and plugins, notice that it shows us the version that
+              we've pulled in right here:</p>
+            <figure>
+              <img src="images/Fig08-048.png"/>
+              <figcaption>Fig 08-048</figcaption>
+            </figure>
+            <p>It also shows you next to that the version that was wanted and the latest version that happens to be out.
+              Of course, these are all the same because we just installed them.</p>
+            <p>Let's look at the plugins:</p>
+            <figure>
+              <img src="images/Fig08-049.png"/>
+              <figcaption>Fig 08-049</figcaption>
+            </figure>
+            <p>We're seeing that it's the same case here too. If I go look at an older project, and if you pull down the
+              vue heroes project, you might have this case as well, depending upon when you installed the dependencies.
+              I'm going to click on the Project Manager in the bottom left-hand corner:</p>
+            <figure>
+              <img src="images/Fig08-050.png"/>
+              <figcaption>Fig 08-050</figcaption>
+            </figure>
+            <p>and I'm going to open up my vue heroes project:</p>
+            <figure>
+              <img src="images/Fig08-051.png"/>
+              <figcaption>Fig 08-051</figcaption>
+            </figure>
+            <p>Then I'm going to go look at the plugins:</p>
+            <figure>
+              <img src="images/Fig08-052.png"/>
+              <figcaption>Fig 08-052</figcaption>
+            </figure>
+            <p>Those look like they're up to date, let's look at the dependencies:</p>
+            <figure>
+              <img src="images/Fig08-053.png"/>
+              <figcaption>Fig 08-053</figcaption>
+            </figure>
+            <p>now and notice that it's analyzing them and seeing that some of them are slightly out of date:</p>
+            <figure>
+              <img src="images/Fig08-054.png"/>
+              <figcaption>Fig 08-054</figcaption>
+            </figure>
+            <p>Now, look on the far right. Over here, we can see some buttons</p>
+            <figure>
+              <img src="images/Fig08-055.png"/>
+              <figcaption>Fig 08-055</figcaption>
+            </figure>
+            <p>That will update those dependencies. So I could do them one at a time. I could also delete the
+              dependencies if I want to:</p>
+            <figure>
+              <img src="images/Fig08-056.png"/>
+              <figcaption>Fig 08-056</figcaption>
+            </figure>
+            <p>which I don't in this case, or I can click in the upper right-hand corner and update all the dependencies
+              at once:</p>
+            <figure>
+              <img src="images/Fig08-057.png"/>
+              <figcaption>Fig 08-057</figcaption>
+            </figure>
+            <p>Let's do that now. And once it's done installing and updating the npm dependencies, it'll let us know,
+              and notice now our versions are the same as what's wanted:</p>
+            <figure>
+              <img src="images/Fig08-058.png"/>
+              <figcaption>Fig 08-058</figcaption>
+            </figure>
+            <p>This is how we can manage and maintain our plugins and dependencies through the Vue UI. </p>
+          </div>
+          <div>
+            <h3>Configuring Projects with the Vue CLI UI</h3>
+            <p>Let's go back into the project we created earlier, we'll click on the bottom left-hand corner to Project
+              Manager:</p>
+            <figure>
+              <img src="images/Fig08-059.png"/>
+              <figcaption>Fig 08-059</figcaption>
+            </figure>
+            <p>we'll get a little practice navigating. And then we should have one down here called vue-hello-ui:</p>
+            <figure>
+              <img src="images/Fig08-060.png"/>
+              <figcaption>Fig 08-060.png</figcaption>
+            </figure>
+            <p>
+              let's click on that. Now it's loaded. How do we know which one's loaded? It's the one on the bottom left
+              corner where it tells us the path of the current working folder:</p>
+            <figure>
+              <img src="images/Fig08-061.png"/>
+              <figcaption>Fig 08-061</figcaption>
+            </figure>
+            <p>Now, sometimes we want to be able to update our project configuration. If we click on the little gear
+              icon in the left-hand side:</p>
+            <figure>
+              <img src="images/Fig08-062.png"/>
+              <figcaption>Fig 08-062</figcaption>
+            </figure>
+            <p>we can view the configuration for our project. Notice we have three set up:</p>
+            <figure>
+              <img src="images/Fig08-063.png"/>
+              <figcaption>Fig 08-063</figcaption>
+            </figure>
+            <p>First, the Vue CLI itself. If we wanted to change, for example, where the output directory was going to,
+              we could change it right here:</p>
+            <figure>
+              <img src="images/Fig08-064.png"/>
+              <figcaption>Fig 08-064</figcaption>
+            </figure>
+            <p>Where it says dist, we could put what we want in there. We can also click on the ESLint
+              configuration:</p>
+            <figure>
+              <img src="images/Fig08-065.png"/>
+              <figcaption>Fig 08-065</figcaption>
+            </figure>
+            <p>We have the default set up and Lint on save. We can toggle Lint on save off or back on, save the changes.
+              We can also put in strongly recommended or recommended if we want. And if we'd like to, we can go and look
+              at all the individual rules:</p>
+            <figure>
+              <img src="images/Fig08-066.png"/>
+              <figcaption>Fig 08-066</figcaption>
+            </figure>
+            <p>I'm going to cancel these changes, but you can save them if you like. There are some other options here
+              like opening up the eslintrc file in the upper right-hand corner:</p>
+            <figure>
+              <img src="images/Fig08-067.png"/>
+              <figcaption>Fig 08-067</figcaption>
+            </figure>
+            <p>Next, we can take a look at the PWA because we added that previously:</p>
+            <figure>
+              <img src="images/Fig08-068.png"/>
+              <figcaption>Fig 08-068</figcaption>
+            </figure>
+            <p>So here, we can set up all the different options for PWA, like our theme color. We can scroll down for
+              all the options that might be there. Some of the configurations also have more info, which will then open
+              up into GitHub:</p>
+            <figure>
+              <img src="images/Fig08-069.png"/>
+              <figcaption>Fig 08-069</figcaption>
+            </figure>
+            <p>information about the configuration for that CLI plugin. Now the more things that you add to your
+              application, the more configuration you have might have. So this list on the left will vary. One last
+              thing about PWA, notice there's something specific for about opening up the manifest in the upper
+              right-hand corner:</p>
+            <figure>
+              <img src="images/Fig08-070.png"/>
+              <figcaption>Fig 08-070</figcaption>
+            </figure>
+            <p>We can click on that or if you go back to ESLint, remember what used to be there for that one was opening
+              eslintrc:</p>
+            <figure>
+              <img src="images/Fig08-071.png"/>
+              <figcaption>Fig 08-071</figcaption>
+            </figure>
+            <p>So this is how you can open up and edit your configuration using the UI. </p>
+          </div>
+          <div>
+            <h3>Running Tasks with the Vue CLI UI</h3>
+            <p>Perhaps the coolest part of the Vue UI is that we can run the tasks. So let's click on the clipboard on
+              the left-hand sid:</p>
+            <figure>
+              <img src="images/Fig08-072.png"/>
+              <figcaption>Fig 08-072</figcaption>
+            </figure>
+            <p>and by default we can see these tasks are in our project:</p>
+            <figure>
+              <img src="images/Fig08-073.png"/>
+              <figcaption>Fig 08-073</figcaption>
+            </figure>
+            <p>Now if we do serve:</p>
+            <figure>
+              <img src="images/Fig08-074.png"/>
+              <figcaption>Fig 08-074</figcaption>
+            </figure>
+            <p>we can see all the different options here. First, the easiest thing to do is just run the task</p>
+            <figure>
+              <img src="images/Fig08-075.png"/>
+              <figcaption>Fig 08-075</figcaption>
+            </figure>
+            <p>So we'll run this task, it'll compile and build the application, and then when it's done:</p>
+            <figure>
+              <img src="images/Fig08-076.png"/>
+              <figcaption>Fig 08-076</figcaption>
+            </figure>
+            <p>we'll see that the build was successful. So if we wanted to see the app, we can open it up by clicking on
+              Open app right here:</p>
+            <figure>
+              <img src="images/Fig08-077.png"/>
+              <figcaption>Fig 08-077</figcaption>
+            </figure>
+            <p>It'll launch it into another tab:</p>
+            <figure>
+              <img src="images/Fig08-078.png"/>
+              <figcaption>Fig 08-078</figcaption>
+            </figure>
+            <p>We'll go back to the Vue UI, and n otice that by default it's going to the dashboard:</p>
+            <figure>
+              <img src="images/Fig08-079.png"/>
+              <figcaption>Fig 08-079</figcaption>
+            </figure>
+            <p>We can see our success, errors, and warnings:</p>
+            <figure>
+              <img src="images/Fig08-080.png"/>
+              <figcaption>Fig 08-080</figcaption>
+            </figure>
+            <p>our assets, modules, and dependencies, how long it took to build it, different speed stats, information
+              about all the assets in our project and the dependencies that are there. If we scroll back up, we can
+              toggle between the parsed, the stats, and Gzip:</p>
+            <figure>
+              <img src="images/Fig08-081.png"/>
+              <figcaption>Fig 08-081</figcaption>
+            </figure>
+            <p>Gzip's the way we probably want to put it onto a production server. Looking at the other options here,
+              the output shows us what happened while building it:</p>
+            <figure>
+              <img src="images/Fig08-082.png"/>
+              <figcaption>Fig 08-082</figcaption>
+            </figure>
+            <p>So if we edited our project, we'd see more output here:</p>
+            <figure>
+              <img src="images/Fig08-083.png"/>
+              <figcaption>Fig 08-083</figcaption>
+            </figure>
+            <p>We can clear our output by clicking on the trashcan:</p>
+            <figure>
+              <img src="images/Fig08-084.png"/>
+              <figcaption>Fig 08-084</figcaption>
+            </figure>
+            <p>And if we click on the Analyzer button:</p>
+            <figure>
+              <img src="images/Fig08-085.png"/>
+              <figcaption>Fig 08-085</figcaption>
+            </figure>
+            <p>we can see a deeper analysis of what's inside of our bundles. Here are the three sizes for stats, parsed,
+              and Gzip:</p>
+            <figure>
+              <img src="images/Fig08-086.png"/>
+              <figcaption>Fig 08-086</figcaption>
+            </figure>
+            <p>If you hover over the different pieces, you'll see the different pieces that are taking up more or less
+              of the space.</p>
+            <p>Finally, we can stop our task by clicking here:</p>
+            <figure>
+              <img src="images/Fig08-087.png"/>
+              <figcaption>Fig 08-087</figcaption>
+            </figure>
+            <p>Now if we had any parameters:</p>
+            <figure>
+              <img src="images/Fig08-088.png"/>
+              <figcaption>Fig 08-088</figcaption>
+            </figure>
+            <p>we can go ahead and put them into our parameters list. Perhaps we want to open a browser on start. And
+              you'll recognize these parameters are the same ones that you can run from the terminal with the Vue
+              CLI:</p>
+            <figure>
+              <img src="images/Fig08-089.png"/>
+              <figcaption>Fig 08-089</figcaption>
+            </figure>
+            <p>
+              Next, let's take a look at the build:</p>
+            <figure>
+              <img src="images/Fig08-090.png"/>
+              <figcaption>Fig 08-090</figcaption>
+            </figure>
+            <p>Now, let's go ahead and just run the build so it gets going:</p>
+            <figure>
+              <img src="images/Fig08-091.png"/>
+              <figcaption>Fig 08-091</figcaption>
+            </figure>
+            <p>and this is going to do it for production by default. So notice it's already taking longer than it did to
+              do serve:</p>
+            <figure>
+              <img src="images/Fig08-092.png"/>
+              <figcaption>Fig 08-092</figcaption>
+            </figure>
+            <p>Instead of being 2 seconds, it was 4. And our sizes are smaller:</p>
+            <figure>
+              <img src="images/Fig08-093.png"/>
+              <figcaption>Fig 08-093</figcaption>
+            </figure>
+            <p>And you get some of the same stats down below, and then our assets, of course. If we look at the
+              output:</p>
+            <figure>
+              <img src="images/Fig08-094.png"/>
+              <figcaption>Fig 08-094</figcaption>
+            </figure>
+            <p>we'll see the output of the different files:</p>
+            <figure>
+              <img src="images/Fig08-095.png"/>
+              <figcaption>Fig 08-095</figcaption>
+            </figure>
+            <p>and then if you look at the Analyzer:</p>
+            <figure>
+              <img src="images/Fig08-096.png"/>
+              <figcaption>Fig 08-096</figcaption>
+            </figure>
+            <p>we can see what's in our bundles. Notice there's less files and less things to look at here because this
+              is a production build. If we click on the Parameters, </p>
+            <figure>
+              <img src="images/Fig08-097.png"/>
+              <figcaption>Fig 08-097</figcaption>
+            </figure>
+            <p>we'll see the parameters for building:</p>
+            <figure>
+              <img src="images/Fig08-098.png"/>
+              <figcaption>Fig 08-098</figcaption>
+            </figure>
+            <p>Next, we can take a look at the lint:</p>
+            <figure>
+              <img src="images/Fig08-099.png"/>
+              <figcaption>Fig 08-099</figcaption>
+            </figure>
+            <p>and this one has less options, we can run the task:</p>
+            <figure>
+              <img src="images/Fig08-100.png"/>
+              <figcaption>Fig 08-100</figcaption>
+            </figure>
+            <p>It didn't find any issues, we can click on the Parameters. And there's also other tasks that we can be
+              running. Any time you have npm scripts in your package. json, they'll be listed here as well. If we added
+              end-to-end testing or unit testing, those would also show up here as tasks.</p>
+            <p>What I find most intriguing is sometimes you really need to look at the build:</p>
+            <figure>
+              <img src="images/Fig08-101.png"/>
+              <figcaption>Fig 08-101</figcaption>
+            </figure>
+            <p>to see what's inside those bundles, so I really like how the Analyzer:</p>
+            <figure>
+              <img src="images/Fig08-102.png"/>
+              <figcaption>Fig 08-102</figcaption>
+            </figure>
+            <p>shows us the bundles right here:</p>
+            <figure>
+              <img src="images/Fig08-103.png"/>
+              <figcaption>Fig 08-103</figcaption>
+            </figure>
+            <p>It becomes super helpful when you're trying to figure out why your bundles are too large, in some cases,
+              so you can start trimming out pieces or maybe refactoring to make it be a little more efficient. And this
+              is how we use the tasks with the Vue CLI's UI. </p>
+          </div>
+          <div>
+            <h3>Summary of the Vue CLI UI</h3>
+            <p>In this module, we walked through the different features of the Vue CLI's UI, a graphical user interface
+              that we can use to do a whole bunch of things with our applications using the Vue CLI:</p>
+            <figure>
+              <img src="images/Fig08-104.png"/>
+              <figcaption>Fig 08-104</figcaption>
+            </figure>
+            <p>We explored the Project Manager and how we can import projects, create new ones or tag favorites. We can
+              manage our plugins or dependencies. We can configure our project or our plugins. We can even go to light
+              mode or dark mode, depending upon how you like to look at the app, and one of my favorite features are the
+              tasks because we can serve, build, lint or run any npm script right from inside the UI, and then after a
+              build, we can even analyze the contents of our bundles.</p>
+            <p>We learned about the Vue CLI's UI last because I find it to be important to understand what the different
+              commands in the CLI are through the terminal first. And now that you've learned how to use these commands
+              through the terminal and through the UI, you can make the decision yourself on which way to run them under
+              what circumstances.</p>
+            <p>My name is John Papa, and it's been a pleasure sharing with you this course,
+              Developing Faster with the Vue CLI. Thanks for watching, and go have a lot of fun building great
+              applications with Vue. </p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

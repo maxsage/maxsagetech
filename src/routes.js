@@ -2,21 +2,18 @@ import Home from './components/Home.vue'
 import Header from './components/Header.vue'
 
 import Nodejs from './components/nodejs/Nodejs.vue'
-import NodejsTheCompleteGuidetoBuildRESTfulAPIs00CourseContents from './components/nodejs/NodejsTheCompleteGuidetoBuildRESTfulAPIs00CourseContents.vue'
+import NodejsTheCompleteGuidetoBuildRESTfulAPIsCourseContents from './components/nodejs/NodejsTheCompleteGuidetoBuildRESTfulAPIsCourseContents.vue'
 
 import Vuejs from './components/vuejs/Vuejs.vue'
 
 import VuejsDeployingToHeroku from './components/vuejs/VuejsDeployingToHeroku.vue'
 
-import VuejsEssentials00CourseContents from './components/vuejs/VuejsEssentials00CourseContents.vue'
-import VuejsEssentials01AnIntroductionToVue from './components/vuejs/VuejsEssentials01AnIntroductionToVue.vue'
-import VuejsEssentials02MovingOnWithVueCLI from './components/vuejs/VuejsEssentials02MovingOnWithVueCLI.vue'
-import VuejsEssentials03WritingEffectiveApps from './components/vuejs/VuejsEssentials03WritingEffectiveApps.vue'
-import VuejsEssentials04HandlingStateWithVuex from './components/vuejs/VuejsEssentials04HandlingStateWithVuex.vue'
-import VuejsEssentials05AuthenticationinVuewithOAuth2 from './components/vuejs/VuejsEssentials05AuthenticationinVuewithOAuth2.vue'
-import VuejsEssentials06NavigationwithVueRouter from './components/vuejs/VuejsEssentials06NavigationwithVueRouter.vue'
-import VuejsEssentials07DesignOfVuexModules from './components/vuejs/VuejsEssentials07DesignOfVuexModules.vue'
-import VuejsEssentials08HandlingImageUpload from './components/vuejs/VuejsEssentials08HandlingImageUpload.vue'
+import VuejsBigPictureCourseContents from './components/vuejs/VuejsBigPictureCourseContents.vue'
+import VuejsPlaybookCourseContents from './components/vuejs/VuejsPlaybookCourseContents.vue'
+import DevelopingFasterWithVueCLICourseContents from './components/vuejs/DevelopingFasterWithTheVueCLICourseContents.vue'
+import VueJSFundamentalsCourseContents from './components/vuejs/VueJSFundamentalsCourseContents.vue'
+
+import VuejsEssentialsCourseContents from './components/vuejs/VuejsEssentialsCourseContents.vue'
 
 import Webpack from './components/webpack/Webpack.vue'
 
@@ -64,7 +61,6 @@ import SQLite from './components/sqlite/SQLite.vue'
 import Editors from './components/editors/Editors.vue'
 import VisualStudio from './components/editors/visual-studio/VisualStudio.vue'
 import VisualStudioCode from './components/editors/visual-studio-code/VisualStudioCode.vue'
-import Webstorm from './components/editors/webstorm/Webstorm.vue'
 
 // I think this loads the route at application startup
 // const User = resolve => {
@@ -90,9 +86,9 @@ export const routes = [
     }
   },
   {
-    path: '/nodejsthecompleteguidetobuildrestfulapis-00-course-contents',
+    path: '/nodejsthecompleteguidetobuildrestfulapis-course-contents',
     components: {
-      default: NodejsTheCompleteGuidetoBuildRESTfulAPIs00CourseContents,
+      default: NodejsTheCompleteGuidetoBuildRESTfulAPIsCourseContents,
       'header-top': Header
     }
   },
@@ -110,66 +106,42 @@ export const routes = [
       'header-top': Header
     }
   },
+
   {
-    path: '/vuejsessentials-00-course-contents',
+    path: '/vuejsbigpicture-course-contents',
     components: {
-      default: VuejsEssentials00CourseContents,
+      default: VuejsBigPictureCourseContents,
       'header-top': Header
     }
   },
   {
-    path: '/vuejsessentials-01-an-introduction-to-vue',
+    path: '/vuejsplaybook-course-contents',
     components: {
-      default: VuejsEssentials01AnIntroductionToVue,
+      default: VuejsPlaybookCourseContents,
       'header-top': Header
     }
   },
   {
-    path: '/vuejsessentials-02-moving-on-with-vue-cli',
+    path: '/developingfasterwithvuecli-course-contents',
     components: {
-      default: VuejsEssentials02MovingOnWithVueCLI,
+      default: DevelopingFasterWithVueCLICourseContents,
       'header-top': Header
     }
   },
   {
-    path: '/vuejsessentials-03-writing-effective-apps',
+    path: '/vuejsfundamentals-course-contents',
     components: {
-      default: VuejsEssentials03WritingEffectiveApps,
+      default: VueJSFundamentalsCourseContents,
       'header-top': Header
     }
   },
+  
+   
+
   {
-    path: '/vuejsessentials-04-handling-state-with-vuex',
+    path: '/vuejsessentials-course-contents',
     components: {
-      default: VuejsEssentials04HandlingStateWithVuex,
-      'header-top': Header
-    }
-  },
-  {
-    path: '/vuejsessentials-05-authentication-in-vue-with-oauth2',
-    components: {
-      default: VuejsEssentials05AuthenticationinVuewithOAuth2,
-      'header-top': Header
-    }
-  },
-  {
-    path: '/vuejsessentials-06-navigation-with-vue-router',
-    components: {
-      default: VuejsEssentials06NavigationwithVueRouter,
-      'header-top': Header
-    }
-  },
-  {
-    path: '/vuejsessentials-07-design-of-vuex-modules',
-    components: {
-      default: VuejsEssentials07DesignOfVuexModules,
-      'header-top': Header
-    }
-  },
-  {
-    path: '/vuejsessentials-08-handling-image-upload',
-    components: {
-      default: VuejsEssentials08HandlingImageUpload,
+      default: VuejsEssentialsCourseContents,
       'header-top': Header
     }
   },
@@ -439,13 +411,6 @@ export const routes = [
     path: '/editors/visual-studio-code',
     components: {
       default: VisualStudioCode,
-      'header-top': Header
-    }
-  },
-  {
-    path: '/editors/webstorm',
-    components: {
-      default: Webstorm,
       'header-top': Header
     }
   },

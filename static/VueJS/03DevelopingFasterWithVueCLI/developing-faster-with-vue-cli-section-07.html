@@ -1,0 +1,533 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+
+<head>
+  <meta charset="UTF-8">
+  <title>maxsagetech - Developing Faster with the Vue CLI</title>
+  <script src="https://unpkg.com/vue"></script>
+  <!--<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"-->
+  <!--integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">-->
+  <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" rel="stylesheet">
+  <link href="prism.css" rel="stylesheet">
+  <script src="prism.js"></script>
+  <style>
+    img {
+      max-width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container" id="app">
+    <div class="panel-group">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h2>Developing Faster with the Vue CLI</h2>
+        </div>
+        <div class="panel-body">
+          <div>
+            <h2>Running Unit and End to End Tests</h2>
+            <div>
+              <h3>Overview of Testing with the Vue CLI</h3>
+              <p>One of the key aspects to using the Vue CLI is how easy it makes it to write and run and then rerun
+                end-to-end and unit tests. In this module, you'll learn how to use the Vue CLI to test your Vue
+                applications both with unit tests, of course with all the options you have with unit tests, and with
+                end-to-end testing and looking at the options for end-to-end testing that come out of the box with the
+                Vue CLI. Let's dive in. </p>
+            </div>
+            <div>
+              <h3>How to Set up and Run Unit Tests with Mocha or Jest</h3>
+              <p>Unit testing is an important part of creating applications to maintain the integrity and to maintain it
+                long term. The Vue CLI makes it easy to run your unit tests, and out of the box you can run them with
+                Mocha and Chai or with Jest:</p>
+              <figure> <img src="images/Fig06-001.PNG" />
+                <figcaption>Fig 06-001</figcaption>
+              </figure>
+              <p>two very popular unit testing frameworks. You can find more information about these two frameworks at
+                the links provided here. Let's take a look at how you'd run those unit tests. Out of the box, you get an
+                npm script that says npm run test:unit:</p>
+              <figure> <img src="images/Fig06-002.PNG" />
+                <figcaption>Fig 06-002</figcaption>
+              </figure>
+              <p>If you run that, well, it's going to run your unit test for you. The way you get these is when you go
+                through creating a Vue application, when you select that you want unit tests, it'll automatically ask
+                you do you want Mocha or Jest, and then it'll set up these npm scripts for you.</p>
+              <p>You can also execute the second example in Fig 06-002 which is the longer way to get to the binary. We
+                learned about this previously with other commands from the Vue CLI service, which is really just at the
+                core of all the commands you run with the Vue CLI.</p>
+              <p>And if you want to run it straight from a command line, there is a shortcut if you're using npm version
+                5.2 or higher, and that's using npx (The last example in Fig 06-002).</p>
+              <p>We'll be using the top command, npm run test:unit, and if we want to customize any of our options for
+                unit testing, we'll just edit the npm scripts to make our lives easy.</p>
+              <p>When you're choosing your options for testing, they may differ based on whether you choose Mocha or
+                Jest. Let's explore that:</p>
+              <figure> <img src="images/Fig06-003.PNG" />
+                <figcaption>Fig 06-003</figcaption>
+              </figure>
+              <p>Now if we want to see the different options, we know we can run --help. Now we just heard that these
+                options might be different based upon the different framework. That kind of makes sense under the
+                covers, and what this is telling us is the Vue CLI is effectively just using the underlying framework.
+                It's not putting a whole lot on top of them, it's just letting you use those two, Mocha or Jest, with
+                Vue. So effectively, it allows all the options from the underlying test provider. Now if you want to
+                know what options you have for those testing providers, you should see those docs for full details.</p>
+              <p>Now we can run the help command here, and when you run them, based upon whether you chose Mocha or
+                Jest, you might see different options. So you can find those options here at the links for Mocha and
+                Jest. The good news is you're not learning a whole new language here. If you're familiar with Mocha,
+                just use those. If you're familiar with Jest, use them. If you're just getting started, I kind of like
+                Jest.</p>
+              <p>Now that we've learned how to run our unit tests, let's go through creating a project and set up some
+                unit tests and run them. </p>
+            </div>
+            <div>
+              <h3>Learning How to Run Unit Tests with the Vue CLI</h3>
+              <p> Let's go into a folder where we can create a new project to create a set of unit tests and then run
+                them through the Vue CLI. We'll use the Vue CLI to create the project, of course, vue create, and we'll
+                call this in vue-test-jest:</p>
+              <figure> <img src="images/Fig06-004.PNG" />
+                <figcaption>Fig06-004</figcaption>
+              </figure>
+              <p>So I'm just going to call the project Jest. I'm not going to give it any options out of the box because
+                we're going to walk through them manually for now. Remember, you can always go back later and create
+                your own presets. So I'm going to manually choose the features. In this case, I'm going to slide down to
+                Unit Testing and just select that:</p>
+              <figure> <img src="images/Fig06-005.png" />
+                <figcaption>Fig 06-005</figcaption>
+              </figure>
+              <p>and then I'll select ESlint plus Prettier:</p>
+              <figure> <img src="images/Fig06-006.png" />
+                <figcaption>Fig 06-006</figcaption>
+              </figure>
+              <p>Now we can choose Mocha and Chai or Jest. I'm going to choose Jest in this case:</p>
+              <figure> <img src="images/Fig06-007.png" />
+                <figcaption>Fig 06-007</figcaption>
+              </figure>
+              <p>and Dedicated Config Files, and then we're not going to save it as a preset for now.</p>
+              <p>Once the project is created, we go into our vue-test-jest folder:</p>
+              <figure> <img src="images/Fig06-008.png" />
+                <figcaption>Fig 06-008</figcaption>
+              </figure>
+              <p>Let's open up our favorite editor. Now we can look at the project over here on the left:</p>
+              <figure> <img src="images/Fig06-009.png" />
+                <figcaption>Fig 06-009</figcaption>
+              </figure>
+              <p>I always like to start by looking at package.json to see what happened:</p>
+              <figure> <img src="images/Fig06-010.png" />
+                <figcaption>Fig 06-010</figcaption>
+              </figure>
+              <p>Here we can see that we have an additional script on line 9 for testing unit tests:</p>
+              <figure> <img src="images/Fig06-011.png" />
+                <figcaption>Fig 06-011</figcaption>
+              </figure>
+              <p>It's going to use the Vue CLI service and run test:unit. And if we look at the dependencies, we're
+                going to see some testing dependencies down here. Notice we have babel-jest on line 23:</p>
+              <figure> <img src="images/Fig06-012.png" />
+                <figcaption>Fig 06-012</figcaption>
+              </figure>
+              <p>And of course we have the plugin for the Vue CLI on line 17 to run our Jest tests:</p>
+              <figure> <img src="images/Fig06-013.png" />
+                <figcaption>Fig 06-013</figcaption>
+              </figure>
+              <p>So now we should be able to run npm run test:unit. Let's try that from the integrated terminal here.
+                We'll do:</p>
+              <figure>
+                <pre><code class="language-command-line">npm run test:unit</code></pre>
+                <figcaption>Fig 06-014</figcaption>
+              </figure>
+              <p>and it's running through and there's an example spec that gets created out of the box, and notice it's
+                passing:</p>
+              <figure> <img src="images/Fig06-015.png" />
+                <figcaption>Fig 06-015</figcaption>
+              </figure>
+              <p>The great thing here is all of your testing comes out of the box ready to go. All you have to do is
+                write the test. Notice it's telling us where the tests are right under tests/unit/example.spec.js:</p>
+              <figure> <img src="images/Fig06-016.png" />
+                <figcaption>Fig 06-016</figcaption>
+              </figure>
+              <p>So we can go to Tests, Unit, example. spec, right there:</p>
+              <figure> <img src="images/Fig06-017.png" />
+                <figcaption>Fig 06-017</figcaption>
+              </figure>
+              <p>Now we can see our test, this is the one that comes out of the box:</p>
+              <figure> <img src="images/Fig06-018.png" />
+                <figcaption>Fig 06-018</figcaption>
+              </figure>
+              <p>Now let's imagine we wrote a new component. We'll go up under the src, under components:</p>
+              <figure> <img src="images/Fig06-019.png" />
+                <figcaption>Fig 06-019</figcaption>
+              </figure>
+              <p>Let's create a new one here, we're going to call it the HiChild because it's going to be a child
+                component that says hi. Now I'm going to use some snippets to create this component. As a refresher,
+                I've loaded an extension that we looked at earlier in the course. If we look at my extensions down here
+                towards the bottom, you're going to see Vue VSCode Snippets by Sarah Drasner:</p>
+              <figure> <img src="images/Fig06-020.png" />
+                <figcaption>Fig 06-020</figcaption>
+              </figure>
+              <p>And using those snippets, I can type:</p>
+              <figure>
+                <pre><code class="language-javascript">vbase</code></pre>
+                <figcaption>Fig 06-021</figcaption>
+              </figure>
+              <p>up top and hit Tab, and it's going to give me the basic outline of a component:</p>
+              <figure> <img src="images/Fig06-022.png" />
+                <figcaption>Fig 06-022</figcaption>
+              </figure>
+              <p>Now our component's going to be pretty simple. We're going to put an h2 up top and it's going to say
+                the child says, and then we're going to have a message, like this:</p>
+              <figure> <img src="images/Fig06-023.png" />
+                <figcaption>Fig 06-023</figcaption>
+              </figure>
+              <p>Now down inside the component, we're going to use a vprops snippet to put in our prop, and we'll make
+                it a little bit bigger so we can see, and a prop name's going to be message:</p>
+              <figure> <img src="images/Fig06-024.png" />
+                <figcaption>Fig 06-024</figcaption>
+              </figure>
+              <p>So we're going to pass the message in. The type is going to be a string and the default is going to be
+                quotes. Now let's set up an interesting rule. Maybe the message has to use a bigger word than just hi,
+                for example. The point here is they want to set up rules so that if there's some kind of validation or
+                any kind of computeds in our components, we know how to test them.</p>
+              <p>Underneath the props, let's add a computed, and I'm going to use the vcomputed snippet. We're going to
+                create one called error:</p>
+              <figure> <img src="images/Fig06-025.png" />
+                <figcaption>Fig 06-025</figcaption>
+              </figure>
+              <p>we're going to say this.message.trim.length is less than three characters, we'll use a ternary here,
+                say &quot;The child can say bigger words than that!&quot; Otherwise, there really is no error message,
+                and if it's less than three characters, such as a word like hi, it'll have this error message. Or we're
+                going to display it.</p>
+              <p>Let's create a div up top, and inside the div let's create a vif so if the error exists, let's go ahead
+                and print the message out for the error:</p>
+              <figure> <img src="images/Fig06-026.png" />
+                <figcaption>Fig 06-026</figcaption>
+              </figure>
+              <p>Pretty simple. Now we're intentionally not going to put this component anywhere yet. We just want to
+                test the component out. And while this is not a course on testing Vue, I think it's important to
+                understand how we could test it so we can see how the different commands work with the Vue CLI.</p>
+              <p>So let's go back to Test and the example.spec:</p>
+              <figure> <img src="images/Fig06-027.png" />
+                <figcaption>Fig 06-027</figcaption>
+              </figure>
+              <p>and let's add in our component. We'll just copy that first one because we want to add the HiChild, so
+                now we're importing it:</p>
+              <figure> <img src="images/Fig06-028.png" />
+                <figcaption>Fig 06-028</figcaption>
+              </figure>
+              <p>and we'll create a new describe. So I'm just going to copy the first one there. Be careful copying and
+                pasting, of course, and we'll first just test it out. Now this one has a prop called message, and we'll
+                just say hello there as the first one, and we're going to mount the HiChild and then message is going to
+                be used and injected in:</p>
+              <figure> <img src="images/Fig06-029.png" />
+                <figcaption>Fig 06-029</figcaption>
+              </figure>
+              <p>So now we basically just did the same test we did for hello world, but with hi child. The biggest
+                differences are first, the hello world is what we're doing up top, down below it's hi child, and the
+                second one is that there's a prop called message, msg, and down here it's called message, the full word.
+              </p>
+              <p>So if we go back to our specs, we can run the same command, npm run test:unit:</p>
+              <figure> <img src="images/Fig06-030.png" />
+                <figcaption>Fig 06-030</figcaption>
+              </figure>
+              <p>Now it's going to run those, it should run both tests. Notice they both pass:</p>
+              <figure> <img src="images/Fig06-031.png" />
+                <figcaption>Fig 06-031</figcaption>
+              </figure>
+              <p>Now we've seen how we can write unit tests for new components and then execute them. The next step
+                would be to learn how we can do a little bit more with it by adding watchers and other options. </p>
+            </div>
+            <div>
+              <h3>Watching and Refactoring Unit Tests</h3>
+              <p>We just wrote the HiChild component, which will show a message, and if the message is shorter than
+                three characters, it's going to show an error message there. But how do we test this? Under
+                example.spec:</p>
+              <figure> <img src="images/Fig06-032.png" />
+                <figcaption>Fig 06-032</figcaption>
+              </figure>
+              <p>We can write a new it, basically a new test. So let's just copy the other it for a moment. We'll change
+                the message because that's not what we're going to test. It should say that it should render the error
+                when the message is too short. So, let's go ahead and we're going to mount the child like this, and
+                first we're going to pass in a short message, like hi:</p>
+              <figure> <img src="images/Fig06-033.png" />
+                <figcaption>Fig 06-033</figcaption>
+              </figure>
+              <p>it's only two characters.</p>
+              <p>We need a way to find the elements. Let's go back to our component:</p>
+              <figure> <img src="images/Fig06-034.png" />
+                <figcaption>Fig 06-034</figcaption>
+              </figure>
+              <p>and let's assume we have a class on here:</p>
+              <figure> <img src="images/Fig06-035.png" />
+                <figcaption>Fig 06-035</figcaption>
+              </figure>
+              <p>and it's going to be called our error class that has some styling to go along with it, but this is also
+                going to allow us to find that element. So now we can say, all right, expect the wrapper to find the
+                error class:</p>
+              <figure> <img src="images/Fig06-036.png" />
+                <figcaption>Fig 06-036</figcaption>
+              </figure>
+              <p>and if it exists, then expect that to be true. So should it be true if there's only a two-character
+                word in there? Yes. Now let's do the same thing, but change the message. So now we'll go back into
+                wrapper and we'll call setProps, and inside of there we'll set the message to something longer:</p>
+              <figure> <img src="images/Fig06-037.png" />
+                <figcaption>Fig 06-037</figcaption>
+              </figure>
+              <p>And this time, let's expect that should be false. So effectively, the first message is an error and the
+                second message is not.</p>
+              <p>Now, let's go back and run our tests here. We're going to make a little room on the screen by getting
+                rid of the Explorer for a moment, and we'll pull up our terminal. And if I run the unit test once, we
+                should end up having more unit tests this time:</p>
+              <figure> <img src="images/Fig06-038.png" />
+                <figcaption>Fig 06-038</figcaption>
+              </figure>
+              <p>Now we've got three, and all three have passed. Well, let's test this out a moment. Let's go ahead and
+                change hi to hello:</p>
+              <figure> <img src="images/Fig06-039.png" />
+                <figcaption>Fig 06-039</figcaption>
+              </figure>
+              <p>Now this should no longer be true, it should be false, so if we run this, we should have a failed test.
+                And we do have some errors, now we can see there's a failed test:</p>
+              <figure> <img src="images/Fig06-040.png" />
+                <figcaption>Fig 06-040</figcaption>
+              </figure>
+              <p>So we've done some basic unit testing here, but how do we know if these tests worked or didn't? Well,
+                let's check our help. So if I run:</p>
+              <figure>
+                <pre><code class="language-command-line">npx vue-cli-service test:unit --help</code></pre>
+                <figcaption>Fig 06-041</figcaption>
+              </figure>
+              <p>We should see what commands we have. And lo and behold, we have a watch flag:</p>
+              <figure> <img src="images/Fig06-042.png" />
+                <figcaption>Fig 06-042</figcaption>
+              </figure>
+              <p>So, we could run the whole test command straight up from here with npx and then run it with --watch,
+                like this. But let's do what I said we should do, which is go inside of the package. json, I'll go find
+                that, and let's go to unit test and let's just add on the end of it --watch:</p>
+              <figure> <img src="images/Fig06-043.png" />
+                <figcaption>Fig 06-043</figcaption>
+              </figure>
+              <p>Now we'll go back into our terminal and we'll type in:</p>
+              <figure>
+                <pre><code class="language-command-line">npm run test:unit</code></pre>
+                <figcaption>Fig 06-044</figcaption>
+              </figure>
+              <p>and now it's running those unit tests with a watcher. Notice that it's still failed one and passed two:
+              </p>
+              <figure> <img src="images/Fig06-045.png" />
+                <figcaption>Fig 06-045</figcaption>
+              </figure>
+              <p> but it's giving us an option because it's waiting at this point to see if any files are going to
+                change, it'll rerun them. And notice you've got the Watch Usage here:</p>
+              <figure> <img src="images/Fig06-046.png" />
+                <figcaption>Fig 06-046</figcaption>
+              </figure>
+              <p>you can use a to run all the tests or f to run only the failed tests, and so on and so forth. These are
+                features you get by using Jest with Vue.</p>
+              <p>So let's go back to our spec, and let's change hello back to hi:</p>
+              <figure> <img src="images/Fig06-047.png" />
+                <figcaption>Fig 06-047</figcaption>
+              </figure>
+              <p>and as soon as it picks up on the file change, notice it reran the test, and now they pass. We can
+                change that again to hi hi hi:</p>
+              <figure> <img src="images/Fig06-048.png" />
+                <figcaption>Fig 06-048</figcaption>
+              </figure>
+              <p>and every time it sees the file saved, it's going to rerun those tests. And to stop it from running, we
+                can just hit Ctrl+C down in our terminal, make sure the focus is down there, and it'll stop the test the
+                running. So now you know how to set up your tests and you can write as many as you need, and then run
+                them with the Vue CLI. </p>
+            </div>
+            <div>
+              <h3>How to Set up End-to-end Tests with Cypress or Nightwatch </h3>
+              <p> Unit testing is great for testing a specific unit or set of code, but I also really like end-to-end
+                testing because it tests an interaction with the user. And we can do end-to-end testing with Vue, and
+                it's very easy to set this up with the Vue CLI. Let's learn how.</p>
+              <p>By default, you're going to get a couple different options out of the box for end-to-end testing tools,
+                Cypress. io and Nightwatch.js:</p>
+              <figure> <img src="images/Fig06-049.png" />
+                <figcaption>Fig 06-049</figcaption>
+              </figure>
+              <p>And to run either one of these, after you choose which one you want, you can just run npm run test:e2e;
+                e2e stands for end to end. If you want to learn about these two different products, you can either go to
+                cypress.io or you can go to nightwatchjs. org to learn about them. There are plugins that allow both of
+                these products to work with Vue through the CLI.</p>
+              <p>So to run these, we said that we can run:</p>
+              <figure>
+                <pre><code class="language-command-line">npm run test:e2e</code></pre>
+                <figcaption>Fig 06-050</figcaption>
+              </figure>
+              <p>That is going to be an npm script that gets added to our package json, just like we had an npm script
+                added for other things we did, like if we added unit tests. Under the covers, that's running:</p>
+              <figure> <img src="images/Fig06-051.png" />
+                <figcaption>Fig 06-051</figcaption>
+              </figure>
+              <p> /node_modules/. bin/vue-cli-service test:e2e, and we can also use npx to run it as a shortcut. That's
+                the way I prefer to do it, as long as you're using npm 5. 2 or higher. Now let's go create a project
+                together with the Vue CLI that'll set up our end-to-end tests for us and show how we can run them. </p>
+            </div>
+            <div>
+              <h3>Learning How to Run End-to-end Tests with the Vue CLI</h3>
+              <p> Let's go ahead and create a new project where we can set up our end-to-end tests. I'm going to
+                navigate back to my PlayVue folder, and we're going to use the Vue CLI once again to create a project.
+                This should be very familiar for you now. I'll call this one vue-test, and then we'll call it cypress:
+              </p>
+              <figure> <img src="images/Fig06-052.png" />
+                <figcaption>Fig 06-052</figcaption>
+              </figure>
+              <p>And we'll choose Manual Options here, we'll manually select the features, and this time we're only
+                going to select end-to-end testing in addition with the defaults:</p>
+              <figure> <img src="images/Fig06-053.png" />
+                <figcaption>Fig 06-053</figcaption>
+              </figure>
+              <p>Obviously, we can select more if we want to. Now I'll select ESlint and Prettier, lint onSave:</p>
+              <figure> <img src="images/Fig06-054.png" />
+                <figcaption>Fig 06-054</figcaption>
+              </figure>
+              <p>and I could choose Cypress or Nightwatch:</p>
+              <figure> <img src="images/Fig06-055.png" />
+                <figcaption>Fig 06-055</figcaption>
+              </figure>
+              <p>I'm going to choose Cypress in this case, and then dedicated package.json files:</p>
+              <figure> <img src="images/Fig06-056.png" />
+                <figcaption>Fig 06-056</figcaption>
+              </figure>
+              <p>and not a preset. And now it's going to install everything we need. Excellent. Now we can go into the
+                VueTest Cypress folder:</p>
+              <figure> <img src="images/Fig06-057.png" />
+                <figcaption>Fig 06-057</figcaption>
+              </figure>
+              <p> we'll open up our favorite code editor, and now let's take a quick look at the project once again.
+                First, let's start a package. json:</p>
+              <figure> <img src="images/Fig06-058.png" />
+                <figcaption>Fig 06-058</figcaption>
+              </figure>
+              <p>Now we can see our script on line 9:</p>
+              <figure> <img src="images/Fig06-059.png" />
+                <figcaption>Fig 06-059</figcaption>
+              </figure>
+              <p>for running the end-to-end tests. If we look at our dependencies, we have a plugin on line 16:</p>
+              <figure> <img src="images/Fig06-060.png" />
+                <figcaption>Fig 06-060</figcaption>
+              </figure>
+              <p>for the end-to-end test for Cypress, just like we had a plugin for our unit test earlier for Jest. This
+                is what lights up the Cypress features with the Vue CLI. Now we've also got a cypress.json file over
+                here:</p>
+              <figure> <img src="images/Fig06-061.png" />
+                <figcaption>Fig 06-061</figcaption>
+              </figure>
+              <p>and it's showing us where the tests are stored and the plugins file:</p>
+              <figure> <img src="images/Fig06-062.png" />
+                <figcaption>Fig 06-062</figcaption>
+              </figure>
+              <p>these are for options for running Cypress. You can learn more about those options on the Cypress. io
+                website. Let's go take a look at the tests that it created for us:</p>
+              <figure> <img src="images/Fig06-063.png" />
+                <figcaption>Fig 06-063</figcaption>
+              </figure>
+              <p>Here is the default test:</p>
+              <figure> <img src="images/Fig06-064.png" />
+                <figcaption>Fig 06-064</figcaption>
+              </figure>
+              <p>it's called My First Test, and the way this works is it, the test, is going to visit the app URL. So,
+                cy is the Cypress runner, it's going to visit slash, or default route, and then it's going to see if it
+                contains an h1 that says Welcome to Your Vue. js App.</p>
+              <p>Well, if we go look at our application under src, there's our app Vue, notice around line 4:</p>
+              <figure> <img src="images/Fig06-065.png" />
+                <figcaption>Fig 06-065</figcaption>
+              </figure>
+              <p>it says Welcome to Your Vue. js App, which is getting passed into Hello World, which is in our
+                components right here:</p>
+              <figure> <img src="images/Fig06-066.png" />
+                <figcaption>Fig 06-066</figcaption>
+              </figure>
+              <p>and displayed through the h1 on line 3:</p>
+              <figure> <img src="images/Fig06-067.png" />
+                <figcaption>Fig 06-067</figcaption>
+              </figure>
+              <p>so this should work. Well, should and did are two different things, so let's go back to package.json,
+                refresh our memories on what this script is called, test:e2e:</p>
+              <figure> <img src="images/Fig06-068.png" />
+                <figcaption>Fig 06-068</figcaption>
+              </figure>
+              <p>We'll open up our terminal, and then we'll run that command, make it so we can see both, type:</p>
+              <figure>
+                <pre><code class="language-command-line">npm run test:e2e</code></pre>
+                <figcaption>Fig 06-069</figcaption>
+              </figure>
+              <p>and then we hit Enter. Now it's going to start up the development server because it needs to run the
+                app so it can run the test and it's going to need to use Cypress to run it. Notice it's opening up the
+                Cypress Test Runner:</p>
+              <figure> <img src="images/Fig06-070.png" />
+                <figcaption>Fig 06-070</figcaption>
+              </figure>
+              <p>Now you can learn a whole lot more about Cypress and also Nightwatch at the two different sites
+                respectively, but notice one thing up here which I find really interesting, you can run it in Chrome or
+                you can run Electron:</p>
+              <figure> <img src="images/Fig06-071.png" />
+                <figcaption>Fig 06-071</figcaption>
+              </figure>
+              <p>I happen to like running it in Electron because I feel like it's a little more stable for me, but you
+                can run it either way. And then to run the tests themselves, you just can double-click on the tests like
+                this and run it, and then the runner will open up and execute the tests.</p>
+              <figure> <img src="images/Fig06-072.png" />
+                <figcaption>Fig 06-072</figcaption>
+              </figure>
+              <p>And then you can use all the Cypress features to rerun the test or actually examine what's happening
+                inside them. So let's keep the runner open over here on the right-hand side, and I'll try to make it a
+                little bit less painful to look at, there we go, and we'll minimize the actual runner and we can see
+                here's the output. Let's put VS Code on the left and let's make a change. Notice the tests are still
+                running and they're looking at things. If we go into the Hello World, right here, that's where the
+                message is. What if we got rid of that h1:</p>
+              <figure> <img src="images/Fig06-073.png" />
+                <figcaption>Fig 06-073</figcaption>
+              </figure>
+              <p>what would happen? We save our file, it's recompiling down here:</p>
+              <figure> <img src="images/Fig06-074.png" />
+                <figcaption>Fig 06-074</figcaption>
+              </figure>
+              <p>the test isn't looking at it. Now we can rerun the test right here and notice it's visiting that site,
+                but it's having a problem here:</p>
+              <figure> <img src="images/Fig06-075.png" />
+                <figcaption>Fig 06-075</figcaption>
+              </figure>
+              <p>and it timed out. It said it timed out trying to find the content. Of course, because we deleted the
+                h1. If we put the h1 back, but we do something different, like we go to the app Vue, and this time we
+                change the Welcome to Your Vue. js App to say, Welcome to Vue, and we save that, then we rerun the test
+                after it compiles on the left, it's going to go and try again. And this time it's probably going to time
+                out again because it still doesn't quite match what we were looking for in the spec:</p>
+              <figure> <img src="images/Fig06-076.png" />
+                <figcaption>Fig 06-076</figcaption>
+              </figure>
+              <p>which we can remind ourselves of by going and looking at that spec. It's looking for &quot;Welcome to
+                Your Vue. js App&quot;:</p>
+              <figure> <img src="images/Fig06-077.png" />
+                <figcaption>Fig 06-077</figcaption>
+              </figure>
+              <p>but now we can make the spec match that:</p>
+              <figure> <img src="images/Fig06-078.png" />
+                <figcaption>Fig 06-078</figcaption>
+              </figure>
+              <p>should recompile, and rerun our test over here on the right-hand side. Now you can say how easy it is
+                to set up end-to-end testing inside of your applications with Vue CLI. </p>
+            </div>
+            <div>
+              <h3>What's Next?</h3>
+              <p> In this module, you learned how you can use the Vue CLI to both create projects that include unit
+                testing and end-to-end testing:</p>
+              <figure> <img src="images/Fig06-079.png" />
+                <figcaption>Fig 06-079</figcaption>
+              </figure>
+              <p>And then we learned how we can run those unit and end-to-end tests. We can choose Mocha or Jest for our
+                unit tests right out of the box, and we can choose end-to-end tests with Cypress of Nightwatch out of
+                the box. Whichever you choose, it's super easy to run those tests using the npm scripts, npm run
+                test:unit or :e2e. We can also run these tests or create projects with those tests using the Vue UI.
+                We'll take a look at that in one of the upcoming modules. And what lights up all these tests are the
+                plugins for these different testing platforms. We're going to take a closer look at how we can add other
+                plugins into our projects using the Vue CLI in the next module. </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

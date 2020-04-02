@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="UTF-8">
+  <title>maxsagetech - Vue JS Fundamentals</title>
+  <script src="https://unpkg.com/vue"></script>
+  <!--<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"-->
+  <!--integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">-->
+  <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" rel="stylesheet">
+  <link href="prism.css" rel="stylesheet">
+  <script src="prism.js"></script>
+  <style>
+
+    img {
+      max-width: 100%;
+      width: 100%
+    }
+  </style>
+</head>
+<body>
+<div class="container" id="app">
+  <div class="panel-group">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h2>Vue JS Fundamentals</h2>
+      </div>
+      <div class="panel-body">
+        <div class="course-transcript">
+          <div><h2>Getting Started with the Vue.js CLI</h2>
+            <div><h3>Introduction</h3>
+              <p>Hello. This is Jim Cooper, and welcome to this Vue. js Fundamentals module on getting started with the
+                Vue. js CLI. In this module, we'll spend a few minutes gaining a high-level understanding of Vue.js
+                applications, and then we'll dive into creating our first project with the Vue CLI.</p>
+              <p>We'll even start writing some of our own code in this module, including building this home page for the
+                Build-a-Bot application that we'll build throughout this course. We're going to have some fun in this
+                course using Vue to create a simple website for building and buying custom robots.</p>
+              <figure>
+                <img src="images/Fig01-001.PNG"/>
+                <figcaption>Fig 01-001</figcaption>
+              </figure>
+              <p>This application will be rich enough to demonstrate all the fundamental concepts you need in order to
+                create your own applications with Vue, but it will also be simple enough that we won't waste our time
+                building unnecessary features that have no educational value.</p>
+              <p>And this is what it'll look like when you're finished.</p>
+              <figure>
+                <img src="images/Fig01-002.PNG"/>
+                <figcaption>Fig 01-002</figcaption>
+              </figure>
+              <p>As you can see, I can come to the build page and start customizing my robot:</p>
+              <figure>
+                <img src="images/Fig01-003.PNG"/>
+                <figcaption>Fig 01-003</figcaption>
+              </figure>
+              <p>And I can build the robot that I want and then click Add to Cart to add it to my cart. And then you can
+                see, it shows up in my cart here:</p>
+              <figure>
+                <img src="images/Fig01-004.PNG"/>
+                <figcaption>Fig 01-004</figcaption>
+              </figure>
+              <p>and I even show which robots I saved money on, if they happen to be on sale. And back on the Build
+                page, I can click on any of these parts and learn more about the individual parts:</p>
+              <figure>
+                <img src="images/Fig01-005.PNG"/>
+                <figcaption>Fig 01-005</figcaption>
+              </figure>
+              <p>This site doesn't seem like much, but there's a ton of concepts and learning built into this. It will
+                be just enough to allow us to dive into things like creating components and child components,
+                communicating between those components, routing and navigation, state management, and even API calls to
+                a separate server. We'll even explore how to build and deploy this application to production. So let's
+                jump right in and start learning about Vue.
+              </p>
+            </div>
+            <div><h3>Gaining a Conceptual Understanding of Vue</h3>
+              <p>At the heart of a view jess application, you find the Vue instance, is created whenever you call new
+                view. In a typical view application, you will only ever have one Vue Instance.</p>
+              <p>When you create a view instance, you will usually tell it to render a component, which you do by
+                passing in an options object with a render function, which tells it to render an app component:</p>
+              <figure>
+                <img src="images/Fig01-006.PNG"/>
+                <figcaption>Fig 01-006</figcaption>
+              </figure>
+              <p>This app component is the top level component in what will become a hierarchical component structure,
+                so you can imagine your view instance wrapping your entire application:</p>
+              <figure>
+                <img src="images/Fig01-007.PNG"/>
+                <figcaption>Fig 01-007</figcaption>
+              </figure>
+              <p>and inside that you have your App component and the App component may have a child component:</p>
+              <figure>
+                <img src="images/Fig01-008.PNG"/>
+                <figcaption>Fig 01-008</figcaption>
+              </figure>
+              <p>which then may have other child components, etc. This should feel familiar if you've written any
+                Angular or React applications, the component structure is similar other than the Vue instance. In a Vue
+                application that includes routing, which is probably most view applications there's another piece.</p>
+              <p>Basically, instead of the App component containing other components, or maybe in addition to it
+                containing other components, it will also contain a router view:</p>
+              <figure>
+                <img src="images/Fig01-009.PNG"/>
+                <figcaption>Fig 01-009</figcaption>
+              </figure>
+              <p>Which shows the content for the current Url and as the Url changes, the content inside the router view
+                is updated. And while there is a lot more to a Vue application, this is a pretty good conceptual
+                overview of the main structure of a Vue App. To understand the rest of the details. Let's jump into
+                creating an app from the ground up.
+              </p>
+            </div>
+            <div><h3>Setting up the Environment</h3>
+              <p>We're going to need a few tools installed to get going. First, we'll need Git installed. I'm on
+                Windows, so I'm going to use Git for Windows, which can be downloaded from here:</p>
+              <figure>
+                <img src="images/Fig01-010.PNG"/>
+                <figcaption>Fig 01-010</figcaption>
+              </figure>
+              <p>If you're on a Mac, you can install SCM Git from here. And if you're on Linux, you can just run a
+                command like this one:</p>
+              <figure>
+                <pre><code class="language-command-line">sudo apt-get install git</code></pre>
+                <figcaption>Fig 01-011</figcaption>
+              </figure>
+              <p>from the terminal. I'll go ahead and download and install Git for Windows, and then I'll run that, and
+                I'll just use the defaults throughout the install. And now that that's installed, I have this new Git
+                Bash console that I can run:</p>
+              <figure>
+                <img src="images/Fig01-012.PNG"/>
+                <figcaption>Fig 01-012</figcaption>
+              </figure>
+              <p>so we'll use that in a minute. And actually, while I prefer to use this Bash console, sometimes Windows
+                users have issues with it, so if you're getting weird errors, try using the Windows console window
+                instead.</p>
+              <p>The next thing I need is Node. I prefer to install Node using Node Version Manager, just because it
+                makes it easier to switch between versions of Node as I develop different applications. On Windows, I
+                can download that from here:</p>
+              <figure>
+                <img src="images/Fig01-013.PNG"/>
+                <figcaption>Fig 01-013</figcaption>
+              </figure>
+              <p>For Linux and Mac, you can just run this command from the terminal:</p>
+              <figure>
+                <pre><code class="language-command-line">curl -o-
+                  https://raw.githubusercontent.com/creationix/nvm/v0.32.0/install.sh | bash</code></pre>
+                <figcaption>Fig 01-014</figcaption>
+              </figure>
+              <p>So I'm going to go ahead and install NVM for Windows. And I'll just use all the default options here
+                too. Okay, now that that's installed, I'm going to open my Git Bash console. On Windows, be sure to open
+                it as an administrator. Okay, now that I have NVM installed, I can just run:</
+              <figure>
+                <pre><code class="language-command-line">nvm install 8.11.2</code></pre>
+                <figcaption>Fig 01-015</figcaption>
+              </figure>
+              <p>and then the version of Node that you want to install. It's recommended that you use this version for
+                this course, if you're following along, to avoid any compatibility issues. And now I can just tell NVM
+                to use this version of Node:</p>
+              <figure>
+                <pre><code class="language-command-line">nvm use 8.11.2</code></pre>
+                <figcaption>Fig 01-016</figcaption>
+              </figure>
+              <p>Okay, we're good to go with Git and Node now. If you have problems using NVM to install Node, you can
+                try installing it directly from here:</p>
+              <figure>
+                <img src="images/Fig01-017.PNG"/>
+                <figcaption>Fig 01-017</figcaption>
+              </figure>
+              <p>Just choose the correct installer for your system. Okay, let's get coding.
+              </p>
+            </div>
+            <div><h3>Creating a New Project with the Vue CLI</h3>
+              <p>We're going to use the Vue CLI to create our new project. If you're using Vue to create a project that
+                you're going to deploy to a production environment, I highly recommend you use the CLI. The CLI
+                represents a lot of thought and effort by the Vue team to create an environment where you can easily
+                work in development, and when you're ready, create an optimized production build. So to get started,
+                let's install the Vue CLI.</p>
+              <p>We'll do that from the terminal. On Windows, we need to use the Bash terminal we just installed, and
+                then we just need to use npm to install the Vue CLI globally, like this:</p>
+              <figure>
+                <pre><code class="language-command-line">npm install -g @vue/cli</code></pre>
+                <figcaption>Fig 01-018</figcaption>
+              </figure>
+              <p>Typically, this is all you'll do to install the CLI. But for this course, we're going to install a
+                specific version like this:</p>
+              <figure>
+                <pre><code class="language-command-line">npm install -g @vue/cli@3.0.0-rc.3</code></pre>
+                <figcaption>Fig 01-019</figcaption>
+              </figure>
+              <p>If you're following along with this course, be sure to use this same version to ensure you don't run
+                into any surprises or problems a long the way. And you can see that I'm using a release candidate
+                version of the CLI. That's because version 3 of the CLI is not yet released. But don't worry; even
+                though we're using an RC version of the CLI, it will still install a non-RC version of the Vue itself.
+                We don't expect there to be any major changes to the CLI before final release, and since doing things
+                with version 3 of the CLI is quite different from doing things with version 2, you'll be learning the
+                new way to do things.</p>
+              <p>Okay, now that that's installed, we can use it to generate our project. So I'm in my dev folder where I
+                want to create my project:</p>
+              <figure>
+                <img src="images/Fig01-020.PNG"/>
+                <figcaption>Fig 01-020</figcaption>
+              </figure>
+              <p>and now I can just run this command:</p>
+              <figure>
+                <pre><code class="language-command-line">vue create build-a-bot</code></pre>
+                <figcaption>Fig 01-021</figcaption>
+              </figure>
+              <p>So this is going to create a new Vue project and is going to create that new project in a build-a-bot
+                directory. Okay, so notice here that I can either choose to install according to a default preset, or I
+                can choose this option to manually select which features to bootstrap my project with:</p>
+              <figure>
+                <img src="images/Fig01-022.PNG"/>
+                <figcaption>Fig 01-022</figcaption>
+              </figure>
+              <p>Let's go ahead and choose Manually select features. So you can see that the Vue CLI starts with a
+                handful of out-of-the-box features to choose from:</p>
+              <figure>
+                <img src="images/Fig01-023.PNG"/>
+                <figcaption>Fig 01-023</figcaption>
+              </figure>
+              <p>Each of the features listed here has the ability, when you select one, to do several things, including
+                things like prompting you for more information on the command line, modifying the webpack config,
+                installing npm packages, and generating files.</p>
+              <p>This is all based on a new Vue plugin architecture as of CLI version 3. And the whole idea is to create
+                a zero-config environment, meaning they've done a lot of the thought to create all the webpack and other
+                configs so you don't have to worry about that.</p>
+              <p>Now usually, that sort of thing makes me nervous because when framework developers say you won't have
+                to worry about it, it usually means I'm going to have to worry about it, and it's going to be a pain to
+                work with when I do. And as you look at this out-of-the-box list, you might think, well, this is great
+                if this list contains the features that I want, but what if I need something else? Or what if I don't
+                choose something here and I want to add it later? Well, not to worry. Forget to install one of these? No
+                problem, just add it later. Don't see a feature that you want? No problem, anyone can create a plugin
+                and add it later. And there's a good chance you'll find that the community has created one for you. And
+                when you do need to make changes to the webpack config yourself, you can do that too, all without ever
+                having to eject from the CLI. This is all part of an attempt to create a zero-config or low-config
+                environment, and they've done a stellar job of it. Of course, if you need to do some custom
+                configuration, you can do that too.</p>
+              <p>For now, let's just go ahead and add Babel and a linter. We're going to use a router and Vuex later,
+                but we'll add those then so you can see how to do that. Okay, so now that I've selected this by hitting
+                Space, I can hit enter to continue, and now we need to choose our linter options.</p>
+              <figure>
+                <img src="images/Fig01-024.PNG"/>
+                <figcaption>Fig 01-024</figcaption>
+              </figure>
+              <p>And I'm going to go ahead and choose ESLint with the Airbnb config. I really like the Airbnb
+                configuration for code styling, so I'll go ahead and select that. So I'll hit Enter, and then I'm going
+                to select Lint on save:</p>
+              <figure>
+                <img src="images/Fig01-025.PNG"/>
+                <figcaption>Fig 01-025</figcaption>
+              </figure>
+              <p>so that it will execute my linter whenever I save a file. Now I'm going to go ahead and hit Enter
+                again. And then I have an option here as to whether to put my config in my package.json or in dedicated
+                config files.</p>
+              <figure>
+                <img src="images/Fig01-026.PNG"/>
+                <figcaption>Fig 01-026</figcaption>
+              </figure>
+              <p>And I like it in dedicated config files, so I'll select that. And then here I have the option to save
+                all of these options that I've selected as a preset for future projects.</p>
+              <figure>
+                <img src="images/Fig01-027.PNG"/>
+                <figcaption>Fig 01-027</figcaption>
+              </figure>
+              <p>If I do that, then when I create a new project in the future, I can select that preset instead of
+                having to go through all these options again. But I'm just going to go ahead and so no here.</p>
+              <p>Okay, so now it's generating our project for us and installing all of our npm dependencies:</p>
+              <figure>
+                <img src="images/Fig01-028.PNG"/>
+                <figcaption>Fig 01-028</figcaption>
+              </figure>
+              <p>Cool. Now that that's done, let's take a quick peek at what it generated, and then we'll start writing
+                some code of our own. So I'm going to open up my code editor, and I'm using Visual Studio Code, so I'm
+                going to change directory into my new build-a-bot folder, and then I'll just type:</p>
+              <figure>
+                <pre><code class="language-command-line">code.</code></pre>
+                <figcaption>Fig 01-029</figcaption>
+              </figure>
+              <p>and that should start Visual Studio Code in this directory.</p>
+              <p>I highly recommend VS Code for working with Vue because it has a lot of great Vue extensions that offer
+                some incredible support for working in Vue. In fact, let's take a look at those extensions. So notice
+                here that I have an ESLint plugin, Vetur plugin, and a vue plugin:</p>
+              <figure>
+                <img src="images/Fig01-030.PNG"/>
+                <figcaption>Fig 01-030</figcaption>
+              </figure>
+              <p>I recommend you install each of these if you're following along or if you're going to be doing Vue
+                development in Visual Studio Code. And if you're unfortunate enough to be working in Windows like I am,
+                you'll want to update a rule in your ESLint file. So right here we have this. eslintrc. js file, and I
+                need to add a rule here to make it so that it handles Windows line endings correctly. So I'm just going
+                to add rules, and I'm going to set linebreak-style to 0:</p>
+              <figure>
+                <img src="images/Fig01-031.PNG"/>
+                <figcaption>Fig 01-031</figcaption>
+              </figure>
+              <p>Now this won't give me warnings due to my Windows-style line breaks. And then one last thing to
+                configure for linting with Vue, over here in my workspace settings, I've configured some ESLint rules
+                for formatting Vue files:</p>
+              <figure>
+                <img src="images/Fig01-032.PNG"/>
+                <figcaption>Fig 01-032</figcaption>
+              </figure>
+              <p>So notice here that I'm telling ESLint to validate HTML, Vue, and JavaScript files. And notice for each
+                one of these sections that autoFix is set to true:</p>
+              <figure>
+                <img src="images/Fig01-033.PNG"/>
+                <figcaption>Fig 01-033</figcaption>
+              </figure>
+              <p>So whatever I save, if there are linting errors, it will autofix them for me. And then notice down here
+                that I have eslint. autoFixOnSave set to true also. I've found that these settings are all required in
+                order to really get ESLint working well and code formatting and styling working well with Vue files.</p>
+              <p>All right, now that we've got our editor set up the way we want, let's take a look at what the CLI
+                generated for us. We'll start with the package.json file. If we take a look at the scripts in the
+                package.json file right here, you can see that it created these three scripts for us, all of which call
+                the vue-cli-service.:</p>
+              <figure>
+                <img src="images/Fig01-034.PNG"/>
+                <figcaption>Fig 01-034</figcaption>
+              </figure>
+              <p>The vue-cli-service manages a local dev webserver that is based on webpack DevServer.</p>
+              <p>We're not going to cover the vue-cli-service in depth in this course, but you can learn more about it
+                here:</p>
+              <figure>
+                <img src="images/Fig01-035.PNG"/>
+                <figcaption>Fig 01-035</figcaption>
+              </figure>
+              <p>For now, we're just going to go ahead and run this serve script. So back in our terminal, we can just
+                run:</p>
+              <figure>
+                <pre><code class="language-command-line">npm run serve</code></pre>
+                <figcaption>Fig 01-036</figcaption>
+              </figure>
+
+              <p>And that's going to compile our application for development and then start a development server for us
+                on port 8080:</p>
+              <figure>
+                <img src="images/Fig01-037.PNG"/>
+                <figcaption>Fig 01-037</figcaption>
+              </figure>
+              <p>There we go. Now let's go take a look at that:</p>
+              <figure>
+                <img src="images/Fig01-038.PNG"/>
+                <figcaption>Fig 01-038</figcaption>
+              </figure>
+              <p>Cool. So we can see that we have a running application here, and this is the sample web page that
+                always gets generated from the CLI. This just gives us a good starting point that we can start editing.
+                So let's take a look at how this is all working and being rendered. So back over here, we'll take a look
+                at our main.js file in the src directory:</p>
+              <figure>
+                <img src="images/Fig01-039.PNG"/>
+                <figcaption>Fig 01-039</figcaption>
+              </figure>
+              <p>This is the entry point for our Vue application:</p>
+              <figure>
+                <img src="images/Fig01-040.PNG"/>
+                <figcaption>Fig 01-040</figcaption>
+              </figure>
+              <p>and you can see it's really simple. Notice we're just creating a new Vue instance here, and then we
+                pass in this options object:</p>
+              <figure>
+                <img src="images/Fig01-041.PNG"/>
+                <figcaption>Fig 01-041</figcaption>
+              </figure>
+              <p>to configure our Vue application. And all we're currently configuring is the render property. Notice
+                that the render property is set to a function and that we're passing this App component into it:</p>
+              <figure>
+                <img src="images/Fig01-042.PNG"/>
+                <figcaption>Fig 01-042</figcaption>
+              </figure>
+              <p>And all we're currently configuring on our Vue instance is the render property. Notice that the render
+                property is rendering our App component, so when Vue bootstraps our app, it will start by displaying the
+                App component. So let's take a look at that next.</p>
+
+              <p>So first of all, notice that there are three sections to this file, a template section:</p>
+              <figure>
+                <img src="images/Fig01-043.PNG"/>
+                <figcaption>Fig 01-043</figcaption>
+              </figure>
+              <p>a script section:</p>
+              <figure>
+                <img src="images/Fig01-044.PNG"/>
+                <figcaption>Fig 01-044</figcaption>
+              </figure>
+              <p>and a style section:</p>
+              <figure>
+                <img src="images/Fig01-045.PNG"/>
+                <figcaption>Fig 01-045</figcaption>
+              </figure>
+              <p>Clearly, this is not a file that a browser could understand, so the question is, how is this getting
+                used? Well, consider a couple of things. First of all, there is a Vue-specific webpack plugin being used
+                to parse this file into its individual parts and compile them in a way that a browser can use them. And
+                secondly, this component was passed into the Vue instance, so Vue will work with what's generated by
+                webpack to render this component. We'll talk more about components and each of these sections in the
+                next module. For now, all you need to understand is that this App component is the top-level component
+                in our app, and as we build our app, it will remain at the top level of our component hierarchy, as it
+                is used to display routed components and their child components.</p>
+              <p>Right now, there is no routing at work here. The App component is just displaying this HelloWorld
+                component:</p>
+              <figure>
+                <img src="images/Fig01-046.PNG"/>
+                <figcaption>Fig 01-046</figcaption>
+              </figure>
+              <p>So the App component is displaying this as a child component, and if we go look at that component,
+                which is in this components folder, you can see that here is all the HTML and all the links that are
+                currently being displayed in our app. Cool, so that's how everything is wired up that was generated by
+                the CLI. Next, we'll start replacing this content with some of our own.
+              </p>
+            </div>
+            <div><h3>Creating the Home Page</h3>
+              <p>Alright, in this clip we're going to start creating some of our own content. We won't be exploring any
+                new concepts just yet. We're just going to spend a little bit of time replacing this generated
+                content:</p>
+              <figure>
+                <img src="images/Fig01-047.PNG"/>
+                <figcaption>Fig 01-047</figcaption>
+              </figure>
+              <p>
+                with some of our own content. This will get us a little more familiar with what the CLI generated and
+                with the layout of our new app before we start digging into key Vue.js concepts. So let's start by
+                renaming this HelloWorld component. This will become our new home page, so let's name it
+                HomePage.vue:</p>
+              <figure>
+                <img src="images/Fig01-048.PNG"/>
+                <figcaption>Fig 01-048</figcaption>
+              </figure>
+              <p>
+                We could just name it Home.vue, but one of the Vue style guide rules says that components should be two
+                words at a minimum. So we'll name it HomePage. And let's update the component name down here too:</p>
+              <figure>
+                <img src="images/Fig01-049.PNG"/>
+                <figcaption>Fig 01-049</figcaption>
+              </figure>
+              <p>And then we'll have to update the import for this in the App component, so instead of importing
+                HelloWorld, we'll import HomePage from HomePage.vue:</p>
+              <figure>
+                <img src="images/Fig01-050.PNG"/>
+                <figcaption>Fig 01-050</figcaption>
+              </figure>
+              <p>and then we'll use that down here:</p>
+              <figure>
+                <img src="images/Fig01-051.PNG"/>
+                <figcaption>Fig 01-051</figcaption>
+              </figure>
+              <p>And we'll change it up here in the template:</p>
+              <figure>
+                <img src="images/Fig01-052.PNG"/>
+                <figcaption>Fig 01-052</figcaption>
+              </figure>
+              <p>And we don't need this msg attribute anymore, so we'll delete that:</p>
+              <figure>
+                <img src="images/Fig01-053.PNG"/>
+                <figcaption>Fig 01-053</figcaption>
+              </figure>
+              <p>And I'd like to put all of this inside a main element:</p>
+              <figure>
+                <img src="images/Fig01-054.PNG"/>
+                <figcaption>Fig 01-054</figcaption>
+              </figure>
+              <p>And we don't want this Vue logo up here anymore:</p>
+              <figure>
+                <img src="./images/Fig01-055.PNG"/>
+                <figcaption>Fig 01-055.PNG</figcaption>
+              </figure>
+              <p>so we'll delete that. All right, and then let's add a couple of styles and clean up some styles that we
+                don't need. So down here in the style section of our App component, I'd like to add a gradient to the
+                body of our application. So I'm going to give it a background, I'm going to set linear-gradient to a
+                gradient from top to bottom, and let's fix that spelling error, and then I want to set the
+                background-attachment to fixed:</p>
+              <figure>
+                <img src="images/Fig01-056.png"/>
+                <figcaption>Fig 01-056</figcaption>
+              </figure>
+              <p>And then down here on the app element, I'm just going to remove everything except our font family:</p>
+              <figure>
+                <img src="images/Fig01-057.png"/>
+                <figcaption>Fig 01-057.png</figcaption>
+              </figure>
+              <p>
+                And by the way, this app element is just referring to this div up here that has an id of app:</p>
+              <figure>
+                <img src="images/Fig01-058.png"/>
+                <figcaption>Fig 01-058</figcaption>
+              </figure>
+              <p>And then I just wanted to add a few styles for this main div, so down here I'll add a main style. And I
+                want to set margin to 0 auto, so this will center the main content, and we'll add some padding and give
+                it a background-color of white and a width of 1024px and then just a min-height of 300px:</p>
+              <figure>
+                <img src="images/Fig01-059.png"/>
+                <figcaption>Fig 01-059</figcaption>
+              </figure>
+              <p>Okay, we'll talk more about components and styling them in the next module. We're just trying to get a
+                decent starting point set up here, and then we'll delve into this stuff more. So let's go see what our
+                site looks like now:</p>
+              <figure>
+                <img src="images/Fig01-060.png"/>
+                <figcaption>Fig 01-060</figcaption>
+              </figure>
+              <p>Okay, ignore the main content area, but notice that our background has a gray gradient now, and our
+                main content area has a white background. Now let's go replace all of this content with our HomePage
+                content. So back in our HomePage component, up here in the template, all right, so let's delete all of
+                this content inside the outer div, and we'll change this class to home:</p>
+              <figure>
+                <img src="images/Fig01-061.png"/>
+                <figcaption>Fig 01-061</figcaption>
+              </figure>
+              <p>And then I'm just going to go ahead and paste a little bit of content here. If you're following along,
+                go ahead and paste this in:</p>
+              <figure>
+                <img src="images/Fig01-062.png"/>
+                <figcaption>Fig 01-062</figcaption>
+              </figure>
+              <p>And then notice that we just have a couple of divs here:</p>
+              <figure>
+                <img src="images/Fig01-063.png"/>
+                <figcaption>Fig 01-063</figcaption>
+              </figure>
+              <p>One just has an image of a robot, and the other has a get-started link. So notice that this image is
+                loading robot-home.png file out of the assets folder, but that file doesn't exist in here:</p>
+              <figure>
+                <img src="images/Fig01-064.png"/>
+                <figcaption>Fig 01-064</figcaption>
+              </figure>
+              <p>This is just the Vue logo that came with our Vue CLI sample page. So let's go download that
+                robot-home.png file. To help us with this and a number of other tasks throughout this course, I've
+                created a little helper repo over here in GitHub for the Vue.js Fundamentals course:</p>
+              <figure>
+                <img src="images/Fig01-065.png"/>
+                <figcaption>Fig 01-065</figcaption>
+              </figure>
+              <p>And there's just a few files in here that we will occasionally use to download things as we go
+                throughout this course. So in the src folder, notice we have an assets folder, and here is the
+                robot-home.png file:</p>
+              <figure>
+                <img src="images/Fig01-066.png"/>
+                <figcaption>Fig 01-066</figcaption>
+              </figure>
+              <p>And we'll actually need this other image, too, so we might as well download them both. So first I'll
+                click on robot-home, and then click on Download, and then Save image as, and then I just need to go find
+                my build-a-bot folder. And in the assets folder, we'll just save it here:</p>
+              <figure>
+                <img src="images/Fig01-067.png"/>
+                <figcaption>Fig 01-067</figcaption>
+              </figure>
+              <p>And then we can go back and do the same thing for this build-a-bot logo. So we'll save that here too.
+                Okay, cool. So now that robot-home image exists in our assets folder:</p>
+              <figure>
+                <img src="images/Fig01-068.png"/>
+                <figcaption>Fig 01-068</figcaption>
+              </figure>
+              <p>Now we just need to clean up some styles down here. And we don't need any of these:</p>
+              <figure>
+                <img src="images/Fig01-069.png"/>
+                <figcaption>Fig 01-069</figcaption>
+              </figure>
+              <p>so I'm just going to add a few classes here. So we have a home class, and I just want that to be
+                text-align: center, and then a robot class, and I just want to set the height to 300px:</p>
+              <figure>
+                <img src="images/Fig01-070.png"/>
+                <figcaption>Fig 01-070</figcaption>
+              </figure>
+              <p>This is for that robot image. So let's go see what our site looks like now:</p>
+              <figure>
+                <img src="images/Fig01-071.png"/>
+                <figcaption>Fig 01-071</figcaption>
+              </figure>
+              <p>Okay, cool. This is looking great now. And you may have noticed that I didn't need to hit refresh on
+                this page in order to see my changes. That's because we are using, behind the scenes Vue CLI is using
+                the webpack DevServer, including Hot Module Replacement. So as we make changes to our code, the changes
+                immediately show up in our browser without us having to refresh.</p>
+              <p>Okay, awesome. So now we've created a new home page. But let's add one more thing that we're going to
+                use throughout this course. Our site is missing a navigation header, so let's add that quick. And we
+                could add that to our home component, but then when we navigate away from our home page, we would lose
+                that navigation header. So really we want it to be on our App component. So up here just above our main
+                element, we're going to add a header element:</p>
+              <figure>
+                <img src="images/Fig01-072.png"/>
+                <figcaption>Fig 01-072</figcaption>
+              </figure>
+              <p>And that's going to have a nav element:</p>
+              <figure>
+                <img src="images/Fig01-073.png"/>
+                <figcaption>Fig 01-073</figcaption>
+              </figure>
+              <p>and this nav element is nothing special. It's not Vue specific; it's just a normal HTML element that
+                comes with HTML 5. And then inside here, we're going to use an unordered list to list out each of the
+                nav elements:</p>
+              <figure>
+                <img src="images/Fig01-074.png"/>
+                <figcaption>Fig 01-074</figcaption>
+              </figure>
+              <p>And for now, that's just going to have one list element, and that will have a nav-item class:</p>
+              <figure>
+                <img src="images/Fig01-075.png"/>
+                <figcaption>Fig 01-075</figcaption>
+              </figure>
+              <p>And then inside here we're going to have an image, which will be our logo, so we'll give that logo
+                class. And this is going to be the other image that we downloaded, so in our assets folder, it is the
+                build-a-bot-logo.png file:</p>
+              <figure>
+                <img src="images/Fig01-076.png"/>
+                <figcaption>Fig 01-076</figcaption>
+              </figure>
+              <p>And then we'll just say Build-a-Bot here:</p>
+              <figure>
+                <img src="images/Fig01-077.png"/>
+                <figcaption>Fig 01-077</figcaption>
+              </figure>
+              <p>And now we just need to add some styles to style that. Again, we'll cover styling in more depth in the
+                next module. But rather than have you type in all the styles, let's go over to our helper repo, and in
+                the src folder, there is this header.css:</p>
+              <figure>
+                <img src="images/Fig01-078.png"/>
+                <figcaption>Fig 01-078</figcaption>
+              </figure>
+              <p>And we're just going to click on the raw version of that and copy all of it, and then let's just paste
+                that all in right here:</p>
+              <figure>
+                <img src="images/Fig01-079.png"/>
+                <figcaption>Fig 01-079</figcaption>
+              </figure>
+              <p>Okay, so you can see we're just adding some header and nav item styling here and some styling for our
+                logo. Okay, let's go take a look at that:</p>
+              <figure>
+                <img src="images/Fig01-080.png"/>
+                <figcaption>Fig 01-080</figcaption>
+              </figure>
+              <p>All right, awesome. So you can see here, again, without having to refresh, Hot Module Refreshment just
+                updated our page for us, and we now have a navigation bar at the top with a list item here on the left
+                for navigating to our home page. And that's not a link yet or anything. We'll update that later. But now
+                we have a home page with a navigation bar in our App component. And I realize that this clip was just a
+                bit of just following along, not a lot of new concepts. But hopefully as we moved around in the app and
+                replaced some HTML in our home page component and our App component, you began to become a little bit
+                more familiar with the layout of our application, and hopefully that will help a bit going forward.</p>
+              <p>In the next module, we're going to dive into components and templates syntax and start learning a lot
+                more concepts. So in this module, we just learned some high-level things about Vue, and how to use the
+                Vue CLI to create a project, and a little bit about working within components and making some HTML and
+                CSS changes. In the next module, we're going to take a much deeper look at components and templates in
+                text, so let's go jump into that.
+              </p>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

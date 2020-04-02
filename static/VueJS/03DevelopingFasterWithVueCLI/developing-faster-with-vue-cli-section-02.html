@@ -1,0 +1,395 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+
+<head>
+  <meta charset="UTF-8">
+  <title>maxsagetech - Developing Faster with the Vue CLI</title>
+  <script src="https://unpkg.com/vue"></script>
+  <!--<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"-->
+  <!--integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">-->
+  <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" rel="stylesheet">
+  <link href="prism.css" rel="stylesheet">
+  <script src="prism.js"></script>
+  <style>
+    img {
+      max-width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container" id="app">
+    <div class="panel-group">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h2>Developing Faster with the Vue CLI</h2>
+        </div>
+        <div class="panel-body">
+          <div>
+            <h2>Getting Started with the Vue CLI</h2>
+            <div>
+              <h3>Introducing the Vue CLI</h3>
+              <p>Hi, my name's John Papa. Welcome to my new course, Developing Faster with the Vue CLI. Thanks for
+                joining me here at Pluralsight. In this first module, we're going to get started with the Vue CLI. We'll
+                start by learning what the Vue CLI does for you, and then of course why you should use the Vue CLI, and
+                then we'll go through a couple different demos or tours, the first of which is touring the zero
+                configuration options, which help us get started quickly. And then we'll tour the Vue CLI itself. And
+                finally, we'll take a look at the Vue CLI's UI. Yeah, you heard that right. The Vue CLI has a user
+                interface, and it has some pretty impressive features, so let's dive right in. </p>
+            </div>
+            <div>
+              <h3>Creating a Vue App with the Zero Configuration Option</h3>
+              <p> One of the best ways to show off Vue is just to dive right in and show off Vue. So first, let's start
+                off by installing one of the Vue packages here. It's called Vue CLI, that's the CLI itself, and we're
+                going to do that globally, so I'm going to use the -g flag. We're also going to install a second global
+                package here, and that's under the Vue scope, and it's going to be the cli-service-global, like this:
+              </p>
+              <figure>
+                <pre><code class="language-command-line">npm i -g @vue/cli @vue/cli-service-global</code></pre>
+                <figcaption>Fig 01-001</figcaption>
+              </figure>
+              <p>Now you really only need the Vue CLI to do most of what you want, but the cli-service-global is going
+                to allow us to do something special, which we call the zero configuration option. Let's take a look at
+                that.</p>
+              <p>So notice I created a folder called play, and then vue inside of that.</p>
+              <figure> <img src="images/Fig01-002.PNG" />
+                <figcaption>Fig 01-002</figcaption>
+              </figure>
+              <p>Now just to make this easy, we're going to echo out a new file. Now in Vue, all of our templates go
+                inside of a template tag, so let's create one in here with an h1, that's going to be our HTML, it's
+                going to say Hello Vue CLI, and then we'll end our template like this.</p>
+              <p>And the idea here is that we're going to echo this out and send it right to a file called App. vue:</p>
+              <figure>
+                <pre><code class="language-command-line">echo &quot;&lt;template&gt;&lt;h1&gt;Hello Vue CLI&lt;/h1&gt;&lt;/template&gt;&quot; &gt; App.vue</code></pre>
+                <figcaption>Fig 01-003</figcaption>
+              </figure>
+              <p>and that should create that file for us. So now if we do ls (or dir in Windows) and we do App.vue, it's
+                right there. We could also cat it (or type in Windows), and it shows the contents.</p>
+              <p>Now that we have our single file, we can actually just say:</p>
+              <figure>
+                <pre><code class="language-command-line">vue serve -o</code></pre>
+                <figcaption>Fig 01-004</figcaption>
+              </figure>
+              <p>for open, and this is actually going to compile our Vue application and launch it in the browser, which
+                you can see over here:</p>
+              <figure> <img src="images/Fig01-005.PNG" />
+                <figcaption>Fig 01-005</figcaption>
+              </figure>
+              <p>This is the zero configuration option of the Vue CLI. And while you're not going to build a fully
+                fledged application with this, what's nice about this is you can take some simple ideas and just try
+                them out without having to create an entire file structure, or webpack, or a bunch of other things that
+                you may not need.</p>
+              <p>Let's say that we wanted to use an editor to change our files. I'll open up a separate terminal here,
+                and I'll open this folder with VS Code, right here in the bottom left, and I'll make the terminal take
+                up a little less room. And we can see that here we've got our App. vue file, and if I change this from
+                Hello Vue CLI to Hello World, as soon as I save this file, we should notice a change over in the
+                browser:</p>
+              <figure> <img src="./images/Fig01-006.PNG" />
+                <figcaption>Fig 01-006</figcaption>
+              </figure>
+              <p> because Vue is constantly looking at this and serving the changes for us. And it's that easy to create
+                a new file and then try out your ideas with Vue. </p>
+            </div>
+            <div>
+              <h3>Why You Should Use the Vue CLI</h3>
+              <p>Now that we've taken the Vue CLI for a test drive, let's take a moment to step back and think about why
+                you might want to use the Vue CLI in the first place. But first of all, CLI, what's that mean? It means
+                command line interface. So we're going to be typing in at the terminal. It allows us to create things
+                rapidly so you can have a really quick development experience, not just writing code, but seeing the
+                code.</p>
+              <figure> <img src="images/Fig01-007.png" />
+                <figcaption>Fig 01-007</figcaption>
+              </figure>
+              <p> We can select different libraries that we want to use, and the Vue CLI will help configure them for
+                us. One of the best features is creating the build. It can optimize the builds for loading speed. And
+                depending upon how we like to write our code, and the different things we want to do with writing our
+                code, we can choose our own adventure. Choosing things like TypeScript or JavaScript, or using Sass or
+                ESLint.</p>
+              <p>Now you might be wondering what makes building a new app so difficult? Well, when you're starting from
+                scratch, you often have a blank slate. Where do you start? How do you organize the project structure? Do
+                you have a style guide that you want to follow, and how do you do that once you find one, like looking
+                at the Vue documentation? How do you create that optimized build, or any build at all, from scratch? How
+                do you follow your team's conventions that you might have specific for your team? How would you set up
+                end-to-end or unit testing? And what about plugins that you might want to add in, things like Vuetify
+                for your UI, or Vuex for state management?</p>
+              <p>This is why using a tool like the Vue CLI is so helpful. It's got all these kinds of features, and
+                more, that are built into it.</p>
+              <figure> <img src="images/Fig01-008.png" />
+                <figcaption>Fig 01-008</figcaption>
+              </figure>
+              <p>You want a PWA? It's there. You want to use Mocha or Jest? You got it. Do you want TypeScript or do you
+                want JavaScript? Do you want Babel? No worries. All these different options come out of the box. You get
+                to configure what you want. The bottom line is that the Vue CLI makes it easy for you to create these
+                applications. And that's why I recommend using the Vue CLI for all applications that you start with Vue.
+              </p>
+            </div>
+            <div>
+              <h3>A Sneak Peek at the Vue CLI</h3>
+              <p>Now let's take a sneak peek at the Vue CLI. The first thing we'll look at is how we can create a new
+                application. We've seen how we can install the CLI using npm here:</p>
+              <figure> <img src="images/Fig01-009.png" />
+                <figcaption>Fig 01-009</figcaption>
+              </figure>
+              <p>and then afterwards we can do a vue create, and then we name the project, in this case, hello-vue, and
+                we can specify different flags and options here. The -d means use all the defaults. We'll learn more
+                about that in a later module.</p>
+              <p>So in a typical workflow, what you might do is vue create hello-world, the name of your project, and
+                then cd into that project, and then run your project right out of the gate with npm run serve:</p>
+              <figure> <img src="./images/Fig01-010.png" />
+                <figcaption>Fig 01-010.png</figcaption>
+              </figure>
+              <p>This is because the Vue CLI gives you an npm script called npm serve, which you can then run to
+                basically build your application and then serve it in a browser. And that will watch the file, so if you
+                make changes, it will automatically rebuild it and then show it again in the browser.</p>
+              <figure> <img src="images/Fig01-011.PNG" />
+                <figcaption>Fig 01-011</figcaption>
+              </figure>
+              <p>Here's some other commands that we're going to use and get familiar with with the Vue CLI. First, vue
+                create. We're going to use that a lot. That's to create a new Vue app. Vue --help will show you all the
+                commands that the Vue CLI offers. We can use --help with subcommands like vue create. So we could do a
+                vue create --help to see what the create offers.</p>
+              <p>When the Vue CLI creates our application, it adds three scripts by default to our package. json. Those
+                are for linting, building, and serving. And as you might have guessed, we then can lint our build or
+                server application using those scripts.</p>
+              <figure> <img src="images/Fig01-012.PNG" />
+                <figcaption>Fig 01-012</figcaption>
+              </figure>
+              <p>But what if you don't want to type into the terminal using the CLI, it is a command line interface,
+                after all? Well, the Vue CLI comes with a UI. That's right. So we have a visual way to create or
+                configure our application. We can use the commands here in the window to do that. We can add plugins or
+                just look at the plugins that are in our project. And of course, we can do things like build and lint
+                and serve. The Vue CLI's UI looks something like this:</p>
+              <figure> <img src="images/Fig01-013.PNG" />
+                <figcaption>Fig 01-013</figcaption>
+              </figure>
+              <p>and it's ever-evolving, but we can serve, build or lint, or even inspect the webpack configuration
+                right from here. And it gives us a lot of tools like starting and stopping our server, analyzing what's
+                in our bundles, and just a whole bunch of great goodness, which we can use:</p>
+              <figure> <img src="images/Fig01-014.PNG" />
+                <figcaption>Fig 01-014</figcaption>
+              </figure>
+              <p>Now that we have an idea for what the Vue CLI and the UI can do for us, let's dive right in and take a
+                tour of these features for ourselves. </p>
+            </div>
+            <div>
+              <h3>Test Drive the Vue CLI</h3>
+              <p>The first thing we'll do is make sure we install the Vue CLI globally. Now we've already done that
+                here, but we can check to make sure it's installed by doing:</p>
+              <figure>
+                <pre><code class="language-command-line">vue --version</code></pre>
+                <figcaption>Fig 01-015</figcaption>
+              </figure>
+              <p>Here I can see I'm using 3. 2. 1. For you, it'll be whatever version you've installed recently. Next,
+                let's create a new project. We'll do vue create and we'll call this hello-world:</p>
+              <figure>
+                <pre><code class="language-command-line">vue create hello-world</code></pre>
+                <figcaption>Fig 01-016</figcaption>
+              </figure>
+              <p>Now when we set up this, we're going to get asked a bunch of options. We're going to choose the
+                default, and I can use the down arrows to get to there, and then hit the Enter key. And then it's going
+                to go out and install all the default options that you get with a Vue project.</p>
+              <p>Once installed, there's a couple hints down here for us. For example, we can cd into hello-world, and
+                we can run npm run serve.</p>
+              <p>But instead, I'm going to open up my favorite code editor, Visual Studio Code:</p>
+              <figure>
+                <pre><code class="language-command-line">code .</code></pre>
+                <figcaption>Fig 01-017</figcaption>
+              </figure>
+              <p>If you issued the command from within the hello-world directory that was just created you should see we
+                have a bunch of different files in there:</p>
+              <figure> <img src="images/Fig01-018.PNG" />
+                <figcaption>Fig 01-018</figcaption>
+              </figure>
+              <p>The one we're going to look for is under src, and then components, and then HelloWorld.vue. So here we
+                can see our hello-world app:</p>
+              <figure> <img src="images/Fig01-019.PNG" />
+                <figcaption>Fig 01-019</figcaption>
+              </figure>
+              <p>and then back up here in the terminal, we'll run npm run serve:</p>
+              <figure> <img src="images/Fig01-020.PNG" />
+                <figcaption>Fig 01-020</figcaption>
+              </figure>
+              <p>That'll build the application in memory, and then it tells us we can then browse to it at
+                localhost:8080. So let's do that now. Here we can see the sample application:</p>
+              <figure> <img src="images/Fig01-021.PNG" />
+                <figcaption>Fig 01-021</figcaption>
+              </figure>
+              <p>Now notice it's running right now and showing it over here in the browser. If you wanted to change some
+                of this, which one of the easiest things we can do is just remove some of the stuff that's on the page.
+                For example, let's say we didn't want all this here for a guide:</p>
+              <figure>
+                <pre><code class="language-html">&lt;p&gt; For a guide and recipes on how to configure / customize this project,&lt;br&gt; check out the &lt;a href=&quot;https://cli.vuejs.org&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;vue-cli documentation&lt;/a&gt;. &lt;/p&gt; &lt;h3&gt;Installed CLI Plugins&lt;/h3&gt; &lt;ul&gt; &lt;li&gt;&lt;a href=&quot;https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;babel&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;eslint&lt;/a&gt;&lt;/li&gt; &lt;/ul&gt;</code></pre>
+                <figcaption>Fig 01-022</figcaption>
+              </figure>
+              <p>we could delete that. And now you can see it rebuilds it and it deleted the text we removed from
+                HelloWorld.vue</p>
+              <figure> <img src="images/Fig01-023.PNG" />
+                <figcaption>Fig 01-023</figcaption>
+              </figure>
+              <p>We can get rid of these essential links:</p>
+              <figure>
+                <pre><code class="language-html">&lt;h3&gt;Essential Links&lt;/h3&gt; &lt;ul&gt; &lt;li&gt;&lt;a href=&quot;https://vuejs.org&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Core Docs&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;https://forum.vuejs.org&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Forum&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;https://chat.vuejs.org&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Community Chat&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;https://twitter.com/vuejs&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Twitter&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;https://news.vuejs.org&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;News&lt;/a&gt;&lt;/li&gt; &lt;/ul&gt;</code></pre>
+                <figcaption>Fig 01-024</figcaption>
+              </figure> and as we keep deleting, you're going to see it rebuilding each time:
+            </div>
+            <figure> <img src="images/Fig01-025.PNG" />
+              <figcaption>Fig 01-025</figcaption>
+            </figure>
+            <p>And there we go. So now we just have simply the logo and then the Welcome to Your Vue. js App. Well this
+              is great because it gives us that awesome edit, and then build, and then looking at our application
+              experience. So, this hot reload option is really nice. Well let's Ctrl+C out of this, and now let's look
+              at some of the other commands we can run, like npm run lint. This will lint our application. In this case,
+              there were no errors found:</p>
+            <figure> <img src="images/Fig01-026.PNG" />
+              <figcaption>Fig 01-026</figcaption>
+            </figure>
+            <p>but if there were it would report what those errors are. And by default, we're using ESLint in any
+              configuration we want, and of course we can customize that ourselves. When it's time to go ahead and build
+              our application so we can put it on a web server somewhere, we can run npm run build:</p>
+            <figure> <img src="images/Fig01-027.PNG" />
+              <figcaption>Fig 01-027</figcaption>
+            </figure>
+            <p>And by default, it's going to do a production build. Now the keyword here is production. Production means
+              that it's going to optimize the build for our production server. So you'll notice we have a couple files
+              up there, and you can see the size and the gzip size, and they are located in the dist folder:</p>
+            <figure> <img src="images/Fig01-028.PNG" />
+              <figcaption>Fig 01-028</figcaption>
+            </figure>
+            <p>So, let's say we go over to the dist folder for a moment and we can look at those. There's the same files
+              that were reported:</p>
+            <figure> <img src="images/Fig01-029.PNG" />
+              <figcaption>Fig 01-029</figcaption>
+            </figure>
+            <p>Now we could serve those files with any server. Just to test it out, we're going to use a quick server
+              called http-server, using a tool from npm called npx. So we'll say:</p>
+            <figure>
+              <pre><code class="language-command-line">npx http-server</code></pre>
+              <figcaption>Fig 01-030</figcaption>
+            </figure>
+            <p>on the current folder (dist). Now notice it's running this port on port 8080:</p>
+            <figure>
+              <pre><code class="language-command-line">http://localhost:8080/index.html</code></pre>
+              <figcaption>Fig 01-031</figcaption>
+            </figure>
+            <p>and there's our page:</p>
+            <figure> <img src="images/Fig01-032.PNG" />
+              <figcaption>Fig 01-032</figcaption>
+            </figure>
+            <p>Now, we did all this from the terminal, but we could also use tooling, like the Vue CLI UI. Let's take a
+              look at that next. </p>
+          </div>
+          <div>
+            <h3>Test Drive the Vue CLI UI</h3>
+            <p>Another powerful option with the Vue CLI is to type: <figure>
+                <pre><code class="language-command-line">vue ui</code></pre>
+                <figcaption>Fig 01-033</figcaption>
+              </figure>
+              <p>where we get a graphical user interface to interact with the Vue CLI. So here we can see it launches on
+                port 8000, and it shows us the projects that we have:</p>
+              <figure> <img src="images/Fig01-034.PNG" />
+                <figcaption>Fig 01-034</figcaption>
+              </figure>
+              <p>We can create new ones or import existing ones. So here we can go ahead and put in import, and we can
+                see that this is in the hello-world folder</p>
+              <figure> <img src="images/Fig01-035.PNG" />
+                <figcaption>Fig 01-035</figcaption>
+              </figure>
+              <p>We can then import that folder and here is our project:</p>
+              <figure> <img src="images/Fig01-036.PNG" />
+                <figcaption>Fig 01-036</figcaption>
+              </figure>
+              <p>Let's make this full screen and take a look at what we get. Notice we can kill a port. We got our new
+                project here and it kind of gives a quick whirlwind of what's going on. We can look to these different
+                options like installed plugins:</p>
+              <figure> <img src="images/Fig01-037.PNG" />
+                <figcaption>Fig 01-037</figcaption>
+              </figure>
+              <p>We have vue/cli-service, and Babel, and ESLint out of the box. We got those because we chose the
+                default options. And then up top it's giving us the option to add popular ones like the vue-router and
+                vuex:</p>
+              <figure> <img src="images/Fig01-038.PNG" />
+                <figcaption>Fig 01-038</figcaption>
+              </figure>
+              <p> These are additional plugins we can put into our project. Looking over our project dependencies, we
+                can see all the dependencies in our project as well, and the version numbers of those, and we can
+                install new ones or we can delete existing ones:</p>
+              <figure> <img src="images/Fig01-039.PNG" />
+                <figcaption>Fig 01-039</figcaption>
+              </figure>
+              <p>Next, we can look at the configuration. By default, we have two right here. The first one is the Vue
+                CLI's configuration:</p>
+              <figure> <img src="images/Fig01-040.PNG" />
+                <figcaption>Fig 01-040</figcaption>
+              </figure>
+              <p>like where is our code actually going to get built to, dist. And we can change that if we want to. And
+                we can scroll through these different options to look at how we want it to work. Now we also have
+                another configuration for ESLint:</p>
+              <figure> <img src="images/Fig01-041.PNG" />
+                <figcaption>Fig 01-041</figcaption>
+              </figure>
+              <p>Now here we can see that we're doing Lint on save, and then our configuration is the default one. We
+                can change that if we want. And we can also go define the rules that we have. And again, by default,
+                we're just using the default setting, so we didn't do any of those.</p>
+              <p>And finally, we can look at tasks:</p>
+              <figure> <img src="images/Fig01-042.PNG" />
+                <figcaption>Fig 01-042</figcaption>
+              </figure>
+              <p>Here's where we can serve our application. Let's click on that right now and see what we get. We've got
+                our dashboard here:</p>
+              <figure> <img src="images/Fig01-043.PNG" />
+                <figcaption>Fig 01-043</figcaption>
+              </figure>
+              <p>We've also got our output, which shows us what's happening while it serves, and then we can click on
+                our analyzer, which shows us what's in the served output. So here, let's click on running the task, and
+                while it's happening we can click on the output to see what's going on.</p>
+              <figure> <img src="images/Fig01-044.PNG" />
+                <figcaption>Fig 01-044</figcaption>
+              </figure>
+              <p>Notice here it shows us the build and it says it's running on port 8080. Let's go ahead and click on
+                that. It opens up our application. And then we can click on our dashboard:</p>
+              <figure> <img src="images/Fig01-045.PNG" />
+                <figcaption>Fig 01-045</figcaption>
+              </figure>
+              <p>Notice it shows it's been idle. Here's our dependencies and modules and assets. And then our analyzer
+                can analyze our application:</p>
+              <figure> <img src="images/Fig01-046.PNG" />
+                <figcaption>Fig 01-046</figcaption>
+              </figure>
+              <p>This is really powerful because we can now look at what's inside of our bundles. And then when we're
+                ready, we can stop the task. We can also go back over to our tasks here, and we see we got a build task:
+              </p>
+              <figure> <img src="images/Fig01-047.PNG" />
+                <figcaption>Fig 01-047</figcaption>
+              </figure>
+              <p>we can build our application, we can lint from right here. If these are familiar, that's because we can
+                run these same commands right from the CLI itself from the terminal. We can also inspect the webpack
+                configuration if we want to. This is just a really quick glimpse at what we can do with the Vue CLI's
+                UI. </p>
+          </div>
+          <div>
+            <h3>Summary and Next Steps</h3>
+            <p>In this module, you got a quick tour of the Vue CLI and all the main features that it has, really just to
+              give you a taste of the things that you can do, but yeah, there's so much more:</p>
+            <figure> <img src="images/Fig01-048.PNG" />
+              <figcaption>Fig 01-048</figcaption>
+            </figure>
+            <p>You installed the Vue CLI and verified it by checking the version. You created your first new
+              application, Hello World. We're going to create a lot more applications throughout this course using the
+              Vue CLI. You linted your code, you built your application for production, and you served your first app.
+            </p>
+            <p>Then we also took a quick look together at how we can edit our files and then use hot reloading when we
+              run that npm run serve command, so all of our changes are shown in a browser right away. That makes for a
+              really great development experience.</p>
+            <p>And finally, we took a look at the Vue CLI's UI, so we can run the same commands that we do in the
+              terminal over in the UI. And really, you might want to choose one or the other based upon what you're
+              trying to accomplish, and we'll learn more about that throughout the course. And now that your quick tour
+              of the Vue CLI is over, it's time to learn all of these details and so much more. </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
