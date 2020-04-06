@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="UTF-8">
+  <title>Vue.js Playbook</title>
+  <script src="https://unpkg.com/vue"></script>
+  <!--<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"-->
+  <!--integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">-->
+  <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" rel="stylesheet">
+  <link href="prism.css" rel="stylesheet">
+  <script src="prism.js"></script>
+  <style>
+    img {
+      max-width: 100%;
+    }
+    .example {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+<div class="container" id="app">
+  <div class="panel-group">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h2>Vue.js Playbook</h2>
+      </div>
+
+      <div class="panel-body">
+        <div>
+          <h2>Creating Vue.js Templates </h2>
+          <div>
+            <h3>
+              Introducing Templates
+            </h3>
+            <p>
+              The last module showed you how to initialize an instance of Vue. That instance of Vue represented our
+              fictional beer search engine called Growler. In this module, we'll continue to create Growler, and begin
+              to work on its visual structure. That structure is known as a template.
+            </p>
+            <p>Templates in Vue are created with good, old-fashioned HTML. In fact, templates in Vue are HTML
+              specification compliant. This is a fancy way of saying valid HTML. Still, the data that drives these
+              templates are defined in the Vue instance itself.
+            </p>
+            <p>
+              This module will begin with a discussion about defining template data. This data can be used in a number
+              of ways. For example, in this module, you'll see how to bind the data as content to a template. You'll
+              also see how to bind the data to HTML attributes. Finally, this module will conclude by showing you how to
+              use data properties in JavaScript expressions. This module will begin to pick up the pace of the course. I
+              encourage you to stick with it, as you'll begin to see the Growler search engine take shape.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Defining Template Data
+            </h3>
+            <p>
+              Templates are driven by data. In the first module, the Growler view was initialized with this code:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig02-024.png"/>
+              <figcaption>Fig 02-024</figcaption>
+            </figure>
+            <p>To drive this Vue, we need some data. That's the role of the data property. The data property is an
+              object with two purposes. At design time, which is when you're developing your view, the data property
+              represents the schema. At runtime, the data property serves at the model behind an instance of the Vue. To
+              see what the data property looks like in action, I'll expand on the growler initialization code like this:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig02-025.png"/>
+              <figcaption>Fig 02-025</figcaption>
+            </figure>
+            <p>The significance of this example is that the data property is assigned to a plain, old JavaScript object.
+              This is also known as a POJO. There's nothing here that's unique to Vue. This means that you can access
+              Vue data from outside of your Vue, like this:
+            </p>
+            <figure>
+              <pre><code class="language-javascript">growler.data.appName</code></pre>
+              <figcaption>Fig 02-026</figcaption>
+            </figure>
+            <p>As a nicety, Vue automatically creates shortcuts to data properties for you. This means that you can work
+              with the Vue's data using code like this:
+            </p>
+            <figure>
+              <pre><code class="language-javascript">growler.appName</code></pre>
+              <figcaption>Fig 02-027</figcaption>
+            </figure>
+            <p>This may not seem important, but if you've tried to access a property like this in other UI frameworks,
+              you'll probably find this approach refreshing. If you're new to UI frameworks, this code should reinforce
+              the idea that one of Vue's core benefits is its simplicity. This code shows how Vue plays nicely with
+              established web standards like JavaScript. In fact, JavaScript is at the heart of when properties are
+              loaded, named, and assigned values.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Loading Data Properties
+            </h3>
+            <p>
+              Vue loads data properties during the creation stage. For each property in the data object, Vue uses
+              JavaScript's built-in Object. defineProperty method to create getters and setters:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig02-028.png"/>
+              <figcaption>Fig 02-028</figcaption>
+            </figure>
+            <p>
+              When Vue does this, it enables change notification and dependency tracking under the covers. These two
+              technical terms are a way of saying that when a data property changes, everything that relies on the
+              property will know about the change. This is also known as making the property reactive. While extremely
+              advantageous, there are two caveats you should be aware of.
+            </p>
+            <p>First, you can only modify properties that are defined in the data object. You can't add properties to
+              the data object at runtime. You also can't remove properties from the data object at runtime. The reason
+              why is because data properties are converted to getters and setters during the creation stage of a view's
+              lifecycle. Vue doesn't have a way to detect the addition or removal of properties. This is due to the
+              limitations in JavaScript itself. While this may seem limiting, I think this is a benefit. Remember, Vue
+              is focused on being approachable and easy to use. Since properties can't be added or deleted from a view
+              at runtime, it forces you to think ahead. This also means that the data object for your view serves as its
+              schema. If you have to maintain this code later, or another developer needs to work with it, the schema
+              simplifies this process. If you know that you'll need a property in your view eventually, but not when the
+              view is created, don't worry, just assign the property to an empty value or null.
+            </p>
+            <p>The second caveat with getters and setters involves your development experience. If you use the browser
+              console during development, you'll notice that data properties with JavaScript objects are formatted
+              differently. For example, later in this course, growler will show how to search fictional beers. To search
+              for those beers, the view will hit a web service. The details for that web service will be stored in a
+              property named searchService. Now, if you printed searchService in the console window, you might expect
+              something like this:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig02-029.png"/>
+              <figcaption>Fig 02-029</figcaption>
+            </figure>
+
+            <p>This is how a JavaScript object is usually formatted in a console window. In it, you can see the names of
+              each property and their values, however, remember, Vue adds getters and setters to make the data
+              properties reactive. This changes the format of a property in the console window to something that looks
+              like this:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig02-030.png"/>
+              <figcaption>Fig 02-030</figcaption>
+            </figure>
+            <p>This makes it more difficult to inspect data in your view. It's probably not the development experience
+              you want. To work around this side effect, install an extension in Google Chrome called vue-devtools. Once
+              installed, you can quickly examine the data in your view. Now, instead of seeing getters and setters,
+              you'll see something like this:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig02-031.png"/>
+              <figcaption>Fig 02-031</figcaption>
+            </figure>
+            <p>This is a much better development experience. You can once again see something that resembles a
+              JavaScript object. You can clearly see actual property names, which brings us to our next topic.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Naming Properties
+            </h3>
+            <p>
+              Each property in the data object has a name. The name is what's used in the Vue template to reference a
+              property value. The name can be whatever you want, as long as it's consistent with JavaScript variable
+              naming rules. This means that your properties can be named with letters, digits, dollar signs, and
+              underscores, should start with a letter, are case-sensitive, and cannot be reserved words. There is one
+              naming rule that's specific to Vue though.
+            </p>
+            <p>Property names should not start with dollar signs or underscores. The reason why is because property
+              names that start with dollar signs or underscores can conflict with Vue's internal operations. Those are
+              really the only rules when it comes to naming properties in a data object. The more interesting details
+              happen with the property values.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Understanding Property Values
+            </h3>
+            <p>
+              Each property in the data object has a value. The value of a property is what will be shown in the view.
+              If you modify a value, the UI will asynchronously change to reflect the change in the value. That's why
+              the dependency tracking and change notifications mentioned earlier are so important. Data property values
+              should just be data. That sounds redundant, but it's true.
+            </p>
+            <p>Once again, the focus is on simplicity. For that reason, the data object supports JavaScript primitive
+              values like numbers, strings, dates, and arrays. However, the data object does not support native objects.
+              Vue actually ignores native objects with number, string, date, and array types. For that reason, you
+              should stick with raw data. This simplifies state management, and is more intuitive anyways.
+            </p>
+            <p>When it comes to understanding property values, that pretty much sums it up. In this section, you also
+              saw property naming rules, and learned how properties are loaded. Together, these set up the schema for
+              your view. When your data object is defined, you can begin binding it to a template.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Binding Content to a Template
+            </h3>
+            <p>
+              A template is made to show content. For example, think of the name of our fictional beer search engine,
+              growler, as a piece of content. Earlier in this module, the name was added to the data object as a
+              property called appName. Next, I'll show you how to bind appName as plain old text in a template. Then
+              I'll expand on that concept and show you how to bind that name as HTML, to a template. Let's begin.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Binding Text
+            </h3>
+            <p>If you have some plain, unformatted text that you want to bind to a template, you can create a data
+              binding. Vue has two syntaxes you can use to bind text to a template. The first is a semantic syntax that
+              uses curly braces. The second is a declarative syntax that uses an attribute in your template. The choice
+              of syntax is based primarily on your preferences. They both accomplish the same thing, and listen for
+              changes to the properties they're bound to. There's also a way to create one-time bindings if you need to,
+              though. Each of these topics will now be covered in detail.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Semantic Bindings
+            </h3>
+            <p>
+              You can create a data binding with a semantic syntax by using double curly braces. Oftentimes, these curly
+              braces are referred to as mustaches. Mustaches are used in HTML elements as placeholders. They can exist
+              with other HTML content, as shown here:
+            </p>
+            <figure>
+              <pre><code class="language-html">&lt;h2&gt;Welcome to {{ appName }}&gt;&lt;/h2&gt;</code></pre>
+              <figcaption>Fig 02-032</figcaption>
+            </figure>
+            <p class="example">Module 02 - Semantic Binding 1</p>
+            <p>They can be used as the sole child of an HTML element, like this.</p>
+            <figure>
+              <pre><code class="language-html">&lt;h2&gt;{{ appName }}&lt;/h2&gt;</code></pre>
+              <figcaption>Fig 02-033</figcaption>
+            </figure>
+            <p class="example">Module 02 - Semantic Binding 2</p>
+            <p>You can even use multiple mustache placeholders in an HTML element, as shown here:</p>
+            <figure>
+              <pre><code class="language-html">&lt;h2&gt;{{ appName }} - {{ appVersion }}&lt;/h2&gt;</code></pre>
+              <figcaption>Fig 02-034</figcaption>
+            </figure>
+            <p class="example">Module 02 - Semantic Binding 3</p>
+            <p>For now, let's focus on a single placeholder, though. Towards the end of the last section, the Growler
+              view had been instantiated, like this.
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig02-035.png"/>
+              <figcaption>Fig 02-035</figcaption>
+            </figure>
+            <p class="example">Module 02 - Semantic Binding 4</p>
+            <p>If this code were executed, Vue would look for mustaches and replace them with actual values. Vue would
+              look inside each pair of mustaches and evaluate the code. In this case, the code is a variable called
+              appName. Vue looks for appName in the data object on the Vue instance:</p>
+            <p>If a property named appName is found, Vue replaces the mustaches with the value of the appName property
+              at runtime. If the property is not found, the mustaches will be replaced with an empty string. A helpful
+              and descriptive warning will also appear in your console window. Still, the process of going from
+              mustaches to actual text is known as interpolation. This process also happens if you use declarative
+              bindings.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Declarative Bindings
+            </h3>
+            <p class="example">Module 02 - Declarative Binding (property not found) </p>
+            <p>
+              Declarative bindings are created via directives. Directives are pre-defined tokens that tell Vue to do
+              something specific to a DOM element. They provide a way to reactively update the DOM when an associated
+              value changes. Vue has several baked-in directives, and all baked-in directives begin with v-. Since all
+              of the directives included with Vue have the v- prefix, I'm going to call them by a different name,
+              though. I'll refer to each directive without the v- prefix. For example, inside of saying v-text, I'll say
+              text directive. I believe this will make the course more enjoyable than hearing the phrase v- over and
+              over again. Either way, the text directive empowers you to interpolate a property value as an HTML
+              elements text.
+            </p>
+            <p>An example of declaratively binding to appName looks like this:</p>
+            <figure>
+              <pre><code class="language-html">&lt;h2 v-text=&quot;appName&quot;&gt;&lt;/h2&gt;</code></pre>
+              <figcaption>Fig 02-036</figcaption>
+            </figure>
+            <p>At runtime, Vue assigns the text content property of the HTML element to the property value. This
+              approach works great if you want to bind an element's entire content to a property. If you need to only
+              bind to part of an element's content, you'll need to use the semantic syntax with mustaches.
+            </p>
+            <p>These two syntaxes may seem like just an abstraction, however, they do more than that. Remember, Vue
+              manages a virtual DOM for you. Let's imagine that for some reason the value of appName needed to change at
+              runtime. The UI would also change. To demonstrate, I'm going to show the app running in Google Chrome.
+              Now, I'm going to open the console window and change the appName value to Growler with an exclamation
+              point. Notice how the UI automatically reflected this change:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig02-037.png"/>
+              <figcaption>Fig 02-037</figcaption>
+            </figure>
+            <p>You can play with this example yourself in the course repo found here:</p>
+            <a href="https://github.com/ecofic/course-vue-getting-started">https://github.com/ecofic/course-vue-getting-started</a>
+            <p>Dynamic UI updates can be really valuable if your app has some business logic, like the spreadsheet shown
+              in the first module. Sometimes, though, you don't want the UI to change with the data changes. Sometimes,
+              you just want to set it and forget it.
+            </p>
+          </div>
+          <div>
+            <h3>
+              One Time Bindings
+            </h3>
+            <p>
+              Let's be honest, the appName value probably doesn't need to change at runtime. For that reason, it doesn't
+              make sense to listen for changes to appNames value. After all, listening for changes does require more
+              computing under the covers, so to improve performance, you can add the once directive to an HTML element.
+              To demonstrate, I'm going to switch over to Visual Studio code and add the once directive to the h2
+              element:
+            </p>
+            <figure>
+              <pre><code class="language-html">&lt;h2 v-once&gt;{{ appName }}&lt;/h2&gt;</code></pre>
+              <figcaption>Fig 02-038</figcaption>
+            </figure>
+            <p class="example">Module 02 - One-Time Bindings</p>
+            <p>Once the web page reloads, the one-time binding will take effect. Now, if I try to change the appName via
+              the console window, you'll notice it doesn't change. The once directive tells Vue to render the element
+              it's hosted in once, and only once. This directive informs the virtual DOM to skip an element during the
+              updating stage of the lifecycle.
+            </p>
+            <p>It should be noted that any child of an element with the once directive will also be rendered only once.
+              When the virtual DOM sees the once directive, it assumes that the rest of the branch should also only be
+              rendered once. For that reason, make sure you understand the impact of this directive on your UI before
+              using it. Still, the once directive does help optimize view performance. This can be useful when you're
+              binding to plain text. It can also be useful if you're binding to HTML.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Binding to HTML
+            </h3>
+            <p>
+              You can show plain HTML inside of an element by adding the HTML directive to an element. To demonstrate,
+              I'm going to jump back to our example. Here you can see the appName property is now a link to the root of
+              the site:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig02-039.png"/>
+              <figcaption>Fig 02-039</figcaption>
+            </figure>
+            <p>Typically, you would never want to put HTML in your data, you want to keep your UI separate from your
+              data, but in the real world, you may get data from a web service, which may include HTML. So if you do
+              need to bind some HTML to a template, you can, but if I ran this specific example, you'd see the
+              following:
+            </p>
+            <figure>
+              <img src="images/vue-js-getting-started/Fig02-040.png"/>
+              <figcaption>Fig 02-040</figcaption>
+            </figure>
+            <p class="example">Module 02 - Default HTML Rendering </p>
+            <p>Instead of having a usable link, we get the HTML rendered as raw text. To get the rendered version of the
+              HTML, use the html directive. I'm going to switch over to Visual Studio code and add the html directive to
+              the h2 element. I'll assign the html directive to the appName property. I'm also going to remove the
+              mustaches that were there, as they're no longer necessary:
+            </p>
+            <figure>
+              <pre><code class="language-html">&lt;h2 v-html=&quot;appName&quot;&gt;&lt;/h2&gt;</code></pre>
+              <figcaption>Fig 02-041</figcaption>
+            </figure>
+            <p class="example">Module 02 - Using v-html</p>
+            <p> Now, if I look in Google Chrome, you'll see that the name now appears as a working link:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig02-042.png"/>
+              <figcaption>Fig 02-042</figcaption>
+            </figure>
+            <p>The mustache bindings aren't necessary, because the html directive updates the innerHTML property of the
+              element it's attached to. This replaces the visual tree within the element, including any mustaches. The
+              HTML that gets inserted into the element is plain HTML. This means that you can't nest bindings. In other
+              words, you can't put bindings and property values with HTML, like this:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig02-043.png"/>
+              <figcaption>Fig 02-043</figcaption>
+            </figure>
+            <p>Well, technically you can do this, you'll just see something like this:</p>
+            <figure>
+              <pre><code class="language-html">{{ appName }}</code></pre>
+              <figcaption>Fig 02-044</figcaption>
+            </figure>
+            <p class="example">Module 02 - Attempting nested bindings</p>
+            <p>instead of what you would expect.</p>
+            <p>On a security related note, you should only bind to HTML that you trust. Dynamically rendered HTML can be
+              a security hole targeted by cross-site scripting attackers. For that reason, don't bind to user-generated
+              HTML, only bind to HTML that you trust. That's how you bind HTML to a template. It's slightly different
+              than binding text to a template. Still, the binding techniques introduced with the text, once, and html
+              directives showed you an important concept in Vue. That concept is called a directive, and it's also
+              needed when binding to attributes in HTML elements.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Binding to HTML Attributes
+            </h3>
+            <p>
+              Attributes are an important part of any HTML element. They are used to describe an HTML element. Vue made
+              sure to consider HTML attributes in its design. I'm going to show you how to bind to HTML attributes. To
+              do this, we'll build on the concept of directives explained in the last section. Specifically, I'll
+              introduce the bind directive. Once established, I'll show you how to bind with inline CSS properties.
+              Finally, I'll show you how to bind to CSS classes.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Introducing the Bind Directive
+            </h3>
+            <p>
+              The bind directive is specifically designed to bind to HTML attributes. With the bind directive, you can
+              bind data property values to HTML attributes. For example, what if the logo for growler was defined in a
+              property named appLogo, like this:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig02-045.png"/>
+              <figcaption>Fig 02-045</figcaption>
+            </figure>
+            <p>When I was learning Vue, my first instinct was to do this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig02-046.png"/>
+              <figcaption>Fig 02-046</figcaption>
+            </figure>
+            <p>however, mustaches can't be used inside of HTML attributes. Instead, you must use a bind directive on the
+              source attribute, like this:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig02-047.png"/>
+              <figcaption>Fig 02-047</figcaption>
+            </figure>
+
+            <p>If you're into the whole brevity thing, the bind directive also has a shorthand syntax. That syntax looks
+              like this:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig02-048.png"/>
+              <figcaption>Fig 02-048</figcaption>
+            </figure>
+            <p>This syntax removes the directive name, and leaves only the colon. The ability to bind to an HTML
+              attribute is kept intact, though, which is good, because the bind directive is needed to bind with inline
+              CSS properties.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Binding to CSS Properties
+            </h3>
+            <p>
+              You should strive to keep your design separate from your logic. Sometimes, though, the two worlds collide.
+              If this happens, you might find yourself in a situation where you need to bind to an HTML element style
+              attribute. You can bind to the style attribute with the bind directive. When binding to the style
+              attribute, you must choose between two approaches. You must decide if you're going to get CSS properties
+              from a JavaScript object or from a JavaScript array. I'll cover both of these approaches in this section.
+            </p>
+            <p>
+              You can get CSS properties from a JavaScript object during bindings. This approach looks very similar to
+              the traditional CSS approach, except the style string is a JavaScript object. Each property name of the
+              object represents the name of a CSS property. The value associated with each property can be a property
+              name from the Vue's data object, or a static value. To demonstrate, here is an example that sets the color
+              of the appName.
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig02-049.png"/>
+              <figcaption>Fig 02-049</figcaption>
+            </figure>
+            <p>Notice in this example that the style binding references a property named color. In this case, we're
+              binding to the CSS color property, however, this brings us to a problem. What if we wanted to bind to the
+              font-family property? This is a problem, because you can't use dashes in JavaScript variable names. If you
+              need to set a CSS property in a style binding, whose name is separated by dashes, you're out of luck. Just
+              kidding. I wanted to make sure you're still paying attention. You can actually work around this limitation
+              by changing the property name from kebab casing, which means the dashed approach, to camel-casing, so
+              font-family becomes fontFamily:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig02-050.png"/>
+              <figcaption>Fig 02-050</figcaption>
+            </figure>
+            <p>This isn't a Vue-specific thing. Instead, it's consistent with the JavaScript naming of CSS properties.
+              This syntax is great because it lets you mix dynamic property values with hard-coded static values. For
+              example, if I wanted to set the margin property to 0, I can, like this:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig02-051.png"/>
+              <figcaption>Fig 02-051</figcaption>
+            </figure>
+            <p>We don't expect the margin to change, so this is a realistic example. At this point, the style attribute
+              is starting to become cluttered, though. Thankfully, this style attribute's value can be refactored to the
+              data property, like this:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig02-052.png"/>
+              <figcaption>Fig 02-052</figcaption>
+            </figure>
+            <p>As you can see, this cleans up our code a bit. That's all there is to binding to CSS properties with the
+              JavaScript object. You can also bind to CSS properties with an array. Styles are often shared across
+              multiple elements. For example, at this time, the title of the app has an orangish color. That color may
+              be shared by other elements and referred to as an accent color. At the same time, the header tags in the
+              app may use shared styles too. For these scenarios, where you need to use multiple style definitions
+              during binding, you can use a JavaScript array, like this.
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig02-053.png"/>
+              <figcaption>Fig 02-053</figcaption>
+            </figure>
+            <p class="example">Module 02 - Binding to CSS Properties</p>
+            <p>In this example, the view has two JavaScript objects with CSS property settings. Both of these JavaScript
+              objects are bound to the style attribute of the HTML element via a JavaScript array. When an array is
+              used,
+              CSS properties are stacked from left to right. This means that the latest property setting has the
+              greatest precedence. In other words, if the headers object in this example had defined a color property
+              with the value green, the name Growler would be green instead of orange.
+            </p>
+            <p>Binding CSS properties through JavaScript arrays and objects can be handy as your app becomes more
+              dynamic. However, as a general rule, you should strive to keep your CSS separate from your data as much as
+              possible. For this reason, instead of defining CSS property values in the data object, you might want to
+              define them in standard CSS classes and bind to those classes.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Binding to CSS Classes
+            </h3>
+            <p>
+              Vue lets you bind directly to CSS classes. This is an improvement over binding to CSS properties, because
+              it helps you maintain separation between your design and your data. This separation helps you keep your
+              code clean and maintainable. To demonstrate, the code that was just shown while discussing binding to CSS
+              properties looked like this:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig02-054.png"/>
+              <figcaption>Fig 02-054</figcaption>
+            </figure>
+            <p>When refactored to use CSS classes, it becomes this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig02-055.png"/>
+              <figcaption>Fig 02-055</figcaption>
+            </figure>
+            <p class="example">Module 02 - Binding to CSS Classes</p>
+            <p>At first glance, it may look like we just moved some code around, which isn't really better, however,
+              what's really happening here is, we've separated the UI from the data. The data in the left portion of the
+              screen is just JavaScript, while the design is defined in the right part of the screen with HTML and CSS.
+              This approach complements the HTML and CSS standards more naturally. Instead of trying to generate HTML
+              and CSS form JavaScript, you're complementing the HTML and CSS.
+            </p>
+            <p>This approach works by prepending the class attribute with the bind directive. This is similar to what
+              was completed when we were binding to the style attribute. In a similar way, you combine the class
+              attribute to a JavaScript array, or a JavaScript object.
+            </p>
+            <p> There are some subtle differences, though, that I'd like to cover in this section. The example on the
+              screen binds the class attribute to a JavaScript array. Each element in the array is the name of a
+              property in the underlying data object. The property references the name of an actual CSS class. At
+              runtime, this h2 element actually becomes this:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig02-056.png"/>
+              <figcaption>Fig 02-056</figcaption>
+            </figure>
+            <p>We could have put the entire JavaScript array in the Vue's data, like this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig02-057.png"/>
+              <figcaption>Fig 02-057</figcaption>
+            </figure>
+            <p class="example">Module 02 - Getting CSS Classes from an Array</p>
+            <p>if we wanted to, there's no difference. It's really just a personal preference of which syntax to use.
+              While you can use an array for CSS classes, you can also use a JavaScript object:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig02-058.png"/>
+              <figcaption>Fig 02-058</figcaption>
+            </figure>
+            <p>Binding to CSS property values like we did earlier, was intuitive. Each property name in the JavaScript
+              object was the name of a CSS property, and the value was a recognized CSS value. However, binding to CSS
+              class names via a JavaScript object may seem odd at first. When binding CSS classes via a JavaScript
+              object, it's not really obvious what the name and value of each property represents. When binding CSS
+              classes via a JavaScript object, the name of each property is the name of a CSS class. The value of the
+              property acts as a flag to determine whether or not to apply the class to the element. In other words,
+              this is a way to conditionally apply CSS classes to an element. To demonstrate, this code is the syntax
+              for binding the header CSS class via a JavaScript object.
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig02-059.png"/>
+              <figcaption>Fig 02-059</figcaption>
+            </figure>
+            <p>The headers property is explicitly set to true. Since true is a truthy value in JavaScript, the headers
+              CSS class gets added to the HTML element during the updating stage. As a reminder, a truthy value in
+              JavaScript is anything other than false, 0, an empty string, null, undefined, or not a number. Those
+              values are recognized as falsy. If a class binding value is falsy, the CSS class does not get added to the
+              HTML element.
+            </p>
+            <p>Now, imagine that sometimes you want the growler text to be a different color. For example, right now,
+              the appName is black by default, but once Growler connects to the web service that powers this pretend
+              beer search engine, we apply an accent color, effectively communicating that the app is online. While this
+              example is somewhat contrived, the code would look something like this:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig02-060.png"/>
+              <figcaption>Fig 02-060</figcaption>
+            </figure>
+            <p class="example">Module 02 - Getting CSS Classes from an Object</p>
+            <p>This is a bit more interesting than explicitly setting the property value to something truthy or falsy.
+              Now, anytime the isOnline property changes, the UI will automatically reflect the change. So if I go to
+              the app, open the console window, and set the isOnline property to a truthy value, you'll see that the
+              accent color is applied. If I change the isOnline property to a falsy value, the accent color is removed
+              from the Growler text.
+            </p>
+            <p>That's how you can get CSS classes from an object. You also saw how to get CSS classes via an array. You
+              also saw how to bind to specific CSS properties. All of this was made possible with the power of
+              directives. In the next section, I'd like to show you how to take your data bindings to the next level
+              with JavaScript expressions.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Using JavaScript Expressions
+            </h3>
+            <p>
+              Vue lets you use the full power of JavaScript expressions in your bindings. If you've work with
+              JavaScript, or any other language for a while, it can be easy to forget some language-specific
+              terminology. For that reason, this section will begin by defining exactly what a JavaScript expression is.
+              From there, I'll show you how to use JavaScript expressions in your templates. You've probably seen
+              JavaScript that looks like this.
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig02-061.png"/>
+              <figcaption>Fig 02-061</figcaption>
+            </figure>
+            <p>This line of code determines if the current page is running on the local machine. You might use something
+              like this if you're trying to test something during development, but don't want it to appear in a
+              production environment. Regardless of the situation, this line of JavaScript is known as a statement. An
+              expression is a type of statement. A JavaScript expression is a line of code that produces a value. For
+              example, an expression is something like this.
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig02-062.png"/>
+              <figcaption>Fig 02-062</figcaption>
+            </figure>
+            <p>Notice this line doesn't assign a value to a variable like the previous statement. Instead, when
+              executed, this line evaluates to true or false. This is important, because only expressions can be used in
+              bindings. They can also be used in the context of a template. To use a JavaScript expression in a
+              template, just use double curly braces or mustaches.
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig02-063.png"/>
+              <figcaption>Fig 02-063</figcaption>
+            </figure>
+            <p>In case you're wondering, yes, we've already used JavaScript expressions in this module. I wanted to
+              deliver some practical examples before getting to the technical details. Now that you've seen expressions
+              in action, though, I'd like to take a moment and go a little deeper.
+            </p>
+            <p>Expressions are evaluated within the context of a view. When evaluated, an expression is scoped to the
+              hosting view instance. To demonstrate, let's look at a real-world example of an expression in action.
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig02-064.png"/>
+              <figcaption>Fig 02-064</figcaption>
+            </figure>
+            <p>This example uses an expression to determine the color of the header. The expression uses the isOnline
+              property in the data scope to make that decision. If the app is online, the header will be orange. If the
+              app is offline, the header will be black. This is a little different than the bindings used earlier in
+              this module.
+            </p>
+            <p>With this approach, a style is applied conditionally at runtime. If the isOnline property value changes,
+              the expression will be reevaluated. It's not only evaluated within the context of the view instance
+              itself, though, it's also evaluated within a sandbox.
+            </p>
+            <p>Expressions run within a sandbox. This means that they're executed in an isolated environment. This
+              environment supports some core JavaScript properties, functions, and objects. In fact, the complete list
+              of white-listed globals is presented on this slide:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig02-065.png"/>
+              <figcaption>Fig 02-065</figcaption>
+            </figure>
+            <p>You can print this slide off if you'd like a reference card. Still, you shouldn't use user-defined global
+              variables in an expression. Global variables that are white-listed, can't be used in expressions. This
+              means that global variables, like the popular $ sign in jQuery, can't be used in Vue expressions. The
+              reason why is because these global variables may conflict with Vue itself. There is also not a way to
+              whitelist global variables, but if you run into a situation where you need to use a global variable, you
+              can in the context of a user-defined method. I'll be showing you how to do that later in this course.
+            </p>
+            <p>For now, I'd like to share that we've completed this module. You saw how to use JavaScript expressions in
+              a template. In this module, you also saw how to bind to HTML attributes in content. You also saw how to
+              set up the data schema used when creating a template. All of this information is incredibly valuable when
+              you're displaying some data. At this point, you might be wondering how to actually collect data. That's
+              actually the topic of the next module.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

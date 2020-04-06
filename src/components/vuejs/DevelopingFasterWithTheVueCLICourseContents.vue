@@ -89,7 +89,6 @@
                 <li>Building a Web Component</li>
                 <li>Using the Vue UI to Build</li>
                 <li>Wrap up and What's Next?</li>
-                
               </ol>
             </li>
             <li>
@@ -104,7 +103,6 @@
                 <li>How to Set up End-to-end Tests with Cypress or Nightwatch</li>
                 <li>Learning How to Run End-to-end Tests with the Vue CLI</li>
                 <li>What's Next?</li>
-                
               </ol>
             </li>
             <li>
@@ -138,8 +136,7 @@
         </div>
       </div>
     </div>
-  </div>  
+  </div>
 </template>
 <style scoped>
-
 </style>

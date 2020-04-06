@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Vue. js: Big Picture</title>
+  <script src="https://unpkg.com/vue"></script>
+  <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" rel="stylesheet">
+  <link href="prism.css" rel="stylesheet">
+  <script src="prism.js"></script>
+  <style>
+    img {
+      max-width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container" id="app">
+    <div class="panel-group">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h2>Vue. js: Big Picture</h2>
+        </div>
+        <div class="panel-body">
+          <div>
+            <h2>The Vue Ecosystem </h2>
+          </div>
+          <div>
+            <h3>The Vue Ecosystem </h3>
+            <p> We'll now be talking about the Vue ecosystem. The libraries we'll be talking about here are separate
+              from Vue. They're a sperate npm install and they have their own maintainers; however, they're designed to
+              work with Vue and let us do things that we couldn't do if we only had Vue. js.</p>
+            <p>So what is the so called Vue ecosystem? Well, Vue is a small library. It's small because it only has its
+              core features, the features that let you quickly render your application's Vue. In a sense, this is good,
+              especially as we'll see soon when we compare the file size to React and Angular; however, there's a
+              caveat. To achieve the same functionality as React or Angular, and I should point out that they also have
+              their own large, distinct, unique ecosystems, you have to use other libraries together with Vue.</p>
+            <p>So what are some of these libraries that you might use? Now I want to qualify this by saying that I'm
+              just going to do a bird's eye view of these libraries. Rest assured many of these could have and entire
+              course written on them, the length of which far exceeds this course. Hopefully in the future, I'll have a
+              chance to share that course with you, but for now use this as an opportunity to gain context, to
+              understand more what you'd like to learn about next.</p>
+            <figure> <img src="./images/vue-js-big-picture/Fig04-001.png" />
+              <figcaption>Fig 04-001</figcaption>
+            </figure>
+            <p>So one complimentary library is called Nuxt, and it's used for universal rendering. In other words, you
+              use it to speed up the rendering of your application by having the server do a lot of work. It's a
+              complicated process to do manually, but Nuxt tries to make it simple.</p>
+            <p>Next is Vuex. Vuex is like Redux, and it's used for state management. So if you have a really big app and
+              it has a lot of state, an ad-hoc solution may get unwieldy quickly.</p>
+            <p>Next is Vuetify, and, yes, almost all of Vue's complimentary libraries have funny names. Vuetify is a
+              component framework, so it's similar to Angular Material, and you can use it for many cool things as we'll
+              see.</p>
+            <p>Last one we'll talk about is Vue CLI, or the Vue Command-line Interface, which we use to scaffold and
+              build your application. So first of all, Nuxt. </p>
+          </div>
+          <div>
+            <h3> Universal Rendering with Nuxt </h3>
+            <p> So you use Nuxt to create a universal application, you might also call this application server-rendered.
+            </p>
+            <figure> <img src="images/vue-js-big-picture/Fig04-002.PNG" />
+              <figcaption>Fig 04-002</figcaption>
+            </figure>
+            <p> If you ever tried to build a universal application from scratch, you'll know there are a lot of
+              challenges, not simple challenges, not trivial ones, really tricky ones that test your deepest knowledge
+              of front and back-end development; however, Nuxt simplifies these challenges. So ideally, you don't even
+              have to think about them. They just work.</p>
+            <p>I won't get into details about all the specific features of a universal app, but I will say the end
+              result is that it loads faster when you view it on your phone. Is this a big deal? Why don't you ask the
+              people making billions of dollars every day because their applications load up faster on their customers'
+              phones than their competitors'. Next, let's talk about Vuex. </p>
+          </div>
+          <div>
+            <h3>Managing State with Vuex </h3>
+            <p> So Vuex provides you a way of updating your state.</p>
+            <figure> <img src="images/vue-js-big-picture/Fig04-003.png" />
+              <figcaption>Fig 04-003</figcaption>
+            </figure>
+            <p>The nature of your state affects the way your components are going to look, and the user's interaction
+              may change that state by say introducing a new item to a list or changing their name. As the name
+              suggests, it's similar to Flux or Redux. If you've used these libraries or if you've seen my excellent
+              course on Pluralsight, Flux and Redux, then you'll already be 99% of the way to using Vuex because Vuex
+              just basically takes these technologies and wraps them a up a little bit so it integrates nicer with Vue.
+              Personally, I feel that Redux is so general that it makes a good option as well, but Vuex is, in a sense,
+              more specific and more tailored to this particular job.</p>
+            <p> Ultimately, the reason why you would use this is to keep applications with huge state manageable. If
+              your application state consists of say just an array of numbers, then it's not necessary to have Vuex. It
+              would be overkill. But if your application is a big one and has hundreds, or even thousands, of pieces of
+              information in the state at any time, then Vuex will prevent this from becoming a maintenance nightmare.
+            </p>
+          </div>
+          <div>
+            <h3>Building Websites with Vuetify </h3>
+            <p> Next is Veutify.</p>
+            <figure> <img src="images/vue-js-big-picture/Fig04-004.png" />
+              <figcaption>Fig 04-004</figcaption>
+            </figure>
+            <p>So Veutify, it contains components that you put into your application, so normally you write the
+              components yourself, but Veutify is a solution which comes with a basket of components for you to use. All
+              these components have a visually pleasing material design aesthetic. They look smooth, and they give users
+              the impression, especially on mobile, that you can just reach out and touch them.</p>
+            <p>So you'd use Veutify if you were building an application from the beginning and you knew it was going to
+              have a lot of standard components, buttons, lists, accordions, and to save money, you ask your team to use
+              an existing solution for all these components rather than making each one yourself. As we know, building
+              components is a lot of work because to build them properly, we not only have to build them, but we also
+              have to make sure they're well tested, and performant, and compatible on every platform we need. </p>
+          </div>
+          <div>
+            <h3>Scaffolding and Collaborating with Vue CLI </h3>
+            <p> Last is Vue CLI.</p>
+            <figure> <img src="./images/vue-js-big-picture/Fig04-005.png" />
+              <figcaption>Fig 04-005</figcaption>
+            </figure>
+            <p>Now Vue CLI is the one you might see the most because its role is kind of the most essential. You need
+              something like Vue CLI at least to get your application off the ground in most cases. So it's a tool for
+              creating, building, and updating your Vue applications.</p>
+            <p>Using its command, you can introduce new parts to your application and change their structure in a way
+              that's difficult for a new developer to get wrong. Vue CLI provides a standard way for your whole team to
+              update the app. No longer does only the senior developer have the know how to add a new folder or a new
+              view.</p>
+            <p>In this way, junior developers can take more of the tasks they're assigned to. For example, a junior
+              developer may be instructed to add a new page where the user can check their settings. Rather than needing
+              a senior developer to actually set up the blank page and the routes that they use, they could use Vue CLI,
+              increasing their confidence and saving the senior developer time.</p>
+            <p>The end goal of using a Vue CLI is to facilitate productivity with big teams. If your team is only one or
+              two people, then Vue CLI might be overkill. But the bigger it gets, the more it makes sense to use this
+              tool.</p>
+            <p>Let's take 2 minutes to go over a few Vue CLI commands.</p>
+            <figure> <img src="./images/vue-js-big-picture/Fig04-006.png" />
+              <figcaption>Fig 04-006</figcaption>
+            </figure>
+            <p>There are commands like vue serve, vue build, vue create, and vue ui, which are in a sense twins, and vue
+              add.</p>
+            <p>What do they do? Well, typing vue serve into your command line will serve the application. It's the same
+              as using HTTP Server or Apache.</p>
+            <p>If you call build, it takes your. vue files, as well as ES6 files, and and turns them into JavaScript.
+              This is the command that makes. vue files readable by browsers.</p>
+            <p>Saying create or ui creates a new project. Using vue ui implements the very cool Vue User Interface,
+              which is kind of this graphical tool that they've made to help you build Vue applications.</p>
+            <p>So here I am in the Vue CLI UI.</p>
+            <figure> <img src="images/vue-js-big-picture/Fig04-007.PNG" />
+              <figcaption>Fig 04-007</figcaption>
+            </figure>
+            <p>This is a tool that allows us to do everything we can do with the Vue CLI using a convenient interface.
+              For example, we can create a new project.</p>
+            <figure> <img src="images/vue-js-big-picture/Fig04-008.PNG" />
+              <figcaption>Fig 04-008</figcaption>
+            </figure>
+            <p>The UI lets us do more than just name our project. It allows us to define presets, which, for example,
+              can allow us to install Babel and ESLint automatically.</p>
+            <figure> <img src="images/vue-js-big-picture/Fig04-009.PNG" />
+              <figcaption>Fig 04-009</figcaption>
+            </figure>
+            <p>It even downloads the required packages from npm.</p>
+            <p>Overall, the Vue CLI UI can increase productivity and foster collaboration within your team.</p>
+            <p>Lastly, vue add is a way of adding new features to Vue CLI itself. I won't get into the details, but for
+              common scenarios like testing or performance there's definitely times where you'd want an extra bit of
+              help.</p>
+          </div>
+          <div>
+            <h3>Comparison to Existing Frameworks (Angular, React) </h3>
+            <p> I feel like the vast majority of developers will find this next section interesting wherein we compare
+              Vue to existing frameworks. I think this is so because a lot of us are already quite familiar with Angular
+              and React. After all, they've been a big deal for many years now.</p>
+            <p>So when I compare Vue to these frameworks in the next few minutes, the ideas that I present should be
+              especially meaningful. And if you do not know about these frameworks, you can still learn a lot from this
+              clip as in your workplace, you may be called upon to put forward your opinion on if you think you should
+              use Angular, or Vue, or React for a particular part of the application. At least this way you'll have
+              something intelligent and informed to say. So let's compare them. Is it the best? Is there a best
+              framework?</p>
+            <p>As Shakespeare said, and, yes, I do like Shakespeare a lot:</p>
+            <blockquote>"There is nothing either good or bad, but thinking makes it so. "</blockquote> <cite>William
+              Shakespeare, Hamlet</cite>
+            <p> In other words, there definitely isn't a best framework. It's all about what your opinion is; however,
+              your opinion is important because that's got a really close connection to the actual job you're trying to
+              solve. This chart shows the file size of the major frameworks after they've been minified</p>
+            <figure> <img src="images/vue-js-big-picture/Fig04-010.PNG" />
+              <figcaption>Fig 04-010</figcaption>
+            </figure>
+            <p>The blue bar represents Vue, while as the orange bars represent other libraries like React, AngularJS,
+              and Angular. You'll note that AngularJS refers to the older version of Angular pre-2 and Angular after 2.
+              So as you can see, Vue is significantly smaller than React and much smaller than Angular; however, there
+              do exist solutions smaller than Vue, for example, Preact, which is a minimally featured version of React.
+              It's almost not even a real library because they take so many features out. But I wanted to include it
+              here because Vue isn't the smallest solution. If absolute smallness is your goal, then there's even better
+              things than Vue. But Vue does a great job of reconciling the small size of Preact with the many useful
+              features of say React</p>
+            <p>As we know, mobile users may get bored and navigate away from your site before they've seen anything if
+              the framework doesn't load in time. Thus, this is a telling chart to consult if you're trying to determine
+              which framework to use to actually make the most money off your mobile commerce application.</p>
+            <p>So let's compare Vue with React.</p>
+            <figure> <img src="images/vue-js-big-picture/Fig04-011.PNG" />
+              <figcaption>Fig 04-011</figcaption>
+            </figure>
+            <p>So on the Vue hand, Vue builds fast and scalable apps; it speeds the render up of the application using a
+              virtual DOM; it has a proprietary file type,. vue; and Vue is used to group HTML, JavaScript, and a bit of
+              CSS. If you want to do more advanced stuff like conditionals or lists in your template, you'd use
+              directives like v-for and v-if. When you're not sure about what structure your app should have, Vue CLI
+              makes that task easy. And lastly, with Vue, if you don't use the build step, you've got an excellent
+              prototyping solution on your hands. Now let's compare this to React.</p>
+            <p>React also builds fast and scalable applications, and it also uses a virtual DOM to speed up the render.
+              In this way, they're very similar. React has a proprietary language called JSX that's used to group HTML
+              and JavaScript together. If you want to have more functionality, React doesn't have directives. It
+              requires on more basic JavaScript, so you'll just use an existing JavaScript map or a ternary and replace
+              for v-for and v-if. A lot of people consider these a bit trickier, so React is kind of harder in this
+              sense. React has an equivalent of Vue CLI called Create React App, which also makes the structure of your
+              app easy. Now unlike Vue, React really doesn't do all that much without JSX, so even if you're building a
+              prototype, you should have a build step. This is a bit more work than using Vue where you can skip the
+              build step if you want.</p>
+            <p> Overall, they're both great frameworks. In my opinion, the executive summary is they're both awesome,
+              but React is a bit harder.</p>
+            <p>Now let's compare Vue to Angular. The picture on the left is Vue, and the picture on the right is
+              Angular.</p>
+            <figure> <img src="images/vue-js-big-picture/Fig04-012.PNG" />
+              <figcaption>Fig 04-012</figcaption>
+            </figure>
+            <p>That's not to say that Vue is better than Angular. Angular is just more complex. There's no doubt that
+              there's some people in this audience that will be much more excited about solving the maze on the right
+              than solving the maze on the left because they like a challenge. Being a bit more academic with our
+              comparison, first, let's talk about Vue.</p>
+            <figure> <img src="./images/vue-js-big-picture/Fig04-013.png" />
+              <figcaption>Fig 04-013</figcaption>
+            </figure>
+            <p>So in comparison to Angular, Vue is simple and easy to learn because it emphasizes plain HTML and
+              JavaScript. Sure, you have. vue files, but those are just essentially HTML and JavaScript together. As a
+              module solution, your only option is existing JavaScript modules, and you don't even have to use those. So
+              if you've use module. exports or import from, this is what I'm talking about.</p>
+            <p>If you want to integrate Vue and make it just one part of your application, but make the rest of the
+              application something else, this is easy. And we tend to see the highest productivity with Vue when we're
+              building an application that's medium size, not too small, not too big. And you'll recall that when we
+              want to add functionality, we use directives like v-for and v-if.</p>
+            <p>Now as for Angular, learning and using Angular is no simple task. Not only does Angular have modules and
+              many other tricky things, but you also need to write it in TypeScript. TypeScript is confusing enough as
+              it is, so you kind of have to master it before you can even master Angular. It's fun, but let me tell you,
+              it's not easy.</p>
+            <p>Now Angular uses JavaScript modules, but it also on top of that has its own module solution called
+              Angular Modules, which are cool, but they're also a lot of work to learn as well. Now Angular doesn't
+              really play nice with other frameworks. Angular wants to be the chief framework on your page. So while it
+              is technically possible, you generally don't look at Angular as the solution to say I'm just going to
+              replace one tiny part of my app with Angular. For starters, the library is very large.</p>
+            <p>Speaking of large, one thing that Angular does have is that for really big applications, we're talking
+              huge, it's just better suited to building them in Vue. Really all the decisions about Angular are kind of
+              geared towards these very, very large projects. That's why some things like Angular Modules might seem too
+              confusing. Well, they are for small projects, but for big projects, they're a lifesaver.</p>
+            <p>Lastly, if we want to add functionality with directives, we can do them with stuff like ng-for and ng-if.
+              Ng-for and ng-if. Those sound very familiar to our Vue directives. In fact, Vue took a lot of queues from
+              Angular on how to name and design their directive, so anyone who understands Angular will recognize these
+              Vue directives. So I've done a good job of making Vue sound great, but in the next clip, we're going to
+              see why Vue might not be so great. </p>
+          </div>
+          <div>
+            <h3>Vue Pitfalls and Drawbacks </h3>
+            <p> I'll be the first to admit that my praise of Vue has been lavish, but don't fear because I'm not looking
+              at Vue through rose-colored glasses. I've definitely taken some time to think about why Vue might not be
+              the best for your solution, and surely it is not right for every project. So what are some drawbacks of
+              Vue .</p>
+            <figure> <img src="images/vue-js-big-picture/Fig04-014.PNG" />
+              <figcaption>Fig 04-014</figcaption>
+            </figure>
+            <p>So first of all, Vue needs support from its ecosystem to do a lot of things. Once you get past that
+              prototype step, you're really going to want to start using these libraries, and once you do, Vue is no
+              longer a matter of just being a simple, tiny library. You're getting into dependencies and complexity that
+              rivals that of an Angular or React application.</p>
+            <p>Next, Vue has some tricky reactivity. This is because they try and make it quite magical in the way that
+              the components respond to data being changed. Compare this to React, which does no such thing. You have to
+              tell react to render every time. It's very unmagical. So there's no shortage of scenarios where your
+              components might not update in the way you expect. You have to learn to play around these scenarios.</p>
+            <p>Next, while it is true that if your developer is familiar with Vue, they'll find the Vue file type easy
+              to use, but if you have a developer who's never heard of Vue, then the file type may be confusing. It
+              isn't like anything else out there. Finally, while there are production applications using Vue today,
+              compared to React and Angular, it is very new, and there are many scenarios which haven't been tested.
+              Probably they will work, but you're taking a bit of a risk there, and I consider that a drawback.</p>
+            <p>So let's say at the end of the day you've chosen not to use Vue, but to use React or Angular. Why would
+              you have made such a choice?</p>
+            <figure> <img src="images/vue-js-big-picture/Fig04-015.png" />
+              <figcaption>Fig 04-015</figcaption>
+            </figure>
+            <p>Well, Vue is less established. There's fewer existing resources. Maybe you find the fact that Angular and
+              React have a huge amount of English language documentation quite comforting, and that's why you've chosen
+              to use it. A fair decision.</p>
+            <p>In addition, perhaps you're worried by the fact that many scenarios in production just haven't been
+              tested very much, and if you're the first person ever to try this with Vue, then you'll be the one testing
+              it and paying the cost if it doesn't work.</p>
+            <p>Lastly, if you're building an application and you know from the beginning that it's going to be huge,
+              we're talking enterprise, then you wouldn't be blamed for choosing Angular or React instead of Vue.
+              They're both geared for projects that are a little bit larger.</p>
+            <p>So that's it. At the end of the day, there's not really a lot of drawbacks, but they're there, and
+              consider them when you try to decide if Vue is right for your project. In the last and final clip, outside
+              of the conclusion, I'll be talking a bit more about the build step. </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

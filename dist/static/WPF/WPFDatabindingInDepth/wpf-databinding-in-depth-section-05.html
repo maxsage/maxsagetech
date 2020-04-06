@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="UTF-8">
+  <title>maxsagetech - Vue JS Fundamentals</title>
+  <script src="https://unpkg.com/vue"></script>
+  <!--<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"-->
+  <!--integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">-->
+  <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" rel="stylesheet">
+  <link href="prism.css" rel="stylesheet">
+  <script src="prism.js"></script>
+  <style>
+
+    img {
+      max-width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="panel-group">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h2>Unleashing the Full Power of Bindings</h2>
+        </div>
+        <div class="panel-body">
+          <h3>Introduction</h3>
+          <p>Hi, this is Brian Noyes, and in this module we're going to dive deeper into bindings and look at a number
+            of additional properties that let you unleash the full power of what a binding can do for you for
+            specialized scenarios.
+          </p>
+          <p>First up, we're going to look at a property called UpdateSourceTrigger, and this is a property on a binding
+            that controls when data flows from the target to the source into a data binding scenario. The Default mode
+            is when focus changes, but you'll see there's a number of other options there and I'll explain how that
+            works.
+          </p>
+          <p>Next we're going to talk about Converters. Convertors give you a lot of power because it allows you to
+            insert an object between the source and the target object conceptually, hooked up through the binding, and
+            the data will flow through that Converter. So as the data flows from the source to the target, you can
+            change the value or the type of the object that's being used to set the target property. And, likewise, in a
+            two-way data binding scenario, as data flows from the target to the source, you can do a similar
+            transformation either in value or in type.
+          </p>
+          <p>Next we'll talk about Async Bindings. Normally, bindings all happen on the UI thread, but sometimes you may
+            need to have the get and set block of your source property called on a background thread, and Async bindings
+            allow you to do that.
+          </p>
+          <p>Then we'll talk about Fallback values and this is really two separate properties on a binding, one called
+            FallbackValue and one called TargetNullValue, that allow you to provide alternate values to be used when the
+            source object can't be resolved properly.
+          </p>
+          <p>Next we'll talk about FormatString. This is an automatic convertor of sorts, that lets you convert from the
+            source property into a formatted string using any standard .NET FormatString to render out the value the way
+            you want to present it to the user.
+          </p>
+          <p>Finally, we'll finish off with a couple of specialized bindings called a MultiBinding and a
+            PriorityBinding. These bindings allow you to aggregate multiple bindings into a collection, and in the case
+            of the MultiBinding, you can come up with a single value based on the individual values of those multiple
+            bindings. And in the case of the PriorityBinding you can pick from one of the child bindings which one to
+            use based on a priority scheme. So let's dive right in and see how these modify the behavior of our
+            bindings.
+          </p>
+        </div>
+        <div class="panel-body">
+          <h3>UpdateSourceTrigger</h3>
+          <p>Now let's talk about the triggers that cause data to flow through a binding in a two-way data binding
+            scenario. By default, the modified values in a binding control only get pushed down to the source object
+            when you tab out of the field or really a focus change, so things like minimize, maximize, and switching to
+            another window would also do it. Sometimes, however, you want to get the values sooner than that. You want
+            it keystroke by keystroke in the TextBox, for example, or you want it as a slider bar is being slid.
+          </p>
+          <p>To do that, you can use a property on the binding called UpdateSourceTrigger. The default value is called
+            Default, and it basically means lost focus for most controls. There's also a value called LostFocus and then
+            there's the PropertyChanged value. PropertyChanged says, whenever the target property changes, such as Text
+            on a TextBox, which will happen with every keystroke or the position on a slider, then you want to push that
+            current value down into the source object. LostFocus is going to wait until the focus leaves the control.
+          </p>
+          <p>Basically, Default and LostFocus mean the same thing for most controls. The one place they're different is
+            in a DataGrid. Default means when the row itself that the editable control is in loses focus, whereas
+            LostFocus means the cell lost focus. So basically, if you set it to LostFocus, as soon as you tab out of the
+            cell, the value will be written to the source object.
+          </p>
+          <p>If you leave it on the default, then you're going to have to actually click on a separate row or tab out of
+            the row before the values of all the edited cells will be written to the source object. And, of course, even
+            in the DataGrid scenario, PropertyChanged means keystroke by keystroke in a TextEdit field, for example. So
+            let's take a look at using UpdateSourceTrigger in a demo.
+          </p>
+        </div>
+        <div class="panel-body">
+          <h3>Demo: UpdateSourceTrigger</h3>
+          <div class="example">
+            <div class="input-group">
+              <input id="Ex05-001" type="text" class="form-control"
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 5\before\BindingProperties\BindingProperties.sln">
+<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex05-001"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
+            </div>
+          </div>
+          <div class="example">
+            <div class="input-group">
+              <input id="Ex05-002" type="text" class="form-control"
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 5\after\BindingProperties\BindingProperties.sln">
+<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex05-002"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
+            </div>
+          </div>
+          <p>In this demo, I want to show you how to use the UpdateSourceTrigger property on a binding to control
+            exactly when data flows in a two-way data binding scenario. By default, as we've talked about before, when
+            you've got a two-way data bound scenario here, the point where data flows is when you tab out of the field,
+            and that's called LostFocus.
+          </p>
+
+          <figure>
+            <img src="./images/Fig04-001.png" class="image"/>
+            <figcaption>Fig 04-001</figcaption>
+          </figure>
+          <p>That is the default UpdateSourceTrigger for most bindings. I'm going to drop into the XAML here and add a
+            couple of Labels and TextBoxes which we can show up down here as Source and Target, two different TextBoxes.
+          </p>
+
+          <figure>
+                <pre class="prettyprint">&lt;TextBox x:Name=&quot;SourceTextBox&quot;
+    HorizontalAlignment=&quot;Left&quot;
+    Height=&quot;23&quot;
+    Margin=&quot;35,200,0,0&quot;
+    TextWrapping=&quot;Wrap&quot;
+    VerticalAlignment=&quot;Top&quot;
+    Width=&quot;120&quot; /&gt;
+&lt;TextBox x:Name=&quot;TargetTextBox&quot;
+    Text=&quot;{Binding ElementName=SourceTextBox, Path=Text, UpdateSourceTrigger=PropertyChanged, Delay=500}&quot;
+    HorizontalAlignment=&quot;Left&quot;
+    Height=&quot;23&quot;
+    Margin=&quot;207,200,0,0&quot;
+    TextWrapping=&quot;Wrap&quot;
+    VerticalAlignment=&quot;Top&quot;
+    Width=&quot;120&quot; /&gt;
+&lt;Label Content=&quot;Source:&quot;
+    HorizontalAlignment=&quot;Left&quot;
+    Margin=&quot;35,175,0,0&quot;
+    VerticalAlignment=&quot;Top&quot; /&gt;
+&lt;Label Content=&quot;Target:&quot;
+    HorizontalAlignment=&quot;Left&quot;
+    Margin=&quot;207,175,0,0&quot;
+    VerticalAlignment=&quot;Top&quot; /&gt;</pre>
+            <figcaption>Fig 04-002</figcaption>
+          </figure>
+          <p>And the way the bindings are set up here between these is that you can see the Source TextBox has no
+            binding, so it's just going to reflect whatever is put into it as a source object.
+          </p>
+          <figure>
+                <pre class="prettyprint">&lt;TextBox x:Name=&quot;SourceTextBox&quot;
+    HorizontalAlignment=&quot;Left&quot;
+    Height=&quot;23&quot;
+    Margin=&quot;35,200,0,0&quot;
+    TextWrapping=&quot;Wrap&quot;
+    VerticalAlignment=&quot;Top&quot;
+    Width=&quot;120&quot; /&gt;
+&lt;TextBox x:Name=&quot;TargetTextBox&quot;
+    Text=&quot;{Binding ElementName=SourceTextBox, Path=Text, UpdateSourceTrigger=PropertyChanged, Delay=500}&quot;
+    HorizontalAlignment=&quot;Left&quot;
+    Height=&quot;23&quot;
+    Margin=&quot;207,200,0,0&quot;
+    TextWrapping=&quot;Wrap&quot;
+    VerticalAlignment=&quot;Top&quot;
+    Width=&quot;120&quot; /&gt;</pre>
+            <figcaption>Fig 04-003</figcaption>
+          </figure>
+          <p>The Target TextBox has its text bound, but it's using an ElementName binding, which we covered earlier, to
+            point to the source TextBox as a source object. And because the Path that we point to is a
+            DependencyProperty, that's going to raise Change Notifications, and we should see the Target update whenever
+            the Source value changes. So that means for every character that we put into the Text, the Text property is
+            changing and it's going to update the Target to reflect that.
+          </p>
+          <p>Now notice this UpdateSourceTrigger=PropertyChanged.</p>
+          <figure>
+            <pre class="prettyprint">Path=Text, UpdateSourceTrigger=PropertyChanged}</pre>
+            <figcaption>Fig 04-004</figcaption>
+          </figure>
+          <p>If I leave it on Default:</p>
+          <figure>
+            <pre class="prettyprint">Path=Text, UpdateSourceTrigger=Default}</pre>
+            <figcaption>Fig 04-005</figcaption>
+          </figure>
+          <p>once I start putting stuff in the Source, you can see that the Target stays in synch on every keystroke:
+          </p>
+          <figure>
+            <img src="./images/Fig04-006.png" class="image"/>
+            <figcaption>Fig 04-006</figcaption>
+          </figure>
+          <p>However, if I go to the Target and start putting stuff in, the Source does not update until I tab out of
+            the field and then the Source is updated because of the focus change.
+          </p>
+          <p>So the Default UpdateSourceTrigger is really a focus change for most elements. So if I change this to
+            PropertyChanged:
+          </p>
+          <figure>
+                <pre class="prettyprint">TextBox x:Name="TargetTextBox"
+                    Text="{Binding ElementName=SourceTextBox,
+                    Path=Text, UpdateSourceTrigger=PropertyChanged}"</pre>
+            <figcaption>Fig 04-007</figcaption>
+          </figure>
+          <p>It basically says, every time the Target property changes, which is the Text property of this TextBox, go
+            ahead and push its current value down into the source object's property.
+          </p>
+
+          <p>So now we're going to get fully synchronized if we start up. Source is raising PropertyChanged on every
+            keystroke because the text of the Source is changing, but now on every keystroke in the Target, it's pushing
+            the current value of the text of the Target down into the Source property.
+          </p>
+          <figure>
+            <img src="./images/Fig04-008.png" class="image"/>
+            <figcaption>Fig 04-008</figcaption>
+          </figure>
+          <p>So basically, when you want the source set immediately every time the bound property changes, then you want
+            to use the PropertyChanged on UpdateSourceTrigger. This is especially good for validation scenarios where
+            you want immediate feedback to the user and not wait until they tab out of the field.
+          </p>
+          <p>Now you can see here there's actually four choices there:</p>
+          <ul>
+            <li>Default</li>
+            <li>Explicit</li>
+            <li>LostFocus</li>
+            <li>PropertyChanged</li>
+          </ul>
+          <p>There's Default and LostFocus, which for most controls mean exactly the same thing, lost focus. The place
+            where they're different is if you're inside of a DataGrid. If the bound control is inside of a DataGrid,
+            Default means losing focus on the row that the control is within, whereas LostFocus means losing focus on
+            the cell that the control is within, but for single controls like a TextBox, Defaults and LostFocus mean the
+            same thing.
+          </p>
+          <p>We covered PropertyChanged. Explicit is a mode where you actually have to use programmatic call against the
+            binding itself to tell it when to flow the data. So data is not going to flow automatically in any case, you
+            have to tell it to flow the data and it's fairly rarely used.
+          </p>
+        </div>
+        <div class="panel-body">
+          <h3>Converters</h3>
+          <p>Now let's talk about using Converters and bindings, which is a very powerful mechanism to be able to
+            transform values as they flow from your source object to your target and vice-versa. Basically, a Converter
+            is a chunk of custom code that you can write that's going to sit in between that source and target object,
+            and as the data flows from the source to the target, you can transform the data value.
+          </p>
+          <p>You can transform just the value using the same type, so in a numeric scenario maybe you would round off a
+            floating point number to a whole digit, but still keep it as a float. But you can also transform the data
+            type. So one example that I'll demo is, that we could data bind to a Boolean property, but set a Style
+            property based on that Boolean flag.
+          </p>
+          <p>The way you define a convertor is by creating a class that implements the IValueConverter interface. This
+            interface has two methods. Convert is the method that gets called when data is flowing from the source to
+            the target and ConvertBack is called in two-way data binding scenarios when data is flowing from the target
+            to the source.
+          </p>
+          <p>So basically, you just implement this interface on a class, you put an instance of that class in a Resource
+            dictionary within your UI, and then you point to that Converter instance from the Converter property on a
+            binding using the StaticResource markup extension. So let's take a look at a couple of examples of using
+            converters.
+          </p>
+        </div>
+        <div class="panel-body">
+          <h3>Demo: Converters</h3>
+          <div class="example">
+            <div class="input-group">
+              <input id="Ex05-003" type="text" class="form-control"
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 5\before\BindingProperties\BindingProperties.sln">
+<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex05-003"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
+            </div>
+          </div>
+          <div class="example">
+            <div class="input-group">
+              <input id="Ex05-004" type="text" class="form-control"
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 5\after\BindingProperties\BindingProperties.sln">
+<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex05-004"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
+            </div>
+          </div>
+          <p>In this demo, I want to show you how you can use converters with bindings to change the value that gets set
+            through a binding or to change the type entirely.
+          </p>
+          <p>For our first scenario, let's say that anytime you want to display negative numbers in a form, you want to
+            put parentheses around them instead of showing the minus sign. That's something I can accommodate through a
+            converter.
+          </p>
+          <p>So I'm going to go and add a class to my project here called NegativeNumberConverter:</p>
+          <figure>
+            <img src="./images/Fig04-010.png" class="image"/>
+            <figcaption>Fig 04-010</figcaption>
+          </figure>
+          <p>To implement a Converter, you're going to want it to be public so it can be called by the framework, and
+            you're going to implement the IValueConverter interface. I can stub out the methods on that interface and
+            you can see that it has two methods, Convert, and ConvertBack.
+          </p>
+          <figure>
+                <pre class="prettyprint">public class NegativeNumberConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}</pre>
+            <figcaption>Fig 04-011</figcaption>
+          </figure>
+          <p>Convert gets called as data is flowing from the source to the target. The value that is going to be set,
+            flows in here and tells you what the typeof the Target property is that's going to be set and it has an
+            optional parameter, and will tell you what culture it's being done in, so you can use converters to actually
+            modify values for localization purposes. ConvertBack is called if you have two-way data binding and the
+            value is being pushed down from the target down into the source object.
+          </p>
+          <p>So I'm going to replace this implementation with a fully fleshed out version:</p>
+          <figure>
+                <pre class="prettyprint">public class NegativeNumberConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        int input = (int)value;
+        if (input &gt;= 0) return input.ToString();
+        else return string.Format(&quot;({0})&quot;, 0 - input);
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if (value.ToString().StartsWith(&quot;(&quot;) &amp;&amp; value.ToString().EndsWith(&quot;)&quot;))
+        {
+            return -int.Parse(value.ToString().Substring(1, value.ToString().Length - 2));
+        }
+        else return value;
+    }
+}</pre>
+            <figcaption>Fig 04-012</figcaption>
+          </figure>
+          <p>and you can see what the implementation does here, is it's expecting this to only be hooked up to integers.
+            Now to write a production of one of these, you want to do a little more type checking and not just blindly
+            cast the value here, which could blow up if it's not an integer.
+          </p>
+          <p>But here we're assuming we're only going to be hooked up to integers. We cast to an integer and we check to
+            see whether it's greater than or equal to 0. If so, we're just going to return it as a string, but
+            otherwise, we're going to negate it here and put it in between parentheses using a string format.
+          </p>
+          <p>If we're going to support two-way data binding and allow people to enter negative numbers with parentheses
+            around them, then the value is going to flow in here when they tab out of the field or if you're using
+            UpdateSourceTrigger=PropertyChanged.
+          </p>
+          <figure>
+            <pre class="prettyprint">public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)</pre>
+            <figcaption>Fig 04-013</figcaption>
+          </figure>
+          <p> And we're going to look here and see if it starts with parentheses and ends with parentheses.</p>
+          <figure>
+                <pre class="prettyprint">public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+{
+    if (value.ToString().StartsWith(&quot;(&quot;) &amp;&amp; value.ToString().EndsWith(&quot;)&quot;))
+    {
+        return -int.Parse(value.ToString().Substring(1, value.ToString().Length - 2));
+    }
+    else return value;
+}</pre>
+            <figcaption>Fig 04-014</figcaption>
+          </figure>
+          <p>We're basically going to strip those off and negate the value that's there to return the negative integer
+            down to the source object.
+          </p>
+          <p>Now to use this converter I need to create an instance of it and use it in a binding. So I'm going to go
+            over to my MainWindow and I'm going to go to its Resource section. And the way you'll typically use a
+            converter is by creating an instance of it in your Resources collection and give it a key:
+          </p>
+          <figure>
+                <pre class="prettyprint">&lt;Window.Resources&gt;
+    &lt;local:NegativeNumberConverter x:Key=&quot;NegConverter&quot; /&gt;
+&lt;/Window.Resources&gt;</pre>
+            <figcaption>Fig 04-015</figcaption>
+          </figure>
+          <p>Then you can refer to it in a binding using a StaticResource.</p>
+          <p>So then we're going to drop down into the form here to the field that we have that's a numeric value, such
+            as an age, and we're going to use the Converter property, say StaticResource, grab the key name of our
+            Converter as we defined it up above, and pass that as the key in the StaticResource.
+          </p>
+          <figure>
+                <pre class="prettyprint">&lt;TextBox x:Name=&quot;ageTextBox&quot;
+     Width=&quot;120&quot;
+     VerticalAlignment=&quot;Center&quot;
+     Text=&quot;{Binding Path=Age, Converter={StaticResource NegConverter}}&quot;
+     Grid.Row=&quot;3&quot;
+     Margin=&quot;3&quot;
+     Height=&quot;23&quot;
+     HorizontalAlignment=&quot;Left&quot;
+     Grid.Column=&quot;1&quot; /&gt;</pre>
+            <figcaption>Fig 04-016</figcaption>
+          </figure>
+          <p>So that's going to pull in a reference to that converter and basically invoke it.</p>
+          <p>Anytime data is flowing from the source to the target, it's going to call the Convert method, and then if
+            we edit this and push a value down through, it's going to invoke the ConvertBack method on that converter.
+          </p>
+          <p>With that in place, we can go back here to where our Customer is being initialized and we'll set the Age
+            property as -35 there:
+          </p>
+          <figure>
+                <pre class="prettyprint">Customer = new Customer
+{
+    Id = 42,
+    Name = &quot;Joe&quot;,
+    PremiumCustomer = true,
+    Age = -35
+};</pre>
+            <figcaption>Fig 04-017</figcaption>
+          </figure>
+
+          <p>I'll go over to the Age property on my Customer object and set a breakpoint so we can see when it's being
+            set what it's being set to.
+          </p>
+          <figure>
+                <pre class="prettyprint">public int Age
+{
+    get
+    {
+        return _Age;
+    }
+    set
+    {
+        if (value != _Age) // Set breakpoint here
+        {
+            _Age = value;
+            PropertyChanged(this, new PropertyChangedEventArgs(&quot;Age&quot;));
+        }
+    }
+}</pre>
+            <figcaption>Fig 04-018</figcaption>
+          </figure>
+          <p>We'll go ahead and start up and it will be called here one time as it's initializing</p>
+          <figure>
+            <img src="./images/Fig04-019.png" class="image"/>
+            <figcaption>Fig 04-019</figcaption>
+          </figure>
+          <p>and we see it renders out with parentheses instead of the -35.</p>
+          <figure>
+            <img src="./images/Fig04-020.png" class="image"/>
+            <figcaption>Fig 04-020</figcaption>
+          </figure>
+          <p>And if we put in some other values, such as (99), and tab out of the field, our set block gets called, and
+            the current value is -99:
+          </p>
+          <figure>
+            <img src="./images/Fig04-021.png" class="image"/>
+            <figcaption>Fig 04-021</figcaption>
+          </figure>
+          <p>so it strips off those parentheses and turns it into an actual negative integer.</p>
+          <p>Now as another example, let's say we want to set a style based on a Boolean property in our model. I'm
+            going to add a BoolToStyle Converter class and I'll quickly flesh out the implementation:
+          </p>
+          <figure>
+                <pre class="prettyprint">public class BoolToStyleConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        string[] styles = parameter.ToString().Split(';');
+        if (targetType == typeof(Style) &amp;&amp; value is bool)
+        {
+            if ((bool)value) { return GetStyle(styles[0]); }
+            else { return GetStyle(styles[1]); }
+        }
+        else return value;
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+
+    Style GetStyle(string key)
+    {
+        return Application.Current.Resources[key] as Style;
+    }
+}</pre>
+            <figcaption>Fig 04-022</figcaption>
+          </figure>
+          <p>You can see what this is doing is it's doing a little more type checking, so it's saying, if the target
+            type is a Style and the input is a Boolean, then that's what this thing was designed to do, otherwise, it's
+            just going to blindly return the value and say, this converter doesn't know what to do with that.
+          </p>
+          <p>And for a starting point here, it's going to say, I could hard code here a style name of TrueStyle and
+            FalseStyle corresponding to those Boolean values:
+          </p>
+          <figure>
+                <pre class="prettyprint"> if (targetType == typeof(Style) && value is bool)
+{
+    if ((bool)value) { return GetStyle(styles[0]); }
+    else { return GetStyle("FalseStyle"); }
+</pre>
+            <figcaption>Fig 04-023</figcaption>
+          </figure>
+          <p>and go use a Helper method here:</p>
+          <figure>
+                <pre class="prettyprint">Style GetStyle(string key)
+{
+    return Application.Current.Resources[key] as Style;
+}</pre>
+            <figcaption>Fig 04-024</figcaption>
+          </figure>
+          <p>to reach out to my Application Resources and get the Style by name out of my Resource dictionary:</p>
+          <p>Then I'm just going to return that as the value that actually gets set on the target of the binding.
+          </p>
+          <figure>
+                <pre class="prettyprint">if ((bool)value) { return GetStyle(styles[0]); }
+else { return GetStyle(styles[1]); }</pre>
+            <figcaption>Fig 04-025</figcaption>
+          </figure>
+          <p>Based on that code, I'll need those styles to exist so I'll go out of here to my Application.Resources and
+            pop in a Name Style called TrueStyle and FalseStyle that are just going to set the foreground to Red for
+            True and Black for False:
+          </p>
+          <figure>
+                <pre class="prettyprint">&lt;Application x:Class=&quot;BindingProperties.App&quot;
+             xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+             xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+             StartupUri=&quot;MainWindow.xaml&quot;&gt;
+    &lt;Application.Resources&gt;
+        &lt;Style x:Key=&quot;TrueStyle&quot;&gt;
+            &lt;Setter Property=&quot;Control.Foreground&quot;
+                    Value=&quot;Red&quot; /&gt;
+        &lt;/Style&gt;
+        &lt;Style x:Key=&quot;FalseStyle&quot;&gt;
+            &lt;Setter Property=&quot;Control.Foreground&quot;
+                    Value=&quot;Black&quot; /&gt;
+        &lt;/Style&gt;
+    &lt;/Application.Resources&gt;
+&lt;/Application&gt;</pre>
+            <figcaption>Fig 04-026</figcaption>
+          </figure>
+          <p>Now to use that in my application, I would go to my MainWindow to the Resources, and create an instance of
+            that Converter and give it a name. And then on the control that I wanted to use it on, such as my TextBox, I
+            would set the Style property using a Binding so the value that's going to come out of the Converter is a
+            Style, but the input is a Boolean:
+          </p>
+          <figure>
+                <pre class="prettyprint">&lt;TextBox x:Name=&quot;nameTextBox&quot;
+    Style=&quot;{Binding Path=PremiumCustomer,
+        Converter={StaticResource BoolToStyleConverter}}&quot;
+    Width=&quot;120&quot;
+    VerticalAlignment=&quot;Center&quot;
+    Text=&quot;{Binding Path=Name, Mode=OneTime}&quot;
+    Grid.Row=&quot;1&quot;
+    Margin=&quot;3&quot;
+    Height=&quot;23&quot;
+    HorizontalAlignment=&quot;Left&quot;
+    Grid.Column=&quot;1&quot; /&gt;</pre>
+            <figcaption>Fig 04-027</figcaption>
+          </figure>
+          <p>So I'm pointing to a Boolean property on my model called premium customer and then I'm using my Converter
+            instance to convert that Boolean value into a Style value.
+          </p>
+          <p>With that in place, I can go ahead and run, and we can see that Joe is red right now because it is a
+            Premium Customer:
+          </p>
+          <figure>
+            <img src="./images/Fig04-028.png" class="image"/>
+            <figcaption>Fig 04-028</figcaption>
+          </figure>
+          <p>If I uncheck it, it goes to black and back to red.</p>
+          <p>Now obviously hard-coding Style names down inside some code like this is not a great idea, and that's where
+            this object parameter can come in.
+          </p>
+          <figure>
+            <pre class="prettyprint">public object Convert(object value, Type targetType, object parameter, CultureInfo culture)</pre>
+            <figcaption>Fig 04-029</figcaption>
+          </figure>
+          <p>You can pass ConverterParameters to a converter to drive its behavior. So if I modify that implementation a
+            little bit, and I expect my parameter to be a semi-colon separated pair of Style names:
+          </p>
+          <figure>
+                <pre class="prettyprint">string[] styles = parameter.ToString().Split(';');
+if (targetType == typeof(Style) &amp;&amp; value is bool)
+{
+    if ((bool)value) { return GetStyle(styles[0]); }
+    else { return GetStyle(styles[1]); }
+}
+else return value;</pre>
+            <figcaption>Fig 04-030</figcaption>
+          </figure>
+          <p>I can split that out into an array and then use the first one as my TrueStyle and the second one as my
+            FalseStyle.
+          </p>
+          <p>Now I can just go back to where I was binding the Style and add another property on my binding called
+            ConverterParameter, and pass that value, which is going to be TrueStyle;FalseStyle:
+          </p>
+          <figure>
+            <pre class="prettyprint">Converter={StaticResource BoolToStyleConverter}, ConverterParameter=TrueStyle;FalseStyle}</pre>
+            <figcaption>Fig 04-031</figcaption>
+          </figure>
+          <p>With that in place, the same behavior is manifest, it's red now, it goes to black when I uncheck the
+            Premium Customer property.
+          </p>
+          <p>But now this BoolToStyleConverter is a little more reusable because you can pass in those two different
+            styles that it supports as a parameter when you use the Converter. The one downside to be aware of is when
+            you use a ConverterParameter, the values will have to be statically expressible in the code here:
+          </p>
+          <figure>
+            <pre class="prettyprint">Converter={StaticResource BoolToStyleConverter}, ConverterParameter=TrueStyle;FalseStyle}</pre>
+            <figcaption>Fig 04-032</figcaption>
+          </figure>
+          <p>And that's the basics of using Converters.</p>
+        </div>
+        <div class="panel-body">
+          <h3>Async Binding</h3>
+          <p>Most of the time you're binding, you're going to be binding to objects in memory that have already been
+            populated and so the binding can pull the values out of the properties very quickly and push values back
+            into those objects quickly. Occasionally, you might bind to something that's a little slower, and that's
+            where Async bindings come in.
+          </p>
+          <p>So a binding is calling the get and set block of the property it's bound to, and it does that on the UI
+            thread in a synchronous manner by default.
+          </p>
+          <p>Now one thing to be aware of is that in WPF your source objects can raise PropertyChanged on a separate
+            thread, so you could have a background thread or an Async service execution that goes out, gets some data,
+            and pushes values into your data bound objects. And when you call the set block, the PropertyChanged event
+            is going to fire.
+          </p>
+          <p>In WPF that's okay. The binding is actually smart enough to see that you're not on the UI thread, switch to
+            the UI thread and get the value, and update the UI, only on the UI thread. However, just be aware, other
+            XAML technologies are not as smart. You cannot do that same thing in other XAML technologies, you'll have to
+            make sure your set blocks are always being called on the UI thread if they raise PropertyChanged.
+          </p>
+          <p> Now if the get and set blocks will execute slowly, maybe they make a database call themselves or the
+            service call themselves, you can get the binding to call those on a background thread itself.
+          </p>
+          <p>So all you do is you set IsAsync true on the binding, and the binding is actually going to go grab a
+            background thread and use that to dispatch the call to the get or set block. And then once it gets the
+            value, it'll set the target property on the element using the UI thread.
+          </p>
+          <p>Another form of Async the bindings support, is setting a Delay on when the binding can call the set block.
+            So this is only for two-way data binding scenarios and it's basically there to act as a buffer to make sure
+            that you're not sending new values down to the source object too often. The Delay property is specified in
+            ms and it's basically, how long will the binding wait before it attempts to set the property on the source
+            object, even if the target property is rapidly changing? So let's take a look at a demo of working with
+            Async bindings.
+          </p>
+        </div>
+        <div class="panel-body">
+          <h3>Demo: Async Binding</h3>
+          <div class="example">
+            <div class="input-group">
+              <input id="Ex05-005" type="text" class="form-control"
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 5\before\BindingProperties\BindingProperties.sln">
+<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex05-005"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
+            </div>
+          </div>
+          <div class="example">
+            <div class="input-group">
+              <input id="Ex05-006" type="text" class="form-control"
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 5\after\BindingProperties\BindingProperties.sln">
+<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex05-006"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
+            </div>
+          </div>
+          <p>In this demo, I want to show you how you can use the Async capabilities of bindings. Now in most binding
+            scenarios, as long as your data is already right there in memory, populated on whatever your model objects
+            are that you're binding to, you won't have to worry about doing the binding itself Async. You may have some
+            code behind the scenes that gets these things loaded up asynchronously, but the binding itself won't have to
+            be Async.
+          </p>
+          <figure>
+                <pre class="prettyprint">public string Phone
+{
+    get
+    {
+        return _Phone;
+    }
+    set
+    {
+        if (value != _Phone)
+        {
+            _Phone = value;
+            PropertyChanged(this, new PropertyChangedEventArgs(&quot;Phone&quot;));
+        }
+    }
+}</pre>
+            <figcaption>Fig 04-033</figcaption>
+          </figure>
+          <p>But depending on the way you structure things, you may have setters and getters on a given property that
+            take a while to execute. So I'm going to simulate that in this case by putting a Thread.Sleep in the get and
+            set block of my Phone property on my Customer:
+          </p>
+          <figure>
+                <pre class="prettyprint">public string Phone
+{
+    get
+    {
+        Thread.Sleep(5000);
+        return _Phone;
+    }
+    set
+    {
+        Thread.Sleep(5000);
+        if (value != _Phone)
+        {
+            _Phone = value;
+            PropertyChanged(this, new PropertyChangedEventArgs(&quot;Phone&quot;));
+        }
+    }
+}</pre>
+            <figcaption>Fig 04-034</figcaption>
+          </figure>
+          <p>And if I did that without doing anything else and tried to run, first off, we can see as it starts up it's
+            waiting a full 5 seconds before the UI becomes responsive because it's got to read that value in to populate
+            the UI through the binding and it's got to wait for that full execution of the get block to complete:
+          </p>
+          <figure>
+            <img src="./images/Fig04-035.png" class="image"/>
+            <figcaption>Fig 04-035</figcaption>
+          </figure>
+          <p>Likewise, if we go and change that field and tab out of the field, you can see the cursor didn't move, it's
+            gone completely unresponsive, and will stay that way until the set block execution completes and then it
+            comes back to life:
+          </p>
+          <figure>
+            <img src="./images/Fig04-036.png" class="image"/>
+            <figcaption>Fig 04-036</figcaption>
+          </figure>
+          <p>Obviously not the user experience you're going for.</p>
+          <p>So if you're doing complex model objects that you're binding to where the get and set blocks of the
+            properties you're binding to execute real work such as doing a database query or a service call or
+            something, you may need to use Async bindings then.
+          </p>
+          <p>So all you would do to leverage Async bindings, is go to the binding on the property that you want to be
+            Async and say, IsAsync=True:
+          </p>
+          <figure>
+                <pre class="prettyprint"> &lt;TextBox x:Name=&quot;phoneTextBox&quot;
+    Width=&quot;120&quot;
+    VerticalAlignment=&quot;Center&quot;
+    Text=&quot;{Binding Phone, IsAsync=True}&quot;
+    Grid.Row=&quot;2&quot;
+    Margin=&quot;3&quot;
+    Height=&quot;23&quot;
+    HorizontalAlignment=&quot;Left&quot;
+    Grid.Column=&quot;1&quot; /&gt;</pre>
+            <figcaption>Fig 04-037</figcaption>
+          </figure>
+          <p>Now, if we start up our same exact scenario, you can see the UI comes up and is responsive right away:
+          </p>
+          <figure>
+            <img src="./images/Fig04-038.png" class="image"/>
+            <figcaption>Fig 04-038</figcaption>
+          </figure>
+          <p>And then 5 seconds later the Phone pops in there when the set block is finally done executing:</p>
+          <figure>
+            <img src="./images/Fig04-039.png" class="image"/>
+            <figcaption>Fig 04-039</figcaption>
+          </figure>
+          <p>And, likewise, if we modify it and tab out of the field, it just goes blank and we can be using the rest of
+            the UI until the point where the Phone set block completes and the value pops back in there.
+          </p>
+          <p>So it just makes it a non-blocking thing the WPF is going to actually go use a background thread to invoke
+            the get and set blocks when you have IsAsync=True on the binding. But that also means that these are
+            actually going to execute on a separate thread, so you do have to be concerned about concurrency if the UI
+            thread can also access this code.
+          </p>
+          <p>The other thing to be aware of is that if you have multiple threads in your application and a background
+            thread calls this set block, it's going to raise the PropertyChanged notification, which goes up into the
+            binding and the binding has subscribed to that based on seeing that your bound object supports
+            INotifyPropertyChanged. And generally you don't want to be doing anything to a UI element on a background
+            thread.
+          </p>
+          <p>The good news is, in WPF, and only WPF, the other XAML technologies this is not true, you can raise
+            PropertyChanged from a background thread and the WPF binding will be smart enough to switch back over to the
+            UI thread before it calls the get block and modifies the UI based on the PropertyChanged notification. So it
+            is safe from a binding perspective to set the property on a background thread.
+          </p>
+          <p>So another binding property related to Async that you might use in some scenarios is the Delay property. So
+            I can add Delay=500 on my data binding to my two TextBoxes down here:
+          </p>
+          <figure>
+                <pre class="prettyprint">&lt;TextBox x:Name=&quot;TargetTextBox&quot;
+    Text=&quot;{Binding ElementName=SourceTextBox, Path=Text, UpdateSourceTrigger=PropertyChanged, Delay=500}&quot;
+    HorizontalAlignment=&quot;Left&quot;
+    Height=&quot;23&quot;
+    Margin=&quot;207,200,0,0&quot;
+    TextWrapping=&quot;Wrap&quot;
+    VerticalAlignment=&quot;Top&quot;
+    Width=&quot;120&quot; /&gt;</pre>
+            <figcaption>Fig 04-040</figcaption>
+          </figure>
+          <p>So I could add Delay=500, and that's in ms, on my two TextBoxes that are bound to each other down here. And
+            what that's going to do is act as a throttle for input. So this only affects the calling of the set block
+            and it basically says, my input may be coming quicker than I actually want to go set it on the data bound
+            source object, so I'm going to delay by this much time before I call the set block, and if I would have
+            triggered multiple times within that time window, I'm only going to call it once when that time window is
+            up.
+          </p>
+          <p>So with that in place, we can see the visual impact of this behavior. If I go down here to my source, I
+            start setting things there in sync. I go to my target and I rapidly input some stuff:
+          </p>
+          <figure>
+            <img src="./images/Fig04-041.png" class="image"/>
+            <figcaption>Fig 04-041</figcaption>
+          </figure>
+          <p>500 ms later, it fills in the source and it only set the source one time in that case at the 500 ms point.
+            Do it again, and 500 ms later, one set of the source happens, not one for each character that I was setting.
+          </p>
+          <p>So this is handy for situations like this if you may have some very rapid input, especially if you're doing
+            something like an auto-complete service call to look up the available candidates, and you don't want to do
+            that service call on every single keystroke. Another example would be if you were binding the current
+            position in something like a slider, you don't want to necessarily go set the property on the source object
+            on every miniscule movement of that slider, just when it finally settles in position or has moved by a
+            significant amount, so you could set the Delay property on there so that it only sets the source property
+            every 500 ms, for example.
+          </p>
+        </div>
+        <div class="panel-body">
+          <h3>Fallback Values</h3>
+          <p>Another minor capability of bindings you should be aware of is the ability to supply some fallback values
+            when the binding can't come up with an appropriate value to set the target with. The first one of these is
+            called TargetNullValue, and the name is a little deceptive there. What it really means is, if the source
+            object's property is null, what is the value you want to use for the target?
+          </p>
+          <p>So you basically supply a value in the binding that's going to be used to set the target property if the
+            current value of the source property is null.
+          </p>
+          <p>The other one is literally called FallbackValue, and this one is used when the binding can't come up with a
+            value at all based on the data source and the path. So when that's the case, it can't come up with the
+            value, and you supply a FallbackValue, it's going to use that value to set the target instead. So let's take
+            a look at a quick demo of using both of these.
+          </p>
+        </div>
+        <div class="panel-body">
+          <h3>Demo: Fallback Values</h3>
+          <div class="example">
+            <div class="input-group">
+              <input id="Ex05-007" type="text" class="form-control"
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 5\before\BindingProperties\BindingProperties.sln">
+<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex05-007"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
+            </div>
+          </div>
+          <div class="example">
+            <div class="input-group">
+              <input id="Ex05-008" type="text" class="form-control"
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 5\after\BindingProperties\BindingProperties.sln">
+<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex05-008"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
+            </div>
+          </div>
+          <p>In this demo, I want to show you a couple last properties here on the binding which relate to having
+            fallback values when the binding can't quite come up with the value it's supposed to use for binding. What I
+            mean by that is, I can go into my MainWindow here, and we'll just use my Name TextBox that I've been
+            binding, we'll go to its Text Binding here for name, get rid of the Mode=OneTime here, and we'll say,
+            TargetNullValue-'Not set'.
+          </p>
+          <figure>
+                <pre class="prettyprint">&lt;TextBox x:Name=&quot;nameTextBox&quot;
+        Style=&quot;{Binding Path=PremiumCustomer,
+            Converter={StaticResource BoolToStyleConverter}, ConverterParameter=TrueStyle;FalseStyle}&quot;
+         Width=&quot;120&quot;
+         VerticalAlignment=&quot;Center&quot;
+         Text=&quot;{Binding Path=Namex, Mode=Default, TargetNullValue='Not set', FallbackValue='no value'}&quot;
+
+         Grid.Row=&quot;1&quot;
+         Margin=&quot;3&quot;
+         Height=&quot;23&quot;
+         HorizontalAlignment=&quot;Left&quot;
+         Grid.Column=&quot;1&quot; /&gt;</pre>
+            <figcaption>Fig 04-042</figcaption>
+          </figure>
+
+          <p>What TargetNullValue means, the name is a little misleading there, it's really if the source value is null,
+            then what is the value you want to set on the target instead of null? So if we go to the code-behind to the
+            point where we're setting the name, and we set it to null here:
+          </p>
+          <figure>
+                <pre class="prettyprint">private void Window_Loaded(object sender, RoutedEventArgs e)
+{
+    Customer = new Customer
+    {
+        Id = 42,
+        Name = null,
+        PremiumCustomer = true,
+        Age = -35
+    };
+}</pre>
+            <figcaption>Fig 04-043</figcaption>
+          </figure>
+          <p>Start up the UI, and we see, Not set:</p>
+          <figure>
+            <img src="./images/Fig04-044.png" class="image"/>
+            <figcaption>Fig 04-044</figcaption>
+          </figure>
+          <p>So because of the value that the binding came up with was equal to null, and we had the TargetNullValue
+            there, it used the value provided by the TargetNullValue property on the binding.
+          </p>
+          <p>Another somewhat similar property is the FallbackValue. So here we're going to say FallbackValue='no
+            value':
+          </p>
+          <figure>
+                    <pre class="prettyprint">{Binding Path=Name, TargetNullValue='Not set', FallbackValue='no value'}</pre>
+            <figcaption>Fig 04-045</figcaption>
+          </figure>
+          <p>This will be used when the binding is unable to come up with a value at all based on the Path that it's
+            given. So if I corrupt my Path over here and say Namex, which doesn't exist on my DataContext object:
+          </p>
+          <figure>
+                    <pre class="prettyprint">{Binding Path=Name, TargetNullValue='Not set', FallbackValue='no value'}</pre>
+            <figcaption>Fig 04-046</figcaption>
+          </figure>
+          <p>and I run, now we see no value in there because the binding was unable to evaluate and come up with a value
+            to set the target property. And, again, down here in the output window, notice that we have one of these
+            System.Data Warnings that says, Namex not found on Customer:
+          </p>
+          <figure>
+            <img src="./images/Fig04-047.png" class="image"/>
+            <figcaption>Fig 04-047</figcaption>
+          </figure>
+          <p>So you always want to be looking for those. In this case, it was a warning, not an error, because we had
+            the FallbackValue here. If we get rid of the FallbackValue and run with Namex in place there, now you can
+            see it's a System.Windows.Data Error down here because it can't come up with any value to present in the UI:
+          </p>
+          <figure>
+            <img src="./images/Fig04-048.png" class="image"/>
+            <figcaption>Fig 04-048</figcaption>
+          </figure>
+          <p>So those are TargetNullValue used when the Source property is null, and gives a value to set on the target
+            and FallbackValue when it can't resolve a value from the specified binding Path.
+          </p>
+        </div>
+        <div class="panel-body">
+          <h3>StringFormat</h3>
+          <p>StringFormat is a handy property on bindings for being able to render out a formatted value in the form of
+            a string for a given source property value. You can think of StringFormat as an automatic converter from the
+            source property type to a string, applying formatting in the process. So with it, you can use any standard
+            .NET format string, the same kind of format string you would use with the String.Format method in the
+            framework.
+          </p>
+          <p>There are a number of built-in format strings for things like dates and numeric formats, and you can come
+            up with your own custom format strings as well. Now this works great in simple scenarios where you want to
+            render out a date in the TextBox or a numeric value in a TextBox and have some formatting applied to it.
+          </p>
+          <p>But there is one gotcha with it, you generally don't want to combine it with the
+            UpdateSourceTrigger=PropertyChanged value. There can be some weird input behaviors that you'll see in the
+            demos that makes it kind of unsuitable for use in combination with that, and I'll just defer to the demo to
+            show you what I mean by that.
+          </p>
+        </div>
+        <div class="panel-body">
+          <h3>Demo: StringFormat</h3>
+          <div class="example">
+            <div class="input-group">
+              <input id="Ex05-009" type="text" class="form-control"
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 5\before\BindingProperties\BindingProperties.sln">
+<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex05-009"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
+            </div>
+          </div>
+          <div class="example">
+            <div class="input-group">
+              <input id="Ex05-010" type="text" class="form-control"
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF Data Binding in Depth\Module 5\after\BindingProperties\BindingProperties.sln">
+<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex05-010"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
+            </div>
+          </div>
+          <p>In this demo, I want to show you quickly how to use the StringFormat property on a binding to render out a
+            formatted value to the user interface. Our starting point here is the same demo app that we've been using up
+            to this point and what I'm going to focus on is this Age field. If you remember from previous demo, we were
+            applying a converter there that's putting the parentheses there for a negative value.
+          </p>
+          <figure>
+            <img src="./images/Fig04-049.png" class="image"/>
+            <figcaption>Fig 04-049</figcaption>
+          </figure>
+          <p>We're going to replace that and do some string formatting. So, first off, I'm going to drop into my
+            Customer and change my Age property (I created a new property called Age2) to be a floating value so that we
+            can put some decimal points in there:
+          </p>
+          <figure>
+                <pre class="prettyprint">public class Customer : INotifyPropertyChanged
+{
+    private bool _PremiumCustomer;
+    private int _Age;
+    private float _Age2;
+    private string _Phone = &quot;555-555-5555&quot;;
+    private string _Name;
+    private int _Id;</pre>
+            <figcaption>Fig 04-050</figcaption>
+          </figure>
+          <p>And I'll do that on the member variable and on the property:</p>
+          <figure>
+                <pre class="prettyprint">public float Age2
+{
+    get
+    {
+        return _Age2;
+    }
+    set
+    {
+        if (value != _Age2)
+        {
+            _Age2 = value;
+            PropertyChanged(this, new PropertyChangedEventArgs(&quot;Age2&quot;));
+        }
+    }
+}</pre>
+            <figcaption>Fig 04-051</figcaption>
+          </figure>
+          <p>Then I'm going to drop into the UI and find the Age input, and I'm going to replace that with a slightly
+            different Text Binding.
+          </p>
+          <figure>
+                <pre class="prettyprint">&lt;TextBox x:Name=&quot;ageTextBox&quot;
+    Width=&quot;120&quot;
+    VerticalAlignment=&quot;Center&quot;
+    Text=&quot;{Binding Path=Age, StringFormat=f2}&quot;
+    Grid.Row=&quot;3&quot;
+    Margin=&quot;3&quot;
+    Height=&quot;23&quot;
+    HorizontalAlignment=&quot;Left&quot;
+Grid.Column=&quot;1&quot; /&gt;</pre>
+            <figcaption>Fig 04-052</figcaption>
+          </figure>
+          <p>So here we can see we're still binding to the Age Property, but now we just simply set the StringFormat
+            property and here we're using one of the pre-defined StringFormats, a floating point with two decimals. If
+            we go ahead and run now, we can see that that value which is set to -35 now displays with two decimals. If
+            we go and make other mods to it, let's say we set it to 44.444 and we tab out of the field, notice as we tab
+            out of the field the value is written to the underlying object and the value becomes 44.44.
+          </p>
+          <figure>
+            <img src="./images/Fig04-053.png" class="image"/>
+            <figcaption>Fig 04-053</figcaption>
+          </figure>
+          <p>Now let's go set a breakpoint in the set block and do that again, and we'll say 44.4455, tab out, and we
+            can see the value that's being set is the full precision value:
+          </p>
+          <figure>
+            <img src="./images/Fig04-054.png" class="image"/>
+            <figcaption>Fig 04-054</figcaption>
+          </figure>
+          <p> but when we run, all we see is the rounded off value applied by StringFormat:</p>
+          <figure>
+            <img src="./images/Fig04-055.png" class="image"/>
+            <figcaption>Fig 04-055</figcaption>
+          </figure>
+          <p>So one downside to using these is to realize that what you see on the screen and what the actual underlying
+            values are might be slightly different, but if the way you want to display it to the user is always with two
+            decimal places, then that's up to you to manage the actual precision under the covers.
+          </p>
+          <p>Now there's one other gotcha to be aware of with using StringFormat. If we also add the
+            UpdateSourceTrigger=PropertyChanged property on our binding, which we saw earlier in the module:
+          </p>
+          <figure>
+                    <pre class="prettyprint">{Binding Path=Age, StringFormat=f2, UpdateSourceTrigger=PropertyChanged}}</pre>
+            <figcaption>Fig 04-056</figcaption>
+          </figure>
+
+          <p>and go run our scenario again, now watch what happens as I put in a value. I hit 5, and it immediately
+            StringFormats because we've got UpdateSourceTrigger=PropertyChanged. As soon as the Target property changes,
+            which happens on every keystroke, it's going to set the underlying source property.
+          </p>
+          <figure>
+            <img src="./images/Fig04-057.png" class="image"/>
+            <figcaption>Fig 04-057</figcaption>
+          </figure>
+          <p>The source property raises a PropertyChangedEvent, that forces the binding to re-bind and re-render based
+            on the StringFormat. The problem with this is, for a rapid input scenario, say that I wanted to highlight
+            this and say 55.55.
+          </p>
+          <p>If I do that quickly, 55.55, look what I end up with.</p>
+          <figure>
+            <img src="./images/Fig04-058.png" class="image"/>
+            <figcaption>Fig 04-058</figcaption>
+          </figure>
+          <p>It's because after each keystroke it's re-rendering, it's putting the decimal place in there for me, so
+            when I get around and type the decimal place I'm actually adding another decimal place and I've got an
+            invalid StringFormat now that can't be converted to the underlying Type, and that's why we see the red box,
+            which we'll get into more in the validation section.
+          </p>
+          <p>As a result of that, you generally don't want to use UpdateSourceTrigger=PropertyChanged in combination
+            with StringFormat because you'll get this re-rendering as you're typing, which especially with numeric
+            formats, does not work out the way you want, but with a normal focus change UpdateSourceTrigger,
+            StringFormat works very nicely for inputting those formatted values and rendering them appropriately.
+          </p>
+        </div>
+        <div class="panel-body">
+          <h3>MultiBinding/PriorityBinding</h3>
+          <p>One last topic I want to touch on in this module is the concept of MultiBindings and PriorityBindings. A
+            MultiBinding is a special kind of binding in WPF that allows you to provide a collection of bindings inside
+            the MultiBinding. It's basically going to evaluate each one of those bindings and come up with a value, and
+            then you combine this MultiBinding with a MultiValueConverter, an object that you implement this interface
+            on, similar to the converters we covered earlier in the module.
+          </p>
+          <p>But this MultiValueConverter is going to get passed an array of values. The array is going to be populated
+            with the values that came out of each one of the child bindings in the MultiBinding and then the Converter
+            can do with those values what it pleases. So one example would be if you were going to create a color picker
+            and have a separate slider for the red, the green, and the blue values, you could use a MultiBinding in
+            combination with a MultiValueConverter to come up with a color object based on those red, green, and blue
+            inputs. So basically, the net result of a MultiBinding is to come up with a single value based on the
+            individual values of the child bindings.
+          </p>
+          <p> The other kind of binding is called a PriorityBinding, and it's somewhat similar in that it can contain a
+            collection of child bindings, but what the PriorityBinding is going to do is pick a value from one of those,
+            and the priority is the first one declared is the highest priority one, and the idea is that even though you
+            have a binding in there, it may not be able to come up with a value. It could be that it's using Async and
+            it's waiting for an Async result that hasn't come back yet, or it could be that it's pointing to a Path that
+            may or may not be there in the DataContext that varies over time. So the PriorityBinding is going to produce
+            a single value based on whichever highest priority binding has an available value.
+          </p>
+          <p>Now I'm not even going to do a demo of these, because generally, in many years of doing WPF development,
+            I've never used either one of these. And the reason for that is I don't like the fact that they really are
+            putting logic in the XAML itself. They are a little difficult to debug as a result. If you are not getting
+            exactly what you want, there's nowhere you can set a breakpoint and see what's going on. And it's also too
+            much coupling in the view.
+          </p>
+          <p>Generally the alternative is to go produce a single value behind the scenes and put it into a source object
+            property and just use normal binding. And then all the code that produces that value is debuggable and you
+            can structure it however you want, to use priorities or to go to multiple sources and figure out which one
+            to use or to go to multiple sources and combine the values of those multiple sources, but then you can just
+            use a normal binding and point to your source object that you populate however you want.
+          </p>
+        </div>
+        <div class="panel-body">
+          <h3>Summary</h3>
+          <p>So in this module we covered a bunch of fine-grain control points that you have when you apply bindings by
+            setting different properties on those bindings. First we covered the UpdateSourceTrigger, which controls
+            when data flows in a two-way data binding scenario from the target to the source. Normally it's going to be
+            on FocusChange, but if you set this to PropertyChanged then you can get that immediate feedback, keystroke
+            by keystroke, in a TextBox, for example, to flow the data from the target to the source. And we'll see later
+            in the Validation module this can be important for immediate feedback to the user if they're inputting bad
+            data.
+          </p>
+          <p>We also talked about the difference between Default and LostFocus. Default and LostFocus generally mean the
+            same thing on most controls, but on a control like the DataGrid, Default means a row focus changed and
+            LostFocus means a cell focus changed.
+          </p>
+          <p>Next we talked about Converters. Converters are these objects that you implement that implement the
+            IValueConverter interface. You hook them in through the Converter property of the binding and the data will
+            flow through them both from source to target and from target to source. And as part of that flowing process,
+            you can transform the value or the type of the object that's being passed through.
+          </p>
+          <p>Next we talked about Async bindings and simply using the IsAsync property on a binding to make it so the
+            get and set block of your source object get called on a background thread if they might take a long time and
+            you don't want to block the UI.
+          </p>
+          <p>Next we talked about FallbackValues, specifically the FallbackValue property and the TargetNullValue
+            property that allow you to supply alternate values to be used when the source object value can't be
+            resolved.
+          </p>
+          <p>Next we talked about StringFormat and the way it will let you, basically, "pretty print" or create a
+            formatted string version of the value that you're getting from your source object, so this works very nicely
+            with dates and numeric formats, and so on.
+          </p>
+          <p>Finally, we finished off with the concept surrounding MultiBindings and PriorityBindings. We described that
+            MultiBindings have a collection of child bindings, from which it can come up with a final value based on the
+            values that come out of the individual bindings. And a PriorityBinding, on the other hand, allows you to
+            have a collection of child bindings and have it pick the highest priority one of those that comes up with a
+            value for you.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

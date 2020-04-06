@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="UTF-8">
+  <title>Vue.js Playbook</title>
+  <script src="https://unpkg.com/vue"></script>
+  <!--<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"-->
+  <!--integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">-->
+  <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" rel="stylesheet">
+  <link href="prism.css" rel="stylesheet">
+  <script src="prism.js"></script>
+  <style>
+    img {
+      max-width: 100%;
+    }
+    .example {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+<div class="container" id="app">
+  <div class="panel-group">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h2>Vue.js Playbook</h2>
+      </div>
+      <div class="panel-body">
+        <div>
+          <h2>Responding to User Events in Vue.js </h2>
+          <div>
+            <h3>
+              Responding to User Events in Vue.js
+            </h3>
+            <p>
+              The last module showed you how to bind with forms in Vue. Collecting data is an important part of many web
+              apps. In many web apps, though, it's just as important to respond to user interactions. These interactions
+              are also known as user events. In this module, I'll show you how to respond to user events in Vue.
+            </p>
+            <p>
+              First, this module will begin by explaining how to listen for user-initiated events. From there, I'll go a
+              bit deeper and show you how to tailor events to meet your needs. We'll discuss how to modify events. These
+              topics are important to delivering interactive apps with Vue. For that reason, I encourage you to buckle
+              up as we begin using event handlers.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Using Event Handlers
+            </h3>
+            <p>
+              As users interact with an app, they expect certain things to happen when they do certain things. For
+              example, in Growler, if a user clicked the search button, they would expect a search to run. To meet this
+              expectation, you need to first attach to an event. V-on directive empowers you to attach to events. The
+              on-directive listens for events in the HTML DOM. For example, here's a line of code from Growler that
+              wires up an event handler for the Search button.
+            </p>
+            <figure>
+              <pre><code
+                class="language-html">&lt;button v-on:click=&quot;executeSearch&quot;&gt;Search&lt;/button&gt;</code></pre>
+              <figcaption>Fig 04-001</figcaption>
+            </figure>
+            <p class="example">Module 04 - Attaching to an Event</p>
+
+            <p>In this example, I'm using the on directive to attach to the button's click event. This event is
+              referenced after the colon separating the directive and event name. Technically, this could be any HTML
+              DOM event supported by the hosting element. In this case, though, I'm using the click event. This approach
+              breaks from the traditional HTML event wire-up convention.
+            </p>
+            <p>In traditional HTML, the term onClick would have been used instead of the term click, but in this context
+              we're effectively working in the JavaScript world. For that reason, the event name that I've selected is
+              the same name that I would have used with JavaScript's baked-in add event listener function.
+            </p>
+            <p>As a general rule, when using the on directive, ignore the on prefix that you might have used in HTML.
+              Still, when the event specified in the on directive is triggered, some custom JavaScript can be run. In
+              this example, that custom JavaScript gets run when the Search button is clicked. That JavaScript is this
+              executeSearch. While there's nothing particularly interesting here, it does raise the question, what is
+              executeSearch?
+            </p>
+          </div>
+          <div>
+            <h3>
+              Defining Event Handlers
+            </h3>
+            <p>
+              In this example, executeSearch is the name of a JavaScript function:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-002.png"/>
+              <figcaption>Fig 04-002</figcaption>
+            </figure>
+            <p class="example">Module 04 - Defining an Event Handler</p>
+            <p>Technically, this could be a JavaScript expression, but in this case I'm using a JavaScript function.
+              This isn't some random function defined in JavaScript's global scope, though. Instead, this function must
+              be defined within the scope of the view. To do that, you must set up the methods option. On this slide,
+              I've moved the button definition to the right side. Here on the left side, you can once again see the
+              growler definition. The data object was discussed in a previous module. In addition to the data object,
+              though, another JavaScript object named methods has been added.
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-003.png"/>
+              <figcaption>Fig 04-003</figcaption>
+            </figure>
+            <p>
+              As you can see, I separated the data and methods objects with a comma. Inside of methods, I've defined the
+              executeSearch function. This function is defined using JavaScript's object method syntax. My guess is that
+              this is why they call the object methods instead of functions, just a thought.
+            </p>
+            <p>Anyways, if you look at the two sides, you can see what is going to happen. If a user clicks the Search
+              button, the query will appear in an alert box. The button in the HTML templates uses the on directive to
+              create the bridge between the UI and functional code. The functional code shows the query entered by the
+              user by leveraging this:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-004.png"/>
+              <figcaption>Fig 04-004</figcaption>
+            </figure>
+            <p>In a method, the <code class="language-">this</code> keyword is automatically bound to the Vue instance.
+              Since the query input's value is bound to the query property in the data object, <code class="language-">this.query</code>
+              maps to what a user enters. Beyond the Vue instance content, you also have access to the event that
+              triggered the event handler.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Examining Events and Passing Parameters
+            </h3>
+            <p>
+              If you need to examine the event that was triggered, you can include an optional event parameter like
+              this:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-005.png"/>
+              <figcaption>Fig 04-005</figcaption>
+            </figure>
+            <p class="example">Module 04 - Examining the Event</p>
+            <p>In this snippet, I'm showing two things in the alert window. First, I'm showing the query that was
+              entered by the user. Second, I'm showing the text of the button that was clicked. This text was retrieved
+              through the event parameter. I named this parameter event just to be verbose. Technically, you can name it
+              anything you want. The main thing is the last parameter in an event handler is the event object that
+              triggered the event. This brings us to the next question. How do you pass other parameters to a method?
+            </p>
+            <p>To pass parameters to a method, you need to use an inline JavaScript statement. This means that you have
+              to expand the event reference in your on directive a bit. For example, if the Growler search engine was
+              running on a web server, you might assign a token to the user. You might want to pass that token to an
+              event handler. To do that, you could expand the event reference like this.
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-006.png"/>
+              <figcaption>Fig 04-006</figcaption>
+            </figure>
+            <p class="example">Module 04 - Passing a string with an inline statement</p>
+            <p>In this example, I'm showing a token along with the query and button text in an alert prompt. There are
+              two things I want to discuss in this example. First is the token parameter itself, then the event
+              variable.
+            </p>
+            <p>The token parameter is just a string that gets passed to the executeSearch function. This could have been
+              a string, number, date, or any other JavaScript object. The samples provided with this course show each of
+              these types being used as parameters. Those samples can be found here:
+            </p>
+            <p class="example">Module 04 - Passing a Number with an inline statement</p>
+            <p class="example">Module 04 - Passing a Date with an inline statement</p>
+            <p class="example">Module 04 - Passing an Object with an inline statement</p>
+            <a href="https://github.com/ecofic/course-vue-getting-started">https://github.com/ecofic/course-vue-getting-started</a>
+            <p>Still, I used a string for the token in this sample. In addition, I'm also passing in an event variable.
+              The event variable is a reserve variable in Vue. This variable will give you access to the HTML DOM event
+              that was triggered. This provides the same event object that was shown just a moment ago. The only
+              difference is that in this scenario we're passing it to the event handler with another parameter. That's
+              really all there is to passing parameters to an event handler, and that's really all there is to cover in
+              regards to using event handlers.
+            </p>
+            <p> As a side note, the on directive also has a shorthand syntax.</p>
+            <figure>
+              <pre><code
+                class="language-html">&lt;button @click=&quot;executeSearch&quot;&gt;Search&lt;/button&gt;</code></pre>
+              <figcaption>Fig 04-007</figcaption>
+            </figure>
+
+            <p>That syntax uses the @ symbol as a convenience. I won't be using the shorthand syntax in this course,
+              though. The reason why is because I prefer the more verbose syntax for the on directive. I also believe
+              the verbose approach makes it easier to learn the content. If you have a different opinion, please let me
+              know on Facebook.
+            </p>
+            <a href="https://www.facebook.com/ecofic/">https://www.facebook.com/ecofic/</a>
+            <p>Either way, now that you know how to use event handlers, you might want to go deeper and learn about
+              event modifiers.
+            </p>
+
+          </div>
+          <div>
+            <h3>
+              Altering Event Behaviors
+            </h3>
+            <p>
+              As you interact with an app, you may learn that some things don't behave like you'd expect. You probably
+              won't experience any issues with basic apps; however, as an app grows in size, it becomes more complex.
+              This complexity can emerge as HTML elements nest within one another. While necessary, this nesting can
+              introduce side effects that you may not have thought about.
+            </p>
+            <p>I want to help you proactively identify and address these side effects. To do this, I need to begin by
+              explaining event propagation. Once you have an understanding of how events spread, I can show you how to
+              modify their behavior. I'll do this by showing you how to react to keyboard and mouse events. Finally,
+              I'll show you how to consider special keys, like Alt, Ctrl, and Shift. Let's begin.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Understanding Event Propagation
+            </h3>
+            <p>
+              When events are invoked, they can start a chain reaction. This can happen because, by default, events in
+              the HTML DOM are propagated through the visual tree. For example, imagine that the Search button in
+              Growler was hosted in a div element like this:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-008.png"/>
+              <figcaption>Fig 04-008</figcaption>
+            </figure>
+            <p class="example">Module 04 - Demo</p>
+            <p>In this snippet, this button is part of a visual tree that has at least two ancestors. Now, if a user
+              clicks this button, the event can propagate in two different ways. The event can bubble up, or it can get
+              captured. When an event bubbles, the element that was first selected invokes the event first. In the
+              context of the Search button example, this means that the Search button would get first crack at handling
+              the event:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-009.png"/>
+              <figcaption>Fig 04-009</figcaption>
+            </figure>
+            <p>The event would then bubble up through the ancestor elements. Each ancestor could respond to the click
+              event if it wanted to. This is the default approach used by events in Vue. There is a way to use event
+              capturing if you want to, though.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Event Capturing
+            </h3>
+            <p>
+              Event capturing should be used if you want an event to be handled in the opposite order of event bubbling.
+              Instead of the event target being first in the order of events, the event handling starts at the window
+              object. The order then bubbles down through the visual tree all the way down to the target:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-010.png"/>
+              <figcaption>Fig 04-010</figcaption>
+            </figure>
+            <p>
+              Personally, I remember the difference in event ordering by using this phrase, bubble up, capture down.
+              Still, you might wonder why does event capturing even exist? Event capturing was introduced by Netscape in
+              the early days of the web. Microsoft introduced the event bubbling approach, which is the default approach
+              used today. When the official W3C specification for events came out, it decided to support both
+              approaches.
+            </p>
+            <p>Since Vue complements web technology so well, it naturally supports both event bubbling and event
+              capturing. Personally, I can't think of a time when I've needed to use event capturing, but since your app
+              may include a third party component that uses it, I want to discuss capturing for completeness.
+            </p>
+            <p>
+              In Vue, event capturing can be applied on an element with a capture modifier. The capture modifier is used
+              like the other modifiers shown in module 3. You simply append a dot after the name of the event and apply
+              the name of the modifier. If the capture modifier were applied to the Search button code shown earlier, it
+              would look like this:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-011.png"/>
+              <figcaption>Fig 04-011</figcaption>
+            </figure>
+            <p class="example">Module 04 - Using the Capture Modifier</p>
+            <p>In this example, I'm using the capture modifier on three elements. By doing this, I ensure the event
+              handlers are executed from top to bottom. In this example, the grandparentClick event handler will be
+              fired first, then the parentClick event handler, and finally executeSearch.
+            </p>
+            <p>Notice, again that I applied the capture modifier to all three of these elements. Remember, the default
+              approach is to bubble events up, so if I change the code snippet to look like this:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-012.png"/>
+              <figcaption>Fig 04-012</figcaption>
+            </figure>
+            <p class="example">Module 04 - Mixing Capturing and Bubbling</p>
+            <p>something interesting happens. The order of events changes. Now the grandparentClick handler fires first,
+              then the executeSearch handler, and lastly, parentClick. Yes, this order is probably not what you'd ever
+              want. I created this example to show the impact of mixing propagation types. It's this type of behavior
+              that makes me avoid using event capturing if I can. There are other modifiers that I do find quite useful,
+              though, like the prevent modifier.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Using the Prevent Modifier
+            </h3>
+            <p>
+              The prevent modifier lets you bypass the default event behavior of an element. This modifier serves as
+              Vue's representation of JavaScript's built-in preventDefault method. At first glance, you may wonder, why
+              would you want to ignore an element's default event behavior. Let's revisit the Search button.
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-013.png"/>
+              <figcaption>Fig 04-013</figcaption>
+            </figure>
+            <p>In this example, I've changed the Search button a bit. Instead of it being a traditional button, I've
+              made it an HTML submit button. Now, the default behavior of an HTML submit button is to submit form data
+              to a server. This causes a round trip to a server, and back to the user's browser. In other words, it
+              causes the page to reload.
+            </p>
+            <p>In a lot of cases this is fine, but what if the user did not enter a search query. If the user didn't
+              enter a search query, we'd be doing a round trip for no good reason. This would reload the page, creating
+              a less than desirable experience for the user. It would also take up a few more computing cycles on the
+              server. To improve the search experience, we should validate the data as much as we can on the client side
+              before sending it to the web server.
+            </p>
+            <p>To do that, you can use the prevent modifier like this.</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-014.png"/>
+              <figcaption>Fig 04-014</figcaption>
+            </figure>
+            <p class="example">Module 04 - Using the Prevent Modifier</p>
+            <p class="example">Module 04 - Using the Prevent Modifier on an Ancestor</p>
+            <p>In this example, I've added the prevent modifier to the submit search button. Once this button is
+              clicked, the executeSearch function will run. This function's purpose is to validate the user input. If
+              the user entered a search query, the form will be submitted. Otherwise, this code will alert the user to
+              their mistake.
+            </p>
+            <p>The prevent modifier prevents the form from being submitted unless it passes validation. While the
+              prevent modifier prevents the default event behavior, it doesn't prevent event propagation. To address
+              that, you need the stop modifier.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Using the Stop Modifier
+            </h3>
+            <p>
+              The stop modifier can be used to cease event propagation. This modifier serves as a convenient hook to
+              JavaScript's built-in stopPropagation method. If I revisit the Search button example and apply the stop
+              modifier to the Search button, I'd get this:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-015.png"/>
+              <figcaption>Fig 04-015</figcaption>
+            </figure>
+            <p class="example">Module 04 - Using the Stop Modifier</p>
+            <p>This modifier significantly changes the behavior we've recently seen due to propagation. With the stop
+              modifier in place, only the executeSearch method would run, nothing else. To further demonstrate the stop
+              modifier's behavior, I'm going to move it up the visual tree:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-016.png"/>
+              <figcaption>Fig 04-016</figcaption>
+            </figure>
+            <p class="example">Module 04 - Using the Stop Modifier on an Ancestor</p>
+            <p>Notice how I moved the stop modifier to the parent element. Now, on this slide, the executesearch method
+              would run, and then the parentClick handler. However, that's as far as the event would propagate. The
+              grandparentClick would not get run if the search button was clicked.
+            </p>
+            <p>I specifically chose this example to show you that there is a way to cease propagation. I find stopping
+              propagation to be really useful. In Growler, if I click the Search button, I honestly wouldn't want the
+              event to propagate. There are two reasons why I wouldn't want this to happen.
+            </p>
+            <p>First, by stopping the propagation, less code will get executed. This may improve the performance of an
+              app, depending on your code. Second, the stop modifier helps you create more predictable code. I know what
+              I expect to run, and that's it, fewer side effects. In some scenarios, though, I may want to narrow what
+              triggers an element's event handler.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Using the Self Modifier
+            </h3>
+            <p>
+              The self modifier lets you declare that an element should trigger an event only if the element is the
+              originator. This means that this modifier is only concerned with one element, the target. If the self
+              modifier were applied to the Search button that's been used, it would look like this.
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-017.png"/>
+              <figcaption>Fig 04-017</figcaption>
+            </figure>
+            <p class="example">Module 04 - Using the Self Modifier</p>
+            <p>In this example, the executeSearch method would run if the Search button were clicked. In addition, the
+              parentClick and grandparentClick event handlers would also get executed. This is because the event still
+              propagates up the tree when the self modifier is used; however, things get interesting if I move the self
+              modifier to the parent element, like this.
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-018.png"/>
+              <figcaption>Fig 04-018</figcaption>
+            </figure>
+            <p class="example">Module 04 - Using the Self Modifier on an Ancestor</p>
+            <p>
+              If I click the Search button now, the executeSearch method would run; however, the parentClick event would
+              not execute because the originating event is not the originator, but the event will continue to propagate
+              up the tree and trigger the grandparentClick event handler.
+            </p>
+            <p>If I chose to click the parent div, the parentClick method would have been executed, and then the
+              grandparentClick event handler:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-019.png"/>
+              <figcaption>Fig 04-019</figcaption>
+            </figure>
+            <p>In addition to the self modifier, there's one more modifier that I'd like to discuss at this time.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Using the Once Modifier
+            </h3>
+            <p>
+              The once modifier can be used if you want to run an event one, and only one time. In other words, if this
+              modifier is applied, and the event is triggered, this same event won't get triggered by that element
+              again. This is because the once modifier removes the event handler after the event has fired. This can be
+              useful if the server is responsible for data validation. Even in that case, though, you still should
+              update the UI to prevent a user from submitting a form twice.
+            </p>
+            <p>For example, let's disable the Search button and Search field after a user clicks Search. That code would
+              look like this:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-020.png"/>
+              <figcaption>Fig 04-020</figcaption>
+            </figure>
+            <p class="example">Module 04 - Using the Once Modifier</p>
+            <p>In this example, the Search field and the Search button are disabled once the user clicks the Search
+              button. These elements are disabled because each element's disabled attribute is bound to the isRunning
+              flag. This flag is set to true once a user clicks the Search button. At that point, the form is submitted.
+              By using the once modifier, the user is prevented from clicking the Search button multiple times. While
+              this stops the button from getting clicked, it doesn't stop the event propagation.
+            </p>
+            <p>When you use the once modifier, it only detaches from the event handler of the containing element. For
+              example, if the Search button would have been something like this:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-021.png"/>
+              <figcaption>Fig 04-021</figcaption>
+            </figure>
+            <p class="example">Module 04 - Once Modifier Event Propagation</p>
+            <p style="font-weight: bold">Please note, the example Module 04 - Once Modifier Event Propagation
+              writes to
+              the
+              event
+              log
+              instead
+              of using alerts as shown in the slides</p>
+            <p>the behavior would have been different. In this case, if you click the Search button, you would see the
+              executeSearch alert box, and then the parentClick alert box, but if you click the Search button again,
+              you  would only see the parentClick alert box:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-022.png"/>
+              <figcaption>Fig 04-022</figcaption>
+            </figure>
+
+            <p>If you disabled the Search button, though, the event would not propagate.</p>
+            <p>Throughout this section, you've seen how event propagation can impact your view. You've also seen the
+              five
+              modifiers that can be used to change the propagation behavior. Remembering each modifier's impact can be
+              challenging. For that reason, I've summarized them in this slide:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-023.png"/>
+              <figcaption>Fig 04-023</figcaption>
+            </figure>
+            <p class="example">Module 04 - Comparing Event Modifiers</p>
+            <p>You may want to pause this video and print this slide out to use as a reference card. I also want to
+              share that just like the modifiers mentioned in module 3, you can chain these modifiers together. So, if
+              you wanted to ignore propagation altogether, you could do something like this.
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-024.png"/>
+              <figcaption>Fig 04-024</figcaption>
+            </figure>
+            <p class="example">Module 04 - Chaining Event Modifiers Together</p>
+            <p>This example removes the parent element from the effects of propagation. This happened by chaining the
+              stop and self modifiers together. The stop modifier ceases the event propagation, while the self modifier
+              ensures that the event handler isn't triggered by any of the element's descendants.
+            </p>
+            <p>Event propagation is a great way to squeeze those last performance tweaks out of an app. Now that you
+              have an understanding of event propagation, and the related event modifiers, I'd like to change topics.
+              We're now going to discuss handling events triggered from key presses.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Reacting to Keyed Events
+            </h3>
+            <p>
+              Earlier in this module, I showed you how to attach to events. Imagine using an event handler to respond
+              to the keys pressed by a user. For example, a common example is to perform an action when a user presses
+              the Enter key. To handle this situation, you could do something like this:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-025.png"/>
+              <figcaption>Fig 04-025</figcaption>
+            </figure>
+            <p class="example">Module 04 - Demo</p>
+            <p>Typically, the Enter key submits a form by default, but in this example, I'm submitting the form through
+              my view. Once again, this allows me to do some client-side validation before sending the data to the
+              server. I'm doing this by using the keypress event to see if the Enter key was pressed.
+            </p>
+            <p>If the Enter key is pressed, a keyCode of 13 will be shared. That 13 is a bit of a magic number. Magic
+              numbers are bad because they're difficult to remember and don't describe the intent. In addition, this
+              line to get that 13 is a bit odd. I'll explain it in a second. Either way, there should be a simpler, more
+              intentional way to handle this common scenario.
+            </p>
+            <p>Vue does, in fact, provide a way to handle common key events. Vue provides nine modifiers to handle
+              common key events. These nine modifiers are:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-026.png"/>
+              <figcaption>Fig 04-026</figcaption>
+            </figure>
+            <p>When any of these keys are pressed, a key code is passed to the event handler. If you've worked with key
+              codes in JavaScript before, these may look familiar. You may also be aware that the keyCode property used
+              to reference these codes in JavaScript is now deprecated. Moving forward, the code property will be used
+              to reference these codes. The problem is, as of the time of writing this course, some of the latest
+              browser versions didn't support the code property. It also means that using key codes can introduce
+              complexity or problems in your app.
+            </p>
+            <p>To protect your app from this issue, you can use the modifiers shown in the last column. Personally, I
+              find using these modifiers just easier to use. They let you focus on your app's goals, instead of the
+              low-level details of key codes. They're also just easier to remember. If I revisit the Enter key scenario
+              I showed earlier, the example could be changed from this:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-027.png"/>
+              <figcaption>Fig 04-027</figcaption>
+            </figure>
+            <p>to this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-028.png"/>
+              <figcaption>Fig 04-028</figcaption>
+            </figure>
+            <p class="example">Module 04 - Using the enter modifier</p>
+            <p>With this approach, we're able to remove the checkForEnter method needed earlier. Instead, the enter
+              modifier is now used on the keyup event of the input field. This example also shows that you can use
+              multiple methods for a given event.
+            </p>
+            <p>I'm using one method for when the Enter key is pressed. I'm then using another method to handle any other
+              key being pressed. With this code, if the Enter key is pressed, the evaluateKey method will be called
+              first, because it comes first in the list. Then, the executeSearch method will be called. This shows that
+              the order in which you reference event handlers matters. For events beyond the nine baked-in modifiers,
+              you may want to create your own key modifiers.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Creating Key Modifiers
+            </h3>
+            <p>
+              Vue lets you create key modifiers for key codes that are used less often. This can be useful if your app
+              needs to support specific shortcuts via keys. For example, in Growler, it would be nice to show
+              information about the app if a user pressed F1. To handle the user pressing F1, you would first have to
+              define the modifier. You can define key modifiers in Vue by using the globally-visible config property:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-029.png"/>
+              <figcaption>Fig 04-029</figcaption>
+            </figure>
+            <p>
+              This property exposes Vue configuration details like keyCodes. To define a key modifier, you add a key
+              value pair to the keyCodes property, as shown above. This example adds a key modifier to handle the F1
+              key. The F1 in this case, will be used as the modifier in the code. This property's value is the value
+              that would be returned from the JavaScript keyboard event objects code, or keyCode property.
+            </p>
+            <p>Once you've defined a modifier, you can use it in your view. To use a custom key modifier, you use the
+              name of the property you added to the keyCode's configuration. Since F1 was just added, it can be used as
+              a key modifier, like this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-030.png"/>
+              <figcaption>Fig 04-030</figcaption>
+            </figure>
+            <p class="example">Module 04 - Using Custom Modifiers</p>
+            <p>In this example, I'm using the f1 modifier that was defined on the previous slide. As you can see, the f1
+              modifier is used, just like the other modifiers that have been shown.</p>
+            <p>
+              That's really all there is to reacting to keys pressed by a user. Believe it or not, there's also a way to
+              react to events that come from mouse buttons as well.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Reacting to Mouse Button Events
+            </h3>
+            <p>
+              Sometimes, mouse-specific actions are as important to the user experience as the keyboard. Vue provides
+              three modifiers that are specific to the mouse. These modifiers are for the left, middle, and right
+              buttons on a mouse.</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-031.png"/>
+              <figcaption>Fig 04-031</figcaption>
+            </figure>
+            <p class="example">Module 04 - All mouse modifiers in one example</p>
+            <p>These three modifiers can be used with mouse-related events to respond accordingly. Specifically, all
+              three of these modifiers can work with the mousedown and mouseup events. However, beyond the mousedown and
+              mouseup events, these three modifiers provide limited support for the mouse-related events. For that
+              reason, I'd like to discuss the left, middle, and right modifiers more closely so you can fully harness
+              their power.</p>
+
+            <p>The left modifier empowers you to respond to a user interacting with the left mouse button. For example,
+              imagine that there's an area on the web page that you want to react to the user clicking on. In fact, I'm
+              going to jump over to Google Chrome and show this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-032.png"/>
+              <figcaption>Fig 04-032</figcaption>
+            </figure>
+            <p class="example">Module 04 - An example with the onmousedown event</p>
+            <p>This example, which is part of the exercise files for this course, prints the mouse event when the left
+              mouse button is used. This works in both of these boxes. Now, if I use the right mouse button in the box
+              on the left, you'll see the event still gets triggered.</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-033.png"/>
+              <figcaption>Fig 04-033</figcaption>
+            </figure>
+            <p class="example">Module 04 - An example with the onmousedown event</p>
+            <p> This is because I haven't applied the left modifier to this element. However, the left modifier is
+              applied with the event on the box on the right. You'll notice that when I right-click in this box nothing
+              gets written to the event log:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-034.png"/>
+              <figcaption>Fig 04-034</figcaption>
+            </figure>
+            <p>The implementation for this looks like this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-035.png"/>
+              <figcaption>Fig 04-035</figcaption>
+            </figure>
+            <p>On this slide, I'm using the mousedown event to respond to a user clicking on a div element. However,
+              I've added the left modifier to the mousedown event. This has the impact of only reaching the onBlockClick
+              event handler if the mousedown event was triggered via the left mouse button. A more familiar approach
+              would be to use the click event like this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-036.png"/>
+              <figcaption>Fig 04-036</figcaption>
+            </figure>
+            <p class="example">Module 04 - An example with the onclick event</p>
+            <p>While this code technically works, I want to take it a step further and actually remove the left
+              modifier.</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-037.png"/>
+              <figcaption>Fig 04-037</figcaption>
+            </figure>
+            <p>Once removed, this code becomes cleaner and looks like this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-038.png"/>
+              <figcaption>Fig 04-038</figcaption>
+            </figure>
+            <p>The reason this approach is better is because the click event only fires if the event was triggered by
+              the left mouse button. In other words, using the left modifier with the click event is redundant. That's
+              why on this slide:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-039.png"/>
+              <figcaption>Fig 04-039</figcaption>
+            </figure>
+            <p>I'm showing a question mark to represent the left modifier support for the click event. Beyond the click
+              event, though, you can see that support is limited to the mousedown and mouseup event handlers. These two
+              events are also only supported options for the middle mouse modifier.</p>
+            <p>The middle mouse modifier lets you respond to a user interacting with the middle mouse button. This
+              modifier is rarely used in an app. Personally, I've never needed it; however, I wanted to include it in
+              case you needed to use it. Notably, as shown on this slide:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-040.png"/>
+              <figcaption>Fig 04-040</figcaption>
+            </figure>
+            <p>There are only two mouse-related events that this modifier works with, the mousedown and mouseup events.
+              You can add the middle modifier to one of these events, like this.</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-041.png"/>
+              <figcaption>Fig 04-041</figcaption>
+            </figure>
+            <p class="example">Module 04 - An example with the onmousedown event</p>
+            <p>There is nothing really exciting here. Once again, I wanted to mention the middle modifier for
+              completeness. While you might never need to use the middle modifier, you may need to use the right
+              modifier.</p>
+            <p>The right modifier empowers you to respond to a user interacting with the right mouse button. I want to
+              revisit Google Chrome to show the difference in behavior. In this example, I'm once again plugging into
+              the mousedown event. You'll notice that when I use the right mouse button in the box on the right, an
+              event is logged:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-042.png"/>
+              <figcaption>Fig 04-042</figcaption>
+            </figure>
+            <p class="example">Module 04 - An example with the onmousedown event</p>
+            <p class="example">Module 04 - An example with the click and contextmenu events</p>
+            <p>but if I use the left mouse button, nothing gets logged:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-043.png"/>
+              <figcaption>Fig 04-043</figcaption>
+            </figure>
+            <p>This is because I added the right mouse modifier to the mousedown event, like this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-044.png"/>
+              <figcaption>Fig 04-044</figcaption>
+            </figure>
+            <p>This approach is similar to the approach shown in the middle and left modifiers shown earlier; however,
+              when I clicked in the box, you probably noticed that a context menu appeared. If you want to use the right
+              modifier, there's a good chance you want to create your own context menu. Your initial instinct may be to
+              leverage the click event; however, the right modifier doesn't work with the click event. Instead, you have
+              to use the contextmenu event, like this.</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-045.png"/>
+              <figcaption>Fig 04-045</figcaption>
+            </figure>
+            <p class="example">Module 04 - A custom context menu</p>
+            <p>
+              This example is a bit more involved. I want to break it down, though. First, look at the contextmenu event
+              in the div element. Notice that I'm using the prevent modifier with the contextmenu event. Without the
+              prevent modifier, the browser's default context menu would appear. However, by adding the prevent
+              modifier, Vue bypasses the default event behavior. This means the browser's context menu won't appear.
+              However, the onBlockClick event handler will still get executed.</p>
+            <p>Notably, the right modifier isn't even used. That's because the contextmenu event only works with the
+              right mouse button. While the right modifier could be used, it would just be redundant. The onBlockClick
+              event handler is responsible for showing and positioning the context menu:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-046.png"/>
+              <figcaption>Fig 04-046</figcaption>
+            </figure>
+            <p>The menu is rendered based on whether the showContextMenu property is set to true or not. You'll notice
+              that the if directive is used to accomplish this. If you think you've missed something, don't worry; the
+              if directive is discussed in the next module.</p>
+            <p>Still, if the context menu is shown, it's positioned using the binding approach discussed in module 2.
+              Each item in the context menu has its own event handler.:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-047.png"/>
+              <figcaption>Fig 04-047</figcaption>
+            </figure>
+            <p>Finally, when you focus on something outside of the menu, the context menu will go away. When activated,
+              this context menu looks like this.</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-048.png"/>
+              <figcaption>Fig 04-048</figcaption>
+            </figure>
+            <p>While it's ugly, it does in fact work. There are additional enhancements that could be made to make it
+              more robust. Those are more advanced topics that are beyond the scope of this module, though. The reason I
+              wanted to show this context menu was to explain how to react to a user clicking the right mouse button on
+              their mouse.</p>
+            <p>You also saw how to use the middle and left modifiers. As discussed, some of these modifiers work with
+              some mouse-related events, but not others. I've created this reference slide to help you quickly look up
+              what events work with each modifier:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-049.png"/>
+              <figcaption>Fig 04-049</figcaption>
+            </figure>
+            <p>You may want to pause this video and take a screenshot or print this screen out. Either way, Vue lets you
+              go beyond using mouse buttons as modifiers. In fact, Vue also has modifiers that let you react to special
+              keys.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Reacting to Special Keys
+            </h3>
+            <p>
+              Personally, after learning to type in school, I learned about keyboard shortcuts. Popular shortcuts to
+              copy and paste, like Ctrl+C and Ctrl+V, are still part of my everyday use. These shortcuts improve the
+              experience of an app by giving the user more power. For that reason, you might want to consider adding
+              keyboard shortcuts to your Vue apps with special keys. Special keys like Alt, Ctrl, and Shift are
+              technically known as modifier keys. I'm going to refer to these modifier keys as special keys.</p>
+            <p>The reason why is because we're already talking about modifiers in Vue. I'm concerned that if I use the
+              term modifier keys instead of special keys, it will create confusion. Either way, special keys empower you
+              to deliver keyboard shortcuts. This slide shows the modifiers Vue provides for special keys:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-051.png"/>
+              <figcaption>Fig 04-051</figcaption>
+            </figure>
+            <p>The Alt, Ctrl, and Shift are commonly used keys in keyboard shortcuts. The meta key, is the Windows or
+              Command key. Either way, let's create a keyboard shortcut in Growler. For example, the default behavior of
+              the Search field is to run a search. Pretend that you wanted to add a keyboard shortcut for users who may
+              want to run multiple searches at once. For example, what if we let the users run their search in another
+              tab. That behavior would look like this.</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-052.png"/>
+              <figcaption>Fig 04-052</figcaption>
+            </figure>
+            <p>Now, I'm going to enter a query for Porter. Now if I press the Enter key, you'll see that I get one beer
+              returned. Now I'm going to press Ctrl+Enter. Notice that another tab opened. If I switch to this tab,
+              you'll see that my query ran in this tab:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-053.png"/>
+              <figcaption>Fig 04-053</figcaption>
+            </figure>
+            <p>Now I'm going to close this tab. I'm going to go ahead and run multiple queries. I'm going to open each
+              query in its own tab by using the Ctrl+Enter shortcut. First, I'll run a search for ale, then a search for
+              stout, and finally, a search for pilsner. Now if I look in the tabs, you'll see that each query ran in its
+              own tab:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-054.png"/>
+              <figcaption>Fig 04-054</figcaption>
+            </figure>
+            <p>Part of implementing this feature involved implementing the keyboard shortcut, which I did, like
+              this:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig04-055.png"/>
+              <figcaption>Fig 04-055</figcaption>
+            </figure>
+            <p class="example">Module 04 - Demo - this demo doesn't seem to correlate to the slides</p>
+            <p>This snippet is from the Growler sample app. This snippet brings several of the concepts we've been
+              discussing, together. First, the trim modifier from module 3 is used to remove whitespace from the query
+              as a user enters it. If a user presses the Enter key, the executeNewSearch function will get run. The
+              enter and prevent modifiers discussed earlier in this module were chained together to properly handle the
+              desired default behavior. As an added bonus, we included a keyboard shortcut that allows a user to press
+              Enter and Ctrl to run the query in a new tab. That was made possible by chaining the control and enter
+              modifiers together.</p>
+            <p>As you can see, the special key modifiers and their mouse button counterparts help you deliver powerful
+              features in your apps. By taking control of the event propagation approach, you can be sure to deliver a
+              high-performing app. Collectively, these modifiers are powerful additions in Vue that let you enforce a
+              separation between the UI and the logic. With modifiers, you don't have to worry about DOM event details.
+              In this module, you learned how to respond to events by using event handlers. You also learned how to
+              alter event behavior with modifiers. These two things explain how to respond to user events in Vue.</p>
+            <p>In the context of the beer search engine, you now know how to collect the user query. You also know how
+              to respond to the user clicking the Search button. When a user clicks the Search button, though, they'll
+              expect to see the results of their query. That's the topic of the next module.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

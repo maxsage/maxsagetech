@@ -1,0 +1,794 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="UTF-8">
+  <title>maxsagetech - Developing Faster with the Vue CLI</title>
+  <script src="https://unpkg.com/vue"></script>
+  <!--<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"-->
+  <!--integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">-->
+  <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" rel="stylesheet">
+  <link href="prism.css" rel="stylesheet">
+  <script src="prism.js"></script>
+  <style>
+    img {
+      max-width: 100%;
+    }
+  </style>
+</head>
+<body>
+<div class="container" id="app">
+  <div class="panel-group">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h2>Developing Faster with the Vue CLI</h2>
+      </div>
+      <div class="panel-body">
+        <div>
+          <h2>Mastering Essential Vue Tools</h2>
+          <div>
+            <h3>Using Great Tooling for Vue</h3>
+            <p>One of the best positive influences that we can have in our development experiences is using great
+              tooling, and that applies to Vue developers as well. In this module, we're going to talk about the
+              essential Vue tools that are going to help you become a great Vue developer.</p>
+            <p>We'll start off by talking about the single most impactful tool that you can have in your toolbox, and of
+              course that is the Vue CLI, and sometimes when you're just not sure how to solve a problem, don't worry,
+              there's some great Vue documentation for various libraries up there, and we'll take a look at some of
+              those so you know how to find them.</p>
+            <p>We live in the browser, so it's important to know how to use the browser tooling. We'll look at some
+              plugins that you can use inside the browser and how we can do debugging in the browser for our Vue
+              applications.</p>
+            <p>Now when it comes time to open up our editor, we'll take a look at some great tools, things like code
+              snippets and a great extension called Vetur, which helps us with writing Vue applications inside of tools
+              like Visual Studio Code. This entire module is very demo driven, so let's go ahead and dive into all the
+              Vue tooling that you need to have in your toolbox. </p>
+          </div>
+          <div>
+            <h3>Vue CLI Overview</h3>
+            <p>
+              Let's get familiar with a couple of the most important Vue CLI commands. Now first we're going to run:
+              <figure>
+                <pre><code class="language-command-line">vue --help</code></pre>
+                <figcaption>Fig 03-001</figcaption>
+              </figure>
+            <p>Help is super important because when we're not sure what to do, it gives us a little bit of a hint. So
+              here we can do vue help and it shows us how we can see the version or we can see the commands like create
+              or add a plugin or inspect the options or do a build or invoke the UI:</p>
+            <figure>
+              <img src="images/Fig03-001.PNG"/>
+              <figcaption>Fig 03-001</figcaption>
+            </figure>
+            <p>We can also do these subcommands like help on things like create. So for example, I could do:
+              <figure>
+                <pre><code class="language-command-line">vue create --help</code></pre>
+                <figcaption>Fig 03-002</figcaption>
+              </figure>
+            <p>and here you'll see all the different options that we have for creating a new Vue project:</p>
+            <figure>
+              <img src="images/Fig03-002.PNG"/>
+              <figcaption>Fig 03-002</figcaption>
+            </figure>
+            <p>For example, we could create a project like this:</p>
+            <figure>
+              <pre><code class="language-command-line">vue create foo -db</code></pre>
+              <figcaption>Fig 03-003</figcaption>
+            </figure>
+            <p>We can add a -d flag to take the default options and a second flag -b to create a bare project. We can
+              put those two letters together like -db, and the order's not important. And this designates that we're
+              going to have default project settings and we're going to have a scaffold of a bare project. Basically a
+              project without the beginner instructions. If you recall in the project that we created for hello-cli, it
+              had a hello world component and it hooked it up with a bunch of links to documentation and things. Well,
+              we don't want to do that for every project, we can just go ahead and use the bare setting.</p>
+            <p>So we can combine several of these letters if we want to. Let's just go back to vue help here and maybe
+              we wanted to know how vue add works. So we could do:</p>
+            <figure>
+              <pre><code class="language-command-line">vue add --help</code></pre>
+              <figcaption>Fig 03-004</figcaption>
+            </figure>
+            <p>now we can see the usage of vue add. So we can type vue add and then the options that we might want to
+              use:</p>
+            <figure>
+              <img src="images/Fig03-005.PNG"/>
+              <figcaption>Fig 03-005</figcaption>
+            </figure>
+            <p>In this case there were very few, like where is the npm registry if we are using a different one than the
+              default, and we can specify the name of a plugin. For example, maybe Vuex or the Vue router.</p>
+            <p>There's a couple other commands that we're going to get familiar with, and one of those, if we're inside
+              of a project, we can do
+              <figure>
+                <pre><code class="language-command-line">cat package.json</code></pre>
+                <figcaption>Fig 03-006</figcaption>
+              </figure>
+            <p>which'll just show us everything inside the package. At a quick glance, you can see all the npm scripts,
+              serve, build, and lint:</p>
+            <figure>
+              <img src="images/Fig03-007.PNG"/>
+              <figcaption>Fig 03-007</figcaption>
+            </figure>
+            <p>Let's open our favorite editor code. You can type code and then dot. Then we'll open up the project
+              window and click on package.json. And now we can see the scripts:</p>
+            <figure>
+              <img src="images/Fig03-008.PNG"/>
+              <figcaption>Fig 03-008</figcaption>
+            </figure>
+            <p>There's serve, build, and lint. Now these are shortcuts to be able to run the serve, build, and lint
+              commands that the Vue CLI exposes.</p>
+            <p>Serving will compile the application in memory and then launch it so we can then view it in a browser.
+              Build will build the optimized version of the build for production by default. And lint will lint our
+              entire application.</p>
+            <p>Let's go back to terminal for a moment, and we'll type:</p>
+            <figure>
+              <pre><code class="language-command-line">vue --help</code></pre>
+              <figcaption>Fig 03-009</figcaption>
+            </figure>
+            <p>one more time. Notice what is missing in here:</p>
+            <p>Notice that there's a create for creating a project:</p>
+            <figure>
+              <img src="images/Fig03-010.PNG"/>
+              <figcaption>Fig 03-010</figcaption>
+            </figure>
+            <p>but there is no generation command. So for creating new components or new files, we just create those
+              with our favorite editor. Now I personally don't think that that's a gap in the CLI, it's just that pretty
+              much all you're going to do is create a component or just a plain old JavaScript file and start writing
+              your code. If you need some extra help with some of the syntax, there are ways to do that, and we'll learn
+              about those later in this module.
+            </p></div>
+          <div>
+            <h3>Navigating the Vue Documentation</h3>
+            <p>
+              The next stop on our tour of essential tools is to look at the documentation that you're going to want to
+              know how to get to and how to explore. First place, of course, is the vuejs. org home page. Let's take a
+              look at the Learn button at the top:</p>
+            <figure>
+              <img src="images/Fig03-011.PNG"/>
+              <figcaption>Fig 03-011</figcaption>
+            </figure>
+            <p>and we can see there's a Guide, an API, Style Guide, Examples, and Cookbook. The Guide is effectively the
+              docs. It's the ideal place to ask questions and get them answered for how does the v-for work with loops?
+              Or v-if with conditionals? And you'll notice that the table of contents is over here on the left. And then
+              you've got the content here in the middle:</p>
+            <figure>
+              <img src="images/Fig03-012.PNG"/>
+              <figcaption>Fig 03-012</figcaption>
+            </figure>
+            <p>I recommend reading through here even if you feel that you know Vue strongly. There's a lot of great
+              information. The next stop would be the API which is under the Learn menu. The API is ideal for learning
+              things like how do I know the API for props? So if we scroll down to Options/Data, props, which I'll give
+              you a hint here, you could actually just on the page do search with Cmd+F and you can find the word props,
+              or you could use the search up top here:</p>
+            <figure>
+              <img src="images/Fig03-013.PNG"/>
+              <figcaption>Fig 03-013</figcaption>
+            </figure>
+            <p>and it shows you all the places you can find props. In this case it just found the guide. So I like to go
+              to the page itself in the API and then just search for it, or you can just scroll through the table of
+              contents. Now notice here in props it's showing us the syntax. For example, in props we can have this
+              object where we've got height and then a number for the type check:</p>
+            <figure>
+              <img src="images/Fig03-014.PNG"/>
+              <figcaption>Fig 03-014</figcaption>
+            </figure>
+            <p>Or we could have a more complicated object like this with age. But it's great for looking up the syntax
+              and things inside the API.</p>
+            <p>Next on our list is the Style Guide again from the Learn menu.</p>
+            <figure>
+              <img src="images/Fig03-015.PNG"/>
+              <figcaption>Fig 03-015</figcaption>
+            </figure>
+            <p>It's currently in beta at the time of recording this course. This is great though because it shows you
+              different categories, and if we scroll to the left we can see those. The first one's essential rules,
+              strongly recommended rules, and then recommended rules and use with caution rules.</p>
+            <p>And then finally we've got Examples and Cookbook. The Cookbook is ideal for showing us scenarios and
+              solutions. So notice down here in the left one of my favorites is Dockerizing your Vue App:</p>
+            <figure>
+              <img src="images/Fig03-016.PNG"/>
+              <figcaption>Fig 03-016</figcaption>
+            </figure>
+            <p>First it talks about how you can use a Dockerfile and create your Vue app, and notice it's launching it
+              with the HTTP server. It also explains why it made these decisions, and then how you can also use
+              something like NGINX or Apache if you want to use it in production. So these are the Vue docs. </p>
+            <p>There's also a whole bunch of stuff in the ecosystem. For example, of course, there's the Vue CLI.</p>
+            <figure>
+              <img src="images/Fig03-017.PNG"/>
+              <figcaption>Fig 03-017</figcaption>
+            </figure>
+            <p>I'll hold Cmd down and open a new tab for that. There's also the Vue Router and Vuex. Just a couple
+              different things are there. The Vue CLI, we can go over and look at its own docs. We can click on Get
+              Started or just go right to the Guide. If we're looking at the Vue Router, we can go click on its guide as
+              well:</p>
+            <figure>
+              <img src="images/Fig03-018.PNG"/>
+              <figcaption>Fig 03-018</figcaption>
+            </figure>
+            <p>which brought us right to it here in this case, we learn how to use the Vue router, or Vuex for state
+              management, and we can learn how this all works.</p>
+            <p>Just a recap, there's the main Vue docs, there's the Vue CLI docs, the Vue Router docs, and then the Vuex
+              docs:</p>
+            <figure>
+              <img src="images/Fig03-019.PNG"/>
+              <figcaption>Fig 03-019</figcaption>
+            </figure>
+            <p>and many, many more. The best place to go if you're getting a little confused is right to the main Vue
+              docs, and then you can look for all the other docs right from its main menu.
+            </p></div>
+          <div>
+            <h3>Getting Familiar with the Vue Developer Tooling</h3>
+            <p>
+              The next stop on our dev tools tour is to look at the tools for the browser that we can use to help us
+              debug and analyze Vue apps. The best place we can go for this is to open up a new tab. And then open
+              github. com/vuejs/vue-devtools:</p>
+            <figure>
+              <img src="images/Fig03-020.PNG"/>
+              <figcaption>Fig 03-020</figcaption>
+            </figure>
+            <p>This is a repository holding the dev tools by the official Vue team. We scroll down, we can see what
+              those dev tools look like, and the features it offers, and notice there's three different ways we can
+              install it currently:</p>
+            <figure>
+              <img src="images/Fig03-021.PNG"/>
+              <figcaption>Fig 03-021</figcaption>
+            </figure>
+            <p>One's a standalone Electron app, another one's a Firefox add-on, and the third one's a Chrome extension.
+              Let's click on the Chrome extension just to see how we can get there. Notice I'm in the Chrome web store
+              and then I could add it if I didn't already have it with the button over here:</p>
+            <figure>
+              <img src="images/Fig03-022.PNG"/>
+              <figcaption>Fig 03-022</figcaption>
+            </figure>
+            <p>
+              Once you have it in your browser, you'll see a little icon like this up here. All right, so what does this
+              offer for you? To find out how we can use these tools, let's open another tab and let's type in <a
+              href="jpapa.me/heroes-vue">jpapa.me/heroes-vue</a></p>
+            <figure>
+              <img src="images/Fig03-023.PNG"/>
+              <figcaption>Fig 03-023</figcaption>
+            </figure>
+            <p>This'll bring you to my GitHub repository of an app called heroes-vue. It's called the Tour of Heroes,
+              and you can see it running right here in production mode if you'd like to do that. This is the Tour of
+              Heroes app written with Vue:</p>
+            <figure>
+              <img src="images/Fig03-024.PNG"/>
+              <figcaption>Fig 03-024</figcaption>
+            </figure>
+            <p>Now we're going to pull this code down. So we're going to clone it by clicking on the Clone button. I'm
+              going to copy this here. You can also just download the zip if you'd like to. We'll flip back over to our
+              play folder. And now I'm going to type:</p>
+            <figure>
+              <pre><code class="language-command-line">git clone https://github.com/johnpapa/heroes-vue.git</code></pre>
+              <figcaption>Fig 03-025</figcaption>
+            </figure>
+            <p>And now once we get that, we're going to go into that folder and then run:</p>
+            <figure>
+              <pre><code class="language-command-line">npm install</code></pre>
+              <figcaption>Fig 03-026</figcaption>
+            </figure>
+            <p>Once you've cloned the repository, we're going to run:</p>
+            <figure>
+              <pre><code class="language-command-line">npm run quick</code></pre>
+              <figcaption>Fig 03-027</figcaption>
+            </figure>
+            <p>This is an npm script that I created that not only starts up the Vue application and serves it, but also
+              starts up a back end for us. This will run the application in development mode, and then we can click on
+              the port to run it locally. Notice we're running locally now:</p>
+            <figure>
+              <img src="images/Fig03-028.PNG"/>
+              <figcaption>Fig 03-028</figcaption>
+            </figure>
+            <p>And here if I click on the button for the Vue tool, you'll see that it detected Vue on the page. So now I
+              can open up the development tools and I can go over here and click on Vue:</p>
+            <figure>
+              <img src="images/Fig03-029.PNG"/>
+              <figcaption>Fig 03-029</figcaption>
+            </figure>
+            <p>and you'll see that there's my elements for components, and all the different ones are showing up
+              here</p>
+            <figure>
+              <img src="images/Fig03-030.PNG"/>
+              <figcaption>Fig 03-030</figcaption>
+            </figure>
+            <p>
+              Now let's go down into Heroes themselves and we'll click on the HeroList. Notice in the HeroList I've got
+              a CardContent, there is Aslaug the warrior queen:</p>
+            <figure>
+              <img src="images/Fig03-031.PNG"/>
+              <figcaption>Fig 03-031</figcaption>
+            </figure>
+            <p>and you'll see the props are down here. And when you click on the props, you'll have options like copying
+              the value. Now let's select Aslaug by doing Edit:</p>
+            <figure>
+              <img src="images/Fig03-032.PNG"/>
+              <figcaption>Fig 03-032</figcaption>
+            </figure>
+            <p>and if I can't figure out where the element is here I'll go over to the left and get it. The way I do
+              that is to click on this little icon up here.</p>
+            <figure>
+              <img src="images/Fig03-033.PNG"/>
+              <figcaption>Fig 03-033</figcaption>
+            </figure>
+            <p>That'll select component in the page. And then I can select the name for Aslaug. And down here we can see
+              there's the Hero in the props:</p>
+            <figure>
+              <img src="images/Fig03-034.PNG"/>
+              <figcaption>Fig 03-034</figcaption>
+            </figure>
+            <p>There's also data. Now with the data you can edit it. So let's say we wanted to change the description
+              from warrior queen, we could come over here and type something different:</p>
+            <figure>
+              <img src="images/Fig03-035.PNG"/>
+              <figcaption>Fig 03-035</figcaption>
+            </figure>
+            <p>We could type in here it's a vue hero, and then hit Cancel or Save and notice the value changes here and
+              over on the left.</p>
+            <figure>
+              <img src="images/Fig03-036.PNG"/>
+              <figcaption>Fig 03-036</figcaption>
+            </figure>
+            <p>We can also look at the elements here, and then flip back if we want to Vue. And the top, we can see
+              there's different icons. This one is for the components:</p>
+            <figure>
+              <img src="images/Fig03-037.PNG"/>
+              <figcaption>Fig 03-037</figcaption>
+            </figure>
+            <p>that's what we're looking at now. The second icon is to show Vuex:</p>
+            <figure>
+              <img src="images/Fig03-038.PNG"/>
+              <figcaption>Fig 03-038</figcaption>
+            </figure>
+            <p>If your application's using Vuex for state management, which this one is, you'll see the Base State.
+              Let's change Aslaug to joe.</p>
+            <figure>
+              <img src="images/Fig03-039.PNG"/>
+              <figcaption>Fig 03-039</figcaption>
+            </figure>
+            <p>We'll scroll down, press Save, and you'll see the change was made right here.</p>
+            <figure>
+              <img src="images/Fig03-040.PNG"/>
+              <figcaption>Fig 03-040</figcaption>
+            </figure>
+            <p>Now we can see the full state. Notice there's 6 heroes and there are 0 villains at this point:</p>
+            <figure>
+              <img src="images/Fig03-041.PNG"/>
+              <figcaption>Fig 03-041</figcaption>
+            </figure>
+            <p>And we can open that up and look at them. And then we've got our getters, and then there's a mutation
+              that was just made. And we can click through here using time traveling. Now, why aren't there any
+              villains? Because I haven't clicked on villains yet, so now when I go get the villains you'll see the
+              villains appear:</p>
+            <figure>
+              <img src="images/Fig03-042.PNG"/>
+              <figcaption>Fig 03-042</figcaption>
+            </figure>
+            <p>So this tool is great for showing this, and then we can stop recording or we can clear the state out. The
+              third option is to show the events</p>
+            <figure>
+              <img src="images/Fig03-043.PNG"/>
+              <figcaption>Fig 03-043</figcaption>
+            </figure>
+            <p>The events are nice because it shows you all the events that have happened. Let's clear this out. And now
+              when I click on Edit:</p>
+            <figure>
+              <img src="images/Fig03-044.PNG"/>
+              <figcaption>Fig 03-044</figcaption>
+            </figure>
+            <p>we can see it was selected on the villain list and then clicked on the button footer</p>
+            <figure>
+              <img src="images/Fig03-045.PNG"/>
+              <figcaption>Fig 03-045</figcaption>
+            </figure>
+            <p>I'm going to come down here and hit Cancel:</p>
+            <figure>
+              <img src="images/Fig03-046.PNG"/>
+              <figcaption>Fig 03-046</figcaption>
+            </figure>
+            <p>We'll get an unselect and a clicked event that were emitted:</p>
+            <figure>
+              <img src="images/Fig03-047.PNG"/>
+              <figcaption>Fig 03-047</figcaption>
+            </figure>
+            <p>And then finally we've got a refresh that we can do right here:</p>
+            <figure>
+              <img src="images/Fig03-048.PNG"/>
+              <figcaption>Fig 03-048</figcaption>
+            </figure>
+            <p>The Vue developer tools are a great complement to using the Vue CLI to help you analyze the applications
+              that you're creating.
+            </p></div>
+          <div>
+            <h3>Debugging Vue in the Browser</h3>
+            <p>
+              One of the most essential tools for developing with any platform is a debugger, and Vue is no exception.
+              So let's run the heroes-vue app again using:</p>
+            <figure>
+              <pre><code class="language-command-line">npm run quick</code></pre>
+              <figcaption>Fig 03-049</figcaption>
+            </figure>
+            <p>And then when it's done we'll launch this in the browser. And we'll go full screen real quick, but let's
+              say we wanted to walk through this application here in a debugger. We'll open up the developer tools over
+              here on the right-hand side, and we'll click on Sources:</p>
+            <figure>
+              <img src="images/Fig03-050.PNG"/>
+              <figcaption>Fig 03-050.PNG</figcaption>
+            </figure>
+            <p>Now we happen to know that there is a heroes and a hero-list and a hero-details component in our
+              application. So here we can see with sources all the files. Let's actually hide that navigator. And I'm
+              going to right-click up here and choose Close all:</p>
+            <figure>
+              <img src="images/Fig03-051.PNG"/>
+              <figcaption>Fig 03-051</figcaption>
+            </figure>
+            <p>Now let's say we want to walk through the process of what happens when we edit a hero; notice joe over
+              here:</p>
+            <figure>
+              <img src="images/Fig03-052.PNG"/>
+              <figcaption>Fig 03-052</figcaption>
+            </figure>
+            <p>So let's first go up and we happen to know it's in the hero-detail vue is where this happens. That's
+              where the save is pressed. So here in saveHero on line 72 I'll set a breakpoint:</p>
+            <figure>
+              <img src="images/Fig03-053.PNG"/>
+              <figcaption>Fig 03-053</figcaption>
+            </figure>
+            <p>Now this is going to emit a save event, and it's going to be caught by the heroes component. So I'll have
+              to go look for the heroes component. It's right there:</p>
+            <figure>
+              <img src="images/Fig03-054.PNG"/>
+              <figcaption>Fig 03-054</figcaption>
+            </figure>
+            <p>heroes. vue. And we should look up where for where is it getting mapped to for save? Right down here on
+              line 85:</p>
+            <figure>
+              <img src="images/Fig03-055.PNG"/>
+              <figcaption>Fig 03-055</figcaption>
+            </figure>
+            <p>We know that because the template up top is listening on the heroDetail, right here:</p>
+            <figure>
+              <img src="images/Fig03-056.PNG"/>
+              <figcaption>Fig 03-056</figcaption>
+            </figure>
+            <p>for save to call the save function.</p>
+            <p>So we've got our breakpoint set up and we can see these if we pull up the bottom piece of the developer
+              tools:</p>
+            <figure>
+              <img src="images/Fig03-057.PNG"/>
+              <figcaption>Fig 03-057</figcaption>
+            </figure>
+            <p>We can now see our breakpoints set to hero-detail. vue and heroes vue. So let's go ahead and edit joe,
+              and then we'll press Save down here:</p>
+            <figure>
+              <img src="images/Fig03-058.PNG"/>
+              <figcaption>Fig 03-058</figcaption>
+            </figure>
+            <p>Notice we can catch that in the debugger. It shows us the editing hero:</p>
+            <figure>
+              <img src="images/Fig03-059.PNG"/>
+              <figcaption>Fig 03-059</figcaption>
+            </figure>
+            <p>We can see the description, the ID, and the name. We can also break into this in the console, and we can
+              type in any of those values, so we could do this. editingHero, and we can see the whole object right
+              there:</p>
+            <figure>
+              <img src="images/Fig03-060.PNG"/>
+              <figcaption>Fig 03-060</figcaption>
+            </figure>
+            <p>And then we can let it run through by clicking this button there to resume:</p>
+            <figure>
+              <img src="images/Fig03-061.PNG"/>
+              <figcaption>Fig 03-061</figcaption>
+            </figure>
+            <p>And notice now here back in the heroes component</p>
+            <figure>
+              <img src="images/Fig03-062.PNG"/>
+              <figcaption>Fig 03-062</figcaption>
+            </figure>
+            <p>it's listening to that save event that was emitted from the hero details, now we can walk through it line
+              by line if we want, stepping over it. We can hover over this hero. id. Here's the new hero right
+              there:</p>
+            <figure>
+              <img src="images/Fig03-063.PNG"/>
+              <figcaption>Fig 03-063</figcaption>
+            </figure>
+            <p>
+              Now we can just press run, resume:</p>
+            <figure>
+              <img src="images/Fig03-064.PNG"/>
+              <figcaption>Fig 03-064</figcaption>
+            </figure>
+            <p>and we're good to go. Now we can disable our breakpoints:</p>
+            <figure>
+              <img src="images/Fig03-065.PNG"/>
+              <figcaption>Fig 03-065</figcaption>
+            </figure>
+            <p>and if we go and edit again, we can put in an exclamation in the name field and then Save. Nothing gets
+              caught. There's nothing specific about Vue in this process. It's just walking through and debugging
+              JavaScript inside of the Chrome development tools. I find it very useful to be able to use this as just
+              another tool in my toolbox when using the Vue CLI to develop Vue applications.</p>
+          </div>
+          <div>
+            <h3>Developing with Vue in Visual Studio Code</h3>
+            <p>There are some great editors out there that you can use. My favorite happens to be Visual Studio Code.
+              And you can grab that here:</p>
+            <figure>
+              <img src="images/Fig03-066.PNG"/>
+              <figcaption>Fig 03-066</figcaption>
+            </figure>
+            <p>from code. visualstudio. com. There's great support in VS Code for using things like Vue. First you can
+              download the version you like. I happen to like to use the Insiders version. That's what I have installed
+              here. The Stable you get once a month. The Insiders you happen to get updates almost daily, sometimes more
+              than once a day. This means that you're getting the new features as soon as they're available. It's been
+              extremely stable for me, so that's what I've been using for the last several years.</p>
+            <p>It only takes a moment to download. We'll do that right now. And after you downloaded it, it brings you
+              to a Getting Started page. Notice it's about 66 MB at the time of recording. And there we go, it's
+              installed. At that point you can then install it on your machine by opening up the zip file. Now once we
+              open code and we look at a project such as the HEROES-VUE project, you'll notice that when we click on a
+              Vue file, all the text is the same color:</p>
+            <figure>
+              <img src="images/Fig03-067.PNG"/>
+              <figcaption>Fig 03-067</figcaption>
+            </figure>
+            <p>It's not recognizing what a. vue file is. One of the great things about VS Code is you can extend it with
+              language services, in this case a Vue language service, and there's an extension for that. If we click on
+              the extensions icon on the left, and then go search for it, they call it Vetur, right there, by Pine
+              Wu:</p>
+            <figure>
+              <img src="images/Fig03-068.PNG"/>
+              <figcaption>Fig 03-068</figcaption>
+            </figure>
+            <p>
+              we can then install this and then we'll reload. And now let's go back and look at that same file called
+              heroes.vue. Notice we get all the syntax coloring and highlighting that we need.</p>
+            <figure>
+              <img src="images/Fig03-069.PNG"/>
+              <figcaption>Fig 03-069</figcaption>
+            </figure>
+            <p>There's a whole lot more inside of Vetur that we get. Let's take a quick look at that by opening up the
+              extension:</p>
+            <figure>
+              <img src="images/Fig03-070.PNG"/>
+              <figcaption>Fig 03-070</figcaption>
+            </figure>
+            <p>and now we'll type Vetur again. This time it finds one that we have. Let's go check out the docs:</p>
+            <figure>
+              <img src="images/Fig03-071.PNG"/>
+              <figcaption>Fig 03-071</figcaption>
+            </figure>
+            <p>There's a lot of things that you get out of the box, like syntax-highlighting, you get a couple snippets,
+              linting and error checking, formatting:</p>
+            <figure>
+              <img src="images/Fig03-072.PNG"/>
+              <figcaption>Fig 03-072</figcaption>
+            </figure>
+            <p>For formatting it uses Prettier if you've got the prettierrc file inside of your project, which I happen
+              to have inside the vue-heroes project. You get IntelliSense inside the template, style, and script tags
+              for the single file component in Vue. There's a recipe right here:</p>
+            <figure>
+              <img src="images/Fig03-073.PNG"/>
+              <figcaption>Fig 03-073</figcaption>
+            </figure>
+            <p>for debugging inside of Visual Studio Code. And there's a whole lot more on there including a roadmap for
+              future versions.</p>
+            <p>Okay, so back inside of VS Code, let's go and look at a Vue file real quick. I'm going to hit Cmd+B to
+              hide the sidebar and Cmd+J to hide the bottom panel. Now let's say that I had nothing in this file. I'm
+              going to highlight everything and delete it:</p>
+            <figure>
+              <img src="images/Fig03-074.PNG"/>
+              <figcaption>Fig 03-074</figcaption>
+            </figure>
+            <p>Maybe I need to put in a brand new Vue file here. One of the snippets you get out of the box is called
+              scaffold, and it gives you the template, the script, and then the style tags. But I happen to like another
+              extension that's out there. Don't worry that this file's empty, we've got Git source control here. You can
+              always undo. If you go to the extensions there's another one. This time I'm going to type in vue just to
+              see what's out there. There's some Vue snippets right here from hollowtree, but there's also some from
+              sarah. drasner.</p>
+            <figure>
+              <img src="images/Fig03-075.PNG"/>
+              <figcaption>Fig 03-075</figcaption>
+            </figure>
+            <p>I happen to like these ones here, so I'll install those. You can really use any that you like of course.
+              Once we have those snippets installed, now I can type something called vbase:</p>
+            <figure>
+              <img src="images/Fig03-076.PNG"/>
+              <figcaption>Fig 03-076</figcaption>
+            </figure>
+            <p>and notice on the right-hand side it's previewing what I'm going to get. There's vbase. It's very similar
+              to the other extension that we had. And let's say inside of here we wanted to do something with data. I
+              could type in vdata. And we get the data attribute right there:</p>
+            <figure>
+              <img src="images/Fig03-077.PNG"/>
+              <figcaption>Fig 03-077</figcaption>
+            </figure>
+            <p>We can type our key in and our value. Let's say we wanted a method. I can type in vmethod, and there we
+              go. If I wanted to do a computed, there's a vcomputed we can use. So some nice little snippets that we can
+              use inside of our code as we're generating the files. And of course, like any good editor, there's always
+              an undo with Git control. We can discard those changes, and we get our file back.</p>
+            <p>There's a whole lot of other extensions that you can install. One of my favorites, again, is Prettier
+              that you can use for formatting your code. And if you happen to like this theme, it's called Winter is
+              Coming and it's one that I created. You can download and install these for free right from VS Code. I
+              realize the editor is a very personal choice. I happen to really like this one because it makes my
+              development flow much easier. So that's the one I'll be using throughout this course. And if you'd like to
+              use it, these are some great tips that you can use to get going. </p>
+          </div>
+          <div>
+            <h3>Debugging Vue in Visual Studio Code</h3>
+            <p>
+              We know that we can debug inside of Chrome, but if we install the extension for Chrome debugging in VS
+              Code, we can do it right from VS Code. So here we can type in Chrome in the extensions marketplace:</p>
+            <figure>
+              <img src="images/Fig03-078.PNG"/>
+              <figcaption>Fig 03-078</figcaption>
+            </figure>
+            <p>Notice I've already got the debugger there. It's a little popular. It's got 15 million downloads. So it's
+              quite the well-used extension. Let's take a look at how we can set this up. First, inside of the vue.
+              config. js, notice I have from lines 2 through 4 configureWebpack and my devtool is set to source-map:</p>
+            <figure>
+              <img src="images/Fig03-079.PNG"/>
+              <figcaption>Fig 03-079</figcaption>
+            </figure>
+            <p>
+              And then let's hit the Debug pane over here</p>
+            <figure>
+              <img src="images/Fig03-080.PNG"/>
+              <figcaption>Fig 03-080</figcaption>
+            </figure>
+            <p>and hit the gear:</p>
+            <figure>
+              <img src="images/Fig03-081.PNG"/>
+              <figcaption>Fig 03-081</figcaption>
+            </figure>
+            <p>and choose Chrome:</p>
+            <figure>
+              <img src="images/Fig03-082.PNG"/>
+              <figcaption>Fig 03-082</figcaption>
+            </figure>
+            <p>That's going to set up a debug configuration for Chrome. Now we'll name this something that's a little
+              more useful like Vue with Chrome. And the name is just what's going to show up in the box in the upper
+              left:</p>
+            <figure>
+              <img src="images/Fig03-083.PNG"/>
+              <figcaption>Fig 03-083</figcaption>
+            </figure>
+            <p>
+              The URL is where you're launching from. Our app happens to launch from 9626:</p>
+            <figure>
+              <img src="images/Fig03-084.PNG"/>
+              <figcaption>Fig 03-084</figcaption>
+            </figure>
+            <p>Because it's the Tour of Heroes app it's heroes-vue. If you're using 8080 or 8000, make sure you adjust
+              the port accordingly. Our web root is where our source code is. Ours happens to be in
+              workspaceFolder/src:</p>
+            <figure>
+              <img src="images/Fig03-085.PNG"/>
+              <figcaption>Fig 03-085</figcaption>
+            </figure>
+            <p>
+              I like to set the setting called breakOnLoad:</p>
+            <figure>
+              <img src="images/Fig03-086.PNG"/>
+              <figcaption>Fig 03-086</figcaption>
+            </figure>
+            <p>I set that to true. And if you'd like to know what these things do, if you hover over them you get a
+              little tooltip. And this is an experimental feature and it says here of course that if it's true it's
+              going to attempt to set a breakpoint before the scripts are loaded. So it can hit anything at the
+              beginning.</p>
+            <p>And then there's a sourceMapPathOverride, which we're going to set. And when you automatically type this
+              it's going to fill in a bunch of these options for us:</p>
+            <figure>
+              <img src="images/Fig03-087.PNG"/>
+              <figcaption>Fig 03-087</figcaption>
+            </figure>
+            <p>Now it's okay to leave them all here, but the one we really need is right there:</p>
+            <figure>
+              <img src="images/Fig03-088.PNG"/>
+              <figcaption>Fig 03-088</figcaption>
+            </figure>
+            <p>It's the second one, so we could just run with this one here.</p>
+            <p>Now once we have these, what do we accomplish? We set up a launch configuration that allows us to set
+              breakpoints and debug right here inside of VS Code. So how does it work? Okay, once we do this, and this
+              is a one-time thing, you save this for your project. And again, we set the vue. config. js, and we set a
+              launch.json file up, which is a VS Code feature.</p>
+            <p>When we have both of those and the Chrome debugging extension installed, all we have to do now is run our
+              app and set breakpoints. So let's close both these files. And let's go find our heroes.vue, and we'll come
+              down into the data. And I'll set a breakpoint right there on the return of data:</p>
+            <figure>
+              <img src="images/Fig03-089.PNG"/>
+              <figcaption>Fig 03-089</figcaption>
+            </figure>
+            <p>and we'll do another one on askToDelete:</p>
+            <figure>
+              <img src="images/Fig03-090.PNG"/>
+              <figcaption>Fig 03-090</figcaption>
+            </figure>
+            <p>So when we click the button to delete, we should get a breakpoint there. Next we run our app. In this
+              case we can run it from terminal. I'm going to open up the terminal right here inside of VS Code. It's
+              integrated into it:</p>
+            <figure>
+              <pre><code class="language-command-line">npm run quick</code></pre>
+              <figcaption>Fig 03-091</figcaption>
+            </figure>
+            <p>will do it for me. That'll build it, and then launch it when it's ready. Don't worry about that localhost
+              9627:</p>
+            <figure>
+              <img src="images/Fig03-092.PNG"/>
+              <figcaption>Fig 03-092</figcaption>
+            </figure>
+            <p>that's the back-end server. We're proxying our API calls to that. Our app is actually running on 9626 as
+              we can see here:</p>
+            <figure>
+              <img src="images/Fig03-093.PNG"/>
+              <figcaption>Fig 03-093</figcaption>
+            </figure>
+            <p>Now no debugger happened yet. That's because we haven't launched it. If we go back over here to the Debug
+              window:</p>
+            <figure>
+              <img src="images/Fig03-094.PNG"/>
+              <figcaption>Fig 03-094</figcaption>
+            </figure>
+            <p>and now we click on the go button, this green button up here:</p>
+            <figure>
+              <img src="images/Fig03-095.PNG"/>
+              <figcaption>Fig 03-095</figcaption>
+            </figure>
+            <p>make sure that Vue: Chrome is selected because you could have multiple configurations. Now we run it. It
+              launches the app in a browser and notice we hit our first breakpoint:</p>
+            <figure>
+              <img src="images/Fig03-096.PNG"/>
+              <figcaption>Fig 03-096</figcaption>
+            </figure>
+            <p>Return on the data. Now I'm going to go ahead and show this side by side, VS Code on the left, and we'll
+              make it so we can see everything pretty good, and the app on the right. It says it's paused in the VS
+              Code. Now we can let it run. Everything's good here unless we want to delete the second one. When I click
+              Delete right here:</p>
+            <figure>
+              <img src="images/Fig03-097.PNG"/>
+              <figcaption>Fig 03-097</figcaption>
+            </figure>
+            <p>it goes over here and it prompts us for it. So let's go back to full screen on VS Code. We can hover over
+              hero and we can see the values:</p>
+            <figure>
+              <img src="images/Fig03-098.PNG"/>
+              <figcaption>Fig 03-098</figcaption>
+            </figure>
+            <p>We can look over on the left at the Local window. Now we can see the values there:</p>
+            <figure>
+              <img src="images/Fig03-099.PNG"/>
+              <figcaption>Fig 03-099</figcaption>
+            </figure>
+            <p>We can edit them as well. We can change this to John if we want to right there. Probably not a great
+              idea, but we can do these things. And then we can step through one by one:</p>
+            <figure>
+              <img src="images/Fig03-100.PNG"/>
+              <figcaption>Fig 03-100</figcaption>
+            </figure>
+            <p>Now it's going to show the modal. And if I flip back over to the code, you can see that the code is still
+              running on this side, and I could let it rip. Just let it run. We're good. Now it's asking if I want to
+              delete it:</p>
+            <figure>
+              <img src="images/Fig03-101.PNG"/>
+              <figcaption>Fig 03-101</figcaption>
+            </figure>
+            <p>I'll say no. This is how easy it is to debug projects that you create with the Vue CLI right from VS Code
+              using the Chrome debugger extension.
+            </p></div>
+          <div>
+            <h3>Reviewing the Vue Tooling</h3>
+            <p>In this module, we learned about all the tooling that we can use in conjunction with the Vue CLI. VS Code
+              is an important part of that, and that included extensions like Prettier, Code Snippets, and Vetur. Of
+              course, we need the Vue CLI and its UI to do the great tooling that it has for us to generate our projects
+              and do our builds and our runs, and we integrated it all by doing debugging both through the Chrome
+              browser and in VS Code using the Chrome debugging extension. And finally, don't forget that one of the
+              best tools we have is the great documentation that Vue provides for us:</p>
+            <figure>
+              <img src="images/Fig03-102.PNG"/>
+              <figcaption>Fig 03-102</figcaption>
+            </figure>
+            <p>I'm a firm believer of making sure before you start a project that you have all your tools laid out and a
+              good plan, and hopefully by going through this module you've got that plan for your Vue CLI, the
+              documentation, the browser tooling, debugging plans for yourselves both with the browser and VS Code, and
+              all the extensions that you need. And now we're set up to be successful using the Vue CLI to create great
+              Vue applications. </p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

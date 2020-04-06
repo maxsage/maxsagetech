@@ -1,0 +1,2027 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="UTF-8">
+  <title>maxsagetech - Vue JS Fundamentals</title>
+  <script src="https://unpkg.com/vue"></script>
+  <!--<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"-->
+  <!--integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">-->
+  <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" rel="stylesheet">
+  <link href="prism.css" rel="stylesheet">
+  <script src="prism.js"></script>
+  <style>
+
+    img {
+      max-width: 100%;
+     
+    }
+  </style>
+</head>
+<body>
+<div class="container" id="app">
+  <div class="panel-group">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h2>Vue JS Fundamentals</h2>
+      </div>
+      <div class="panel-body">
+        <div class="course-transcript">
+        <div><h2>Managing State and Server Communication with Vuex</h2>
+          <div><h3>Introduction</h3>
+            <p>
+              Welcome to this module on managing state and server communication with Vuex. In this module, we'll explore
+              how to reliably handle data in a Vue application using Vuex. Vuex helps us by creating a central store
+              where we can store and retrieve data in a way that works well with change detection across an entire Vue
+              application. At the heart of Vuex state management is the Vuex store:</p>
+            <figure>
+              <img src="images/Fig05-001.png"/>
+              <figcaption>Fig 05-001</figcaption>
+            </figure>
+            <p>The store provides not just a storage mechanism, but an interface for mutating data, requesting
+              asynchronous mutations to data, and managing complex logic for fetching computed data with getters. The
+              interface it provides ensures a shared data store for your application that will work well with Vue's
+              change detection. At the heart of the Vuex store is the shared state tree:</p>
+            <figure>
+              <img src="images/Fig05-002.png"/>
+              <figcaption>Fig 05-002</figcaption>
+            </figure>
+            <p>This is essentially a single object that contains all of the data for your entire application. When you
+              first create your store, you provide an initial state object with reasonable defaults. This is important
+              to Vue's change detection. We'll talk more about that later, but just know that the store contains a
+              single state object that can be accessed throughout your application.</p>
+            <p>Once the store is created, if you want to make changes to data in the store you do so by committing
+              mutations.</p>
+            <figure>
+              <img src="images/Fig05-003.png"/>
+              <figcaption>Fig 05-003</figcaption>
+            </figure>
+            <p>Mutations are synchronous and shouldn't be confused with actions, which are asynchronous.</p>
+            <p>You might wonder what the purpose of a synchronous mutation is. Why not just change the state directly?
+              Essentially, by telling the store to commit a mutation it keeps everything within the store consistent and
+              working well with change detection. If you want to kick off an asynchronous call that will eventually
+              mutate the store, such as making a call to an API to fetch data, that's where actions come in:</p>
+            <figure>
+              <img src="images/Fig05-004.png"/>
+              <figcaption>Fig 05-004</figcaption>
+            </figure>
+            <p>Actions contain asynchronous calls using constructs like promises or async/await, which when finished
+              commit mutations to the store. Actions and mutations work hand in hand to make asynchronous calls and then
+              mutate the state. Sometimes when you want to access data from the store, you want to perform some complex
+              calculation logic before returning the data.</p>
+            <p>For example, you may have an array of unicorns in your store and perhaps it's common in your application
+              to want to retrieve only unicorns who can heal fatal wounds. Well, all over your application you could
+              retrieve the list of unicorns from your store and then filter it as needed. But this distributes and
+              duplicates the logic all throughout your application. For purposes like this, Vuex provides getters:</p>
+            <figure>
+              <img src="images/Fig05-005.png"/>
+              <figcaption>Fig 05-005</figcaption>
+            </figure>
+            <p>Getters are basically functions in your store that fetch data from the state and do some sort of
+              calculation on or manipulation of the data before returning it. So these four items, state, mutations,
+              actions, and getters make up a Vuex store.</p>
+            <p>In this module, we'll cover all the fundamentals of working with Vuex including:</p>
+            <ul>
+              <li>Creating a Vuex store</li>
+              <li>Changing state with mutations</li>
+              <li>Retrieving data from the state</li>
+              <li>Using getters to return calculated data from the state</li>
+              <li>using actions to work with asynchronous data</li>
+              <li>using modules to organize a store</li>
+              <li>using built-in helpers to work with the store.</li>
+            </ul>
+            <p>This will really help us turn our Build-a-Bot app into a full-feature Vue application. So let's get
+              started.</p>
+          </div>
+          <div><h3>Creating a Vuex Store</h3>
+            <p>The first need that we have in our app for state management is a place to store our cart. As it is right
+              now, we've had to have our cart on our build page because we've had no way to manage state across pages.
+              What we really want though is to create a cart page and then be able to add a robot to the cart from the
+              build page and then have it show up on the cart page.</p>
+            <p>Vuex will allow us to do that, but we'll first need to create a Vuex store. So let's create that. But
+              first, we need to install Vuex. So, I'm going to stop my server here, and then I'm going to type:</p>
+            <figure>
+              <pre><code class="language-command-line">npm install vuex --save</code></pre>
+              <figcaption>Fig 05-006</figcaption>
+            </figure>
+            <p>And then we'll save that. Now typically, this is all you'll do to install Vuex. But for this course, if
+              you're following along, go ahead and specify version 3. 0. 1:</p>
+            <figure>
+              <pre><code class="language-command-line">npm install vuex@3.0.1 --save</code></pre>
+              <figcaption>Fig 05-006</figcaption>
+            </figure>
+            <p>This will just make sure that you don't have any inconsistencies with different Vuex versions in the
+              future. So let's go ahead and run that. Alright, now let's go ahead and start our server up again. Okay,
+              and now to create our Vuex store.</p>
+            <p>So, back over in our project here let's create a new folder. We'll call that store. And then inside that
+              store we'll create a new index.js file:</p>
+            <figure>
+              <img src="images/Fig05-006.png"/>
+              <figcaption>Fig 05-006</figcaption>
+            </figure>
+            <p>Okay, now in our store file we're just going to go ahead and import Vue, and we're going to import
+              Vuex:</p>
+            <figure>
+              <img src="images/Fig05-007.png"/>
+              <figcaption>Fig 05-007</figcaption>
+            </figure>
+            <p>And now we just need to tell Vue to use Vuex like this. So now our Vue instance is aware that we're using
+              Vuex. And then finally, we'll just export a new Vuex store like this:</p>
+            <figure>
+              <img src="images/Fig05-008.png"/>
+              <figcaption>Fig 05-008.png</figcaption>
+            </figure>
+            <p>Alright. And we'll come back to this and add more to this shortly. But first we need to come back over to
+              our main.js and configure our Vue instance to use our new store. So let's import that up here:</p>
+            <figure>
+              <img src="images/Fig05-009.png"/>
+              <figcaption>Fig 05-009</figcaption>
+            </figure>
+            <p>And then we'll just use it down here like this:</p>
+            <figure>
+              <img src="images/Fig05-010.png"/>
+              <figcaption>Fig 05-010</figcaption>
+            </figure>
+            <p>Okay, so now we have a new store that we can start working with. In the next clip, we'll see how to start
+              adding data to our store using mutations.
+            </p>
+          </div>
+          <div><h3>Changing Vuex Store State with Mutations</h3>
+            <p>Alright, now that we have a store let's start storing data in it. If we look at our RobotBuilder, we have
+              the addToCart method. And right now, it's just storing the cart items in this array:</p>
+            <figure>
+              <img src="images/Fig05-011.png"/>
+              <figcaption>Fig 05-011</figcaption>
+            </figure>
+            <p>We'd like to instead add that to our store so that it can be accessed by other components. Specifically,
+              by a cart page component when we create it in the next clip.</p>
+            <p>First off, our store needs a state object.</p>
+            <figure>
+              <img src="images/Fig05-012.png"/>
+              <figcaption>Fig 05-012</figcaption>
+            </figure>
+            <p>
+              The state object is where we'll store all of our data. So, we're going to create a cart property in our
+              state object and default it to an empty array:</p>
+            <figure>
+              <img src="images/Fig05-013.png"/>
+              <figcaption>Fig 05-013</figcaption>
+            </figure>
+            <p>This step is surprisingly important. You might think that we could just add this cart array to our state
+              object somewhere else in our code later. Like, say, when we first mutate the state to add stuff to a cart.
+              But it's important for Vue's change detection that you start with a default value for everything that you
+              add to the store. This is because Vue's change detection works by tapping into the getters and setters of
+              objects in the store. If you don't add a default property to the state to start with Vue won't even notice
+              changes when you add that data later. So, for everything that you're going to store in the state you need
+              to add a default property for it here in the state object.</p>
+            <p>Okay, so now that we have a default cart object, let's go ahead and add a mutation. So we'll just add a
+              mutations object:</p>
+            <figure>
+              <img src="images/Fig05-014.png"/>
+              <figcaption>Fig 05-014</figcaption>
+            </figure>
+            <p>And as we discussed previously, all changes to data in a store must happen through a mutation. You can't
+              just access the store's state directly and start changing data. All changes must go through a
+              mutation.</p>
+            <p>So we're going to add an addRobotToCart method here:</p>
+            <figure>
+              <img src="images/Fig05-015.png"/>
+              <figcaption>Fig 05-015.png</figcaption>
+            </figure>
+            <p>This addRobotToCart mutation will be called from our RobotBuilder component. And the first parameter of a
+              mutation is the state. And then the remaining parameters, if any, are the data that you want to pass in to
+              the mutation. So we're going to add a robot parameter. And in our function we say
+              state.cart.push(robot).</p>
+            <p>So we're accessing the state through the parameter that was passed in to the mutation. And then we're
+              accessing the cart on the state, which is an empty array initially because we defaulted it up above. And
+              then we just push the robot that's passed in to the mutation onto that array.</p>
+            <p>So this is all we need in order to add data to the store. Now let's go call this mutation. So back over
+              here in our RobotBuilder, instead of pushing our robot onto this local cart array:</p>
+            <figure>
+              <img src="images/Fig05-016.png"/>
+              <figcaption>Fig 05-016</figcaption>
+            </figure>
+            <p>we're going to access our store. And we can access it like this:</p>
+            <figure>
+              <img src="images/Fig05-017.png"/>
+              <figcaption>Fig 05-017</figcaption>
+            </figure>
+            <p>because our global view instance is aware of our store, and so it's made available to our components. So,
+              on the store I'm going to call commit. And then the first thing that we pass in to commit is the name of
+              the mutation in our store.</p>
+            <p>So this was the name of this function here:</p>
+            <figure>
+              <img src="images/Fig05-018.png"/>
+              <figcaption>Fig 05-018</figcaption>
+            </figure>
+            <p>addRobotToCart. So we're going to paste that in here:</p>
+            <figure>
+              <img src="images/Fig05-019.png"/>
+              <figcaption>Fig 05-019</figcaption>
+            </figure>
+            <p>So we're going to commit the addRobotToCart mutation, and then the next parameter that we pass in is the
+              data that we want to pass to that mutation. And so that's our robot, which is this expression here:</p>
+            <figure>
+              <img src="images/Fig05-020.png"/>
+              <figcaption>Fig 05-020</figcaption>
+            </figure>
+            <p>
+              Alright, now we can delete this line:</p>
+            <figure>
+              <img src="images/Fig05-021.png"/>
+              <figcaption>Fig 05-021</figcaption>
+            </figure>
+            <p>Okay, so this is now adding a robot to our cart in our Vuex store using a mutation. And this happens when
+              we click the Add to Cart button on our RobotBuilder. But we can't see this at work until we display the
+              data from the store somewhere else.</p>
+            <p>So in the next clip, were going to create a simple cart page and see how to retrieve the cart data from
+              the store. And then you'll be able to see this working.</p>
+          </div>
+          <p>
+          <h3>Retreiving Items from the Vuex Store</h3>
+          <p>Okay, so we've used this addRobotToCart mutation:</p>
+          <figure>
+            <img src="images/Fig05-022.png"/>
+            <figcaption>Fig 05-022</figcaption>
+          </figure>
+          <p>in order to add our robot to the store. And now to demonstrate how to retrieve data from the store, let's
+            create a cart page:</p>
+          <figure>
+            <img src="images/Fig05-023.png"/>
+            <figcaption>Fig 05-023</figcaption>
+          </figure>
+          <p>So first, we'll create a cart folder and then we'll create a ShoppingCart component. And let's get the
+            basic content for this from our GitHub repo. So, in the src cart folder we have this ShoppingCart.vue
+            file.</p>
+          <figure>
+            <img src="images/Fig05-024.png"/>
+            <figcaption>Fig 05-024</figcaption>
+          </figure>
+          <p>Let's go ahead and grab that and paste that into here. Okay, so nothing too fancy going on here. Just a bit
+            of HTML here with an HTML table. And down here on line 16 we have this v-for:</p>
+          <figure>
+            <img src="images/Fig05-025.png"/>
+            <figcaption>Fig 05-025</figcaption>
+          </figure>
+          <p>that we're looping over to display each of the items in the cart. This may look familiar. We did the same
+            thing on the RobotBuilder page. And we'll delete that soon. And you can see here that our v-for is looping
+            over a cart array:</p>
+          <figure>
+            <img src="images/Fig05-026.png"/>
+            <figcaption>Fig 05-026</figcaption>
+          </figure>
+          <p>But that doesn't exist yet in our component. We want to get that off of our new Vuex store. For that, we'll
+            use a computed property. So down here, let's create a computed section:</p>
+          <figure>
+            <img src="images/Fig05-027.png"/>
+            <figcaption>Fig 05-027</figcaption>
+          </figure>
+          <p>And in here we're going to create a computed property called cart. And then, although you can't mutate a
+            Vuex store state directly, you can access the state directly to read from it. And so, we're just going to
+            access the cart on the store like this:</p>
+          <figure>
+            <img src="images/Fig05-028.png"/>
+            <figcaption>Fig 05-028</figcaption>
+          </figure>
+          <p>So we're just going to return this. $store.state.cart. And that's it. Now we are adding items to the cart
+            in the Vuex store from our RobotBuilder and then accessing it here in our cart component.</p>
+          <p>So let's just go add a route and link to our cart page so we can see this working. So over in our routes,
+            down at the bottom, let's add a new route. And the path for that will just be /cart. And we will name it
+            cart. And that will use the ShoppingCart component:</p>
+          <figure>
+            <img src="images/Fig05-030.png"/>
+            <figcaption>Fig 05-030</figcaption>
+          </figure>
+          <p>
+            This needs to go right here. Okay, so now we just need to import our ShoppingCart. So right here we will
+            import ShoppingCart from cart/ShoppingCart.vue:</p>
+          <figure>
+            <img src="images/Fig05-031.png"/>
+            <figcaption>Fig 05-031</figcaption>
+          </figure>
+          <p>Okay, so we have a route for it. Now let's go over to our App component and add a link to it. So let's copy
+            this existing menu item:</p>
+          <figure>
+            <img src="images/Fig05-032.png"/>
+            <figcaption>Fig 05-032</figcaption>
+          </figure>
+          <p>
+            And in addition to this nav-item class let's add a cart class:</p>
+          <figure>
+            <img src="images/Fig05-033.png"/>
+            <figcaption>Fig 05-033</figcaption>
+          </figure>
+          <p>We're going to go ahead and pull this nav-item over to the right-hand side so there's a cart link in the
+            top right-hand corner of our application. So we'll use this cart class for that.</p>
+          <p>And then we're going to just go ahead and link to a simple /cart route here:</p>
+          <figure>
+            <img src="images/Fig05-034.png"/>
+            <figcaption>Fig 05-034</figcaption>
+          </figure>
+          <p>And then since that's just a URL string we don't need to bind. And then right here we'll just change this
+            to Cart. Okay, cool.</p>
+
+          <p>So now down here in our styles, next to our other nav-item, we will add a nav-item. cart class. And we'll
+            position this relative with a margin-left: auto and a border-right of none:</p>
+          <figure>
+            <img src="images/Fig05-035.png"/>
+            <figcaption>Fig 05-035</figcaption>
+          </figure>
+          <p>Alright, we're ready to go check this all out. so just as a reminder, from our last clip we added a robot
+            to our store using the addRobotToCart mutation:</p>
+          <figure>
+            <img src="images/Fig05-036.png"/>
+            <figcaption>Fig 05-036</figcaption>
+          </figure>
+          <p>And that exists in our store right here:</p>
+          <figure>
+            <img src="images/Fig05-037.png"/>
+            <figcaption>Fig 05-037</figcaption>
+          </figure>
+          <p>And that mutation is just pushing the robot onto our cart in our store. And then in our ShoppingCart we are
+            using a computed property in order to get the cart out of the store:</p>
+          <figure>
+            <img src="images/Fig05-038.png"/>
+            <figcaption>Fig 05-038</figcaption>
+          </figure>
+          <p>So let's go check that out. So, here we have our cart link:</p>
+          <figure>
+            <img src="images/Fig05-039.png"/>
+            <figcaption>Fig 05-039</figcaption>
+          </figure>
+          <p>So, let's go ahead and add this robot to a cart and then we'll also add our friendly robot to our cart:</p>
+          <figure>
+            <img src="images/Fig05-040.png"/>
+            <figcaption>Fig 05-040</figcaption>
+          </figure>
+          <p>
+            And then let's go ahead and click on the cart to go to the cart page. And there we go:</p>
+          <figure>
+            <img src="images/Fig05-041.png"/>
+            <figcaption>Fig 05-041</figcaption>
+          </figure>
+          <p>So you can see that we have our large cyclops and friendly bot robots that we just added from our build
+            page, and it's accessible to us here on our cart page. So just to make it a little bit more obvious that
+            this is being added to our cart when we click this button:</p>
+          <figure>
+            <img src="images/Fig05-042.png"/>
+            <figcaption>Fig 05-042</figcaption>
+          </figure>
+          <p>let's add a little indicator up here on our cart link:</p>
+          <figure>
+            <img src="images/Fig05-043.png"/>
+            <figcaption>Fig 05-043</figcaption>
+          </figure>
+          <p>that shows how many items are in the cart. So, back over in our App component, let's add a computed
+            property here:</p>
+          <figure>
+            <img src="images/Fig05-044.png"/>
+            <figcaption>Fig 05-044</figcaption>
+          </figure>
+          <p>to also get our cart off of the store like we did in the cart page. So add a computed section that will
+            have a cart and that will just return this. $store.state.cart. And then up here right next to our cart link
+            inside the list item, we're going to add a new div. And it will have a class, and we'll call that class
+            cart-items:</p>
+          <figure>
+            <img src="images/Fig05-045.png"/>
+            <figcaption>Fig 05-045</figcaption>
+          </figure>
+          <p>And then right in here we're exposing cart from our component. So we'll just say cart.length here:</p>
+          <figure>
+            <img src="images/Fig05-046.png"/>
+            <figcaption>Fig 05-046</figcaption>
+          </figure>
+          <p>So this will display the number of items in the cart. And then we just need to add this cart-items class,
+            so let's just come down to the bottom her:</p>
+          <figure>
+            <img src="images/Fig05-047.png"/>
+            <figcaption>Fig 05-047</figcaption>
+          </figure>
+          <p>And you can see we're just positioning this absolute in the top right-hand corner next to the cart link,
+            and we are giving it a border radius so it will be like a round pill. And then just a background color of
+            sea green.</p>
+          <p>Okay, so let's go see how that's working. Here we go, we can see that we have two items in our cart:</p>
+          <figure>
+            <img src="images/Fig05-048.png"/>
+            <figcaption>Fig 05-048</figcaption>
+          </figure>
+          <p>If we go to our cart you can see that we do have two things in our cart:</p>
+          <figure>
+            <img src="images/Fig05-049.png"/>
+            <figcaption>Fig 05-049</figcaption>
+          </figure>
+          <p>And we'll go back to Build, and let's add another item to our cart:</p>
+          <figure>
+            <img src="images/Fig05-050.png"/>
+            <figcaption>Fig 05-050</figcaption>
+          </figure>
+          <p>And you can see immediately that changed to three. I'll click it again here, it'll change to four:</p>
+          <figure>
+            <img src="images/Fig05-051.png"/>
+            <figcaption>Fig 05-051</figcaption>
+          </figure>
+          <p>So now we are accessing data from our store across three different components. It's being added from our
+            RobotBuilder component and then it's being accessed by our cart and App components.</p>
+          <p> Okay, that's awesome. So, let's just go clean up this extra cart stuff here:</p>
+          <figure>
+            <img src="images/Fig05-052.png"/>
+            <figcaption>Fig 05-052</figcaption>
+          </figure>
+          <p>that we're not using any more on our RobotBuilder page. So, here in our RobotBuilder, down here at the
+            bottom we have this table data, table header, and cost classes that we can delete:</p>
+          <figure>
+            <img src="images/Fig05-053.png"/>
+            <figcaption>Fig 05-053</figcaption>
+          </figure>
+          <p>And then up in the HTML, we have this whole cart section here that we can delete:</p>
+          <figure>
+            <img src="images/Fig05-054.png"/>
+            <figcaption>Fig 05-054.png</figcaption>
+          </figure>
+          <p>Okay. So, that is gone now from our RobotBuilder page, and when we add items to our cart they are showing
+            on our cart. So accessing data from the state is pretty simple.</p>
+          <p>Next, we'll take a look at how to add getter functions to the store so that we can compute derived state in
+            the store when necessary.
+          </>
+        </div>
+        <div><h3>Using Vuex Getters to Return Calculated Data</h3>
+          <p>So far, we've been accessing state on the store directly just like this:</p>
+          <figure>
+            <img src="images/Fig05-055.png"/>
+            <figcaption>Fig 05-055</figcaption>
+          </figure>
+          <p>Sometimes you want to have a computed property on the state that returns a value that is a calculation or
+            derived value of some sort based on data that's in the state. This is what Vuex getters are for. To explore
+            this, let's create a getter on our store that will return only items from the cart that are on sale.</p>
+          <p>
+            This is going to be based on this cart value from the state:</p>
+          <figure>
+            <img src="images/Fig05-056.png"/>
+            <figcaption>Fig 05-056</figcaption>
+          </figure>
+          <p>but will basically filter the cart for just the items that are on sale. We could just do this in the
+            component, but sometimes you want to reuse logic like this, and encapsulating logic like this in the store
+            can be helpful.</p>
+          <p>So first, let's go back over to our shopping cart and we will duplicate our cart here. So we'll grab this
+            header and this table:</p>
+          <figure>
+            <img src="images/Fig05-057.png"/>
+            <figcaption>Fig 05-057</figcaption>
+          </figure>
+          <p>and we'll just duplicate it. And then let's change this to h2. And we'll change this to say You saved money
+            on these robots. And then let's just add a class on this h2 called saleItems.:</p>
+          <figure>
+            <img src="images/Fig05-058.png"/>
+            <figcaption>Fig 05-058</figcaption>
+          </figure>
+          <p> And then that class just looks like this. So it'll have a margin on the top to separate it from the normal
+            part. And we'll give it a font size of 18px. And we'll give it a red color since it's sale items:</p>
+          <figure>
+            <img src="images/Fig05-059.png"/>
+            <figcaption>Fig 05-059</figcaption>
+          </figure>
+          <p>Okay, now back up in our HTML, instead of looping over the cart we're going to loop over a new computed
+            property and that will be called cartSaleItems:</p>
+          <figure>
+            <img src="images/Fig05-060.png"/>
+            <figcaption>Fig 05-060</figcaption>
+          </figure>
+          <p>Okay. And then let's add a computed property down here for that. So this will be cartSaleItems:</p>
+          <figure>
+            <img src="images/Fig05-061.png"/>
+            <figcaption>Fig 05-061.png</figcaption>
+          </figure>
+          <p>And then again, we could just grab the cart from the store and then filter it right here, but we want to do
+            this in a getter in the store so it's reusable. So let's go back over to the store and we'll add a new
+            section for getters. And then we'll add our cartSaleItems getter:</p>
+          <figure>
+            <img src="images/Fig05-062.png"/>
+            <figcaption>Fig 05-062</figcaption>
+          </figure>
+          <p>And the first parameter for getters is the state. And now we can do whatever calculations from the state
+            that we want to do here. So, we'll go ahead and return state.cart.filter. And then we'll filter that for
+            just the items where the head is on sale:</p>
+          <figure>
+            <img src="images/Fig05-063.png"/>
+            <figcaption>Fig 05-063</figcaption>
+          </figure>
+          <p>Of course, a robot would be on sale if other parts are on sale, but this is simple and you get the idea.
+            You can go ahead and enhance this if you'd like.</p>
+          <p>So now you can see that we're just filtering for any items where the robot's head is on sale. And this
+            calculation is based on data that's in the state and then exposed as a cartSaleItems getter. And now this
+            logic is nicely encapsulated here. So now the only question is how do we access it?</p>
+          <p>Well that's pretty simple. So back over here in our cart where we created our computed property we can
+            access it just like we do with the state, this.$store. But instead of saying. state we'll say. getters. And
+            we'll ask for cartSaleItems.</p>
+          <figure>
+            <img src="images/Fig05-064.png"/>
+            <figcaption>Fig 05-064</figcaption>
+          </figure>
+          <p>Okay, let's go see how that's working. So, here's our cart and here's our new section:</p>
+          <figure>
+            <img src="images/Fig05-065.png"/>
+            <figcaption>Fig 05-065</figcaption>
+          </figure>
+          <p>Although it is not styled correctly, so let's come back over here and see what we did. Oh, here we go. This
+            should be class:</p>
+          <figure>
+            <img src="images/Fig05-066.png"/>
+            <figcaption>Fig 05-066</figcaption>
+          </figure>
+          <p>You probably saw that when I first did it and I was probably driving you nuts. But now that that's styled
+            let's go take a look. Okay, there we go:</p>
+          <figure>
+            <img src="images/Fig05-067.png"/>
+            <figcaption>Fig 05-067</figcaption>
+          </figure>
+          <p>So that's working now. So let's go ahead and add this robot that is not on sale. Now you can see we now
+            have one item in our cart.</p>
+          <figure>
+            <img src="images/Fig05-068.png"/>
+            <figcaption>Fig 05-068</figcaption>
+          </figure>
+          <p>And now let's go ahead and add this one that's on sale:</p>
+          <figure>
+            <img src="images/Fig05-069.png"/>
+            <figcaption>Fig 05-069</figcaption>
+          </figure>
+          <p>And now let's go take a look at our cart. There we go. So you can see that we have two items in our cart
+            and only one of them is on sale:</p>
+          <figure>
+            <img src="images/Fig05-070.png"/>
+            <figcaption>Fig 05-070</figcaption>
+          </figure>
+          <p>So using getters is really easy and a nice way to encapsulate any calculation logic into your store</p>
+          <p>
+            Next, we'll start exploring how to access data from a remote API. And that get a little bit more interesting
+            due to the asynchronous nature of HTTP calls.
+          </p>
+        </div>
+        <div><h3>Using Actions to Work with APIs and Asynchronous Data</h3>
+          <p>Everything that we've done so far with Vuex has been synchronous, simply modifying and reading from the
+            local state. But of course, most web applications today deal with asynchronous HTTP calls to fetch and
+            update data from a remote API. With Vuex we can accomplish that with actions. But first, we'll need an API
+            to work with.</p>
+          <p>To make this easy I've already created this API over here:</p>
+          <figure>
+            <img src="images/Fig05-071.png"/>
+            <figcaption>Fig 05-071</figcaption>
+          </figure>
+          <p>So, let's clone this by copying the remote URL here. And then over here in our bash console I'm going to
+            open a new tab and change directory to where I keep my projects. And then I'm going to go ahead and git
+            clone that:</p>
+          <figure>
+            <img src="images/Fig05-072.png"/>
+            <figcaption>Fig 05-072</figcaption>
+          </figure>
+          <p>And if you're using this same bash console, you paste by right-clicking. So I'll paste my remote URL in
+            here and go ahead and clone that. Okay, so let's change directory into that new directory. And then I'm just
+            going to do a npm install:</p>
+          <figure>
+            <img src="images/Fig05-073.png"/>
+            <figcaption>Fig 05-073</figcaption>
+          </figure>
+          <p>Alright, now we can go ahead and start up this server by just saying npm start:</p>
+          <figure>
+            <img src="images/Fig05-074.png"/>
+            <figcaption>Fig 05-074</figcaption>
+          </figure>
+          <p>Okay, now you can see we have a server listening at port 8081. So if I come back over to my browser and go
+            to localhost port 8081 then I have an endpoint right here that I can hit, api/parts:</p>
+          <figure>
+            <img src="images/Fig05-075.png"/>
+            <figcaption>Fig 05-075</figcaption>
+          </figure>
+          <p>And there we go. So you can see now that this parts endpoint on our new API is returning all of our robot
+            parts data that we previously have had hard decoded in our application.</p>
+          <p>And now it's time to finally start getting this from the real API, so we'll do that with a Vuex action. So,
+            back over in our store let's add an action section:</p>
+          <figure>
+            <img src="images/Fig05-076.png"/>
+            <figcaption>Fig 05-076</figcaption>
+          </figure>
+          <p>And in here we create our first action which we call getParts.</p>
+          <p>And the first parameter to an action function is a context object:</p>
+          <figure>
+            <img src="images/Fig05-077.png"/>
+            <figcaption>Fig 05-077</figcaption>
+          </figure>
+          <p>The context exposes several items for working with the state. So instead of passing in this we could
+            actually deconstruct it to grab what we want. It provides things like state, getters, a commit function, and
+            a dispatch function:</p>
+          <figure>
+            <img src="images/Fig05-078.png"/>
+            <figcaption>Fig 05-078</figcaption>
+          </figure>
+          <p>But all we really need right now is the commit function so that's all I'm going to deconstruct out of the
+            context object. The commit function is how we call mutations on the store. You may recall that we're already
+            using the commit function in the RobotBuilder currently to call the addRobotToCart mutation. So, we'll use
+            this commit function in just a minute. First, we need a way to make HTTP calls.</p>
+          <p>Vue doesn't provide any of its own custom Ajax or data access methods or libraries. Instead, they allow you
+            to use whatever you want to make HTTP calls. So we're going to use Axios, which means we need to install
+            it.</p>
+          <p>
+            So, back over in our console, on the tab that's running our Build-a-Bot app, let's go ahead and stop it. And
+            then I'm going to npm install axios:</p>
+          <figure>
+            <img src="images/Fig05-079.png"/>
+            <figcaption>Fig 05-079</figcaption>
+          </figure>
+          <p>And we'll save that. Okay, let's go ahead and start our server back up:</p>
+          <figure>
+            <img src="images/Fig05-080.png"/>
+            <figcaption>Fig 05-080</figcaption>
+          </figure>
+          <p>And then back over in our app, we're going to go ahead and import Axios:</p>
+          <figure>
+            <img src="images/Fig05-081.png"/>
+            <figcaption>Fig 05-081</figcaption>
+          </figure>
+          <p>And now down in our getParts function I can use Axios to get data. So I'm going to say axios.get:</p>
+          <figure>
+            <img src="images/Fig05-082.png"/>
+            <figcaption>Fig 05-082</figcaption>
+          </figure>
+          <p>And then the axios.get function takes a URL for the endpoint that you want to hit. But what can we put
+            here? Our API endpoint that we created is right here. So we could put http://localhost:8081/api/parts:</p>
+          <figure>
+            <img src="images/Fig05-083.png"/>
+            <figcaption>Fig 05-083</figcaption>
+          </figure>
+          <p>
+            But, of course, there are a couple of problems with this. First of all, we're going to get CORS issues if we
+            do this because we're accessing a different port than what our application was running under. But also,
+            localhost is not going to work in production. And in production, this is typically solved by hosting your
+            application and your API on the same domain and port. But we don't have that luxury in development without
+            some effort.</p>
+          <p> That's not a problem though because Vue provides a way for us to configure a built-in proxy so that we can
+            proxy the API through our dev server that our Vue app is being served from. This will solve our issues
+            locally and enable us to just use a relative URL like this:</p>
+          <figure>
+            <img src="images/Fig05-084.png"/>
+            <figcaption>Fig 05-084</figcaption>
+          </figure>
+          <p>So, in order for this to work we need to configure the Vue proxy to proxy our API. We can do that by
+            creating a file at the root of our project named vue.config.j s. So I'm just going to right-click here and
+            create a new file, vue.config.js:</p>
+          <figure>
+            <img src="images/Fig05-085.png"/>
+            <figcaption>Fig 05-085</figcaption>
+          </figure>
+          <p>And then in here we just need to configure the proxy like this. So, we'll do a module.exports and we'll
+            just export an object from here. And in here we'll just provide a devServer configuration. And we'll
+            configure the proxy. And we want our proxy to be running at /api:</p>
+          <figure>
+            <img src="images/Fig05-086.png"/>
+            <figcaption>Fig 05-086</figcaption>
+          </figure>
+          <p>So now we can configure this API to be proxied to where our server is running. So, the target for API is
+            going to be http://localhost:8081:</p>
+          <figure>
+            <img src="images/Fig05-087.png"/>
+            <figcaption>Fig 05-087</figcaption>
+          </figure>
+          <p>And then we just specify changeOrigin, and we'll set that to true.</p>
+          <p>So this is actually webpack. config. And Vue, behind the scenes, is using the webpack-dev-server. So that's
+            why we're using webpack. config here. So this is how you configure the webpack-dev-server.</p>
+          <p>So now, we have a proxy running at /api that will proxy all requests from /api to http://localhost, port
+            8081. So now this api/parts URL will get proxied to our API that's running on port 8081. So now that that's
+            set up we can continue working on our action.</p>
+          <p>So, when this axios call:</p>
+          <figure>
+            <img src="images/Fig05-088.png"/>
+            <figcaption>Fig 05-088</figcaption>
+          </figure>
+          <p>finishes we want to commit the data to our store. But before we can do that we need to add a default value
+            to our state. So up here I'm going to set parts by default to just null:</p>
+          <figure>
+            <img src="images/Fig05-089.png"/>
+            <figcaption>Fig 05-089</figcaption>
+          </figure>
+          <p>
+            Remember, anything that you add to your state you need to add here at a default value for it to start with.
+            And, again, when this axios call finishes we want to mutate our state. But we can't do that directly. We do
+            that through mutations. So let's add a mutation next for updateParts:</p>
+          <figure>
+            <img src="images/Fig05-090.png"/>
+            <figcaption>Fig 05-090</figcaption>
+          </figure>
+          <p>And that takes in state and our parts. And then we'll just set state.parts equal to the parts being passed
+            in here.</p>
+          <p>Okay. And then notice something interesting with this mutation. ESLint is saying that we're violating the
+            no-param-reassign rule:</p>
+          <figure>
+            <img src="images/Fig05-091.png"/>
+            <figcaption>Fig 05-091</figcaption>
+          </figure>
+          <p>This rule says that you should never mutate a parameter that is passed in to a function. This helps avoid
+            mutation-related bugs. However, Vue's whole change detection relies on mutations within the store. It's
+            actually intended that you will mutate this state object when it's passed in. So for that reason, let's
+            update our ESLint RC file to allow this.</p>
+          <p>So, here we have our eslintrc.js file:</p>
+          <figure>
+            <img src="images/Fig05-092.png"/>
+            <figcaption>Fig 05-092</figcaption>
+          </figure>
+          <p>And then right here in rules all we have to do is add another rule for no-param-reassign. And we'll set
+            that to 0:</p>
+          <figure>
+            <img src="images/Fig05-093.png"/>
+            <figcaption>Fig 05-093</figcaption>
+          </figure>
+          <p>And now ESLint should stop warning us. Yep, sure enough. Looks good now:</p>
+          <figure>
+            <img src="images/Fig05-094.png"/>
+            <figcaption>Fig 05-094</figcaption>
+          </figure>
+          <p>Okay, so finally back to our action here. When our axios call finishes we want to then commit the data to
+            the store. So, we'll take in our result here from our axios call and then we will call commit that we've
+            de-structured there from our parameters. And we want to commit the updateParts mutation. And then we'll pass
+            in the data that we get back from our API calls. So that will be result.data. So Axios returns a result
+            object and it has a data object that has the payload that was returned.</p>
+          <figure>
+            <img src="images/Fig05-095.png"/>
+            <figcaption>Fig 05-095</figcaption>
+          </figure>
+          <p>
+            Okay, cool. And then in the event that an error occurs I'll catch it and then I'll just pass that to
+            console.error:</p>
+          <figure>
+            <img src="images/Fig05-096.png"/>
+            <figcaption>Fig 05-096</figcaption>
+          </figure>
+          <p>Of course, you might want to do something more useful than this in a real application, but for now I'll
+            just log any errors to the console.</p>
+          <p>Okay, so with all of this in place we use Axios to call our API:</p>
+          <figure>
+            <img src="images/Fig05-097.png"/>
+            <figcaption>Fig 05-097</figcaption>
+          </figure>
+          <p>And then we commit:</p>
+          <figure>
+            <img src="images/Fig05-098.png"/>
+            <figcaption>Fig 05-098</figcaption>
+          </figure>
+          <p>the returned data to our store:</p>
+          <figure>
+            <img src="images/Fig05-099.png"/>
+            <figcaption>Fig 05-099</figcaption>
+          </figure>
+          <p>through the updateParts mutation:</p>
+          <figure>
+            <img src="images/Fig05-100.png"/>
+            <figcaption>Fig 05-100</figcaption>
+          </figure>
+          <p>Okay, cool. So now wherever we need this data, we need to first dispatch to this action and then get the
+            parts from the store instead of from the hard-coded parts. json file we're currently using.</p>
+          <p>So, let's start in the RobotBuilder. So, first up here we are importing availableParts from this parts
+            file:</p>
+          <figure>
+            <img src="images/Fig05-101.png"/>
+            <figcaption>Fig 05-101</figcaption>
+          </figure>
+          <p>So let's delete that. And then in order to kick of the axios call we need to dispatch an action. And then
+            we want to dispatch that action as soon as this component is created. So, let's go ahead and add a created
+            hook:</p>
+          <figure>
+            <img src="images/Fig05-102.png"/>
+            <figcaption>Fig 05-102</figcaption>
+          </figure>
+          <p>And then in here I'm going to access the store with this. $store. And then there's a new function we
+            haven't used on the store yet and that's called dispatch. And we're just going to tell it to dispatch the
+            getParts action:</p>
+          <figure>
+            <img src="images/Fig05-103.png"/>
+            <figcaption>Fig 05-103</figcaption>
+          </figure>
+          <p>So you use commit to commit mutations and you use dispatch to kick off actions.</p>
+          <p>Okay, so that will kick off our axios action, which is asynchronous. And then all we need to do is create a
+            computed property that will return the parts from the store when the axios call is finished. So down here in
+            computed, let's add a new computed property called availableParts. And this will just return
+            this.$store.state.parts.</p>
+          <figure>
+            <img src="images/Fig05-104.png"/>
+            <figcaption>Fig 05-104</figcaption>
+          </figure>
+          <p>Okay, and then this is just complaining because we have availableParts declared in two places. We don't
+            need it in data anymore since it's now a computed prop:</p>
+          <figure>
+            <img src="images/Fig05-105.png"/>
+            <figcaption>Fig 05-105</figcaption>
+          </figure>
+          <p>So our created lifecycle hook now dispatches the axios call and then once that's available this computed
+            prop will get updated whenever that data returns. And now up here in our template, in all these places that
+            we're calling availableParts:</p>
+          <figure>
+            <img src="images/Fig05-106.png"/>
+            <figcaption>Fig 05-106</figcaption>
+          </figure>
+          <p>will now get availableParts from the computed property. Okay, so this is pretty much it. We've dispatched
+            our call and then we're getting the data off the store after the action in the store has committed the data
+            via a mutation. But we still have one problem.</p>
+          <p>So if we come over here, you can see our build page is not rendering. And if we look in here we have
+            errors:</p>
+          <figure>
+            <img src="images/Fig05-107.png"/>
+            <figcaption>Fig 05-107</figcaption>
+          </figure>
+          <p>Notice that it says here Cannot read property "heads" of null. So back over here, That's right here:</p>
+          <figure>
+            <img src="images/Fig05-108.png"/>
+            <figcaption>Fig 05-108</figcaption>
+          </figure>
+          <p>So it's saying that it cannot read property heads of null. So availableParts is null. And that's going to
+            happen everywhere below where we're using availableParts also. Well, that's because over in our store here
+            our default value for parts is null:</p>
+          <figure>
+            <img src="images/Fig05-109.png"/>
+            <figcaption>Fig 05-109</figcaption>
+          </figure>
+          <p>And so, because our action is asynchronous, when the component first loads the store returns null for
+            availableParts or for this parts property. And we could fix this in two different ways.</p>
+          <p>We could provide an empty object as the default value in our store or we could prevent the RobotBuilder
+            page from rendering until the availableParts is populated. I'm going to go with the later solution because
+            the first solution would have some other cascading problems with an empty object.</p>
+          <p>So, let's just use a v-if on this outer div here. And we will just say v-if, and we will only show this if
+            availableParts is truthy:</p>
+          <figure>
+            <img src="images/Fig05-110.png"/>
+            <figcaption>Fig 05-110</figcaption>
+          </figure>
+          <p>So this won't render if it's null. So this should be working now. If we come back over here and refresh.
+            Okay, and now we're getting a 404 error:</p>
+          <figure>
+            <img src="images/Fig05-111.png"/>
+            <figcaption>Fig 05-111</figcaption>
+          </figure>
+          <p>but that's just because when we created our proxy, updated our proxy config, we needed to restart our
+            server. So I'm going to stop my server and start it again:</p>
+          <figure>
+            <img src="images/Fig05-112.png"/>
+            <figcaption>Fig 05-112</figcaption>
+          </figure>
+          <p>And now let's go ahead and refresh here. There we go. No more errors here:</p>
+          <figure>
+            <img src="images/Fig05-113.png"/>
+            <figcaption>Fig 05-113</figcaption>
+          </figure>
+          <p>And you can see that we are getting our robot parts just fine:</p>
+          <figure>
+            <img src="images/Fig05-114.png"/>
+            <figcaption>Fig 05-114</figcaption>
+          </figure>
+          <p>And now it's coming from an API call. So if I look in Network over here and refresh this page, you can see
+            that I made this call to port 8080/api/parts:</p>
+          <figure>
+            <img src="images/Fig05-115.png"/>
+            <figcaption>Fig 05-115</figcaption>
+          </figure>
+          <p>and that got rewritten by our proxy server to port 8081. Alright, awesome. So we have now dispatched an
+            action, which kicked off an asynchronous API call and then we're getting that data.</p>
+          <p>Now we just need to update the other places in our app where we were importing that old parts.json file and
+            use the action instead. So, let's start with these four files in the parts folder:</p>
+          <figure>
+            <img src="images/Fig05-116.png"/>
+            <figcaption>Fig 05-116</figcaption>
+          </figure>
+          <p>So this is for the part info pages that display information about each of the parts. And these four files
+            are very similar. And they're all going to need to dispatch the getParts action. And th en they'll each need
+            to have a computer prop to get the parts off the store. And since that will be repeated across all four of
+            these components, let's create a mixin to do it and then we'll reuse it.</p>
+          <p>So, we'll create a new file and we'll name it get-parts-mixin.js:</p>
+          <figure>
+            <img src="images/Fig05-117.png"/>
+            <figcaption>Fig 05-117</figcaption>
+          </figure>
+          <p>And then this will just export a component options object. And in here we'll add a created hook. And this
+            will dispatch the getParts action:</p>
+          <figure>
+            <img src="images/Fig05-118.png"/>
+            <figcaption>Fig 05-118</figcaption>
+          </figure>
+          <p>And then we just want a computed prop. And that computed prop will be called parts. And it will return
+            this.$store.state.parts:</p>
+          <figure>
+            <img src="images/Fig05-119.png"/>
+            <figcaption>Fig 05-119</figcaption>
+          </figure>
+          <p>And actually, I'd like this computed prop to do a little bit more than just this. I'd like to make it so
+            that we don't have to do a v-if check in all of our components while we wait for the parts action to
+            complete.</p>
+          <p>So, we'll return the parts unless it's null. In which case, we'll return a default object. So, that default
+            object will just look like this. It'll have heads, which is an empty array, arms, and torsos, and bases:</p>
+          <figure>
+            <img src="images/Fig05-120.png"/>
+            <figcaption>Fig 05-120</figcaption>
+          </figure>
+          <p>Okay, so this is dispatching the getParts action and then returning parts from the store or a reasonable
+            default object if the parts are not in the store. Okay, so let's just go use that mixin in each of these
+            components. So, here in the robot arms we'll get rid of this import:</p>
+          <figure>
+            <img src="images/Fig05-121.png"/>
+            <figcaption>Fig 05-121</figcaption>
+          </figure>
+          <p>And we can delete our data function:</p>
+          <figure>
+            <img src="images/Fig05-122.png"/>
+            <figcaption>Fig 05-122</figcaption>
+          </figure>
+          <p>since our mixin is going to handle that via computed props. And let's go ahead and import our mixin,
+            getPartsMixin from ./get-parts-mixin.</p>
+          <figure>
+            <img src="images/Fig05-123.png"/>
+            <figcaption>Fig 05-123</figcaption>
+          </figure>
+          <p>Okay. And then our mixin we use down here by specifying mixins and passing that in in the array:</p>
+          <figure>
+            <img src="images/Fig05-124.png"/>
+            <figcaption>Fig 05-124</figcaption>
+          </figure>
+          <p>Okay, and then up here we just need our v-for to loop over parts.arms instead of just arms:</p>
+          <figure>
+            <img src="images/Fig05-125.png"/>
+            <figcaption>Fig 05-125</figcaption>
+          </figure>
+          <p>Okay, so now let's do the same thing for RobotBases. Specify the mixin. And then up here this will be
+            parts.bases:</p>
+          <figure>
+            <img src="images/Fig05-126.png"/>
+            <figcaption>Fig 05-126</figcaption>
+          </figure>
+          <p>And then same thing here in the RobotHeads:</p>
+          <figure>
+            <img src="images/Fig05-127.png"/>
+            <figcaption>Fig 05-127</figcaption>
+          </figure>
+          <p>And then finally on RobotTorsos:</p>
+          <figure>
+            <img src="images/Fig05-128.png"/>
+            <figcaption>Fig 05-128</figcaption>
+          </figure>
+          <p>There we go. Okay, so now all of these parts components are updated, and you can see how helpful a mixin
+            was in this case. It's made these four components incredibly simple.</p>
+          <p>And actually, we can use that mixin in one more place. This PartInfo component also needs parts. So we can
+            get rid of this import here:</p>
+          <figure>
+            <img src="images/Fig05-129.png"/>
+            <figcaption>Fig 05-129</figcaption>
+          </figure>
+          <p>and import the mixin instead:</p>
+          <figure>
+            <img src="images/Fig05-130.png"/>
+            <figcaption>Fig 05-130</figcaption>
+          </figure>
+          <p>and add mixins:</p>
+          <figure>
+            <img src="images/Fig05-131.png"/>
+            <figcaption>Fig 05-131</figcaption>
+          </figure>
+          <p>And then down here we just need to change this to this.parts since that's a computer prop now from our
+            mixin:</p>
+          <figure>
+            <img src="images/Fig05-132.png"/>
+            <figcaption>Fig 05-132</figcaption>
+          </figure>
+          <p>Okay, and that wraps up our changes. So now our whole application is getting parts data from the API via a
+            Vuex action. And that means that we don't need this data folder anymore:</p>
+          <figure>
+            <img src="images/Fig05-133.png"/>
+            <figcaption>Fig 05-133</figcaption>
+          </figure>
+          <p>Okay, cool. This should all be working now so let's go check it out. So our RobotBuilder page is working.
+            And if I click on one of these parts you can see that this is working looking up the part information:</p>
+          <figure>
+            <img src="images/Fig05-134.png"/>
+            <figcaption>Fig 05-134</figcaption>
+          </figure>
+          <p>And if I go to the parts/browse then you can see that I'm getting the heads information, arms information,
+            torsos, and bases etc:</p>
+          <figure>
+            <img src="images/Fig05-135.png"/>
+            <figcaption>Fig 05-135</figcaption>
+          </figure>
+          <p>
+            Awesome. So that was a fair amount of work to retrofit our application to use the new action and API. But
+            the amount of work that was actually involved in creating the action on our store, which we can see again
+            over here:</p>
+          <figure>
+            <img src="images/Fig05-136.png"/>
+            <figcaption>Fig 05-136</figcaption>
+          </figure>
+          <p>was not that much work. And accessing it in each of the components wasn't that much work either. Just felt
+            like a lot of work because we were retrofitting a bunch of places. But you can see that creating actions and
+            making asynchronous calls is actually pretty straight forward.</p>
+          <p>So, in the next clip we'll take a look at how to use actions to save data to our API.
+          </p>
+        </div>
+        <div><h3>Using Actions to Save Data to an API</h3>
+          <p>
+            We just learned how to use actions to retrieve data. Now let's look at using actions to save data to an API.
+            The concept is fairly similar. We'll start by creating a new action in our store and we'll call it the
+            addRobotToCart action:</p>
+          <figure>
+            <img src="images/Fig05-138.png"/>
+            <figcaption>Fig 05-138</figcaption>
+          </figure>
+          <p>And again, we'll need the commit function. And then we'll also want to de-structure the state off of our
+            contacts parameter. We'll use this here in a minute.</p>
+          <p>And then unlike our getParts action, which doesn't take any other parameters, we're going to pass in a
+            robot to our addRobotToCart action so that we can pass that along to our axios call and add it to our
+            state:</p>
+          <figure>
+            <img src="images/Fig05-139.png"/>
+            <figcaption>Fig 05-139</figcaption>
+          </figure>
+          <p>Okay, so our API takes in a fully populated cart. So, we're going to need to get the current cart off of
+            the state, append this one, and then pass it to our API endpoint. So let's create a new cart variable, and
+            we'll set that to an array, which contains all of the items from the old cart plus our new robot:</p>
+          <figure>
+            <img src="images/Fig05-140.png"/>
+            <figcaption>Fig 05-140</figcaption>
+          </figure>
+          <p>Okay, so this is what our new cart looks like. Now let's save it to the API with an axios. post. And that
+            hits the api/cart endpoint. And we are going to pass in our new cart:</p>
+          <figure>
+            <img src="images/Fig05-141.png"/>
+            <figcaption>Fig 05-141</figcaption>
+          </figure>
+          <p>So we're posting to the api/cart endpoint and then we're passing the cart object as the body. And when this
+            post finishes I want to update my local Vuex state to include the robot that was saved, but I don't want to
+            do that until the axios. post is successful. And we need to add it to our local state. Otherwise, we'll save
+            it to the server, but our app won't reflect that we have a new item in our cart.</p>
+          <p>So, let's go ahead and add a.then here:</p>
+          <figure>
+            <img src="images/Fig05-142.png"/>
+            <figcaption>Fig 05-142</figcaption>
+          </figure>
+          <p>So axios post returns a promise. And then we basically want to just call our addToCart mutation to add this
+            robot to the cart. If you remember, we do that with commit. So, I'm going to create a new function here:</p>
+          <figure>
+            <img src="images/Fig05-143.png"/>
+            <figcaption>Fig 05-143</figcaption>
+          </figure>
+          <p>And this function is just going to call commit and commit an addRobotToCart mutation. And that needs the
+            robot to be added.</p>
+          <p>Okay, so now we have an action that will save our robot to the cart on the server and then also insert it
+            into the cart on our local store after that succeeds. Now we just need to call the action.</p>
+          <p>So we'll do that over here in our RobotBuilder. So we have our addToCart function here. And right now, the
+            addToCart method is just calling the commit function on the store to commit a mutation:</p>
+          <figure>
+            <img src="images/Fig05-144.png"/>
+            <figcaption>Fig 05-144</figcaption>
+          </figure>
+          <p>And we want to use our action now. So instead of commit we'll use dispatch:</p>
+          <figure>
+            <img src="images/Fig05-145.png"/>
+            <figcaption>Fig 05-145</figcaption>
+          </figure>
+          <p>And we'll now dispatch the addRobotToCart action instead of calling the mutation. And the rest of this is
+            just the same. So we're calling the addRobotToCart action and we're passing in the robot to add.</p>
+          <p>So basically, the only difference between calling a mutation and an action is that you commit mutations
+            whereas you dispatch actions. Okay, let's go check out how our app is working now.</p>
+          <p>So, if you watch this indicator up here on the cart, when I click Add to Cart you'll notice that there is
+            now a delay as it makes the call to the server:</p>
+          <figure>
+            <img src="images/Fig05-146.png"/>
+            <figcaption>Fig 05-146</figcaption>
+          </figure>
+          <p>And then only when it succeeds do we add it to our cart locally. And then if I open my dev tools and on the
+            Network tab I click the Add to Cart button again then you can see that we're calling the api/cart
+            endpoint:</p>
+          <figure>
+            <img src="images/Fig05-147.png"/>
+            <figcaption>Fig 05-147</figcaption>
+          </figure>
+          <p>
+            And down here, you can see that for the payload we are passing along the cart array. Excellent. We're now
+            using an action to save data to our API. In the next clip, we'll see how to tap in to the promises that are
+            returned by actions.
+          </p>
+        </div>
+        <div><h3>Returning Promises from Actions</h3>
+          <p>
+            If we look at our addToCart method in our RobotBuilder:</p>
+          <figure>
+            <img src="images/Fig05-148.png"/>
+            <figcaption>Fig 05-148</figcaption>
+          </figure>
+          <p>we're dispatching an action, but we have no idea here when it finishes. What I would like to do is redirect
+            to the cart page after adding the robot to the cart succeeds. But how can I know when the action has
+            completed successfully?</p>
+          <p>Well, over here in the store in our addRobotToCart action, all we have to do is return this axios.post
+            call:</p>
+          <figure>
+            <img src="images/Fig05-149.png"/>
+            <figcaption>Fig 05-149</figcaption>
+          </figure>
+          <p>Axios.post returns a promise and we can return that from our action. And now that this returns a promise
+            over here in the RobotBuilder.vue addToCart method, I can add a .then to my dispatch call:</p>
+          <figure>
+            <img src="images/Fig05-150.png"/>
+            <figcaption>Fig 05-150</figcaption>
+          </figure>
+          <p>And so when that action completes successfully then I'm going to call this.$router.push. And I'm just going
+            to navigate to the cart URL.</p>
+          <p>
+            And now when I add an item to my cart you can see that there's a little bit of a delay as it goes out to the
+            server. And then when it succeeds it navigates to my cart page:</p>
+          <figure>
+            <img src="images/Fig05-151.png"/>
+            <figcaption>Fig 05-151</figcaption>
+          </figure>
+          <p>So, even though we're calling dispatch here, we're not actually calling our addRobotToCart function
+            directly, the promise return from our action still gets returned to us from this dispatch call, making it
+            easy to respond to the asynchronous event when it finishes or even to catch errors when it fails.</p>
+          <p>So that was easy. Next, we'll take a look at how to organize our store into modules.
+          </p>
+        </div>
+        <div><h3>Organizing the Store with Modules</h3>
+          <p>So far, we've been adding all of our actions, mutations, getters, and state objects to the single store
+            file. This has been fine for this small application, but imagine a larger application with dozens or even
+            hundreds or thousands of items in it. A single file would quickly become unmanageable. This is where modules
+            come in. They allow us to break up a single store into multiple modules for maintainability. </p>
+          <p>So let's imagine that our application had need for some other actions in here related to users, such as a
+            sign-in action for example. We could change our store to have two modules, a robots module and a users
+            module. So let's create a robots module, that's easy.</p>
+          <p>First we'll create a modules folder inside our store folder. And then we'll create a new file for our
+            module. I'll call it robots.js:</p>
+          <figure>
+            <img src="images/Fig05-152.png"/>
+            <figcaption>Fig 05-152</figcaption>
+          </figure>
+          <p>And then I'm going to move all of this that is all related to robots, starting with state all the way down
+            to my getters:</p>
+          <figure>
+            <img src="images/Fig05-153.png"/>
+            <figcaption>Fig 05-153</figcaption>
+          </figure>
+          <p>I'm going to cut that out of here. And then over here in robots.js I'll export a different object:</p>
+          <figure>
+            <img src="images/Fig05-154.png"/>
+            <figcaption>Fig 05-154</figcaption>
+          </figure>
+          <p>and I'll paste that in here:</p>
+          <figure>
+            <img src="images/Fig05-155.png"/>
+            <figcaption>Fig 05-155</figcaption>
+          </figure>
+          <p>And we'll need our axios import. And we won't need it over here in index.js anymore so I'll move it from
+            here and import it here in robots.js:</p>
+          <figure>
+            <img src="images/Fig05-156.png"/>
+            <figcaption>Fig 05-156</figcaption>
+          </figure>
+          <p>And then back in my store file I'll import my new robots module:</p>
+          <figure>
+            <img src="images/Fig05-157.png"/>
+            <figcaption>Fig 05-157</figcaption>
+          </figure>
+          <p>So import robotsModule from modules/robots. And then finally, in my configuration object down here for my
+            store, I'll just add a modules section.:</p>
+          <figure>
+            <img src="images/Fig05-158.png"/>
+            <figcaption>Fig 05-158</figcaption>
+          </figure>
+          <p>And then you just add a property for each of the modules. So I'm going to create a robots module and that
+            will use my new robotsModule:</p>
+          <figure>
+            <img src="images/Fig05-159.png"/>
+            <figcaption>Fig 05-159</figcaption>
+          </figure>
+          <p>Okay, we'll come back and add a users module in just a sec. But for now, let's go take a look at our site.
+            Okay, this is not looking great. So, if we look at our console:</p>
+          <figure>
+            <img src="images/Fig05-160.png"/>
+            <figcaption>Fig 05-160</figcaption>
+          </figure>
+          <p>you can see that we are getting this error, Cannot read property "length" of undefined. And that's
+            happening in our App component. So, if we come back over here and look at our App component, we come up to
+            the template up here. That error is occurring right here where we're trying to show the number of items in
+            the cart:</p>
+          <figure>
+            <img src="images/Fig05-161.png"/>
+            <figcaption>Fig 05-161</figcaption>
+          </figure>
+          <p>So the problem is that the cart is undefined here. And if we go down to our computer property for that you
+            can see that we're getting it from this.$store.state.cart:</p>
+          <figure>
+            <img src="images/Fig05-162.png"/>
+            <figcaption>Fig05-162</figcaption>
+          </figure>
+          <p>But we just added a robots module. And if we go look at that robots module you can see that the cart is in
+            the robots module state:</p>
+          <figure>
+            <img src="images/Fig05-163.png"/>
+            <figcaption>Fig 05-163</figcaption>
+          </figure>
+          <p>not in our root store state. And so, over here in App.vue we need to access our cart with
+            state.robots.cart:</p>
+          <figure>
+            <img src="images/Fig05-164.png"/>
+            <figcaption>Fig 05-164</figcaption>
+          </figure>
+          <p>Notice that robots matches the name that we gave our module over here on line 10:</p>
+          <figure>
+            <img src="images/Fig05-165.png"/>
+            <figcaption>Fig 05-165</figcaption>
+          </figure>
+          <p>Okay, so that should fix our error. And you see our site's rendering. If I refresh we have no errors
+            here:</p>
+          <figure>
+            <img src="images/Fig05-166.png"/>
+            <figcaption>Fig 05-166</figcaption>
+          </figure>
+          <p>
+            So we're now working fine again. And we are accessing the cart through our robots module.</p>
+          <p>So I want to call out something important here and that is that we still have a single state tree or a
+            single state object. So we still have a single state object:</p>
+          <figure>
+            <img src="images/Fig05-167.png"/>
+            <figcaption>Fig 05-167</figcaption>
+          </figure>
+          <p>and on that state object we have a robots module:</p>
+          <figure>
+            <img src="images/Fig05-168.png"/>
+            <figcaption>Fig 05-168</figcaption>
+          </figure>
+          <p>Okay, so we've fixed this here, but there are actually several places in our app that we need to fix this.
+            And right now, everything is in the robots module. So I'm going to undo the change we made in Fig 05-168 and
+            then I'm going to do a global search and replace, which you can do by hitting Ctrl+Shift+H if you're using
+            VS code. And I'm going to replace this.$store.state with this.$store.state.robots:</p>
+          <figure>
+            <img src="images/Fig05-169.png"/>
+            <figcaption>Fig 05-169</figcaption>
+          </figure>
+          <p>And that should be good. Then I'm going to go ahead and replace everything here. Oh, you have to execute
+            the search first and then I will replace everything. There we go. So that updated four occurrences across
+            four files.</p>
+          <p>So now everything that was accessing state is now accessing the robots state, which is where all of our
+            state currently is. Okay, so now everywhere on our site should be working. We get our robot parts and we can
+            add to the cart. And we're getting our cart data here:</p>
+          <figure>
+            <img src="images/Fig05-170.png"/>
+            <figcaption>Fig 05-170</figcaption>
+          </figure>
+          <p>And that data's all coming through the state in our robots module. Now, you might be wondering about the
+            fact that we have fixed everywhere where we're accessing state, but we didn't go in and add robots to the
+            places where we're calling actions and mutations and getters. We'll talk about that more in the next module,
+            but just realize that state is a little bit different than those other pieces of the store when it comes to
+            modules. Okay, so just keep that in mind.</p>
+          <p> Now, back over in our store we currently have a single robots module. In order to see just what it looks
+            like if you have two modules and also to set us up for working with namespaced modules in our next clip,
+            let's add a second module. We'll call that users:</p>
+          <p>So, I'm going to hit Ctrl+Shift+E to get my explorer back here. And then in my modules folder I'm going to
+            create a new file and that will be users.js:</p>
+          <figure>
+            <img src="images/Fig05-171.png"/>
+            <figcaption>Fig 05-171</figcaption>
+          </figure>
+          <p>And then we'll get the contents of this from our GitHub repo. So over here in the repo I'm going to click
+            on src and then store/modules and users. And let's grab the contents of that and paste it in here:</p>
+          <figure>
+            <img src="images/Fig05-172.png"/>
+            <figcaption>Fig 05-172</figcaption>
+          </figure>
+          <p>
+            Alright, now we have a users module, and notice that it has a sign-in action:</p>
+          <figure>
+            <img src="images/Fig05-173.png"/>
+            <figcaption>Fig 05-173</figcaption>
+          </figure>
+          <p>And the sign-in action commits the updateCurrentUser mutation:</p>
+          <figure>
+            <img src="images/Fig05-174.png"/>
+            <figcaption>Fig 05-174</figcaption>
+          </figure>
+          <p>And that mutation just puts the user returned from the axios call on the state.</p>
+          <p>By the way, it's worth mentioning that with async/await it's expected that in the future mutations and
+            actions will be combined into a single action. But for now, they're separate.</p>
+          <p>Now, don't worry too much about what's happening in this users module. We just needed a couple of modules
+            to demonstrate a few things. So let's go add this to the store. So back here in our store we will import it.
+            We'll just copy this one and we will import the usersModule from modules/users:</p>
+          <figure>
+            <img src="images/Fig05-175.png"/>
+            <figcaption>Fig 05-175</figcaption>
+          </figure>
+          <p>And then we can just add that down here:</p>
+          <figure>
+            <img src="images/Fig05-176.png"/>
+            <figcaption>Fig 05-176</figcaption>
+          </figure>
+          <p>So we'll create a users module and paste in usersModule here. Okay, and this is it. So we now have a store
+            with multiple modules in it.</p>
+          <p>And in the next clip we're going to take a look at namespacing our modules, which will separate these two
+            even further from each other.
+          </p>
+        </div>
+        <div><h3>Namespacing Modules</h3>
+          <p>There are a few nuances to working with modules in the store that we should cover. First of all, let's take
+            a look at how actions are dispatched. If we take a look at the RobotBuilder component, you can see that when
+            we add an item to the cart we dispatch this addRobotToCart method:</p>
+          <figure>
+            <img src="images/Fig05-177.png"/>
+            <figcaption>Fig 05-177</figcaption>
+          </figure>
+          <p>And you can see in the app that this is working. So if I click Add to Cart then the robot does indeed get
+            added to the cart:</p>
+          <figure>
+            <img src="images/Fig05-178.png"/>
+            <figcaption>Fig 05-178</figcaption>
+          </figure>
+          <p>But if you look at our store we have two modules, right? And they each have their own set of actions. So
+            robots has a set of actions here:</p>
+          <figure>
+            <img src="images/Fig05-179.png"/>
+            <figcaption>Fig 05-179</figcaption>
+          </figure>
+          <p>and users has a set of actions here:</p>
+          <figure>
+            <img src="images/Fig05-180.png"/>
+            <figcaption>Fig 05-180</figcaption>
+          </figure>
+          <p>And if you think about this for a moment you might wonder how in the world is this dispatch:</p>
+          <figure>
+            <img src="images/Fig05-181.png"/>
+            <figcaption>Fig 05-181</figcaption>
+          </figure>
+          <p>working because we never told it which module to dispatch this action to. We updated all of our state calls
+            to get data from the robots module, but we didn't update any of our dispatch calls. How in the world did Vue
+            know that the robots module should be the one to handle this? Well, the answer is Vue didn't know.</p>
+          <p>As we have it configured now, both modules will respond to this dispatched action as long as they have an
+            action that corresponds to this addRobotToCart name. We can demonstrate this by adding an action to the
+            users module. So right here:</p>
+          <figure>
+            <img src="images/Fig05-182.png"/>
+            <figcaption>Fig 05-182</figcaption>
+          </figure>
+          <p>I'm going to create an addRobotToCart method. And we'll just have that log to the console so that we can
+            see that it's getting called. So I'll add that to console. log, and I'm just going to say Users
+            addRobotToCart called.</p>
+          <p>Alright, so now if we come back over here to our builder and open our console, now you can see that if I
+            click the Add to Cart button it did get added to the cart:</p>
+          <figure>
+            <img src="images/Fig05-183.png"/>
+            <figcaption>Fig 05-183</figcaption>
+          </figure>
+          <p>So, it had to have gone through the robots module to do that. But it also logged to the console the "Users
+            addRobotToCart called".</p>
+          <p>So you might be asking yourself what good are Vuex modules then if it doesn't keep things separated?
+            Especially in a larger application, you could easily make the mistake of giving two actions in different
+            modules the same name and not even realize it.</p>
+          <p>Well, don't worry. Vue can keep them separated if we tell it to. That's where namespaced modules come into
+            play. So, over here in our robots module I am going to set it to be a namespaced module by just setting here
+            namespaced to true:</p>
+          <figure>
+            <img src="images/Fig05-184.png"/>
+            <figcaption>Fig 05-184</figcaption>
+          </figure>
+          <p>So now over here in the robots module I need to add the namespace to the action name that I'm dispatching.
+            So this will be robots/addRobotToCart:</p>
+          <figure>
+            <img src="images/Fig05-185.png"/>
+            <figcaption>Fig 05-185.png</figcaption>
+          </figure>
+          <p>I need to change this for all of my actions throughout the app. So, let's do this in a global search and
+            replace again. So I'll hit Ctrl+Shift+H. And again, since the robots module is the only one that we're
+            using, that we're dispatching actions to, I can just update all of my dispatches. So this is going to
+            replace this. $store. dispatch with an apostrophe. We'll replace that with this. $store. dispatch with an
+            apostrophe and then we will prefix everything with robots/:</p>
+          <figure>
+            <img src="images/Fig05-186.png"/>
+            <figcaption>Fig 05-186</figcaption>
+          </figure>
+          <p>Make sure you get all of the periods and apostrophes and everything here correctly. And then I'll execute
+            that search and do that replace. Okay, and then let's just make sure we do a Save All after that.</p>
+          <p>Alright, now if we go back to our app here, and now if we go add another robot to our cart you can see it
+            got added to the cart but it did not log the message from the users module:</p>
+          <figure>
+            <img src="images/Fig05-187.png"/>
+            <figcaption>Fig 05-187</figcaption>
+          </figure>
+          <p>So now we are successfully only dispatching items from the namespaced robots module.</p>
+          <p>Okay, so it's important to note here, I mentioned this earlier and I'll probably mention it again, so the
+            state on a module is always namespaced whether the module is namespaced or not. You may remember that when
+            we first added our robots module we had to immediately go and add robots. to everywhere where we were
+            accessing the state. And that was before we namespaced this module. So state is always namespaced even if
+            your module is not set to namespaced.</p>
+          <p>But mutations, actions, and getters are only namespaced if you set namespaced to true. That caught me up a
+            few times when I was first learning Vue so that's important to note. Okay, so now we know how to create a
+            namespace module and who accessed the actions on namespaced modules.</p>
+          <p>Next let's take a look at how to access namespaced getters.
+          </p>
+        </div>
+        <div><h3>Accessing Namespaced Getters</h3>
+          <p>If you remember on our cart page, we're displaying down here:</p>
+          <figure>
+            <img src="images/Fig05-188.png"/>
+            <figcaption>Fig 05-188</figcaption>
+          </figure>
+          <p>any robots that are currently on sale. But that's actually broken currently. If we go add a robot that's on
+            sale, like this friendly robot:</p>
+          <figure>
+            <img src="images/Fig05-189.png"/>
+            <figcaption>Fig 05-189</figcaption>
+          </figure>
+          <p>to our cart and then come over here, you can see that it's not showing up down here:</p>
+          <figure>
+            <img src="images/Fig05-190.png"/>
+            <figcaption>Fig 05-190</figcaption>
+          </figure>
+          <p>This is because we namespaced our robots module. But we never actually updated the way that we're accessing
+            the getter right here:</p>
+          <figure>
+            <img src="images/Fig05-191.png"/>
+            <figcaption>Fig 05-191</figcaption>
+          </figure>
+          <p>And if you look at the way we're accessing state up here:</p>
+          <figure>
+            <img src="images/Fig05-192.png"/>
+            <figcaption>Fig 05-192</figcaption>
+          </figure>
+          <p>you might think that we would access it the same way. And we could just say robots right here:</p>
+          <figure>
+            <img src="images/Fig05-193.png"/>
+            <figcaption>Fig 05-193</figcaption>
+          </figure>
+          <p>But getters.robots is not actually defined. You have to actually access getters using this notation here
+            where we use a string to access the property and then we preface the name of the getter with robots/:</p>
+          <figure>
+            <img src="images/Fig05-194.png"/>
+            <figcaption>Fig 05-194</figcaption>
+          </figure>
+          <p>So now if we go take a look at our cart you can see that we are getting our sale robot down here:</p>
+          <figure>
+            <img src="images/Fig05-195.png"/>
+            <figcaption>Fig 05-195</figcaption>
+          </figure>
+          <p>So our getter is working now. So, a slightly different syntax for accessing getters in namespace
+            modules.</p>
+          <p>
+            Next, let's take a closer look at how our Vuex state is structured and used inside of our modules when using
+            namespace modules.
+          </p>
+        </div>
+        <div><h3>Understanding Global and Namespaced State</h3>
+          <p>
+            We've discussed how we have one single state tree or state object, but to remind ourselves of how that state
+            is structured let's add a couple of variables to our state. First, we'll add a state object on our root
+            store config:</p>
+          <figure>
+            <img src="images/Fig05-196.png"/>
+            <figcaption>Fig 05-196</figcaption>
+          </figure>
+          <p>So, we add state here and then we're going to put a variable in here call foo. And it will just be set to
+            root-foo. Okay, so we now have a foo property in our store. And this is called the root state because it's
+            not in a namespaced module. So it's part of the root state. And actually, any state that you add to
+            non-namespaced modules is also part of the root state.</p>
+          <p>Now let's add this same property to the other modules. So, we'll add a foo property here, but it will be
+            set to robots-foo:</p>
+          <figure>
+            <img src="images/Fig05-197.png"/>
+            <figcaption>Fig 05-197</figcaption>
+          </figure>
+          <p>And then we'll do the same thing in the users module. This will be called users-foo:</p>
+          <figure>
+            <img src="images/Fig05-198.png"/>
+            <figcaption>Fig 05-198</figcaption>
+          </figure>
+          <p>Okay, and then let's do something similar with a getter at each level. So in our root store let's add a
+            getter. So we need a getters section:</p>
+          <figure>
+            <img src="images/Fig05-199.png"/>
+            <figcaption>Fig 05-199</figcaption>
+          </figure>
+          <p>And we'll create a foo getter. And we will return root-getter/ and then the value from the state property,
+            state.foo:</p>
+          <figure>
+            <img src="images/Fig05-200.png"/>
+            <figcaption>Fig 05-200</figcaption>
+          </figure>
+          <p>So this is just prepending root-getter to that string and returning it. Now let's do the same thing for
+            getters in the robots module. So down here we'll add a foo-getter, but it will prepend robots-getter:</p>
+          <figure>
+            <img src="images/Fig05-201.png"/>
+            <figcaption>Fig 05-201</figcaption>
+          </figure>
+          <p>And then we'll do the same thing for users:</p>
+          <figure>
+            <img src="images/Fig05-202.png"/>
+            <figcaption>Fig 05-202</figcaption>
+          </figure>
+          <p>So right here in getters we'll add a foo getter and it will prepend users-getter.</p>
+          <figure>
+            <img src="images/Fig05-203.png"/>
+            <figcaption>Fig 05-203</figcaption>
+          </figure>
+          <p>Okay, so now we have a foo property on the state at each level and a foo-getter at each level. This will
+            help us demonstrate some interesting things about how state works across different modules. </p>
+          <p>So, let's go print those out in our App component here, and we'll put it right here at the top. So I'm just
+            going to print each of these out like this:</p>
+          <figure>
+            <img src="images/Fig05-204.png"/>
+            <figcaption>Fig 05-204</figcaption>
+          </figure>
+          <p>So you can see that here I'm printing out each of the foo properties from the state. And then down here I'm
+            going to print out each of the foo getters from the state in each of the modules. So we'll need some
+            computed props for that. So down here in computed I'm going to create a rootFoo computed property:</p>
+          <figure>
+            <img src="images/Fig05-205.png"/>
+            <figcaption>Fig 05-205</figcaption>
+          </figure>
+          <p>And that will return this.$state.foo.</p>
+          <p>And then we'll do the same thing for each of the modules. So robotsFoo, and the same thing for
+            usersFoo:</p>
+          <figure>
+            <img src="images/Fig05-206.png"/>
+            <figcaption>Fig 05-206</figcaption>
+          </figure>
+          <p>
+            Okay, and now I just need computed props for each of the getters. So I'm going to have a rootGetterFoo going
+            to return this.$store.getters.foo, the same thing for robots but it will return this.$store.getters and the
+            string syntax robots/foo. And then same thing for users:</p>
+          <figure>
+            <img src="images/Fig05-207.png"/>
+            <figcaption>Fig 05-207</figcaption>
+          </figure>
+          <p>Okay, so let's go take a look at this, see what it looks like. Okay. So there's something interesting at
+            the top here in these first three variables that we're printing out:</p>
+          <figure>
+            <img src="images/Fig05-208.png"/>
+            <figcaption>Fig 05-208</figcaption>
+          </figure>
+          <p>So these are the items that we got directly off of state. Notice that users does indeed have its own
+            namespaced state even though it is not a namespace module. So, in our App component we're accessing it with
+            this.$store.state.users.foo:</p>
+          <figure>
+            <img src="images/Fig05-209.png"/>
+            <figcaption>Fig 05-209</figcaption>
+          </figure>
+          <p>which is a thing. So, even though users is not a namespace module it does have its own namespaced state. So
+            again, just a reminder that state is always namespaced in a module even if the module itself is not set to
+            be namespaced:</p>
+          <p>And then another point to make is that root state is not inherited by modules. And so if I get rid of this
+            foo property here:</p>
+          <figure>
+            <img src="images/Fig05-210.png"/>
+            <figcaption>Fig 05-210</figcaption>
+          </figure>
+          <p>and save it on the users module and then come back and look at this it is empty:</p>
+          <figure>
+            <img src="images/Fig05-211.png"/>
+            <figcaption>Fig 05-211</figcaption>
+          </figure>
+          <p>So, this.$store.state.users.foo is not set to anything. So it is not inherited from the root state. Now
+            let's go ahead and put that back:</p>
+          <figure>
+            <img src="images/Fig05-212.png"/>
+            <figcaption>Fig 05-212</figcaption>
+          </figure>
+          <p>Okay, so let's come back and look at this. And let's look at the getters:</p>
+          <figure>
+            <img src="images/Fig05-213.png"/>
+            <figcaption>Fig 05-213</figcaption>
+          </figure>
+          <p>So first of all, notice that the users getter did not return anything. And that's because in our App
+            module, in the computed prop, we were accessing it with this.$store.getters users/foo:</p>
+          <figure>
+            <img src="images/Fig05-214.png"/>
+            <figcaption>Fig 05-214</figcaption>
+          </figure>
+          <p>And so, we're trying to access a namespaced getter on a module that is not namespaced. So that's not too
+            surprising that that's not showing up. But what might be surprising is if we look at the console here:</p>
+          <figure>
+            <img src="images/Fig05-215.png"/>
+            <figcaption>Fig 05-215</figcaption>
+          </figure>
+          <p>you can see that we're getting this error, duplicate getter key: foo. This is because the users module and
+            the root store are sharing the same namespace. And yet over here you can see that we've created, in our
+            users module, a foo getter:</p>
+          <figure>
+            <img src="images/Fig05-216.png"/>
+            <figcaption>Fig 05-216</figcaption>
+          </figure>
+          <p>And we also have, on our root store, a foo getter:</p>
+          <figure>
+            <img src="images/Fig05-217.png"/>
+            <figcaption>Fig 05-217</figcaption>
+          </figure>
+          <p>And so, we're getting an error because we've created a getter with the same name in two different places
+            that share the same namespace, specifically the root namespace. So let's see what happens if we get rid of
+            this getter that's at the root level.</p>
+          <figure>
+            <img src="images/Fig05-218.png"/>
+            <figcaption>Fig 05-218</figcaption>
+          </figure>
+          <p>And so now if we go back to here it shouldn't be too surprising that when we called the root getter we got
+            the users getter value:</p>
+          <figure>
+            <img src="images/Fig05-219.png"/>
+            <figcaption>Fig 05-219</figcaption>
+          </figure>
+          <p>And so, in our computed property in our App module, the root getter is calling this.$store.getters.foo:</p>
+          <figure>
+            <img src="images/Fig05-220.png"/>
+            <figcaption>Fig 05-220</figcaption>
+          </figure>
+          <p>
+            And in the users computed property we're calling getters users/foo. And we've already talked about that this
+            is not a thing. This is not defined. So it's interesting that the root getter is getting the value from the
+            users module:</p>
+          <figure>
+            <img src="images/Fig05-221.png"/>
+            <figcaption>Fig 05-221</figcaption>
+          </figure>
+          <p>And that's because this is not a namespaced module and so its getters are shared with the root store. And
+            so, the root store doesn't have a getter, but we added one in the users module which technically means we're
+            adding that to the root namespace. And so when we requested the foo getter from the root namespace it
+            retrieved the one in Fig 05-221 even though it was defined in the users module. </p>
+          <p>Okay, now let's explore something else with this getter. So, I'm going to remove this foo property off of
+            our users state:</p>
+          <figure>
+            <img src="images/Fig05-222.png"/>
+            <figcaption>Fig 05-222</figcaption>
+          </figure>
+          <p>and then I'm going to come back over here. And let's see what we're getting:</p>
+          <figure>
+            <img src="images/Fig05-223.png"/>
+            <figcaption>Fig 05-223</figcaption>
+          </figure>
+          <p>Okay, so now when we call the foo getter we're getting users-getter/undefined. And so that's kind of
+            interesting because we've already established that we would get into this getter here:</p>
+          <figure>
+            <img src="images/Fig05-224.png"/>
+            <figcaption>Fig 05-224</figcaption>
+          </figure>
+          <p>because we don't have one defined on the root and they're shared. But why is state.foo undefined?</p>
+          <p>If the users module is not namespaced why are we not getting the value here from state.foo:</p>
+          <figure>
+            <img src="images/Fig05-225.png"/>
+            <figcaption>Fig 05-225</figcaption>
+          </figure>
+          <p>Well, remember, state is always namespaced. And the state that's passed in to getters and other places like
+            actions and mutations:</p>
+          <figure>
+            <img src="images/Fig05-226.png"/>
+            <figcaption>Fig 05-226</figcaption>
+          </figure>
+          <p>within the module, it is always that local module's state. And so this is trying to get state.foo off of
+            our users module and there is nothing. And so that is printing undefined</p>
+          <p>So that's the other important point is that the state that's passed in to mutations, getters, and actions
+            is always the local state from that module. But what if we did want to access the root state from this
+            getter:</p>
+          <figure>
+            <img src="images/Fig05-227.png"/>
+            <figcaption>Fig 05-227</figcaption>
+          </figure>
+          <p>Well, that's available to us as the third parameter in our getter function. So, the second parameter is the
+            getters and the third parameter is rootState:</p>
+          <figure>
+            <img src="images/Fig05-228.png"/>
+            <figcaption>Fig 05-228</figcaption>
+          </figure>
+          <p>So, in a non-namespace module this is all the getters in the entire store including getters from namespace
+            modules. In a namespace module, these getters are only the local getters in case you need access to them
+            inside another getter.</p>
+          <p>And then we have the rootState. So let's use that here.</p>
+          <figure>
+            <img src="images/Fig05-229.png"/>
+            <figcaption>Fig 05-229</figcaption>
+          </figure>
+          <p>Okay, and now if we go take a look at this, there we go:</p>
+          <figure>
+            <img src="images/Fig05-230.png"/>
+            <figcaption>Fig 05-230</figcaption>
+          </figure>
+          <p> Perfect. So we are now getting --- From the getter inside the users modules we are now getting the value
+            from the rootState. And that remains true even if we come back over here and put a foo property on here set
+            to users-foo:</p>
+          <figure>
+            <img src="images/Fig05-231.png"/>
+            <figcaption>Fig 05-231</figcaption>
+          </figure>
+          <p>Over here, you can see we're still getting root-foo:</p>
+          <figure>
+            <img src="images/Fig05-232.png"/>
+            <figcaption>Fig 05-232</figcaption>
+          </figure>
+          <p>and that's because we're using the rootState here:</p>
+          <figure>
+            <img src="images/Fig05-233.png"/>
+            <figcaption>Fig 05-233</figcaption>
+          </figure>
+          <p>And everything that we've said here about getters is also true of actions and mutations except that
+            rootState is not actually available to mutations. So it is not passed in to mutation functions.</p>
+          <p>But in an action, I can get access to rootState by de-structuring it just like we do everything else off of
+            the context object. And then you can access rootState here:</p>
+          <figure>
+            <img src="images/Fig05-234.png"/>
+            <figcaption>Fig 05-234</figcaption>
+          </figure>
+          <p> But we don't have a need for that so we'll remove it. So as a reminder, rootState is not actually
+            available to mutations. There's been some discussion about whether it should be added, but for now if you
+            need access to the rootState in a mutation do it in an action, not the mutation.</p>
+          <p>Hopefully this has helped create a little bit more clarity around some of the nuances with what data and
+            methods exist where in a namespaced and non-namespaced modules.</p>
+          <p>Next, we're going to take a look at some helper functions that Vuex provides to make it a little less
+            verbose to access items from the store in our components.
+          </p>
+        </div>
+        <div><h3>Using the Vuex MapState Helper</h3>
+          <p>
+            If we take a look at the methods that we just added on our app component you can see that there's a lot of
+            boilerplate here just to get these three props off of state:</p>
+          <figure>
+            <img src="images/Fig05-235.png"/>
+            <figcaption>Fig 05-235</figcaption>
+          </figure>
+          <p>Vuex provides a mapState helper to simplify this. So let's import that helper:</p>
+          <figure>
+            <img src="images/Fig05-236.png"/>
+            <figcaption>Fig 05-236</figcaption>
+          </figure>
+          <p>So up here I'm just going to import mapState from Vuex. And then we can just use mapState right down here
+            in the computed section. So, the most simple form of mapState looks like this. So you spread the results of
+            calling the mapState function and then we pass along to that an array of strings:</p>
+          <figure>
+            <img src="images/Fig05-237.png"/>
+            <figcaption>Fig 05-237</figcaption>
+          </figure>
+          <p>So this is basically saying take the foo property off of the rootState and provide it as a computed prop
+            with the same name. So it basically replaces this syntax down here:</p>
+          <figure>
+            <img src="images/Fig05-238.png"/>
+            <figcaption>Fig 05-238</figcaption>
+          </figure>
+          <p>except that we're actually renaming this property to rootFoo. If you want to give your computed prop a
+            different name than what it's called in the state, like rootFoo in this case, then you need to use an object
+            syntax instead of the simple array syntax. And if I had additional props here with the array syntax I could
+            just add the other props here. But if I want to rename it I need to use a different syntax. So instead of an
+            array I'm going to use an object:</p>
+          <figure>
+            <img src="images/Fig05-239.png"/>
+            <figcaption>Fig 05-239</figcaption>
+          </figure>
+          <p>and I'm going to set to rootFoo on that object to foo. So this is a short-hand syntax that now is exactly
+            equivalent to the syntax below. So we can remove this:</p>
+          <figure>
+            <img src="images/Fig05-240.png"/>
+            <figcaption>Fig 05-240</figcaption>
+          </figure>
+          <p>We'll just need a comma here. Okay, but what about this robot's foo? We would like to be able to just say
+            robotsFoo here, but what would we pass in here:</p>
+          <figure>
+            <img src="images/Fig05-241.png"/>
+            <figcaption>Fig 05-241</figcaption>
+          </figure>
+          <p>since this is coming from the robots module? Unfortunately, this requires a little bit more verbose syntax.
+            So, we set this to a function and then we can pull whatever off the state we want to like this:</p>
+          <figure>
+            <img src="images/Fig05-242.png"/>
+            <figcaption>Fig 05-242</figcaption>
+          </figure>
+          <p>And then we can delete this right here:</p>
+          <figure>
+            <img src="images/Fig05-243.png"/>
+            <figcaption>Fig 05-243</figcaption>
+          </figure>
+          <p>So now we have our mapState function boiled down to just a single line, whereas it was six lines before.
+            Granted this is wrapping and, frankly, we should probably clean this up by moving this down here like
+            this:</p>
+          <figure>
+            <img src="images/Fig05-244.png"/>
+            <figcaption>Fig 05-244</figcaption>
+          </figure>
+          <p>
+            So that syntax is a little bit more verbose when you are working with modules, but you can see this is still
+            a lot cleaner than it was when it was two separate properties and we were using six lines. But actually,
+            there's another syntax that we can use when working with modules. So let's use this other method for this
+            usersFoo property.</p>
+          <p>So I'm just going to use a second mapState call here, but this time the first parameter is going to be the
+            name of the module:</p>
+          <figure>
+            <img src="images/Fig05-245.png"/>
+            <figcaption>Fig 05-245</figcaption>
+          </figure>
+          <p>So now this mapState function will work with anything on the users module. And since we're renaming foo to
+            usersFoo then I can just pass in an object, usersFoo, and set that to foo. So this syntax is now equivalent
+            to this code here. So we can delete this code:</p>
+          <figure>
+            <img src="images/Fig05-246.png"/>
+            <figcaption>Fig 05-246</figcaption>
+          </figure>
+          <p>So that's a pretty clean syntax that we could use. And we could use that up here for robotsFoo also, but
+            we'll leave this how it is so that you can see the different examples. And actually, this is plural,
+            users:</p>
+          <figure>
+            <img src="images/Fig05-247.png"/>
+            <figcaption>Fig 05-247</figcaption>
+          </figure>
+          <p>
+            However, we have a small problem here. If we go over here and look at our site, you can see usersFoo is not
+            rendering:</p>
+          <figure>
+            <img src="images/Fig05-248.png"/>
+            <figcaption>Fig 05-248.png</figcaption>
+          </figure>
+          <p>And if I look at my console you can see module namespace not found in mapState, and it's referencing our
+            users module:</p>
+          <figure>
+            <img src="images/Fig05-249.png"/>
+            <figcaption>Fig 05-249</figcaption>
+          </figure>
+          <p>Well, the problem is, and I think this is kind of unfortunate, but the problem is that this syntax only
+            works with namespaced modules:</p>>
+          <figure>
+            <img src="images/Fig05-250.png"/>
+            <figcaption>Fig 05-250</figcaption>
+          </figure>
+          <p>And so, we're actually going to be forced to use this syntax for the usersFoo property:</p>
+          <figure>
+            <img src="images/Fig05-251.png"/>
+            <figcaption>Fig 05-251</figcaption>
+          </figure>
+          <p>So I'll use the function syntax state. users. foo. But we could use this syntax for robots since it is a
+            namespace module:</p>
+          <figure>
+            <img src="images/Fig05-252.png"/>
+            <figcaption>Fig 05-252</figcaption>
+          </figure>
+          <p>Now if we go take a look at this, now everything is rendering correctly:</p>
+          <figure>
+            <img src="images/Fig05-253.png"/>
+            <figcaption>Fig 05-253</figcaption>
+          </figure>
+          <p>And if I refresh we don't have any errors here:</p>
+          <figure>
+            <img src="images/Fig05-254.png"/>
+            <figcaption>Fig 05-254</figcaption>
+          </figure>
+          <p>So just keep in mind that this syntax can only be used for namespaced modules. Okay, cool. So, just like
+            there is a mapState function there's also a mapGetters helper. So let's go take a look at that next.
+          </p>
+        </div>
+        <div><h3>Using the Vuex MapGetters Helper</h3>
+          <p>Using mapGetters is identical to using mapState. So let's go ahead and import that up here also:</p>
+          <figure>
+            <img src="images/Fig05-255.png"/>
+            <figcaption>Fig 05-255</figcaption>
+          </figure>
+          <p>And then we can use it in the exact same way. So down here I'm going to spread mapGetters. And then for the
+            rootGetter I will just use the object syntax because I want to rename it to rootGetterFoo. And that is going
+            to grab the foo getter off of the root store. And then I will use the module syntax for the robotsGetter
+            like this:</p>
+          <figure>
+            <img src="images/Fig05-256.png"/>
+            <figcaption>Fig 05-256</figcaption>
+          </figure>
+          <p>And then we can delete these two functions here:</p>
+          <figure>
+            <img src="images/Fig05-257.png"/>
+            <figcaption>Fig 05-257</figcaption>
+          </figure>
+          <p>And actually, this usersGetterFoo is leftover code from an earlier demo:</p>
+          <figure>
+            <img src="images/Fig05-258.png"/>
+            <figcaption>Fig 05-258</figcaption>
+          </figure>
+          <p>We're not actually using that so we can delete that there. And we can delete the binding for it up here
+            also:</p>
+          <figure>
+            <img src="images/Fig05-259.png"/>
+            <figcaption>Fig 05-259</figcaption>
+          </figure>
+          <p>Okay. And that should be working fine. There we go:</p>
+          <figure>
+            <img src="images/Fig05-260.png"/>
+            <figcaption>Fig 05-260</figcaption>
+          </figure>
+          <p>The getters are now working just as we'd expect. And again, this code is a lot less verbose than it was
+            before, and so these helpers are nice. And next, we'll do the same thing for actions. Although mapActions is
+            a little bit different so let's take a look at that.
+          </p>
+        </div>
+        <div><h3>Using the Vuex MapActions Helper</h3>
+          <p>
+            MapActions is similar to mapState and mapGetters, but it has a little bit different syntax. So, first of
+            all, we will import mapActions right here from Vuex:</p>
+          <figure>
+            <img src="images/Fig05-261.png"/>
+            <figcaption>Fig 05-261</figcaption>
+          </figure>
+          <p>And then the first difference with mapActions is that instead of using it in the computed section we will
+            use it in the methods section. So right here I'm going to spread mapActions:</p>
+          <figure>
+            <img src="images/Fig05-262.png"/>
+            <figcaption>Fig 05-262</figcaption>
+          </figure>
+          <p>And there are a couple of actions in here that we want to map, and both of them are in the robots module.
+            The first one is up here in this created hook. It is this dispatch right here:</p>
+          <figure>
+            <img src="images/Fig05-263.png"/>
+            <figcaption>Fig 05-263</figcaption>
+          </figure>
+          <p>where we're dispatching getParts. And the second one that we want to use is this addRobotToCart action down
+            here:</p>
+          <figure>
+            <img src="images/Fig05-264.png"/>
+            <figcaption>Fig 05-264</figcaption>
+          </figure>
+          <p>So, we'll map both of these actions here. And we'll start out by specifying the robots module since it's a
+            namespaced module. And then we don't need to rename these actions at all so we'll just use the array syntax
+            and we'll pass in getParts and addRobotToCart:</p>
+          <figure>
+            <img src="images/Fig05-265.png"/>
+            <figcaption>Fig 05-265</figcaption>
+          </figure>
+          <p>So actually, this syntax is identical to the other helpers, but we're putting it in the methods section of
+            our component. And the way we call them is interesting for actions. And this is in the methods section so
+            that means that these are now methods on our component named getParts and addRobotToCart.</p>
+          <p> >So, if we go up here to where we dispatch our getParts call we can just call this.getParts:</p>
+          <figure>
+            <img src="images/Fig05-266.png"/>
+            <figcaption>Fig 05-266</figcaption>
+          </figure>
+          <p>And the interesting thing about this is that notice that we're not calling dispatch anywhere anymore.
+            Calling dispatch is taken care of for us by the mapActions helper. So that makes using it really nice.</p>
+          <p>And now we can do the same thing for addRobotToCart down here in our addToCart function. So we can just
+            call this.addRobotToCart. And then we'll delete all of this:</p>
+          <figure>
+            <img src="images/Fig05-267.png"/>
+            <figcaption>Fig 05-267</figcaption>
+          </figure>
+          <p>but we'll still pass in our robot:</p>
+          <figure>
+            <img src="images/Fig05-268.png"/>
+            <figcaption>Fig 05-268</figcaption>
+          </figure>
+          <p>Cool. So now we're not having to worry about any dispatch details, and this feels a lot cleaner. So let's
+            go check this out.</p>
+          <p>So, over here in our RobotBuilder, our robot builder is getting its parts:</p>
+          <figure>
+            <img src="images/Fig05-269.png"/>
+            <figcaption>Fig 05-269</figcaption>
+          </figure>
+          <p>And I can still add to cart here:</p>
+          <figure>
+            <img src="images/Fig05-270.png"/>
+            <figcaption>Fig 05-270</figcaption>
+          </figure>
+          <p>Awesome, this is working great. Let's go clean this up so that we don't have this extra stuff up here
+            anymore. So, in our App. vue component I'm just going to comment this out in case you want to reference it
+            later:</p>
+          <figure>
+            <img src="images/Fig05-271.png"/>
+            <figcaption>Fig 05-271</figcaption>
+          </figure>
+          <p>
+            And there, now our site's looking decent:</p>
+          <figure>
+            <img src="images/Fig05-272.png"/>
+            <figcaption>Fig 05-272</figcaption>
+          </figure>
+          <p>Cool. So now we've talked about mapState, mapGetters, and mapActions. So the last helper that we'll talk
+            about is the mapMutations helper.
+          </p>
+        </div>
+        <div><h3>Using the Vuex MapMutations Helper</h3>
+          <p>MapMutations is not any different than all the other helpers. We don't have any mutations that we're using
+            outside of the store, but I can show you how we'd use it if we did. So we'll just import mapMutations:</p>
+          <figure>
+            <img src="images/Fig05-273.png"/>
+            <figcaption>Fig 05-273.png</figcaption>
+          </figure>
+          <p>
+            And then down here in methods we'd map mutations just like everything else. So we spread mapMutations, and
+            then add the module name if necessary, and then the array of mutations that you want to map over:</p>
+          <figure>
+            <img src="images/Fig05-274.png"/>
+            <figcaption>Fig 05-274</figcaption>
+          </figure>
+          <p>Of course, we could use the object syntax here also just like we did with mapState if we wanted to rename
+            the method locally. And that really is all there is to using mapMutations. It's just like using any of the
+            other map helpers. But, of course, we don't have any mutations so I'm going to go ahead and delete the code
+            I just added.</p>
+          <p>So with that, we've covered all of the different Vuex map helpers. And, in fact, this concludes our
+            discussion of Vuex.
+          </p>
+        </div>
+        <div><h3>Summary</h3>
+          <p>In this module, we learned how to use Vuex to manage all of our applications state. And this included:</p>
+          <ul>
+            <li>Creating a Vuex store,</li>
+            <li>Changing state with mutations</li>
+            <li>Retrieving data from the state</li>
+            <li>Using getters to return calculated data from the state</li>
+            <li>Using actions to work with asynchronous data</li>
+            <li>Using modules to organize a store</li>
+            <li>Using built-in helpers to work with a store.</li>
+          </ul>
+          <p>In the next module, we'll learn how to create our own custom directives and how to create and use filters.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

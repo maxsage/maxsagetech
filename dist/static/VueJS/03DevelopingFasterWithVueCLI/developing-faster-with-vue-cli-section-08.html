@@ -1,0 +1,452 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+
+<head>
+  <meta charset="UTF-8">
+  <title>maxsagetech - Developing Faster with the Vue CLI</title>
+  <script src="https://unpkg.com/vue"></script>
+  <!--<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"-->
+  <!--integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">-->
+  <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" rel="stylesheet">
+  <link href="prism.css" rel="stylesheet">
+  <script src="prism.js"></script>
+  <style>
+    img {
+      max-width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container" id="app">
+    <div class="panel-group">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h2>Developing Faster with the Vue CLI</h2>
+        </div>
+        <div class="panel-body">
+          <div>
+            <h2>Adding Packages and Plugins to Your Vue App with the Vue CLI</h2>
+            <div>
+              <h3>Overview of Plugins for the Vue CLI</h3>
+              <p> One of the most common things you're going to do when building a Vue application is want to extend
+                your application with other dependencies, with packages, and plugins to really light up some of the
+                features in your app.</p>
+              <p>In this module, we'll talk about how you can do that using the Vue CLI. First, we'll start off
+                understanding what Vue plugins are, and then how we can use those not only to install dependencies, but
+                also to configure our applications. We'll explore how we can find these Vue plugins, then of course
+                we'll walk through how you can add and use the plugins in your applications. Let's dive in. </p>
+            </div>
+            <p>
+              <h3>Understanding Vue CLI Plugins</h3>
+              <p>A great place to start with plugins and packages is to understand what they do for you. A plugin's
+                going to extend your Vue application, and usually they're going to install dependencies and some of them
+                will actually ask you questions, like prompts.</p>
+              <p>We've already seen some of these when we did the Vue CLI's vue create option when it installed some
+                plugins out of the box for us. In those cases, like with ESLint, it asked us questions about what we
+                wanted with ESLint, for example, whether we want to fix on save or not, and those answers are then used
+                to figure out how to hook up the application with those plugins.</p>
+              <p>Okay, so I've already revealed what are plugins. The ESLint one was one of the examples we have, but
+                traits of the plugins are you'll see that they begin with these names, either scoped with @vue and then
+                cli-plugin- or just vue-cli-plugin-, for example, ESLint or PWA.</p>
+              <figure> <img src="images/Fig07-001.png" />
+                <figcaption>Fig 07-001.png</figcaption>
+              </figure>
+              <p>And the way you add these is with the vue add command with the Vue CLI. Some of them are integrated
+                right into the CLI like ESLint or PWA, and some of them also have their own presets, or prompts, to
+                configure it.</p>
+              <p>There are two very notable special cases with the naming convention. The first one is vue-router and
+                the other is vuex. Both of these are very popular and odds are you're going to run across using one or
+                both of these. Neither one of them follows the same naming convention that we mentioned above. But in
+                general, that's the naming convention you're going to look for right up top here.</p>
+              <p>Okay, so when we're adding a scoped plugin with @vue, the way it works, use the vue add command, and we
+                can omit the cli-plugin- portion of the name. For example, we could say vue add @vue/cli-plugin-pwa:</p>
+              <figure> <img src="images/Fig07-002.png" />
+                <figcaption>Fig 07-002</figcaption>
+              </figure>
+              <p>Now that would add the PWA plugin after we already have an existing app. But we could also use the
+                second command shown above, which does the same exact thing. Notice we're omitting the cli-plugin-. This
+                is how you'd add the PWA plugin to an existing Vue app. And this works for @vue scoped plugins.</p>
+              <p>If you see plugins with the other naming convention, the vue-cli-plugin-, you can install those using
+                this command:</p>
+              <figure> <img src="images/Fig07-003.png" />
+                <figcaption>Fig 07-003</figcaption>
+              </figure>
+              <p>vue add, then you just use the full name, that'll add the Apollo plugin, for example, or you could just
+                do vue add apollo (as in the second example above) and that would do the same thing.</p>
+              <p>Now as you might have guessed, most people just use the shortcuts. What about those prompts or the
+                presets that we talked about:</p>
+              <figure> <img src="images/Fig07-004.png" />
+                <figcaption>Fig 07-004</figcaption>
+              </figure>
+              <p>If you did vue add @vue/eslint, which is the shortcut syntax to add the ESLint plugin to your
+                application, you would be asked some questions. Those are the prompts. Now you can skip those prompts by
+                passing generator options right into the command. And the way you can do that is to call the same
+                command, but then pass in those options. In the second example shown above, it's looking for
+                configuration with --config, and here we're choosing airbnb, and also we're choosing lintOn to be save.
+              </p>
+              <p>Now, other than some of the plugins we've mentioned here, where would you find a lot of plugins? Well,
+                a good old Google search will work, but you can also start with the Vue docs:</p>
+              <figure> <img src="images/Fig07-005.png" />
+                <figcaption>Fig 07-005</figcaption>
+              </figure>
+              <p>That's what I recommend. Go there and then look through the rich ecosystem in the menu structure in the
+                documentation because they point out an awesome list and a bunch of other ideas for how you can find
+                really rich plugins. Now that we've learned about the plugins and how we can add them, let's go do it
+                together. </p>
+          </div>
+          <div>
+            <h3>Adding a Plugin Via the Vue CLI</h3>
+            <p>Let's walk through creating a project to see what the experience is for getting plugins right out of the
+              gate, and then also to add plugins to an existing project. To start things off, we'll use vue create, and
+              we'll do vue-plugin-demo as the name of the project. And let's choose just -d for default:</p>
+            <figure> <img src="images/Fig07-006.png" />
+              <figcaption>Fig 07-006</figcaption>
+            </figure>
+            <p>Then we'll go into the folder called vue-plugin-demo and we'll open up our favorite code editor. Now
+              we'll take a quick look here inside the package.json:</p>
+            <figure> <img src="images/Fig07-007.png" />
+              <figcaption>Fig 07-007</figcaption>
+            </figure>
+            <p>and we'll see some things in here about the plugins that we may not have noticed before. Notice on lines
+              14, 15, and 16:</p>
+            <figure> <img src="images/Fig07-008.png" />
+              <figcaption>Fig 07-008</figcaption>
+            </figure>
+            <p>we see some Vue CLI dependencies. The first two are plugins. By default, we get the plugin for babel and
+              for eslint. These are the defaults that we selected when we chose -d.</p>
+            <p>Now let's get back to the terminal for a moment, we'll do it inside of the integrated terminal now, and
+              if we type:</p>
+            <figure>
+              <pre><code class="language-command-line">vue create foo</code></pre>
+              <figcaption>Fig 07-009</figcaption>
+            </figure>
+            <p>just to see what those questions look like, and we'll cancel out of this in a moment. If you manually
+              select the features, a lot of these features that we're selecting were hooked in through the plugins. For
+              example, there's our Linter:</p>
+            <figure> <img src="images/Fig07-010.png" />
+              <figcaption>Fig 07-010.png</figcaption>
+            </figure>
+            <p>that's the ESLint plugin right there, and notice Babel has been selected up top:</p>
+            <figure> <img src="images/Fig07-011.png" />
+              <figcaption>Fig 07-011</figcaption>
+            </figure>
+            <p>Well, what if you already had a project and you forgot to select you wanted progressive web app support:
+            </p>
+            <figure> <img src="images/Fig07-012.png" />
+              <figcaption>Fig 07-012</figcaption>
+            </figure>
+            <p>what do you do? Well, I'm going to cancel out of this for now, and let's say we already had this project
+              called vue-plugin-demo and we wanted to add those. So we'd open up our terminal, I'll pull it up a little
+              bit, we'll kind of keep an eye on the scripts and we'll keep an eye on the dev dependencies, now we can
+              type</p>
+            <figure>
+              <pre><code class="language-command-line">vue add --help</code></pre>
+              <figcaption>Fig 07-013</figcaption>
+            </figure>
+            <p>So you type vue add, and then the name of the plugin that we want, and then any options that could be
+              optional at the end of it. So we'll type vue add down here, and let's say PWA:</p>
+            <figure>
+              <pre><code class="language-command-line">vue add @vue/pwa</code></pre>
+              <figcaption>Fig 07-014</figcaption>
+            </figure>
+            <p>And the name of this would be @vue/pwa, because remember, we can do the shortcut syntax. Or
+              alternatively, we could've done:</p>
+            <figure>
+              <pre><code class="language-command-line">vue add @vue/cli-plugin-pwa</code></pre>
+              <figcaption>Fig 07-015</figcaption>
+            </figure>
+            <p>but let's use the shortcut syntax. And now when we add that, it's running through and installing it for
+              us, and if there's any questions to ask, it will ask us those through the prompts. Now note first, I
+              already had committed all my changes. When you get a new project, they're already committed. When I add a
+              new plugin, it's going to make some changes to files. Minimally, it's going to change the package. json.
+              With the PWA, it changed a heck of a lot more. It added a bunch of files, and it tells you right here in
+              the output:</p>
+            <figure> <img src="images/Fig07-016.png" />
+              <figcaption>Fig 07-016</figcaption>
+            </figure>
+            <p> which is great, there were no prompts, so no questions to ask, but notice now in the git diff, we can
+              see all the files that were changed or modified:</p>
+            <figure> <img src="images/Fig07-017.png" />
+              <figcaption>Fig 07-017</figcaption>
+            </figure>
+            <p>All the Us are the new files, and the Ms are the modified ones. So I click on package.json right there:
+            </p>
+            <figure> <img src="images/Fig07-018.png" />
+              <figcaption>Fig 07-018</figcaption>
+            </figure>
+            <p>we can see there's a new dependency for register-service-worker:</p>
+            <figure> <img src="images/Fig07-019.png" />
+              <figcaption>Fig 07-019</figcaption>
+            </figure>
+            <p>and then a dev dependency for the CLI plugin for PWA:</p>
+            <figure> <img src="images/Fig07-020.png" />
+              <figcaption>Fig 07-020</figcaption>
+            </figure>
+            <p>Then the main.js file also changed:</p>
+            <figure> <img src="images/Fig07-021.png" />
+              <figcaption>Fig 07-021</figcaption>
+            </figure>
+            <p>because then it's importing this file called register-service-worker:</p>
+            <figure> <img src="images/Fig07-022.png" />
+              <figcaption>Fig 07-022</figcaption>
+            </figure>
+            <p> and that's the new file there:</p>
+            <figure> <img src="images/Fig07-023.png" />
+              <figcaption>Fig 07-023</figcaption>
+            </figure>
+            <p>which gives us a service worker for our Vue app. I highly recommend before you run vue add on any of your
+              code, you first commit all your changes to Git. So let's do that now, let's say I'm good with the PWA, so
+              I'll commit those changes. Now I followed the directions here, I did Cmd+Enter to commit them. You can
+              also come up here:</p>
+            <figure> <img src="images/Fig07-024.png" />
+              <figcaption>Fig 07-024</figcaption>
+            </figure>
+            <p>and then choose Commit. Well now let's say we wanted to add a different one, we wanted to come through
+              here and do add apollo, which again, this is not a scoped package, so here:</p>
+            <figure> <img src="images/Fig07-025.png" />
+              <figcaption>Fig 07-025</figcaption>
+            </figure>
+            <p>we could have typed in vue-cli-plugin-apollo. I don't know about you, but I'm much happier just typing:
+            </p>
+            <figure>
+              <pre><code class="language-command-line">vue add apollo</code></pre>
+              <figcaption>Fig 07-026</figcaption>
+            </figure>
+            <p>Remember I committed the changes first, so now it's going to go out and install this plugin for us. And
+              once it's done installing, we'll see the Git changes show up in the Source Control pane once again. Now
+              notice this one does have a prompt:</p>
+            <figure> <img src="images/Fig07-027.png" />
+              <figcaption>Fig 07-027</figcaption>
+            </figure>
+            <p>Here it's asking would you like to add any example code? You can say yes or no, no is the default. I'm
+              going to choose yes.</p>
+            <p>Would you like to add a server? I'm going to say no. And then it's going to finish all of its
+              installation. And again, once it's completed we can look at the git diff to see what's actually been
+              changed. Notice now it actually changed the code:</p>
+            <figure> <img src="images/Fig07-028.png" />
+              <figcaption>Fig 07-028</figcaption>
+            </figure>
+            <p>it didn't just add code, but it changed the code for one of the components to load ApolloExample instead
+              of HelloWorld. And if we look at main.js, it added apolloProvider in there:</p>
+            <figure> <img src="images/Fig07-029.png" />
+              <figcaption>Fig 07-029</figcaption>
+            </figure>
+            <p>and it put it into the stack to crank it up when view starts, and of course we got our package. json
+              changes. If we look over at our code and our components, we still have HelloWorld:</p>
+            <figure> <img src="images/Fig07-030.png" />
+              <figcaption>Fig 07-030</figcaption>
+            </figure>
+            <p>it just added this other component and made that the thing that was cranking up out of the box right
+              there on line 4:</p>
+            <figure> <img src="images/Fig07-031.png" />
+              <figcaption>Fig 07-031</figcaption>
+            </figure>
+            <p>Now let's say I change my mind, I don't really want these. There's a simple way to undo these changes:
+            </p>
+            <figure> <img src="images/Fig07-032.png" />
+              <figcaption>Fig 07-032</figcaption>
+            </figure>
+            <p>I can discard them all right there by clicking on the button over in source control, and then choosing
+              Discard All 14 files. And now we no longer have in the package.json anything to do with Apollo.</p>
+            <p>So you've learned three things about plugins with our projects. We can use vue create and then select a
+              bunch of plugins right out of the gate, or we can add plugins to an existing project with vue add, and
+              third, and probably most importantly, we should always commit our changes before we actually run vue add
+              because then we can revert them if we want to, or we can just see at least all the files that changed
+              inside of our project. </p>
+          </div>
+          <div>
+            <h3>Invoking a Plugin Via the Vue CLI</h3>
+            <p>There may be a time where you've got a plugin in your application, but you want to change how you
+              configured it. For example, maybe you have ESLint set up in your project, but then you want to change the
+              configurations that you selected.</p>
+            <p>You can do this using the invoke command of the CLI:</p>
+            <figure> <img src="images/Fig07-033.png" />
+              <figcaption>Fig 07-033</figcaption>
+            </figure>
+            <p>This is ideal for when you want to change something that you've already configured with a plugin. So the
+              syntax would be vue invoke, and then the plugin name. So let's say that we added eslint with either vue
+              create or vue add vue/eslint to your project, later we could then run:</p>
+            <figure>
+              <pre><code class="language-command-line">vue invoke @vue/eslint</code></pre>
+              <figcaption>Fig 07-034</figcaption>
+            </figure>
+            <p>and that will run through the generator's prompts once again so you can reconfigure it. Let's go try this
+              out together.</p>
+            <p>Back in our project called vue-plugin-demo, we already had eslint configured:</p>
+            <figure> <img src="images/Fig07-035.png" />
+              <figcaption>Fig 07-035</figcaption>
+            </figure>
+            <p>and also pwa and babel. So instead of typing in just vue add, instead we're going to type vue invoke, and
+              then I like to do help first to see what the syntax looks like, so we'll do:</p>
+            <figure>
+              <pre><code class="language-command-line">vue invoke @vue/eslint</code></pre>
+              <figcaption>Fig 07-036</figcaption>
+            </figure>
+            <p>And it's going to run through now and ask us the configuration for this plugin. Remember, we're not
+              adding from scratch, but we're just changing the configuration. And just like with vue add, I always like
+              to commit first so I can see what the changes will be. So let's say I wanted to change to use Airbnb.</p>
+            <figure> <img src="images/Fig07-037.png" />
+              <figcaption>Fig 07-037</figcaption>
+            </figure>
+            <p>We'll select that and we'll do Lint and fix on commit just to show what it looks like. Notice right out
+              of the gate, we're seeing some changes over on the left:</p>
+            <figure> <img src="images/Fig07-038.png" />
+              <figcaption>Fig 07-038</figcaption>
+            </figure>
+            <p>We can take a look at these as it's going through. So here is the editor config, which it added that as a
+              new file. And then you'll also notice babel.config shows up here:</p>
+            <figure> <img src="images/Fig07-039.png" />
+              <figcaption>Fig 07-039</figcaption>
+            </figure>
+            <p>We're now getting different formatting, we've got commas at the end of our lines. Our package.json
+              changed because we have ESLint config for Airbnb:</p>
+            <figure> <img src="images/Fig07-040.png" />
+              <figcaption>Fig 07-040</figcaption>
+            </figure>
+            <p>Our app vue changed slightly, why? Probably more configuration:</p>
+            <figure> <img src="images/Fig07-041.png" />
+              <figcaption>Fig 07-041</figcaption>
+            </figure>
+            <p>Again, semicolons and commas showing up in different places. So that's what a lot of these code changes
+              are, it's changing the actual formatting of the code. Now once again if you don't like these settings, you
+              could just discard them right like this:</p>
+            <figure> <img src="images/Fig07-042.png" />
+              <figcaption>Fig 07-042</figcaption>
+            </figure>
+            <p>And this is a really nice feature because sometimes we plan on something at the beginning of a project,
+              or we add a feature in with vue add, but then we're like, you know what, we want to make a small change to
+              this. And that's where vue invoke really fits in nicely. </p>
+          </div>
+          <div>
+            <h3>Using the Vue CLI UI for Plugins</h3>
+            <p> Sometimes you need a little help finding the different plugins or setting them up and configuring them.
+              I really like the Vue UI for this, so let's take a quick look at that by just typing in:</p>
+            <figure>
+              <pre><code class="language-command-line">vue ui</code></pre>
+              <figcaption>Fig 07-043</figcaption>
+            </figure>
+            <p>into a terminal. First let's go and open up a project, we'll import the one we just created under vue:
+            </p>
+            <figure> <img src="images/Fig07-044.png" />
+              <figcaption>Fig 07-044</figcaption>
+            </figure>
+            <p> and then we called this one vue-plugin-demo:</p>
+            <figure> <img src="images/Fig07-045.png" />
+              <figcaption>Fig 07-045</figcaption>
+            </figure>
+            <p>Now if we go look at the puzzle piece over here on the left:</p>
+            <figure> <img src="images/Fig07-046.png" />
+              <figcaption>Fig 07-046</figcaption>
+            </figure>
+            <p>that icon means plugins. So here's the plugins that we have in our project:</p>
+            <figure> <img src="images/Fig07-047.png" />
+              <figcaption>Fig 07-047</figcaption>
+            </figure>
+            <p>Let's get a little tour of how this works first. You can filter through what you have in your project
+              just by typing in a word, like PWA:</p>
+            <figure> <img src="images/Fig07-048.png" />
+              <figcaption>Fig 07-048</figcaption>
+            </figure>
+            <p>If you want to add a new plugin, you can click on these two right here:</p>
+            <figure> <img src="images/Fig07-049.png" />
+              <figcaption>Fig 07-049</figcaption>
+            </figure>
+            <p>those are the special cases we mentioned before. So now I can click on vue-router, and then I can click
+              Continue:</p>
+            <figure> <img src="images/Fig07-050.png" />
+              <figcaption>Fig 07-050</figcaption>
+            </figure>
+            <p>it will install the router for us. Now before we continue with plugins, if we look over on the left
+              you'll see Dependencies:</p>
+            <figure> <img src="images/Fig07-051.png" />
+              <figcaption>Fig 07-051</figcaption>
+            </figure>
+            <p>Now you'll see the vue-router is there:</p>
+            <figure> <img src="images/Fig07-052.png" />
+              <figcaption>Fig 07-052</figcaption>
+            </figure>
+            <p>Of course, register-service-worker:</p>
+            <figure> <img src="images/Fig07-053.png" />
+              <figcaption>Fig 07-053</figcaption>
+            </figure>
+            <p>effectively this is a much nicer look at your package.json.</p>
+            <p>Going back over to the plugins, you can see our plugins here, and now notice that vue-router is gone at
+              the top, we can now click on Add plugin:</p>
+            <figure> <img src="images/Fig07-054.png" />
+              <figcaption>Fig 07-054</figcaption>
+            </figure>
+            <p> and we can search for them. At the time of this recording these were sorted it seems by the most
+              downloaded or used ones, and you can see up here that these are the @vue scoped ones:</p>
+            <figure> <img src="images/Fig07-055.png" />
+              <figcaption>Fig 07-055</figcaption>
+            </figure>
+            <p>We've already got Babel and ESLint in our project. And we can scroll through these and look to see what
+              do we want to add. Maybe we wanted vuetify. Well first, we could just type in at the top too. Then we get
+              a little bit of a filtered view. Once we click on that:</p>
+            <figure> <img src="images/Fig07-056.png" />
+              <figcaption>Fig 07-056</figcaption>
+            </figure>
+            <p>we can then go to here for more info:</p>
+            <figure> <img src="images/Fig07-057.png" />
+              <figcaption>Fig 07-057</figcaption>
+            </figure>
+            <p>It opens up the GitHub repository, or we can install it in the bottom right-hand corner:</p>
+            <figure> <img src="images/Fig07-058.png" />
+              <figcaption>Fig 07-058</figcaption>
+            </figure>
+            <p>Now notice that it's asking us information:</p>
+            <figure> <img src="images/Fig07-059.png" />
+              <figcaption>Fig 07-059</figcaption>
+            </figure>
+            <p>these are the prompts. Do we want to preset? Default recommended, or do we want to use one of these other
+              options? So, any of the prompts that are there, it'll automatically show up inside these screens. And any
+              file changes that got made will then show up here showing a little git diff:</p>
+            <figure> <img src="images/Fig07-060.png" />
+              <figcaption>Fig 07-060</figcaption>
+            </figure>
+            <p>so now we can see that the changes were made to our package.json, and our index. html, and our App. vue.
+              Now we can skip the Git changes:</p>
+            <figure> <img src="images/Fig07-061.png" />
+              <figcaption>Fig 07-061</figcaption>
+            </figure>
+            <p>This doesn't mean that we're not going to make the changes to the project, it just means we're not going
+              to commit them right now. Maybe we want to look at our full VS Code editor to do that. So I can click on
+              Skip, and it indeed did pull in vuetify:</p>
+            <figure> <img src="images/Fig07-062.png" />
+              <figcaption>Fig 07-062</figcaption>
+            </figure>
+            <p>One last feature that's worth really looking at is the three dots in the upper hand corner:</p>
+            <figure> <img src="images/Fig07-063.png" />
+              <figcaption>Fig 07-063</figcaption>
+            </figure>
+            <p>We can update all of our plugins to the latest version by clicking this button right here. So as you can
+              see, the Vue CLI is super powerful, but the Vue UI gives us another look, which might actually make it
+              easier to navigate all the plugins for this ecosystem. </>
+          </div>
+          <div>
+            <h3>Wrap up and What's Next?</h3>
+            <p>In this module, we learned how the Vue CLI can help us navigate plugins with Vue applications, and the
+              plugins are the building blocks to creating really rich Vue applications:</p>
+            <figure> <img src="images/Fig07-064.png" />
+              <figcaption>Fig 07-064</figcaption>
+            </figure>
+            <p>And we can get plugins right out of the box when we create an application using vue create, or we can add
+              them after the fact with vue add, and we can skip to any prompts we want if there's any prompts supported
+              or presets inside of the plugin by passing those parameters in, and the plugins generator will take care
+              of that for us. If we need to go back and modify an existing application's plugins, we can use vue invoke.
+              And remember, we can always lean on the Vue UI to help us find those plugins and navigate it there as
+              well.</p>
+            <p>In the end, the Vue plugins are going to add dependencies to our application, and possibly reconfigure
+              some of our code, so it's always a good idea to commit our changes to Git first. Now that we've covered
+              plugins, we're going to take a closer look at the Vue UI in the next module. </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</body>
+
+</html>

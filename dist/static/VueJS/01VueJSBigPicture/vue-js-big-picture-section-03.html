@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Vue. js: Big Picture</title>
+  <script src="https://unpkg.com/vue"></script>
+  <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" rel="stylesheet">
+  <link href="prism.css" rel="stylesheet">
+  <script src="prism.js"></script>
+  <style>
+    img {
+      max-width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container" id="app">
+    <div class="panel-group">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h2>Vue. js: Big Picture</h2>
+        </div>
+        <div class="panel-body">
+          <div>
+            <h2>Why Use Vue.js? </h2>
+            <div>
+              <h3> Vue Capabilities and Limitations </h3>
+              <p> In this clip, we'll be discussing Vue's capabilities and limitations. After all, my goal is not to get
+                you to use Vue under any circumstances. I don't get any special reward at the end of the day if you
+                decide to use Vue or React. I just honestly do believe that Vue is the best tool for many situations.
+                Many, but not all. So, let's have a look.</p>
+              <figure> <img src="images/vue-js-big-picture/Fig03-001.png" />
+                <figcaption>Fig 03-001</figcaption>
+              </figure>
+              <p>So what are said capabilities and limitations? We'll be looking at what Vue does and what Vue does not
+                do.</p>
+              <p>So first, what Vue does. So it outputs HTML code, browsers can read this HTML code, and users see
+                something at the end of the day. Simple enough. Vue also, similar to any front-end framework, maps the
+                interactions that your user makes, hovering or clicking, to JavaScript methods that you write, which
+                may, for example, contact your server and make a payment.</p>
+              <p>Vue does use sophisticated techniques similar to React and Angular to speed the rendering of the
+                application. So when you, say, have a list of 20 items and replace them with a list of another 20 items,
+                clever substitutions are made so that the device that it's being viewed on re-renders as little as
+                possible, and this actually makes a huge difference on slow devices like mobile phones.</p>
+              <p>In addition, as long as you don't use the. vue file, Vue works in most browsers, modern browsers,
+                without any build step at all. If you're like me and not a huge fan of the extra complexity that build
+                steps bring, you'd think this is a very cool feature, especially for prototypes or applications with
+                limited scope.</p>
+              <p>Now there's stuff that Vue doesn't do.</p>
+              <p>So Vue doesn't create a server for your application. The exception is if you use Vue CLI as well since
+                Vue CLI can make a server, but that runs on npm, and we're talking about a whole different stack of
+                dependencies, so you may not want to go down that route, in which case you'll need a different solution
+                like Apache to actually serve your application.</p>
+              <p>Vue doesn't test your code for errors. You still have to do that yourself. If you write code that's
+                wrong, Vue will still try to run it.</p>
+              <p>Unlike Angular, it doesn't have a lot of utility methods. There aren't many pipes, and currency
+                converters, and language support built in. It's just Vue. You have to use its complimentary library,
+                which we'll be spending quite a bit of time discussing, to give it any utility; otherwise, without these
+                libraries, you'd just have to look at it as something that takes a model and outputs HTML code.</p>
+              <p>In addition, it doesn't do routing, which is where what the URL in the browser is affects what you see.
+                You, once again, need to use a complimentary library, vue-router, to get this working. And unlike
+                Angular, Vue does not have its own module solutions, so you're still going to be using ES6 modules for
+                your Vue app. </p>
+            </div>
+            <div>
+              <h3> Reactivity and Vue </h3>
+              <p> In this clip, we'll discuss reactivity and Vue. This is an important topic since reactivity is one of
+                the main problems that Vue sets out to solve. So what is reactivity? Basically, reactivity is the way an
+                application changes what the user sees in response to any kind of activity, for example, the user
+                hitting a button, or putting text into an input, or activity coming from the server, like a message
+                that's been sent via AJAX. Here's a simple example.</p>
+              <figure> <img src="images/vue-js-big-picture/Fig03-002.png" />
+                <figcaption>Fig 03-002</figcaption>
+              </figure>
+              <p>Imagine in your application you have a simple array representing a list of your favorite fruits. The
+                array contains the items apples and pears. On the right is what a user might see. Now imagine we add a
+                new item to this list, let's say grapes. As our data model on the left is updated, we see that our
+                application on the right also updates. But why is this all important?</p>
+              <figure> <img src="images/vue-js-big-picture/Fig03-003.png" />
+                <figcaption>Fig 03-003</figcaption>
+              </figure>
+              <p>So JavaScript doesn't have any built-in solution for reactivity. That's why libraries like Vue,
+                Angular, and React exist to fill this gap in the features that JavaScript provides automatically.</p>
+              <p>It's a good thing that we have these frameworks too because if not implemented correctly, reactivity is
+                very slow, easily the slowest part of any application.</p>
+              <p>Vue solves this problem, and moreover, it doesn't solve it in the exact same way as say Angular or
+                React, lending to its validity as a possible alternative to those libraries.</p>
+              <figure> <img src="images/vue-js-big-picture/Fig03-004.png" />
+                <figcaption>Fig 03-004</figcaption>
+              </figure>
+              <p>So when you're working with a Vue application, how should you expect it to handle reactivity? So Vue
+                detects the changes to the data automatically, and then what the user sees is updated automatically, and
+                they're able to continue interacting with the application.</p>
+              <p>In other words, with Vue, reactivity is completely automatic. Compare this to React when, for example,
+                you might need to call render in order for your application's view to match its data model.</p>
+              <p>Moreover, Vue reuses DOM elements and also uses other special techniques to make the performance of
+                these updates very fast.</p>
+              <figure> <img src="images/vue-js-big-picture/Fig03-005.png" />
+                <figcaption>Fig 03-005</figcaption>
+              </figure>
+              <p>So we've talked about it in theory, but what does this really mean, both for a developer and for a
+                user? </p>
+              <p>First, let's talk about how Vue's reactivity relates to a developer. Code is easier to write and
+                maintain since you don't have to explicitly tell Vue every time you want to render something. Vue uses a
+                virtual DOM to make large updates fast, and it allows you, as a programmer, to express those updates in
+                less code. Since you have less code, it's easier to find and fix bugs. But how did this all impact your
+                end user?</p>
+              <p> Well to your end user, the application is fast and fun to use. Even if they're working with a huge
+                list, let's say this is a really popular guy, and they have 1000 people on their friends list, no matter
+                how big a list, the application doesn't seem to go any slower. Finally, the user simply experiences
+                fewer bugs as they're using your application. Pretty good.</p>
+              <p>Unfortunately, reactivity and Vue do have some challenges. I find that this is because Vue tries to
+                make everything so automatic that there's some situations that arise that are just difficult to resolve.
+                So as we found, Vue components update automatically when the underlying data changes. This is really
+                simple if the underlying data is a number, or a string, or a Boolean, or an immutable data structure. In
+                JavaScript, the immutable data structures are numbers, strings, and Booleans, and the mutable data
+                structures are arrays and objects. And if an array of objects represents your data, then reactivity is
+                not so simple.</p>
+              <p> Because of the way modern JavaScript works, Vue's automatic detection methods, let's just say they
+                work inconsistently with arrays and objects. Sometimes they're able to determine the array has been
+                updated, and sometimes they simply aren't aware, and you're Vue app will not update when you expect it
+                to. As you become more experienced with Vue, you will learn techniques that sort of indicate to Vue that
+                the data has changed. But I really wanted to warn you about this now, because inevitably, if you go deep
+                into Vue, you are going to encounter this challenge where, for example, having an object will make your
+                application not work the way that you expect, and now you'll know that the solution involves
+                understanding reactivity and mutable objects.</p>
+              <p>In the next clip, we'll jump right into a sample Vue application and see how they really work. </p>
+            </div>
+            <div>
+              <h3> A Simple Vue Application </h3>
+              <p> I felt that simply talking about Vue without having any kind of Vue application would be too thin of a
+                discussion, so I've put together a simple Vue application for us to look at. Now I do mean simple
+                because I wanted the application to be fully understandable in under 5 minutes, so I have pulled out all
+                the stops and created the simplest thing I could.</p>
+              <p>So we'll be looking at a basic to-do list application. It's you'll take things you want to do, you add
+                them to the list, you check them off. It's the most common trope of examples in computer programming. As
+                we look at it, you're going to want to take note of the following things. We don't need any build step
+                to run our application, the file size is very, very small, and we're using a content delivery network to
+                download Vue, which means we don't need npm, and if Vue's already been downloaded by the user from the
+                same CDN on a different website, it'll actually load up instantly, which is terrific.</p>
+              <p>So first, let's look at the app. The app is available at <a
+                  href="danielstern.ca/vue">danielstern.ca/vue </a>, so let's go over there now.</p>
+              <figure> <img src="images/vue-js-big-picture/Fig03-006.png" />
+                <figcaption>Fig 03-006</figcaption>
+              </figure>
+              <p>I now have my sample Vue application open on the left along with the repository, which contains all the
+                code, on the right. So if you'd like to get this application running on your own computer, you can
+                install it from the GitHub repository and follow the instructions in the Installation section.</p>
+              <p>First, let's have a look at what this application does. It's a basic TodoMVC, or to-do
+                Model-View-Controller, application.</p>
+              <figure> <img src="images/vue-js-big-picture/Fig03-007.png" />
+                <figcaption>Fig 03-007</figcaption>
+              </figure>
+              <p>You can click any of these items, which will toggle their completeness, and you can toggle this global
+                Show Completed setting, which will hide or show the items that have been completed.</p>
+              <p>Finally, you can add new items. It's not an incredibly complex application, but it's a nice microcosm
+                of what we might see in a full-sized production app. Let's look at the code that make all this possible.
+              </p>
+              <p> Let's start by looking at index.html.</p>
+              <figure> <img src="images/vue-js-big-picture/Fig03-008.png" />
+                <figcaption>Fig 03-008</figcaption>
+              </figure>
+              <p>So what we see here at the top is the structure of a normal application. We see the title, a link to
+                Bootstrap, and a link to our own styles, which we'll investigate in a minute. The first interesting
+                thing we'll run into is this div with the ID app.</p>
+              <figure> <img src="images/vue-js-big-picture/Fig03-009.png" />
+                <figcaption>Fig 03-009</figcaption>
+              </figure>
+              <p>There's nothing in it, but when a Vue runs, you'll define an element that it should kind of bootstrap
+                or put the application into. In this case, the div with the ID of app is our such element.</p>
+              <p>The next interesting thing is this script tag.</p>
+              <figure> <img src="images/vue-js-big-picture/Fig03-010.png" />
+                <figcaption>Fig 03-010</figcaption>
+              </figure>
+              <p>Now Vue has some interesting ways of dealing with templates, and one of the ways is that you can put a
+                template inside the HTML file. Now this isn't a great way to organize a Vue application if it has more
+                than one component, but in the case of my small Vue, TodoMVC, it was just right. So this code inside
+                here is actual Vue template code.</p>
+              <p>First you'll notice, on line 26, you'll see this attribute, v-on:click.</p>
+              <figure> <img src="images/vue-js-big-picture/Fig03-011.png" />
+                <figcaption>Fig 03-011</figcaption>
+              </figure>
+              <p>Vue uses HTML directives similar to Angular to coordinate activity. So in this case, v-on:click means
+                that the expression in the quotes afterwards will execute whenever the click event occurs.</p>
+              <p>Here, you can see the v-model property on the checkbox.</p>
+              <figure> <img src="images/vue-js-big-picture/Fig03-012.png" />
+                <figcaption>Fig 03-012</figcaption>
+              </figure>
+              <p>So when I click this checkbox here:</p>
+              <figure> <img src="images/vue-js-big-picture/Fig03-013.png" />
+                <figcaption>Fig 03-013</figcaption>
+              </figure>
+              <p>The property of the model known as showComplete is changing to match whether it's checked or not. This
+                code here represents the list of items.</p>
+              <figure> <img src="images/vue-js-big-picture/Fig03-014.png" />
+                <figcaption>Fig 03-014</figcaption>
+              </figure>
+              <p>Here, we can see a repeater, or an element that repeats itself for every item in an array. You can see
+                it uses the v-for directive, which may be familiar to anyone who's used Angular as being almost
+                identical to the ngFor directive, and whatever is inside this list item will be repeated for every
+                element of the array.</p>
+              <figure> <img src="images/vue-js-big-picture/Fig03-015.png" />
+                <figcaption>Fig 03-015</figcaption>
+              </figure>
+              <p>Finally, you can see some interpolation:</p>
+              <figure> <img src="images/vue-js-big-picture/Fig03-016.png" />
+                <figcaption>Fig 03-016</figcaption>
+              </figure>
+              <p>Inside these double curly brackets is a statement, a JavaScript statement, that says todo. name. So
+                where the text of the actual Todo appears is directly equivalent to this line of code containing
+                {{todo.name}}. If you're working at home, you can try it by, for example, adding the word hello, and
+                you'll see that hello will now appear before each one of these elements.</p>
+              <p>Finally, a form allows us to submit a new Todo. Notice this form is using the v-on directive as well,
+                but it's listening to the submit event.</p>
+              <figure> <img src="images/vue-js-big-picture/Fig03-017.png" />
+                <figcaption>Fig 03-017</figcaption>
+              </figure>
+              <p>Finally, at the bottom, you can notice that we're including Vue via a script tag.</p>
+              <figure> <img src="images/vue-js-big-picture/Fig03-018.png" />
+                <figcaption>Fig 03-018</figcaption>
+              </figure>
+              <p>This means that there's no build step and getting our application to actually be a prototype is a bit
+                easier. </p>
+              <p>Next, let's take a quick look at our styles. css. As you can see, there's not a whole lot here.</p>
+              <figure> <img src="images/vue-js-big-picture/Fig03-019.png" />
+                <figcaption>Fig 03-019</figcaption>
+              </figure>
+              <p> Most of the styles are handled by bootstrap, which is compatible with Vue. You can see the. completed
+                style, which we are applying conditionally to certain elements of our application. Finally, let's look
+                at app. js.</p>
+              <figure> <img src="images/vue-js-big-picture/Fig03-020.png" />
+                <figcaption>Fig 03-020.png</figcaption>
+              </figure>
+              <p>Here, on line 11, you can see our data model. Our application's data model is literally an array.</p>
+              <p>On line 25, you can see us actually initialize the Vue application. This is done with the syntax new
+                Vue. We define an element, as I pointed out, our app element in our index file, and our template, which
+                we also had a look at. That's also in the index file. The data method returns our application's data
+                model:</p>
+              <figure> <img src="images/vue-js-big-picture/Fig03-021.png" />
+                <figcaption>Fig 03-021</figcaption>
+              </figure>
+              <p>Here are todos, as well as an empty text string, which will correspond to our input here, and the
+                showComplete property.</p>
+              <p>The computed properties of our configurations work in the same way as data, but it's data that needs to
+                be processed beforehand.</p>
+              <figure> <img src="images/vue-js-big-picture/Fig03-022.png" />
+                <figcaption>Fig 03-022</figcaption>
+              </figure>
+              <p>Here you can see the filteredTodos property, which is all the todos in the list, but without those that
+                are complete. Computed properties are calculated differently than regular properties. The general idea
+                is that they save processing power.</p>
+              <p>Finally, we can see the methods that we've defined for our Vue application:</p>
+              <figure> <img src="images/vue-js-big-picture/Fig03-023.png" />
+                <figcaption>Fig 03-023</figcaption>
+              </figure>
+              <p>There's just one, addTodo, which is called whenever this form is submitted. You'll notice all we do is
+                push our new Todo item to the array of todos that we have, and then Vue handles the update
+                automatically. This goes back to the reactivity that we're talking about.</p>
+              <p>So that's the application. It has some interesting properties. I think it's very cool how declarative
+                our app. js file is and how much of the logic we were actually able to put into the template. So that's
+                all the time I have to show you this application, but I do encourage you to copy it onto your computer,
+                get it started, and make a few changes in the code base to see how each and every line works. So that's
+                all the time I have to discuss this simple app I've made, but there's so much more in my comments for
+                you to read and become familiar with. So go ahead, clone it, modify it, change the values, add new
+                features, and take some time to get familiar with it. After you're satisfied with that, join us again.
+              </p>
+              <p>And in the next clip, we'll be discussing the question of where should you use Vue? </p>
+            </div>
+            <div>
+              <h3> Where Should You Use Vue? </h3>
+              <p> As we've seen so far, Vue is a powerful framework with many interesting features, but all front-end
+                challenges are not created equal. There are some jobs that Vue just makes more sense for than others, so
+                let's discuss that.</p>
+              <p>So what's a good scenario to use Vue in? Well, an off sided and good example is modernizing a legacy
+                application, so taking an app that's old and works, but is slow, and maybe isn't compatible with
+                everything you want it to be, and bringing it up to modern standards. Additionally, Vue makes it very
+                easy to build applications as a team, which we'll discuss in a moment. Finally, Vue is perhaps the best
+                choice out of all the major frameworks for the process of prototyping. Let's dive a bit further into
+                these three things.</p>
+              <p>First, let's talk about modernizing legacy applications. Legacy applications are extremely common as
+                all an application needs to do to become a legacy application is to stick around for 10 or 15 years
+                without breaking; however, these older apps tend to be very difficult to upgrade and maintain. So how
+                could we use a Vue to fix this situation?</p>
+              <figure> <img src="images/vue-js-big-picture/Fig03-024.PNG" />
+                <figcaption>Fig 03-024</figcaption>
+              </figure>
+              <p>So probably the best part is that a Vue can be included incrementally. In other words, you can just
+                replace a small part of the application, the most critical part, with a small Vue app. In this scenario,
+                the rest of the application will continue to function the same, and you'd go about a process of slowly,
+                but incrementally replacing the application with Vue components.</p>
+              <p>In this way, we can also preserve the structure of the existing application as we modernize it. This is
+                good because in very old, fragile applications, even the tiniest structural change could break the whole
+                thing.</p>
+              <p>Now even if an application is not so old as if it's built with React, or Angular, or jQuery, Vue will
+                still be helpful in these situations as it integrates nicely into applications that are built with these
+                frameworks.</p>
+              <p>At the end of the day, this is good because using Vue to update your legacy application lets you show
+                results right away. As soon as you've fixed a particular problem area, you can push the changes, and in
+                that particular area, performance and maintainability will be improved.</p>
+              <p>Now you might wonder when is the right time to modernize your application? Well, as William Shakespeare
+                said</p>
+              <blockquote>"Cowards die many times before their deaths; The valiant never taste of death but once."
+              </blockquote>
+              <p><cite>William Shakespeare, Julius Caesar</cite></p>
+              <p>In other words, the longer you wait to modernize your application, the more trouble you're going to
+                have. So here's a quick checklist to see if you should modernize your application.</p>
+              <figure> <img src="images/vue-js-big-picture/Fig03-025.PNG" />
+                <figcaption>Fig 03-025</figcaption>
+              </figure>
+              <p>First are simple changes, especially just cosmetic ones to what the users see. Do those changes take a
+                long time? And are they so unusually complicated that for some reason only your most senior and
+                experienced developers can handle them?</p>
+              <p>When the boss of the company requests a new feature in the view layer, do the senior developers say
+                that they simply cannot do it because implementing it would be too hard or it might break something
+                else? Do you hear this a lot while working on your project?</p>
+              <p>Finally, is the code of the application all ad hoc? In other words, is there no guiding principle or
+                unifying strategy that ties the whole application together? If it is, then when you have a new developer
+                coming in, they're going to have to relearn everything from the ground up, whereas if you use something
+                like Vue, new recruits are usually already familiar with the conventions used in React, Angular, and
+                Vue. </p>
+            </div>
+            <div>
+              <h3> Building Applications as a Team and Prototyping with Vue </h3>
+              <p> The next area where it makes sense to use Vue is when you have a team and you're all building an
+                application together. Now I know that you can also use React and Angular for this purpose, but we'll be
+                comparing React and Angular directly to Vue a bit later. So for now, let's just look at Vue's benefits
+                specifically when we're working with a team.</p>
+              <figure> <img src="images/vue-js-big-picture/Fig03-026.PNG" />
+                <figcaption>Fig 03-026</figcaption>
+              </figure>
+              <p>So the main feature of Vue, as we've seen, is components, and components allow us to separate the
+                different parts of our app into different bodies of work. This makes it easy for two different
+                developers to work on two different parts of the app.</p>
+              <p>In addition,. vue files give us a convenient way to separate our CSS, our HTML, and our JavaScript, but
+                keep them in the same file. As the HTML, CSS, and JavaScript can't be mixed, but have to be in their own
+                distinct part of the Vue file, it makes it easy to check these changes in with source control and
+                multiple different developers can work on the same Vue file.</p>
+              <p>Another advantage, which I've pointed out, is that a lot of people, and this proportion of people is
+                growing every day, are already familiar with Vue. By the time you're done with this course, you'll be
+                somewhat familiar with Vue as well. Thus, if you've been building an extremely by the books Vue app and
+                you bring someone else in, they should be able to jump in with minimal assistance. Very cool.</p>
+              <p>Finally, when it comes time for your application to really evolve and become a big, full-featured
+                application, the ecosystem that Vue has, the accompanying libraries, provide the tooling that you need
+                to make it happen. So as we'll discuss later, you can use Vue's ecosystem libraries to facilitate
+                routing, or state management, or all the bigger challenges that you're going to face when you build this
+                app.</p>
+              <p> Finally, let's talk about prototyping. I've saved the best for last because prototyping is really
+                where Vue shines above React and Angular.</p>
+              <figure> <img src="images/vue-js-big-picture/Fig03-027.png" />
+                <figcaption>Fig 03-027</figcaption>
+              </figure>
+              <p>So Vue can be set up very quickly. If you go with the most basic setup, as in using the Vue script from
+                a CDN, then there's basically no set up at all. You can get started 5 minutes after your supervisor or
+                boss has requested the prototype. But even in a prototype, Vue is still fast. So if your prototype
+                involves say a list of 100 elements or 1000 elements, if you just wrote it in plain HTML or jQuery,
+                you'd probably get a bit of slowdown, esp</p>
+              <p> Finally, there's not a big difference between how you'd make a Vue prototype and how you'd make a real
+                Vue app. Thus, if your prototype is a hit, it's very simple to take that prototype and turn it into a
+                full application or compose it into your existing Vue components. So those are all the things you can do
+                with Vue. As you can see, the list is not short, and it's a very useful library. In the next clip, we'll
+                be discussing the Vue ecosystem, or those libraries that let you do things that with just Vue you
+                cannot. </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

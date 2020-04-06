@@ -9,8 +9,6 @@
           <h3>Vue JS Deploying to Heroku</h3>
           <router-link to="/vuejsdeployingtoheroku" active-class="active"><a>Vuejs - Deploying to Heroku</a>
           </router-link>
-          
-
           <h3>Vue JS Big Picture</h3>
           <a target="blank" href="https://app.pluralsight.com/search/?q=daniel%20stern&query_id=3c0dc4a5-6f72-4812-a639-cfeabdcd72f3">Daniel Stern</a><br/>
           <a target="blank" href="https://app.pluralsight.com/library/courses/vuejs-big-picture/table-of-contents">Pluralsight</a><br/>
@@ -42,7 +40,6 @@
           <p>Date Completed: ??/??/????</p>
           <p>Rating: ??/10</p>
           <p>Course review</p>
-
 
           <h3>Vue JS Essentials with Vuex and Vue Router</h3>
           <a target="blank" href="https://www.udemy.com/courses/search/?q=stephen%20grider&src=sac&kw=stephen%20gr">Stephen Grider</a><br />

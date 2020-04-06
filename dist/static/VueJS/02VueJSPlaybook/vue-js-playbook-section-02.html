@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="UTF-8">
+  <title>Vue.js Playbook</title>
+  <script src="https://unpkg.com/vue"></script>
+  <!--<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"-->
+  <!--integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">-->
+  <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" rel="stylesheet">
+  <link href="prism.css" rel="stylesheet">
+  <script src="prism.js"></script>
+  <style>
+    img {
+      max-width: 100%;
+    }
+    .example {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+<div class="container" id="app">
+  <div class="panel-group">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h2>Vue.js Playbook</h2>
+      </div>
+
+      <div class="panel-body">
+        <div>
+          <h2>Introducing Vue.js</h2>
+          <div>
+            <h3>Introducing Vue.js</h3>
+            <p>
+              Hey there, I'm Chad Campbell, and today I'd like to talk with you about Vue. js. I've decided to write
+              this course because I believe that Vue. js is a breath of fresh air in the increasingly complex world of
+              web development. Vue. js has a focus on simplicity and speed. This focus helps you quickly build web apps
+              that run fast.
+            </p>
+            <p>In this course, I'm going to show you how to build an app with Vue. js. To help drive home the concepts,
+              we'll create a UI that will let you search for fictional beers and breweries:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig02-001.png"/>
+              <figcaption>Fig 02-001</figcaption>
+            </figure>
+            <p>This UI is what's showing on the screen during this introduction. This UI, Google Chrome, and Visual
+              Studio code will be used to show the key features of Vue. js. Plus, each module in this course has tons of
+              examples which are in this repo:
+            </p>
+            <a href="https://github.com/ecofic/course-vue-getting-started">https://github.com/ecofic/course-vue-getting-started</a>
+            <p>All of this is designed to help you learn how to use Vue. js to quickly create fast, running apps. In
+              this module, you'll get a high-level overview of Vue. js. You'll see why Vue. js is compelling. From
+              there, I'll address common concerns you or your friends may have about this framework. After that, we'll
+              get to work. We'll walk through how to install and set up Vue. js in an app. Finally, this module will
+              conclude by showing you how to initialize a Vue. js app. Let's begin.
+            </p>
+          </div>
+          <div>
+            <h3>Why Should I Care About Vue.js?</h3>
+            <p>
+              Vue. js, also known as just Vue, is a UI framework designed with simplicity in mind. Developers already
+              have several popular UI frameworks to choose from. For that reason, I think it's important to consider why
+              you might want to use Vue. These reasons will provide motivation for the rest of this course. In addition,
+              this information will equip you if you want to promote your choice amongst others. It's important to
+              remember that these are my opinions, and there's not a one-size-fits-all answer. Still, I like Vue at this
+              time primarily because of its simplicity and its speed.
+            </p>
+          </div>
+          <div>
+            <h3>The Simplicity of Vue</h3>
+            <p>
+              Vue promotes itself as an approachable framework. This framework is approachable because of how few
+              prerequisites there are. If you know HTML, CSS, and JavaScript, you can hit the ground running very
+              quickly.
+            </p>
+            <p>This is similar to what jQuery did when it was introduced. JQuery was introduced in 2006. Since then,
+              it's been one of the most popular JavaScript libraries in use. This library became popular because it
+              empowered people to easily do amazing things. It let someone focus on solving problems instead of worrying
+              about design patterns, tool chains, and other complexities. These complexities have run rampant in other
+              frameworks. In some situations, these complexities are necessary; however, a lot of times they simply take
+              you away from what you're trying to accomplish. So, if jQuery is powerful and easy, why consider using
+              Vue?
+            </p>
+            <p>As a web page or app grows, it becomes more complex. This complexity can make an app error prone and
+              difficult to maintain. This challenge is accurately depicted in a quote I saw on Twitter which said if you
+              don't actively fight for simplicity in software, complexity will win, and it will suck. Vue helps you
+              fight this good fight with templates and declarative bindings.
+            </p>
+            <p>Templates are a big part of Vue. Templates separate the UI from the data and business logic:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig02-001a.png"/>
+              <figcaption>Fig 02-001a</figcaption>
+            </figure>
+            <br/>
+            <p class="example">Module 01 - templating example</p>
+            <p>
+              The data and business logic get written with JavaScript. The UI is defined by HTML and CSS. Vue is then
+              responsible for compiling the templates into what the user sees. To remember the purpose of a template, I
+              think back to my childhood. When I was a kid, I collected basketball cards:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig02-002.png"/>
+              <figcaption>Fig 02-002</figcaption>
+            </figure>
+            <p class="example">Module 02 - templating example (basketball card)</p>
+            <p>Each basketball card could have a picture of a basketball player and their stats on it. In the context of
+              Vue, the stats would be the data. The picture in details would be the template. The two come together to
+              make the basketball card for a player. The code on the screen shows data for a single basketball player:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig02-003.png"/>
+              <figcaption>Fig 02-003</figcaption>
+            </figure>
+            <p>Imagine if we wanted to show the cards for all 12 players on a team, though. If we had to manually create
+              the HTML for each player, that would be a lot of HTML to create. Going one step further, imagine if we
+              wanted to show players for 30 or more teams. That's too much work, and most likely, next seasons the
+              layout and style of the basketball cards will change. That would be a lot of HTML to change.
+            </p>
+            <p>A Template insulates you from two things. First, a template minimizes the amount of code you have to
+              write. With a template, you don't have to write similar code over and over again. Second, templates
+              protect you from changes. With a template, you only have to update the HTML once. Instead of the UI being
+              driven by the HTML, the UI is driven by the data. The UI and the data are bound together by declarative
+              bindings.
+            </p>
+            <p> A declarative binding is the glue that holds the UI and the data together. To understand why this is so
+              valuable, I want you to imagine a spreadsheet that calculates sales tax:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig02-004.png"/>
+              <figcaption>Fig 02-004</figcaption>
+            </figure>
+            <p>This spreadsheet has a design that consists of fonts, colors, and other formatting details. the
+              spreadsheet also has raw data in each cell, and some cells have formulas, which are a kind of business
+              logic. If you change the text color of a spreadsheet cell:
+            </p>
+            <figure>
+              <img src="images/vue-js-getting-started/Fig02-005.PNG"/>
+              <figcaption>Fig 02-005</figcaption>
+            </figure>
+            <p>You don't expect the actual data to change. You also wouldn't expect the results of the formulas to
+              change either, but if you change the actual data:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig02-006.png"/>
+              <figcaption>Fig 02-006</figcaption>
+            </figure>
+            <p>You would totally expect the cell's data to change. You would also expect the formulas to update the
+              results without you having to do anything. This real-world scenario gives you a visual for why declarative
+              bindings are so valuable.
+            </p>
+            <p>Declarative bindings are an important part of templating. They enable a separation of concerns that
+              simplifies development. If you're on a team with other developers, these concepts enable you to work on
+              the design or UI, while other team members focus on the back end. You can just make up some fake data
+              until the real stuff is available.
+            </p>
+            <p>Declarative bindings reduce the amount of code you have to write. Declarative bindings also remove the
+              burden of directly managing the DOM when the data changes. As you saw in the spreadsheet, the sales tax
+              total just updated when the related sales were updated. Without declarative bindings, you would have to
+              write the code to manually update the value in the cell. With declarative bindings, though, the update
+              happens automatically, just like it does in a spreadsheet.
+            </p>
+            <p>
+              Declarative bindings are one way that Vue helps simplify your development. Vue's support for templates
+              also streamlines your development. These topics will be discussed in much more detail beginning in module
+              2. For now, I just wanted to share what they are. I also wanted to point out that you get these things
+              without having to learn specific design patterns or complex tool chains.
+            </p>
+            <p>This simplified approach is why some, like Peter Jang, are calling Vue the next jQuery. While that's a
+              bold statement, I do believe Vue's popularity will only skyrocket. I believe this because of how easy Vue
+              is to learn and develop with. I also believe this because of how easy the app code is to maintain. In
+              addition to these things, I believe Vue is valuable because of how fast it is.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Running Fast with Vue
+            </h3>
+            <p>
+              Vue apps start fast and run fast. These two valuable speed indicators are met because of the size of Vue
+              itself and its virtual document object model. As of the time of writing, the core Vue library was only 27.
+              3 KB when gzipped. This compact size allows it to quickly transfer from a webserver to a web browser.
+            </p>
+            <p>Once downloaded, the library is extracted into a small 74. 8 KB package:</p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig02-007.png"/>
+              <figcaption>Fig 02-007</figcaption>
+            </figure>
+            <p>This small size means that the library can be parsed and loaded quickly.</p>
+            <p> While the speed that Vue can be downloaded and started is awesome, your Vue will spend most of its time
+              actually running. The Vue is able to run quickly because of its virtual document object model. From a
+              runtime performance perspective, changing the DOM is expensive. In fact, manipulating the DOM is typically
+              the most expensive operation performed on the client side.
+            </p>
+            <p>It's expensive because the browser must recalculate the positions, shapes, and sizes of the elements on a
+              web page. These recalculations block the user from using an app until it's done. This blocking behavior is
+              not specific to Vue. Instead, it's performed by the browser and experienced with other client-side
+              frameworks as well. To minimize the number of calculations, Vue implements a virtual DOM.
+            </p>
+            <p>A virtual DOM is like a lightweight copy of the actual DOM. The virtual DOM is responsible for
+              efficiently determining what needs to be updated. It also batches those updates, which is faster than
+              performing each update individually. To give you an idea of how Vue performs against other popular
+              frameworks, let's take a look at a benchmarking chart:
+              <figure>
+                <img src="./images/vue-js-getting-started/Fig02-008.png"/>
+                <figcaption>Fig 02-008</figcaption>
+              </figure>
+            <p>This chart shows the average time to complete a set of predefined tasks for benchmarking purposes.
+              Shorter bars are better. This means that Vue executes the benchmark tasks faster than Angular and React.
+              You can review the test yourself at this <a
+                href="http://stefankrause.net/js-frameworks-benchmark5/webdriver-ts/table.html"
+                target="_blank">address</a>. A faster runtime experience is something your users will appreciate. The
+              simplicity of creating this faster experience is something that I believe you and other developers will
+              appreciate. Still, it's important to consider a couple of other things too.
+            </p>
+          </div>
+          <div>
+            <h3>Other Considerations for Vue</h3>
+            <p>
+              In my opinion, there are additional considerations you should make when choosing a client-side framework.
+              For example, I believe that you should consider browser support and licensing. I want to quickly discuss
+              these other factors before discussing how to install Vue. New technology can be exciting; however, it's
+              not much fun to release an awesome new app and get complaints due to browser compatibility issues. I know
+              I don't want that, and I'm sure you don't want that either. For that reason, I want to show you which
+              browsers Vue supports:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig02-009.png"/>
+              <figcaption>Fig 02-009</figcaption>
+            </figure>
+            <p>As shown on the screen, Vue supports legacy browsers, including Internet Explorer 9 and up. Vue also
+              support popular Evergreen browsers. Evergreen browsers are browsers that automatically update themselves
+              to the latest version. These include Apple Safari on Mac OS, Google Chrome, Microsoft Edge, and Mozilla
+              Firefox.
+            </p>
+            <p>On the mobile side, Vue supports Android and Safari on iOS. With browser support being this broad, a Vue
+              app can reach virtually anyone.
+            </p>
+            <p>While having the ability to reach anyone is exciting, it's also important to consider if you can legally,
+              due to licensing:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig02-010.png"/>
+              <figcaption>Fig 02-010</figcaption>
+            </figure>
+
+            <p>Vue is available with the permissive and popular MIT license. This license is also used by jQuery and
+              Angular; however, React uses the 3-clause BSD license with a Facebook addendum. The license used by React
+              has been the subject of some concern and debate. I'm not a lawyer, and for that reason, I recommend you
+              consult with your organization's legal representation as part of your framework decision process. However,
+              personally, I've never received any pushback over something that was MIT-licensed. Personally, I strive to
+              use permissive, well-defined, and easy to understand licenses like the MIT license, and that's another
+              reason why I like Vue.
+            </p>
+            <p>Licensing and browser support are two important things to consider when choosing a framework. The runtime
+              performance of a framework is also important. It's also helpful to use a framework that's both easy to
+              learn and easy to use. Collectively, these things are good reasons to use Vue. Either way, once you've
+              decided to use Vue, you'll need to install it and set it up.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Installing and Setting up Vue
+            </h3>
+            <p>
+              Vue has a core library that is focused on app structure; however, modern apps often need more than just
+              structure. They need to be able to do things like make HTTP requests to call web services. In fact, we
+              need that ability in this course. For that reason, I'm going to show you how to install two libraries in
+              this section. First, I'll show you how to install Vue itself. Then I'll show you how to install a library
+              for making HTTP requests called Axios.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Installing Vue.js
+            </h3>
+            <p>
+              Vue is the core library that you'll need for all Vue apps. This library can be installed using a Content
+              Delivery Network, also known as a CDN. Vue is available on several CDNs; however, the recommended CDN is
+              called unpkg. Unpkg is recommended because Vue's project maintainers have stated that this CDN is kept in
+              sync with the latest version of Vue.
+            </p>
+            <p>To install the latest version of Vue via unpkg, reference the library using this URL:</p>
+            <a href="https://unpkg.com/vue">https://unpkg.com/vue</a>
+            <p>This URL will always redirect you to the latest version of Vue. As of the time of writing, this URL
+              redirected to version 2. 2. 5 or Vue. So the actual reference to version 2. 2. 5 looks like this:
+            </p>
+            <a href="https://unpkg.com/vue@2.25">https://unpkg.com/vue@2.25</a>
+            <p>however, you can reference any available version by using a URL that fits this template:</p>
+            <a
+              href="https://unpkg.com/vue@[version]/dist/vue.min.js">https://unpkg.com/vue@[version]/dist/vue.min.js</a>
+            <p>Once you have a path to the Vue core library, you're ready to include it in your app. To add it to your
+              app, add a script tag towards the bottom of an HTML file. The actual script tag that we'll be using looks
+              like this:
+            </p>
+            <figure>
+            <pre><code class="language-html">&lt;script
+  type=&quot;text/javascript&quot;
+  src=&quot;https://unpkg.com/vue@2.2.5/dist/vue.min.js&quot;&gt;&lt;/script&gt;</code></pre>
+              <figcaption>Fig 02-011</figcaption>
+            </figure>
+            <p>In the context of an HTML file, your page should be set up like this:</p>
+            <figure>
+            <pre><code class="language-html">&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Growler&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div id=&quot;growler&quot;&gt;&lt;/div&gt;
+    &lt;script
+      type=&quot;text/javascript&quot;
+      src=&quot;https://unpkg.com/vue&quot;&gt;
+    &lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+              <figcaption>Fig 02-012</figcaption>
+            </figure>
+            <p class="example">Module 01 - basic template</p>
+            <p>That's all you have to do to start up Vue. For more advanced scenarios, you can install Vue using a
+              package manager like Bower or npm; however, those scenarios are beyond the scope of this course. What is
+              in scope, and often needed, though, is a way to issue HTTP requests via Axios.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Installing Axios
+            </h3>
+            <p>
+              Axios is the recommended library for making HTTP requests from Vue. Axios is not part of the view project
+              itself. Instead, it's simply one of the most popular HTTP client libraries available. Axios, like Vue, is
+              available on unpkg. This means that, like Vue, you can reference the latest version of Axios using this
+              URL:
+            </p>
+            <a href="https:unpkg.com/axios/dist/axios.min.js">https:unpkg.com/axios/dist/axios.min.js</a>
+            <p>When you include Axios in the HTML file, you get the following:</p>
+            <figure>
+            <pre><code class="language-html">&lt;html&gt;
+	&lt;head&gt;
+		&lt;title&gt;Growler&lt;/title&gt;
+	&lt;/head
+	&lt;body&gt;
+		&lt;div id=&quot;growler&quot;&gt;&lt;/div&gt;
+		&lt;script type=&quot;text/javascript&quot; src=&quot;https://unpkg.com/vue&quot;&gt;&lt;/script&gt;
+		&lt;script type=&quot;text/javascript&quot;
+            src=&quot;https://unpkg.com/axios/dist/axios.min.js&quot;&gt;&lt;/script&gt;
+	&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+              <figcaption>Fig 02-013</figcaption>
+            </figure>
+            <p class="example">Module 01 - basic template with Axios</p>
+            <p>This gives us the ability to make HTTP requests in our Vue apps. This is an optional part of setting up a
+              Vue app; however, referencing the Vue core library is a requirement for all Vue apps. Either way, once
+              you've installed and set up Vue, you're ready to initialize an instance of Vue.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Initializing an Instance of Vue
+            </h3>
+            <p>
+              To initialize an instance of Vue, invoke the Vue constructor function. This function brings an instance of
+              Vue to life. In the rest of this course, we'll refer to an instance of Vue as just a view when it makes
+              sense. This will move you faster through the course, and it's consistent with the role that an instance of
+              Vue plays in an app. So to begin bringing our app, growler, to life, I'm going to instantiate a view, like
+              this:
+            </p>
+            <figure>
+            <pre><code class="language-javascript">var growler = new Vue({
+  el: '#growler',
+  data: {
+  }
+});</code></pre>
+              <figcaption>Fig 02-014</figcaption>
+            </figure>
+            <p>There's really nothing exciting here. In fact, if a user visited this web page, growler wouldn't show
+              anything. This code simply initializes growler. The Vue constructor was imported with the Vue. js core
+              library that was explained in the last section. In this section, we're going to pass some options to the
+              constructor to make growler more functional. In the rest of this module, I'm going to show you how to
+              mount growler onto the DOM. This will serve as the bridge between the UI and data we want to show. After
+              that, I'll explain the lifecycle of the Growler view. These two things are foundational to getting started
+              with Vue, so let's get to it.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Mounting an Instance of Vue
+            </h3>
+            <p>
+              Mounting is when Vue's virtual DOM is actually shown to the user. In other words, this is when your view
+              becomes visible to the user. To mount an instance of Vue onto the DOM, use the el option in the Vue
+              constructor. The el option identifies the HTML element the instance will be mounted onto. You have two
+              choices when it comes to identifying the element. You can assign it to an HTML element like this:
+            </p>
+            <figure>
+            <pre><code class="language-javascript">var growler = new Vue({
+  el: document.getElementById('growler')
+});</code></pre>
+              <figcaption>Fig 02-015</figcaption>
+            </figure>
+            <p class="example">Module 01 - mounting to an HTML Element</p>
+            <p>or as a convenience you can use a CSS selector like this:</p>
+            <figure>
+            <pre><code class="language-javascript">var growler = new Vue({
+  el: '#growler',
+});</code></pre>
+              <figcaption>Fig 02-016</figcaption>
+            </figure>
+            <p class="example">Module 01 - mounting via CSS selector</p>
+            <p>I recommend using the CSS selector approach simply because it's easier to read. Mounting an instance of
+              Vue actually replaces the HTML DOM element with the Vue-generated DOM. For that reason, you should never
+              set the el option to the HTML or BODY elements in a web page. Personally, I typically use a div. Either
+              way, I'd now like to explain the lifecycle of a view.
+            </p>
+          </div>
+          <div>
+            <h3>
+              Lifecycle of a View
+            </h3>
+            <p>
+              Each view has its own lifecycle. This lifecycle has four main stages. In order of execution, these four
+              stages are creation, mounting, updating, and destroy:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig02-017.png"/>
+              <figcaption>Fig 02-017</figcaption>
+            </figure>
+            <p class="example">Module 01 - the four main stages</p>
+            <p>Each of these four stages have two hooks that give you an opportunity to implement custom logic. The
+              hooks provide access to before and after points of each stage. Each hook is appropriately named as
+              beforeCreate and created, beforeMount and mounted, beforeUpdate and updated, and beforeDestroy and
+              destroyed:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig02-018.png"/>
+              <figcaption>Fig 02-018</figcaption>
+            </figure>
+            <p>At this point, you might want to know how a view progresses through each stage. I'm going to expand each
+              of these four stages so we can go deeper into each stage of the lifecycle. The creation stage happens when
+              you call the Vue constructor:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig02-019.png"/>
+              <figcaption>Fig 02-019</figcaption>
+            </figure>
+            <p>You can literally call the Vue constructor with no configuration and the beforeCreate hook will fire.
+              After any custom logic that you implement in the beforeCreate hook is executed, its state will get
+              initialized. This includes loading properties, event handlers, data, and watchers. You may not know what
+              each of these are yet. Don't worry. We'll discuss them in detail throughout this course. Still, once the
+              view state is initialized, the created hook will fire. After the view has completed the creation stage,
+              its template gets compiled. Once the template is compiled, the view's lifecycle moves into the mounting
+              stage:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig02-020.png"/>
+              <figcaption>Fig 02-020</figcaption>
+            </figure>
+            <p>The mounting stage is responsible for inserting the view into the DOM. First, the beforeMount hook is
+              triggered. After any custom code is executed, the view's virtual DOM gets built. This virtual DOM then
+              replaces the actual HTML DOM identified by the el property discussed in the last section. Remember, the
+              virtual DOM is what empowers UI changes to happen so fast and so smooth. After this swap to the virtual
+              DOM, the mounted hook gets fired. After the view completes the mounting stage, it begins listening for
+              changes to the data:
+            <p>
+              <figure>
+                <img src="./images/vue-js-getting-started/Fig02-021.png"/>
+                <figcaption>Fig 02-021</figcaption>
+              </figure>
+            <p>Your view will spend most of its time in this listening stage. But if any property in the initialized
+              data object gets changed, the view goes through the updating stage:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig02-022.png"/>
+              <figcaption>Fig 02-022</figcaption>
+            </figure>
+            <p>The updating stage is responsible for modifying the virtual DOM and re-rendering the UI as needed. If a
+              data property that's bound to the UI is modified, the beforeUpdate hood is fired. Once this hook has
+              completed executing any custom code, Vue continues evaluating the property change. Vue works to update the
+              virtual DOM with the fewest number of changes necessary. These changes are referred to as patches. Vue's
+              algorithm for determining DOM patches is inspired by an MIT-licensed open source project named snabbdom.
+              Once the patches are generated, the virtual DOM gets updated. This means that the UI on the screen gets
+              updated, and the updated hook gets fired. Your Vue will spend most, if not all, of its remaining life
+              waiting for updates and events. If for some reason you need to tear down your view, Vue provides an
+              instance method called destroy:
+            </p>
+            <figure>
+              <img src="./images/vue-js-getting-started/Fig02-023.png"/>
+              <figcaption>Fig 02-023</figcaption>
+            </figure>
+            <p>When this is called, your view will enter the destroy stage. It will begin by firing the beforeDestroy
+              hook. It will then tear down the virtual DOM. Then it will stop watching for any changes to the data.
+              Finally, the Vue instance will trigger the destroyed hook, and the lifecycle will be complete.
+            </p>
+            <p>I want to point out that the destroy stage only happens if you specifically call the destroy method on
+              the Vue instance. The destroy stage does not get called if a user navigates to another page, for example.
+              For that reason, you shouldn't rely on the beforeDestroy or destroyed hooks getting called, unless you
+              explicitly call the destroy method. The destroy stage completes the lifecycle of a view.
+            </p>
+            <p>As you saw in this module, this lifecycle begins when you instantiate an instance of Vue. An instance is
+              created via the Vue constructor. This constructor is in the Vue. js core library, which you saw how to
+              install and set up in this module. You also learned what makes Vue valuable. In the next module, we'll go
+              deeper and continue with the Growler sample app. In the next module, we'll discuss how to create the
+              actual UI portion with templates.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
