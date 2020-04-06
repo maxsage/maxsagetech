@@ -5,6 +5,7 @@
         <router-link to="/vuejs" tag="li" active-class="active"><a>Vue.js</a></router-link>
         <router-link to="/webpack" tag="li" active-class="active"><a>Webpack</a></router-link>
         <router-link to="/wpf" tag="li" active-class="active"><a>WPF</a></router-link>
+        <router-link to="/mvvmlight" tag="li" active-class="active"><a>MVVMLight</a></router-link>
         <router-link to="/xamarin" tag="li" active-class="active"><a>Xamarin</a></router-link>
         <router-link to="/sqlite" tag="li" active-class="active"><a>SQLite</a></router-link>
         <router-link to="/editors" tag="li" active-class="active"><a>Editors</a></router-link>
