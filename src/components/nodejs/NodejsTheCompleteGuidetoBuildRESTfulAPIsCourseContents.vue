@@ -9,7 +9,7 @@
           <ul>
             <li>
               <a target="_blank"
-                href="../../../static/nodejs/01NodejsTheCompleteGuidetoBuildRESTfulAPIs/node-js-the-complete-guide-to-build-restful-apis-section-01.html" >Section 1: Getting Started</a><br />
+                href="../../../static/nodejs/01nodejsthecompleteguidetobuildrestfulapis/node-js-the-complete-guide-to-build-restful-apis-section-01.html" >Section 1: Getting Started</a><br />
               <ol>
                 <li>Welcome</li>
                 <li>What is Node</li>
@@ -24,7 +24,7 @@
             </li>
             <li>
               <a target="_blank"
-                href="../../../static/nodejs/01NodejsTheCompleteGuidetoBuildRESTfulAPIs/node-js-the-complete-guide-to-build-restful-apis-section-02.html" >Section 2: Node Module System</a><br />
+                href="../../../static/nodejs/01nodejsthecompleteguidetobuildrestfulapis/node-js-the-complete-guide-to-build-restful-apis-section-02.html" >Section 2: Node Module System</a><br />
               <ol start="10">
                 <li>Introduction</li>
                 <li>Global Object</li>
@@ -44,7 +44,7 @@
             </li>
             <li>
               <a target="_blank"
-                 href="../../../static/nodejs/01NodejsTheCompleteGuidetoBuildRESTfulAPIs/node-js-the-complete-guide-to-build-restful-apis-section-03.html" >Section 3:  Node Package Manager</a><br />
+                 href="../../../static/nodejs/01nodejsthecompleteguidetobuildrestfulapis/node-js-the-complete-guide-to-build-restful-apis-section-03.html" >Section 3:  Node Package Manager</a><br />
               <ol start="24">
                 <li>Introduction</li>
                 <li>Package.json</li>
@@ -67,7 +67,7 @@
             </li>
             <li>
               <a target="_blank"
-                 href="../../../static/nodejs/01NodejsTheCompleteGuidetoBuildRESTfulAPIs/node-js-the-complete-guide-to-build-restful-apis-section-04.html" >Section 4: Building RESTful API's Using Express</a><br />
+                 href="../../../static/nodejs/01nodejsthecompleteguidetobuildrestfulapis/node-js-the-complete-guide-to-build-restful-apis-section-04.html" >Section 4: Building RESTful API's Using Express</a><br />
               <ol start="41">
                 <li>Introduction</li>
                 <li>RESTful Services</li>
@@ -88,7 +88,7 @@
             </li>
             <li>
               <a target="_blank"
-                href="../../../static/nodejs/01NodejsTheCompleteGuidetoBuildRESTfulAPIs/node-js-the-complete-guide-to-build-restful-apis-section-05.html" >Section 5: Express-Advanced Topics</a><br />
+                href="../../../static/nodejs/01nodejsthecompleteguidetobuildrestfulapis/node-js-the-complete-guide-to-build-restful-apis-section-05.html" >Section 5: Express-Advanced Topics</a><br />
               <ol start="56">
                 <li>Introduction</li>
                 <li>Middleware</li>
@@ -108,7 +108,7 @@
             </li>
             <li>
               <a target="_blank"
-                 href="../../../static/nodejs/01NodejsTheCompleteGuidetoBuildRESTfulAPIs/node-js-the-complete-guide-to-build-restful-apis-section-06.html" >Section 6: Asynchronous Javascript</a><br />
+                 href="../../../static/nodejs/01nodejsthecompleteguidetobuildrestfulapis/node-js-the-complete-guide-to-build-restful-apis-section-06.html" >Section 6: Asynchronous Javascript</a><br />
               <ol start="70">
                 <li>Synchronous Vs. Asynschronous Code</li>
                 <li>Patterns For Dealing With Asynchronous Code</li>
@@ -126,7 +126,7 @@
             </li>
             <li>
               <a target="_blank"
-                href="../../../static/nodejs/01NodejsTheCompleteGuidetoBuildRESTfulAPIs/node-js-the-complete-guide-to-build-restful-apis-section-07.html" >Section 7: CRUD Operations Using MongoDB</a><br />
+                href="../../../static/nodejs/01nodejsthecompleteguidetobuildrestfulapis/node-js-the-complete-guide-to-build-restful-apis-section-07.html" >Section 7: CRUD Operations Using MongoDB</a><br />
               <ol start="82">
                 <li>Introducing MongoDB</li>
                 <li>Installing MongoDB on Mac</li>
@@ -152,7 +152,7 @@
             </li>
             <li>
               <a target="_blank"
-                 href="../../../static/nodejs/01NodejsTheCompleteGuidetoBuildRESTfulAPIs/node-js-the-complete-guide-to-build-restful-apis-section-08.html" >Section 8: Mongoose - Data Validation</a><br />
+                 href="../../../static/nodejs/01nodejsthecompleteguidetobuildrestfulapis/node-js-the-complete-guide-to-build-restful-apis-section-08.html" >Section 8: Mongoose - Data Validation</a><br />
               <ol start="102">
                 <li>Validation</li>
                 <li>Built-In Validators</li>
@@ -168,7 +168,7 @@
             </li>
             <li>
             <a target="_blank"
-               href="../../../static/nodejs/01NodejsTheCompleteGuidetoBuildRESTfulAPIs/node-js-the-complete-guide-to-build-restful-apis-section-09.html" >Section 9: Mongoose-Modelling Reslationships Between Connected Data</a><br />
+               href="../../../static/nodejs/01nodejsthecompleteguidetobuildrestfulapis/node-js-the-complete-guide-to-build-restful-apis-section-09.html" >Section 9: Mongoose-Modelling Reslationships Between Connected Data</a><br />
               <ol start="112">
                 <li>Modelling Relationships</li>
                 <li>Referencing Documents</li>
@@ -186,7 +186,7 @@
             </li>
             <li>
             <a target="_blank"
-               href="../../../static/nodejs/01NodejsTheCompleteGuidetoBuildRESTfulAPIs/node-js-the-complete-guide-to-build-restful-apis-section-10.html" >Section 10: Authentication and Authorization</a><br />
+               href="../../../static/nodejs/01nodejsthecompleteguidetobuildrestfulapis/node-js-the-complete-guide-to-build-restful-apis-section-10.html" >Section 10: Authentication and Authorization</a><br />
               <ol start="124">
                 <li>Introduction</li>
                 <li>Creating the User Model</li>
@@ -211,7 +211,7 @@
             </li>
             <li>
               <a target="_blank"
-                 href="../../../static/nodejs/01NodejsTheCompleteGuidetoBuildRESTfulAPIs/node-js-the-complete-guide-to-build-restful-apis-section-11.html" >Section 11: Handling and Logging Errors</a><br />
+                 href="../../../static/nodejs/01nodejsthecompleteguidetobuildrestfulapis/node-js-the-complete-guide-to-build-restful-apis-section-11.html" >Section 11: Handling and Logging Errors</a><br />
               <ol start="143">
                 <li>Introduction</li>
                 <li>Handling Rejected Promises</li>

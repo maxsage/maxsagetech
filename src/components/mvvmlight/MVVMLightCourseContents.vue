@@ -9,7 +9,7 @@
           <ul>
             <li>
               <a target="_blank"
-                href="../../../static/mvvmlight/MVVMLightToolkitFundamentals/mvvm-light-toolkit-fundamentals-section-01.html">Introduction to the MVVM</a><br />
+                href="../../../static/mvvmlight/mvvmlighttoolkitfundamentals/mvvm-light-toolkit-fundamentals-section-01.html">Introduction to the MVVM</a><br />
               <ol>
                 <li>Introduction</li>
                 <li>Showing the Data Service Output</li>
@@ -26,7 +26,7 @@
             </li>
             <li>
               <a target="_blank"
-                href="../../../static/mvvmlight/MVVMLightToolkitFundamentals/mvvm-light-toolkit-fundamentals-section-02.html">Refactoring the App to MVVM</a><br />
+                href="../../../static/mvvmlight/mvvmlighttoolkitfundamentals/mvvm-light-toolkit-fundamentals-section-02.html">Refactoring the App to MVVM</a><br />
               <ol start="10">
                 <li>Introduction</li>
                 <li>Refactor the Model Object</li>
@@ -41,7 +41,7 @@
             </li>
             <li>
               <a target="_blank"
-                 href="../../../static/mvvmlight/MVVMLightToolkitFundamentals/mvvm-light-toolkit-fundamentals-section-03.html">The Core Components</a><br />
+                 href="../../../static/mvvmlight/mvvmlighttoolkitfundamentals/mvvm-light-toolkit-fundamentals-section-03.html">The Core Components</a><br />
               <ol start="24">
                 <li>Introduction: What is MVVM Light and What is it Not?</li>
                 <li>The ObservableObject and the ViewModelBase</li>
@@ -61,7 +61,7 @@
             </li>
             <li>
               <a target="_blank"
-                 href="../../../static/mvvmlight/MVVMLightToolkitFundamentals/mvvm-light-toolkit-fundamentals-section-04.html">The Extras</a><br />
+                 href="../../../static/mvvmlight/mvvmlighttoolkitfundamentals/mvvm-light-toolkit-fundamentals-section-04.html">The Extras</a><br />
               <ol start="41">
                 <li>Introduction</li>
                 <li>Setting the DataContext</li>
@@ -87,7 +87,7 @@
             </li>
             <li>
               <a target="_blank"
-                href="../../../static/mvvmlight/MVVMLightToolkitFundamentals/mvvm-light-toolkit-fundamentals-section-05.html">Installing the MVVM Light Toolkit and Additional Components</a><br />
+                href="../../../static/mvvmlight/mvvmlighttoolkitfundamentals/mvvm-light-toolkit-fundamentals-section-05.html">Installing the MVVM Light Toolkit and Additional Components</a><br />
               <ol start="56">
                 <li>Introduction</li>
                 <li>Using the Assemblies From Nuget</li>
@@ -107,7 +107,7 @@
             </li>
             <li>
               <a target="_blank"
-                 href="../../../static/mvvmlight/MVVMLightToolkitFundamentals/mvvm-light-toolkit-fundamentals-section-06.html">Advanced Examples With MVVM Light</a><br />
+                 href="../../../static/mvvmlight/mvvmlighttoolkitfundamentals/mvvm-light-toolkit-fundamentals-section-06.html">Advanced Examples With MVVM Light</a><br />
               <ol start="70">
                 <li>Introduction; Plug-Ins: Introducing the Interfaces</li>
                 <li>Plug-Ins: Preparing the View</li>

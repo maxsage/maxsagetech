@@ -7,7 +7,7 @@
         </div>
         <div class="panel-body">
           <h4>Course Overview</h4>
-           <a target="_blank" href="../../../static/wpf/WPFDatabindingInDepth/wpf-databinding-in-depth-section-01.html">Course Overview</a><br />
+           <a target="_blank" href="../../../static/wpf/wpfdatabindingindepth/wpf-databinding-in-depth-section-01.html">Course Overview</a><br />
           <p>
             Data binding is one of the most powerful and important capabilities in WPF applications for building
             data-driven, loosely coupled, maintainable applications. In this course you will learn how to use the
@@ -15,7 +15,7 @@
             advanced capabilities.
           </p>
           <h4>Data Binding Overview</h4>
-          <a target="_blank" href="../../../static/wpf/WPFDatabindingInDepth/wpf-databinding-in-depth-section-02.html">Data Binding Overview</a><br />
+          <a target="_blank" href="../../../static/wpf/wpfdatabindingindepth/wpf-databinding-in-depth-section-02.html">Data Binding Overview</a><br />
           <p>
             Hi there. This is Brian Noyes, and in this first module we're going to go through a high-level overview of
             what data binding is all about in WPF, why you want to use it, and what some of the fundamental concepts are
@@ -38,7 +38,7 @@
             finally, cleaning that up a little bit by consolidating your data sources into a single DataContext object.
           </p>
           <h4>Data Sources</h4>
-          <a target="_blank" href="../../../static/wpf/WPFDatabindingInDepth/wpf-databinding-in-depth-section-03.html">Data Sources</a><br />
+          <a target="_blank" href="../../../static/wpf/wpfdatabindingindepth/wpf-databinding-in-depth-section-03.html">Data Sources</a><br />
           <p>
             Hi, this is Brian Noyes, and in this module we're going to focus on data sources for data binding, where the
             data comes from to support your UI. Specifically, we're going to talk about the different kinds of data
@@ -62,7 +62,7 @@
             Data Sources, and how you can go about data binding to those.
           </p>
           <h4>Binding Core Concepts</h4>
-          <a target="_blank" href="../../../static/wpf/WPFDatabindingInDepth/wpf-databinding-in-depth-section-04.html">Binding Concepts</a><br />
+          <a target="_blank" href="../../../static/wpf/wpfdatabindingindepth/wpf-databinding-in-depth-section-04.html">Binding Concepts</a><br />
           <p>
             Hi, this is Brian Noyes. In this module, we're going to dive a little deeper into bindings and get into some
             of the core concepts of how you can have explicit control over exactly what a binding is doing with respect
@@ -91,7 +91,7 @@
             default direction is set for a given target property through its DependencyProperty metadata.
           </p>
           <h4>Unleashing the Full Power of Bindings</h4>
-          <a target="_blank" href="../../../static/wpf/WPFDatabindingInDepth/wpf-databinding-in-depth-section-05.html">Unleashing The Full Power Of Bindings</a><br />
+          <a target="_blank" href="../../../static/wpf/wpfdatabindingindepth/wpf-databinding-in-depth-section-05.html">Unleashing The Full Power Of Bindings</a><br />
           <p>
             Hi, this is Brian Noyes, and in this module we're going to dive deeper into bindings and look at a number of
             additional properties that let you unleash the full power of what a binding can do for you for specialized
@@ -134,7 +134,7 @@
             a priority scheme. So let's dive right in and see how these modify the behavior of our bindings.
           </p>
           <h4>Deep Dive into DataTemplates</h4>
-          <a target="_blank" href="../../../static/wpf/WPFDatabindingInDepth/wpf-databinding-in-depth-section-06.html">Deep Dive Into Data Templates</a><br />
+          <a target="_blank" href="../../../static/wpf/wpfdatabindingindepth/wpf-databinding-in-depth-section-06.html">Deep Dive Into Data Templates</a><br />
           <p>
             Hi, this is Brian Noyes, and in this module we're going to dive into Data Templates. Data Templates are a
             very powerful mechanism of WPF data binding that allows you to provide the visual structure for some
@@ -166,7 +166,7 @@
             TreeView control.
           </p>
           <h4>Design Time Data Binding</h4>
-          <a target="_blank" href="../../../static/wpf/WPFDatabindingInDepth/wpf-databinding-in-depth-section-07.html">Design Time Data Binding</a><br />
+          <a target="_blank" href="../../../static/wpf/wpfdatabindingindepth/wpf-databinding-in-depth-section-07.html">Design Time Data Binding</a><br />
           <p>
             Hi, this is Brian Noyes. In this module, we're going to look into some of the Design Time Data features that
             Visual Studio has to help you get your UI's hooked up, data-bound, and even generate UI elements based on
@@ -197,7 +197,7 @@
             data that will populate your UI in the designer, but not be there at runtime.
           </p>
           <h4>Containers and Collection Controls</h4>
-          <a target="_blank" href="../../../static/wpf/WPFDatabindingInDepth/wpf-databinding-in-depth-section-08.html">Containers and Collection Controls</a><br />
+          <a target="_blank" href="../../../static/wpf/wpfdatabindingindepth/wpf-databinding-in-depth-section-08.html">Containers and Collection Controls</a><br />
           <p>
             Hi, this is Brian Noyes. In this module, we're going to dive into some of the containment scenarios and the
             dynamic generation of contained controls based on data binding.
@@ -237,7 +237,7 @@
             you're working with to do things like sorting, filtering, grouping, and master-details presentations.
           </p>
           <h4>Data Input Validation</h4>
-          <a target="_blank" href="../../../static/wpf/WPFDatabindingInDepth/wpf-databinding-in-depth-section-09.html">Data Input Validation</a><br />
+          <a target="_blank" href="../../../static/wpf/wpfdatabindingindepth/wpf-databinding-in-depth-section-09.html">Data Input Validation</a><br />
           <p>
             Hi, this is Brian Noyes. In this last module, we're going to look into the validation mechanisms of data
             bindings and how you can use it to provide validation indications to a user when they put in bad data.

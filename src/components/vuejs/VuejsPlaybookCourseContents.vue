@@ -10,7 +10,7 @@
             <li>
               <a
                 target="_blank"
-                href="../../../../static/vuejs/02VueJSPlaybook/vue-js-playbook-section-01.html">Course Overview</a>
+                href="../../../../static/vuejs/02vuejsplaybook/vue-js-playbook-section-01.html">Course Overview</a>
               <ol>
                 <li>Course Overview</li>
               </ol>
@@ -18,7 +18,7 @@
             <li>
                 <a
                 target="_blank"
-                href="../../../../static/vuejs/02VueJSPlaybook/vue-js-playbook-section-02.html">Introducting Vue.js</a>
+                href="../../../../static/vuejs/02vuejsplaybook/vue-js-playbook-section-02.html">Introducting Vue.js</a>
               <ol start="2">
                 <li>Introducing Vue.js</li>
                 <li>Why Should You Care About Vue.js?</li>
@@ -36,7 +36,7 @@
             <li>
                 <a
                 target="_blank"
-                href="../../../../static/vuejs/02VueJSPlaybook/vue-js-playbook-section-03.html">Creating Vue.js Templates</a>
+                href="../../../../static/vuejs/02vuejsplaybook/vue-js-playbook-section-03.html">Creating Vue.js Templates</a>
               <ol start="5">
                 <li>Introducing Templates</li>
                 <li>Defining Template Data</li>
@@ -59,7 +59,7 @@
             <li>
                 <a
                 target="_blank"
-                href="../../../../static/vuejs/02VueJSPlaybook/vue-js-playbook-section-04.html">Binding with Forms in Vue.js</a>
+                href="../../../../static/vuejs/02vuejsplaybook/vue-js-playbook-section-04.html">Binding with Forms in Vue.js</a>
               <ol start="10">
                 <li>An Introduction to Binding with Forms</li>
                 <li>Using Input Bindings</li>
@@ -76,7 +76,7 @@
             <li>
                 <a
                 target="_blank"
-                href="../../../../static/vuejs/02VueJSPlaybook/vue-js-playbook-section-05.html">Responding to User Events in Vue.js</a>
+                href="../../../../static/vuejs/02vuejsplaybook/vue-js-playbook-section-05.html">Responding to User Events in Vue.js</a>
               <ol start="17">
                 <li>Responding to User Events in Vue.js</li>
                 <li>Using Event Handlers</li>
@@ -98,7 +98,7 @@
             <li>
                 <a
                 target="_blank"
-                href="../../../../static/vuejs/02VueJSPlaybook/vue-js-playbook-section-06.html">Rendering Lists and Conditional Rendering in Vue.js</a>
+                href="../../../../static/vuejs/02vuejsplaybook/vue-js-playbook-section-06.html">Rendering Lists and Conditional Rendering in Vue.js</a>
               <ol start="17">
                 <li>Conditional Rendering and Rendering of Lists</li>
                 <li>Rendering Elements Conditionally</li>
@@ -121,7 +121,7 @@
             <li>
                 <a
                 target="_blank"
-                href="../../../../static/vuejs/02VueJSPlaybook/vue-js-playbook-section-07.html">Filters, Properties, and Watchers</a>
+                href="../../../../static/vuejs/02vuejsplaybook/vue-js-playbook-section-07.html">Filters, Properties, and Watchers</a>
               <ol start="17">
                 <li>Introduction</li>
                 <li>Monitoring Data Changes with Watchers</li>

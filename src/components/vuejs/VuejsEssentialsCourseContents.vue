@@ -10,7 +10,7 @@
             <li>
               <a
                 target="_blank"
-                href="../../../../static/vuejs/05VueJSEssentials/vue-js-essentials-section-01.html"
+                href="../../../../static/vuejs/05vuejsessentials/vue-js-essentials-section-01.html"
               >An Introduction to Vue</a>
               <ol>
                 <li>How to Get Help</li>
@@ -40,7 +40,7 @@
             <li>
                 <a
                 target="_blank"
-                href="../../../../static/vuejs/05VueJSEssentials/vue-js-essentials-section-02.html">Moving on with Vue CLI</a>
+                href="../../../../static/vuejs/05vuejsessentials/vue-js-essentials-section-02.html">Moving on with Vue CLI</a>
               <ol start="23">
                 <li>App Overview</li>
                 <li>App Challenges</li>
@@ -55,7 +55,7 @@
             <li>
                 <a
                 target="_blank"
-                href="../../../../static/vuejs/05VueJSEssentials/vue-js-essentials-section-03.html">Writing Effective Apps</a>
+                href="../../../../static/vuejs/05vuejsessentials/vue-js-essentials-section-03.html">Writing Effective Apps</a>
               <ol start="31">
                 <li>Starting from Scratch</li>
                 <li>The App Component</li>
@@ -107,7 +107,7 @@
             <li>
                 <a
                 target="_blank"
-                href="../../../../static/vuejs/05VueJSEssentials/vue-js-essentials-section-04.html">Handling State with Vuex</a>
+                href="../../../../static/vuejs/05vuejsessentials/vue-js-essentials-section-04.html">Handling State with Vuex</a>
               <ol start="75">
                 <li>App Overview</li>
                 <li>App Challenges</li>
@@ -122,7 +122,7 @@
             <li>
                 <a
                 target="_blank"
-                href="../../../../static/vuejs/05VueJSEssentials/vue-js-essentials-section-05.html">Authenticating in Vue with OAuth2</a>
+                href="../../../../static/vuejs/05vuejsessentials/vue-js-essentials-section-05.html">Authenticating in Vue with OAuth2</a>
               <ol start="83">
                 <li>OAuth Overview</li>
                 <li>Imgur API Signup</li>
@@ -146,7 +146,7 @@
             <li>
                 <a
                 target="_blank"
-                href="../../../../static/vuejs/05VueJSEssentials/vue-js-essentials-section-06.html">Navigation with Vue Router</a>
+                href="../../../../static/vuejs/05vuejsessentials/vue-js-essentials-section-06.html">Navigation with Vue Router</a>
               <ol start="100">
                 <li>Wiring up Vue Router</li>
                 <li>Browser vs Hash Routers</li>
@@ -169,7 +169,7 @@
             <li>
                 <a
                 target="_blank"
-                href="../../../../static/vuejs/05VueJSEssentials/vue-js-essentials-section-07.html">Design of Vuex Modules</a>
+                href="../../../../static/vuejs/05vuejsessentials/vue-js-essentials-section-07.html">Design of Vuex Modules</a>
               <ol start="116">
                 <li>Image Module Design</li>
                 <li>Module Implementation</li>
@@ -186,7 +186,7 @@
             <li>
                 <a
                 target="_blank"
-                href="../../../../static/vuejs/05VueJSEssentials/vue-js-essentials-section-08.html">Handling Image Upload</a>
+                href="../../../../static/vuejs/05vuejsessentials/vue-js-essentials-section-08.html">Handling Image Upload</a>
               <ol start="126">
                 <li>Image Upload Overview</li>
                 <li>Upload Form HTML</li>

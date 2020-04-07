@@ -10,7 +10,7 @@
             <li>
               <a
                 target="_blank"
-                href="../../../../static/vuejs/04VueJSFundamentals/vue-js-fundamentals-section-01.html">Course Overview</a>
+                href="../../../../static/vuejs/04vuejsfundamentals/vue-js-fundamentals-section-01.html">Course Overview</a>
               <ol>
                 <li>Course Overview</li>
               </ol>
@@ -18,7 +18,7 @@
             <li>
                 <a
                 target="_blank"
-                href="../../../../static/vuejs/04VueJSFundamentals/vue-js-fundamentals-section-02.html">Getting Started with the Vue.js CLI</a>
+                href="../../../../static/vuejs/04vuejsfundamentals/vue-js-fundamentals-section-02.html">Getting Started with the Vue.js CLI</a>
               <ol start="2">
                 <li>Introduction</li>
                 <li>Gaining a Conceptual Understanding of Vue</li>
@@ -30,7 +30,7 @@
             <li>
                 <a
                 target="_blank"
-                href="../../../../static/vuejs/04VueJSFundamentals/vue-js-fundamentals-section-03.html">Creating Vue.js Components and Using Template Syntax</a>
+                href="../../../../static/vuejs/04vuejsfundamentals/vue-js-fundamentals-section-03.html">Creating Vue.js Components and Using Template Syntax</a>
               <ol start="5">
                 <li>Introduction</li>
                 <li>Global Components vs. Single-file Components</li>
@@ -55,7 +55,7 @@
             <li>
                 <a
                 target="_blank"
-                href="../../../../static/vuejs/04VueJSFundamentals/vue-js-fundamentals-section-04.html">Enabling Inter-component Communication</a>
+                href="../../../../static/vuejs/04vuejsfundamentals/vue-js-fundamentals-section-04.html">Enabling Inter-component Communication</a>
               <ol start="10">
                 <li>Introduction</li>
                 <li>Creating Child Components</li>
@@ -69,7 +69,7 @@
             <li>
                 <a
                 target="_blank"
-                href="../../../../static/vuejs/04VueJSFundamentals/vue-js-fundamentals-section-05.html">Routing from Page to Page</a>
+                href="../../../../static/vuejs/04vuejsfundamentals/vue-js-fundamentals-section-05.html">Routing from Page to Page</a>
               <ol start="17">
                 <li>Introduction</li>
                 <li>Adding Routing to Your App</li>
@@ -89,7 +89,7 @@
             <li>
                 <a
                 target="_blank"
-                href="../../../../static/vuejs/04VueJSFundamentals/vue-js-fundamentals-section-06.html">Managing State and Server Communication with Vuex</a>
+                href="../../../../static/vuejs/04vuejsfundamentals/vue-js-fundamentals-section-06.html">Managing State and Server Communication with Vuex</a>
               <ol start="17">
                 <li>Introduction</li>
                 <li>Creating a Vuex Store</li>
@@ -113,7 +113,7 @@
             <li>
                 <a
                 target="_blank"
-                href="../../../../static/vuejs/04VueJSFundamentals/vue-js-fundamentals-section-07.html">Creating Custom Directives and Filters</a>
+                href="../../../../static/vuejs/04vuejsfundamentals/vue-js-fundamentals-section-07.html">Creating Custom Directives and Filters</a>
               <ol start="17">
                 <li>Introduction</li>
                 <li>Creating a Custom Directive</li>
@@ -128,7 +128,7 @@
             <li>
                 <a
                 target="_blank"
-                href="../../../../static/vuejs/04VueJSFundamentals/vue-js-fundamentals-section-08.html">Deploying Vue Applications to Production</a>
+                href="../../../../static/vuejs/04vuejsfundamentals/vue-js-fundamentals-section-08.html">Deploying Vue Applications to Production</a>
               <ol start="17">
                 <li>Introduction</li>
                 <li>Creating a Basic Vue.js Build with the CLI</li>
@@ -144,7 +144,7 @@
         </div>
       </div>
     </div>
-  </div>  
+  </div>
 </template>
 <style scoped>
 </style>

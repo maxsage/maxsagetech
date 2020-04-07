@@ -10,7 +10,7 @@
             <li>
               <a
                 target="_blank"
-                href="../../../../static/vuejs/01VueJSBigPicture/vue-js-big-picture-section-01.html">Course Overview</a>
+                href="../../../../static/vuejs/01vuejsbigpicture/vue-js-big-picture-section-01.html">Course Overview</a>
               <ol>
                 <li>Course Overview</li>
               </ol>
@@ -18,7 +18,7 @@
             <li>
                 <a
                 target="_blank"
-                href="../../../../static/vuejs/01VueJSBigPicture/vue-js-big-picture-section-02.html">What is Vue.js?</a>
+                href="../../../../static/vuejs/01vuejsbigpicture/vue-js-big-picture-section-02.html">What is Vue.js?</a>
               <ol start="2">
                 <li>Introduction</li>
                 <li>Creating Business Solutions with Vue.js</li>
@@ -29,7 +29,7 @@
             <li>
                 <a
                 target="_blank"
-                href="../../../../static/vuejs/01VueJSBigPicture/vue-js-big-picture-section-03.html">Why Use Vue.js?</a>
+                href="../../../../static/vuejs/01vuejsbigpicture/vue-js-big-picture-section-03.html">Why Use Vue.js?</a>
               <ol start="5">
                 <li>Vue Capabilities and Limitations</li>
                 <li>Reactivity and Vue</li>
@@ -41,7 +41,7 @@
             <li>
                 <a
                 target="_blank"
-                href="../../../../static/vuejs/01VueJSBigPicture/vue-js-big-picture-section-04.html">The Vue Ecosystem</a>
+                href="../../../../static/vuejs/01vuejsbigpicture/vue-js-big-picture-section-04.html">The Vue Ecosystem</a>
               <ol start="10">
                 <li>The Vue Ecosystem</li>
                 <li>Universal Rendering with Nuxt</li>
@@ -55,7 +55,7 @@
             <li>
                 <a
                 target="_blank"
-                href="../../../../static/vuejs/01VueJSBigPicture/vue-js-big-picture-section-05.html">Summary/Next Steps</a>
+                href="../../../../static/vuejs/01vuejsbigpicture/vue-js-big-picture-section-05.html">Summary/Next Steps</a>
               <ol start="17">
                 <li>Executive Summary / Continue Your Education</li>
               </ol>

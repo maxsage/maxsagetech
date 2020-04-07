@@ -10,7 +10,7 @@
             <li>
               <a
                 target="_blank"
-                href="../../../../static/vuejs/03DevelopingFasterWithVueCLI/developing-faster-with-vue-cli-section-01.html">Course Overview</a>
+                href="../../../../static/vuejs/03developingfasterwithvuecli/developing-faster-with-vue-cli-section-01.html">Course Overview</a>
               <ol>
                 <li>Course Overview</li>
               </ol>
@@ -18,7 +18,7 @@
             <li>
                 <a
                 target="_blank"
-                href="../../../../static/vuejs/03DevelopingFasterWithVueCLI/developing-faster-with-vue-cli-section-02.html">Getting Started with the Vue CLI</a>
+                href="../../../../static/vuejs/03developingfasterwithvuecli/developing-faster-with-vue-cli-section-02.html">Getting Started with the Vue CLI</a>
               <ol start="2">
                 <li>Introducing the Vue CLI</li>
                 <li>Creating a Vue App with the Zero Configuration Option</li>

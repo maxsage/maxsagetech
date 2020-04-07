@@ -9,7 +9,7 @@
                      <ul>
                         <li>
                             <a target="_blank"
-                                href="../../../static/xamarin/01XamarinFormsCrossPlatform/xamarin-forms-cross-platform-section-01.html">Getting Started</a><br />
+                                href="../../../static/xamarin/01xamarinformscrossplatform/xamarin-forms-cross-platform-section-01.html">Getting Started</a><br />
                             <ol>
                                 <li>Introduction</li>
                                 <li>What is Xamarin Forms?</li>
@@ -25,7 +25,7 @@
                         </li>
                         <li>
                             <a target="_blank"
-                                href="../../../static/xamarin/01XamarinFormsCrossPlatform/xamarin-forms-cross-platform-section-02.html">XAML Essentials</a><br />
+                                href="../../../static/xamarin/01xamarinformscrossplatform/xamarin-forms-cross-platform-section-02.html">XAML Essentials</a><br />
                             <ol>
                                 <li>Introduction</li>
                                 <li>XAML vs Code</li>
@@ -42,7 +42,7 @@
                         </li>
                         <li>
                             <a target="_blank"
-                                href="../../../static/xamarin/01XamarinFormsCrossPlatform/xamarin-forms-cross-platform-section-03.html">Layouts</a><br />
+                                href="../../../static/xamarin/01xamarinformscrossplatform/xamarin-forms-cross-platform-section-03.html">Layouts</a><br />
                             <ol>
                                 <li>Introduction</li>
                                 <li>Stack Layout in XAML</li>
@@ -61,7 +61,7 @@
                         </li>
                         <li>
                             <a target="_blank"
-                                href="../../../static/xamarin/01XamarinFormsCrossPlatform/xamarin-forms-cross-platform-section-04.html">Images</a><br />
+                                href="../../../static/xamarin/01xamarinformscrossplatform/xamarin-forms-cross-platform-section-04.html">Images</a><br />
                             <ol>
                                 <li>Introduction</li>
                                 <li>Image Sources</li>
@@ -80,7 +80,7 @@
                         </li>
                         <li>
                             <a target="_blank"
-                                href="../../../static/xamarin/01XamarinFormsCrossPlatform/xamarin-forms-cross-platform-section-05.html">Lists</a><br />
+                                href="../../../static/xamarin/01xamarinformscrossplatform/xamarin-forms-cross-platform-section-05.html">Lists</a><br />
                             <ol>
                                 <li>Introduction</li>
                                 <li>Populating a Basic List</li>
@@ -97,7 +97,7 @@
                         </li>
                         <li>
                             <a target="_blank"
-                                href="../../../static/xamarin/01XamarinFormsCrossPlatform/xamarin-forms-cross-platform-section-06.html">Navigation</a><br />
+                                href="../../../static/xamarin/01xamarinformscrossplatform/xamarin-forms-cross-platform-section-06.html">Navigation</a><br />
                             <ol>
                                 <li>Introduction</li>
                                 <li>Hierarchical Navigation</li>
@@ -114,7 +114,7 @@
                         </li>
                         <li>
                             <a target="_blank"
-                                href="../../../static/xamarin/01XamarinFormsCrossPlatform/xamarin-forms-cross-platform-section-07.html">Forms and Setting Pages</a><br />
+                                href="../../../static/xamarin/01xamarinformscrossplatform/xamarin-forms-cross-platform-section-07.html">Forms and Setting Pages</a><br />
                             <ol>
                                 <li>Introduction</li>
                                 <li>Switch</li>
@@ -133,7 +133,7 @@
                         </li>
                                                 <li>
                             <a target="_blank"
-                                href="../../../static/xamarin/01XamarinFormsCrossPlatform/xamarin-forms-cross-platform-section-08.html">Data Access</a><br />
+                                href="../../../static/xamarin/01xamarinformscrossplatform/xamarin-forms-cross-platform-section-08.html">Data Access</a><br />
                             <ol>
                                 <li>Introduction</li>
                                 <li>Overview</li>
@@ -152,7 +152,7 @@
                         </li>
                         <li>
                             <a target="_blank"
-                                href="../../../static/xamarin/01XamarinFormsCrossPlatform/xamarin-forms-cross-platform-section-09.html">Model-View-ViewModel Architectural Pattern</a><br />
+                                href="../../../static/xamarin/01xamarinformscrossplatform/xamarin-forms-cross-platform-section-09.html">Model-View-ViewModel Architectural Pattern</a><br />
                             <ol>
                                 <li>Introduction</li>
                                 <li>What is MVVM?</li>
@@ -170,7 +170,7 @@
                         </li>
                                                 <li>
                             <a target="_blank"
-                                href="../../../static/xamarin/01XamarinFormsCrossPlatform/xamarin-forms-cross-platform-section-10.html">Beyond the Basics</a><br />
+                                href="../../../static/xamarin/01xamarinformscrossplatform/xamarin-forms-cross-platform-section-10.html">Beyond the Basics</a><br />
                             <ol>
                                 <li>Introduction</li>
                                 <li>Resource Dictionary</li>

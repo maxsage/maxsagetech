@@ -8,7 +8,7 @@
         <div class="panel-body">
 
           <h4>MVVM Pattern Fundamentals</h4>
-          <a target="_blank" href="../../../static/wpf/WPFMVVMInDepth//wpf-mvvm-in-depth-section-01.html">MVVM Pattern Fundamentals</a><br />
+          <a target="_blank" href="../../../static/wpf/wpfmvvmindepth//wpf-mvvm-in-depth-section-01.html">MVVM Pattern Fundamentals</a><br />
           <p>
             This module starts by explaining seperation of concerns and how MVVM helps you structure your code to
             achieve this. It then moves on to briefly discuss other UI Seperation patterns such as MVP and MVC. The next
@@ -19,7 +19,7 @@
             which the various components get constructed.
           </p>
           <h4>First Taste of MVVM</h4>
-          <a target="_blank" href="../../../static/wpf/WPFMVVMInDepth//wpf-mvvm-in-depth-section-02.html">First Taste Of MVVM</a><br />
+          <a target="_blank" href="../../../static/wpf/wpfmvvmindepth//wpf-mvvm-in-depth-section-02.html">First Taste Of MVVM</a><br />
           <p>Welcome back to the second module of WPF MVVM in Depth. In this module I want to give you a quick exposure
             or taste of how using MVVM changes some coding patterns for a simple input screen in WPF application that
             you may already be used to.
@@ -33,7 +33,7 @@
             </li>
           </ul>
           <h4>Hooking up Views and ViewModels in MVVM</h4>
-          <a target="_blank" href="../../../static/wpf/WPFMVVMInDepth//wpf-mvvm-in-depth-section-03.html">Hooking up Views and ViewModels in MVVM</a><br />
+          <a target="_blank" href="../../../static/wpf/wpfmvvmindepth//wpf-mvvm-in-depth-section-03.html">Hooking up Views and ViewModels in MVVM</a><br />
           <p>
             In this module we will cover different ways that Views can be hooked up to ViewModels. We will also cover
             how databinding is used to expose data from your Data Models to your Views. We will start with View-First
@@ -48,7 +48,7 @@
             instance of a ViewModel being placed into a data binding context.
           </p>
           <h4>View/ViewModel Communication in WPF</h4>
-          <a target="_blank" href="../../../static/wpf/WPFMVVMInDepth//wpf-mvvm-in-depth-section-04.html">View/ViewModel Communication in WPF</a><br />
+          <a target="_blank" href="../../../static/wpf/wpfmvvmindepth//wpf-mvvm-in-depth-section-04.html">View/ViewModel Communication in WPF</a><br />
           <p>
             In this module, we will cover View/ViewModel communication in WPF. We will look at how to cleanly call logic
             that is implemented in the ViewModel when something happens in the View as well as letting the View know
@@ -70,7 +70,7 @@
             at the appropriate time.
           </p>
           <h4>Applied MVVM Part 1 - Hierarchies and Navigation</h4>
-          <a target="_blank" href="../../../static/wpf/WPFMVVMInDepth//wpf-mvvm-in-depth-section-05.html">Applied MVVM Part 1 - Hierarchies and Navigation</a><br />
+          <a target="_blank" href="../../../static/wpf/wpfmvvmindepth//wpf-mvvm-in-depth-section-05.html">Applied MVVM Part 1 - Hierarchies and Navigation</a><br />
           <p>
             We will now start building out a few more fully functional use cases from start to finish. In doing so we
             will hit on a number of other design considerations and things you will need to know how to tackle when
@@ -82,7 +82,7 @@
             <li>MVVM App Building</li>
           </ul>
           <h4>Applied MVVM Part 2 - Validation and Dependency Injection</h4>
-          <a target="_blank" href="../../../static/wpf/WPFMVVMInDepth//wpf-mvvm-in-depth-section-06.html">Applied MVVM Part 2 - Validation and Dependency Injection</a><br />
+          <a target="_blank" href="../../../static/wpf/wpfmvvmindepth//wpf-mvvm-in-depth-section-06.html">Applied MVVM Part 2 - Validation and Dependency Injection</a><br />
           <p>
             In this final module we continue to build out use cases surrounding Customers in our Pizza Order Management
             Application. This will include fleshing out some data entry for adding and editing Customers by leveraging
@@ -106,7 +106,7 @@
 
 <script>
 export default {
-  name: 'WPFMVVMInDepth00CourseContents'
+  name: 'wpfmvvmindepth00CourseContents'
 }
 </script>
 
