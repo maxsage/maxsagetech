@@ -140,13 +140,11 @@
                 <li>Summary</li>
               </ol>
             </li>
-
           </ul>
         </div>
       </div>
     </div>
-  </div>
+  </div>  
 </template>
 <style scoped>
-
 </style>
