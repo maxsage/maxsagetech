@@ -45,12 +45,12 @@
             <a href="https://github.com/ecofic/course-vue-getting-started">https://github.com/ecofic/course-vue-getting-started</a>
             <p>You'll notice in the upper right corner is a button that says view full example:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-001.png"/>
+              <img src="./images/Fig06-001.png"/>
               <figcaption>Fig 06-001</figcaption>
             </figure>
             <p>If you click this button, you'll see the following:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-002.png"/>
+              <img src="./images/Fig06-002.png"/>
               <figcaption>Fig 06-002</figcaption>
             </figure>
             <p>
@@ -58,20 +58,20 @@
               show you what you've learned in this course. In module 2, I showed you how to use templates. That
               information was used to render the name of our fictional beer engine, Growler, as shown here:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-003.png"/>
+              <img src="./images/Fig06-003.png"/>
               <figcaption>Fig 06-003</figcaption>
             </figure>
             <p>As a reminder, the color change is based on whether the app can connect to the internet or not. In module
               3, I showed you how to bind to forms. You saw how to use the model directive to bind to HTML input
               elements like text fields. This information was used for the search field in Growler</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-004.png"/>
+              <img src="./images/Fig06-004.png"/>
               <figcaption>Fig 06-004</figcaption>
             </figure>
             <p>You also saw how to use modifiers to handle common development chores and lighten your load. If you look
               next to the query field, you'll see a Search button:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-005.png"/>
+              <img src="./images/Fig06-005.png"/>
               <figcaption>Fig 06-005</figcaption>
             </figure>
             <p>In module 4, you saw how to use event handlers. This empowered you to do things like handle a button
@@ -87,7 +87,7 @@
               load time, and at runtime. You also saw how to render lists of items. This information could be used to
               render these results in the search engine:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-006.png"/>
+              <img src="./images/Fig06-006.png"/>
               <figcaption>Fig 06-006</figcaption>
             </figure>
             <p>As you can see on the screen, the information you've learned in this course can be used to build a
@@ -99,7 +99,7 @@
             <p>This module is ordered this way because it matches how data changes get propagated. In fact, here's a
               diagram to reinforce the data flow:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-007.png"/>
+              <img src="./images/Fig06-007.png"/>
               <figcaption>Fig 06-007</figcaption>
             </figure>
             <p class="example">Module 06 - lifecycle of watchers, computed properties, and filters</p>
@@ -125,7 +125,7 @@
               As a matter of fact, I'm going to switch over to Google Chrome and show you what that screen would look
               like. Now, when I click the buy button, notice that the Subtotal field updates:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-008.png"/>
+              <img src="./images/Fig06-008.png"/>
               <figcaption>Fig 06-008</figcaption>
             </figure>
             <p class="example">Module 06 - Using watched property</p>
@@ -133,51 +133,51 @@
             <p>Each time I click the buy button, the price of the beer is added to the Subtotal. I want to take a moment
               and explain the code powering this:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-009.png"/>
+              <img src="./images/Fig06-009.png"/>
               <figcaption>Fig 06-009</figcaption>
             </figure>
             <p>To show you all of the code involved on the screen, I have to break this story down across multiple
               slides, so please bear with me. Let's begin by looking at the data that's driving this view:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-010.png"/>
+              <img src="./images/Fig06-010.png"/>
               <figcaption>Fig 06-010</figcaption>
             </figure>
             <p>Each beer in the beers property is rendered as a table row:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-011.png"/>
+              <img src="./images/Fig06-011.png"/>
               <figcaption>Fig 06-011</figcaption>
             </figure>
             <p>Thanks to the for directive. Each table row includes the beer's name, price, and a button:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-012.png"/>
+              <img src="./images/Fig06-012.png"/>
               <figcaption>Fig 06-012</figcaption>
             </figure>
             <p>If clicked, this button will pass the beer to the buy function. The buy function is defined in the
               methods option. That option is depicted by these ellipses:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-013.png"/>
+              <img src="./images/Fig06-013.png"/>
               <figcaption>Fig 06-013</figcaption>
             </figure>
             <p>In reality, it looks like this:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-014.png"/>
+              <img src="./images/Fig06-014.png"/>
               <figcaption>Fig 06-014</figcaption>
             </figure>
             <p>This slide has the methods option now visible. The ellipses represent the data object shown in the last
               slide:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-015.png"/>
+              <img src="./images/Fig06-015.png"/>
               <figcaption>Fig 06-015</figcaption>
             </figure>
             <p>Here you can see the buy function triggered by the button in the template.</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-016.png"/>
+              <img src="./images/Fig06-016.png"/>
               <figcaption>Fig 06-016</figcaption>
             </figure>
             <p>If called, this function adds a beer to the user's shopping cart. When the shopping cart is updated, we
               want to update the subTotal property. Now, I could call the updateSubTotal function directly:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-017.png"/>
+              <img src="./images/Fig06-017.png"/>
               <figcaption>Fig 06-017</figcaption>
             </figure>
             <p>If I wanted to, but in reality, there could be other functions that update the shopping cart also. Maybe
@@ -186,18 +186,18 @@
               changes.</p>
             <p>To do that, I'm going to create a watcher, as shown on this slide:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-018.png"/>
+              <img src="./images/Fig06-018.png"/>
               <figcaption>Fig 06-018</figcaption>
             </figure>
             <p>The ellipses in this slide represent the methods option defined in the last slide. Notice the addition of
               the watch option, though:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-019.png"/>
+              <img src="./images/Fig06-019.png"/>
               <figcaption>Fig 06-019</figcaption>
             </figure>
             <p>The watch option defines a list of watchers. Each key is the name of a property in the data object:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-020.png"/>
+              <img src="./images/Fig06-020.png"/>
               <figcaption>Fig 06-020</figcaption>
             </figure>
             <p>This is the name of the property to monitor for data changes. If a data change happens, the keys value
@@ -211,19 +211,19 @@
             <p>
               I want to focus specifically on the watch option in this definition:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-021.png"/>
+              <img src="./images/Fig06-021.png"/>
               <figcaption>Fig 06-021</figcaption>
             </figure>
             <p>If you focus on it, you can see that the behavior of the watcher is defined in a JavaScript function. In
               this case, a basic function is used that calls the updateSubTotal function:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-022.png"/>
+              <img src="./images/Fig06-022.png"/>
               <figcaption>Fig 06-022</figcaption>
             </figure>
             <p class="example">Module 06 - Introductory example</p>
             <p>Technically, since this is all this watcher is doing, it could be simplified like this:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-023.png"/>
+              <img src="./images/Fig06-023.png"/>
               <figcaption>Fig 06-023</figcaption>
             </figure>
             <p class="example">Module 06 - Simplified example</p>
@@ -231,7 +231,7 @@
               updated, Vue looks for the function named updateSubTotal in the methods option. At this point, you may be
               wondering why you would want to associate a full-blown function with a watcher:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-024.png"/>
+              <img src="./images/Fig06-024.png"/>
               <figcaption>Fig 06-024</figcaption>
             </figure>
             <p>The approach on this slide is clearly more compact.
@@ -239,14 +239,14 @@
             <p>Well, there is an added benefit to using a function. To demonstrate, I want to show you another
               example.</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-025.png"/>
+              <img src="./images/Fig06-025.png"/>
               <figcaption>Fig 06-025</figcaption>
             </figure>
             <p class="example">Module 06 - Getting before and after values</p>
             <p>In this example, I've defined a watcher on the subTotal property. Notice that in this watcher I've passed
               two parameters into the watcher function:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-026.png"/>
+              <img src="./images/Fig06-026.png"/>
               <figcaption>Fig 06-026</figcaption>
             </figure>
             <p>When Vue calls a watcher function, it automatically passes in two parameters. I've named those parameters
@@ -254,13 +254,13 @@
               to. Still, what's important is what they represent. The first value is the value that the data property
               has been changed to.</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-027.png"/>
+              <img src="./images/Fig06-027.png"/>
               <figcaption>Fig 06-027</figcaption>
             </figure>
             <p>In this example, the latest parameter would be the value of the Subtotal including an added beer.
               However, the original parameter:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-028.png"/>
+              <img src="./images/Fig06-028.png"/>
               <figcaption>Fig 06-028</figcaption>
             </figure>
             <p>Would be the value of the Subtotal before the price of the new beer is included. This is a way of
@@ -271,7 +271,7 @@
               Since the shopping cart is an array, it wouldn't work. Instead, you would need to use an expression like
               this:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-029.png"/>
+              <img src="./images/Fig06-029.png"/>
               <figcaption>Fig 06-029</figcaption>
             </figure>
             <p>To detect a change in the length of an array. This example watches for changes to the length of the
@@ -294,7 +294,7 @@
             <p>I want to demonstrate this point, because I believe it's important. Up to this point, the shopping cart
               property in the data object has just been an array:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-030.png"/>
+              <img src="./images/Fig06-030.png"/>
               <figcaption>Fig 06-030</figcaption>
             </figure>
             <p>Let's expand the
@@ -302,12 +302,12 @@
               responsibility of the shopping cart, though. In fact, now it will have an array named items, which
               represent the items in the shopping cart:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-031.png"/>
+              <img src="./images/Fig06-031.png"/>
               <figcaption>Fig 06-031</figcaption>
             </figure>
             <p>The shopping cart will also have a property named subTotal:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-032.png"/>
+              <img src="./images/Fig06-032.png"/>
               <figcaption>Fig 06-032</figcaption>
             </figure>
             <p>The goal is that as beers are bought, the subtotal will get updated. If you're curious, we're basically
@@ -315,7 +315,7 @@
               run into in the real world. Now, if I run this code, you'll notice that the subtotal doesn't get updated
               when I click the buy button next to a beer.</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-033.png"/>
+              <img src="./images/Fig06-033.png"/>
               <figcaption>Fig 06-033#</figcaption>
             </figure>
             <p>
@@ -323,23 +323,23 @@
               the items property is nested within the shopping cart, so by default, Vue won't be able to detect the
               addition of beers to the items array. This means that the subtotal never gets updated:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-034.png"/>
+              <img src="./images/Fig06-034.png"/>
               <figcaption>Fig 06-034</figcaption>
             </figure>
             <p>However, I could update the watcher definition like this:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-035.png"/>
+              <img src="./images/Fig06-035.png"/>
               <figcaption>Fig 06-035</figcaption>
             </figure>
             <p>To react to changes in nested properties. This watcher syntax is slightly different than what's been
               used. The handler defines the function to call when the shoppingCart property changes:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-036.png"/>
+              <img src="./images/Fig06-036.png"/>
               <figcaption>Fig 06-036</figcaption>
             </figure>
             <p>The notable part of this example, though, is the deep property:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-037.png"/>
+              <img src="./images/Fig06-037.png"/>
               <figcaption>Fig 06-037</figcaption>
             </figure>
             <p>By setting this property to true, I'm telling Vue to watch for changes to properties nested within the
@@ -367,7 +367,7 @@
               re-evaluated. Instead, a computed properties result will only be regenerated if a depending value
               changes:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-038.png"/>
+              <img src="./images/Fig06-038.png"/>
               <figcaption>Fig 06-038</figcaption>
             </figure>
             <p>This means a faster runtime experience. Let's see how to initialize a computed property.
@@ -381,37 +381,37 @@
               To initialize a computed property, you set up something that looks like a method. To demonstrate, let's
               look at an example:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-039.png"/>
+              <img src="./images/Fig06-039.png"/>
               <figcaption>Fig 06-039</figcaption>
             </figure>
             <p class="example">Module 06 - Initializing a computed property</p>
             <p>In this example, I have a computed property named isOnline:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-040.png"/>
+              <img src="./images/Fig06-040.png"/>
               <figcaption>Fig 06-040</figcaption>
             </figure>
             <p>This property is a flag that signals if the search engine is able to access the internet, or not. It
               provides a simple yes or no, based on the value of canConnect:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-041.png"/>
+              <img src="./images/Fig06-041.png"/>
               <figcaption>Fig 06-041</figcaption>
             </figure>
             <p>By default, this property is set to false when the app starts. Once the app is created, the Axios library
               mentioned in module 1 is used to see if the app can reach a website:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-042.png"/>
+              <img src="./images/Fig06-042.png"/>
               <figcaption>Fig 06-042</figcaption>
             </figure>
             <p>The result of that request is used to set the canConnect property. When the canConnect property changes,
               the isOnline computed property will get refreshed:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-043.png"/>
+              <img src="./images/Fig06-043.png"/>
               <figcaption>Fig 06-043</figcaption>
             </figure>
             <p>In other words, the cached value will be replaced with the new value. This results in the UI bindings
               getting updated as well.</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-044.png"/>
+              <img src="./images/Fig06-044.png"/>
               <figcaption>Fig 06-044</figcaption>
             </figure>
             <p>So, if the can Connect property gets set to false, the UI will show no, and if the canConnect property is
@@ -432,14 +432,14 @@
             <p>To see what Vue's version of an accessor looks like, let's do a before and after of the isOnline computed
               property:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-045.png"/>
+              <img src="./images/Fig06-045.png"/>
               <figcaption>Fig 06-045</figcaption>
             </figure>
             <p>Here on the left, you can see the isOnline computed property used in the last section. Now, I could
               expand this code and explicitly declare that this computed property is a getter by defining a get function
               like this.</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-046.png"/>
+              <img src="./images/Fig06-046.png"/>
               <figcaption>Fig 06-046</figcaption>
             </figure>
             <p class="example">Module 06 - Adding a getter</p>
@@ -447,21 +447,21 @@
               achieving the same goal.</p>
             <p>Now, if I wanted to set the canConnect value, I could by adding a set function, like this:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-047.png"/>
+              <img src="./images/Fig06-047.png"/>
               <figcaption>Fig 06-047</figcaption>
             </figure>
             <p class="example">Module 06 - Adding a setter</p>
             <p>Now, the isOnline computed property lets you both get and set the canConnect data value. Notice how the
               set function takes in a parameter called newValue:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-048.png"/>
+              <img src="./images/Fig06-048.png"/>
               <figcaption>Fig 06-048</figcaption>
             </figure>
             <p>This parameter is the value that you want to change a property to. This empowers you to use the existing
               value as a before value, and the newValue parameter as the after value. Then, when the new value is set to
               the canConnect data property value:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-049.png"/>
+              <img src="./images/Fig06-049.png"/>
               <figcaption>Fig 06-049</figcaption>
             </figure>
             <p>The get function is rerun. The reason why is because canConnect is the dependency property for the
@@ -482,14 +482,14 @@
               beer has International Beer Units, or IBUs, associated with it. Pretend for a second that that data looks
               like this:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-050.png"/>
+              <img src="./images/Fig06-050.png"/>
               <figcaption>Fig 06-050</figcaption>
             </figure>
             <p>Well, if that were the case, you may want to transform the data in two ways. First, you may want to
               remove the periods. Next, you may want to make the text upper case. If you did these two things, each
               value would become this.</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-051.png"/>
+              <img src="./images/Fig06-051.png"/>
               <figcaption>Fig 06-051</figcaption>
             </figure>
             <p>These kinds of basic text transformations are best implemented as filters. Filters are a special type of
@@ -498,24 +498,24 @@
               engine, removing periods and converting the text to uppercase. If you wanted to make a filter that meets
               the needs of the last example, You'd have a filter that looks like this:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-052.png"/>
+              <img src="./images/Fig06-052.png"/>
               <figcaption>Fig 06-052</figcaption>
             </figure>
             <p class="example">Module 06 - using a filter</p>
             <p>This slide has a predefined list of beers squished here in an array called results:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-053.png"/>
+              <img src="./images/Fig06-053.png"/>
               <figcaption>Fig 06-053</figcaption>
             </figure>
             <p>The beer listed here has its international beer units available through the ibu property. In the HTML, a
               for directive is used to loop through the results:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-054.png"/>
+              <img src="./images/Fig06-054.png"/>
               <figcaption>Fig 06-054</figcaption>
             </figure>
             <p>For each result, mustaches are used to create a semantic binding on the name:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-055.png"/>
+              <img src="./images/Fig06-055.png"/>
               <figcaption>Fig 06-055</figcaption>
             </figure>
             <p>Mustaches are again used to bind the IBUs to the template. I'm using mustaches, because, as of the time
@@ -523,7 +523,7 @@
               mustaches there's a filter named convertIBU being applied.
             </p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-056.png"/>
+              <img src="./images/Fig06-056.png"/>
               <figcaption>Fig 06-056</figcaption>
             </figure>
           </div>
@@ -534,7 +534,7 @@
             <p>
               The convertIBU filter is defined in an instance-level object called filters.</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-057.png"/>
+              <img src="./images/Fig06-057.png"/>
               <figcaption>Fig 06-057</figcaption>
             </figure>
             <p>This object is at the same level as the data and methods objects you've already seen in this course.
@@ -543,13 +543,13 @@
               passed in. The periods are then removed from the value, and it's converted to uppercase. That's it. If you
               wanted to pass in an additional parameter, you could, like this.</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-058.png"/>
+              <img src="./images/Fig06-058.png"/>
               <figcaption>Fig 06-058</figcaption>
             </figure>
             <p class="example">Module 06 - Passing a parameter to a filter</p>
             <p>In this example, I'm passing in a parameter called empty:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-059.png"/>
+              <img src="./images/Fig06-059.png"/>
               <figcaption>Fig 06-059</figcaption>
             </figure>
             <p>This parameter's value is used if a beer doesn't have an IBU value. In this case, two dashes will be used
@@ -571,31 +571,31 @@
               multiple filters, you could. In fact, let's pretend that you decided to refactor the convertIBU filter
               like this.</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-060.png"/>
+              <img src="./images/Fig06-060.png"/>
               <figcaption>Fig 06-060</figcaption>
             </figure>
             <p class="example">Module 06 - Programmatically calling filters</p>
             <p>This slide shows the convertIBU filter refactored. Now, instead of one single filter, there are actually
               three:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-061.png"/>
+              <img src="./images/Fig06-061.png"/>
               <figcaption>Fig 06-061</figcaption>
             </figure>
             <p>It should be noted that all of these filters belong in the filters object discussed earlier. I'm showing
               them this way due to the available real estate on the screen. You can see the actual implementation in the
               sample repo that goes with this course. Still, the convertIBU filter shown in the left half:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-062.png"/>
+              <img src="./images/Fig06-062.png"/>
               <figcaption>Fig 06-062</figcaption>
             </figure>
             <p>Is calling the removePeriods and toUpperCase filters defined in the right half.</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-063.png"/>
+              <img src="./images/Fig06-063.png"/>
               <figcaption>Fig 06-063</figcaption>
             </figure>
             <p>I want to point out this check right here.</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-064.png"/>
+              <img src="./images/Fig06-064.png"/>
               <figcaption>Fig 06-064</figcaption>
             </figure>
             <p>This assertion is used to ensure that Growler is defined. The reason for this is because filters are
@@ -614,34 +614,34 @@
               period, though, as in the case with modifiers, you use a pipe. Let's pretend for a second that the filter
               definitions were changed one more time. For example, I'll make each filter its own unit, like this:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-065.png"/>
+              <img src="./images/Fig06-065.png"/>
               <figcaption>Fig 06-065</figcaption>
             </figure>
             <p class="example">Module 06 - chaining filters together</p>
             <p>Now, there are three distinct filters, convertIBU, removePeriods, and toUpperCase:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-066.png"/>
+              <img src="./images/Fig06-066.png"/>
               <figcaption>Fig 06-066</figcaption>
             </figure>
             <p>Each of these filters is being called in sequence by the HTML template shown on the right half of the
               screen:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-067.png"/>
+              <img src="./images/Fig06-067.png"/>
               <figcaption>Fig 06-067</figcaption>
             </figure>
             <p>The result of the convertIBU filter:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-068.png"/>
+              <img src="./images/Fig06-068.png"/>
               <figcaption>Fig 06-068</figcaption>
             </figure>
             <p>is passed as the value into the removePeriods filter:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-069.png"/>
+              <img src="./images/Fig06-069.png"/>
               <figcaption>Fig 06-069</figcaption>
             </figure>
             <p>Then, the result of the removePeriods filter is passed as the value to the toUpperCase filter:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-070.png"/>
+              <img src="./images/Fig06-070.png"/>
               <figcaption>Fig 06-070</figcaption>
             </figure>
 
@@ -663,13 +663,13 @@
             <p>Beyond the intended purpose, though, filters are just easier to read. Imagine the functions called by the
               convertIBU filters were methods. In that case, you'd call them like this.</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-071.png"/>
+              <img src="./images/Fig06-071.png"/>
               <figcaption>Fig 06-071</figcaption>
             </figure>
             <p class="example">Module 06 - comparing methods to filters</p>
             <p>When compared to the version that uses filters:</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-072.png"/>
+              <img src="./images/Fig06-072.png"/>
               <figcaption>Fig 06-072</figcaption>
             </figure>
             <p>Which do you find easier to read? Personally, I find the filter version easier to read. It's more
@@ -683,7 +683,7 @@
             <p>Finally, if you need to handle asynchronous data operations, you should consider a watcher. I've tried to
               summarize the abilities of each construct on this slide.</p>
             <figure>
-              <img src="./images/vue-js-getting-started/Fig06-073.png"/>
+              <img src="./images/Fig06-073.png"/>
               <figcaption>Fig 06-073</figcaption>
             </figure>
             <p>If you would like to pause the video and take a screenshot or print this out, it may be handy for you.

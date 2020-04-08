@@ -32,7 +32,7 @@
             <li>
                 <a
                 target="_blank"
-                href="../../../../static/vuejs/03DevelopingFasterWithVueCLI/developing-faster-with-vue-cli-section-03.html">Setting up the Vue CLI</a>
+                href="../../../../static/vuejs/03developingfasterwithvuecli/developing-faster-with-vue-cli-section-03.html">Setting up the Vue CLI</a>
               <ol start="5">
                 <li>Setting up the Vue CLI</li>
                 <li>Installing the Vue CLI</li>
@@ -44,7 +44,7 @@
             <li>
                 <a
                 target="_blank"
-                href="../../../../static/vuejs/03DevelopingFasterWithVueCLI/developing-faster-with-vue-cli-section-04.html">Mastering Essential Vue Tools</a>
+                href="../../../../static/vuejs/03developingfasterwithvuecli/developing-faster-with-vue-cli-section-04.html">Mastering Essential Vue Tools</a>
               <ol start="10">
                 <li>Using Great Tooling for Vue</li>
                 <li>Vue CLI Overview</li>
@@ -59,7 +59,7 @@
             <li>
                 <a
                 target="_blank"
-                href="../../../../static/vuejs/03DevelopingFasterWithVueCLI/developing-faster-with-vue-cli-section-05.html">Creating a Vue Application</a>
+                href="../../../../static/vuejs/03developingfasterwithvuecli/developing-faster-with-vue-cli-section-05.html">Creating a Vue Application</a>
               <ol start="17">
                 <li>Application Creation Concepts</li>
                 <li>Learning the Application Creation Options</li>
@@ -76,7 +76,7 @@
             <li>
                 <a
                 target="_blank"
-                href="../../../../static/vuejs/03DevelopingFasterWithVueCLI/developing-faster-with-vue-cli-section-06.html">Building and Serving Vue</a>
+                href="../../../../static/vuejs/03developingfasterwithvuecli/developing-faster-with-vue-cli-section-06.html">Building and Serving Vue</a>
               <ol start="17">
                 <li>Overview of the Building and Serving</li>
                 <li>Exploring the Vue CLI Service</li>
@@ -94,7 +94,7 @@
             <li>
                 <a
                 target="_blank"
-                href="../../../../static/vuejs/03DevelopingFasterWithVueCLI/developing-faster-with-vue-cli-section-07.html">Running Unit and End to End Tests</a>
+                href="../../../../static/vuejs/03developingfasterwithvuecli/developing-faster-with-vue-cli-section-07.html">Running Unit and End to End Tests</a>
               <ol start="17">
                 <li>Overview of Testing with the Vue CLI</li>
                 <li>How to Set up and Run Unit Tests with Mocha or Jest</li>
@@ -108,7 +108,7 @@
             <li>
                 <a
                 target="_blank"
-                href="../../../../static/vuejs/03DevelopingFasterWithVueCLI/developing-faster-with-vue-cli-section-08.html">Adding Packages and Plugins to Your Vue App with the Vue CLI</a>
+                href="../../../../static/vuejs/03developingfasterwithvuecli/developing-faster-with-vue-cli-section-08.html">Adding Packages and Plugins to Your Vue App with the Vue CLI</a>
               <ol start="17">
                 <li>Overview of Plugins for the Vue CLI</li>
                 <li>Understanding Vue CLI Plugins</li>
@@ -121,7 +121,7 @@
             <li>
                 <a
                 target="_blank"
-                href="../../../../static/vuejs/03DevelopingFasterWithVueCLI/developing-faster-with-vue-cli-section-09.html">Creating Vue Apps with Vue CLI's UI</a>
+                href="../../../../static/vuejs/03developingfasterwithvuecli/developing-faster-with-vue-cli-section-09.html">Creating Vue Apps with Vue CLI's UI</a>
               <ol start="17">
                 <li>Overview of the Vue CLI UI</li>
                 <li>Touring the Vue CLI UI</li>
