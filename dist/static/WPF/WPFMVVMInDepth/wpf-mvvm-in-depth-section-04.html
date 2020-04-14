@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
   <meta charset="UTF-8">
-  <title>maxsagetech - Vue JS Fundamentals</title>
+  <title>maxsagetech - WPF MVVM In Depth</title>
   <script src="https://unpkg.com/vue"></script>
   <!--<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"-->
   <!--integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">-->
@@ -117,7 +117,7 @@
             ViewModel that is an ICommand and bind to it from the Buttons Command Property:
           </p>
           <figure>
-            <pre class="prettyprint">Command="Binding DeleteCommand"</pre>
+            <pre><code class="language-csharp">Command="Binding DeleteCommand"</code></pre>
             <figcaption>Fig 04-002</figcaption>
           </figure>
           <p>With this definition we expect to have a DeleteCommand property of type ICommand exposed from our ViewModel
@@ -136,7 +136,7 @@
           </ul>
           <p>Next add a Delete Command to the CustomerListViewModel. Add a public property of type ICommand:</p>
           <figure>
-            <pre class="prettyprint">public ICommand DeleteCommand { get; private set; }</pre>
+            <pre><code class="language-csharp">public ICommand DeleteCommand { get; private set; }</code></pre>
             <figcaption>Fig 04-003</figcaption>
           </figure>
           <p>It has a private setter because the Property should only be set one time inside the ViewModel upon
@@ -147,7 +147,7 @@
             is already in the project in the download code and is called RelayCommand:
           </p>
           <figure>
-                <pre class="prettyprint">public class RelayCommand : ICommand
+                <pre><code class="language-csharp">public class RelayCommand : ICommand
 {
     Action _TargetExecuteMethod;
     Func&lt;bool&amp;gt; _TargetCanExecuteMethod;
@@ -162,7 +162,7 @@
 }
 
 public class RelayCommand&amp;lt;T&amp;gt; : ICommand
-{</pre>
+{</code></pre>
             <figcaption>Fig 04-004</figcaption>
           </figure>
           <p>
@@ -173,7 +173,7 @@ public class RelayCommand&amp;lt;T&amp;gt; : ICommand
           </p>
           <p>The implementation of ICommand is fairly straightforward:</p>
           <figure>
-                <pre class="prettyprint">bool ICommand.CanExecute(object parameter)
+                <pre><code class="language-csharp">bool ICommand.CanExecute(object parameter)
 {
     if (_TargetCanExecuteMethod != null)
     {
@@ -196,7 +196,7 @@ void ICommand.Execute(object parameter)
     {
         _TargetExecuteMethod();
     }
-}</pre>
+}</code></pre>
             <figcaption>Fig 04-005</figcaption>
           </figure>
           <p>
@@ -208,13 +208,13 @@ void ICommand.Execute(object parameter)
             Back in CustomerListViewModel change the DeleteCommand to be of type RelayCommand instead of just ICommand:
           </p>
           <figure>
-            <pre class="prettyprint">public RelayCommand DeleteCommand { get; private set; }</pre>
+            <pre><code class="language-csharp">public RelayCommand DeleteCommand { get; private set; }</code></pre>
             <figcaption>Fig 05-005A</figcaption>
           </figure>
           <p>Now we need to construct an instance and put it into that property; we will do this in the constructor.
           </p>
           <figure>
-                <pre class="prettyprint">public CustomerListViewModel()
+                <pre><code class="language-csharp">public CustomerListViewModel()
 {
     if (DesignerProperties.GetIsInDesignMode(
         new System.Windows.DependencyObject())) return;
@@ -222,7 +222,7 @@ void ICommand.Execute(object parameter)
     Customers = new ObservableCollection&lt;Customer&gt;( _repository.GetCustomersAsync().Result);
     DeleteCommand = new RelayCommand(OnDelete,CanDelete);
 
-}</pre>
+}</code></pre>
             <figcaption>Fig 04-006</figcaption>
           </figure>
           <p>
@@ -232,7 +232,7 @@ void ICommand.Execute(object parameter)
           </p>
           <p>Now we can stub the methods out:</p>
           <figure>
-                <pre class="prettyprint">private void OnDelete()
+                <pre><code class="language-csharp">private void OnDelete()
 {
     Customers.Remove(SelectedCustomer);
 }
@@ -240,7 +240,7 @@ void ICommand.Execute(object parameter)
 private bool CanDelete()
 {
     return true;
-}</pre>
+}</code></pre>
             <figcaption>Fig 04-007</figcaption>
           </figure>
           <p>For the moment we will just return true from CanDelete.</p>
@@ -255,7 +255,7 @@ private bool CanDelete()
             to. That way the ViewModel will always know what the current context is in terms of selection:
           </p>
           <figure>
-                <pre class="prettyprint">private Customer _selectedCustomer;
+                <pre><code class="language-csharp">private Customer _selectedCustomer;
 public Customer SelectedCustomer
 {
     get
@@ -266,7 +266,7 @@ public Customer SelectedCustomer
     {
         _selectedCustomer = value;
     }
-}</pre>
+}</code></pre>
             <figcaption>Fig 04-008</figcaption>
           </figure>
           <p>So I've added a new SelectedCustomer property and we can go over to the View now and set it up so it's
@@ -274,7 +274,7 @@ public Customer SelectedCustomer
             to my DataGrid and set the SelectedItem property bound to the SelectedCustomer Property on my ViewModel.
           </p>
           <figure>
-                <pre class="prettyprint"> &lt;DataGrid x:Name=&quot;customerDataGrid&quot;
+                <pre><code class="language-csharp"> &lt;DataGrid x:Name=&quot;customerDataGrid&quot;
           AutoGenerateColumns=&quot;False&quot;
           ItemsSource=&quot;{Binding Customers}&quot;
           SelectedItem=&quot;{Binding SelectedCustomer}&quot;
@@ -285,7 +285,7 @@ public Customer SelectedCustomer
                             Width=&quot;SizeToHeader&quot; /&gt;
         &lt;DataGridTextColumn Binding=&quot;{Binding LastName}&quot;
                             Header=&quot;Last Name&quot;
-                            Width=&quot;SizeToHeader&quot; /&gt;</pre>
+                            Width=&quot;SizeToHeader&quot; /&gt;</code></pre>
             <figcaption>Fig 04-009</figcaption>
           </figure>
           <p>Now the ViewModel will always be in tune with what the selection is and it can use that as the context for
@@ -295,7 +295,7 @@ public Customer SelectedCustomer
             from the Customer Collection when the Delete button is pressed and the Command fires.
           </p>
           <figure>
-                <pre class="prettyprint"> private void OnDelete()
+                <pre><code class="language-csharp"> private void OnDelete()
 {
     Customers.Remove(SelectedCustomer);
 }
@@ -303,7 +303,7 @@ public Customer SelectedCustomer
 private bool CanDelete()
 {
     return SelectedCustomer != null;
-}</pre>
+}</code></pre>
             <figcaption>Fig 04-010</figcaption>
           </figure>
           <p>
@@ -319,10 +319,10 @@ private bool CanDelete()
             null and return true or false accordingly:
           </p>
           <figure>
-                <pre class="prettyprint">private bool CanDelete()
+                <pre><code class="language-csharp">private bool CanDelete()
 {
     return SelectedCustomer != null;
-}</pre>
+}</code></pre>
             <figcaption>Fig 04-011</figcaption>
           </figure>
           <p>
@@ -336,11 +336,11 @@ private bool CanDelete()
             the Command we'll be good to go:
           </p>
           <figure>
-                <pre class="prettyprint">set
+                <pre><code class="language-csharp">set
 {
     _selectedCustomer = value;
     DeleteCommand.RaiseCanExecuteChanged();
-}</pre>
+}</code></pre>
             <figcaption>Fig 04-012</figcaption>
           </figure>
           <p>
@@ -351,11 +351,11 @@ private bool CanDelete()
             InputBindings as a collection on the Root element.
           </p>
           <figure>
-                <pre class="prettyprint">&lt;UserControl.InputBindings&gt;
+                <pre><code class="language-csharp">&lt;UserControl.InputBindings&gt;
     &lt;KeyBinding Key=&quot;D&quot;
                 Modifiers=&quot;Control&quot;
                 Command=&quot;{Binding DeleteCommand}&quot; /&gt;
-&lt;/UserControl.InputBindings&gt;</pre>
+&lt;/UserControl.InputBindings&gt;</code></pre>
             <figcaption>Fig 04-013</figcaption>
           </figure>
           <p>
@@ -433,7 +433,7 @@ private bool CanDelete()
             called LoadedMethodName. Make it of type string:
           </p>
           <figure>
-                <pre class="prettyprint">public static class MvvmBehaviors
+                <pre><code class="language-csharp">public static class MvvmBehaviors
 {
     public static string GetLoadedMethodName(DependencyObject obj)
     {
@@ -447,7 +447,7 @@ private bool CanDelete()
 
     public static readonly DependencyProperty LoadedMethodNameProperty =
         DependencyProperty.RegisterAttached(&quot;LoadedMethodName&quot;,
-        typeof(string), typeof(MvvmBehaviors), new PropertyMetadata(null));</pre>
+        typeof(string), typeof(MvvmBehaviors), new PropertyMetadata(null));</code></pre>
             <figcaption>Fig 04-014</figcaption>
           </figure>
           <p>
@@ -455,9 +455,9 @@ private bool CanDelete()
             Property meta data and say my change handler is going to be named OnLoadedMethodNameChanged.
           </p>
           <figure>
-                <pre class="prettyprint"> public static readonly DependencyProperty LoadedMethodNameProperty =
+                <pre><code class="language-csharp"> public static readonly DependencyProperty LoadedMethodNameProperty =
     DependencyProperty.RegisterAttached(&quot;LoadedMethodName&quot;,
-    typeof(string), typeof(MvvmBehaviors), new PropertyMetadata(null, OnLoadedMethodNameChanged));</pre>
+    typeof(string), typeof(MvvmBehaviors), new PropertyMetadata(null, OnLoadedMethodNameChanged));</code></pre>
             <figcaption>Fig 04-015</figcaption>
           </figure>
           <p>
@@ -467,7 +467,7 @@ private bool CanDelete()
             can get that ViewModel and use reflection to invoke a method with the specified method name on it:
           </p>
           <figure>
-                <pre class="prettyprint">private static void OnLoadedMethodNameChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+                <pre><code class="language-csharp">private static void OnLoadedMethodNameChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
 {
     FrameworkElement element = d as FrameworkElement;
     if (element != null)
@@ -481,7 +481,7 @@ private bool CanDelete()
             if (methodInfo != null) methodInfo.Invoke(viewModel, null);
         };
     }
-}</pre>
+}</code></pre>
             <figcaption>Fig 04-016</figcaption>
           </figure>
 
@@ -497,14 +497,14 @@ private bool CanDelete()
             put the Behavior definition:
           </p>
           <figure>
-            <pre class="prettyprint">xmlns:local=&amp;quot&amp;quot;clr-namespace:MVVMCommsDemo&amp;quot;</pre>
+            <pre><code class="language-csharp">xmlns:local=&amp;quot&amp;quot;clr-namespace:MVVMCommsDemo&amp;quot;</code></pre>
             <figcaption>Fig 04-017</figcaption>
           </figure>
           <p>Then in the root element of the View use the Attached Property (LoadedMethodName) and specify the Method
             name that you expect to find in your ViewModel:
           </p>
           <figure>
-            <pre class="prettyprint">local:MvvmBehaviors.LoadMethodName=&quot;LoadCustomers&quot;&gt;</pre>
+            <pre><code class="language-csharp">local:MvvmBehaviors.LoadMethodName=&quot;LoadCustomers&quot;&gt;</code></pre>
             <figcaption>Fig 04-018</figcaption>
           </figure>
           <p>
@@ -519,14 +519,14 @@ private bool CanDelete()
             GetCustomerAsync method call and make the LoadCustomers method async:
           </p>
           <figure>
-                <pre class="prettyprint">public async void LoadCustomers()
+                <pre><code class="language-csharp">public async void LoadCustomers()
 {
     if (DesignerProperties.GetIsInDesignMode(
         new System.Windows.DependencyObject())) return;
 
     Customers = new ObservableCollection&lt;Customer&gt;(await _repository.GetCustomersAsync());
 
-}</pre>
+}</code></pre>
             <figcaption>Fig 04-019</figcaption>
           </figure>
           <p>
@@ -582,17 +582,17 @@ private bool CanDelete()
             we can access the stuff that is in those libraries from our XAML.
           </p>
           <figure>
-                <pre class="prettyprint">xmlns:i=&quot;http://schemas.microsoft.com/expression/2010/interactivity&quot;
-xmlns:ei=&quot;http://schemas.microsoft.com/expression/2010/interactions&quot;</pre>
+                <pre><code class="language-csharp">xmlns:i=&quot;http://schemas.microsoft.com/expression/2010/interactivity&quot;
+xmlns:ei=&quot;http://schemas.microsoft.com/expression/2010/interactions&quot;</code></pre>
             <figcaption>Fig 04-021</figcaption>
           </figure>
           <p>Scrolling down you see that Blend has added some more XAML:</p>
           <figure>
-                <pre class="prettyprint">&lt;i:Interaction.Triggers&gt;
+                <pre><code class="language-csharp">&lt;i:Interaction.Triggers&gt;
     &lt;i:EventTrigger EventName=&quot;MouseLeftButtonDown&quot;&gt;
         &lt;ei:CallMethodAction /&gt;
     &lt;/i:EventTrigger&gt;
-&lt;/i:Interaction.Triggers&gt;</pre>
+&lt;/i:Interaction.Triggers&gt;</code></pre>
             <figcaption>Fig 04-022</figcaption>
           </figure>
 
@@ -607,7 +607,7 @@ xmlns:ei=&quot;http://schemas.microsoft.com/expression/2010/interactions&quot;</
             LoadCustomers method (achieving the same thing as our Attached Behaviour did):
           </p>
           <figure>
-            <pre class="prettyprint">&lt;ei:CallMethodAction TargetObject=&quot;{Binding}&quot; MethodName=&quot;LoadCustomers&quot; /&gt;</pre>
+            <pre><code class="language-csharp">&lt;ei:CallMethodAction TargetObject=&quot;{Binding}&quot; MethodName=&quot;LoadCustomers&quot; /&gt;</code></pre>
             <figcaption>Fig 04-023</figcaption>
           </figure>
           <p>
@@ -664,7 +664,7 @@ xmlns:ei=&quot;http://schemas.microsoft.com/expression/2010/interactions&quot;</
             INotifyPropertyChanged:
           </p>
           <figure>
-            <pre class="prettyprint">public class CustomerListViewModel : INotifyPropertyChanged</pre>
+            <pre><code class="language-csharp">public class CustomerListViewModel : INotifyPropertyChanged</code></pre>
             <figcaption>Fig 04-024</figcaption>
           </figure>
           <p>
@@ -675,7 +675,7 @@ xmlns:ei=&quot;http://schemas.microsoft.com/expression/2010/interactions&quot;</
           </p>
           <figure>
             <pre
-              class="prettyprint">public event PropertyChangedEventHandler PropertyChanged = delegate { };</pre>
+              class="prettyprint">public event PropertyChangedEventHandler PropertyChanged = delegate { };</code></pre>
             <figcaption>Fig 04-025</figcaption>
           </figure>
           <p>
@@ -683,7 +683,7 @@ xmlns:ei=&quot;http://schemas.microsoft.com/expression/2010/interactions&quot;</
             going to be raising an event when they change you need to make sure the value actually changed:
           </p>
           <figure>
-                <pre class="prettyprint">public ObservableCollection&lt;Customer&gt; Customers
+                <pre><code class="language-csharp">public ObservableCollection&lt;Customer&gt; Customers
 {
     get
     {
@@ -697,7 +697,7 @@ xmlns:ei=&quot;http://schemas.microsoft.com/expression/2010/interactions&quot;</
             PropertyChanged(this, new PropertyChangedEventArgs(&quot;Customers&quot;));
         }
     }
-}</pre>
+}</code></pre>
             <figcaption>Fig 04-026</figcaption>
           </figure>
           <p>
@@ -721,22 +721,22 @@ xmlns:ei=&quot;http://schemas.microsoft.com/expression/2010/interactions&quot;</
             our screen that ends up changing a customer object behind the scenes:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;Button Content=&quot;Change Customer&quot;
+                <pre><code class="language-csharp">&lt;Button Content=&quot;Change Customer&quot;
     HorizontalAlignment=&quot;Left&quot;
     Margin=&quot;80,0,0,0&quot;
     VerticalAlignment=&quot;Top&quot;
     Width=&quot;100&quot;
     Click=&quot;OnChangeCustomer&quot; /&gt;
-                </pre>
+                </code></pre>
             <figcaption>Fig 04-027</figcaption>
           </figure>
           <p>For speed (but anti-MVVM) we will hook-up a change event in the code-behind:</p>
           <figure>
-                <pre class="prettyprint">private void OnChangeCustomer(object sender, RoutedEventArgs e)
+                <pre><code class="language-csharp">private void OnChangeCustomer(object sender, RoutedEventArgs e)
 {
     var cust = customerDataGrid.SelectedItem as Customer;
     cust.FirstName = &quot;Changed in background&quot;;
-}</pre>
+}</code></pre>
             <figcaption>Fig 04-028</figcaption>
           </figure>
           <p>
@@ -756,7 +756,7 @@ xmlns:ei=&quot;http://schemas.microsoft.com/expression/2010/interactions&quot;</
           </p>
           <figure>
             <pre
-              class="prettyprint">public event PropertyChangedEventHandler PropertyChanged = delegate { };</pre>
+              class="prettyprint">public event PropertyChangedEventHandler PropertyChanged = delegate { };</code></pre>
             <figcaption>Fig 04-029</figcaption>
           </figure>
           <p>
@@ -795,14 +795,14 @@ xmlns:ei=&quot;http://schemas.microsoft.com/expression/2010/interactions&quot;</
           </p>
           <figure>
             <pre
-              class="prettyprint">public class ShowNotificationMessageBehavior : Behavior&lt;ContentControl&gt;</pre>
+              class="prettyprint">public class ShowNotificationMessageBehavior : Behavior&lt;ContentControl&gt;</code></pre>
             <figcaption>Fig 04-029A</figcaption>
           </figure>
           <p>Next, using the propp code snippet, expose a property on the Behavior called Message of type string which
             can be set on the ViewModel through data binding (which means it will need to be a Dependency Property):
           </p>
           <figure>
-                <pre class="prettyprint">public string Message
+                <pre><code class="language-csharp">public string Message
 {
     get { return (string)GetValue(MessageProperty); }
     set { SetValue(MessageProperty, value); }
@@ -810,7 +810,7 @@ xmlns:ei=&quot;http://schemas.microsoft.com/expression/2010/interactions&quot;</
 
 public static readonly DependencyProperty MessageProperty =
     DependencyProperty.Register(&quot;Message&quot;, typeof(string),
-    typeof(ShowNotificationMessageBehavior), new PropertyMetadata(null, OnMessageChanged));</pre>
+    typeof(ShowNotificationMessageBehavior), new PropertyMetadata(null, OnMessageChanged));</code></pre>
             <figcaption>Fig 04-029B</figcaption>
           </figure>
           <p>
@@ -818,9 +818,9 @@ public static readonly DependencyProperty MessageProperty =
             and make the appropriate changes in the View when it happens.
           </p>
           <figure>
-                <pre class="prettyprint">private static void OnMessageChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+                <pre><code class="language-csharp">private static void OnMessageChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
 {
-    var behavior = ((ShowNotificationMessageBehavior)d);</pre>
+    var behavior = ((ShowNotificationMessageBehavior)d);</code></pre>
             <figcaption>Fig 04-030</figcaption>
           </figure>
           <p>
@@ -830,9 +830,9 @@ public static readonly DependencyProperty MessageProperty =
             on.
           </p>
           <figure>
-                <pre class="prettyprint">var behavior = ((ShowNotificationMessageBehavior)d);
+                <pre><code class="language-csharp">var behavior = ((ShowNotificationMessageBehavior)d);
 behavior.AssociatedObject.Content = e.NewValue;
-behavior.AssociatedObject.Visibility = Visibility.Visible;</pre>
+behavior.AssociatedObject.Visibility = Visibility.Visible;</code></pre>
             <figcaption>Fig 04-030A</figcaption>
           </figure>
           <p>
@@ -843,11 +843,11 @@ behavior.AssociatedObject.Visibility = Visibility.Visible;</pre>
             down as a click dismiss and change the visibility to collapsed at that point.
           </p>
           <figure>
-                <pre class="prettyprint">protected override void OnAttached()
+                <pre><code class="language-csharp">protected override void OnAttached()
 {
     AssociatedObject.MouseLeftButtonDown += (s, e) =&gt;
         AssociatedObject.Visibility = Visibility.Collapsed;
-}</pre>
+}</code></pre>
             <figcaption>Fig 04-031</figcaption>
           </figure>
           <p>
@@ -855,7 +855,7 @@ behavior.AssociatedObject.Visibility = Visibility.Visible;</pre>
             a two row Grid and a new ContentControl in the top row above our existing ContentControl in the bottom row:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;Grid&gt;
+                <pre><code class="language-csharp">&lt;Grid&gt;
     &lt;Grid.RowDefinitions&gt;
         &lt;RowDefinition Height=&quot;Auto&quot; /&gt;
         &lt;RowDefinition /&gt;
@@ -869,7 +869,7 @@ behavior.AssociatedObject.Visibility = Visibility.Visible;</pre>
                     Grid.Row=&quot;1&quot; /&gt;
 
     &lt;!--&lt;Customers:CustomerListView /&gt;--&gt;
-&lt;/Grid&gt;</pre>
+&lt;/Grid&gt;</code></pre>
             <figcaption>Fig 04-032</figcaption>
           </figure>
           <p>
@@ -881,7 +881,7 @@ behavior.AssociatedObject.Visibility = Visibility.Visible;</pre>
             Behaviors Attached Property resides in.
           </p>
           <figure>
-            <pre class="prettyprint">xmlns:i=&quot;http://schemas.microsoft.com/expression/2010/interactivity&quot;</pre>
+            <pre><code class="language-csharp">xmlns:i=&quot;http://schemas.microsoft.com/expression/2010/interactivity&quot;</code></pre>
             <figcaption>Fig 04-033</figcaption>
           </figure>
           <p>
@@ -889,7 +889,7 @@ behavior.AssociatedObject.Visibility = Visibility.Visible;</pre>
             from INotifyPropertyChanged and add the NotificationMessage Property to the ViewModel:
           </p>
           <figure>
-                <pre class="prettyprint">public class MainWindowViewModel : INotifyPropertyChanged
+                <pre><code class="language-csharp">public class MainWindowViewModel : INotifyPropertyChanged
     {
         public MainWindowViewModel()
         {
@@ -898,7 +898,7 @@ behavior.AssociatedObject.Visibility = Visibility.Visible;</pre>
         public object CurrentViewModel { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
-    }</pre>
+    }</code></pre>
             <figcaption>Fig 04-033A</figcaption>
           </figure>
 
@@ -906,7 +906,7 @@ behavior.AssociatedObject.Visibility = Visibility.Visible;</pre>
             which is propc:
           </p>
           <figure>
-                <pre class="prettyprint">private string _NotificationMessage;
+                <pre><code class="language-csharp">private string _NotificationMessage;
 
 public string NotificationMessage
 {
@@ -919,7 +919,7 @@ public string NotificationMessage
             PropertyChanged(this, new PropertyChangedEventArgs(&quot;NotificationMessage&quot;));
         }
     }
-}</pre>
+}</code></pre>
             <figcaption>Fig 04-034</figcaption>
           </figure>
 
@@ -931,8 +931,8 @@ public string NotificationMessage
             we will use a simple Timer. Add a Timer that ticks every 5 seconds to the MainWindowViewModel’s constructor:
           </p>
           <figure>
-                <pre class="prettyprint"> _timer.Elapsed += (s, e) =&gt; NotificationMessage = &quot;At the tone the time will be: &quot; + DateTime.Now.ToLocalTime() + &quot; beep.&quot;;
-_timer.Start();</pre>
+                <pre><code class="language-csharp"> _timer.Elapsed += (s, e) =&gt; NotificationMessage = &quot;At the tone the time will be: &quot; + DateTime.Now.ToLocalTime() + &quot; beep.&quot;;
+_timer.Start();</code></pre>
             <figcaption>Fig 04-035</figcaption>
           </figure>
           <p>

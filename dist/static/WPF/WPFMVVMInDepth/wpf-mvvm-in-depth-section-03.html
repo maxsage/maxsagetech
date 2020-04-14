@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
   <meta charset="UTF-8">
-  <title>maxsagetech - Vue JS Fundamentals</title>
+  <title>maxsagetech - WPF MVVM In Depth</title>
   <script src="https://unpkg.com/vue"></script>
   <!--<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"-->
   <!--integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">-->
@@ -47,14 +47,14 @@
             is being constructed initiated by the call to InitializeComponent() that is in your Views Constructor:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;UserControl x:Class=&quot;ZzaDashboard.Customers.CustomerEditView&quot;
+                <pre><code class="language-csharp">&lt;UserControl x:Class=&quot;ZzaDashboard.Customers.CustomerEditView&quot;
          Width=&quot;400&quot;
          Loaded=&quot;OnLoaded&quot;
          ...&gt;
     &lt;UserControl.DataContext&gt;
         &lt;local:CustomerEditViewModel /&gt;
     &lt;/UserControl.DataContext&gt;
-&lt;/UserControl&gt;</pre>
+&lt;/UserControl&gt;</code></pre>
             <figcaption>Fig 03-001A</figcaption>
           </figure>
 
@@ -88,14 +88,14 @@
             behind of your View and setting the DataContext there with the instance:
           </p>
           <figure>
-                <pre class="prettyprint">public partial class CustomerListView : UserControl
+                <pre><code class="language-csharp">public partial class CustomerListView : UserControl
 {
     public CustomerListView()
     {
         this.DataContext = new CustomerListViewModel();
         InitializeComponent();
     }
-}</pre>
+}</code></pre>
             <figcaption>Fig 03-001B</figcaption>
           </figure>
           <p>Typically, this is performed in the constructor method for your View but you could also defer the
@@ -183,7 +183,7 @@
             <figcaption>Fig 03-001BF</figcaption>
           </figure>
           <figure>
-                <pre class="prettyprint">&lt;Window xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+                <pre><code class="language-csharp">&lt;Window xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
         xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
         xmlns:Customers=&quot;clr-namespace:MVVMHookupDemo.Customers&quot;
         x:Class=&quot;MVVMHookupDemo.MainWindow&quot;
@@ -193,7 +193,7 @@
     &lt;Grid&gt;
         &lt;Customers:CustomerListView/&gt;
     &lt;/Grid&gt;
-&lt;/Window&gt;</pre>
+&lt;/Window&gt;</code></pre>
             <figcaption>Fig 03-001BG</figcaption>
           </figure>
 
@@ -210,28 +210,28 @@
           </p>
           <figure>
             <pre
-              class="prettyprint">public ObservableCollection&lt;Customer&gt; Customers { get; set; }</pre>
+              class="prettyprint">public ObservableCollection&lt;Customer&gt; Customers { get; set; }</code></pre>
             <figcaption>Fig 03-001</figcaption>
           </figure>
           <p>
             Next we will populate the Collection. Add an instance of our repository to the ViewModel:
           </p>
           <figure>
-            <pre class="prettyprint">private ICustomersRepository _repo = new CustomersRepository();</pre>
+            <pre><code class="language-csharp">private ICustomersRepository _repo = new CustomersRepository();</code></pre>
             <figcaption>Fig 03-001C</figcaption>
           </figure>
           <p>and a constructor to populate our Customers collection.</p>
           <figure>
-<pre class="prettyprint">public CustomerListViewModel()
+<pre><code class="language-csharp">public CustomerListViewModel()
 {
     Customers = _repo.GetCustomersAsync()
-}</pre>
+}</code></pre>
             <figcaption>Fig 03-001D</figcaption>
           </figure>
 
           <p>So first we might try setting the Customers collection through the repo:</p>
           <figure>
-            <pre class="prettyprint">Customers = _repo.GetCustomersAsync()</pre>
+            <pre><code class="language-csharp">Customers = _repo.GetCustomersAsync()</code></pre>
             <figcaption>Fig 03-001E</figcaption>
           </figure>
           <p>But the challenge here is that this is an async method that produces a Task and not the Result and we can't
@@ -239,14 +239,14 @@
             synchronously which you can do with the .Result property on a Task:
           </p>
           <figure>
-            <pre class="prettyprint">Customers = _repo.GetCustomersAsync().Result;</pre>
+            <pre><code class="language-csharp">Customers = _repo.GetCustomersAsync().Result;</code></pre>
             <figcaption>Fig 03-001E</figcaption>
           </figure>
           <p>Now that still doesn't produce what we need cause the repository produces a List and we need an
             ObservableCollection so we'll have to wrap the result:
           </p>
           <figure>
-            <pre class="prettyprint">Customers = new ObservableCollection&lt;Customer&gt;(_repo.GetCustomersAsync().Result);</pre>
+            <pre><code class="language-csharp">Customers = new ObservableCollection&lt;Customer&gt;(_repo.GetCustomersAsync().Result);</code></pre>
             <figcaption>Fig 03-002</figcaption>
           </figure>
           <p>Now we would generally be good to go with this but something you generally want to do if you have lines of
@@ -255,8 +255,8 @@
             they can break the design surface so you can't use it anymore. To do that we'll add a simple line of code:
           </p>
           <figure>
-                    <pre class="prettyprint">if(DesignerProperties.GetIsInDesignMode(
-new System.Windows.DependencyObject())) return;</pre>
+                    <pre><code class="language-csharp">if(DesignerProperties.GetIsInDesignMode(
+new System.Windows.DependencyObject())) return;</code></pre>
             <figcaption>Fig 03-002A</figcaption>
           </figure>
           <p>
@@ -268,7 +268,7 @@ new System.Windows.DependencyObject())) return;</pre>
           </p>
           <figure>
             <pre
-              class="prettyprint">xmlns:Class=&quot;MVVMHookupDemo.Customers.CustomerListView&quot;</pre>
+              class="prettyprint">xmlns:Class=&quot;MVVMHookupDemo.Customers.CustomerListView&quot;</code></pre>
             <figcaption>Fig 03-002B</figcaption>
           </figure>
           <p>
@@ -276,18 +276,18 @@ new System.Windows.DependencyObject())) return;</pre>
             DataContext in XAML to an instance of the ViewModel:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;UserControl.DataContext&gt;
+                <pre><code class="language-csharp">&lt;UserControl.DataContext&gt;
     &lt;cust:CustomerListViewModel /&gt;
-&lt;/UserControl.DataContext&gt;</pre>
+&lt;/UserControl.DataContext&gt;</code></pre>
             <figcaption>Fig 03-003</figcaption>
           </figure>
           <p>And with that we have MVVM hooked up. Now let's prove it by adding something in that actually shows the
             data being produced by the ViewModel. Add a DataGrid to display the data:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;Grid&gt;
+                <pre><code class="language-csharp">&lt;Grid&gt;
     &lt;DataGrid ItemsSource=&quot;{Binding Customers}&quot; /&gt;
-&lt;/Grid&gt;</pre>
+&lt;/Grid&gt;</code></pre>
             <figcaption>Fig 03-004</figcaption>
           </figure>
 
@@ -303,12 +303,12 @@ new System.Windows.DependencyObject())) return;</pre>
             in the XAML first):
           </p>
           <figure>
-<pre class="prettyprint">
+<pre><code class="language-csharp">
 public CustomerListView()
 {
     this.DataContext = new CustomerListViewModel();
     IntializeComponent();
-}</pre>
+}</code></pre>
             <figcaption>Fig 03-006</figcaption>
           </figure>
           <p>Now we have the equation of MVVM satisfied through imperative code. We can run the application again and
@@ -370,26 +370,26 @@ public CustomerListView()
           </p>
           <p>Define a ViewModelLocator class called ViewModelLocator. Make it public and static.</p>
           <figure>
-                <pre class="prettyprint">namespace MVVMHookupDemo
+                <pre><code class="language-csharp">namespace MVVMHookupDemo
 {
     public static class ViewModelLocator
     {
     }
-}</pre>
+}</code></pre>
             <figcaption>Fig 03-007A</figcaption>
           </figure>
           <p>
             Use the propa code snippet to stub out a new Attached Property called AutoWireViewModel:
           </p>
           <figure>
-            <pre class="prettyprint">public static bool GetAutoWireViewModel(DependencyObject obj)</pre>
+            <pre><code class="language-csharp">public static bool GetAutoWireViewModel(DependencyObject obj)</code></pre>
             <figcaption>Fig 03-007AB</figcaption>
           </figure>
           <p>
             make its type Boolean:
           </p>
           <figure>
-                <pre class="prettyprint">public static bool GetMyProperty(DependencyObject obj)
+                <pre><code class="language-csharp">public static bool GetMyProperty(DependencyObject obj)
 {
     return (bool)obj.GetValue(MyPropertyProperty);
 }
@@ -403,18 +403,18 @@ public static void SetMyProperty(DependencyObject obj, bool value)
 public static readonly DependencyProperty MyPropertyProperty =
     DependencyProperty.RegisterAttached(&quot;MyProperty&quot;,
     typeof(bool), typeof(ViewModelLocator),
-    new PropertyMetadata(false, MyPropertyChanged));</pre>
+    new PropertyMetadata(false, MyPropertyChanged));</code></pre>
             <figcaption>Fig 03-007B</figcaption>
           </figure>
           <p>
             and make it contained within the ViewModelLocator class with a default of false.
           </p>
           <figure>
-                <pre class="prettyprint">// Using a DependencyProperty as the backing store for MyProperty. This enables animation, styling, binding, etc...
+                <pre><code class="language-csharp">// Using a DependencyProperty as the backing store for MyProperty. This enables animation, styling, binding, etc...
 public static readonly DependencyProperty MyPropertyProperty =
     DependencyProperty.RegisterAttached(&amp;quot;MyProperty&amp;quot;,
     typeof(bool), typeof(ViewModelLocator),
-    new PropertyMetadata(false, MyPropertyChanged));</pre>
+    new PropertyMetadata(false, MyPropertyChanged));</code></pre>
             <figcaption>Fig 03-007C</figcaption>
           </figure>
 
@@ -425,15 +425,15 @@ public static readonly DependencyProperty MyPropertyProperty =
             AutoWireViewModelChanged
           </p>
           <figure>
-                <pre class="prettyprint">public static readonly DependencyProperty AutoWireViewModelProperty =
+                <pre><code class="language-csharp">public static readonly DependencyProperty AutoWireViewModelProperty =
 DependencyProperty.RegisterAttached(&quot;AutoWireViewModel&quot;,
 typeof(bool), typeof(ViewModelLocator),
-new PropertyMetadata(false, AutoWireViewModelChanged));</pre>
+new PropertyMetadata(false, AutoWireViewModelChanged));</code></pre>
             <figcaption>Fig 03-008</figcaption>
           </figure>
           <p>Stub this method out:</p>
           <figure>
-                <pre class="prettyprint">private static void AutoWireViewModelChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+                <pre><code class="language-csharp">private static void AutoWireViewModelChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
 {
     if (DesignerProperties.GetIsInDesignMode(d)) return;
     var viewType = d.GetType();
@@ -443,7 +443,7 @@ new PropertyMetadata(false, AutoWireViewModelChanged));</pre>
     var viewModel = Activator.CreateInstance(viewModelType);
     ((FrameworkElement)d).DataContext = viewModel;
 
-}</pre>
+}</code></pre>
             <figcaption>Fig 03-009</figcaption>
           </figure>
           <p>
@@ -451,14 +451,14 @@ new PropertyMetadata(false, AutoWireViewModelChanged));</pre>
             the View. Firstly, add a guard condition that does nothing if we are in DesignMode:
           </p>
           <figure>
-            <pre class="prettyprint">if (DesignerProperties.GetIsInDesignMode(d)) return;</pre>
+            <pre><code class="language-csharp">if (DesignerProperties.GetIsInDesignMode(d)) return;</code></pre>
             <figcaption>Fig 03-009A</figcaption>
           </figure>
           <p>Next we need to get the ViewType name which we can do with a couple of lines of code:
           </p>
           <figure>
-                <pre class="prettyprint">var viewType = d.GetType();
-var viewTypeName = viewType.FullName;</pre>
+                <pre><code class="language-csharp">var viewType = d.GetType();
+var viewTypeName = viewType.FullName;</code></pre>
             <figcaption>Fig 03-010</figcaption>
           </figure>
           <p>
@@ -474,8 +474,8 @@ var viewTypeName = viewType.FullName;</pre>
             the ViewModel:
           </p>
           <figure>
-                <pre class="prettyprint">var viewModelTypeName = viewType + &quot;Model&quot;;
-var viewModelType = Type.GetType(viewModelTypeName);</pre>
+                <pre><code class="language-csharp">var viewModelTypeName = viewType + &quot;Model&quot;;
+var viewModelType = Type.GetType(viewModelTypeName);</code></pre>
             <figcaption>Fig 03-011</figcaption>
           </figure>
           <p>So with the above code we can take the viewTypeName append "Model" to it (that gives us our
@@ -483,7 +483,7 @@ var viewModelType = Type.GetType(viewModelTypeName);</pre>
           </p>
           <p>We use the Activator.CreateInstance method to create an instance of the ViewModel type.</p>
           <figure>
-            <pre class="prettyprint">var viewModel = Activator.CreateInstance(viewModelType);</pre>
+            <pre><code class="language-csharp">var viewModel = Activator.CreateInstance(viewModelType);</code></pre>
             <figcaption>Fig 03-012</figcaption>
           </figure>
 
@@ -492,19 +492,19 @@ var viewModelType = Type.GetType(viewModelTypeName);</pre>
             Finally, we set the DataContext of the View to the newly created ViewModel:
           </p>
           <figure>
-            <pre class="prettyprint">((FrameworkElement)d).DataContext = viewModel;</pre>
+            <pre><code class="language-csharp">((FrameworkElement)d).DataContext = viewModel;</code></pre>
             <figcaption>Fig 03-013</figcaption>
           </figure>
           <p>Now that our simple ViewModelLocator is complete we can use it to wire up our View and ViewModel.</p>
           <p>In the View add a namespace so that we can get to the ViewModelLocator type in the root of our project:
           </p>
           <figure>
-            <pre class="prettyprint">xmlns:local="clr-namespace:MVVMHookupDemo"</pre>
+            <pre><code class="language-csharp">xmlns:local="clr-namespace:MVVMHookupDemo"</code></pre>
             <figcaption>Fig 03-013A</figcaption>
           </figure>
           <p>Next on our root element which is the ViewType I add the AutoWireViewModel property:</p>
           <figure>
-            <pre class="prettyprint">local:ViewModelLocator.AutoWireViewModel=&quot;True&quot;</pre>
+            <pre><code class="language-csharp">local:ViewModelLocator.AutoWireViewModel=&quot;True&quot;</code></pre>
             <figcaption>Fig 03-014</figcaption>
           </figure>
           <p>By doing that our ViewModelLocator will kick in as that property is being set and will take care of the
@@ -520,22 +520,22 @@ var viewModelType = Type.GetType(viewModelTypeName);</pre>
           </p>
           <p>Add a constructor to the ViewModel so we can set a breakpoint and see that it is being called:</p>
           <figure>
-<pre class="prettyprint">public CustomerDetailViewModel()
+<pre><code class="language-csharp">public CustomerDetailViewModel()
 {
 
-}</pre>
+}</code></pre>
             <figcaption>Fig03-014A</figcaption>
           </figure>
           <p>And again add the local namespace:</p>
           <figure>
-            <pre class="prettyprint">xmlns:local="clr-namespace:MVVMHookupDemo"</pre>
+            <pre><code class="language-csharp">xmlns:local="clr-namespace:MVVMHookupDemo"</code></pre>
             <figcaption>Fig03-014B</figcaption>
           </figure>
           <p>
             And add the AutoWireViewModel property (set to true) in the new Views XAML as we did before:
           </p>
           <figure>
-            <pre class="prettyprint">local:ViewModelLocator.AutoWireViewModel="True"</pre>
+            <pre><code class="language-csharp">local:ViewModelLocator.AutoWireViewModel="True"</code></pre>
             <figcaption>Fig03-014C</figcaption>
           </figure>
 
@@ -574,7 +574,7 @@ var viewModelType = Type.GetType(viewModelTypeName);</pre>
           </p>
 
           <figure>
-                <pre class="prettyprint">&lt;UserControl x:Class=&quot;...&quot; ...&gt;
+                <pre><code class="language-csharp">&lt;UserControl x:Class=&quot;...&quot; ...&gt;
     &lt;Grid&gt;
         ...
         &lt;Label Content=&quot;First Name:&quot; ... /&gt;
@@ -583,14 +583,14 @@ var viewModelType = Type.GetType(viewModelTypeName);</pre>
         &lt;TextBox ... Text=&quot;{Binding Customer.LastName&quot; /&gt;
         &lt;Button ... Command=&quot;{Binding SaveCommand}&quot; /&gt;
     &lt;/Grid&gt;
-&lt;/UserControl&gt;</pre>
+&lt;/UserControl&gt;</code></pre>
             <figcaption>Fig 03-014DB</figcaption>
           </figure>
           <p>
             You also need another object that the bindings will point to:
           </p>
           <figure>
-                <pre class="prettyprint">public class CustomerEditViewModel
+                <pre><code class="language-csharp">public class CustomerEditViewModel
     : INotifyPropertyChanged
 {
     public Customer Customer
@@ -599,7 +599,7 @@ var viewModelType = Type.GetType(viewModelTypeName);</pre>
     }
 
     public ICommand SaveCommand { get; set; }
-}</pre>
+}</code></pre>
             <figcaption>Fig 033-014DC</figcaption>
           </figure>
           <p>
@@ -654,7 +654,7 @@ var viewModelType = Type.GetType(viewModelTypeName);</pre>
             true) with one that specifies more explicit column definitions:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;Grid&gt;
+                <pre><code class="language-csharp">&lt;Grid&gt;
     &lt;DataGrid x:Name=&quot;customerDataGrid&quot;
               AutoGenerateColumns=&quot;False&quot;
               EnableRowVirtualization=&quot;True&quot;
@@ -675,7 +675,7 @@ var viewModelType = Type.GetType(viewModelTypeName);</pre>
                                 Width=&quot;SizeToHeader&quot; /&gt;
         &lt;/DataGrid.Columns&gt;
     &lt;/DataGrid&gt;
-&lt;/Grid&gt;</pre>
+&lt;/Grid&gt;</code></pre>
             <figcaption>Fig 03-015</figcaption>
           </figure>
           <p>
@@ -685,7 +685,7 @@ var viewModelType = Type.GetType(viewModelTypeName);</pre>
           </p>
           <p>These bindings down here are also DataContext bindings:</p>
           <figure>
-                <pre class="prettyprint">&lt;DataGridTextColumn x:Name=&quot;firstNameColumn&quot;
+                <pre><code class="language-csharp">&lt;DataGridTextColumn x:Name=&quot;firstNameColumn&quot;
                         Binding=&quot;{Binding FirstName}&quot;
                         Header=&quot;First Name&quot;
                         Width=&quot;SizeToHeader&quot; /&gt;
@@ -696,7 +696,7 @@ var viewModelType = Type.GetType(viewModelTypeName);</pre>
     &lt;DataGridTextColumn x:Name=&quot;phoneColumn&quot;
                         Binding=&quot;{Binding Phone}&quot;
                         Header=&quot;Phone&quot;
-                        Width=&quot;SizeToHeader&quot; /</pre>
+                        Width=&quot;SizeToHeader&quot; /</code></pre>
             <figcaption>Fig 03-015A</figcaption>
           </figure>
           <p>
@@ -711,7 +711,7 @@ var viewModelType = Type.GetType(viewModelTypeName);</pre>
             CustomerListViewModel and drop down to my Customer property and expand it to have a backing member variable.
           </p>
           <figure>
-<pre class="prettyprint">public ObservableCollection&lt;Customer&gt; Customers
+<pre><code class="language-csharp">public ObservableCollection&lt;Customer&gt; Customers
 {
     get
     {
@@ -721,14 +721,14 @@ var viewModelType = Type.GetType(viewModelTypeName);</pre>
     {
         customers = value;
     }
-}</pre>
+}</code></pre>
             <figcaption>Fig03-015B</figcaption>
           </figure>
           <p>Likewise, I'm going to drop into the Customer Model object type and find the FirstName property and expand
             it:
           </p>
           <figure>
-                <pre class="prettyprint">private string firstName;
+                <pre><code class="language-csharp">private string firstName;
 public string FirstName
 {
     get
@@ -739,7 +739,7 @@ public string FirstName
     {
         _firstName = value;
     }
-}</pre>
+}</code></pre>
             <figcaption>Fig03-015C</figcaption>
           </figure>
           <p>Now we can go back to our ViewModel and I'm going to set a break point on the setter of the Customers
@@ -747,7 +747,7 @@ public string FirstName
             to the repository and getting Customers:
           </p>
           <figure>
-                <pre class="prettyprint">public CustomerListViewModel()
+                <pre><code class="language-csharp">public CustomerListViewModel()
 {
     if (DesignerProperties.GetIsInDesignMode(
         new System.Windows.DependencyObject())) return;
@@ -765,33 +765,33 @@ public ObservableCollection&lt;Customer&gt; Customers
     {
         _customers = value;
     }
-}</pre>
+}</code></pre>
             <figcaption>Fig 03-015D</figcaption>
           </figure>
           <p>And then I'll drill down into that Customers repository to the GetCustomers method and set a breakpoint
             here:
           </p>
           <figure>
-                <pre class="prettyprint">public Task&lt;List&lt;Customer&gt;&gt; GetCustomersAsync()
+                <pre><code class="language-csharp">public Task&lt;List&lt;Customer&gt;&gt; GetCustomersAsync()
 {
     return _context.Customers.ToListAsync();
-}</pre>
+}</code></pre>
             <figcaption>Fig 03-015E</figcaption>
           </figure>
           <p>So if I start up now basically XAML parsing is happening, starting at the top and it's trying to construct
             our ViewModel. So it comes into our ViewModel constructor now and it's trying to execute this line of code:
           </p>
           <figure>
-                <pre class="prettyprint">Customer = new ObservableCollection&lt;Customer&gt;(
+                <pre><code class="language-csharp">Customer = new ObservableCollection&lt;Customer&gt;(
     _repository.GetCustomersAsync().Result);
-                </pre>
+                </code></pre>
             <figcaption>Fig03-015F</figcaption>
           </figure>
           <p>Which means it first has to go execute GetCustomersAsync. If I hit F5 to continue we'll hit the line of
             code inside the repository that is doing an async call to the database to get the Customers back:
           </p>
           <figure>
-            <pre class="prettyprint">return context.Customers.ToListAsync();</pre>
+            <pre><code class="language-csharp">return context.Customers.ToListAsync();</code></pre>
             <figcaption>Fig03-015G</figcaption>
           </figure>
           <p>And then when that call completes, if I hit F5 again, now we see we're in the set block for our Customers
@@ -799,26 +799,26 @@ public ObservableCollection&lt;Customer&gt; Customers
           </p>
           <p>Now if I go ahead and put a break point on the get block for the Customer:</p>
           <figure>
-                <pre class="prettyprint">get
+                <pre><code class="language-csharp">get
 {
     return _customers; // breakpoint on this line
 }
-</pre>
+</code></pre>
             <figcaption>Fig03-015H</figcaption>
           </figure>
           <p>and the get block for the Customer FirstName property in the Customer model object:</p>
           <figure>
-                <pre class="prettyprint">get
+                <pre><code class="language-csharp">get
 {
     return _firstName; // breakpoint on this line
 }
-</pre>
+</code></pre>
             <figcaption>Fig03-015I</figcaption>
           </figure>
 
           <p>and go ahead an run again. Now we see the get block of the Customers property is being called:</p>
           <figure>
-                <pre class="prettyprint">public ObservableCollection&lt;Customer&gt; Customers
+                <pre><code class="language-csharp">public ObservableCollection&lt;Customer&gt; Customers
 {
     get
     {
@@ -828,17 +828,17 @@ public ObservableCollection&lt;Customer&gt; Customers
     {
         _customers = value;
     }
-}</pre>
+}</code></pre>
             <figcaption>Fig 03-015J</figcaption>
           </figure>
           <p>And this is the data binding that's in the View right here:</p>
           <figure>
-                <pre class="prettyprint">&lt;DataGrid x:Name=&quot;customerDataGrid&quot;
+                <pre><code class="language-csharp">&lt;DataGrid x:Name=&quot;customerDataGrid&quot;
       AutoGenerateColumns=&quot;False&quot;
       EnableRowVirtualization=&quot;True&quot;
       ItemsSource=&quot;{Binding Customers}&quot;
       RowDetailsVisibilityMode=&quot;VisibleWhenSelected&quot;&gt;
-&lt;DataGrid.Columns&gt;</pre>
+&lt;DataGrid.Columns&gt;</code></pre>
             <figcaption>Fig 03-015K</figcaption>
           </figure>
           <p>on the ItemsSource that now needs to be resolved and is going to pull those Customers into the DataGrid. If
@@ -894,7 +894,7 @@ public ObservableCollection&lt;Customer&gt; Customers
             The way this works is that you first have some element that is binding to a Data Object:
           </p>
           <figure>
-            <pre class="prettyprint">&lt;ContentControl Content="{Binding CurrentViewModel}" /&gt;</pre>
+            <pre><code class="language-csharp">&lt;ContentControl Content="{Binding CurrentViewModel}" /&gt;</code></pre>
             <figcaption>Fig03-015Q</figcaption>
           </figure>
           <p>When the property that is being bound on the control drives the rendered content on that control (such as
@@ -955,7 +955,7 @@ public ObservableCollection&lt;Customer&gt; Customers
             property and populates it on construction:
           </p>
           <figure>
-                <pre class="prettyprint">public class CustomerListViewModel
+                <pre><code class="language-csharp">public class CustomerListViewModel
 {
     private ObservableCollection&lt;Customer&gt; _customers;
     private ICustomersRepository _repository = new CustomersRepository();
@@ -979,7 +979,7 @@ public ObservableCollection&lt;Customer&gt; Customers
             _customers = value;
         }
     }
-}</pre>
+}</code></pre>
             <figcaption>Fig 03-015UA</figcaption>
           </figure>
           <p>
@@ -988,10 +988,10 @@ public ObservableCollection&lt;Customer&gt; Customers
           </p>
 
           <figure>
-                <pre class="prettyprint">&lt;Grid.RowDefinitions&gt;
+                <pre><code class="language-csharp">&lt;Grid.RowDefinitions&gt;
     &lt;RowDefinition Height=&quot;*&quot; /&gt;
     &lt;RowDefinition Height=&quot;*&quot; /&gt;
-&lt;/Grid.RowDefinitions&gt;</pre>
+&lt;/Grid.RowDefinitions&gt;</code></pre>
             <figcaption>Fig 03-015V</figcaption>
           </figure>
 
@@ -999,8 +999,8 @@ public ObservableCollection&lt;Customer&gt; Customers
             Binding to the Customers property (the same one the DataGrid is bound to):
           </p>
           <figure>
-                <pre class="prettyprint">&lt;ListBox Grid.Row=&quot;1&quot;
-     ItemsSource=&quot;{Binding Customers}&quot; /&gt;</pre>
+                <pre><code class="language-csharp">&lt;ListBox Grid.Row=&quot;1&quot;
+     ItemsSource=&quot;{Binding Customers}&quot; /&gt;</code></pre>
             <figcaption>Fig 03-015VA</figcaption>
           </figure>
           <p>
@@ -1019,7 +1019,7 @@ public ObservableCollection&lt;Customer&gt; Customers
             DataTemplate called CustomerTemplate:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;UserControl.Resources&gt;
+                <pre><code class="language-csharp">&lt;UserControl.Resources&gt;
     &lt;DataTemplate x:Key=&quot;CustomerTemplate&quot;&gt;
         &lt;Border BorderThickness=&quot;3&quot;
                 BorderBrush=&quot;Blue&quot;&gt;
@@ -1030,16 +1030,16 @@ public ObservableCollection&lt;Customer&gt; Customers
             &lt;/StackPanel&gt;
         &lt;/Border&gt;
     &lt;/DataTemplate&gt;
-&lt;/UserControl.Resources&gt;</pre>
+&lt;/UserControl.Resources&gt;</code></pre>
             <figcaption>Fig 03-016</figcaption>
           </figure>
           <p>So we can see here this is just a DataTemplate containing a StackPanel. It's got a key of CustomerTemplate.
             And then to actually use the template, we would go back to the ListBox and use the ItemTemplate property:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;ListBox ItemsSource=&quot;{Binding Customers}&quot;
+                <pre><code class="language-csharp">&lt;ListBox ItemsSource=&quot;{Binding Customers}&quot;
     ItemTemplate=&quot;{StaticResource CustomerTemplate}&quot;
-    Grid.Row=&quot;1&quot; /&gt;</pre>
+    Grid.Row=&quot;1&quot; /&gt;</code></pre>
             <figcaption>Fig 03-017</figcaption>
           </figure>
           <p>So now you can see we instruct the ListBox to go use that specific template for rendering out those
@@ -1055,7 +1055,7 @@ public ObservableCollection&lt;Customer&gt; Customers
             definition and instead of a key we would give it a DataType:
           </p>
           <figure>
-            <pre class="prettyprint">&lt;DataTemplate DataType=&quot;{x:Type data:Customer}&quot;&gt;</pre>
+            <pre><code class="language-csharp">&lt;DataTemplate DataType=&quot;{x:Type data:Customer}&quot;&gt;</code></pre>
             <figcaption>Fig 03-019</figcaption>
           </figure>
           <p>Using the x:Type markup extension here is very important. If you've been exposed to Silverlight or other
@@ -1065,7 +1065,7 @@ public ObservableCollection&lt;Customer&gt; Customers
             Zza.Data namespace which I already have an XML namespace defined for at the top.
           </p>
           <figure>
-            <pre class="prettyprint">xmlns:data=&quot;clr-namespace:Zza.Data;assembly=Zza.Data&quot;</pre>
+            <pre><code class="language-csharp">xmlns:data=&quot;clr-namespace:Zza.Data;assembly=Zza.Data&quot;</code></pre>
             <figcaption>Fig 03-020</figcaption>
           </figure>
           <p>And now when we run we still get the rendering of the Customers as we did before with their DataTemplate
@@ -1102,7 +1102,7 @@ public ObservableCollection&lt;Customer&gt; Customers
             to from elements within the MainWindow.
           </p>
           <figure>
-                <pre class="prettyprint">namespace MVVMHookupDemo
+                <pre><code class="language-csharp">namespace MVVMHookupDemo
 {
     public class MainWindowViewModel
     {
@@ -1112,7 +1112,7 @@ public ObservableCollection&lt;Customer&gt; Customers
         }
         public object CurrentViewModel { get; set; }
     }
-}</pre>
+}</code></pre>
             <figcaption>Fig 03-020B</figcaption>
           </figure>
           <p>
@@ -1121,7 +1121,7 @@ public ObservableCollection&lt;Customer&gt; Customers
           </p>
 
           <figure>
-                <pre class="prettyprint">&lt;Window xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+                <pre><code class="language-csharp">&lt;Window xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
     xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
     xmlns:Customers=&quot;clr-namespace:MVVMHookupDemo.Customers&quot;
     xmlns:local=&quot;clr-namespace:MVVMHookupDemo&quot;
@@ -1134,7 +1134,7 @@ public ObservableCollection&lt;Customer&gt; Customers
 &lt;/Window.DataContext&gt;
 &lt;Grid&gt;
     &lt;ContentControl Content=&quot;{Binding CurrentViewModel}&quot; /&gt;
-&lt;Grid/&gt;</pre>
+&lt;Grid/&gt;</code></pre>
             <figcaption>Fig 03-021</figcaption>
           </figure>
           <p>First step is to add a namespace for the root folder and then add our standard static XAML wire up of a
@@ -1142,16 +1142,16 @@ public ObservableCollection&lt;Customer&gt; Customers
             up we're going to replace the static instance of the View here:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;Grid&gt;
+                <pre><code class="language-csharp">&lt;Grid&gt;
     &lt;Customers:CustomerListView /&gt;
-&lt;/Grid&gt;</pre>
+&lt;/Grid&gt;</code></pre>
             <figcaption>Fig 03-021A</figcaption>
           </figure>
           <p>with a ContentControl:</p>
           <figure>
-                <pre class="prettyprint">&lt;Grid&gt;
+                <pre><code class="language-csharp">&lt;Grid&gt;
     &lt;ContentControl Content=&quot;{Binding CurrentViewModel}&quot; /&gt;
-&lt;/Grid&gt;</pre>
+&lt;/Grid&gt;</code></pre>
             <figcaption>Fig 03-021B</figcaption>
           </figure>
           <p>and that ContentControl's Content property is going to be bound to that CurrentViewModel property on the
@@ -1168,9 +1168,9 @@ public ObservableCollection&lt;Customer&gt; Customers
             already defined as it's View
           </p>
           <figure>
-                <pre class="prettyprint">&lt;DataTemplate DataType=&quot;{x:Type Customers:CustomerListViewModel}&quot;&gt;
+                <pre><code class="language-csharp">&lt;DataTemplate DataType=&quot;{x:Type Customers:CustomerListViewModel}&quot;&gt;
     &lt;Customers:CustomerListView /&gt;
-&lt;/DataTemplate&gt;</pre>
+&lt;/DataTemplate&gt;</code></pre>
             <figcaption>Fig 03-021D</figcaption>
           </figure>
           <p>So if we just make the Content of the DataTemplate be a ViewType and map the DataType to it's corresponding
@@ -1178,9 +1178,9 @@ public ObservableCollection&lt;Customer&gt; Customers
             ContentControl or an items Control:
           </p>
           <figure>
-                <pre class="prettyprint"> &lt;Grid&gt;
+                <pre><code class="language-csharp"> &lt;Grid&gt;
     &lt;ContentControl Content=&quot;{Binding CurrentViewModel}&quot; /&gt;
-&lt;/Grid&gt;</pre>
+&lt;/Grid&gt;</code></pre>
             <figcaption>Fig 03-021E</figcaption>
           </figure>
           <p>Then the magic of implicit DataTemplates kicks in and as part of trying to render out this content it will

@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
   <meta charset="UTF-8">
-  <title>maxsagetech - Vue JS Fundamentals</title>
+  <title>maxsagetech - WPF Databinding In Depth</title>
   <script src="https://unpkg.com/vue"></script>
   <!--<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"-->
   <!--integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">-->
@@ -58,7 +58,7 @@
           <h3>DataTemplates Overview</h3>
           <p>The way DataTemplates work, in general, is that you are going to have some data-bound control:</p>
           <figure>
-            <pre class="prettyprint">&lt;ContentControl Grid.Row=&quot;1&quot; Content=&quot;{Binding CurrentViewModel}&quot;/&gt;</pre>
+            <pre><code class="language-csharp">&lt;ContentControl Grid.Row=&quot;1&quot; Content=&quot;{Binding CurrentViewModel}&quot;/&gt;</code></pre>
             <figcaption>Fig 05-001</figcaption>
           </figure>
           <p>And it's either going to be a ContentControl or some control derived from ItemsControl in general, such as
@@ -80,9 +80,9 @@
             got a child user control as the structure of that DataTemplate as the nested element:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;DataTemplate DataType=&quot;{x:Type local:HierarchicalDataTemplatesViewModel}&quot;&gt;
+                <pre><code class="language-csharp">&lt;DataTemplate DataType=&quot;{x:Type local:HierarchicalDataTemplatesViewModel}&quot;&gt;
     &lt;local:HierarchicalDataTemplatesView /&gt;
-&lt;/DataTemplate&gt;</pre>
+&lt;/DataTemplate&gt;</code></pre>
             <figcaption>Fig 05-003</figcaption>
           </figure>
           <p>And when these come together in the data binding context, that DataTemplate provides the visual structure
@@ -100,9 +100,9 @@
             HierarchalDataTemplatesView.
           </p>
           <figure>
-                <pre class="prettyprint">&lt;ListBox x:Name=&quot;ProductsListBox&quot; ItemsSource=&quot;{Binding Products}&quot;
+                <pre><code class="language-csharp">&lt;ListBox x:Name=&quot;ProductsListBox&quot; ItemsSource=&quot;{Binding Products}&quot;
          ItemTemplate=&quot;{StaticResource ProductTemplate}&quot;&gt;
-&lt;/ListBox&gt;</pre>
+&lt;/ListBox&gt;</code></pre>
             <figcaption>Fig 05-005</figcaption>
           </figure>
           <p>Now in the case of an ItemsControl, such as a ListBox, ComboBox or DataGrid, first off you're going to be
@@ -112,9 +112,9 @@
             render a single Product object in this case:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;ListBox x:Name=&quot;ProductsListBox&quot; ItemsSource=&quot;{Binding Products}&quot;
+                <pre><code class="language-csharp">&lt;ListBox x:Name=&quot;ProductsListBox&quot; ItemsSource=&quot;{Binding Products}&quot;
          ItemTemplate=&quot;{StaticResource ProductTemplate}&quot;&gt;
-&lt;/ListBox&gt;</pre>
+&lt;/ListBox&gt;</code></pre>
             <figcaption>Fig 05-006</figcaption>
           </figure>
           <p>So here we have a grid with an image and a couple of rows in it to provide the name and description for
@@ -158,7 +158,7 @@
             want to render out:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;UserControl&gt;
+                <pre><code class="language-csharp">&lt;UserControl&gt;
     &lt;UserControl.Resources&gt;
         &lt;DataTemplate x:Key=&quot;ProductTemplate&quot;&gt;
             &lt;Grid&gt;...&lt;/Grid&gt;
@@ -168,7 +168,7 @@
         &lt;ListBox ItemTemplate=&quot;{StaticResource ProductTemplate}&quot;
                  ItemsSource=&quot;{Binding Products}&quot; /&gt;
     &lt;/Grid&gt;
-&lt;/UserControl&gt;</pre>
+&lt;/UserControl&gt;</code></pre>
             <figcaption>Fig 05-010</figcaption>
           </figure>
           <p>You're going to give that DataTemplate a key if it lives in the Resource dictionary, so that you can then
@@ -229,7 +229,7 @@
             fleshed-out definition and just explain the code here quickly.
           </p>
           <figure>
-                <pre class="prettyprint">public class ExplicitDataTemplatesViewModel : INotifyPropertyChanged
+                <pre><code class="language-csharp">public class ExplicitDataTemplatesViewModel : INotifyPropertyChanged
 {
     private ObservableCollection&lt;Product&gt; _Products;
 
@@ -256,7 +256,7 @@
                 PropertyChanged(this, new PropertyChangedEventArgs(&quot;Products&quot;));
             }
         }
-    }</pre>
+    }</code></pre>
             <figcaption>Fig 05-013</figcaption>
           </figure>
           <p>Okay, so the fleshed out definition here is a class that implements INotifyPropertyChanged, so that it can
@@ -266,7 +266,7 @@
             binding, again:
           </p>
           <figure>
-                <pre class="prettyprint">public ObservableCollection&lt;Product&gt; Products
+                <pre><code class="language-csharp">public ObservableCollection&lt;Product&gt; Products
 {
     get
     {
@@ -280,7 +280,7 @@
             PropertyChanged(this, new PropertyChangedEventArgs(&quot;Products&quot;));
         }
     }
-}</pre>
+}</code></pre>
             <figcaption>Fig 05-014</figcaption>
           </figure>
           <p>And then it has a Constructor that only when you're not in the DesignTime environment, and you can do that
@@ -288,7 +288,7 @@
           </p>
           <figure>
             <pre
-              class="prettyprint">if (!DesignerProperties.GetIsInDesignMode(new DependencyObject()))</pre>
+              class="prettyprint">if (!DesignerProperties.GetIsInDesignMode(new DependencyObject()))</code></pre>
             <figcaption>Fig 05-015</figcaption>
           </figure>
           <p>If it's true, then you're in the designer, if it's false you're not. So only if we're not in the Designer,
@@ -296,12 +296,12 @@
             DBContext.
           </p>
           <figure>
-                <pre class="prettyprint">if (!DesignerProperties.GetIsInDesignMode(new DependencyObject()))
+                <pre><code class="language-csharp">if (!DesignerProperties.GetIsInDesignMode(new DependencyObject()))
 {
     ZzaDbContext context = new ZzaDbContext();
     Products = new ObservableCollection&lt;Product&gt;(context.Products.ToList());
     Products.ToList().ForEach(p =&gt; p.Image = &quot;Images/&quot; + p.Image);
-}</pre>
+}</code></pre>
             <figcaption>Fig 05-016</figcaption>
           </figure>
           <p>And then we're looping over each product after we get it, and modifying the Image property to have this
@@ -315,23 +315,23 @@
             project
           </p>
           <figure>
-                <pre class="prettyprint">&lt;UserControl x:Class=&quot;DataTemplates.ExplicitDataTemplatesView&quot;
+                <pre><code class="language-csharp">&lt;UserControl x:Class=&quot;DataTemplates.ExplicitDataTemplatesView&quot;
              xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
              xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
              xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
              xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
              xmlns:local=&quot;clr-namespace:DataTemplates&quot;
              mc:Ignorable=&quot;d&quot;
-             d:DesignHeight=&quot;300&quot; d:DesignWidth=&quot;300&quot;&gt;</pre>
+             d:DesignHeight=&quot;300&quot; d:DesignWidth=&quot;300&quot;&gt;</code></pre>
             <figcaption>Fig 05-017</figcaption>
           </figure>
           <p>and then we're going to set the DataContext of this View declaratively by setting the DataContext property
             to an instance of our new ViewModel
           </p>
           <figure>
-                <pre class="prettyprint">&lt;UserControl.DataContext&gt;
+                <pre><code class="language-csharp">&lt;UserControl.DataContext&gt;
     &lt;local:ExplicitDataTemplatesViewModel /&gt;
-&lt;/UserControl.DataContext&gt;</pre>
+&lt;/UserControl.DataContext&gt;</code></pre>
             <figcaption>Fig 05-018</figcaption>
           </figure>
           <p>Now we can add elements to this View that bind to the exposed properties of that ViewModel.</p>
@@ -339,10 +339,10 @@
             and add that ListBox, and we can see we just set Binding to Products:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;Grid&gt;
+                <pre><code class="language-csharp">&lt;Grid&gt;
     &lt;ListBox x:Name=&quot;ProductsListBox&quot;
              ItemsSource=&quot;{Binding Products&quot; /&gt;
-&lt;/Grid&gt;</pre>
+&lt;/Grid&gt;</code></pre>
             <figcaption>Fig 05-019</figcaption>
           </figure>
           <p>and because there is a Products property that exposes a collection on our ViewModel, we should be good to
@@ -366,12 +366,12 @@
             of the products.
           </p>
           <figure>
-                <pre class="prettyprint">&lt;Grid&gt;
+                <pre><code class="language-csharp">&lt;Grid&gt;
     &lt;ListBox x:Name=&quot;ProductsListBox&quot;
         ItemsSource=&quot;{Binding Products}&quot;
         DisplayMemberPath=&quot;Name&quot;&gt;
     &lt;/ListBox&gt;
-&lt;/Grid&gt;</pre>
+&lt;/Grid&gt;</code></pre>
             <figcaption>Fig 05-022</figcaption>
           </figure>
           <p>If we run with that we get a slightly more functional ListBox where we see the Product name, but it's not
@@ -383,11 +383,11 @@
             declare myself a DataTemplate called ProductTemplate:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;UserControl.Resources&gt;
+                <pre><code class="language-csharp">&lt;UserControl.Resources&gt;
     &lt;DataTemplate x:Key=&quot;ProductTemplate&quot;&gt;
 
     &lt;/DataTemplate&gt;
-&lt;/UserControl.Resources&gt;</pre>
+&lt;/UserControl.Resources&gt;</code></pre>
             <figcaption>Fig 05-023</figcaption>
           </figure>
           <p>A DataTemplate is just an element that you can create inside of a Resource dictionary and it has some
@@ -396,7 +396,7 @@
           </p>
           <p>I'm going to drop into my DataTemplate and add some XAML:</p>
           <figure>
-                <pre class="prettyprint">&lt;Grid&gt;
+                <pre><code class="language-csharp">&lt;Grid&gt;
     &lt;Grid.ColumnDefinitions&gt;
         &lt;ColumnDefinition Width=&quot;Auto&quot; /&gt;
         &lt;ColumnDefinition Width=&quot;Auto&quot; /&gt;
@@ -419,7 +419,7 @@
                    TextWrapping=&quot;Wrap&quot;
                    Width=&quot;300&quot; /&gt;
     &lt;/Grid&gt;
-&lt;/Grid&gt;</pre>
+&lt;/Grid&gt;</code></pre>
             <figcaption>Fig 05-024</figcaption>
           </figure>
           <p>And we can see what I've added here is a root Grid that has two columns. In the first column is an Image
@@ -436,12 +436,12 @@
             that is being rendered:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;DataTemplate x:Key=&quot;ProductTemplate&quot; &gt;
+                <pre><code class="language-csharp">&lt;DataTemplate x:Key=&quot;ProductTemplate&quot; &gt;
     &lt;Grid DataContext=&quot;Product&quot;&gt;
         &lt;Grid.ColumnDefinitions&gt;
             &lt;ColumnDefinition Width=&quot;Auto&quot; /&gt;
             &lt;ColumnDefinition Width=&quot;Auto&quot; /&gt;
-        &lt;/Grid.ColumnDefinitions&gt;</pre>
+        &lt;/Grid.ColumnDefinitions&gt;</code></pre>
             <figcaption>Fig 05-025</figcaption>
           </figure>
           <p>Now you don't explicitly put that there, that's going to happen automatically for you when the DataTemplate
@@ -453,9 +453,9 @@
             DisplayMemberPath and instead use a property called ItemTemplate.
           </p>
           <figure>
-                <pre class="prettyprint">&lt;ListBox x:Name=&quot;ProductsListBox&quot;
+                <pre><code class="language-csharp">&lt;ListBox x:Name=&quot;ProductsListBox&quot;
      ItemsSource=&quot;{Binding Products}&quot;
-     ItemTemplate=&quot;{StaticResource ProductTemplate} &quot; /&gt;</pre>
+     ItemTemplate=&quot;{StaticResource ProductTemplate} &quot; /&gt;</code></pre>
             <figcaption>Fig 05-026</figcaption>
           </figure>
           <p>We're going to point to our template through a StaticResource to the ProductTemplate.</p>
@@ -474,7 +474,7 @@
             RelativeSource bindings, for example, to point to other elements within our DataTemplate:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;Image x:Name=&quot;ProductImage&quot;
+                <pre><code class="language-csharp">&lt;Image x:Name=&quot;ProductImage&quot;
    Source=&quot;{Binding Image}&quot;
    Margin=&quot;5&quot;
    Width=&quot;100&quot; /&gt;
@@ -483,7 +483,7 @@
 &lt;Grid.RowDefinitions&gt;
    &lt;RowDefinition Height=&quot;Auto&quot; /&gt;
    &lt;RowDefinition Height=&quot;Auto&quot; /&gt;
-&lt;/Grid.RowDefinitions&gt;</pre>
+&lt;/Grid.RowDefinitions&gt;</code></pre>
             <figcaption>Fig 05-028</figcaption>
           </figure>
           <p>So, in this case, you can see that we gave a name to our Image called ProductImage and we can use an
@@ -492,8 +492,8 @@
           </p>
 
           <figure>
-                <pre class="prettyprint">&lt;Grid Grid.Column=&quot;1&quot;
-    Height=&quot;{Binding ElementName=ProductImage, Path=ActualHeight}&quot;&gt;</pre>
+                <pre><code class="language-csharp">&lt;Grid Grid.Column=&quot;1&quot;
+    Height=&quot;{Binding ElementName=ProductImage, Path=ActualHeight}&quot;&gt;</code></pre>
             <figcaption>Fig 05-029</figcaption>
           </figure>
           <p>Whenever you bind to a Height or Width, make sure you're binding to the ActualHeight or ActualWidth.</p>
@@ -501,10 +501,10 @@
             couple more TextBlocks:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;TextBlock Grid.Row=&quot;2&quot;
+                <pre><code class="language-csharp">&lt;TextBlock Grid.Row=&quot;2&quot;
     Text=&quot;{Binding RelativeSource={RelativeSource AncestorType=ListBox}, Path=ItemsSource.Count}&quot; /&gt;
 &lt;TextBlock Grid.Row=&quot;3&quot;
-    Text=&quot;{Binding ElementName=ProductsListBox, Path=ItemsSource.Count}&quot; /&gt;</pre>
+    Text=&quot;{Binding ElementName=ProductsListBox, Path=ItemsSource.Count}&quot; /&gt;</code></pre>
             <figcaption>Fig 05-030</figcaption>
           </figure>
           <p>In this case, one of these is using a RelativeSource binding and you can see it's going to walk all the way
@@ -519,25 +519,25 @@
             render that out in a TextBox.
           </p>
           <figure>
-                <pre class="prettyprint">&lt;TextBlock Grid.Row=&quot;2&quot;
-    Text=&quot;{Binding RelativeSource={RelativeSource AncestorType=ListBox}, Path=ItemsSource.Count}&quot; /&gt;</pre>
+                <pre><code class="language-csharp">&lt;TextBlock Grid.Row=&quot;2&quot;
+    Text=&quot;{Binding RelativeSource={RelativeSource AncestorType=ListBox}, Path=ItemsSource.Count}&quot; /&gt;</code></pre>
             <figcaption>Fig 05-031</figcaption>
           </figure>
           <p>Likewise, we can even use ElementName bindings that are outside of our CurrentDataTemplate. So the name of
             our ListBox is ProductsListBox:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;TextBlock Grid.Row=&quot;3&quot;
-   Text=&quot;{Binding ElementName=ProductsListBox, Path=ItemsSource.Count&quot; /&gt;</pre>
+                <pre><code class="language-csharp">&lt;TextBlock Grid.Row=&quot;3&quot;
+   Text=&quot;{Binding ElementName=ProductsListBox, Path=ItemsSource.Count&quot; /&gt;</code></pre>
             <figcaption>Fig 05-032</figcaption>
           </figure>
           <p>That's out here in the main visual tree</p>
           <figure>
-                <pre class="prettyprint">&lt;Grid&gt;
+                <pre><code class="language-csharp">&lt;Grid&gt;
     &lt;ListBox x:Name=&quot;ProductsListBox&quot; ItemsSource=&quot;{Binding Products}&quot;
                 ItemTemplate=&quot;{StaticResource ProductTemplate}&quot;&gt;
     &lt;/ListBox&gt;
-&lt;/Grid&gt;</pre>
+&lt;/Grid&gt;</code></pre>
             <figcaption>Fig 05-033</figcaption>
           </figure>
           <p>but at runtime, this TextBlock will be rendered as part of the overall UI so it's able to use an
@@ -548,8 +548,8 @@
             ActualHeight.
           </p>
           <figure>
-                <pre class="prettyprint">&lt;Grid Grid.Column=&quot;1&quot;
-    Height=&quot;{Binding ElementName=ProductImage, Path=ActualHeight&quot;&gt;</pre>
+                <pre><code class="language-csharp">&lt;Grid Grid.Column=&quot;1&quot;
+    Height=&quot;{Binding ElementName=ProductImage, Path=ActualHeight&quot;&gt;</code></pre>
             <figcaption>Fig 05-034</figcaption>
           </figure>
           <p>I wanted to show that as an example, but it'll end up truncating those fields that we just added because
@@ -566,7 +566,7 @@
           </p>
           <p>Now one last thing to show is I'm going to cut this DataTemplate out of the Resource dictionary:</p>
           <figure>
-                <pre class="prettyprint">&lt;UserControl.DataContext&gt;
+                <pre><code class="language-csharp">&lt;UserControl.DataContext&gt;
     &lt;local:ExplicitDataTemplatesViewModel /&gt;
 &lt;/UserControl.DataContext&gt;
 &lt;UserControl.Resources&gt;
@@ -575,18 +575,18 @@
     &lt;ListBox x:Name=&quot;ProductsListBox&quot;
              ItemsSource=&quot;{Binding Products}&quot;
              ItemTemplat=&quot;{StaticResource ProductTemplate&quot; /&gt;
-&lt;/Grid&gt;</pre>
+&lt;/Grid&gt;</code></pre>
             <figcaption>Fig 05-036</figcaption>
           </figure>
           <p>and show you that you can define it nested directly on the element itself.</p>
           <p>So if I go onto my ListBox and set the ItemTemplate property as a nested element here:</p>
           <figure>
-<pre class="prettyprint">&lt;ListBox x:Name=&quot;ProductsListBox&quot;
+<pre><code class="language-csharp">&lt;ListBox x:Name=&quot;ProductsListBox&quot;
     ItemsSource=&quot;{Binding Products}&quot;&gt;
          &lt;ListBox.ItemTemplate&gt;
 
          &lt;/ListBox.ItemTemplate&gt;
-&lt;/ListBox&gt;</pre>
+&lt;/ListBox&gt;</code></pre>
             <figcaption>Fig 05-037</figcaption>
           </figure>
           <p>and I paste that DataTemplate in there and get rid of the key because it's no longer in the Resource
@@ -594,7 +594,7 @@
           </p>
 
           <figure>
-                <pre class="prettyprint">&lt;ListBox x:Name=&quot;ProductsListBox&quot;
+                <pre><code class="language-csharp">&lt;ListBox x:Name=&quot;ProductsListBox&quot;
          ItemsSource=&quot;{Binding Products}&quot;&gt;
     &lt;ListBox.ItemTemplate&gt;
         &lt;DataTemplate x:Key=&quot;ProductTemplate&quot;&gt;
@@ -610,7 +610,7 @@
                 &lt;Grid Grid.Column=&quot;1&quot;&gt;
                     &lt;Grid.RowDefinitions&gt;
                         &lt;RowDefinition Height=&quot;Auto&quot; /&gt;
-                        &lt;RowDefinition Height=&quot;Auto&quot; /&gt;</pre>
+                        &lt;RowDefinition Height=&quot;Auto&quot; /&gt;</code></pre>
             <figcaption>Fig 05-038</figcaption>
           </figure>
           <p>now the structure here is similar to what we did with our DataContext being set to an instance of a
@@ -625,11 +625,11 @@
           </figure>
           <p>We can see the same visual rendering of our elements. The difference here is this DataTemplate:</p>
           <figure>
-                <pre class="prettyprint">&lt;ListBox x:Name=&quot;ProductsListBox&quot;
+                <pre><code class="language-csharp">&lt;ListBox x:Name=&quot;ProductsListBox&quot;
          ItemsSource=&quot;{Binding Products}&quot;&gt;
     &lt;ListBox.ItemTemplate&gt;
         &lt;DataTemplate x:Key=&quot;ProductTemplate&quot;&gt;
-            &lt;Grid&gt;</pre>
+            &lt;Grid&gt;</code></pre>
             <figcaption>Fig 05-040</figcaption>
           </figure>
           <p>Is no longer reusable, it's only available within the context of this ListBox. So generally, I'll stick to
@@ -637,9 +637,9 @@
             the ItemTemplate property with a StaticResource.
           </p>
           <figure>
-                <pre class="prettyprint">&lt;ListBox x:Name=&quot;ProductsListBox&quot;
+                <pre><code class="language-csharp">&lt;ListBox x:Name=&quot;ProductsListBox&quot;
          ItemsSource=&quot;{Binding Products}&quot;&gt;
-         ItemTemplate=&quot;{StaticResource ProductTemplate}&quot;/&gt;</pre>
+         ItemTemplate=&quot;{StaticResource ProductTemplate}&quot;/&gt;</code></pre>
             <figcaption>Fig 05-041</figcaption>
           </figure>
           <p>Then you could potentially move that DataTemplate out from the User Control to an application-scoped
@@ -730,12 +730,12 @@
             DataTemplateSelectorsView so we know when that view is presented.
           </p>
           <figure>
-                <pre class="prettyprint">&lt;Grid&gt;
+                <pre><code class="language-csharp">&lt;Grid&gt;
     &lt;TextBlock Text=&quot;DataTemplate Selectors View&quot;
                HorizontalAlignment=&quot;Center&quot;
                VerticalAlignment=&quot;Center&quot;
                FontSize=&quot;20&quot; /&gt;
-&lt;/Grid&gt;</pre>
+&lt;/Grid&gt;</code></pre>
             <figcaption>Fig 05-046</figcaption>
           </figure>
           <p>Basically what we're going to be setting up here is the ability to switch between child views, between our
@@ -743,9 +743,9 @@
             going to go back to my ExplicitDataTemplateView and get rid of the explicit setting of the DataContext here:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;UserControl.DataContext&gt;
+                <pre><code class="language-csharp">&lt;UserControl.DataContext&gt;
     &lt;local:ExplicitDataTemplatesViewModel /&gt;
-&lt;/UserControl.DataContext&gt;</pre>
+&lt;/UserControl.DataContext&gt;</code></pre>
             <figcaption>Fig 05-047</figcaption>
           </figure>
           <p>because this is going to end up being done now automatically through ImplicitDataTemplates.</p>
@@ -761,17 +761,17 @@
             interface:
           </p>
           <figure>
-                <pre class="prettyprint">public class MainWindowViewModel : INotifyPropertyChanged
+                <pre><code class="language-csharp">public class MainWindowViewModel : INotifyPropertyChanged
 {
     public event PropertyChangedEventHandler PropertyChanged = delegate {};
-}</pre>
+}</code></pre>
             <figcaption>Fig 05-049</figcaption>
           </figure>
           <p>and then we're going to statically wire this up to our MainWindow by setting the DataContext in the
             MainWindow, similar to what we saw in a previous demo.
           </p>
           <figure>
-                <pre class="prettyprint">&lt;Window xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+                <pre><code class="language-csharp">&lt;Window xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
     xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
     xmlns:local=&quot;clr-namespace:DataTemplates&quot;
     x:Class=&quot;DataTemplates.MainWindow&quot;
@@ -780,24 +780,24 @@
     Width=&quot;525&quot;&gt;
 &lt;Window.DataContext&gt;
     &lt;local:MainWindowViewModel /&gt;
-&lt;/Window.DataContext&gt;</pre>
+&lt;/Window.DataContext&gt;</code></pre>
             <figcaption>Fig 05-050</figcaption>
           </figure>
           <p>I'm going to get rid of this explicit instance of our ExplicitDataTemplatesView:</p>
           <figure>
-                <pre class="prettyprint">&lt;Window.DataContext&gt;
+                <pre><code class="language-csharp">&lt;Window.DataContext&gt;
         &lt;local:MainWindowViewModel /&gt;
     &lt;/Window.DataContext&gt;
     &lt;Grid&gt;&lt;local:ExplicitDataTemplateView /&gt;
     &lt;/Grid&gt;
-&lt;/Window&gt;</pre>
+&lt;/Window&gt;</code></pre>
             <figcaption>Fig 05-051</figcaption>
           </figure>
           <p>And what we're going to do is drop back into our ViewModel and declare a property called
             CurrentViewModel:
           </p>
           <figure>
-                <pre class="prettyprint">public object CurrentViewModel
+                <pre><code class="language-csharp">public object CurrentViewModel
 {
     get
     {
@@ -808,7 +808,7 @@
         _CurrentViewModel = value;
         PropertyChanged(this, new PropertyChangedEventArgs(&quot;CurrentViewModel&quot;));
     }
-}</pre>
+}</code></pre>
             <figcaption>Fig 05-052</figcaption>
           </figure>
           <p>So the idea is that we can set an instance of a ViewModel into this property and data bind to it from the
@@ -818,23 +818,23 @@
             instance of our ExplicitDataTemplatesViewModel and one an instance of our DataTemplateSelectorsViewModel.
           </p>
           <figure>
-                <pre class="prettyprint">private object _CurrentViewModel;
+                <pre><code class="language-csharp">private object _CurrentViewModel;
 ExplicitDataTemplatesViewModel _ViewModel1 = new ExplicitDataTemplatesViewModel();
-DataTemplateSelectorsViewModel _ViewModel2 = new DataTemplateSelectorsViewModel();</pre>
+DataTemplateSelectorsViewModel _ViewModel2 = new DataTemplateSelectorsViewModel();</code></pre>
             <figcaption>Fig 05-053</figcaption>
           </figure>
           <p>Now we need some logic that's actually going to switch between those two and we're going to do that with
             Commands.
           </p>
           <figure>
-                <pre class="prettyprint">public MainWindowViewModel()
+                <pre><code class="language-csharp">public MainWindowViewModel()
 {
     View1Command = new RelayCommand(ShowView1);
     View2Command = new RelayCommand(ShowView2);
     CurrentViewModel = _ViewModel1;
 }
 public RelayCommand View1Command { get; set; }
-public RelayCommand View2Command { get; set; }</pre>
+public RelayCommand View2Command { get; set; }</code></pre>
             <figcaption>Fig 05-054</figcaption>
           </figure>
           <p>So I've added two RelayCommands to my MainWindowViewModel, View1Command and View2Command, that can be
@@ -842,7 +842,7 @@ public RelayCommand View2Command { get; set; }</pre>
             respective ViewModel.
           </p>
           <figure>
-                <pre class="prettyprint">private void ShowView1()
+                <pre><code class="language-csharp">private void ShowView1()
 {
     CurrentViewModel = _ViewModel1;
 }
@@ -850,12 +850,12 @@ public RelayCommand View2Command { get; set; }</pre>
 private void ShowView2()
 {
     CurrentViewModel = _ViewModel2;
-}</pre>
+}</code></pre>
             <figcaption>Fig 05-055</figcaption>
           </figure>
           <p>That will trigger a PropertyChanged:</p>
           <figure>
-                <pre class="prettyprint">public object CurrentViewModel
+                <pre><code class="language-csharp">public object CurrentViewModel
 {
     get
     {
@@ -868,7 +868,7 @@ private void ShowView2()
     }
 }
 
-public event PropertyChangedEventHandler PropertyChanged = delegate { };</pre>
+public event PropertyChangedEventHandler PropertyChanged = delegate { };</code></pre>
             <figcaption>Fig 05-056</figcaption>
           </figure>
           <p>and now we can set up some data binding in the view to cause the right view to be rendered for that
@@ -876,7 +876,7 @@ public event PropertyChangedEventHandler PropertyChanged = delegate { };</pre>
             Grid with a grid that has two rows in it.
           </p>
           <figure>
-                <pre class="prettyprint">&lt;Grid&gt;
+                <pre><code class="language-csharp">&lt;Grid&gt;
     &lt;Grid.RowDefinitions&gt;
         &lt;RowDefinition Height=&quot;Auto&quot;/&gt;
         &lt;RowDefinition Height=&quot;*&quot;/&gt;
@@ -886,7 +886,7 @@ public event PropertyChangedEventHandler PropertyChanged = delegate { };</pre>
         &lt;Button Content=&quot;DataTemplateSelectors View&quot; Command=&quot;{Binding View2Command}&quot;/&gt;
     &lt;/StackPanel&gt;
     &lt;ContentControl Grid.Row=&quot;1&quot; Content=&quot;{Binding CurrentViewModel}&quot;/&gt;
-&lt;/Grid&gt;</pre>
+&lt;/Grid&gt;</code></pre>
             <figcaption>Fig 05-057</figcaption>
           </figure>
           <p>The first row has a StackPanel with two Buttons. Each Button is wired up to its respective Command,
@@ -894,7 +894,7 @@ public event PropertyChangedEventHandler PropertyChanged = delegate { };</pre>
           </p>
           <p>Then in the second row we just have a ContentControl:</p>
           <figure>
-            <pre class="prettyprint">&lt;ContentControl Grid.Row=&quot;1&quot; Content=&quot;{Binding CurrentViewModel}&quot;/&gt;</pre>
+            <pre><code class="language-csharp">&lt;ContentControl Grid.Row=&quot;1&quot; Content=&quot;{Binding CurrentViewModel}&quot;/&gt;</code></pre>
             <figcaption>Fig 05-058</figcaption>
           </figure>
           <p>The ContentControl in WPF is a nice little container control that you set the content to some UI element
@@ -912,14 +912,14 @@ public event PropertyChangedEventHandler PropertyChanged = delegate { };</pre>
           </p>
           <p>So what I can do is go up here in my Window and add a Resources section.</p>
           <figure>
-                <pre class="prettyprint">&lt;Window.Resources&gt;
+                <pre><code class="language-csharp">&lt;Window.Resources&gt;
     &lt;DataTemplate DataType=&quot;{x:Type local:ExplicitDataTemplatesViewModel}&quot;&gt;
         &lt;local:ExplicitDataTemplatesView/&gt;
     &lt;/DataTemplate&gt;
     &lt;DataTemplate DataType=&quot;{x:Type local:DataTemplateSelectorsViewModel}&quot;&gt;
         &lt;local:DataTemplateSelectorsView/&gt;
     &lt;/DataTemplate&gt;
-&lt;/Window.Resources&gt;</pre>
+&lt;/Window.Resources&gt;</code></pre>
             <figcaption>Fig 05-059</figcaption>
           </figure>
           <p>And in that Resource section I define two DataTemplates, one that is mapped through the DataType property
@@ -931,8 +931,8 @@ public event PropertyChangedEventHandler PropertyChanged = delegate { };</pre>
             that anything that's data-bound where this Resource is in scope, specifically our ContentControl:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;ContentControl Grid.Row=&quot;1&quot;
-    Content=&quot;{Binding CurrentViewModel&quot; /&gt;</pre>
+                <pre><code class="language-csharp">&lt;ContentControl Grid.Row=&quot;1&quot;
+    Content=&quot;{Binding CurrentViewModel&quot; /&gt;</code></pre>
             <figcaption>Fig 05-060</figcaption>
           </figure>
           <p>that's binding content to one or the other of those ViewModel Types. The data binding is actually going to
@@ -950,7 +950,7 @@ public event PropertyChangedEventHandler PropertyChanged = delegate { };</pre>
             switching which ViewModel is being set in the Command handling of our MainWindowViewModel:
           </p>
           <figure>
-                <pre class="prettyprint">private void ShowView1()
+                <pre><code class="language-csharp">private void ShowView1()
 {
     CurrentViewModel = _ViewModel1;
 }
@@ -958,7 +958,7 @@ public event PropertyChangedEventHandler PropertyChanged = delegate { };</pre>
 private void ShowView2()
 {
     CurrentViewModel = _ViewModel2;
-}</pre>
+}</code></pre>
             <figcaption>Fig 05-061</figcaption>
           </figure>
           <p>With that code in place, I can go ahead and run, and now we can see the two buttons up at the top, I can
@@ -976,13 +976,13 @@ private void ShowView2()
           </figure>
           <p>And again, the chain of events there are, we're clicking on the button that fires the Command:</p>
           <figure>
-                <pre class="prettyprint">&lt;Button Content=&quot;Explicit DataTemplates View&quot;
-                    Command=&quot;{Binding View1Command}&quot;/&gt;</pre>
+                <pre><code class="language-csharp">&lt;Button Content=&quot;Explicit DataTemplates View&quot;
+                    Command=&quot;{Binding View1Command}&quot;/&gt;</code></pre>
             <figcaption>Fig 05-064</figcaption>
           </figure>
           <p>The Command is wired up to set one or the other ViewModel as the CurrentViewModel:</p>
           <figure>
-                <pre class="prettyprint">private void ShowView1()
+                <pre><code class="language-csharp">private void ShowView1()
 {
     CurrentViewModel = _ViewModel1;
 }
@@ -990,12 +990,12 @@ private void ShowView2()
 private void ShowView2()
 {
     CurrentViewModel = _ViewModel2;
-}</pre>
+}</code></pre>
             <figcaption>Fig 05-065</figcaption>
           </figure>
           <p>That triggers a PropertyChange on the CurrentViewModel:</p>
           <figure>
-                <pre class="prettyprint">public object CurrentViewModel
+                <pre><code class="language-csharp">public object CurrentViewModel
 {
     get
     {
@@ -1006,26 +1006,26 @@ private void ShowView2()
         _CurrentViewModel = value;
         PropertyChanged(this, new PropertyChangedEventArgs(&quot;CurrentViewModel&quot;));
     }
-}</pre>
+}</code></pre>
             <figcaption>Fig 05-066</figcaption>
           </figure>
           <p>which is bound to the Content property.</p>
           <figure>
-            <pre class="prettyprint">&lt;ContentControl Grid.Row=&quot;1&quot; Content=&quot;{Binding CurrentViewModel}&quot;/&gt;</pre>
+            <pre><code class="language-csharp">&lt;ContentControl Grid.Row=&quot;1&quot; Content=&quot;{Binding CurrentViewModel}&quot;/&gt;</code></pre>
             <figcaption>Fig 05-067</figcaption>
           </figure>
           <p>Now that a new DataObject has shown up in the Content property through a binding, Control goes out and
             looks in the available Resources, finds the corresponding DataTemplate mapped to that DataType:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;Window.Resources&gt;
+                <pre><code class="language-csharp">&lt;Window.Resources&gt;
     &lt;DataTemplate DataType=&quot;{x:Type local:ExplicitDataTemplatesViewModel}&quot;&gt;
         &lt;local:ExplicitDataTemplatesView/&gt;
     &lt;/DataTemplate&gt;
     &lt;DataTemplate DataType=&quot;{x:Type local:DataTemplateSelectorsViewModel}&quot;&gt;
         &lt;local:DataTemplateSelectorsView/&gt;
     &lt;/DataTemplate&gt;
-&lt;/Window.Resources&gt;</pre>
+&lt;/Window.Resources&gt;</code></pre>
             <figcaption>Fig 05-068</figcaption>
           </figure>
           <p>And renders out the corresponding view for it, setting the DataContext of that root element of the
@@ -1059,14 +1059,14 @@ private void ShowView2()
             something like this:
           </p>
           <figure>
-                <pre class="prettyprint">public class ProductTemplateSelector : DataTemplateSelector
+                <pre><code class="language-csharp">public class ProductTemplateSelector : DataTemplateSelector
 {
     public override DataTemplate SelectTemplate(object item, DependencyObject container)
     {
         DataTemplate template = LocalTemplate(item, container);
         return template;
     }
-}</pre>
+}</code></pre>
             <figcaption>Fig 05-069</figcaption>
           </figure>
           <p>We derive our class from DataTemplateSelector, we override the SelectTemplate method.</p>
@@ -1117,7 +1117,7 @@ private void ShowView2()
             SelectTemplate method on that base class, which you can see returns a DataTemplate:
           </p>
           <figure>
-                <pre class="prettyprint">namespace DataTemplates
+                <pre><code class="language-csharp">namespace DataTemplates
 {
     public class ProductTemplateSelector : DataTemplateSelector
     {
@@ -1131,7 +1131,7 @@ private void ShowView2()
             return template;
         }
     }
-}</pre>
+}</code></pre>
             <figcaption>Fig 05-071</figcaption>
           </figure>
           <p>It takes in two arguments, the first of which is the data-bound object that's being rendered through a
@@ -1142,19 +1142,19 @@ private void ShowView2()
             using this for Products, so I can go ahead and cast the data-bound object to a Product object.
           </p>
           <figure>
-            <pre class="prettyprint">Product product = item as Product;</pre>
+            <pre><code class="language-csharp">Product product = item as Product;</code></pre>
             <figcaption>Fig 05-072</figcaption>
           </figure>
           <p>Likewise, I can cast the container to a framework element.</p>
           <figure>
-            <pre class="prettyprint">FrameworkElement element = container as FrameworkElement;</pre>
+            <pre><code class="language-csharp">FrameworkElement element = container as FrameworkElement;</code></pre>
             <figcaption>Fig 05-073</figcaption>
           </figure>
           <p>As long as both of those casts succeeded, this TemplateSelector must be hooked up in the place I expect it
             to be. If not, I can just punt here and return null.
           </p>
           <figure>
-            <pre class="prettyprint">if (product == null || element == null) return null;</pre>
+            <pre><code class="language-csharp">if (product == null || element == null) return null;</code></pre>
             <figcaption>Fig 05-074</figcaption>
           </figure>
           <p>But as long as I got that far, then I can go and invoke some logic to figure out what DataTemplate to use
@@ -1162,7 +1162,7 @@ private void ShowView2()
             property on it:
           </p>
           <figure>
-            <pre class="prettyprint">DataTemplate template = element.FindResource(product.Type + &quot;Template&quot;) as DataTemplate;</pre>
+            <pre><code class="language-csharp">DataTemplate template = element.FindResource(product.Type + &quot;Template&quot;) as DataTemplate;</code></pre>
             <figcaption>Fig 05-075</figcaption>
           </figure>
           <p>and that Type is going to be pizza, salad or drink in our Zza data examples.</p>
@@ -1172,8 +1172,8 @@ private void ShowView2()
           </p>
           <p>Now obviously, you could have whatever convoluted logic you want here:</p>
           <figure>
-                <pre class="prettyprint">DataTemplate template = element.FindResource(product.Type + &quot;Template&quot;) as DataTemplate;
-            return template;</pre>
+                <pre><code class="language-csharp">DataTemplate template = element.FindResource(product.Type + &quot;Template&quot;) as DataTemplate;
+            return template;</code></pre>
             <figcaption>Fig 05-076</figcaption>
           </figure>
           <p>you could new up a DataTemplate from scratch and dynamically populate its elements from programmatic code.
@@ -1185,13 +1185,13 @@ private void ShowView2()
             need a local namespace up above.
           </p>
           <figure>
-                <pre class="prettyprint">    xmlns:local=&quot;clr-namespace:DataTemplates&quot;
+                <pre><code class="language-csharp">    xmlns:local=&quot;clr-namespace:DataTemplates&quot;
     mc:Ignorable=&quot;d&quot;
     d:DesignHeight=&quot;300&quot;
     d:DesignWidth=&quot;300&quot;&gt;
 &lt;UserControl.Resources&gt;
     &lt;local:ProductTemplateSelector x:Key=&quot;ProductTemplateSelector&quot; /&gt;
-&lt;/UserControl.Resources&gt;</pre>
+&lt;/UserControl.Resources&gt;</code></pre>
             <figcaption>Fig 05-077</figcaption>
           </figure>
           <p>Now that I have an instance of that Selector available, I can use it in the data-bound Context. So I'm
@@ -1200,10 +1200,10 @@ private void ShowView2()
             our ProductTemplateSelector.
           </p>
           <figure>
-                <pre class="prettyprint">&lt;Grid&gt;
+                <pre><code class="language-csharp">&lt;Grid&gt;
     &lt;ListBox ItemsSource=&quot;{Binding Products}&quot;
              ItemTemplateSelector=&quot;{StaticResource ProductTemplateSelector}&quot; /&gt;
-&lt;/Grid&gt;</pre>
+&lt;/Grid&gt;</code></pre>
             <figcaption>Fig 05-078</figcaption>
           </figure>
           <p>Now we just need to get these products from somewhere, so I'm going to wire that up in the ViewModel for
@@ -1211,7 +1211,7 @@ private void ShowView2()
             what we've seen before:
           </p>
           <figure>
-                <pre class="prettyprint">public class DataTemplateSelectorsViewModel : INotifyPropertyChanged
+                <pre><code class="language-csharp">public class DataTemplateSelectorsViewModel : INotifyPropertyChanged
 {
     private ObservableCollection&lt;Product&gt; _Products;
 
@@ -1233,7 +1233,7 @@ private void ShowView2()
         {
             if (value != _Products)
             {
-                _Products = value;</pre>
+                _Products = value;</code></pre>
             <figcaption>Fig 05-079</figcaption>
           </figure>
           <p>We have a Products collection exposed. We only populate that Products collection from the database if we're
@@ -1244,7 +1244,7 @@ private void ShowView2()
             MainWindow.
           </p>
           <figure>
-                <pre class="prettyprint">&lt;Window.Resources&gt;
+                <pre><code class="language-csharp">&lt;Window.Resources&gt;
     &lt;DataTemplate DataType=&quot;{x:Type local:ExplicitDataTemplatesViewModel}&quot;&gt;
         &lt;local:ExplicitDataTemplatesView/&gt;
     &lt;/DataTemplate&gt;
@@ -1254,7 +1254,7 @@ private void ShowView2()
     &lt;DataTemplate DataType=&quot;{x:Type local:HierachicalDataTemplatesViewModel}&quot;&gt;
         &lt;local:HierarchicalDataTemplatesView/&gt;
     &lt;/DataTemplate&gt;
-&lt;/Window.Resources&gt;</pre>
+&lt;/Window.Resources&gt;</code></pre>
             <figcaption>Fig 05-080</figcaption>
           </figure>
           <p>So remember we had this DataTemplateSelectorViewModel ImplicitDataTemplate rendering out the
@@ -1264,7 +1264,7 @@ private void ShowView2()
             ProductTemplateSelector. So if we add into our Resources section here, three DataTemplates:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;UserControl.Resources&gt;
+                <pre><code class="language-csharp">&lt;UserControl.Resources&gt;
         &lt;local:ProductTemplateSelector x:Key=&quot;ProductTemplateSelector&quot; /&gt;
         &lt;DataTemplate x:Key=&quot;pizzaTemplate&quot;&gt;
             &lt;Grid&gt;
@@ -1283,7 +1283,7 @@ private void ShowView2()
             &lt;Grid&gt;
                 &lt;Grid.ColumnDefinitions&gt;
                     &lt;ColumnDefinition Width=&quot;Auto&quot; /&gt;
-                    &lt;ColumnDefinition Width=&quot;*&quot; /&gt;</pre>
+                    &lt;ColumnDefinition Width=&quot;*&quot; /&gt;</code></pre>
             <figcaption>Fig 05-081</figcaption>
           </figure>
 
@@ -1292,7 +1292,7 @@ private void ShowView2()
             ProductTemplateSelector. Each of these:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;DataTemplate x:Key=&quot;pizzaTemplate&quot;&gt;
+                <pre><code class="language-csharp">&lt;DataTemplate x:Key=&quot;pizzaTemplate&quot;&gt;
     &lt;Grid&gt;
         &lt;Grid.ColumnDefinitions&gt;
             &lt;ColumnDefinition Width=&quot;Auto&quot; /&gt;
@@ -1305,7 +1305,7 @@ private void ShowView2()
                    Grid.Column=&quot;1&quot; /&gt;
     &lt;/Grid&gt;
 &lt;/DataTemplate&gt;
-&lt;DataTemplate x:Key=&quot;saladTemplate&quot;&gt;</pre>
+&lt;DataTemplate x:Key=&quot;saladTemplate&quot;&gt;</code></pre>
             <figcaption>Fig 05-082</figcaption>
           </figure>
           <p>is just going to render out a simple representation of a pizza, salad or drink. So by setting that
@@ -1393,31 +1393,31 @@ private void ShowView2()
             added another ViewModel instance to the MainWindowViewModel:
           </p>
           <figure>
-                <pre class="prettyprint">public class MainWindowViewModel : INotifyPropertyChanged
+                <pre><code class="language-csharp">public class MainWindowViewModel : INotifyPropertyChanged
 {
     private object _CurrentViewModel;
     ExplicitDataTemplatesViewModel _ViewModel1 = new ExplicitDataTemplatesViewModel();
     DataTemplateSelectorsViewModel _ViewModel2 = new DataTemplateSelectorsViewModel();
-    HierachicalDataTemplatesViewModel _ViewModel3 = new HierachicalDataTemplatesViewModel();</pre>
+    HierachicalDataTemplatesViewModel _ViewModel3 = new HierachicalDataTemplatesViewModel();</code></pre>
             <figcaption>Fig 05-087</figcaption>
           </figure>
           <p>another Command to trigger switching to that view:</p>
           <figure>
-                <pre class="prettyprint"> public MainWindowViewModel()
+                <pre><code class="language-csharp"> public MainWindowViewModel()
 {
     View1Command = new RelayCommand(ShowView1);
     View2Command = new RelayCommand(ShowView2);
     View3Command = new RelayCommand(ShowView3);
     CurrentViewModel = _ViewModel1;
-}</pre>
+}</code></pre>
             <figcaption>Fig 05-088</figcaption>
           </figure>
           <p>and the Command handler that sets that as the CurrentViewModel on the MainWindowViewModel.</p>
           <figure>
-                <pre class="prettyprint">private void ShowView3()
+                <pre><code class="language-csharp">private void ShowView3()
 {
     CurrentViewModel = _ViewModel3;
-}</pre>
+}</code></pre>
             <figcaption>Fig 05-089</figcaption>
           </figure>
           <p>So that should all look familiar from the ImplicitDataTemplates demo. So if I run at this point, I can
@@ -1439,14 +1439,14 @@ private void ShowView2()
           </p>
           <figure>
             <pre
-              class="prettyprint">public class HierachicalDataTemplatesViewModel : INotifyPropertyChanged</pre>
+              class="prettyprint">public class HierachicalDataTemplatesViewModel : INotifyPropertyChanged</code></pre>
             <figcaption>Fig 05-092</figcaption>
           </figure>
           <p>We have a constructor that is, only when we're not in the Designer, going out to the database through our
             DBContext and retrieving the Customers collection from our DBContext.
           </p>
           <figure>
-                <pre class="prettyprint">public HierachicalDataTemplatesViewModel()
+                <pre><code class="language-csharp">public HierachicalDataTemplatesViewModel()
 {
     if (!DesignerProperties.GetIsInDesignMode(new DependencyObject()))
     {
@@ -1458,7 +1458,7 @@ private void ShowView2()
                 .Include(&quot;Orders.OrderItems.Product&quot;).ToList());
         }
     }
-}</pre>
+}</code></pre>
             <figcaption>Fig 05-093</figcaption>
           </figure>
           <p>In this case, however, it's also using the .Include method of Entity Framework to retrieve the related
@@ -1467,7 +1467,7 @@ private void ShowView2()
           </p>
           <p>The exposed property from our ViewModel is just the root Customers collection:</p>
           <figure>
-                <pre class="prettyprint">private ObservableCollection&lt;Customer&gt; _Customers;
+                <pre><code class="language-csharp">private ObservableCollection&lt;Customer&gt; _Customers;
 public ObservableCollection&lt;Customer&gt; Customers
 {
     get
@@ -1480,14 +1480,14 @@ public ObservableCollection&lt;Customer&gt; Customers
         PropertyChanged(this, new PropertyChangedEventArgs(&quot;Customers&quot;));
     }
 }
-public event PropertyChangedEventHandler PropertyChanged = delegate { };</pre>
+public event PropertyChangedEventHandler PropertyChanged = delegate { };</code></pre>
             <figcaption>Fig 05-094</figcaption>
           </figure>
           <p>and we're going to data bind to that in a TreeView control. So now let's go over to the view for this
             HierarchicalDataTemplate and let's add a little bit of XAML:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;UserControl.Resources&gt;
+                <pre><code class="language-csharp">&lt;UserControl.Resources&gt;
     &lt;DataTemplate x:Key=&quot;CustomerTemplate&quot;&gt;
         &lt;StackPanel Orientation=&quot;Horizontal&quot;&gt;
             &lt;Image Source=&quot;Images/person.jpg&quot; Margin=&quot;3&quot; /&gt;
@@ -1498,7 +1498,7 @@ public event PropertyChangedEventHandler PropertyChanged = delegate { };</pre>
 &lt;Grid&gt;
     &lt;TreeView ItemsSouce=&quot;{Binding Customers}&quot;
               ItemTemplate=&quot;{StaticResource CustomerTemplate}&quot; /&gt;
-&lt;/Grid&gt;</pre>
+&lt;/Grid&gt;</code></pre>
             <figcaption>Fig 05-095</figcaption>
           </figure>
           <p>What I added here in terms of the root structure of the View is a TreeView control. You can see that the
@@ -1522,7 +1522,7 @@ public event PropertyChangedEventHandler PropertyChanged = delegate { };</pre>
           </p>
           <p>So now you can see what we have is a HierarchicalDataTemplate:</p>
           <figure>
-                <pre class="prettyprint">&lt;UserControl.Resources&gt;
+                <pre><code class="language-csharp">&lt;UserControl.Resources&gt;
     &lt;HierarchicalDataTemplate x:Key=&quot;CustomerTemplate&quot;
                               ItemsSource=&quot;{Binding Orders}&quot;&gt;
         &lt;StackPanel Orientation=&quot;Horizontal&quot;&gt;
@@ -1544,7 +1544,7 @@ public event PropertyChangedEventHandler PropertyChanged = delegate { };</pre>
             &lt;/DataTemplate&gt;
         &lt;/HierarchicalDataTemplate.ItemTemplate&gt;
     &lt;/HierarchicalDataTemplate&gt;
-&lt;/UserControl.Resources&gt;</pre>
+&lt;/UserControl.Resources&gt;</code></pre>
             <figcaption>Fig 05-097</figcaption>
           </figure>
           <p>It still has the same key as before, so that the ItemTemplate can point to it. It's got the same root level
@@ -1552,9 +1552,9 @@ public event PropertyChangedEventHandler PropertyChanged = delegate { };</pre>
           </p>
           <p>The first is the ItemsSource property.</p>
           <figure>
-                <pre class="prettyprint">&lt;HierarchicalDataTemplate x:Key=&quot;CustomerTemplate&quot;
+                <pre><code class="language-csharp">&lt;HierarchicalDataTemplate x:Key=&quot;CustomerTemplate&quot;
         ItemsSource=&quot;{Binding Orders}&quot;&gt;
-                </pre>
+                </code></pre>
             <figcaption>Fig 05-098</figcaption>
           </figure>
           <p>The ItemsSource property on a HierarchicalDataTemplate points to some property hanging off of the current
@@ -1566,7 +1566,7 @@ public event PropertyChangedEventHandler PropertyChanged = delegate { };</pre>
           </p>
           <p>And here, one level down:</p>
           <figure>
-                <pre class="prettyprint">&lt;HierarchicalDataTemplate.ItemTemplate&gt;
+                <pre><code class="language-csharp">&lt;HierarchicalDataTemplate.ItemTemplate&gt;
     &lt;DataTemplate&gt;
         &lt;StackPanel Orientation=&quot;Horizontal&quot;&gt;
             &lt;Image Source=&quot;Images/checkmark.jpg&quot;
@@ -1577,7 +1577,7 @@ public event PropertyChangedEventHandler PropertyChanged = delegate { };</pre>
         &lt;/StackPanel&gt;
     &lt;/DataTemplate&gt;
 &lt;/HierarchicalDataTemplate.ItemTemplate&gt;
-                </pre>
+                </code></pre>
             <figcaption>Fig 05-099</figcaption>
           </figure>
           <p>we can see we can just use a normal DataTemplate at that level and we have some simple structure there with
@@ -1597,7 +1597,7 @@ public event PropertyChangedEventHandler PropertyChanged = delegate { };</pre>
             pointing to.
           </p>
           <figure>
-                <pre class="prettyprint">&lt;UserControl.Resources&gt;
+                <pre><code class="language-csharp">&lt;UserControl.Resources&gt;
     &lt;HierarchicalDataTemplate x:Key=&quot;CustomerTemplate&quot;
                               ItemsSource=&quot;{Binding Orders}&quot;&gt;
         &lt;StackPanel Orientation=&quot;Horizontal&quot;&gt;
@@ -1614,7 +1614,7 @@ public event PropertyChangedEventHandler PropertyChanged = delegate { };</pre>
                            Margin=&quot;3&quot;
                            Width=&quot;&quot;50&quot; /&gt;
                     &lt;TextBlock Text=&quot;{Binding Path=OrderDate, StringFormat=d}&quot;
-                               Margin=&quot;5&quot; /&gt;</pre>
+                               Margin=&quot;5&quot; /&gt;</code></pre>
             <figcaption>Fig 05-101</figcaption>
           </figure>
 
@@ -1623,7 +1623,7 @@ public event PropertyChangedEventHandler PropertyChanged = delegate { };</pre>
             that's a StackPanel, but then it has its own ItemsSource that says each order has an OrderItems property.
           </p>
           <figure>
-                <pre class="prettyprint">&lt;HierarchicalDataTemplate.ItemTemplate&gt;
+                <pre><code class="language-csharp">&lt;HierarchicalDataTemplate.ItemTemplate&gt;
     &lt;HierarchicalDataTemplate ItemsSource=&quot;{Binding OrderItems}&quot;&gt;
         &lt;StackPanel Orientation=&quot;Horizontal&quot;&gt;
             &lt;Image Source=&quot;Images/checkmark.jpg&quot; Margin=&quot;3&quot; Width=&quot;50&quot;/&gt;
@@ -1634,7 +1634,7 @@ public event PropertyChangedEventHandler PropertyChanged = delegate { };</pre>
                 &lt;StackPanel Orientation=&quot;Horizontal&quot;&gt;
                     &lt;Border BorderBrush=&quot;Blue&quot; BorderThickness=&quot;2&quot; CornerRadius=&quot;3&quot;&gt;
                         &lt;Image Source=&quot;Images/items.jpg&quot; Margin=&quot;3&quot; Width=&quot;50&quot;/&gt;
-                    &lt;/Border&gt;</pre>
+                    &lt;/Border&gt;</code></pre>
             <figcaption>Fig 05-102</figcaption>
           </figure>
 
@@ -1642,7 +1642,7 @@ public event PropertyChangedEventHandler PropertyChanged = delegate { };</pre>
             for that child HierarchicalDataTemplate and give it some structure:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;HierarchicalDataTemplate.ItemTemplate&gt;
+                <pre><code class="language-csharp">&lt;HierarchicalDataTemplate.ItemTemplate&gt;
     &lt;DataTemplate&gt;
         &lt;StackPanel Orientation=&quot;Horizontal&quot;&gt;
             &lt;Border BorderBrush=&quot;Blue&quot; BorderThickness=&quot;2&quot; CornerRadius=&quot;3&quot;&gt;
@@ -1651,7 +1651,7 @@ public event PropertyChangedEventHandler PropertyChanged = delegate { };</pre>
             &lt;TextBlock Text=&quot;{Binding Path=Product.Name, StringFormat=d}&quot; Margin=&quot;5&quot; VerticalAlignment=&quot;Center&quot;/&gt;
         &lt;/StackPanel&gt;
     &lt;/DataTemplate&gt;
-&lt;/HierarchicalDataTemplate.ItemTemplate&gt;</pre>
+&lt;/HierarchicalDataTemplate.ItemTemplate&gt;</code></pre>
             <figcaption>Fig 05-103</figcaption>
           </figure>
           <p>And in this case, if this is our leaf node, we can just use a standard DataTemplate. So if we run this, go
@@ -1672,7 +1672,7 @@ public event PropertyChangedEventHandler PropertyChanged = delegate { };</pre>
             Resource collection.
           </p>
           <figure>
-                <pre class="prettyprint">&lt;UserControl.Resources&gt;
+                <pre><code class="language-csharp">&lt;UserControl.Resources&gt;
     &lt;HierarchicalDataTemplate DataType=&quot;{x:Type data:Customer}&quot; ItemsSource=&quot;{Binding Orders}&quot;&gt;
         &lt;TextBlock Text=&quot;{Binding LastName}&quot;/&gt;
     &lt;/HierarchicalDataTemplate&gt;
@@ -1685,26 +1685,26 @@ public event PropertyChangedEventHandler PropertyChanged = delegate { };</pre>
 &lt;/UserControl.Resources&gt;
 &lt;Grid&gt;
     &lt;TreeView ItemsSource=&quot;{Binding Customers}&quot;/&gt;
-&lt;/Grid&gt;</pre>
+&lt;/Grid&gt;</code></pre>
             <figcaption>Fig 05-105</figcaption>
           </figure>
           <p>Notice these are ImplicitDataTemplates using the DataType property to say, if a given data-bound node
             happens to be a Customer object, then we render it out with this content
           </p>
           <figure>
-                <pre class="prettyprint">&lt;HierarchicalDataTemplate DataType=&quot;{x:Type data:Customer}&quot; ItemsSource=&quot;{Binding Orders}&quot;&gt;
+                <pre><code class="language-csharp">&lt;HierarchicalDataTemplate DataType=&quot;{x:Type data:Customer}&quot; ItemsSource=&quot;{Binding Orders}&quot;&gt;
     &lt;TextBlock Text=&quot;{Binding LastName}&quot;/&gt;
 &lt;/HierarchicalDataTemplate&gt;
-                </pre>
+                </code></pre>
             <figcaption>Fig 05-106</figcaption>
           </figure>
           <p>as our DataTemplate and we can have an ItemSource for that. Now we don't have to specify the ItemTemplate
             here for those orders, because that can be matched up with a separate ImplicitDataTemplate:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;HierarchicalDataTemplate DataType=&quot;{x:Type data:Order}&quot; ItemsSource=&quot;{Binding OrderItems}&quot;&gt;
+                <pre><code class="language-csharp">&lt;HierarchicalDataTemplate DataType=&quot;{x:Type data:Order}&quot; ItemsSource=&quot;{Binding OrderItems}&quot;&gt;
     &lt;TextBlock Text=&quot;{Binding OrderDate}&quot;/&gt;
-&lt;/HierarchicalDataTemplate&gt;</pre>
+&lt;/HierarchicalDataTemplate&gt;</code></pre>
             <figcaption>Fig 05-107</figcaption>
           </figure>
           <p>so here we have another ImplicitDataTemplate that maps to Order objects and it knows how to render out
@@ -1712,18 +1712,18 @@ public event PropertyChangedEventHandler PropertyChanged = delegate { };</pre>
           </p>
           <p>And then finally, down at the leaf node level, for OrderItem, it's got the structure for those</p>
           <figure>
-                <pre class="prettyprint">&lt;DataTemplate DataType=&quot;{x:Type data:OrderItem}&quot;&gt;
+                <pre><code class="language-csharp">&lt;DataTemplate DataType=&quot;{x:Type data:OrderItem}&quot;&gt;
     &lt;TextBlock Text=&quot;{Binding Product.Name}&quot;/&gt;
 &lt;/DataTemplate&gt;
-                </pre>
+                </code></pre>
             <figcaption>Fig 05-108</figcaption>
           </figure>
           <p>So then we just get rid of the ItemTemplate down here:</p>
           <figure>
-                <pre class="prettyprint">&lt;Grid&gt;
+                <pre><code class="language-csharp">&lt;Grid&gt;
     &lt;TreeView ItemsSource=&quot;{Binding Customers}&quot;/&gt;
     &lt;!--&lt;TreeView ItemsSource=&quot;{Binding Customers}&quot; ItemTemplate=&quot;{StaticResource CustomerTemplate}&quot;/&gt;--&gt;
-&lt;/Grid&gt;</pre>
+&lt;/Grid&gt;</code></pre>
             <figcaption>Fig 05-109</figcaption>
           </figure>
           <p>and go ahead and run, switch to the HierarchicalDataTemplatesView, and now you can see the rendering is

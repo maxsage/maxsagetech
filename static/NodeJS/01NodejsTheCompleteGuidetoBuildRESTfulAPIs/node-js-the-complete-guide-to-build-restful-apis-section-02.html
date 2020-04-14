@@ -106,12 +106,12 @@ window.sayHello();</code></pre>
           then encapsulated in that module.
         </p>
         <figure>
-          <img src="images/Fig02-007.PNG"/>
+          <img src="images/Fig02-007.png"/>
           <figcaption>Fig 02-007</figcaption>
         </figure>
         <p>Every file in a node application is considered a module.</p>
         <figure>
-          <img src="images/Fig02-008.PNG"/>
+          <img src="images/Fig02-008.png"/>
           <figcaption>Fig 02-008</figcaption>
         </figure>
         <p>Variables and functions defined within the module are private (in OOP terms). If we want
@@ -230,7 +230,7 @@ console.log(logger);
         <p>Then we run the application we get an object with a single method called log that is a
           function:</p>
         <figure>
-          <img src="images/Fig02-020.PNG"/>
+          <img src="images/Fig02-020.png"/>
           <figcaption>Fig 02-020</figcaption>
         </figure>
         <p>We can now call this function in app.js:</p>
@@ -240,7 +240,7 @@ console.log(logger);
         </figure>
         <p>Now when we run the app we get the following output:</p>
         <figure>
-          <img src="images/Fig02-022.PNG"/>
+          <img src="images/Fig02-022.png"/>
           <figcaption>Fig 02-022</figcaption>
         </figure>
         <p>In more recent versions of Javascript we have the ability to use a const. So, as a best
@@ -360,7 +360,7 @@ module.exports = log;
         </figure>
         <p>If we now go back and run this application from the terminal we get the following:</p>
         <figure>
-          <img src="images/Fig02-034.PNG"/>
+          <img src="images/Fig02-034.png"/>
           <figcaption>Fig 02-034</figcaption>
         </figure>
         <p>On the first line we have filename which is the complete path to the logger.js file. The
@@ -477,7 +477,7 @@ console.log(files);</code></pre>
         </figure>
         <p>If we run the code above we get the following result:</p>
         <figure>
-          <img src="images/Fig02-039.PNG"/>
+          <img src="images/Fig02-039.png"/>
           <figcaption>Fig 02-039</figcaption>
         </figure>
         <p>So you can see we get an array of strings describing the files in the directory we
@@ -497,7 +497,7 @@ fs.readdir('./', function(err, ))</code></pre>
           This function is known as a callback:
         </p>
         <figure>
-          <img src="images/Fig02-040.PNG"/>
+          <img src="images/Fig02-040.png"/>
           <figcaption>Fig 02-041</figcaption>
         </figure>
         <p>In the intellisense shown above the second parameter is a callback which is a function
@@ -522,7 +522,7 @@ fs.readdir('./', function(err, ))</code></pre>
         </figure>
         <p>If we run the code shown above using node we get the following output:</p>
         <figure>
-          <img src="images/Fig02-044.PNG"/>
+          <img src="images/Fig02-044.png"/>
           <figcaption>Fig 02-044</figcaption>
         </figure>
         <p>This is the same result we saw with the synchronous method. Now let's simulate an error
@@ -537,7 +537,7 @@ fs.readdir('./', function(err, ))</code></pre>
         </figure>
         <p>If we run the application using node now we see the following output:</p>
         <figure>
-          <img src="images/Fig02-046.PNG"/>
+          <img src="images/Fig02-046.png"/>
           <figcaption>Fig 02-046</figcaption>
         </figure>
         <h3>19 Events Module</h3>
@@ -547,14 +547,14 @@ fs.readdir('./', function(err, ))</code></pre>
         <p>For example, in Node there is a class called HTTP which we can use to build a
           webserver:</p>
         <figure>
-          <img src="images/Fig02-047.PNG"/>
+          <img src="images/Fig02-047.png"/>
           <figcaption>Fig 02-047</figcaption>
         </figure>
         <p>So we listen on a given port, and every time we receive a request on that port, that HTTP
           class raises an event:
         </p>
         <figure>
-          <img src="images/Fig02-048.PNG"/>
+          <img src="images/Fig02-048.png"/>
           <figcaption>Fig 02-048</figcaption>
         </figure>
         <p>Our job is to respond to that event which basically involves reading that request and
@@ -881,7 +881,7 @@ if(req.url === '/api/courses') {
           sections). Now browse to localhost:3000/api/courses in the browser:
         </p>
         <figure>
-          <img src="images/Fig02-081.PNG"/>
+          <img src="images/Fig02-081.png"/>
           <figcaption>Fig 02-081</figcaption>
         </figure>
         <p>As you see building a web server with Node is very easy.</p>

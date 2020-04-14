@@ -28,7 +28,7 @@
         <p>Back to our Vidly application and so far we have stored the list of genres in an array in
           memory:</p>
         <figure>
-          <img src="images/Fig07-001.PNG"/>
+          <img src="images/Fig07-001.png"/>
           <figcaption>Fig 07-001</figcaption>
         </figure>
         <p>That's not how we build real world applications because when the server restarts we will
@@ -172,7 +172,7 @@ mongoose.connect('mongodb://localhost/playground')
           To demonstrate go back to MongoDB Compass. I've created a database called playground and
           in this database we have a collection called courses:</p>
         <figure>
-          <img src="images/Fig07-017.PNG"/>
+          <img src="images/Fig07-017.png"/>
           <figcaption>Fig 07-017</figcaption>
         </figure>
         <p>A collection in MongoDB is like a table in a relational database. The courses collection
@@ -180,7 +180,7 @@ mongoose.connect('mongodb://localhost/playground')
           database.</p>
         <p>If we take a look at the collection:</p>
         <figure>
-          <img src="images/Fig07-018.PNG"/>
+          <img src="images/Fig07-018.png"/>
           <figcaption>Fig 07-018</figcaption>
         </figure>
         <p>We see an example of a document. Each document is a container of key/value pairs. So we
@@ -232,7 +232,7 @@ mongoose.connect('mongodb://localhost/playground')
         <p>So here's our course schema that defines the shape of course documents in our MongoDB
           database:</p>
         <figure>
-          <img src="images/Fig07-020.PNG"/>
+          <img src="images/Fig07-020.png"/>
           <figcaption>Fig 07-020</figcaption>
         </figure>
         <p>Now we need to compile this into a model. What is a model? Earlier in the course we
@@ -352,7 +352,7 @@ mongoose.connect('mongodb://localhost/playground')
         </figure>
         <p>You should see output similar to the following:</p>
         <figure>
-          <img src="images/Fig07-033.PNG"/>
+          <img src="images/Fig07-033.png"/>
           <figcaption>Fig 07-033</figcaption>
         </figure>
         <p>This output displays the document that is actually stored in MongoDB. You can see the
@@ -364,7 +364,7 @@ mongoose.connect('mongodb://localhost/playground')
         <p>In MongoDB compass browse the courses collection of the playground database and you will
           see this newly created document:</p>
         <figure>
-          <img src="images/Fig07-035.PNG"/>
+          <img src="images/Fig07-035.png"/>
           <figcaption>Fig 07-035</figcaption>
         </figure>
         <p>The beauty of MongoDB and other NoSQL databases is that we didn't have to create or
@@ -387,13 +387,13 @@ mongoose.connect('mongodb://localhost/playground')
         </figure>
         <p>You should see output similar to the following:</p>
         <figure>
-          <img src="images/Fig07-038.PNG"/>
+          <img src="images/Fig07-038.png"/>
           <figcaption>Fig 07-038</figcaption>
         </figure>
         <p>In MongoDB Compass you should also see the additional document has been added to the
           collection.</p>
         <figure>
-          <img src="images/Fig07-039.PNG"/>
+          <img src="images/Fig07-039.png"/>
           <figcaption>Fig 07-039</figcaption>
         </figure>
         <h3>89 - Querying Documents</h3>
@@ -419,7 +419,7 @@ mongoose.connect('mongodb://localhost/playground')
           document and then remove or update it. We will look at these methods later.</p>
         <p>The find method returns a document query object:</p>
         <figure>
-          <img src="images/Fig07-041.PNG"/>
+          <img src="images/Fig07-041.png"/>
           <figcaption>Fig 07-041</figcaption>
         </figure>
         <p>The document query object is kind of like a promise. It has a then method that can be
@@ -437,7 +437,7 @@ console.log(courses);</code></pre>
         </figure>
         <p>You should receive an array of objects something like this:</p>
         <figure>
-          <img src="images/Fig07-044.PNG"/>
+          <img src="images/Fig07-044.png"/>
           <figcaption>Fig 07-044</figcaption>
         </figure>
         <p>We can also use the find method to pass a filter which consists of an object with one or
@@ -463,7 +463,7 @@ console.log(courses);</code></pre>
           value pairs (1 for ascending, 2 for descending), select the properties we want returned.
           You will still receive the _id property back which is assigned by MongoDB by default:</p>
         <figure>
-          <img src="images/Fig07-047.PNG"/>
+          <img src="images/Fig07-047.png"/>
           <figcaption>Fig 07-047</figcaption>
         </figure>
 
@@ -614,7 +614,7 @@ console.log(courses);</code></pre>
         <p>We are filtering our courses and picking only the name and tags properties. If we run the
           application we get something like this:</p>
         <figure>
-          <img src="images/Fig07-059.PNG"/>
+          <img src="images/Fig07-059.png"/>
           <figcaption>Fig 07-059</figcaption>
         </figure>
         <p>Sometimes you just want to retrieve the number of documents that match your criteria. In
@@ -656,7 +656,7 @@ const pageSize = 10;</code></pre>
         <p>The json file contains 7 course objects which we are going to import into a new database
           called mongo-exercises:</p>
         <figure>
-          <img src="images/Fig07-065.PNG"/>
+          <img src="images/Fig07-065.png"/>
           <figcaption>Fig 07-065</figcaption>
         </figure>
         <p>The exercise.txt file contains a command which we can run from a terminal to import the json
@@ -695,7 +695,7 @@ const pageSize = 10;</code></pre>
         <p>Once you run this command you should be able to browse the new database and the courses
           collection from MongoDB Compass:</p>
         <figure>
-          <img src="images/Fig07-067.PNG"/>
+          <img src="images/Fig07-067.png"/>
           <figcaption>Fig 07-067</figcaption>
         </figure>
         <p>The first exercise is to write a program to get all the published courses, sort them by
@@ -748,7 +748,7 @@ const pageSize = 10;</code></pre>
           automatically wraps the result in a promise. getCourses returns a promise of any[]. That means a promise that
           when resolved will give us an array of objects:</p>
         <figure>
-          <img src="images/Fig07-074.PNG"/>
+          <img src="images/Fig07-074.png"/>
           <figcaption>Fig 07-074</figcaption>
         </figure>
         <p>For this reason we await the result and store it in a const. Because we use the await
@@ -767,7 +767,7 @@ const pageSize = 10;</code></pre>
         </figure>
         <p>If you now run the application you should see something similar to this:</p>
         <figure>
-          <img src="images/Fig07-077.PNG"/>
+          <img src="images/Fig07-077.png"/>
           <figcaption>Fig 07-077</figcaption>
         </figure>
         <h3>96 - Exercise 2</h3>
@@ -894,7 +894,7 @@ const pageSize = 10;</code></pre>
         </figure>
         <p>If we run the application we should see something similar to the following:</p>
         <figure>
-          <img src="images/Fig07-088.PNG"/>
+          <img src="images/Fig07-088.png"/>
           <figcaption>Fig 07-088</figcaption>
         </figure>
         <p>We get four courses, the first three have a price that is greater than or equal to 15$. The
@@ -972,7 +972,7 @@ console.log(result);</code></pre>
         </figure>
         <p>If we run the application you should see something similar to this:</p>
         <figure>
-          <img src="images/Fig07-097.PNG"/>
+          <img src="images/Fig07-097.png"/>
           <figcaption>Fig 07-097</figcaption>
         </figure>
 
@@ -1110,7 +1110,7 @@ console.log(result);</code></pre>
         <p>So we add an object with a key of new and a value of true. If we run again we should now see
           the updated document:</p>
         <figure>
-          <img src="images/Fig07-106.PNG"/>
+          <img src="images/Fig07-106.png"/>
           <figcaption>Fig 07-106</figcaption>
         </figure>
 
@@ -1127,7 +1127,7 @@ console.log(result);</code></pre>
           query then only the first document that matches the query will be deleted.</p>
         <p>If you run the application you should see something like this:</p>
         <figure>
-            <img src="images/Fig07-108.PNG"/>
+            <img src="images/Fig07-108.png"/>
             <figcaption>Fig 07-108</figcaption>
         </figure>
         <p>The result object shows we have deleted one document.</p>

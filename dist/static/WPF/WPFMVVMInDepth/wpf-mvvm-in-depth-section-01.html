@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
   <meta charset="UTF-8">
-  <title>maxsagetech - Vue JS Fundamentals</title>
+  <title>maxsagetech - WPF MVVM In Depth</title>
   <script src="https://unpkg.com/vue"></script>
   <!--<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"-->
   <!--integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">-->
@@ -79,7 +79,7 @@
             Code like the example below doesn’t look too bad at first glance:
           </p>
           <figure>
-                <pre class="prettyprint">private void ComputeCustomerOrdersTotal(object sender, RoutedEventArgs e)
+                <pre><code class="language-csharp">private void ComputeCustomerOrdersTotal(object sender, RoutedEventArgs e)
 {
     var selectedCustomer = this.customerDataGrid.SelectedItem as Customer;
     var orders = (from order in dbContext.Orders.Include(&quot;OrderItems&quot;)
@@ -95,7 +95,7 @@
         }
     }
     this.customerOrderDetail.text = sum.ToString();
-}</pre>
+}</code></pre>
             <figcaption>Fig 01-003</figcaption>
           </figure>
           <p>
@@ -412,7 +412,7 @@
             DataContext to a reference to the ViewModel:
           </p>
           <figure>
-            <pre class="prettyprint">View.DataContext = ViewModel;</pre>
+            <pre><code class="language-csharp">View.DataContext = ViewModel;</code></pre>
             <figcaption>Fig 01-015</figcaption>
           </figure>
           <p>

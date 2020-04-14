@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
   <meta charset="UTF-8">
-  <title>maxsagetech - Vue JS Fundamentals</title>
+  <title>maxsagetech - WPF Databinding In Depth</title>
   <script src="https://unpkg.com/vue"></script>
   <!--<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"-->
   <!--integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">-->
@@ -131,7 +131,7 @@
             from our ZzaDBContext, similar to previous demos:
           </p>
           <figure>
-                <pre class="prettyprint">private void Window_Loaded(object sender, RoutedEventArgs e)
+                <pre><code class="language-csharp">private void Window_Loaded(object sender, RoutedEventArgs e)
 {
     CollectionViewSource productViewSource =
         ((CollectionViewSource)(this.FindResource(&quot;productViewSource&quot;)));
@@ -139,7 +139,7 @@
     {
         productViewSource.Source = context.Products.ToList();
     }
-}</pre>
+}</code></pre>
             <figcaption>Fig 07-002</figcaption>
           </figure>
           <p>And pushing it into a CollectionViewSource that's already up inside the View.</p>
@@ -147,7 +147,7 @@
             in the visual tree. So I've got a Helper method here called GetTreeFromNode:
           </p>
           <figure>
-                <pre class="prettyprint">TreeViewItem GetTreeFromNode(DependencyObject node)
+                <pre><code class="language-csharp">TreeViewItem GetTreeFromNode(DependencyObject node)
 {
     TreeViewItem nodeAndChildren = GetVisualTree(node, true);
     var parent = GetParent(node);
@@ -162,14 +162,14 @@
         parent = GetParent(parent);
     }
     return parentNode;
-}</pre>
+}</code></pre>
             <figcaption>Fig 07-003</figcaption>
           </figure>
           <p>That's basically going to start at the current node and walk down using a Helper down below called
             GetVisualTree.
           </p>
           <figure>
-                <pre class="prettyprint">TreeViewItem GetVisualTree(DependencyObject rootObject, bool highlight)
+                <pre><code class="language-csharp">TreeViewItem GetVisualTree(DependencyObject rootObject, bool highlight)
 {
     TreeViewItem rootItem = new TreeViewItem();
     if (highlight) rootItem.Header = &quot;[[&quot; + GetNodeLabel(rootObject) + &quot;]]&quot;;
@@ -179,7 +179,7 @@
         rootItem.Items.Add(GetVisualTree(VisualTreeHelper.GetChild(rootObject, i), false));
     }
     return rootItem;
-}</pre>
+}</code></pre>
             <figcaption>Fig 07-004</figcaption>
           </figure>
           <p>GetVisualTree uses the VisualTreeHelper class in WPF to walk through all the children of the current node,
@@ -191,7 +191,7 @@
             up:
           </p>
           <figure>
-                <pre class="prettyprint">TreeViewItem GetTreeFromNode(DependencyObject node)
+                <pre><code class="language-csharp">TreeViewItem GetTreeFromNode(DependencyObject node)
 {
     TreeViewItem nodeAndChildren = GetVisualTree(node, true);
     var parent = GetParent(node);
@@ -206,17 +206,17 @@
         parent = GetParent(parent);
     }
     return parentNode;
-}</pre>
+}</code></pre>
             <figcaption>Fig 07-005</figcaption>
           </figure>
           <p>So it has another Helper method down below called GetParent:</p>
           <figure>
-                <pre class="prettyprint">DependencyObject GetParent(DependencyObject depObj)
+                <pre><code class="language-csharp">DependencyObject GetParent(DependencyObject depObj)
 {
     FrameworkElement element = depObj as FrameworkElement;
     if (element != null &amp;&amp; element.Parent != null) return element.Parent;
     else return VisualTreeHelper.GetParent(depObj);
-}</pre>
+}</code></pre>
             <figcaption>Fig 07-006</figcaption>
           </figure>
           <p>That will get the ParentElement of the current node and then it uses that in a loop to walk up the tree and
@@ -224,7 +224,7 @@
           </p>
           <p>The TreeViewItem that comes out of this can be passed this helper called ShowTree:</p>
           <figure>
-                <pre class="prettyprint">void ShowTree(TreeViewItem tree)
+                <pre><code class="language-csharp">void ShowTree(TreeViewItem tree)
 {
     Window popup = new Window();
     TreeView treeView = new TreeView();
@@ -234,7 +234,7 @@
     popup.Height = 300;
     popup.FontSize = 16;
     popup.Show();
-}</pre>
+}</code></pre>
             <figcaption>Fig 07-007</figcaption>
           </figure>
           <p>That's going to basically create a TreeView, put that root node into it, and pop it up in a window. So
@@ -243,7 +243,7 @@
           </p>
           <p>So to get started, let's go over to our UI and I'm just going to drag out a simple TextBox:</p>
           <figure>
-                <pre class="prettyprint">&lt;Grid.RowDefinitions&gt;
+                <pre><code class="language-csharp">&lt;Grid.RowDefinitions&gt;
     &lt;RowDefinition Height=&quot;139*&quot;/&gt;
     &lt;RowDefinition Height=&quot;90*&quot;/&gt;
     &lt;RowDefinition Height=&quot;90*&quot;/&gt;
@@ -254,7 +254,7 @@
          TextWrapping=&quot;Wrap&quot;
          Text=&quot;TextBox&quot;
          VerticalAlignment=&quot;Top&quot;
-         Width=&quot;120&quot; /&gt;</pre>
+         Width=&quot;120&quot; /&gt;</code></pre>
             <figcaption>Fig 07-008</figcaption>
           </figure>
           <p>seemingly simple control, and we will give it a name of TextBox1. I could then drop into my code-behind and
@@ -262,7 +262,7 @@
             ShowTree(GetTreeFromNode(TextBox1)):
           </p>
           <figure>
-                <pre class="prettyprint">private void Window_Loaded(object sender, RoutedEventArgs e)
+                <pre><code class="language-csharp">private void Window_Loaded(object sender, RoutedEventArgs e)
 {
     CollectionViewSource productViewSource =
         ((CollectionViewSource)(this.FindResource(&quot;productViewSource&quot;)));
@@ -273,7 +273,7 @@
 
     //ShowTree(GetTreeFromNode(productListBox));
 
-}</pre>
+}</code></pre>
             <figcaption>Fig 07-009</figcaption>
           </figure>
           <p>If we go ahead and run, we can see the TextBox loads up there and we've got our visual tree here, starting
@@ -298,7 +298,7 @@
           <h3>Demo: Dynamic Data Control Visual Tree</h3>
           <p>So instead of that, if I replace my TextBox with a ContentControl:</p>
           <figure>
-                <pre class="prettyprint">&lt;Grid DataContext=&quot;{StaticResource productViewSource}&quot;&gt;
+                <pre><code class="language-csharp">&lt;Grid DataContext=&quot;{StaticResource productViewSource}&quot;&gt;
     &lt;Grid.RowDefinitions&gt;
         &lt;RowDefinition Height=&quot;139*&quot;/&gt;
         &lt;RowDefinition Height=&quot;90*&quot;/&gt;
@@ -307,16 +307,16 @@
     &lt;ContentControl x:Name=&quot;productContentControl&quot;
                     Grid.Row=&quot;2&quot;
                     Content=&quot;{Binding}&quot;&gt;
-    &lt;/ContentControl&gt;</pre>
+    &lt;/ContentControl&gt;</code></pre>
             <figcaption>Fig 07-011</figcaption>
           </figure>
           <p>and we just use a binding that takes in whatever the current DataContext is, which is going to be the
             collection coming out of this CollectionViewSource.
           </p>
           <figure>
-                <pre class="prettyprint">&lt;Window.Resources&gt;
+                <pre><code class="language-csharp">&lt;Window.Resources&gt;
     &lt;CollectionViewSource x:Key=&quot;productViewSource&quot; d:DesignSource=&quot;{d:DesignInstance {x:Type Data:Product}, CreateList=True}&quot;/&gt;
-&lt;/Window.Resources&gt;</pre>
+&lt;/Window.Resources&gt;</code></pre>
             <figcaption>Fig 07-012</figcaption>
           </figure>
           <p>If we then dump the tree on that ContentControl, and run, now we can see something similar get down to the
@@ -339,7 +339,7 @@
             DataTemplate containing a TextBlock:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;ContentControl x:Name=&quot;productContentControl&quot;
+                <pre><code class="language-csharp">&lt;ContentControl x:Name=&quot;productContentControl&quot;
                 Grid.Row=&quot;2&quot;
                 Content=&quot;{Binding}&quot;&gt;
     &lt;ContentControl.ContentTemplate&gt;
@@ -352,7 +352,7 @@
                        Width=&quot;195&quot; /&gt;
         &lt;/DataTemplate&gt;
     &lt;/ContentControl.ContentTemplate&gt;
-&lt;/ContentControl&gt;</pre>
+&lt;/ContentControl&gt;</code></pre>
             <figcaption>Fig 07-014</figcaption>
           </figure>
           <p>That TextBlock is bound to the Name property of the product that's being rendered. And because of the way
@@ -388,18 +388,18 @@
             collection?
           </p>
           <figure>
-                <pre class="prettyprint">&lt;ListBox x:Name=&quot;productListBox&quot;
+                <pre><code class="language-csharp">&lt;ListBox x:Name=&quot;productListBox&quot;
     ItemsSource=&quot;{Binding}&quot;
     Grid.Row=&quot;1&quot;&gt;
     DisplayMemberPath="Name"
-&lt;/ListBox&gt;</pre>
+&lt;/ListBox&gt;</code></pre>
             <figcaption>Fig 07-018</figcaption>
           </figure>
           <p>And in this case, we've got DisplayMemberPath set to Name. If we add that and dump that in a tree
             instead:
           </p>
           <figure>
-            <pre class="prettyprint">ShowTree(GetTreeFromNode(productListBox));</pre>
+            <pre><code class="language-csharp">ShowTree(GetTreeFromNode(productListBox));</code></pre>
             <figcaption>Fig 07-019</figcaption>
           </figure>
           <p>and go ahead and run, now we can see the dump here behind.</p>
@@ -430,7 +430,7 @@
             ItemTemplate to it and get rid of our DisplayMemberPath:
           </p>
           <figure>
-                <pre class="prettyprint"> &lt;ListBox x:Name=&quot;productListBox&quot;
+                <pre><code class="language-csharp"> &lt;ListBox x:Name=&quot;productListBox&quot;
          ItemsSource=&quot;{Binding}&quot;
          Grid.Row=&quot;1&quot;&gt;
     &lt;ListBox.ItemTemplate&gt;
@@ -439,7 +439,7 @@
                        Loaded=&quot;ListBoxTextBlock_Loaded&quot; /&gt;
         &lt;/DataTemplate&gt;
     &lt;/ListBox.ItemTemplate&gt;
-&lt;/ListBox&gt;</pre>
+&lt;/ListBox&gt;</code></pre>
             <figcaption>Fig 07-023</figcaption>
           </figure>
           <p>this ItemTemplate just contains a TextBlock bound to the Name property of the product again, similar to
@@ -449,13 +449,13 @@
           </p>
           <p>So let's go hook up this Loaded event. So I'll jump into the code-behind and add the Loaded event here:</p>
           <figure>
-                <pre class="prettyprint">bool lbDumpDone = false;
+                <pre><code class="language-csharp">bool lbDumpDone = false;
 private void ListBoxTextBlock_Loaded(object sender, RoutedEventArgs e)
 {
     if (lbDumpDone) return;
     lbDumpDone = true;
     //ShowTree(GetTreeFromNode(sender as DependencyObject));
-}</pre>
+}</code></pre>
             <figcaption>Fig 07-024</figcaption>
           </figure>
           <p>We only want this to fire once, not once for each item, so I've got a little guard condition here to make
@@ -463,13 +463,13 @@ private void ListBoxTextBlock_Loaded(object sender, RoutedEventArgs e)
           </p>
           <p>And then we're going to do the ShowTree call for that sender object that's raising the event:</p>
           <figure>
-            <pre class="prettyprint">ShowTree(GetTreeFromNode(sender as DependencyObject));</pre>
+            <pre><code class="language-csharp">ShowTree(GetTreeFromNode(sender as DependencyObject));</code></pre>
             <figcaption>Fig 07-025</figcaption>
           </figure>
           <p>which will be the individual TextBlock inside of the ListBox.</p>
           <p>I'll comment out the other ShowTree:</p>
           <figure>
-            <pre class="prettyprint">//ShowTree(GetTreeFromNode(productListBox));</pre>
+            <pre><code class="language-csharp">//ShowTree(GetTreeFromNode(productListBox));</code></pre>
             <figcaption>Fig 07-026</figcaption>
           </figure>
           <p>so we don't get two of them popping up, and let's run with that. Now we can expand down and we can see we
@@ -499,7 +499,7 @@ private void ListBoxTextBlock_Loaded(object sender, RoutedEventArgs e)
           </p>
           <p>Now let's take an even more dynamic and complicated data-bound container, a DataGrid:</p>
           <figure>
-                <pre class="prettyprint">&lt;DataGrid x:Name=&quot;productDataGrid&quot;
+                <pre><code class="language-csharp">&lt;DataGrid x:Name=&quot;productDataGrid&quot;
                   RowDetailsVisibilityMode=&quot;VisibleWhenSelected&quot;
                   ItemsSource=&quot;{Binding}&quot;
                   EnableRowVirtualization=&quot;True&quot;
@@ -521,7 +521,7 @@ private void ListBoxTextBlock_Loaded(object sender, RoutedEventArgs e)
                 &lt;DataGridTextColumn x:Name=&quot;idColumn&quot;
                                     Width=&quot;SizeToHeader&quot;
                                     Header=&quot;Id&quot;
-                                    Binding=&quot;{Binding Id}&quot; /&gt;</pre>
+                                    Binding=&quot;{Binding Id}&quot; /&gt;</code></pre>
             <figcaption>Fig 07-029</figcaption>
           </figure>
           <p>A DataGrid is going to render out rows for each object in the collection. Those rows have composite
@@ -530,20 +530,20 @@ private void ListBoxTextBlock_Loaded(object sender, RoutedEventArgs e)
           </p>
           <p>So I'm going to play a similar trick here, that I'm going to use a TemplatedColumn:</p>
           <figure>
-                <pre class="prettyprint">&lt;DataGridTemplateColumn.CellTemplate&gt;
+                <pre><code class="language-csharp">&lt;DataGridTemplateColumn.CellTemplate&gt;
     &lt;DataTemplate&gt;
         &lt;TextBlock Text=&quot;{Binding Description}&quot;
                    Loaded=&quot;DataGridCell_Loaded&quot; /&gt;
     &lt;/DataTemplate&gt;
-&lt;/DataGridTemplateColumn.CellTemplate&gt;</pre>
+&lt;/DataGridTemplateColumn.CellTemplate&gt;</code></pre>
             <figcaption>Fig 07-030</figcaption>
           </figure>
           <p>which we'll get into more details on later in the module, and provide a DataTemplate containing a TextBlock
             bound to the Description field with a Loaded event hooked up on it.
           </p>
           <figure>
-                <pre class="prettyprint">&lt;TextBlock Text=&quot;{Binding Description}&quot;
-        Loaded=&quot;DataGridCell_Loaded&quot; /&gt;</pre>
+                <pre><code class="language-csharp">&lt;TextBlock Text=&quot;{Binding Description}&quot;
+        Loaded=&quot;DataGridCell_Loaded&quot; /&gt;</code></pre>
             <figcaption>Fig 07-031</figcaption>
           </figure>
           <p>I can hook that Loaded event and do my tree walk from there, similar to what I just showed with the
@@ -554,13 +554,13 @@ private void ListBoxTextBlock_Loaded(object sender, RoutedEventArgs e)
             our guard condition to make sure we only do it once.
           </p>
           <figure>
-                <pre class="prettyprint">bool dgDumpDone = false;
+                <pre><code class="language-csharp">bool dgDumpDone = false;
 private void DataGridCell_Loaded(object sender, RoutedEventArgs e)
 {
     if (dgDumpDone) return;
     dgDumpDone = true;
     ShowTree(GetTreeFromNode(sender as DependencyObject));
-}</pre>
+}</code></pre>
             <figcaption>Fig 07-032</figcaption>
           </figure>
           <p>Let's go ahead and run, and now we can see a DataGrid showing up there:</p>
@@ -664,13 +664,13 @@ private void DataGridCell_Loaded(object sender, RoutedEventArgs e)
             the DataGrid.
           </p>
           <figure>
-                <pre class="prettyprint">bool dgDumpDone = false;
+                <pre><code class="language-csharp">bool dgDumpDone = false;
 private void DataGridCell_Loaded(object sender, RoutedEventArgs e)
 {
     if (dgDumpDone) return;
     dgDumpDone = true;
     ShowTree(GetTreeFromNode(sender as DependencyObject));
-}</pre>
+}</code></pre>
             <figcaption>Fig 07-044</figcaption>
           </figure>
           <p>Now when you use Mole, it's a debugger visualizer, which means you can walk up to an object in your
@@ -881,7 +881,7 @@ private void DataGridCell_Loaded(object sender, RoutedEventArgs e)
             retrieval:
           </p>
           <figure>
-                <pre class="prettyprint">public MainWindowViewModel()
+                <pre><code class="language-csharp">public MainWindowViewModel()
 {
     if (!DesignerProperties.GetIsInDesignMode(new DependencyObject()))
     {
@@ -894,7 +894,7 @@ private void DataGridCell_Loaded(object sender, RoutedEventArgs e)
             Products = products;
         }
     }
-}</pre>
+}</code></pre>
             <figcaption>Fig 07-062</figcaption>
           </figure>
           <p>As usual, we're using our ZzaDBContext to go out to a Zza database, we're getting some products and pushing
@@ -902,7 +902,7 @@ private void DataGridCell_Loaded(object sender, RoutedEventArgs e)
           </p>
           <p>That collection is exposed as a property called Products on our ViewModel that we can data bind to:</p>
           <figure>
-                <pre class="prettyprint">public ObservableCollection&lt;Product&gt; Products
+                <pre><code class="language-csharp">public ObservableCollection&lt;Product&gt; Products
 {
     get
     {
@@ -916,7 +916,7 @@ private void DataGridCell_Loaded(object sender, RoutedEventArgs e)
             PropertyChanged(this, new PropertyChangedEventArgs(&quot;Products&quot;));
         }
     }
-}</pre>
+}</code></pre>
             <figcaption>Fig 07-063</figcaption>
           </figure>
           <p>We're also modifying the Image property of each product to point to a collection of Images that's in our
@@ -933,7 +933,7 @@ private void DataGridCell_Loaded(object sender, RoutedEventArgs e)
             have a RelayCommand in the project, which we've seen in previous demos:
           </p>
           <figure>
-                <pre class="prettyprint">public class RelayCommand : ICommand
+                <pre><code class="language-csharp">public class RelayCommand : ICommand
 {
     Action _TargetExecuteMethod;
     Func&lt;bool&gt; _TargetCanExecuteMethod;
@@ -947,7 +947,7 @@ private void DataGridCell_Loaded(object sender, RoutedEventArgs e)
     {
         _TargetExecuteMethod = executeMethod;
         _TargetCanExecuteMethod = canExecuteMethod;
-    }</pre>
+    }</code></pre>
             <figcaption>Fig 07-065</figcaption>
           </figure>
           <p>just an ICommand object we can use to hook up buttons to point to handling in our ViewModel, which we'll
@@ -957,13 +957,13 @@ private void DataGridCell_Loaded(object sender, RoutedEventArgs e)
             ItemsControl
           </p>
           <figure>
-                <pre class="prettyprint">&lt;Grid&gt;
+                <pre><code class="language-csharp">&lt;Grid&gt;
         &lt;ComboBox ItemsSource=&quot;{Binding Products}&quot;
                   HorizontalAlignment=&quot;Left&quot;
                   Margin=&quot;44,23,0,0&quot;
                   VerticalAlignment=&quot;Top&quot;
                   Width=&quot;120&quot; /&gt;
-&lt;/Grid&gt;</pre>
+&lt;/Grid&gt;</code></pre>
             <figcaption>Fig 07-066</figcaption>
           </figure>
           <p>so the most important property that you're going to want to set in data binding is the ItemsSource
@@ -973,9 +973,9 @@ private void DataGridCell_Loaded(object sender, RoutedEventArgs e)
             DataContext is already wired up so that our MainWindowViewModel is our DataContext:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;Window.DataContext&gt;
+                <pre><code class="language-csharp">&lt;Window.DataContext&gt;
     &lt;local:MainWindowViewModel /&gt;
-&lt;/Window.DataContext&gt;</pre>
+&lt;/Window.DataContext&gt;</code></pre>
             <figcaption>Fig 07-067</figcaption>
           </figure>
           <p>So this will cause it to be constructed, the constructor fires and loads the products, and then data
@@ -992,12 +992,12 @@ private void DataGridCell_Loaded(object sender, RoutedEventArgs e)
             I'll set that to Name.
           </p>
           <figure>
-<pre class="prettyprint">&lt;ComboBox ItemsSource=&quot;{Binding Products}&quot;
+<pre><code class="language-csharp">&lt;ComboBox ItemsSource=&quot;{Binding Products}&quot;
     DisplayMemberPath=&quot;Name&quot;
     HorizontalAlignment=&quot;Left&quot;
     Margin=&quot;44,23,0,0&quot;
     VerticalAlignment=&quot;Top&quot;
-    Width=&quot;120&quot; /&gt;</pre>
+    Width=&quot;120&quot; /&gt;</code></pre>
             <figcaption>Fig 07-069</figcaption>
           </figure>
           <p>That basically says, go to the Name property on each of those products, get that out as a string, and then
@@ -1016,13 +1016,13 @@ private void DataGridCell_Loaded(object sender, RoutedEventArgs e)
             some sort of identifier typically. So in our case, we can use the Id property.
           </p>
           <figure>
-                <pre class="prettyprint">&lt;ComboBox ItemsSource=&quot;{Binding Products}&quot;
+                <pre><code class="language-csharp">&lt;ComboBox ItemsSource=&quot;{Binding Products}&quot;
     DisplayMemberPath=&quot;Name&quot;
     SelectedValuePath=&quot;Id&quot;
     HorizontalAlignment=&quot;Left&quot;
     Margin=&quot;44,23,0,0&quot;
     VerticalAlignment=&quot;Top&quot;
-    Width=&quot;120&quot; /&gt;</pre>
+    Width=&quot;120&quot; /&gt;</code></pre>
             <figcaption>Fig 07-071</figcaption>
           </figure>
           <p>Hand-in-hand with the SelectedValuePath is the SelectedValue property, and this is one that you can
@@ -1036,10 +1036,10 @@ private void DataGridCell_Loaded(object sender, RoutedEventArgs e)
             so.
           </p>
           <figure>
-                <pre class="prettyprint">ComboBox ItemsSource=&quot;{Binding Products}&quot;
+                <pre><code class="language-csharp">ComboBox ItemsSource=&quot;{Binding Products}&quot;
                   DisplayMemberPath=&quot;Name&quot;
                   SelectedValuePath=&quot;Id&quot;
-                  SelectedValue=&quot;{Binding SelectedProductId}&quot;</pre>
+                  SelectedValue=&quot;{Binding SelectedProductId}&quot;</code></pre>
             <figcaption>Fig 07-072</figcaption>
           </figure>
           <p>Now, if we go ahead and run, notice that the ComboBox is not empty initially:</p>
@@ -1051,14 +1051,14 @@ private void DataGridCell_Loaded(object sender, RoutedEventArgs e)
             products, but we also initialized the SelectedProductId property to the first item in those products.
           </p>
           <figure>
-            <pre class="prettyprint">SelectedProductId = products[0].Id;</pre>
+            <pre><code class="language-csharp">SelectedProductId = products[0].Id;</code></pre>
             <figcaption>Fig 07-074</figcaption>
           </figure>
           <p>Another one you could do as an alternative to SelectedValue, you generally won't do both of these, is the
             SelectedItem property:
           </p>
           <figure>
-            <pre class="prettyprint">SelectedItem=&quot;{Binding SelectedProduct}&quot;</pre>
+            <pre><code class="language-csharp">SelectedItem=&quot;{Binding SelectedProduct}&quot;</code></pre>
             <figcaption>Fig 07-075</figcaption>
           </figure>
           <p>SelectedItem gets the whole data-bound object, which will be a Product object in this case, and pushes it
@@ -1066,7 +1066,7 @@ private void DataGridCell_Loaded(object sender, RoutedEventArgs e)
           </p>
           <p>That, likewise, was being initialized in the constructor to the first item in the list:</p>
           <figure>
-            <pre class="prettyprint">SelectedProduct = products[0];</pre>
+            <pre><code class="language-csharp">SelectedProduct = products[0];</code></pre>
             <figcaption>Fig 07-076</figcaption>
           </figure>
           <p>So we should see that selected now when it starts up. And we could go back here into our SelectedProduct
@@ -1079,7 +1079,7 @@ private void DataGridCell_Loaded(object sender, RoutedEventArgs e)
           </figure>
           <p>If we want to have more structure to the elements within our ComboBox, we could use a DataTemplate:</p>
           <figure>
-                <pre class="prettyprint">&lt;Window.Resources&gt;
+                <pre><code class="language-csharp">&lt;Window.Resources&gt;
     &lt;DataTemplate DataType=&quot;{x:Type data:Product}&quot;&gt;
         &lt;StackPanel Orientation=&quot;Horizontal&quot;&gt;
             &lt;Image Source=&quot;{Binding Image}&quot;
@@ -1088,7 +1088,7 @@ private void DataGridCell_Loaded(object sender, RoutedEventArgs e)
                        Text=&quot;{Binding Name}&quot; /&gt;
         &lt;/StackPanel&gt;
     &lt;/DataTemplate&gt;
-&lt;/Window.Resources&gt;</pre>
+&lt;/Window.Resources&gt;</code></pre>
             <figcaption>Fig 07-078</figcaption>
           </figure>
           <p>in this case, an ImplicitDatatemplate, but of course, an explicit one would work as well. This DataTemplate
@@ -1097,8 +1097,8 @@ private void DataGridCell_Loaded(object sender, RoutedEventArgs e)
             property:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;ComboBox ItemsSource=&quot;{Binding Products}&quot;
-    DisplayMemberPath=&quot;Name&quot;</pre>
+                <pre><code class="language-csharp">&lt;ComboBox ItemsSource=&quot;{Binding Products}&quot;
+    DisplayMemberPath=&quot;Name&quot;</code></pre>
             <figcaption>Fig 07-079</figcaption>
           </figure>
           <p>because those two are incompatible.</p>
@@ -1106,8 +1106,8 @@ private void DataGridCell_Loaded(object sender, RoutedEventArgs e)
             we can get rid of both DisplayMemberPath and SelectedValuePath:
           </p>
           <figure>
-                <pre class="prettyprint">DisplayMemberPath=&quot;Name&quot;
-SelectedValuePath=&quot;Id&quot;</pre>
+                <pre><code class="language-csharp">DisplayMemberPath=&quot;Name&quot;
+SelectedValuePath=&quot;Id&quot;</code></pre>
             <figcaption>Fig 07-080</figcaption>
           </figure>
           <p>which is not being used anymore, and go ahead and run this.</p>
@@ -1129,12 +1129,12 @@ SelectedValuePath=&quot;Id&quot;</pre>
           <p>All those same concepts apply to a ListBox. I could go in here and add a ListBox bound to Products here.
           </p>
           <figure>
-                <pre class="prettyprint">&lt;ListBox ItemsSource=&quot;{Binding Products}&quot;
+                <pre><code class="language-csharp">&lt;ListBox ItemsSource=&quot;{Binding Products}&quot;
      HorizontalAlignment=&quot;Left&quot;
      Height=&quot;132&quot;
      Margin=&quot;44,72,0,0&quot;
      VerticalAlignment=&quot;Top&quot;
-     Width=&quot;246&quot; /&gt;</pre>
+     Width=&quot;246&quot; /&gt;</code></pre>
             <figcaption>Fig 07-082</figcaption>
           </figure>
           <p>DisplayMemberPath would, again, apply, as would SelectedItem, SelectedValue, SelectedValuePath, and so
@@ -1158,7 +1158,7 @@ SelectedValuePath=&quot;Id&quot;</pre>
             IsSynchronizedWithCurrentItem property comes in. Go ahead and set that to True on both of these items:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;ComboBox ItemsSource=&quot;{Binding Products}&quot;
+                <pre><code class="language-csharp">&lt;ComboBox ItemsSource=&quot;{Binding Products}&quot;
     SelectedItem=&quot;{Binding SelectedProduct}&quot;
     HorizontalAlignment=&quot;Left&quot;
     Margin=&quot;44,23,0,0&quot;
@@ -1171,7 +1171,7 @@ SelectedValuePath=&quot;Id&quot;</pre>
          Height=&quot;132&quot;
          Margin=&quot;44,72,0,0&quot;
          VerticalAlignment=&quot;Top&quot;
-         Width=&quot;246&quot; IsSynchronizedWithCurrentItem=&quot;True&quot; /&gt;</pre>
+         Width=&quot;246&quot; IsSynchronizedWithCurrentItem=&quot;True&quot; /&gt;</code></pre>
             <figcaption>Fig 07-084</figcaption>
           </figure>
           <p>and run again, and now we can see if I select Holy Smokes up above, it's highlighted in the list below,
@@ -1192,30 +1192,30 @@ SelectedValuePath=&quot;Id&quot;</pre>
             called SearchInput:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;TextBox Text=&quot;{Binding SearchInput}&quot;
+                <pre><code class="language-csharp">&lt;TextBox Text=&quot;{Binding SearchInput}&quot;
      HorizontalAlignment=&quot;Left&quot;
      Height=&quot;23&quot;
      Margin=&quot;183,23,0,0&quot;
      TextWrapping=&quot;Wrap&quot;
      VerticalAlignment=&quot;Top&quot;
-     Width=&quot;120&quot; /&gt;</pre>
+     Width=&quot;120&quot; /&gt;</code></pre>
             <figcaption>Fig 07-087</figcaption>
           </figure>
           <p>and the button is bound to a command that we're going to add.</p>
           <figure>
-                <pre class="prettyprint">&lt;Button Command=&quot;{Binding SetProductCommand}&quot;
+                <pre><code class="language-csharp">&lt;Button Command=&quot;{Binding SetProductCommand}&quot;
     Content=&quot;Search&quot;
     HorizontalAlignment=&quot;Left&quot;
     Margin=&quot;322,26,0,0&quot;
     VerticalAlignment=&quot;Top&quot;
-    Width=&quot;75&quot; /&gt;</pre>
+    Width=&quot;75&quot; /&gt;</code></pre>
             <figcaption>Fig 07-088</figcaption>
           </figure>
           <p>So first let me drop back to the ViewModel and add those two properties. So here's our SearchInput as a
             string input:
           </p>
           <figure>
-                <pre class="prettyprint">public string SearchInput
+                <pre><code class="language-csharp">public string SearchInput
 {
     get
     {
@@ -1229,30 +1229,30 @@ SelectedValuePath=&quot;Id&quot;</pre>
             PropertyChanged(this, new PropertyChangedEventArgs(&quot;SearchInput&quot;));
         }
     }
-}</pre>
+}</code></pre>
             <figcaption>Fig 07-089</figcaption>
           </figure>
           <p>and here's our SetProductCommand as a RelayCommand.</p>
           <figure>
 
-            <pre class="prettyprint">public RelayCommand SetProductCommand { get; private set; }</pre>
+            <pre><code class="language-csharp">public RelayCommand SetProductCommand { get; private set; }</code></pre>
             <figcaption>Fig 07-090</figcaption>
           </figure>
           <p>Now we need to initialize that ProductCommand, so in the constructor up here, we can initialize it and
             point it to a method called OnSetProduct:
           </p>
           <figure>
-                <pre class="prettyprint"> public MainWindowViewModel()
+                <pre><code class="language-csharp"> public MainWindowViewModel()
 {
-    SetProductCommand = new RelayCommand(OnSetProduct);</pre>
+    SetProductCommand = new RelayCommand(OnSetProduct);</code></pre>
             <figcaption>Fig 07-091</figcaption>
           </figure>
           <p>and I can declare that method down below here.</p>
           <figure>
-                <pre class="prettyprint">private void OnSetProduct()
+                <pre><code class="language-csharp">private void OnSetProduct()
 {
     SelectedProduct = Products.FirstOrDefault(p =&gt; p.Name.Contains(SearchInput));
-}</pre>
+}</code></pre>
             <figcaption>Fig 07-092</figcaption>
           </figure>
           <p>And you can see when that gets called through the command, I'm going to go out and use the SearchInput
@@ -1263,7 +1263,7 @@ SelectedValuePath=&quot;Id&quot;</pre>
           </p>
           <p>That's going to call the setter</p>
           <figure>
-                <pre class="prettyprint">public Product SelectedProduct
+                <pre><code class="language-csharp">public Product SelectedProduct
 {
     get
     {
@@ -1277,13 +1277,13 @@ SelectedValuePath=&quot;Id&quot;</pre>
             PropertyChanged(this, new PropertyChangedEventArgs(&amp;quot;SelectedProduct&amp;quot;));
         }
     }
-}</pre>
+}</code></pre>
             <figcaption>Fig 07-093</figcaption>
           </figure>
           <p>which raises a PropertyChanged event, and because our SelectedItem is bound to that SelectedProduct:</p>
           <figure>
-                <pre class="prettyprint">&lt;ComboBox ItemsSource=&quot;{Binding Products}&quot;
-                  SelectedItem=&quot;{Binding SelectedProduct}&quot;</pre>
+                <pre><code class="language-csharp">&lt;ComboBox ItemsSource=&quot;{Binding Products}&quot;
+                  SelectedItem=&quot;{Binding SelectedProduct}&quot;</code></pre>
             <figcaption>Fig 07-094</figcaption>
           </figure>
           <p>that's going to cause the ComboBox to change. Because the ComboBox changes and IsSynchronized is set on
@@ -1358,7 +1358,7 @@ SelectedValuePath=&quot;Id&quot;</pre>
             ViewModel:
           </p>
           <figure>
-                <pre class="prettyprint">public ProductViewModel(string type)
+                <pre><code class="language-csharp">public ProductViewModel(string type)
     {
         ProductType = type;
         if (!DesignerProperties.GetIsInDesignMode(new DependencyObject()))
@@ -1369,12 +1369,12 @@ SelectedValuePath=&quot;Id&quot;</pre>
                 Products.ToList().ForEach(p =&gt; p.Image = &quot;Images/&quot; + p.Image);
             }
         }
-    }</pre>
+    }</code></pre>
             <figcaption>Fig 07-098</figcaption>
           </figure>
           <p>Which can be rendered out in a list-oriented control. In addition, it has a ProductType string</p>
           <figure>
-                <pre class="prettyprint">public string ProductType
+                <pre><code class="language-csharp">public string ProductType
 {
     get
     {
@@ -1388,37 +1388,37 @@ SelectedValuePath=&quot;Id&quot;</pre>
             PropertyChanged(this, new PropertyChangedEventArgs(&quot;ProductType&quot;));
         }
     }
-}</pre>
+}</code></pre>
             <figcaption>Fig 07-099</figcaption>
           </figure>
           <p>That can be used to label what kind of products this view is rendering.</p>
           <p>The view itself is just going to use a ListBox to render out those products:</p>
           <figure>
-                <pre class="prettyprint">&lt;Grid&gt;
+                <pre><code class="language-csharp">&lt;Grid&gt;
     &lt;ListBox ItemsSource=&quot;{Binding Products}&quot;/&gt;
 
-&lt;/Grid&gt;</pre>
+&lt;/Grid&gt;</code></pre>
             <figcaption>Fig 07-100</figcaption>
           </figure>
           <p>and notice that no DataContext is set inside the UserControl because it's going to be set dynamically
             through data binding.
           </p>
           <figure>
-                <pre class="prettyprint">mc:Ignorable=&quot;d&quot;
+                <pre><code class="language-csharp">mc:Ignorable=&quot;d&quot;
          d:DesignHeight=&quot;300&quot; d:DesignWidth=&quot;300&quot;&gt;
-&lt;UserControl.Resources&gt;</pre>
+&lt;UserControl.Resources&gt;</code></pre>
             <figcaption>Fig 07-101</figcaption>
           </figure>
           <p>The individual products are being rendered out using a DataTemplate:</p>
           <figure>
-                <pre class="prettyprint">&lt;DataTemplate DataType=&quot;{x:Type data:Product}&quot;&gt;
+                <pre><code class="language-csharp">&lt;DataTemplate DataType=&quot;{x:Type data:Product}&quot;&gt;
     &lt;StackPanel Orientation=&quot;Horizontal&quot;&gt;
         &lt;Image Source=&quot;{Binding Image}&quot;
                Width=&quot;75&quot; /&gt;
         &lt;TextBlock Margin=&quot;5&quot;
                    Text=&quot;{Binding Name}&quot; /&gt;
     &lt;/StackPanel&gt;
-&lt;/DataTemplate&gt;</pre>
+&lt;/DataTemplate&gt;</code></pre>
             <figcaption>Fig 07-102</figcaption>
           </figure>
           <p>specifically an ImplicitDataTemplate for the DataType Product.</p>
@@ -1426,7 +1426,7 @@ SelectedValuePath=&quot;Id&quot;</pre>
             of those ProductViewModels.
           </p>
           <figure>
-                <pre class="prettyprint">public ObservableCollection&lt;ProductViewModel&gt; ChildViewModels
+                <pre><code class="language-csharp">public ObservableCollection&lt;ProductViewModel&gt; ChildViewModels
 {
     get
     {
@@ -1440,7 +1440,7 @@ SelectedValuePath=&quot;Id&quot;</pre>
             PropertyChanged(this, new PropertyChangedEventArgs(&quot;ChildViewModels&quot;));
         }
     }
-}</pre>
+}</code></pre>
             <figcaption>Fig 07-103</figcaption>
           </figure>
 
@@ -1451,9 +1451,9 @@ SelectedValuePath=&quot;Id&quot;</pre>
           </p>
           <p>To do that, we'll need a TabControl. So let's drop into the MainWindow and add a TabControl</p>
           <figure>
-                <pre class="prettyprint">&lt;Grid&gt;
+                <pre><code class="language-csharp">&lt;Grid&gt;
     &lt;TabControl ItemsSource=&quot;{Binding ChildViewModels}&quot; ItemTemplate=&quot;{StaticResource TabHeaderTemplate}&quot;/&gt;
-&lt;/Grid&gt;</pre>
+&lt;/Grid&gt;</code></pre>
             <figcaption>Fig 07-104</figcaption>
           </figure>
           <p> bound to that ChildViewModel's property on its ViewModel, which is already wired up as the DataContext.
@@ -1461,7 +1461,7 @@ SelectedValuePath=&quot;Id&quot;</pre>
             the constructor of the ViewModel here and populate it with an ObservableCollection.
           </p>
           <figure>
-                <pre class="prettyprint">public MainWindowViewModel()
+                <pre><code class="language-csharp">public MainWindowViewModel()
 {
     ChildViewModels = new ObservableCollection&lt;ProductViewModel&gt;
     {
@@ -1469,7 +1469,7 @@ SelectedValuePath=&quot;Id&quot;</pre>
         new ProductViewModel(&quot;salad&quot;),
         new ProductViewModel(&quot;drink&quot;)
     };
-}</pre>
+}</code></pre>
             <figcaption>Fig 07-105</figcaption>
           </figure>
           <p>We're putting one instance of the ProductViewModel in for each of the three ProductTypes that are in our
@@ -1477,30 +1477,30 @@ SelectedValuePath=&quot;Id&quot;</pre>
             it to set the ProductType property:
           </p>
           <figure>
-                <pre class="prettyprint">public ProductViewModel(string type)
+                <pre><code class="language-csharp">public ProductViewModel(string type)
 {
-    ProductType = type;</pre>
+    ProductType = type;</code></pre>
             <figcaption>Fig 07-106</figcaption>
           </figure>
           <p>and then notice it's filtering the products that it loads into that ViewModel, based on that Type.</p>
           <figure>
-            <pre class="prettyprint">Products = new ObservableCollection&lt;Product&gt;(context.Products.Where(p =&gt; p.Type == type));</pre>
+            <pre><code class="language-csharp">Products = new ObservableCollection&lt;Product&gt;(context.Products.Where(p =&gt; p.Type == type));</code></pre>
             <figcaption>Fig 07-107</figcaption>
           </figure>
           <p>So now we have a TabControl, which is an ItemsControl itself, bound to a collection of items:</p>
           <figure>
-                <pre class="prettyprint">&lt;Grid&gt;
-    &lt;TabControl ItemsSource=&quot;{Binding ChildViewModels}&quot; &quot;/&gt; &lt;/Grid&gt;</pre>
+                <pre><code class="language-csharp">&lt;Grid&gt;
+    &lt;TabControl ItemsSource=&quot;{Binding ChildViewModels}&quot; &quot;/&gt; &lt;/Grid&gt;</code></pre>
             <figcaption>Fig 07-108</figcaption>
           </figure>
           <p>but it needs to know how to render those items out, and it's going to do that with DataTemplates.</p>
           <p>So we're going to go up here to our Resources section and add in a DataTemplate:</p>
           <figure>
-                <pre class="prettyprint">&lt;Window.Resources&gt;
+                <pre><code class="language-csharp">&lt;Window.Resources&gt;
     &lt;DataTemplate DataType=&quot;{x:Type local:ProductViewModel}&quot;&gt;
         &lt;local:ProductView/&gt;
     &lt;/DataTemplate&gt;
-&lt;/Window.Resources&gt;</pre>
+&lt;/Window.Resources&gt;</code></pre>
             <figcaption>Fig 07-109</figcaption>
           </figure>
 
@@ -1523,7 +1523,7 @@ SelectedValuePath=&quot;Id&quot;</pre>
           </p>
           <p>The reason for this is, a TabControl is an ItemsControl</p>
           <figure>
-            <pre class="prettyprint">&lt;TabControl ItemsSource=&quot;{Binding ChildViewModels}&quot; /&gt;</pre>
+            <pre><code class="language-csharp">&lt;TabControl ItemsSource=&quot;{Binding ChildViewModels}&quot; /&gt;</code></pre>
             <figcaption>Fig 07-111</figcaption>
           </figure>
           <p>but it's really a composite ItemsControl, it's going to render a TabItem for each of the items in its
@@ -1537,9 +1537,9 @@ SelectedValuePath=&quot;Id&quot;</pre>
           </p>
           <p>What I'll do is I'll drop into my Resources and add another DataTemplate.</p>
           <figure>
-                <pre class="prettyprint">&lt;DataTemplate x:Key=&quot;TabHeaderTemplate&quot;&gt;
+                <pre><code class="language-csharp">&lt;DataTemplate x:Key=&quot;TabHeaderTemplate&quot;&gt;
     &lt;TextBlock Text=&quot;{Binding ProductType}&quot;/&gt;
-&lt;/DataTemplate&gt;</pre>
+&lt;/DataTemplate&gt;</code></pre>
             <figcaption>Fig 07-112</figcaption>
           </figure>
           <p>This one's going to have a key to it so we can point to it explicitly and we'll call this the
@@ -1550,22 +1550,22 @@ SelectedValuePath=&quot;Id&quot;</pre>
             ItemTemplate property through a StaticResource, pointing to that TabHeaderTemplate.
           </p>
           <figure>
-                <pre class="prettyprint">&lt;Grid&gt;
+                <pre><code class="language-csharp">&lt;Grid&gt;
     &lt;TabControl ItemsSource=&quot;{Binding ChildViewModels}&quot;
         ItemTemplate=&quot;{StaticResource TabHeaderTemplate}&quot;/&gt;
 
-&lt;/Grid&gt;</pre>
+&lt;/Grid&gt;</code></pre>
             <figcaption>Fig 07-113</figcaption>
           </figure>
           <p>Now, notice if we wanted to do the other one explicitly, we could do that, and what we would use is the
             ContentTemplate property:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;Grid&gt;
+                <pre><code class="language-csharp">&lt;Grid&gt;
     &lt;TabControl ItemsSource=&quot;{Binding ChildViewModels}&quot;
         ItemTemplate=&quot;{StaticResource TabHeaderTemplate}&quot; ContentTemplate=&quot;&quot; /&gt;
 
-&lt;/Grid&gt;</pre>
+&lt;/Grid&gt;</code></pre>
             <figcaption>Fig 07-114</figcaption>
           </figure>
           <p>and point it to whatever template we want, but since we're using an ImplicitDataTemplate here we don't have
@@ -1658,24 +1658,24 @@ SelectedValuePath=&quot;Id&quot;</pre>
             runtime and getting a Customers collection populated:
           </p>
           <figure>
-                <pre class="prettyprint">if (!DesignerProperties.GetIsInDesignMode(this))
+                <pre><code class="language-csharp">if (!DesignerProperties.GetIsInDesignMode(this))
 {
     using (ZzaDbContext context = new ZzaDbContext())
     {
         Customers = new ObservableCollection&lt;Customer&gt;(context.Customers.Include(&quot;Orders&quot;).ToList());
     }
-}</pre>
+}</code></pre>
             <figcaption>Fig 07-117</figcaption>
           </figure>
           <p>that's exposed from the code-behind as a DependencyProperty that has an ObservableCollection.</p>
           <p>Notice it's also drilling down and getting the related Orders for those Customers:</p>
           <figure>
-            <pre class="prettyprint">context.Customers.Include(&quot;Orders&quot;)</pre>
+            <pre><code class="language-csharp">context.Customers.Include(&quot;Orders&quot;)</code></pre>
             <figcaption>Fig 07-118</figcaption>
           </figure>
           <p>which we'll use later in the demo, and it's also populating a States property:</p>
           <figure>
-            <pre class="prettyprint">States = statesStr.Split(',').ToList();</pre>
+            <pre><code class="language-csharp">States = statesStr.Split(',').ToList();</code></pre>
             <figcaption>Fig 07-119</figcaption>
           </figure>
           <p>which is a collection of the state abbreviations, and that's all that's in the code-behind here.</p>
@@ -1709,7 +1709,7 @@ SelectedValuePath=&quot;Id&quot;</pre>
             afterwards, I'm going to drop into the XAML and move some things around and delete a few columns.
           </p>
           <figure>
-                <pre class="prettyprint">&lt;DataGrid.Columns&gt;
+                <pre><code class="language-csharp">&lt;DataGrid.Columns&gt;
                 &lt;DataGridTextColumn x:Name=&quot;idColumn&quot;
                                     Width=&quot;Auto&quot;
                                     Header=&quot;Id&quot;
@@ -1729,7 +1729,7 @@ SelectedValuePath=&quot;Id&quot;</pre>
                 &lt;DataGridTextColumn x:Name=&quot;emailColumn&quot;
                                     Width=&quot;*&quot;
                                     Header=&quot;Email&quot;
-                                    Binding=&quot;{Binding Email}&quot; /&gt;</pre>
+                                    Binding=&quot;{Binding Email}&quot; /&gt;</code></pre>
             <figcaption>Fig 07-124</figcaption>
           </figure>
           <p>I'm just going to do that all quickly here with cut and paste, and we get it down to Id, FirstName,
@@ -1739,7 +1739,7 @@ SelectedValuePath=&quot;Id&quot;</pre>
             MainWindow to itself. So we saw this in earlier demos using a RelativeSource binding to Self:
           </p>
           <figure>
-            <pre class="prettyprint">DataContext=&quot;{Binding RelativeSource={RelativeSource Self}}&quot;</pre>
+            <pre><code class="language-csharp">DataContext=&quot;{Binding RelativeSource={RelativeSource Self}}&quot;</code></pre>
             <figcaption>Fig 07-125</figcaption>
           </figure>
           <p>meaning that the DataContext is the window itself, so the bindings within the view can point to properties
@@ -1749,10 +1749,10 @@ SelectedValuePath=&quot;Id&quot;</pre>
             modification to it:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;Window.Resources&gt;
+                <pre><code class="language-csharp">&lt;Window.Resources&gt;
         &lt;CollectionViewSource x:Key=&quot;customerViewSource&quot;
             Source=&quot;{Binding Customers}&quot; /&gt;
-&lt;/Window.Resources&gt;</pre>
+&lt;/Window.Resources&gt;</code></pre>
             <figcaption>Fig 07-126</figcaption>
           </figure>
           <p>Setting the Source property equal to the Customers property that's being exposed from the code-behind.</p>
@@ -1773,12 +1773,12 @@ SelectedValuePath=&quot;Id&quot;</pre>
             Grid. The basic properties in play here are, of course, ItemsSource:
           </p>
           <figure>
-            <pre class="prettyprint">ItemsSource=&quot;{Binding}&quot;</pre>
+            <pre><code class="language-csharp">ItemsSource=&quot;{Binding}&quot;</code></pre>
             <figcaption>Fig 07-129</figcaption>
           </figure>
           <p>because it is an ItemsControl; AutoGenerateColumns False:</p>
           <figure>
-            <pre class="prettyprint">AutoGenerateColumns=&quot;False&quot;</pre>
+            <pre><code class="language-csharp">AutoGenerateColumns=&quot;False&quot;</code></pre>
             <figcaption>Fig 07-130</figcaption>
           </figure>
 
@@ -1787,7 +1787,7 @@ SelectedValuePath=&quot;Id&quot;</pre>
           </p>
           <p>Now the important thing, as I pointed out in a previous demo, is that these columns:</p>
           <figure>
-                <pre class="prettyprint">&lt;DataGridTextColumn x:Name=&quot;idColumn&quot;
+                <pre><code class="language-csharp">&lt;DataGridTextColumn x:Name=&quot;idColumn&quot;
             Width=&quot;Auto&quot;
             Header=&quot;Id&quot;
             Binding=&quot;{Binding Id}&quot; /&gt;
@@ -1798,7 +1798,7 @@ SelectedValuePath=&quot;Id&quot;</pre>
 &lt;DataGridTextColumn x:Name=&quot;lastNameColumn&quot;
             Width=&quot;Auto&quot;
             Header=&quot;Last Name&quot;
-            Binding=&quot;{Binding LastName}&quot; /&gt;</pre>
+            Binding=&quot;{Binding LastName}&quot; /&gt;</code></pre>
             <figcaption>Fig 07-131</figcaption>
           </figure>
           <p>Don't actually exist at runtime. They're a declaration used to generate cells within a row that represent a
@@ -1808,7 +1808,7 @@ SelectedValuePath=&quot;Id&quot;</pre>
             here:
           </p>
           <figure>
-            <pre class="prettyprint">Binding=&quot;{Binding Id}&quot;</pre>
+            <pre><code class="language-csharp">Binding=&quot;{Binding Id}&quot;</code></pre>
             <figcaption>Fig 07-132</figcaption>
           </figure>
           <p>is really creating a Binding object, which is held in this Binding property. It's then used to set the
@@ -1817,7 +1817,7 @@ SelectedValuePath=&quot;Id&quot;</pre>
           </p>
           <p>Now these Width properties:</p>
           <figure>
-            <pre class="prettyprint">Width=&quot;Auto&quot;</pre>
+            <pre><code class="language-csharp">Width=&quot;Auto&quot;</code></pre>
             <figcaption>Fig 07-133</figcaption>
           </figure>
           <p>are ones you can set size to Header, by default, but you can see it supports *, Auto, and explicit sizing
@@ -1828,11 +1828,11 @@ SelectedValuePath=&quot;Id&quot;</pre>
           </p>
           <p>There's other built-in column types such as a DataGridComboBoxColumn:</p>
           <figure>
-                <pre class="prettyprint">&lt;DataGridComboBoxColumn x:Name=&quot;stateColumn&quot;
+                <pre><code class="language-csharp">&lt;DataGridComboBoxColumn x:Name=&quot;stateColumn&quot;
                                 Width=&quot;100&quot;
                                 Header=&quot;State&quot;
                                 ItemsSource=&quot;{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=DataContext.States}&quot;
-                                SelectedItemBinding=&quot;{Binding State}&quot; /&gt;</pre>
+                                SelectedItemBinding=&quot;{Binding State}&quot; /&gt;</code></pre>
             <figcaption>Fig 07-134</figcaption>
           </figure>
           <p>DataGridCheckBoxColumns, and so on. Now this DataGridComboBoxColumn may seen tempting, but it's actually a
@@ -1845,7 +1845,7 @@ SelectedValuePath=&quot;Id&quot;</pre>
           </p>
           <p>Well, you might be tempted to try what I did here and use a RelativeSource binding:</p>
           <figure>
-            <pre class="prettyprint">&quot;{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=DataContext.States}&quot;</pre>
+            <pre><code class="language-csharp">&quot;{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=DataContext.States}&quot;</code></pre>
             <figcaption>Fig 07-135</figcaption>
           </figure>
           <p>walking up the visual tree to the parent DataGrid, because after all, this is a ComboBoxColumn inside of a
@@ -1859,7 +1859,7 @@ SelectedValuePath=&quot;Id&quot;</pre>
             SelectedItemBinding
           </p>
           <figure>
-            <pre class="prettyprint">SelectedItemBinding=&quot;{Binding State}&quot;</pre>
+            <pre><code class="language-csharp">SelectedItemBinding=&quot;{Binding State}&quot;</code></pre>
             <figcaption>Fig 07-136</figcaption>
           </figure>
           <p>which corresponds to the SelectedItem property for the ComboBox that will be rendered out. As long as you
@@ -1894,7 +1894,7 @@ SelectedValuePath=&quot;Id&quot;</pre>
           </p>
           <p>So, what we can do instead is use a TemplatedColumn:</p>
           <figure>
-                <pre class="prettyprint">&lt;DataGridTemplateColumn x:Name=&quot;stateColumn&quot;
+                <pre><code class="language-csharp">&lt;DataGridTemplateColumn x:Name=&quot;stateColumn&quot;
                         Width=&quot;Auto&quot;
                         Header=&quot;State&quot;&gt;
     &lt;DataGridTemplateColumn.CellTemplate&gt;
@@ -1903,7 +1903,7 @@ SelectedValuePath=&quot;Id&quot;</pre>
                       SelectedItem=&quot;{Binding State}&quot; /&gt;
         &lt;/DataTemplate&gt;
     &lt;/DataGridTemplateColumn.CellTemplate&gt;
-&lt;/DataGridTemplateColumn&gt;</pre>
+&lt;/DataGridTemplateColumn&gt;</code></pre>
             <figcaption>Fig 07-140</figcaption>
           </figure>
           <p>TemplatedColumn is a very important concept in DataGrids because it gives you full control over exactly
@@ -1913,12 +1913,12 @@ SelectedValuePath=&quot;Id&quot;</pre>
             the Width of the column, but everything else will be driven by what you put in the CellTemplate:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;DataGridTemplateColumn.CellTemplate&gt;
+                <pre><code class="language-csharp">&lt;DataGridTemplateColumn.CellTemplate&gt;
     &lt;DataTemplate&gt;
         &lt;ComboBox ItemsSource=&quot;{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=DataContext.States}&quot;
                   SelectedItem=&quot;{Binding State}&quot; /&gt;
     &lt;/DataTemplate&gt;
-&lt;/DataGridTemplateColumn.CellTemplate&gt;</pre>
+&lt;/DataGridTemplateColumn.CellTemplate&gt;</code></pre>
             <figcaption>Fig 07-141</figcaption>
           </figure>
           <p>I should mention there's also a CellEditingTemplate property on the column if you want a different visual
@@ -1929,8 +1929,8 @@ SelectedValuePath=&quot;Id&quot;</pre>
           </p>
           <p>So, here we use an actual ComboBox:</p>
           <figure>
-                <pre class="prettyprint">&lt;ComboBox ItemsSource=&quot;{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=DataContext.States}&quot;
-        SelectedItem=&quot;{Binding State}&quot; /&gt;</pre>
+                <pre><code class="language-csharp">&lt;ComboBox ItemsSource=&quot;{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=DataContext.States}&quot;
+        SelectedItem=&quot;{Binding State}&quot; /&gt;</code></pre>
             <figcaption>Fig 07-142</figcaption>
           </figure>
           <p>with all of its normal ComboBox properties, and in this case, we can use a RelativeSourceBinding, and
@@ -1942,14 +1942,14 @@ SelectedValuePath=&quot;Id&quot;</pre>
             itself, to the States property that's exposed on that.
           </p>
           <figure>
-            <pre class="prettyprint">RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.States}&quot;</pre>
+            <pre><code class="language-csharp">RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.States}&quot;</code></pre>
             <figcaption>Fig 07-143</figcaption>
           </figure>
           <p>So it's able to use that to get the list of states to render in the ComboBox and then we do the
             SelectedItem Binding:
           </p>
           <figure>
-            <pre class="prettyprint">SelectedItem=&quot;{Binding State}&quot;</pre>
+            <pre><code class="language-csharp">SelectedItem=&quot;{Binding State}&quot;</code></pre>
             <figcaption>Fig 07-144</figcaption>
           </figure>
           <p>against the current DataContext, which is a Customer object.</p>
@@ -1973,12 +1973,12 @@ SelectedValuePath=&quot;Id&quot;</pre>
           </p>
           <p>Another last capability to highlight here in DataGrids, is the ability to provide a RowDetailTemplate:</p>
           <figure>
-                <pre class="prettyprint">&lt;DataGrid.RowDetailsTemplate&gt;
+                <pre><code class="language-csharp">&lt;DataGrid.RowDetailsTemplate&gt;
     &lt;DataTemplate&gt;
         &lt;DataGrid ItemsSource=&quot;{Binding Orders}&quot;
                   AutoGenerateColumns=&quot;True&quot; /&gt;
     &lt;/DataTemplate&gt;
-&lt;/DataGrid.RowDetailsTemplate&gt;</pre>
+&lt;/DataGrid.RowDetailsTemplate&gt;</code></pre>
             <figcaption>Fig 07-147</figcaption>
           </figure>
           <p>So I'm going to pop in here another property on the DataGrid, RowDetailsTemplate, which is just a
@@ -1986,7 +1986,7 @@ SelectedValuePath=&quot;Id&quot;</pre>
           </p>
           <p>It's driven by a property at the DataGrid level called RowDetailsVisibilityMode:</p>
           <figure>
-            <pre class="prettyprint">RowDetailsVisibilityMode=&quot;VisibleWhenSelected&quot;</pre>
+            <pre><code class="language-csharp">RowDetailsVisibilityMode=&quot;VisibleWhenSelected&quot;</code></pre>
             <figcaption>Fig 07-148</figcaption>
           </figure>
           <p>You can set this to collapsed and then programmatically toggle it, or you can use this
@@ -1997,7 +1997,7 @@ SelectedValuePath=&quot;Id&quot;</pre>
           </p>
           <p>So, because we populated the child Orders for a Customer in the query in the code-behind:</p>
           <figure>
-            <pre class="prettyprint">Customers = new ObservableCollection&lt;Customer&gt;(context.Customers.Include(&quot;Orders&quot;).ToList());</pre>
+            <pre><code class="language-csharp">Customers = new ObservableCollection&lt;Customer&gt;(context.Customers.Include(&quot;Orders&quot;).ToList());</code></pre>
             <figcaption>Fig 07-149</figcaption>
           </figure>
           <p>it means that we can bind to that as a property hanging off of the current DataContext for a given row,
@@ -2081,46 +2081,46 @@ SelectedValuePath=&quot;Id&quot;</pre>
           </figure>
           <p>I'm going to drop into the UI here and add a button, its content is set to Sort:</p>
           <figure>
-                <pre class="prettyprint">&lt;Button Content=&quot;Sort&quot;
+                <pre><code class="language-csharp">&lt;Button Content=&quot;Sort&quot;
     HorizontalAlignment=&quot;Left&quot;
     Margin=&quot;10,3,0,0&quot;
     VerticalAlignment=&quot;Top&quot;
     Width=&quot;75&quot;
-Click=&quot;OnSort&quot; /&gt;</pre>
+Click=&quot;OnSort&quot; /&gt;</code></pre>
             <figcaption>Fig 07-152</figcaption>
           </figure>
           <p>and we're going to hook up an OnSort method in the code-behind. Our OnSort handler here, you can see, is
             going to reach out and find that customersViewSource that's up in the XAML.
           </p>
           <figure>
-                <pre class="prettyprint">private void OnSort(object sender, RoutedEventArgs e)
+                <pre><code class="language-csharp">private void OnSort(object sender, RoutedEventArgs e)
 {
     var customerViewSource = FindResource(&quot;customerViewSource&quot;)
         as CollectionViewSource;
     customerViewSource.SortDescriptions.Add(
         new SortDescription(&quot;State&quot;, ListSortDirection.Ascending));
-}</pre>
+}</code></pre>
             <figcaption>Fig 07-153</figcaption>
           </figure>
           <p>This is the one that was generated through drag-and-drop and slightly modified in the last demo, but it's
             pointing to the Customers collection exposed from the Window code-behind, which is our DataContext:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;Window.Resources&gt;
+                <pre><code class="language-csharp">&lt;Window.Resources&gt;
         &lt;CollectionViewSource x:Key=&quot;customerViewSource&quot;
                       Source=&quot;{Binding Customers}&quot;
-&lt;/Window.Resources&gt;</pre>
+&lt;/Window.Resources&gt;</code></pre>
             <figcaption>Fig 07-154</figcaption>
           </figure>
           <p>So once we have a reference to a CollectionViewSource:</p>
           <figure>
-                <pre class="prettyprint">private void OnSort(object sender, RoutedEventArgs e)
+                <pre><code class="language-csharp">private void OnSort(object sender, RoutedEventArgs e)
 {
     var customerViewSource = FindResource(&quot;customerViewSource&quot;)
         as CollectionViewSource;
     customerViewSource.SortDescriptions.Add(
         new SortDescription(&quot;State&quot;, ListSortDirection.Ascending));
-}</pre>
+}</code></pre>
             <figcaption>Fig 07-155</figcaption>
           </figure>
           <p>it exposes a number of methods and properties we can use to modify the collection it exposes for data
@@ -2145,14 +2145,14 @@ Click=&quot;OnSort&quot; /&gt;</pre>
             CollectionViewSource explicitly:
           </p>
           <figure>
-                <pre class="prettyprint">private void OnSort(object sender, RoutedEventArgs e)
+                <pre><code class="language-csharp">private void OnSort(object sender, RoutedEventArgs e)
 {
     //var customerViewSource = FindResource(&quot;customerViewSource&quot;) as CollectionViewSource;
     //customerViewSource.SortDescriptions.Add(new SortDescription(&quot;State&quot;, ListSortDirection.Ascending));
 
     ICollectionView view = customerViewSource.View as ICollectionView;
     view.SortDescriptions.Add(new SortDescription(&quot;State&quot;, ListSortDirection.Ascending));
-}</pre>
+}</code></pre>
             <figcaption>Fig 07-158</figcaption>
           </figure>
           <p>So I could comment out the line of code that went directly to the SortDescriptions property of the
@@ -2166,7 +2166,7 @@ Click=&quot;OnSort&quot; /&gt;</pre>
           </p>
           <p>It has a SortDescriptions collection:</p>
           <figure>
-            <pre class="prettyprint">view.SortDescriptions.Add(new SortDescription(&quot;State&quot;, ListSortDirection.Ascending));</pre>
+            <pre><code class="language-csharp">view.SortDescriptions.Add(new SortDescription(&quot;State&quot;, ListSortDirection.Ascending));</code></pre>
             <figcaption>Fig 07-159</figcaption>
           </figure>
           <p>that you can add new SortDescriptions into, and do the exact same thing that we were doing directly on the
@@ -2181,48 +2181,48 @@ Click=&quot;OnSort&quot; /&gt;</pre>
             here and add another button, which will show up at the top, called Filter:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;Button Content=&quot;Filter&quot;
+                <pre><code class="language-csharp">&lt;Button Content=&quot;Filter&quot;
     HorizontalAlignment=&quot;Left&quot;
     Margin=&quot;90,3,0,0&quot;
     VerticalAlignment=&quot;Top&quot;
     Width=&quot;75&quot;
-    Click=&quot;OnFilter&quot; /&gt;</pre>
+    Click=&quot;OnFilter&quot; /&gt;</code></pre>
             <figcaption>Fig 07-160</figcaption>
           </figure>
           <p>and it's going to target a method we'll add in the code-behind called OnFilter. I'll drop in the
             code-behind and add that method:
           </p>
           <figure>
-                <pre class="prettyprint">private void OnFilter(object sender, RoutedEventArgs e)
+                <pre><code class="language-csharp">private void OnFilter(object sender, RoutedEventArgs e)
 {
     var customerViewSource = FindResource(&quot;customerViewSource&quot;) as CollectionViewSource;
     customerViewSource.Filter += customerViewSource_Filter;
 
-}</pre>
+}</code></pre>
             <figcaption>Fig 07-161</figcaption>
           </figure>
           <p>and you can see what the API looks like here is, again, we reach out and get a reference to our
             CollectionViewSource. That CollectionViewSource has an event on it called Filter:
           </p>
           <figure>
-                <pre class="prettyprint">private void OnFilter(object sender, RoutedEventArgs e)
+                <pre><code class="language-csharp">private void OnFilter(object sender, RoutedEventArgs e)
 {
     var customerViewSource = FindResource(&quot;customerViewSource&quot;)
         as CollectionViewSource;
     customerViewSource.Filter += customerViewSource_Filter;
-}</pre>
+}</code></pre>
             <figcaption>Fig 07-162</figcaption>
           </figure>
           <p>and when you hook up a subscriber to that event it's going to trigger it to reevaluate its collection, fire
             that event once for each object:
           </p>
           <figure>
-                <pre class="prettyprint"> void customerViewSource_Filter(object sender, FilterEventArgs e)
+                <pre><code class="language-csharp"> void customerViewSource_Filter(object sender, FilterEventArgs e)
 {
     Customer c = e.Item as Customer;
     if (c.State == &quot;AK&quot;) e.Accepted = true;
     else e.Accepted = false;
-}</pre>
+}</code></pre>
             <figcaption>Fig 07-163</figcaption>
           </figure>
           <p>and let your event handler decide whether to include that object or not.</p>
@@ -2246,7 +2246,7 @@ Click=&quot;OnSort&quot; /&gt;</pre>
             here
           </p>
           <figure>
-                <pre class="prettyprint">private void OnFilter(object sender, RoutedEventArgs e)
+                <pre><code class="language-csharp">private void OnFilter(object sender, RoutedEventArgs e)
 {
     var customerViewSource = FindResource(&quot;customerViewSource&quot;) as CollectionViewSource;
     //customerViewSource.Filter += customerViewSource_Filter;
@@ -2257,7 +2257,7 @@ Click=&quot;OnSort&quot; /&gt;</pre>
             Customer c = item as Customer;
             return c.State == &quot;AZ&quot; ? true : false;
         };
-}</pre>
+}</code></pre>
             <figcaption>Fig 07-165</figcaption>
           </figure>
           <p>So we could get to our CollectionViewSource and get to its underlying ICollectionView.</p>
@@ -2266,23 +2266,23 @@ Click=&quot;OnSort&quot; /&gt;</pre>
             notion of events, so I'm not a big fan of this event-based way of doing it.
           </p>
           <figure>
-                <pre class="prettyprint">void customerViewSource_Filter(object sender, FilterEventArgs e)
+                <pre><code class="language-csharp">void customerViewSource_Filter(object sender, FilterEventArgs e)
 {
     Customer c = e.Item as Customer;
     if (c.State == &quot;AK&quot;) e.Accepted = true;
     else e.Accepted = false;
-}</pre>
+}</code></pre>
             <figcaption>Fig 07-166</figcaption>
           </figure>
           <p>The ICollectionView way is a little bit more explicit. What you set is a Filter property on the view.</p>
           <p>The Filter property is set to a delegate type that's called Predicate. Predicate takes in an object:</p>
           <figure>
-            <pre class="prettyprint">view.Filter =  (item) =></pre>
+            <pre><code class="language-csharp">view.Filter =  (item) =></code></pre>
             <figcaption>Fig 07-167</figcaption>
           </figure>
           <p>and returns a Boolean.</p>
           <figure>
-            <pre class="prettyprint">return c.State == &quot;AZ&quot; ? true : false;</pre>
+            <pre><code class="language-csharp">return c.State == &quot;AZ&quot; ? true : false;</code></pre>
             <figcaption>Fig 07-168</figcaption>
           </figure>
           <p>And basically, the Filter Predicate will be evaluated once for each object in the collection any time you
@@ -2301,22 +2301,22 @@ Click=&quot;OnSort&quot; /&gt;</pre>
             Group objects:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;Button Content=&quot;Group&quot;
+                <pre><code class="language-csharp">&lt;Button Content=&quot;Group&quot;
     HorizontalAlignment=&quot;Left&quot;
     Margin=&quot;170,3,0,0&quot;
     VerticalAlignment=&quot;Top&quot;
     Width=&quot;75&quot;
-    Click=&quot;OnGroup&quot; /&gt;</pre>
+    Click=&quot;OnGroup&quot; /&gt;</code></pre>
             <figcaption>Fig 07-170</figcaption>
           </figure>
           <p>and I'll drop into the code-behind and add a handler for that OnGroup method.</p>
           <figure>
-                <pre class="prettyprint">private void OnGroup(object sender, RoutedEventArgs e)
+                <pre><code class="language-csharp">private void OnGroup(object sender, RoutedEventArgs e)
 {
     var customerViewSource = FindResource(&quot;customerViewSource&quot;)
         as CollectionViewSource;
     customerViewSource.GroupDescriptions.Add(new PropertyGroupDescription(&quot;State&quot;));
-}</pre>
+}</code></pre>
             <figcaption>Fig 07-171</figcaption>
           </figure>
           <p>Similar thing, I need to get a reference to my CollectionViewSource and it exposes a GroupDescriptions
@@ -2336,7 +2336,7 @@ Click=&quot;OnSort&quot; /&gt;</pre>
             and add a property called GroupStyle to the DataGrid, setting it to a GroupStyle instance:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;DataGrid.GroupStyle&gt;
+                <pre><code class="language-csharp">&lt;DataGrid.GroupStyle&gt;
     &lt;GroupStyle&gt;
         &lt;GroupStyle.HeaderTemplate&gt;
             &lt;DataTemplate&gt;
@@ -2344,7 +2344,7 @@ Click=&quot;OnSort&quot; /&gt;</pre>
             &lt;/DataTemplate&gt;
         &lt;/GroupStyle.HeaderTemplate&gt;
     &lt;/GroupStyle&gt;
-&lt;/DataGrid.GroupStyle&gt;</pre>
+&lt;/DataGrid.GroupStyle&gt;</code></pre>
             <figcaption>Fig 07-173</figcaption>
           </figure>
           <p>and the GroupStyle can have various things in it, but one of the things it has is a HeaderTemplate. That's
@@ -2395,7 +2395,7 @@ Click=&quot;OnSort&quot; /&gt;</pre>
             a Customers property that we're going to be data binding to
           </p>
           <figure>
-                <pre class="prettyprint">public MainWindow()
+                <pre><code class="language-csharp">public MainWindow()
 {
     InitializeComponent();
     using (ZzaDbContext context = new ZzaDbContext())
@@ -2411,14 +2411,14 @@ public ObservableCollection&lt;Customer&gt; Customers
 }
 
 public static readonly DependencyProperty CustomersProperty =
-    DependencyProperty.Register(&quot;Customers&quot;, typeof(ObservableCollection&lt;Customer&gt;), typeof(MainWindow), new PropertyMetadata(null));</pre>
+    DependencyProperty.Register(&quot;Customers&quot;, typeof(ObservableCollection&lt;Customer&gt;), typeof(MainWindow), new PropertyMetadata(null));</code></pre>
             <figcaption>Fig 07-176</figcaption>
           </figure>
           <p>When I populate Customers, notice I'm also drilling down and getting the related Orders, the related
             OrderItems for the Orders, and the related Product for the OrderItem using Entity Framework.
           </p>
           <figure>
-            <pre class="prettyprint">context.Customers.Include(&quot;Orders&quot;).Include(&quot;Orders.OrderItems&quot;).Include(&quot;Orders.OrderItems.Product)</pre>
+            <pre><code class="language-csharp">context.Customers.Include(&quot;Orders&quot;).Include(&quot;Orders.OrderItems&quot;).Include(&quot;Orders.OrderItems.Product)</code></pre>
             <figcaption>Fig 07-177</figcaption>
           </figure>
           <p>I can go into the designer and the Data Sources Window, and I've already added Data Sources for our Entity
@@ -2482,12 +2482,12 @@ public static readonly DependencyProperty CustomersProperty =
             Source property for the root customerViewSource to my Customers collection that I populated on construction.
           </p>
           <figure>
-                <pre class="prettyprint"> private void Window_Loaded(object sender, RoutedEventArgs e)
+                <pre><code class="language-csharp"> private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             System.Windows.Data.CollectionViewSource customerViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource(&quot;customerViewSource&quot;)));
             // Load data by setting the CollectionViewSource.Source property:
             customerViewSource.Source = Customers;
-        }</pre>
+        }</code></pre>
             <figcaption>Fig 07-186</figcaption>
           </figure>
           <p>So with that in place, I can run, and notice that we have the, not very well laid out, but we have
@@ -2504,14 +2504,14 @@ public static readonly DependencyProperty CustomersProperty =
             these CollectionViewSources.
           </p>
           <figure>
-                <pre class="prettyprint">&lt;Window.Resources&gt;
+                <pre><code class="language-csharp">&lt;Window.Resources&gt;
     &lt;CollectionViewSource x:Key=&quot;customerViewSource&quot;
                     d:DesignSource=&quot;{d:DesignInstance {x:Type Data:Customer}, CreateList=True}&quot;/&gt;
     &lt;CollectionViewSource x:Key=&quot;customerOrdersViewSource&quot;
                     Source=&quot;{Binding Orders, Source={StaticResource customerViewSource}}&quot;/&gt;
     &lt;CollectionViewSource x:Key=&quot;customerOrdersOrderItemsViewSource&quot;
                     Source=&quot;{Binding OrderItems, Source={StaticResource customerOrdersViewSource}}&quot;/&gt;
-&lt;/Window.Resources&gt;</pre>
+&lt;/Window.Resources&gt;</code></pre>
             <figcaption>Fig 07-188</figcaption>
           </figure>
           <p>The first one was generated from the drag-and-drop of the CustomerEntityType, and we've talked through that

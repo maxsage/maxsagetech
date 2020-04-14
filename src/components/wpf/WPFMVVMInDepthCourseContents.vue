@@ -3,113 +3,145 @@
     <div class="panel-group">
       <div class="panel panel-primary">
         <div class="panel-heading">
-          <h2>Course Outline</h2>
+          <h2>Course Contents</h2>
         </div>
         <div class="panel-body">
-
-          <h4>MVVM Pattern Fundamentals</h4>
-          <a target="_blank" href="../../../static/wpf/wpfmvvmindepth//wpf-mvvm-in-depth-section-01.html">MVVM Pattern Fundamentals</a><br />
-          <p>
-            This module starts by explaining seperation of concerns and how MVVM helps you structure your code to
-            achieve this. It then moves on to briefly discuss other UI Seperation patterns such as MVP and MVC. The next
-            sections cover the responsibilities of the Model, View, ViewModel and Client Services components.
-          </p>
-          <p>
-            The final part of this model discusses the Equation of MVVM: View.DataContext = ViewModel and the order in
-            which the various components get constructed.
-          </p>
-          <h4>First Taste of MVVM</h4>
-          <a target="_blank" href="../../../static/wpf/wpfmvvmindepth//wpf-mvvm-in-depth-section-02.html">First Taste Of MVVM</a><br />
-          <p>Welcome back to the second module of WPF MVVM in Depth. In this module I want to give you a quick exposure
-            or taste of how using MVVM changes some coding patterns for a simple input screen in WPF application that
-            you may already be used to.
-          </p>
-          <p>I'll do this by stepping through three variants of the same simple application in demos.</p>
           <ul>
-            <li>The first will have no MVVM nor data binding in it.</li>
-            <li>The second will at least leverage data binding but have no MVVM.</li>
-            <li>The third will evolve into showing the same view with MVVM and a quick look at some of the communication
-              between View and ViewModel that we'll get into in more detail later in the course.
+            <li>
+              <a
+                target="_blank"
+                href="../../../static/wpf/wpfmvvmindepth//wpf-mvvm-in-depth-section-01.html"
+              >Course Overview</a>
+              <ol>
+                <li>Course Overview</li>
+              </ol>
+            </li>
+            <li>
+              <a
+                target="_blank"
+                href="../../../static/wpf/wpfmvvmindepth//wpf-mvvm-in-depth-section-02.html"
+              >MVVM Pattern Fundamentals</a>
+              <ol>
+                <li>Welcome</li>
+                <li>Separation of Concerns</li>
+                <li>Separation of Concerns in MVVM</li>
+                <li>MVVM Goals and Benefits</li>
+                <li>Related UI Separation Patterns</li>
+                <li>MVVM across Platforms</li>
+                <li>MVVM Responsibilities</li>
+                <li>Model Responsibilities</li>
+                <li>View Responsibilities</li>
+                <li>ViewModel Responsibilities</li>
+                <li>Client Services Responsibilities</li>
+                <li>Equation of MVVM</li>
+                <li>View/ViewModel Construction</li>
+                <li>Summary</li>
+              </ol>
+            </li>
+            <li>
+              <a
+                target="_blank"
+                href="../../../static/wpf/wpfmvvmindepth//wpf-mvvm-in-depth-section-03.html"
+              >First Taste Of MVVM</a>
+              <ol>
+                <li>Introduction</li>
+                <li>Async in MVVM</li>
+                <li>Implementing a Simple View with No MVVM or Data Binding</li>
+                <li>Implementing a Simple View with Data Binding</li>
+                <li>Implementing a Simple View Transformed to MVVM</li>
+                <li>Summary</li>
+              </ol>
+            </li>
+            <li>
+              <a
+                target="_blank"
+                href="../../../static/wpf/wpfmvvmindepth//wpf-mvvm-in-depth-section-04.html"
+              >Hooking up Views and ViewModels in MVVM</a>
+              <ol>
+                <li>Overview</li>
+                <li>View-First Construction</li>
+                <li>Implementing View-First MVVM Hookup</li>
+                <li>View-First with ViewModelLocators</li>
+                <li>Implementing MVVM Hookup with ViewModelLocator</li>
+                <li>Data Binding Support for MVVM</li>
+                <li>Using Data Binding for MVVM Data Flows</li>
+                <li>ViewModel-First Construction with DataTemplates</li>
+                <li>Using Explicit and Implicit DataTemplates</li>
+                <li>Leveraging Implicit DataTemplates for ViewModel-First MVVM Hookup</li>
+                <li>No One's on First</li>
+                <li>Summary</li>
+              </ol>
+            </li>
+            <li>
+              <a
+                target="_blank"
+                href="../../../static/wpf/wpfmvvmindepth//wpf-mvvm-in-depth-section-05.html"
+              >View/ViewModel Communication in WPF</a>
+              <ol>
+                <li>Introduction</li>
+                <li>Commands for View to ViewModel Communication</li>
+                <li>Using Commands for View to ViewModel Communication</li>
+                <li>Attached Properties and Behaviors</li>
+                <li>Implementing an Attached Behavior</li>
+                <li>Using the XAML Behaviors for WPF</li>
+                <li>Property Change Notifications</li>
+                <li>Leveraging INotifyPropertyChanged</li>
+                <li>Implementing Custom Blend Behavior with INotifyPropertyChanged Trigger</li>
+                <li>Summary</li>
+              </ol>
+            </li>
+            <li>
+              <a
+                target="_blank"
+                href="../../../static/wpf/wpfmvvmindepth//wpf-mvvm-in-depth-section-06.html"
+              >Applied MVVM - Hierarchies and Navigation</a>
+              <ol>
+                <li>Overview</li>
+                <li>Naming MVVM Components</li>
+                <li>Locating MVVM Components</li>
+                <li>MVVM Hierarchies and Navigation</li>
+                <li>Demo Use Case Review</li>
+                <li>Building out an MVVM Hierachy</li>
+                <li>Encapsulating INotifyPropertyChanged</li>
+                <li>Navigating with View Switching</li>
+                <li>Loading Data into a ViewModel</li>
+                <li>Navigating with Parameters</li>
+                <li>Navigating for Adding and Editing Customers</li>
+                <li>Summary</li>
+              </ol>
+            </li>
+            <li>
+              <a
+                target="_blank"
+                href="../../../static/wpf/wpfmvvmindepth//wpf-mvvm-in-depth-section-07.html"
+              >Applied MVVM - Validation and Dependency Injection</a>
+              <ol>
+                <li>Overview</li>
+                <li>Using the Visual Studio Designer and Data Sources</li>
+                <li>Scaffolding an Edit View in Visual Studio</li>
+                <li>Wrapping Model Objects</li>
+                <li>Handling Commands and Using Converters</li>
+                <li>Validating Input in MVVM</li>
+                <li>Adding Validation to an Input View</li>
+                <li>Using Dependency Injection</li>
+                <li>Adding Dependency Injection for Client Services</li>
+                <li>Searching and Filtering Data</li>
+                <li>Leveraging an MVVM Toolkit</li>
+                <li>Summary</li>
+              </ol>
             </li>
           </ul>
-          <h4>Hooking up Views and ViewModels in MVVM</h4>
-          <a target="_blank" href="../../../static/wpf/wpfmvvmindepth//wpf-mvvm-in-depth-section-03.html">Hooking up Views and ViewModels in MVVM</a><br />
-          <p>
-            In this module we will cover different ways that Views can be hooked up to ViewModels. We will also cover
-            how databinding is used to expose data from your Data Models to your Views. We will start with View-First
-            Construction Patterns where the View is constructed first and then takes care of constructing and hooking up
-            its own ViewModel.
-          </p>
-          <p>Next we will cover Data Binding to make it clear how MVVM relies on data binding and uses it to flow data
-            between the View and the ViewModel.
-          </p>
-          <p>
-            Finally, we will cover ViewModel-First approach where Data Templates are used to create the View based on an
-            instance of a ViewModel being placed into a data binding context.
-          </p>
-          <h4>View/ViewModel Communication in WPF</h4>
-          <a target="_blank" href="../../../static/wpf/wpfmvvmindepth//wpf-mvvm-in-depth-section-04.html">View/ViewModel Communication in WPF</a><br />
-          <p>
-            In this module, we will cover View/ViewModel communication in WPF. We will look at how to cleanly call logic
-            that is implemented in the ViewModel when something happens in the View as well as letting the View know
-            when something happens behind the scenes in your ViewModel, Model Objects or Client Services.
-          </p>
-          <p>
-            In the second module you saw a quick example of using a Command to invoke some logic in the ViewModel. In
-            this module we will look at how things get hooked up, and what happens under the covers during that hook-up.
-            In addition, we will see how to use Command Enabling and Keyboard Shortcuts.
-          </p>
-          <p>
-            Next we will look at Attached Properties and Behaviors covering what the relationship between them is, what
-            their general capabilities are and how to use them in the context of MVVM as another means of setting up
-            communication paths between the View elements and View Model logic or vice a versa.
-          </p>
-          <p>
-            We will finish the module with a review of how Property Change Notifications work with Data Binding in WPF
-            and show how they can be used as a signalling mechanism from the ViewModel to make things happen in the View
-            at the appropriate time.
-          </p>
-          <h4>Applied MVVM Part 1 - Hierarchies and Navigation</h4>
-          <a target="_blank" href="../../../static/wpf/wpfmvvmindepth//wpf-mvvm-in-depth-section-05.html">Applied MVVM Part 1 - Hierarchies and Navigation</a><br />
-          <p>
-            We will now start building out a few more fully functional use cases from start to finish. In doing so we
-            will hit on a number of other design considerations and things you will need to know how to tackle when
-            using the MVVM pattern. We will start with a few concepts first including:
-          </p>
-          <ul>
-            <li>Naming and Location of Components</li>
-            <li>Hierarchical MVVM/Navigation</li>
-            <li>MVVM App Building</li>
-          </ul>
-          <h4>Applied MVVM Part 2 - Validation and Dependency Injection</h4>
-          <a target="_blank" href="../../../static/wpf/wpfmvvmindepth//wpf-mvvm-in-depth-section-06.html">Applied MVVM Part 2 - Validation and Dependency Injection</a><br />
-          <p>
-            In this final module we continue to build out use cases surrounding Customers in our Pizza Order Management
-            Application. This will include fleshing out some data entry for adding and editing Customers by leveraging
-            the Scaffolding of data-centric Views that is available in Visual Studio. We also look at validation in the
-            context of MVVM.
-          </p>
-          <p>
-            When ViewModels take dependencies on client services you will want to make sure those dependencies are
-            loosely coupled. We will cover dependency injection.
-          </p>
-          <p>Finally, we will cover some of the toolkits and frameworks that can assist when writing applications that
-            adhere to the MVVM pattern.
-          </p>
-
         </div>
       </div>
     </div>
   </div>
-
 </template>
 
 <script>
 export default {
-  name: 'wpfmvvmindepth00CourseContents'
-}
+  name: "wpfmvvmindepth00CourseContents"
+};
 </script>
 
 <style scoped>
-
 </style>

@@ -42,7 +42,7 @@
           some of the different ways that we can use it in which we'll start to explore in the coming sections. So this
           is the general idea behind what we are currently doing with Webpack:</p>
         <figure>
-          <img src="./images/Fig06-001.PNG"/>
+          <img src="./images/Fig06-001.png"/>
           <figcaption>Fig 06-001</figcaption>
         </figure>
         <p>We run Webpack; we spit out some index HTML and Javascript files; we then manually open up our index.html
@@ -55,7 +55,7 @@
           So, perhaps there's a little bit better way to go about this; maybe there's a little bit better way.</p>
         <p>So in this section, we're gonna start talking about another library called webpack-dev-server:</p>
         <figure>
-          <img src="./images/Fig06-002.PNG"/>
+          <img src="./images/Fig06-002.png"/>
           <figcaption>Fig 06-002</figcaption>
         </figure>
         <p>The purpose of webpack-dev-server is to act as an intermediary between our browser and our Webpack output.
@@ -88,7 +88,7 @@
           want to make sure that we discuss a lot about as well. How do we combine together a traditional Node
           server:</p>
         <figure>
-          <img src="./images/Fig06-003.PNG"/>
+          <img src="./images/Fig06-003.png"/>
           <figcaption>Fig 06-003</figcaption>
         </figure>
         <p>
@@ -116,7 +116,7 @@
           editor, and open up my package.json directory. I'm going to find my script section and will add a new script
           inside of here called 'serve':</p>
         <figure>
-          <img src="./images/Fig06-005.PNG"/>
+          <img src="./images/Fig06-005.png"/>
           <figcaption>Fig 06-005</figcaption>
         </figure>
         <p>And when we run the serve command, we start the module web pack dev server. Do make sure that you also get
@@ -130,7 +130,7 @@
         <p>So once we have got this command added in, I'm going to save the file. Let's go back to the terminal and it
           looks like the installation was successful:</p>
         <figure>
-          <img src="./images/Fig06-006.PNG"/>
+          <img src="./images/Fig06-006.png"/>
           <figcaption>Fig 06-006</figcaption>
         </figure>
         <p>If you see anything about unmet peer dependency or any warnings, those are totally fine.Warnings are fine, if
@@ -144,7 +144,7 @@
         <p>When we start up webpack-dev-server, the npm run serve, you'll see a little bit of output here right of away.
           Something that says, your project is running at local host: 8080:</p>
         <figure>
-          <img src="./images/Fig06-010.PNG"/>
+          <img src="./images/Fig06-010.png"/>
           <figcaption>Fig 06-010</figcaption>
         </figure>
         <p>So this is the default port that our server is going to be running on on our local machine. Once
@@ -154,7 +154,7 @@
         <p>I'm going to open up chrome, and then I will manually navigate to localhost:8080. And lo and behold, we see
           our application pop up on the screen:</p>
         <figure>
-          <img src="./images/Fig06-011.PNG"/>
+          <img src="./images/Fig06-011.png"/>
           <figcaption>Fig 06-011</figcaption>
         </figure>
         <p>Cool. Now, let's do a little bit of investigation and figure out exactly how webpack-dev-server works. It's
@@ -164,7 +164,7 @@
           different. I'm going to open up my console and we'll see a little bit of warning is in here about performance
           stuff. Again, that's totally fine:</p>
         <figure>
-          <img src="./images/Fig06-012.PNG"/>
+          <img src="./images/Fig06-012.png"/>
           <figcaption>Fig 06-012</figcaption>
         </figure>
         <p>You might see a 403 here about an image, totally fine, just a little bit of development messages being sent
@@ -175,7 +175,7 @@
           have already removed that console log statement, so you probably still have a console log it says 'Hi there or
           Hey there'. I'm going to add mine back in:</p>
         <figure>
-          <img src="./images/Fig06-013.PNG"/>
+          <img src="./images/Fig06-013.png"/>
           <figcaption>Fig 06-013</figcaption>
         </figure>
         <p>Like so, I'm going to save this file. Whenever we save this file, webpack-dev-server will watch for any
@@ -184,7 +184,7 @@
           bit more legible. There we go. When I make that change, webpack-dev-server will automatically rebuild our
           project, but you'll notice that it decided to only rebuild one individual file:</p>
         <figure>
-          <img src="./images/Fig06-014.PNG"/>
+          <img src="./images/Fig06-014.png"/>
           <figcaption>Fig 06-014</figcaption>
         </figure>
         <p>So the only file that got changed was the index.js file. And so, webpack-dev-server said, "Well, if that's
@@ -194,7 +194,7 @@
         <p>Let's make sure that it actually did rebuild. So I'm going to go back over to my browser. It looks like the
           browser has already automatically refreshed and I can see a console log of 'Hey there' inside the console:</p>
         <figure>
-          <img src="./images/Fig06-015.PNG"/>
+          <img src="./images/Fig06-015.png"/>
           <figcaption>Fig 06-015</figcaption>
         </figure>
         <p>If you don't see its message, you can always manually refresh the page by hitting command r or refreshing it
@@ -219,7 +219,7 @@
           take just slightly longer than you'd think. Okay. There we go. Very good. So, here's our output. Now if I go
           to my project directory, you'll notice that I've got the disk folder in here:</p>
         <figure>
-          <img src="./images/Fig06-017.PNG"/>
+          <img src="./images/Fig06-017.png"/>
           <figcaption>Fig 06-017</figcaption>
         </figure>
         <p>Right? And that's exactly what we would expect, exactly what we'd expect. The disk folder is here, nothing
@@ -244,13 +244,13 @@
           output. So, when we run webpack-dev-server, let's go back over to our project directory and you'll notice that
           the dist directory was not created:</p>
         <figure>
-          <img src="./images/Fig06-020.PNG"/>
+          <img src="./images/Fig06-020.png"/>
           <figcaption>Fig 06-020</figcaption>
         </figure>
         <p>Hmm, that's interesting. Well, let's go back over to Chrome. I'm going to make sure I'm on local host 8080.
           I'm going to refresh the page and our application still boots u:</p>
         <figure>
-          <img src="./images/Fig06-021.PNG"/>
+          <img src="./images/Fig06-021.png"/>
           <figcaption>Fig 06-021</figcaption>
         </figure>
         <p>So, what in the world is happening? Our application still boots up but it looks like our dist directory

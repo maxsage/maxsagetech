@@ -47,7 +47,7 @@
           JavaScript, usually from ES2015 to 5, but also has support for all different types of transpilations down to
           ES5 code:</p>
         <figure>
-          <img src="./images/Fig03-001.PNG"/>
+          <img src="./images/Fig03-001.png"/>
           <figcaption>Fig 03-001</figcaption>
         </figure>
         <p>So the first thing that I want to talk to you about is to make sure that it's really clear what the
@@ -72,7 +72,7 @@
         </ul>
         <p>So let's walk through them one by one. First is the babel-loader library:</p>
         <figure>
-          <img src="./images/Fig03-002.PNG"/>
+          <img src="./images/Fig03-002.png"/>
           <figcaption>Fig 03-002</figcaption>
         </figure>
         <p>Now this loader library is to just tell Babel how to work with Webpack. It's kind of like a compatibility
@@ -112,7 +112,7 @@
         <p>So now that we've Babel installed, let's figure out exactly how to tell Webpack to make use of it. Let's take
           a look at the diagram really quick:</p>
         <figure>
-          <img src="./images/Fig03-004.PNG"/>
+          <img src="./images/Fig03-004.png"/>
           <figcaption>Fig 03-004</figcaption>
         </figure>
         <p>OK. To wire up the loader we are first going to add it inside of our Webpack config file. Then we'll tell
@@ -212,7 +212,7 @@
         <p>To instruct babel on how to do this, we are going to create a new file inside of our project directory called
           .babelrc, like so:</p>
         <figure>
-          <img src="./images/Fig03-009.PNG"/>
+          <img src="./images/Fig03-009.png"/>
           <figcaption>Fig 03-009</figcaption>
         </figure>
         <p>Notice that there is no file extension on here. No file extension. It's just.babelrc. Then inside of here,
@@ -254,7 +254,7 @@ module.exports = sum;</code></pre>
         <p>Looks like it does its thing. There were no errors, which is always a good sign. I'm going to open up the
           bundle.js that just got generated and I'll scroll all the way down to find the sum section. So here's sum:</p>
         <figure>
-          <img src="./images/Fig03-014.PNG"/>
+          <img src="./images/Fig03-014.png"/>
           <figcaption>Fig 03-014</figcaption>
         </figure>
         <p>Looks like we've got the var key word in there and we've got function with a function keyword. So clearly
@@ -267,7 +267,7 @@ module.exports = sum;</code></pre>
           over to using ES2015 modules.</p>
         <p>So let's get a better idea of how our syntax is going to change for importing and exporting code:</p>
         <figure>
-          <img src="./images/Fig03-015.PNG"/>
+          <img src="./images/Fig03-015.png"/>
           <figcaption>Fig 03-015</figcaption>
         </figure>
         <p>In the CommonJS world, we have been importing modules or importing code through the use of require statements
@@ -302,7 +302,7 @@ console.log(total);</code></pre>
           everything works right now all we got to do is make sure we see the number 15. So I can refresh this and yeah,
           saw the number 15 here:</p>
         <figure>
-          <img src="./images/Fig03-018.PNG"/>
+          <img src="./images/Fig03-018.png"/>
           <figcaption>Fig 03-018</figcaption>
         </figure>
         <p>Just to be clear, we did this reactor from CommonJS over to ES2015 just because ES2015 is definitely the much
@@ -318,7 +318,7 @@ console.log(total);</code></pre>
           use of CSS styling inside of our Webpack project. So let's look at the diagram to kind of figure out how this
           is going to work:</p>
         <figure>
-          <img src="./images/Fig03-019.PNG"/>
+          <img src="./images/Fig03-019.png"/>
           <figcaption>Fig 03-019</figcaption>
         </figure>
         <p>Now the benefit of using Webpack to handle our CSS is that we can make use of a bunch of different CSS files.
@@ -342,7 +342,7 @@ console.log(total);</code></pre>
         <p>
           Inside of my src directory, I'm gonna make a new file called image_viewer:</p>
         <figure>
-          <img src="./images/Fig03-020.PNG"/>
+          <img src="./images/Fig03-020.png"/>
           <figcaption>Fig 03-020</figcaption>
         </figure>
         <p>And inside of here, we'll place some logic to create a new img tag – so, like a raw HTML element – and append
@@ -360,7 +360,7 @@ image.src = 'http://lorempixel.com/400/400/';</code></pre>
           will be used to show an image on the screen. We're going to use an image from http://lorempixel.com and then
           we're gonna add on /400/400. If I take this URL right here and I put it into the browser:</p>
         <figure>
-          <img src="./images/Fig03-022.PNG"/>
+          <img src="./images/Fig03-022.png"/>
           <figcaption>Fig 03-022</figcaption>
         </figure>
         <p>lorempixel is just a nice website for giving you fake random images. Every single time you refresh the page,
@@ -407,13 +407,13 @@ image.src = 'http://lorempixel.com/400/400/';</code></pre>
           build manually, just to make sure we pick up those configuration changes.</p>
         <p>Okay, so here's our Webpack output:</p>
         <figure>
-          <img src="./images/Fig03-026.PNG"/>
+          <img src="./images/Fig03-026.png"/>
           <figcaption>Fig 03-026</figcaption>
         </figure>
         <p>You'll notice that, now, image_viewer is successfully being included into the bundle. So let's test this out.
           I'll refresh the page. And now I should see an image appear on the screen:</p>
         <figure>
-          <img src="./images/Fig03-027.PNG"/>
+          <img src="./images/Fig03-027.png"/>
           <figcaption>Fig 03-027</figcaption>
         </figure>
         <p>Perfect. All right, let's start adding some CSS to style this image in the next section and then figure out
@@ -424,7 +424,7 @@ image.src = 'http://lorempixel.com/400/400/';</code></pre>
           project using Webpack.</p>
         <p>So remember, this is going to be in our project structure:</p>
         <figure>
-          <img src="./images/Fig03-028.PNG"/>
+          <img src="./images/Fig03-028.png"/>
           <figcaption>Fig 03-028</figcaption>
         </figure>
         <p>We're gonna have our image_viewer JS file and it's gonna have an accompanying image_viewer CSS file. Then
@@ -434,7 +434,7 @@ image.src = 'http://lorempixel.com/400/400/';</code></pre>
         <p>So let's flip back over to our code editor. I'm gonna make a new directory called styles inside of my
           project. And then inside of that folder, I'm gonna make a new file called image_viewer.css:</p>
         <figure>
-          <img src="./images/Fig03-029.PNG"/>
+          <img src="./images/Fig03-029.png"/>
           <figcaption>Fig 03-029</figcaption>
         </figure>
         <p>Now note that if you personally like to have your CSS files in the same directory as your actual source – and
@@ -467,7 +467,7 @@ image.src = 'http://lorempixel.com/400/400/';</code></pre>
           configuration to make sure that it can recognize the CSS file and do the right thing when it sees it. So to
           configure Webpack to handle CSS, we're going to install two new modules:</p>
         <figure>
-          <img src="./images/Fig03-032.PNG"/>
+          <img src="./images/Fig03-032.png"/>
           <figcaption>Fig 03-032</figcaption>
         </figure>
         <p>The first is called css-loader and the second is style-loader. The purpose of css-loader is to just to teach
@@ -526,7 +526,7 @@ image.src = 'http://lorempixel.com/400/400/';</code></pre>
         <p>So, I'm going to change over to the browser and I'm going to refresh the page and when I do, you'll notice
           that we now have a big black border around the exterior of the image:</p>
         <figure>
-          <img src="./images/Fig03-037.PNG"/>
+          <img src="./images/Fig03-037.png"/>
           <figcaption>Fig 03-037</figcaption>
         </figure>
         <p>So, clearly our CSS is correctly being loaded up into this page. But, you know what? I'm a little bit
@@ -536,7 +536,7 @@ image.src = 'http://lorempixel.com/400/400/';</code></pre>
           or the DOM browser on the right hand side. And on the right hand side, I'm going to find the head tag and
           expand it. And inside of here, you'll see a style tag that contains our CSS:</p>
         <figure>
-          <img src="./images/Fig03-038.PNG"/>
+          <img src="./images/Fig03-038.png"/>
           <figcaption>Fig 03-038</figcaption>
         </figure>
         <p>So, here's image. Now, it's a border of 10 pixel black. That's exactly what we added. So, the style loader in
@@ -550,7 +550,7 @@ image.src = 'http://lorempixel.com/400/400/';</code></pre>
           search for border, taken immediately down to a result on a line that appears to have the exact contents of our
           CSS file inside of here:</p>
         <figure>
-          <img src="./images/Fig03-039.PNG"/>
+          <img src="./images/Fig03-039.png"/>
           <figcaption>Fig 03-039</figcaption>
         </figure>
         <p>
@@ -569,13 +569,13 @@ image.src = 'http://lorempixel.com/400/400/';</code></pre>
         <p>That's pretty weird so let's walk this flow one more time. So, over the top, we've got our image_viewer file.
           The image_viewer file imports a CSS file:</p>
         <figure>
-          <img src="./images/Fig03-040.PNG"/>
+          <img src="./images/Fig03-040.png"/>
           <figcaption>Fig 03-040</figcaption>
         </figure>
         <p>This CSS loader notices that we have imported a CSS file, and so it takes the contents of that file and
           sticks it into a long string inside of our bundle.js document. So, here's the CSS right here:</p>
         <figure>
-          <img src="./images/Fig03-041.PNG"/>
+          <img src="./images/Fig03-041.png"/>
           <figcaption>Fig 03-041</figcaption>
         </figure>
         <p>Then the style loader looks at the string right here, and adds some code to the bundle.js file to take that
@@ -684,7 +684,7 @@ test: /\.css$/</code></pre>
           test this out inside the browser now. I'll flip back over and OK. Inside the head tag we now have a linked tag
           instead of a style tag:</p>
         <figure>
-          <img src="./images/Fig03-049.PNG"/>
+          <img src="./images/Fig03-049.png"/>
           <figcaption>Fig 03-049</figcaption>
         </figure>
         <p>So it definitely appears that this thing did what we expected it to. It took all of our CSS and extracted it
@@ -704,7 +704,7 @@ test: /\.css$/</code></pre>
           handle images inside of our application. So let's get a better idea of what those two are. So, all right,
           crazy diagram:</p>
         <figure>
-          <img src="./images/Fig03-050.PNG"/>
+          <img src="./images/Fig03-050.png"/>
           <figcaption>Fig 03-050</figcaption>
         </figure>
         <p>Don't worry, it's gonna be fun. So whenever we attempt to import an image into a file, we're going to send it
@@ -799,7 +799,7 @@ test: /\.css$/</code></pre>
           project, so Webpack actually has something to run over. I'm gonna make a new folder inside of my project
           directory called just assets:</p>
         <figure>
-          <img src="./images/Fig03-055.PNG"/>
+          <img src="./images/Fig03-055.png"/>
           <figcaption>Fig 03-055</figcaption>
         </figure>
         <p>and we'll place our images inside of this assets directory. Now, of course we do need some images. Luckily,
@@ -850,7 +850,7 @@ test: /\.css$/</code></pre>
           directory and see what we have. Inside the build directory, you'll notice that we now have this real long
           filename. And if we open it up, it is the large image:</p>
         <figure>
-          <img src="./images/Fig03-059.PNG"/>
+          <img src="./images/Fig03-059.png"/>
           <figcaption>Fig 03-059</figcaption>
         </figure>
         <p>So clearly, the image loader that we got correctly interpreted this thing or correctly processed it in some
@@ -860,7 +860,7 @@ test: /\.css$/</code></pre>
           we'll scroll on down to the bottom. Inside of here, somewhere, we should probably see something that looks
           like, aha, here we go:</p>
         <figure>
-          <img src="./images/Fig03-060.PNG"/>
+          <img src="./images/Fig03-060.png"/>
           <figcaption>Fig 03-060</figcaption>
         </figure>
         <p>So for me, it's number four; for you it may or may not be number four. But what I'm specifically looking for
@@ -912,7 +912,7 @@ document.body.appendChild(bigImage);</code></pre>
           this small image appear on the screen, but you'll notice that the big image appears to not be displaying at
           all:</p>
         <figure>
-          <img src="./images/Fig03-066.PNG"/>
+          <img src="./images/Fig03-066.png"/>
           <figcaption>Fig 03-066</figcaption>
         </figure>
         <p>And if I look at my console, you'll see an error message on here that says FILE_NOT_FOUND. Now, if I look at
@@ -960,12 +960,12 @@ document.body.appendChild(bigImage);</code></pre>
           run build. After it finishes building, we'll refresh it in the browser. Okay, so I'll go back over to the
           browser. And, on refreshing, you'll notice, Okay, well, hey, it looks like it loaded this thing up:</p>
         <figure>
-          <img src="./images/Fig03-069.PNG"/>
+          <img src="./images/Fig03-069.png"/>
           <figcaption>Fig 03-069</figcaption>
         </figure>
         <p>So what the heck does publicPath actually do for us? Well, let's check the diagram:</p>
         <figure>
-          <img src="./images/Fig03-070.PNG"/>
+          <img src="./images/Fig03-070.png"/>
           <figcaption>Fig 03-070</figcaption>
         </figure>
         <p>So as we've learned, the URL Loader's purpose is to take the image that we have included inside of our
@@ -975,7 +975,7 @@ document.body.appendChild(bigImage);</code></pre>
           image_viewer file. So let's go find that really quick. We're gonna go into my image_viewer file, and here's
           the import statement for the big image right here:</p>
         <figure>
-          <img src="./images/Fig03-071.PNG"/>
+          <img src="./images/Fig03-071.png"/>
           <figcaption>Fig 03-071</figcaption>
         </figure>
         <p>So the URL Loader comes back to this import statements and assigns the name of the new image, as it was
@@ -989,7 +989,7 @@ document.body.appendChild(bigImage);</code></pre>
         <p>Now to me, that's a little bit unexpected. It might have been a little bit more predictable if we had to,
           say, add a property to our URL Loader – so here is the URL Loader right here:</p>
         <figure>
-          <img src="./images/Fig03-072.PNG"/>
+          <img src="./images/Fig03-072.png"/>
           <figcaption>Fig 03-072</figcaption>
         </figure>
         <p>It would have been a little bit more predictable for me, personally, if we passed this thing a additional

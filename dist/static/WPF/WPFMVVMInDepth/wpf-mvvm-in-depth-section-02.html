@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
   <meta charset="UTF-8">
-  <title>maxsagetech - Vue JS Fundamentals</title>
+  <title>maxsagetech - WPF MVVM In Depth</title>
   <script src="https://unpkg.com/vue"></script>
   <!--<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"-->
   <!--integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">-->
@@ -111,7 +111,7 @@
           </p>
           <p>The implementation of these repositories is basic CRUD data access through Entity Framework</p>
           <figure>
-                <pre class="prettyprint">namespace ZzaDashboard.Services
+                <pre><code class="language-csharp">namespace ZzaDashboard.Services
 {
     public class CustomersRepository : ICustomersRepository
     {
@@ -132,7 +132,7 @@
             _context.Customers.Add(customer);
             await _context.SaveChangesAsync();
             return customer;
-        }</pre>
+        }</code></pre>
             <figcaption>Fig 02-004</figcaption>
           </figure>
           <p>We have a DbContext, we're doing queries with the ToListAsync to get the Task based Async, we're doing adds
@@ -145,7 +145,7 @@
             an instance of a User Control in it:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;Window xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+                <pre><code class="language-csharp">&lt;Window xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
         xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
         xmlns:Customers=&quot;clr-namespace:ZzaDashboard.Customers&quot;
         x:Class=&quot;ZzaDashboard.MainWindow&quot;
@@ -159,7 +159,7 @@
                                     VerticalAlignment=&quot;Top&quot; /&gt;
 
     &lt;/Grid&gt;
-&lt;/Window&gt;</pre>
+&lt;/Window&gt;</code></pre>
             <figcaption>Fig 02-005</figcaption>
           </figure>
           <p>For demo purposes here we're hard coding up a CustomerId that we're loading from the database. Obviously in
@@ -172,7 +172,7 @@
           </figure>
           <p>It's really just a simple user control with some layout using a grid:</p>
           <figure>
-                <pre class="prettyprint">&lt;Grid x:Name=&quot;grid1&quot;
+                <pre><code class="language-csharp">&lt;Grid x:Name=&quot;grid1&quot;
       HorizontalAlignment=&quot;Left&quot;
       Margin=&quot;10,10,0,0&quot;
       VerticalAlignment=&quot;Top&quot;&gt;
@@ -191,13 +191,13 @@
            HorizontalAlignment=&quot;Left&quot;
            Margin=&quot;3&quot;
            Grid.Row=&quot;0&quot;
-           VerticalAlignment=&quot;Center&quot; /&gt;</pre>
+           VerticalAlignment=&quot;Center&quot; /&gt;</code></pre>
             <figcaption>Fig 02-007</figcaption>
           </figure>
           <p>And then some inputs that have Labels and TextBoxes and you can see each of the inputs has a name to it:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;Label Content=&quot;First Name:&quot;
+                <pre><code class="language-csharp">&lt;Label Content=&quot;First Name:&quot;
        Grid.Column=&quot;0&quot;
        HorizontalAlignment=&quot;Left&quot;
        Margin=&quot;3&quot;
@@ -224,7 +224,7 @@
        Margin=&quot;3&quot;
        Grid.Row=&quot;1&quot;
        VerticalAlignment=&quot;Center&quot;
-       Width=&quot;120&quot; /&gt;</pre>
+       Width=&quot;120&quot; /&gt;</code></pre>
             <figcaption>Fig 02-008</figcaption>
           </figure>
           <p>Likewise, our Save Button down at the bottom has a Click handler, so it's traditional WPF User Control
@@ -232,16 +232,16 @@
             we are newing up an instance of the repository:
           </p>
           <figure>
-                <pre class="prettyprint">public partial class CustomerEditView : UserControl
+                <pre><code class="language-csharp">public partial class CustomerEditView : UserControl
 {
     private ICustomersRepository _repository = new CustomersRepository();
-    private Customer _customer = null;</pre>
+    private Customer _customer = null;</code></pre>
             <figcaption>Fig 02-009</figcaption>
           </figure>
 
           <p>And when the Loaded event fires we go out and get our Customer asynchronously:</p>
           <figure>
-                <pre class="prettyprint">private async void OnLoaded(object sender, RoutedEventArgs e)
+                <pre><code class="language-csharp">private async void OnLoaded(object sender, RoutedEventArgs e)
 {
     if (DesignerProperties.GetIsInDesignMode(this)) return;
 
@@ -250,14 +250,14 @@
     firstNameTextBox.Text = _customer.FirstName;
     lastNameTextBox.Text = _customer.LastName;
     phoneTextBox.Text = _customer.Phone;
-}</pre>
+}</code></pre>
             <figcaption>Fig 02-010</figcaption>
           </figure>
           <p>Notice the async and await keywords here. Because this returns a Task you can await on that Task and the
             execution of this method will be sequential from the code's declaration perspective but this method:
           </p>
           <figure>
-            <pre class="prettyprint">_customer = await _repository.GetCustomerAsync(CustomerId);</pre>
+            <pre><code class="language-csharp">_customer = await _repository.GetCustomerAsync(CustomerId);</code></pre>
             <figcaption>Fig 02-011</figcaption>
           </figure>
 
@@ -270,14 +270,14 @@
             you're referencing by name here in the code-behind of your view:
           </p>
           <figure>
-                <pre class="prettyprint">private async void OnSave(object sender, RoutedEventArgs e)
+                <pre><code class="language-csharp">private async void OnSave(object sender, RoutedEventArgs e)
 {
     // TODO: Validate input... call business rules... etc...
     _customer.FirstName = firstNameTextBox.Text;
     _customer.LastName = lastNameTextBox.Text;
     _customer.Phone = phoneTextBox.Text;
     await _repository.UpdateCustomerAsync(_customer);
-}</pre>
+}</code></pre>
             <figcaption>Fig 02-012</figcaption>
           </figure>
           <p>And then when you go to save you have to pull those discrete values out, put them back on the model object
@@ -299,10 +299,10 @@
             instance of our user control here CustomerEditView inside of it:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;Customers:CustomerEditView CustomerId=&quot;11DA4696-CEA3-4A6D-8E83-013F1C479618&quot;
+                <pre><code class="language-csharp">&lt;Customers:CustomerEditView CustomerId=&quot;11DA4696-CEA3-4A6D-8E83-013F1C479618&quot;
     HorizontalAlignment=&quot;Left&quot;
     Margin=&quot;42,35,0,0&quot;
-    VerticalAlignment=&quot;Top&quot; /&gt;</pre>
+    VerticalAlignment=&quot;Top&quot; /&gt;</code></pre>
             <figcaption>Fig 02-013</figcaption>
           </figure>
           <p>And the CustomerEditView is defined down in the Customers folder still. The main difference here is that
@@ -314,7 +314,7 @@
             So now if we go and look what this does to the code-behind we can see it cleans things up considerably:
           </p>
           <figure>
-                <pre class="prettyprint">public static readonly DependencyProperty CustomerIdProperty =
+                <pre><code class="language-csharp">public static readonly DependencyProperty CustomerIdProperty =
     DependencyProperty.Register(&quot;CustomerId&quot;, typeof(Guid),
     typeof(CustomerEditView), new PropertyMetadata(Guid.Empty));
 
@@ -329,7 +329,7 @@ private async void OnLoaded(object sender, RoutedEventArgs e)
 private async void OnSave(object sender, RoutedEventArgs e)
 {
     await _repository.UpdateCustomerAsync(_customer);
-}</pre>
+}</code></pre>
             <figcaption>Fig 02-014</figcaption>
           </figure>
           <p>
@@ -337,7 +337,7 @@ private async void OnSave(object sender, RoutedEventArgs e)
             layer then we can just push that into the DataContext:
           </p>
           <figure>
-            <pre class="prettyprint">DataContext = _customer;</pre>
+            <pre><code class="language-csharp">DataContext = _customer;</code></pre>
             <figcaption>Fig 02-015</figcaption>
           </figure>
           <p>
@@ -348,7 +348,7 @@ private async void OnSave(object sender, RoutedEventArgs e)
             model object. So we can just go pass it to our repository layer to get it saved:
           </p>
           <figure>
-            <pre class="prettyprint">await _repository.UpdateCustomerAsync(_customer);</pre>
+            <pre><code class="language-csharp">await _repository.UpdateCustomerAsync(_customer);</code></pre>
             <figcaption>Fig 02-016</figcaption>
           </figure>
           <p>So that cleans things up considerably. Then the next logical step is let's get all this junk out of the
@@ -373,11 +373,11 @@ private async void OnSave(object sender, RoutedEventArgs e)
             into the container.
           </p>
           <figure>
-                <pre class="prettyprint">Grid&gt;
+                <pre><code class="language-csharp">Grid&gt;
         &lt;Customers:CustomerEditView HorizontalAlignment=&quot;Left&quot;
                                     Margin=&quot;42,35,0,0&quot;
                                     VerticalAlignment=&quot;Top&quot; /&gt;
-    &lt;/Grid&gt;</pre>
+    &lt;/Grid&gt;</code></pre>
             <figcaption>Fig 02-017</figcaption>
           </figure>
           <p>Notice the CustomerId property has gone from the MainWindow.xaml file because for the purposes of this demo
@@ -385,7 +385,7 @@ private async void OnSave(object sender, RoutedEventArgs e)
             go and look at our View and see whats changed there from the previous demo.
           </p>
           <figure>
-                <pre class="prettyprint">&lt;UserControl xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+                <pre><code class="language-csharp">&lt;UserControl xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
              xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
              xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
              xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
@@ -403,7 +403,7 @@ private async void OnSave(object sender, RoutedEventArgs e)
         &lt;i:EventTrigger EventName=&quot;Loaded&quot;&gt;
             &lt;ei:CallMethodAction TargetObject=&quot;{Binding}&quot;
                                  MethodName=&quot;LoadCustomer&quot; /&gt;
-        &lt;/i:EventTrigger&gt;</pre>
+        &lt;/i:EventTrigger&gt;</code></pre>
             <figcaption>Fig 02-018</figcaption>
           </figure>
           <p>
@@ -412,9 +412,9 @@ private async void OnSave(object sender, RoutedEventArgs e)
             we're newing up an instance of our CustomerEditViewModel statically here in the XAML parsing process:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;UserControl.DataContext&gt;
+                <pre><code class="language-csharp">&lt;UserControl.DataContext&gt;
     &lt;local:CustomerEditViewModel CustomerId=&quot;11DA4696-CEA3-4A6D-8E83-013F1C479618&quot; /&gt;
-&lt;/UserControl.DataContext&gt;</pre>
+&lt;/UserControl.DataContext&gt;</code></pre>
             <figcaption>Fig 02-019</figcaption>
           </figure>
           <p>And the instance that's created there will then be set as the value on the DataContext of the View
@@ -436,20 +436,20 @@ private async void OnSave(object sender, RoutedEventArgs e)
             disable the button.
           </p>
           <figure>
-                <pre class="prettyprint">&lt;Button x:Name=&quot;saveButton&quot;
+                <pre><code class="language-csharp">&lt;Button x:Name=&quot;saveButton&quot;
     Content=&quot;Save&quot;
     Width=&quot;75&quot;
-    Command=&quot;{Binding SaveCommand}&quot; /&gt;</pre>
+    Command=&quot;{Binding SaveCommand}&quot; /&gt;</code></pre>
             <figcaption>Fig 02-020</figcaption>
           </figure>
           <p>At the top of the CustomerEditView.xaml file we define a Behaviour:</p>
           <figure>
-                <pre class="prettyprint"> &lt;i:Interaction.Triggers&gt;
+                <pre><code class="language-csharp"> &lt;i:Interaction.Triggers&gt;
     &lt;i:EventTrigger EventName=&quot;Loaded&quot;&gt;
         &lt;ei:CallMethodAction TargetObject=&quot;{Binding}&quot;
                              MethodName=&quot;LoadCustomer&quot; /&gt;
     &lt;/i:EventTrigger&gt;
-&lt;/i:Interaction.Triggers&gt;</pre>
+&lt;/i:Interaction.Triggers&gt;</code></pre>
             <figcaption>Fig 02-021</figcaption>
           </figure>
           <p>It uses a behaviour from the Blend SDK called CallMethodAction which is able to call a method on some
@@ -459,19 +459,19 @@ private async void OnSave(object sender, RoutedEventArgs e)
             named LoadCustomer which is on our ViewModel which is our DataContext so a binding specified like this:
           </p>
           <figure>
-            <pre class="prettyprint">&quot;{Binding}&quot;</pre>
+            <pre><code class="language-csharp">&quot;{Binding}&quot;</code></pre>
             <figcaption>Fig 02-022</figcaption>
           </figure>
           <p>basically gets you a reference to the whole DataContext object or ViewModel. So this little chunk of code
             in a nutshell:
           </p>
           <figure>
-                <pre class="prettyprint"> &lt;i:Interaction.Triggers&gt;
+                <pre><code class="language-csharp"> &lt;i:Interaction.Triggers&gt;
     &lt;i:EventTrigger EventName=&quot;Loaded&quot;&gt;
         &lt;ei:CallMethodAction TargetObject=&quot;{Binding}&quot;
                              MethodName=&quot;LoadCustomer&quot; /&gt;
     &lt;/i:EventTrigger&gt;
-&lt;/i:Interaction.Triggers&gt;</pre>
+&lt;/i:Interaction.Triggers&gt;</code></pre>
             <figcaption>Fig 02-023</figcaption>
           </figure>
           <p>Says go call the LoadCustomer method on my ViewModel when the Loaded event of the View fires. We'll see how
@@ -483,13 +483,13 @@ private async void OnSave(object sender, RoutedEventArgs e)
             type Customer:
           </p>
           <figure>
-                <pre class="prettyprint">public Customer Customer
+                <pre><code class="language-csharp">public Customer Customer
 {
     get { return _customer; }
     set
     {
         if (value != _customer)
-        {</pre>
+        {</code></pre>
             <figcaption>Fig 02-024</figcaption>
           </figure>
           <p>
@@ -500,7 +500,7 @@ private async void OnSave(object sender, RoutedEventArgs e)
             PropertyChanged event which is part of the INotifyPropertyChanged interface:
           </p>
           <figure>
-                <pre class="prettyprint">public Customer Customer
+                <pre><code class="language-csharp">public Customer Customer
 {
     get { return _customer; }
     set
@@ -511,23 +511,23 @@ private async void OnSave(object sender, RoutedEventArgs e)
             PropertyChanged(this, new PropertyChangedEventArgs(&quot;Customer&quot;));
         }
     }
-}</pre>
+}</code></pre>
             <figcaption>Fig 02-025</figcaption>
           </figure>
           <p>Next we can see our SaveCommand property that we exposed publicly and bound to:</p>
           <figure>
-                <pre class="prettyprint">public Guid CustomerId { get; set; }
-public ICommand SaveCommand { get; set; }</pre>
+                <pre><code class="language-csharp">public Guid CustomerId { get; set; }
+public ICommand SaveCommand { get; set; }</code></pre>
             <figcaption>Fig 02-026</figcaption>
           </figure>
           <p>That gets hooked up in the Constructor which points it to the actual handling method itself which is the
             OnSave handler:
           </p>
           <figure>
-                <pre class="prettyprint">public CustomerEditViewModel()
+                <pre><code class="language-csharp">public CustomerEditViewModel()
 {
     SaveCommand = new RelayCommand(OnSave);
-}</pre>
+}</code></pre>
             <figcaption>Fig 02-027</figcaption>
           </figure>
           <p>From there you can see that both for the LoadCustomer() and the OnSave() method we're doing task based
@@ -536,7 +536,7 @@ public ICommand SaveCommand { get; set; }</pre>
             the Customer property of our ViewModel with the result:
           </p>
           <figure>
-                <pre class="prettyprint">public async void LoadCustomer()
+                <pre><code class="language-csharp">public async void LoadCustomer()
 {
     Customer = await _repository.GetCustomerAsync(CustomerId);
 }
@@ -544,7 +544,7 @@ public ICommand SaveCommand { get; set; }</pre>
 private async void OnSave()
 {
     Customer = await _repository.UpdateCustomerAsync(Customer);
-}</pre>
+}</code></pre>
             <figcaption>Fig 02-028</figcaption>
           </figure>
           <p>

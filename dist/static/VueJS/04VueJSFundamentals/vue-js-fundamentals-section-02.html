@@ -36,7 +36,7 @@
                 Build-a-Bot application that we'll build throughout this course. We're going to have some fun in this
                 course using Vue to create a simple website for building and buying custom robots.</p>
               <figure>
-                <img src="images/Fig01-001.PNG"/>
+                <img src="images/Fig01-001.png"/>
                 <figcaption>Fig 01-001</figcaption>
               </figure>
               <p>This application will be rich enough to demonstrate all the fundamental concepts you need in order to
@@ -44,24 +44,24 @@
                 building unnecessary features that have no educational value.</p>
               <p>And this is what it'll look like when you're finished.</p>
               <figure>
-                <img src="images/Fig01-002.PNG"/>
+                <img src="images/Fig01-002.png"/>
                 <figcaption>Fig 01-002</figcaption>
               </figure>
               <p>As you can see, I can come to the build page and start customizing my robot:</p>
               <figure>
-                <img src="images/Fig01-003.PNG"/>
+                <img src="images/Fig01-003.png"/>
                 <figcaption>Fig 01-003</figcaption>
               </figure>
               <p>And I can build the robot that I want and then click Add to Cart to add it to my cart. And then you can
                 see, it shows up in my cart here:</p>
               <figure>
-                <img src="images/Fig01-004.PNG"/>
+                <img src="images/Fig01-004.png"/>
                 <figcaption>Fig 01-004</figcaption>
               </figure>
               <p>and I even show which robots I saved money on, if they happen to be on sale. And back on the Build
                 page, I can click on any of these parts and learn more about the individual parts:</p>
               <figure>
-                <img src="images/Fig01-005.PNG"/>
+                <img src="images/Fig01-005.png"/>
                 <figcaption>Fig 01-005</figcaption>
               </figure>
               <p>This site doesn't seem like much, but there's a ton of concepts and learning built into this. It will
@@ -77,18 +77,18 @@
               <p>When you create a view instance, you will usually tell it to render a component, which you do by
                 passing in an options object with a render function, which tells it to render an app component:</p>
               <figure>
-                <img src="images/Fig01-006.PNG"/>
+                <img src="images/Fig01-006.png"/>
                 <figcaption>Fig 01-006</figcaption>
               </figure>
               <p>This app component is the top level component in what will become a hierarchical component structure,
                 so you can imagine your view instance wrapping your entire application:</p>
               <figure>
-                <img src="images/Fig01-007.PNG"/>
+                <img src="images/Fig01-007.png"/>
                 <figcaption>Fig 01-007</figcaption>
               </figure>
               <p>and inside that you have your App component and the App component may have a child component:</p>
               <figure>
-                <img src="images/Fig01-008.PNG"/>
+                <img src="images/Fig01-008.png"/>
                 <figcaption>Fig 01-008</figcaption>
               </figure>
               <p>which then may have other child components, etc. This should feel familiar if you've written any
@@ -97,7 +97,7 @@
               <p>Basically, instead of the App component containing other components, or maybe in addition to it
                 containing other components, it will also contain a router view:</p>
               <figure>
-                <img src="images/Fig01-009.PNG"/>
+                <img src="images/Fig01-009.png"/>
                 <figcaption>Fig 01-009</figcaption>
               </figure>
               <p>Which shows the content for the current Url and as the Url changes, the content inside the router view
@@ -110,7 +110,7 @@
               <p>We're going to need a few tools installed to get going. First, we'll need Git installed. I'm on
                 Windows, so I'm going to use Git for Windows, which can be downloaded from here:</p>
               <figure>
-                <img src="images/Fig01-010.PNG"/>
+                <img src="images/Fig01-010.png"/>
                 <figcaption>Fig 01-010</figcaption>
               </figure>
               <p>If you're on a Mac, you can install SCM Git from here. And if you're on Linux, you can just run a
@@ -123,7 +123,7 @@
                 I'll just use the defaults throughout the install. And now that that's installed, I have this new Git
                 Bash console that I can run:</p>
               <figure>
-                <img src="images/Fig01-012.PNG"/>
+                <img src="images/Fig01-012.png"/>
                 <figcaption>Fig 01-012</figcaption>
               </figure>
               <p>so we'll use that in a minute. And actually, while I prefer to use this Bash console, sometimes Windows
@@ -133,7 +133,7 @@
                 makes it easier to switch between versions of Node as I develop different applications. On Windows, I
                 can download that from here:</p>
               <figure>
-                <img src="images/Fig01-013.PNG"/>
+                <img src="images/Fig01-013.png"/>
                 <figcaption>Fig 01-013</figcaption>
               </figure>
               <p>For Linux and Mac, you can just run this command from the terminal:</p>
@@ -159,7 +159,7 @@
               <p>Okay, we're good to go with Git and Node now. If you have problems using NVM to install Node, you can
                 try installing it directly from here:</p>
               <figure>
-                <img src="images/Fig01-017.PNG"/>
+                <img src="images/Fig01-017.png"/>
                 <figcaption>Fig 01-017</figcaption>
               </figure>
               <p>Just choose the correct installer for your system. Okay, let's get coding.
@@ -193,7 +193,7 @@
               <p>Okay, now that that's installed, we can use it to generate our project. So I'm in my dev folder where I
                 want to create my project:</p>
               <figure>
-                <img src="images/Fig01-020.PNG"/>
+                <img src="images/Fig01-020.png"/>
                 <figcaption>Fig 01-020</figcaption>
               </figure>
               <p>and now I can just run this command:</p>
@@ -205,13 +205,13 @@
                 directory. Okay, so notice here that I can either choose to install according to a default preset, or I
                 can choose this option to manually select which features to bootstrap my project with:</p>
               <figure>
-                <img src="images/Fig01-022.PNG"/>
+                <img src="images/Fig01-022.png"/>
                 <figcaption>Fig 01-022</figcaption>
               </figure>
               <p>Let's go ahead and choose Manually select features. So you can see that the Vue CLI starts with a
                 handful of out-of-the-box features to choose from:</p>
               <figure>
-                <img src="images/Fig01-023.PNG"/>
+                <img src="images/Fig01-023.png"/>
                 <figcaption>Fig 01-023</figcaption>
               </figure>
               <p>Each of the features listed here has the ability, when you select one, to do several things, including
@@ -235,34 +235,34 @@
                 but we'll add those then so you can see how to do that. Okay, so now that I've selected this by hitting
                 Space, I can hit enter to continue, and now we need to choose our linter options.</p>
               <figure>
-                <img src="images/Fig01-024.PNG"/>
+                <img src="images/Fig01-024.png"/>
                 <figcaption>Fig 01-024</figcaption>
               </figure>
               <p>And I'm going to go ahead and choose ESLint with the Airbnb config. I really like the Airbnb
                 configuration for code styling, so I'll go ahead and select that. So I'll hit Enter, and then I'm going
                 to select Lint on save:</p>
               <figure>
-                <img src="images/Fig01-025.PNG"/>
+                <img src="images/Fig01-025.png"/>
                 <figcaption>Fig 01-025</figcaption>
               </figure>
               <p>so that it will execute my linter whenever I save a file. Now I'm going to go ahead and hit Enter
                 again. And then I have an option here as to whether to put my config in my package.json or in dedicated
                 config files.</p>
               <figure>
-                <img src="images/Fig01-026.PNG"/>
+                <img src="images/Fig01-026.png"/>
                 <figcaption>Fig 01-026</figcaption>
               </figure>
               <p>And I like it in dedicated config files, so I'll select that. And then here I have the option to save
                 all of these options that I've selected as a preset for future projects.</p>
               <figure>
-                <img src="images/Fig01-027.PNG"/>
+                <img src="images/Fig01-027.png"/>
                 <figcaption>Fig 01-027</figcaption>
               </figure>
               <p>If I do that, then when I create a new project in the future, I can select that preset instead of
                 having to go through all these options again. But I'm just going to go ahead and so no here.</p>
               <p>Okay, so now it's generating our project for us and installing all of our npm dependencies:</p>
               <figure>
-                <img src="images/Fig01-028.PNG"/>
+                <img src="images/Fig01-028.png"/>
                 <figcaption>Fig 01-028</figcaption>
               </figure>
               <p>Cool. Now that that's done, let's take a quick peek at what it generated, and then we'll start writing
@@ -277,7 +277,7 @@
                 some incredible support for working in Vue. In fact, let's take a look at those extensions. So notice
                 here that I have an ESLint plugin, Vetur plugin, and a vue plugin:</p>
               <figure>
-                <img src="images/Fig01-030.PNG"/>
+                <img src="images/Fig01-030.png"/>
                 <figcaption>Fig 01-030</figcaption>
               </figure>
               <p>I recommend you install each of these if you're following along or if you're going to be doing Vue
@@ -286,20 +286,20 @@
                 need to add a rule here to make it so that it handles Windows line endings correctly. So I'm just going
                 to add rules, and I'm going to set linebreak-style to 0:</p>
               <figure>
-                <img src="images/Fig01-031.PNG"/>
+                <img src="images/Fig01-031.png"/>
                 <figcaption>Fig 01-031</figcaption>
               </figure>
               <p>Now this won't give me warnings due to my Windows-style line breaks. And then one last thing to
                 configure for linting with Vue, over here in my workspace settings, I've configured some ESLint rules
                 for formatting Vue files:</p>
               <figure>
-                <img src="images/Fig01-032.PNG"/>
+                <img src="images/Fig01-032.png"/>
                 <figcaption>Fig 01-032</figcaption>
               </figure>
               <p>So notice here that I'm telling ESLint to validate HTML, Vue, and JavaScript files. And notice for each
                 one of these sections that autoFix is set to true:</p>
               <figure>
-                <img src="images/Fig01-033.PNG"/>
+                <img src="images/Fig01-033.png"/>
                 <figcaption>Fig 01-033</figcaption>
               </figure>
               <p>So whatever I save, if there are linting errors, it will autofix them for me. And then notice down here
@@ -310,14 +310,14 @@
                 package.json file right here, you can see that it created these three scripts for us, all of which call
                 the vue-cli-service.:</p>
               <figure>
-                <img src="images/Fig01-034.PNG"/>
+                <img src="images/Fig01-034.png"/>
                 <figcaption>Fig 01-034</figcaption>
               </figure>
               <p>The vue-cli-service manages a local dev webserver that is based on webpack DevServer.</p>
               <p>We're not going to cover the vue-cli-service in depth in this course, but you can learn more about it
                 here:</p>
               <figure>
-                <img src="images/Fig01-035.PNG"/>
+                <img src="images/Fig01-035.png"/>
                 <figcaption>Fig 01-035</figcaption>
               </figure>
               <p>For now, we're just going to go ahead and run this serve script. So back in our terminal, we can just
@@ -330,12 +330,12 @@
               <p>And that's going to compile our application for development and then start a development server for us
                 on port 8080:</p>
               <figure>
-                <img src="images/Fig01-037.PNG"/>
+                <img src="images/Fig01-037.png"/>
                 <figcaption>Fig 01-037</figcaption>
               </figure>
               <p>There we go. Now let's go take a look at that:</p>
               <figure>
-                <img src="images/Fig01-038.PNG"/>
+                <img src="images/Fig01-038.png"/>
                 <figcaption>Fig 01-038</figcaption>
               </figure>
               <p>Cool. So we can see that we have a running application here, and this is the sample web page that
@@ -343,24 +343,24 @@
                 So let's take a look at how this is all working and being rendered. So back over here, we'll take a look
                 at our main.js file in the src directory:</p>
               <figure>
-                <img src="images/Fig01-039.PNG"/>
+                <img src="images/Fig01-039.png"/>
                 <figcaption>Fig 01-039</figcaption>
               </figure>
               <p>This is the entry point for our Vue application:</p>
               <figure>
-                <img src="images/Fig01-040.PNG"/>
+                <img src="images/Fig01-040.png"/>
                 <figcaption>Fig 01-040</figcaption>
               </figure>
               <p>and you can see it's really simple. Notice we're just creating a new Vue instance here, and then we
                 pass in this options object:</p>
               <figure>
-                <img src="images/Fig01-041.PNG"/>
+                <img src="images/Fig01-041.png"/>
                 <figcaption>Fig 01-041</figcaption>
               </figure>
               <p>to configure our Vue application. And all we're currently configuring is the render property. Notice
                 that the render property is set to a function and that we're passing this App component into it:</p>
               <figure>
-                <img src="images/Fig01-042.PNG"/>
+                <img src="images/Fig01-042.png"/>
                 <figcaption>Fig 01-042</figcaption>
               </figure>
               <p>And all we're currently configuring on our Vue instance is the render property. Notice that the render
@@ -369,17 +369,17 @@
 
               <p>So first of all, notice that there are three sections to this file, a template section:</p>
               <figure>
-                <img src="images/Fig01-043.PNG"/>
+                <img src="images/Fig01-043.png"/>
                 <figcaption>Fig 01-043</figcaption>
               </figure>
               <p>a script section:</p>
               <figure>
-                <img src="images/Fig01-044.PNG"/>
+                <img src="images/Fig01-044.png"/>
                 <figcaption>Fig 01-044</figcaption>
               </figure>
               <p>and a style section:</p>
               <figure>
-                <img src="images/Fig01-045.PNG"/>
+                <img src="images/Fig01-045.png"/>
                 <figcaption>Fig 01-045</figcaption>
               </figure>
               <p>Clearly, this is not a file that a browser could understand, so the question is, how is this getting
@@ -393,7 +393,7 @@
               <p>Right now, there is no routing at work here. The App component is just displaying this HelloWorld
                 component:</p>
               <figure>
-                <img src="images/Fig01-046.PNG"/>
+                <img src="images/Fig01-046.png"/>
                 <figcaption>Fig 01-046</figcaption>
               </figure>
               <p>So the App component is displaying this as a child component, and if we go look at that component,
@@ -407,7 +407,7 @@
                 new concepts just yet. We're just going to spend a little bit of time replacing this generated
                 content:</p>
               <figure>
-                <img src="images/Fig01-047.PNG"/>
+                <img src="images/Fig01-047.png"/>
                 <figcaption>Fig 01-047</figcaption>
               </figure>
               <p>
@@ -416,46 +416,46 @@
                 renaming this HelloWorld component. This will become our new home page, so let's name it
                 HomePage.vue:</p>
               <figure>
-                <img src="images/Fig01-048.PNG"/>
+                <img src="images/Fig01-048.png"/>
                 <figcaption>Fig 01-048</figcaption>
               </figure>
               <p>
                 We could just name it Home.vue, but one of the Vue style guide rules says that components should be two
                 words at a minimum. So we'll name it HomePage. And let's update the component name down here too:</p>
               <figure>
-                <img src="images/Fig01-049.PNG"/>
+                <img src="images/Fig01-049.png"/>
                 <figcaption>Fig 01-049</figcaption>
               </figure>
               <p>And then we'll have to update the import for this in the App component, so instead of importing
                 HelloWorld, we'll import HomePage from HomePage.vue:</p>
               <figure>
-                <img src="images/Fig01-050.PNG"/>
+                <img src="images/Fig01-050.png"/>
                 <figcaption>Fig 01-050</figcaption>
               </figure>
               <p>and then we'll use that down here:</p>
               <figure>
-                <img src="images/Fig01-051.PNG"/>
+                <img src="images/Fig01-051.png"/>
                 <figcaption>Fig 01-051</figcaption>
               </figure>
               <p>And we'll change it up here in the template:</p>
               <figure>
-                <img src="images/Fig01-052.PNG"/>
+                <img src="images/Fig01-052.png"/>
                 <figcaption>Fig 01-052</figcaption>
               </figure>
               <p>And we don't need this msg attribute anymore, so we'll delete that:</p>
               <figure>
-                <img src="images/Fig01-053.PNG"/>
+                <img src="images/Fig01-053.png"/>
                 <figcaption>Fig 01-053</figcaption>
               </figure>
               <p>And I'd like to put all of this inside a main element:</p>
               <figure>
-                <img src="images/Fig01-054.PNG"/>
+                <img src="images/Fig01-054.png"/>
                 <figcaption>Fig 01-054</figcaption>
               </figure>
               <p>And we don't want this Vue logo up here anymore:</p>
               <figure>
-                <img src="./images/Fig01-055.PNG"/>
-                <figcaption>Fig 01-055.PNG</figcaption>
+                <img src="./images/Fig01-055.png"/>
+                <figcaption>Fig 01-055.png</figcaption>
               </figure>
               <p>so we'll delete that. All right, and then let's add a couple of styles and clean up some styles that we
                 don't need. So down here in the style section of our App component, I'd like to add a gradient to the

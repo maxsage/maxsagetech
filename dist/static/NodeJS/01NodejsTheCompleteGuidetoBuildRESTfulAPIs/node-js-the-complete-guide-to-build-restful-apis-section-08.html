@@ -62,7 +62,7 @@
         <p>Now if we create a course without a name and try to save the course in the database we will receive an
           exception:</p>
         <figure>
-          <img src="images/Fig08-004.PNG"/>
+          <img src="images/Fig08-004.png"/>
           <figcaption>Fig 08-004</figcaption>
         </figure>
         <p>This means that the promise was rejected but the rejection has not been handled. Remember that promises can
@@ -84,7 +84,7 @@ catch (ex) {
         </figure>
         <p>Now if you run the application you should see the following:</p>
         <figure>
-          <img src="images/Fig08-005.PNG"/>
+          <img src="images/Fig08-005.png"/>
           <figcaption>Fig 08-005</figcaption>
         </figure>
         <p>So MongoDB doesn't allow us to save invalid course objects to the database - validation kicks in at the point
@@ -102,7 +102,7 @@ catch (ex) {
           we will get an exception and end up in the catch block.</p>
         <p>Running the application should return the same result:</p>
         <figure>
-          <img src="images/Fig08-007.PNG"/>
+          <img src="images/Fig08-007.png"/>
           <figcaption>Fig 08-007</figcaption>
         </figure>
         <p>The problem with the validate method returning a promise of void is that we don't get any result. Ideally the
@@ -198,7 +198,7 @@ catch (ex) {
         <p>The this reference above will reference that function not the course object.</p>
         <p>Now, let's comment out the name and price properties and test the application:</p>
         <figure>
-          <img src="images/Fig08-016.PNG"/>
+          <img src="images/Fig08-016.png"/>
           <figcaption>Fig 08-016</figcaption>
         </figure>
         <p>The validation message is returned as a simple string.</p>
@@ -235,8 +235,8 @@ catch (ex) {
         <p>If we reinstate the name and price properties in the course object and then run the application you will
           see:</p>
         <figure>
-          <img src="images/Fig08-020.PNG"/>
-          <figcaption>Fig 08-020.PNG</figcaption>
+          <img src="images/Fig08-020.png"/>
+          <figcaption>Fig 08-020.png</figcaption>
         </figure>
         <h3>104 - Custom Validators</h3>
         <p>Sometimes the built-in validators in Mongoose don't give us the kind of validation that we need.</p>
@@ -282,7 +282,7 @@ tags: [], // empty array</code></pre>
         </figure>
         <p>Test the application:</p>
         <figure>
-          <img src="images/Fig08-026.PNG"/>
+          <img src="images/Fig08-026.png"/>
           <figcaption>Fig 08-026</figcaption>
         </figure>
         <p>A course should have at least one tag.</p>
@@ -294,7 +294,7 @@ tags: [], // empty array</code></pre>
         </figure>
         <p>Test the application:</p>
         <figure>
-          <img src="images/Fig08-028.PNG"/>
+          <img src="images/Fig08-028.png"/>
           <figcaption>Fig 08-028</figcaption>
         </figure>
         <p>We get the same message. If we don't set the tags property then because it's type is defined as array
@@ -306,7 +306,7 @@ tags: [], // empty array</code></pre>
         </figure>
         <p>Run the application and you will see the following:</p>
         <figure>
-          <img src="images/Fig08-030.PNG"/>
+          <img src="images/Fig08-030.png"/>
           <figcaption>Fig 08-030</figcaption>
         </figure>
         <p>This is not the kind of validation message we want to get. To remedy this we need to modify our validation
@@ -353,7 +353,7 @@ tags: [], // empty array</code></pre>
         <p>Finally we call the callback function with the result.</p>
         <p>Test the application:</p>
         <figure>
-          <img src="images/Fig08-034.PNG"/>
+          <img src="images/Fig08-034.png"/>
           <figcaption>Fig 08-034</figcaption>
         </figure>
         <p>We get a delay of 4 seconds before we see the validation message.</p>
@@ -384,13 +384,13 @@ tags: [], // empty array</code></pre>
         </figure>
         <p>Test the application:</p>
         <figure>
-          <img src="images/Fig08-037.PNG"/>
+          <img src="images/Fig08-037.png"/>
           <figcaption>Fig 08-037</figcaption>
         </figure>
         <p>Below the Validation Error we see the stack trace. The validation error objects contain the following
           properties:</p>
         <figure>
-          <img src="images/Fig08-038.PNG"/>
+          <img src="images/Fig08-038.png"/>
           <figcaption>Fig 08-038</figcaption>
         </figure>
         <p>properties gives us information about the validation requirements for this property. Using the category
@@ -422,7 +422,7 @@ tags: [], // empty array</code></pre>
         </figure>
         <p>Run the application again:</p>
         <figure>
-          <img src="images/Fig08-041.PNG"/>
+          <img src="images/Fig08-041.png"/>
           <figcaption>Fig 08-041</figcaption>
         </figure>
         <p>We have two validation error messages.</p>
@@ -470,7 +470,7 @@ tags: [], // empty array</code></pre>
         </figure>
         <p>Run the application (you might need to create a course with a category first):</p>
         <figure>
-          <img src="images/Fig08-044.PNG"/>
+          <img src="images/Fig08-044.png"/>
           <figcaption>Fig 08-044</figcaption>
         </figure>
         <p>Look at the category - you have a lowercase web. You also have an uppercase property. Finally you have
@@ -507,14 +507,14 @@ tags: [], // empty array</code></pre>
         </figure>
         <p>Run the application:</p>
         <figure>
-          <img src="images/Fig08-047.PNG"/>
+          <img src="images/Fig08-047.png"/>
           <figcaption>Fig 08-047</figcaption>
         </figure>
         <p>We create a new course object and the price is set to 16. This is because when we set the price value in
           our createCourse method the custom setter was called which rounded the value. If you look at the last
           course document in Compass you should see the price is set to 16:</p>
         <figure>
-          <img src="images/Fig08-048.PNG"/>
+          <img src="images/Fig08-048.png"/>
           <figcaption>Fig 08-048</figcaption>
         </figure>
         <p>Edit the type of the property to Double and modify the value to 15.8 and then save changes. Here we are
@@ -541,7 +541,7 @@ tags: [], // empty array</code></pre>
         </figure>
         <p>And run the application you will see the price property is rounded:</p>
         <figure>
-          <img src="images/Fig08-051.PNG"/>
+          <img src="images/Fig08-051.png"/>
           <figcaption>Fig 08-051</figcaption>
         </figure>
         <p>Note if you return the whole course object:</p>
@@ -813,7 +813,7 @@ genres.splice(index, 1);</code></pre>
         </figure>
         <p>Now run the application.</p>
         <figure>
-          <img src="images/Fig08-087.PNG"/>
+          <img src="images/Fig08-087.png"/>
           <figcaption>Fig 08-087</figcaption>
         </figure>
         <p>This error is due to the new keyword here:</p>
@@ -841,23 +841,23 @@ genres.splice(index, 1);</code></pre>
         </figure>
         <p>Rerun the application:</p>
         <figure>
-          <img src="images/Fig08-090.PNG"/>
+          <img src="images/Fig08-090.png"/>
           <figcaption>Fig 08-090</figcaption>
         </figure>
         <p>In postman send a get request to our Genres:</p>
         <figure>
-          <img src="images/Fig08-091.PNG"/>
+          <img src="images/Fig08-091.png"/>
           <figcaption>Fig 08-091</figcaption>
         </figure>
         <p>Currently because we don't have any genres in our database we get an empty array.</p>
         <p>Use a post request to create a new Genre:</p>
         <figure>
-          <img src="images/Fig08-092.PNG"/>
+          <img src="images/Fig08-092.png"/>
           <figcaption>Fig 08-092</figcaption>
         </figure>
         <p>If you get the following error:</p>
         <figure>
-          <img src="images/Fig08-093.PNG"/>
+          <img src="images/Fig08-093.png"/>
           <figcaption>Fig 08-093</figcaption>
         </figure>
         <p>It may be that you need to load Joi in the genres module instead of index.js</p>
@@ -868,51 +868,51 @@ genres.splice(index, 1);</code></pre>
         <p>Resend the Post request in Postman and you should get a 200 response along with the document that was
           created in MongoDB:</p>
         <figure>
-          <img src="images/Fig08-094.PNG"/>
+          <img src="images/Fig08-094.png"/>
           <figcaption>Fig 08-094</figcaption>
         </figure>
         <p>You get the id that is generated by MongoDB along with __v which is the version coming from Mongo. If you
           don't want to return this to the client you can simply exclude it from the genre object.</p>
         <p>Now use Postman to get all the genres in the database:</p>
         <figure>
-          <img src="images/Fig08-095.PNG"/>
+          <img src="images/Fig08-095.png"/>
           <figcaption>Fig 08-095</figcaption>
         </figure>
         <p>Now issue a Put request in Postman to update the name of a genre:</p>
         <p>You should see the genre is updated properly:</p>
         <figure>
-          <img src="images/Fig08-096.PNG"/>
+          <img src="images/Fig08-096.png"/>
           <figcaption>Fig 08-096</figcaption>
         </figure>
         <p>If you specify an invalid name (e.g. an empty string):</p>
         <figure>
-          <img src="images/Fig08-097.PNG"/>
+          <img src="images/Fig08-097.png"/>
           <figcaption>Fig 08-097</figcaption>
         </figure>
         <p>You should receive a validation error along with a 400 Bad Request and an error message: "name" is not
           allowed to be empty:</p>
         <figure>
-          <img src="images/Fig08-098.PNG"/>
+          <img src="images/Fig08-098.png"/>
           <figcaption>Fig 08-098</figcaption>
         </figure>
         <p>Also if you specify an id that doesn't exist:</p>
         <figure>
-          <img src="images/Fig08-099.PNG"/>
+          <img src="images/Fig08-099.png"/>
           <figcaption>Fig 08-099</figcaption>
         </figure>
         <p>You should receive a status code 404 and the message: The genre with the given id was not found.</p>
         <figure>
-          <img src="images/Fig08-100.PNG"/>
+          <img src="images/Fig08-100.png"/>
           <figcaption>Fig 08-100</figcaption>
         </figure>
         <p>Finally test the Delete request and you should see the following response:</p>
         <figure>
-          <img src="images/Fig08-101.PNG"/>
+          <img src="images/Fig08-101.png"/>
           <figcaption>Fig 08-101</figcaption>
         </figure>
         <p>Now if you go back to get all genres you should received an empty array in the response:</p>
         <figure>
-          <img src="images/Fig08-102.PNG"/>
+          <img src="images/Fig08-102.png"/>
           <figcaption>Fig 08-102</figcaption>
         </figure>
         <h3>109 - Project Build Customers API</h3>

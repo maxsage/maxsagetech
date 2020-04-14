@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
   <meta charset="UTF-8">
-  <title>maxsagetech - Vue JS Fundamentals</title>
+  <title>maxsagetech - WPF Databinding In Depth</title>
   <script src="https://unpkg.com/vue"></script>
   <!--<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"-->
   <!--integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">-->
@@ -99,10 +99,10 @@
           </p>
           <p>It's got an empty MainWindow at this point. The only thing in the MainWindow is a CollectionViewSource:</p>
           <figure>
-                <pre class="prettyprint">&lt;Window.Resources&gt;
+                <pre><code class="language-csharp">&lt;Window.Resources&gt;
 &lt;CollectionViewSource x:Key=&quot;customerViewSource&quot;
         d:DesignSource=&quot;{d:DesignInstance {x:Type local:Customer}, CreateList=True}&quot; /&gt;
-&lt;/Window.Resources&gt;</pre>
+&lt;/Window.Resources&gt;</code></pre>
             <figcaption>Fig 07-190</figcaption>
           </figure>
           <p>that's going to be working with a Customer Type. In the code-behind of the MainWindow, we've got the Window
@@ -110,17 +110,17 @@
             into that collection.
           </p>
           <figure>
-                <pre class="prettyprint">private void Window_Loaded(object sender, RoutedEventArgs e)
+                <pre><code class="language-csharp">private void Window_Loaded(object sender, RoutedEventArgs e)
 {
 
     CollectionViewSource customerViewSource = ((CollectionViewSource)(this.FindResource("customerViewSource")));
     customerViewSource.Source = new Customer[] { new Customer() };
-}</pre>
+}</code></pre>
             <figcaption>Fig 07-191</figcaption>
           </figure>
           <p>And the Customer object we'll be dealing with in this demo is just a simple form of Customer.</p>
           <figure>
-                <pre class="prettyprint">public class Customer : INotifyPropertyChanged
+                <pre><code class="language-csharp">public class Customer : INotifyPropertyChanged
 {
     private string _HomePhone;
     public string HomePhone
@@ -134,7 +134,7 @@
                 PropertyChanged(this, new PropertyChangedEventArgs(&quot;HomePhone&quot;));
             }
         }
-    }</pre>
+    }</code></pre>
             <figcaption>Fig 07-192</figcaption>
           </figure>
           <p>It's got three properties at this point, it's got a HomePhone, a WorkPhone, and a CellPhone, and you can
@@ -152,34 +152,34 @@
             because we already have this CollectionViewSource here:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;Window.Resources&gt;
+                <pre><code class="language-csharp">&lt;Window.Resources&gt;
     &lt;CollectionViewSource x:Key=&quot;customerViewSource&quot;
                           d:DesignSource=&quot;{d:DesignInstance {x:Type local:Customer}, CreateList=True}&quot; /&gt;
-&lt;/Window.Resources&gt;</pre>
+&lt;/Window.Resources&gt;</code></pre>
             <figcaption>Fig 07-194</figcaption>
           </figure>
           <p>it didn't generate a new one, it just set the DataContext on the two Grids that it generated, you can see
             one grid for one field
           </p>
           <figure>
-                <pre class="prettyprint">&lt;Grid x:Name=&quot;grid1&quot;
+                <pre><code class="language-csharp">&lt;Grid x:Name=&quot;grid1&quot;
         DataContext=&quot;{StaticResource customerViewSource}&quot;&gt;
-        HorizontalAlignment=&quot;Left&quot;</pre>
+        HorizontalAlignment=&quot;Left&quot;</code></pre>
             <figcaption>Fig 07-195</figcaption>
           </figure>
           <p>one grid for the other field.</p>
           <figure>
-                <pre class="prettyprint">&lt;Grid x:Name=&quot;grid1&quot; ...&gt;
+                <pre><code class="language-csharp">&lt;Grid x:Name=&quot;grid1&quot; ...&gt;
     &lt;Grid x:Name=&quot;grid2&quot;
 DataContext=&quot;{StaticResource customerViewSource}&quot;
-HorizontalAlignment=&quot;Left&quot;</pre>
+HorizontalAlignment=&quot;Left&quot;</code></pre>
             <figcaption>Fig 07-196</figcaption>
           </figure>
           <p>It sets the DataContext on the grid to the customerViewSource, and then on the data input field it added
             the binding to the appropriate field.
           </p>
           <figure>
-                <pre class="prettyprint">&lt;TextBox x:Name=&quot;homePhoneTextBox&quot;
+                <pre><code class="language-csharp">&lt;TextBox x:Name=&quot;homePhoneTextBox&quot;
     Grid.Column=&quot;1&quot;
     HorizontalAlignment=&quot;Left&quot;
     Height=&quot;23&quot;
@@ -187,21 +187,21 @@ HorizontalAlignment=&quot;Left&quot;</pre>
     Grid.Row=&quot;0&quot;
     Text=&quot;{Binding HomePhone, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true, UpdateSourceTrigger=PropertyChanged}&quot;
     VerticalAlignment=&quot;Center&quot;
-    Width=&quot;120&quot; /&gt;</pre>
+    Width=&quot;120&quot; /&gt;</code></pre>
             <figcaption>Fig 07-197</figcaption>
           </figure>
           <p>Now as we talked about before, when you do these drag-and-drops it adds some of these other properties
             relative to validation. You can see, by default, it's going to turn on ValidatesOnExceptions=true.
           </p>
           <figure>
-            <pre class="prettyprint">Binding HomePhone, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true</pre>
+            <pre><code class="language-csharp">Binding HomePhone, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true</code></pre>
             <figcaption>Fig 07-198</figcaption>
           </figure>
           <p>The NotifyOnValidationError we'll get to later in the module. I'll take that off for now, as well as the
             Mode=TwoWay, which we covered in the previous module, is not needed on input controls in WPF.
           </p>
           <figure>
-                <pre class="prettyprint">&lt;TextBox x:Name=&quot;homePhoneTextBox&quot;
+                <pre><code class="language-csharp">&lt;TextBox x:Name=&quot;homePhoneTextBox&quot;
     Grid.Column=&quot;1&quot;
     HorizontalAlignment=&quot;Left&quot;
     Height=&quot;23&quot;
@@ -210,7 +210,7 @@ HorizontalAlignment=&quot;Left&quot;</pre>
     Text=&quot;{Binding HomePhone, ValidatesOnExceptions=true }&quot;
     VerticalAlignment=&quot;Center&quot;
     Width=&quot;120&quot;
-/&gt;</pre>
+/&gt;</code></pre>
             <figcaption>Fig 07-199</figcaption>
           </figure>
           <p>So we're going to focus on this Home Phone field for now. In fact, I'm going to take the
@@ -218,7 +218,7 @@ HorizontalAlignment=&quot;Left&quot;</pre>
             are exceptions.
           </p>
           <figure>
-                <pre class="prettyprint">&lt;TextBox x:Name=&quot;homePhoneTextBox&quot;
+                <pre><code class="language-csharp">&lt;TextBox x:Name=&quot;homePhoneTextBox&quot;
     Grid.Column=&quot;1&quot;
     HorizontalAlignment=&quot;Left&quot;
     Height=&quot;23&quot;
@@ -227,19 +227,19 @@ HorizontalAlignment=&quot;Left&quot;</pre>
     Text=&quot;{Binding HomePhone }&quot;
     VerticalAlignment=&quot;Center&quot;
     Width=&quot;120&quot;
-/&gt;</pre>
+/&gt;</code></pre>
             <figcaption>Fig 07-200</figcaption>
           </figure>
           <p>So let's drop back to the customer here and add a little Helper method to validate a phone number.</p>
           <figure>
-                <pre class="prettyprint">private void ValidatePhone(string value)
+                <pre><code class="language-csharp">private void ValidatePhone(string value)
 {
     if (string.IsNullOrEmpty(value))
         return;
     Regex regex = new Regex(@&quot;^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$&quot;);
     if (regex.Match(value) == Match.Empty)
         throw new ArgumentException(&quot;Invalid phone format&quot;);
-}</pre>
+}</code></pre>
             <figcaption>Fig 07-201</figcaption>
           </figure>
           <p>This method's going to take in a value and it's going to use a RegularExpression, which you don't have to
@@ -254,7 +254,7 @@ HorizontalAlignment=&quot;Left&quot;</pre>
             different from the one we currently have, we can invoke our ValidatePhone method, passing in the value.
           </p>
           <figure>
-                <pre class="prettyprint">private string _HomePhone;
+                <pre><code class="language-csharp">private string _HomePhone;
 public string HomePhone
 {
     get { return _HomePhone; }
@@ -267,7 +267,7 @@ public string HomePhone
             PropertyChanged(this, new PropertyChangedEventArgs(&quot;HomePhone&quot;));
         }
     }
-}</pre>
+}</code></pre>
             <figcaption>Fig 07-202</figcaption>
           </figure>
           <p>So one of the advantages of using exceptions for validation is that you can prevent the value from ever
@@ -289,7 +289,7 @@ public string HomePhone
             back to my binding and put back on ValidatesOnExceptions=True:
           </p>
           <figure>
-                <pre class="prettyprint">Grid.Column=&quot;1&quot;
+                <pre><code class="language-csharp">Grid.Column=&quot;1&quot;
     HorizontalAlignment=&quot;Left&quot;
     Height=&quot;23&quot;
     Margin=&quot;3&quot;
@@ -297,7 +297,7 @@ public string HomePhone
     Text=&quot;{Binding HomePhone, ValidatesOnExceptions=True }&quot;
     VerticalAlignment=&quot;Center&quot;
     Width=&quot;120&quot;
-/&gt;</pre>
+/&gt;</code></pre>
             <figcaption>Fig 07-204</figcaption>
           </figure>
           <p>Now if we run the same scenario, we go ahead and put in an invalid value and tab out of the field, now we
@@ -378,7 +378,7 @@ public string HomePhone
             RegexValidationRule:
           </p>
           <figure>
-                <pre class="prettyprint">public class RegexValidationRule : ValidationRule
+                <pre><code class="language-csharp">public class RegexValidationRule : ValidationRule
 {
     public override ValidationResult Validate(object value, CultureInfo cultureInfo)
     {
@@ -389,7 +389,7 @@ public string HomePhone
         else
             return ValidationResult.ValidResult;
     }
-}</pre>
+}</code></pre>
             <figcaption>Fig 07-207</figcaption>
           </figure>
           <p>And basically what you do here is you derive from the ValidationRule base class of WPF.</p>
@@ -415,7 +415,7 @@ public string HomePhone
           </figure>
           <p>So here's the WorkPhone Binding that was put in there through drag-and-drop:</p>
           <figure>
-                <pre class="prettyprint">&lt;TextBox x:Name=&quot;workPhoneTextBox&quot;
+                <pre><code class="language-csharp">&lt;TextBox x:Name=&quot;workPhoneTextBox&quot;
         Grid.Column=&quot;1&quot;
         HorizontalAlignment=&quot;Left&quot;
         Height=&quot;23&quot;
@@ -423,7 +423,7 @@ public string HomePhone
         Grid.Row=&quot;0&quot;
         Text=&quot;{Binding WorkPhone}&quot;
         VerticalAlignment=&quot;Center&quot;
-        Width=&quot;120&quot; /&gt;</pre>
+        Width=&quot;120&quot; /&gt;</code></pre>
             <figcaption>Fig 07-209</figcaption>
           </figure>
           <p>I'm going to remove the rest of the properties on the binding. Now the first thing to realize is that
@@ -431,7 +431,7 @@ public string HomePhone
             that can be set as a markup extension like this, can also be set as a nested element in XAML.
           </p>
           <figure>
-                <pre class="prettyprint">&lt;TextBox x:Name=&quot;workPhoneTextBox&quot;
+                <pre><code class="language-csharp">&lt;TextBox x:Name=&quot;workPhoneTextBox&quot;
         Grid.Column=&quot;1&quot;
         HorizontalAlignment=&quot;Left&quot;
         Height=&quot;23&quot;
@@ -442,7 +442,7 @@ public string HomePhone
     &lt;TextBox.Text&gt;
         &lt;Binding Path=&quot;WorkPhone&quot; /&gt;
     &lt;/TextBox.Text&gt;
-</pre>
+</code></pre>
             <figcaption>Fig 07-210</figcaption>
           </figure>
           <p>So I can take out the Text property here and add it in like this, where I'm setting the text property as a
@@ -455,13 +455,13 @@ public string HomePhone
           </p>
           <p>So then we can expand the binding to allow child elements and add in ValidationRules:</p>
           <figure>
-                <pre class="prettyprint">&lt;TextBox.Text&gt;
+                <pre><code class="language-csharp">&lt;TextBox.Text&gt;
     &lt;Binding Path=&quot;WorkPhone&quot;&gt;
         &lt;Binding.ValidationRules&gt;
             &lt;local:RegexValidationRule  /&gt;
         &lt;/Binding.ValidationRules&gt;
     &lt;/Binding&gt;
-&lt;/TextBox.Text&gt;</pre>
+&lt;/TextBox.Text&gt;</code></pre>
             <figcaption>Fig 07-211</figcaption>
           </figure>
           <p>So there's a ValidationRules collection on a binding. Inside of that you can add instances of
@@ -482,13 +482,13 @@ public string HomePhone
             binding. So this is the same UpdateSourceTrigger that we've seen inside the curly brace notation:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;TextBox.Text&gt;
+                <pre><code class="language-csharp">&lt;TextBox.Text&gt;
     &lt;Binding Path=&quot;WorkPhone&quot; UpdateSourceTrigger="PropertyChanged"&gt;
         &lt;Binding.ValidationRules&gt;
             &lt;local:RegexValidationRule  /&gt;
         &lt;/Binding.ValidationRules&gt;
     &lt;/Binding&gt;
-&lt;/TextBox.Text&gt;</pre>
+&lt;/TextBox.Text&gt;</code></pre>
             <figcaption>Fig 07-213</figcaption>
           </figure>
           <p>If we set it to PropertyChanged instead of the default of LostFocus, then we get more immediate feedback to
@@ -502,7 +502,7 @@ public string HomePhone
             here.
           </p>
           <figure>
-            <pre class="prettyprint">public override ValidationResult Validate(object value, CultureInfo cultureInfo)</pre>
+            <pre><code class="language-csharp">public override ValidationResult Validate(object value, CultureInfo cultureInfo)</code></pre>
             <figcaption>Fig 07-214</figcaption>
           </figure>
           <p>You can think of this as, if a stranger walks up to you on the street, says 42, are you okay with that. You
@@ -514,7 +514,7 @@ public string HomePhone
           <p>So one thing you can do is define properties on your ValidationRules.</p>
           <p>I'm going to expand my implementation here and add down at the bottom here an Expression property.</p>
           <figure>
-                <pre class="prettyprint">public class RegexValidationRule : ValidationRule
+                <pre><code class="language-csharp">public class RegexValidationRule : ValidationRule
 {
     public override ValidationResult Validate(object value, CultureInfo cultureInfo)
     {
@@ -527,7 +527,7 @@ public string HomePhone
             return new ValidationResult(false, &quot;Invalid input format&quot;);
         else
             return ValidationResult.ValidResult;
-    }</pre>
+    }</code></pre>
             <figcaption>Fig 07-215</figcaption>
           </figure>
           <p>Now I can pass in the RegularExpression, making this rule really more reusable.</p>
@@ -536,13 +536,13 @@ public string HomePhone
             rule.
           </p>
           <figure>
-                <pre class="prettyprint">&lt;TextBox.Text&gt;
+                <pre><code class="language-csharp">&lt;TextBox.Text&gt;
     &lt;Binding Path=&quot;WorkPhone&quot; UpdateSourceTrigger="PropertyChanged"&gt;
         &lt;Binding.ValidationRules&gt;
             &lt;local:RegexValidationRule  /&gt;
         &lt;/Binding.ValidationRules&gt;
     &lt;/Binding&gt;
-&lt;/TextBox.Text&gt;</pre>
+&lt;/TextBox.Text&gt;</code></pre>
             <figcaption>Fig 07-216</figcaption>
           </figure>
           <p>So now we set the Expression based on the fact that here we have some context that we're trying to evaluate
@@ -556,10 +556,10 @@ public string HomePhone
             that's static in the XAML.
           </p>
           <figure>
-                <pre class="prettyprint">&lt;Binding.ValidationRules&gt;
+                <pre><code class="language-csharp">&lt;Binding.ValidationRules&gt;
     &lt;local:RegexValidationRule Expression=&quot;^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$&quot; /&gt;
 &lt;/Binding.ValidationRules&gt;
-                </pre>
+                </code></pre>
             <figcaption>Fig 07-217</figcaption>
           </figure>
           <p>Because the base class of ValidationRules is not a DependencyObject, you can't have DependencyProperties on
@@ -643,7 +643,7 @@ public string HomePhone
             extra properties, and just put one additional property, which is ValidatesOnDataErrors=true.
           </p>
           <figure>
-                <pre class="prettyprint">&lt;TextBox x:Name=&quot;cellPhoneTextBox&quot;
+                <pre><code class="language-csharp">&lt;TextBox x:Name=&quot;cellPhoneTextBox&quot;
     Grid.Column=&quot;1&quot;
     HorizontalAlignment=&quot;Left&quot;
     Height=&quot;23&quot;
@@ -651,7 +651,7 @@ public string HomePhone
     Grid.Row=&quot;0&quot;
     Text=&quot;{Binding CellPhone, ValidatesOnDataErrors=true}&quot;
     VerticalAlignment=&quot;Center&quot;
-    Width=&quot;120&quot; /&gt;</pre>
+    Width=&quot;120&quot; /&gt;</code></pre>
             <figcaption>Fig 07-220</figcaption>
           </figure>
           <p>We saw ValidatesOnExceptions earlier, this is an alternative to that, using IDataErrorInfo to derive your
@@ -667,14 +667,14 @@ public string HomePhone
           <p>So I'll drop into my Customer and add the IDataErrorInfo interface and implement it using Visual Studio.
           </p>
           <figure>
-                <pre class="prettyprint">namespace ValidationDemo
+                <pre><code class="language-csharp">namespace ValidationDemo
 {
-    public class Customer : INotifyPropertyChanged, IDataErrorInfo</pre>
+    public class Customer : INotifyPropertyChanged, IDataErrorInfo</code></pre>
             <figcaption>Fig 07-221</figcaption>
           </figure>
           <p>Down at the bottom of my class it added two members</p>
           <figure>
-                <pre class="prettyprint">public string Error
+                <pre><code class="language-csharp">public string Error
 {
     get { throw new NotImplementedException(); }
 }
@@ -682,7 +682,7 @@ public string HomePhone
 public string this[string columnName]
 {
     get { throw new NotImplementedException(); }
-}</pre>
+}</code></pre>
             <figcaption>Fig 07-222</figcaption>
           </figure>
           <p>A string called Error, and an Indexer that says columnName here, but you can think of this, really, as
@@ -692,20 +692,20 @@ public string this[string columnName]
             and it returns a string.
           </p>
           <figure>
-                <pre class="prettyprint">public string this[string propertyName]
+                <pre><code class="language-csharp">public string this[string propertyName]
 {
     get { throw new NotImplementedException(); }
-}</pre>
+}</code></pre>
             <figcaption>Fig 07-223</figcaption>
           </figure>
           <p>So the idea here is that the Error property is meant to represent an error for the object as a whole. For
             that, I'm just going to return string.Empty.
           </p>
           <figure>
-                <pre class="prettyprint">public string Error
+                <pre><code class="language-csharp">public string Error
 {
     get { return string.Empty; }
-}</pre>
+}</code></pre>
             <figcaption>Fig 07-224</figcaption>
           </figure>
           <p>The Indexer is what we're going to focus our effort on, and the idea is that this will be invoked by the
@@ -716,7 +716,7 @@ public string this[string columnName]
           </p>
           <p>You do have to first accept the value into the property:</p>
           <figure>
-                <pre class="prettyprint">private string _CellPhone;
+                <pre><code class="language-csharp">private string _CellPhone;
 public string CellPhone
 {
     get { return _CellPhone; }
@@ -728,17 +728,17 @@ public string CellPhone
             PropertyChanged(this, new PropertyChangedEventArgs("CellPhone"));
         }
     }
-}</pre>
+}</code></pre>
             <figcaption>Fig 07-225</figcaption>
           </figure>
           <p>so you're going to have to let the set block be called, not throw an exception, write it into your member
             variable, so that down here in the Indexer:
           </p>
           <figure>
-                <pre class="prettyprint">public string this[string propertyName]
+                <pre><code class="language-csharp">public string this[string propertyName]
 {
     get { throw new NotImplementedException(); }
-}</pre>
+}</code></pre>
             <figcaption>Fig 07-226</figcaption>
           </figure>
           <p>you can then look at that value in the member variable and decide whether you like it or not, and if not,
@@ -746,17 +746,17 @@ public string CellPhone
           </p>
           <p>So what I'm going to do here is I'm going to return a method:</p>
           <figure>
-                <pre class="prettyprint">public string this[string propertyName]
+                <pre><code class="language-csharp">public string this[string propertyName]
 {
     get { return GetErrorForProperty(propertyName); }
-}</pre>
+}</code></pre>
             <figcaption>Fig 07-227</figcaption>
           </figure>
           <p>because I don't like putting a bunch of logic in a get block of a property. Then I'll go right below that
             and implement that method:
           </p>
           <figure>
-                <pre class="prettyprint">private string GetErrorForProperty(string propertyName)
+                <pre><code class="language-csharp">private string GetErrorForProperty(string propertyName)
 {
     switch (propertyName)
     {
@@ -768,7 +768,7 @@ public string CellPhone
         default:
             return string.Empty;
     }
-}</pre>
+}</code></pre>
             <figcaption>Fig 07-228</figcaption>
           </figure>
           <p>And the nature of the method that you're going to have to implement is, unfortunately, generally a big
@@ -786,7 +786,7 @@ public string CellPhone
           </p>
           <p>So by virtue of the fact that our entity that we're binding to now implements this interface:</p>
           <figure>
-            <pre class="prettyprint">public class Customer : INotifyPropertyChanged, IDataErrorInfo</pre>
+            <pre><code class="language-csharp">public class Customer : INotifyPropertyChanged, IDataErrorInfo</code></pre>
             <figcaption>Fig 07-229</figcaption>
           </figure>
           <p>and our binding says that we do want to honor that interface, this binding will basically hook up to that
@@ -863,10 +863,10 @@ public string CellPhone
             IDataErrorInfo:
           </p>
           <figure>
-                <pre class="prettyprint">namespace ValidationDemo
+                <pre><code class="language-csharp">namespace ValidationDemo
 {
     public class Customer : INotifyPropertyChanged, INotifyDataErrorInfo
-    {</pre>
+    {</code></pre>
             <figcaption>Fig 07-232</figcaption>
           </figure>
           <p>So I changed my interface to INotifyDataErrorInfo, I will use Visual Studio to stub it out, and then I'll
@@ -874,7 +874,7 @@ public string CellPhone
             to be used anymore, and let's look at the API of INotifyDataErrorInfo.
           </p>
           <figure>
-                <pre class="prettyprint">public event EventHandler&lt;DataErrorsChangedEventArgs&gt; ErrorsChanged;
+                <pre><code class="language-csharp">public event EventHandler&lt;DataErrorsChangedEventArgs&gt; ErrorsChanged;
 
 public System.Collections.IEnumerable GetErrors(string propertyName)
 {
@@ -884,7 +884,7 @@ public System.Collections.IEnumerable GetErrors(string propertyName)
 public bool HasErrors
 {
     throw new NotImplementedException();
-}</pre>
+}</code></pre>
             <figcaption>Fig 07-233</figcaption>
           </figure>
           <p>First off, it's got an ErrorsChanged event and I'm going to use the delegate trick here to make it so I
@@ -903,18 +903,18 @@ public bool HasErrors
             it's going to check and call the HasErrors property:
           </p>
           <figure>
-                <pre class="prettyprint">public bool HasErrors
+                <pre><code class="language-csharp">public bool HasErrors
 {
     throw new NotImplementedException();
-}</pre>
+}</code></pre>
             <figcaption>Fig 07-234</figcaption>
           </figure>
           <p>If that returns true, then it's going to call GetErrors:</p>
           <figure>
-                <pre class="prettyprint">public System.Collections.IEnumerable GetErrors(string propertyName)
+                <pre><code class="language-csharp">public System.Collections.IEnumerable GetErrors(string propertyName)
 {
     throw new NotImplementedException();
-}</pre>
+}</code></pre>
             <figcaption>Fig 07-235</figcaption>
           </figure>
           <p>If at some point after it's called GetErrors, the ErrorsChanged event fires, it will come back in and call
@@ -925,7 +925,7 @@ public bool HasErrors
             of that is generally going to be a Dictionary&lt;string, List&lt;string&gt;&gt;:
           </p>
           <figure>
-            <pre class="prettyprint">Dictionary&lt;string, List&lt;string&gt;&gt; _PropertyErrors = new Dictionary&lt;string, List&lt;string&gt;&gt;();</pre>
+            <pre><code class="language-csharp">Dictionary&lt;string, List&lt;string&gt;&gt; _PropertyErrors = new Dictionary&lt;string, List&lt;string&gt;&gt;();</code></pre>
             <figcaption>Fig 07-236</figcaption>
           </figure>
           <p>So you want to have that collection of errors that you return up here for a given property name where the
@@ -933,7 +933,7 @@ public bool HasErrors
             PropertyErrors collection:
           </p>
           <figure>
-                <pre class="prettyprint">public System.Collections.IEnumerable GetErrors(string propertyName)
+                <pre><code class="language-csharp">public System.Collections.IEnumerable GetErrors(string propertyName)
 {
     lock (_PropertyErrors)
     {
@@ -941,7 +941,7 @@ public bool HasErrors
             return _PropertyErrors[propertyName];
     }
     return null;
-}</pre>
+}</code></pre>
             <figcaption>Fig 07-237</figcaption>
           </figure>
           <p>see if there is a key for the propertyName, and if so, return whatever the value is the list of strings
@@ -956,7 +956,7 @@ public bool HasErrors
           </p>
           <p>Next, we need to implement this HasErrors method, so I'm going to flesh that out by calling a method:</p>
           <figure>
-                <pre class="prettyprint">public bool HasErrors
+                <pre><code class="language-csharp">public bool HasErrors
 {
     get { return PropertyErrorsPresent(); }
 }
@@ -972,7 +972,7 @@ private bool PropertyErrorsPresent()
             break;
         }
     }
-}</pre>
+}</code></pre>
             <figcaption>Fig 07-238</figcaption>
           </figure>
           <p>again, because I don't like putting complex logic in a get block, personally. And what this method really
@@ -990,7 +990,7 @@ private bool PropertyErrorsPresent()
             method to simulate this.
           </p>
           <figure>
-                <pre class="prettyprint">Task&lt;List&lt;string&gt;&gt; GetErrorsForPhone(string value)
+                <pre><code class="language-csharp">Task&lt;List&lt;string&gt;&gt; GetErrorsForPhone(string value)
 {
     // Simulate async call - typically to a web service
     return Task.Factory.StartNew&lt;List&lt;string&gt;&gt;(() =&gt;
@@ -1001,7 +1001,7 @@ private bool PropertyErrorsPresent()
             return new List&lt;string&gt; { &quot;Invalid phone format&quot; };
         return null;
     });
-}</pre>
+}</code></pre>
             <figcaption>Fig 07-239</figcaption>
           </figure>
           <p>So this method is using the Task Parallel Library, it's defining a method called GetErrorsForPhone where I
@@ -1013,7 +1013,7 @@ private bool PropertyErrorsPresent()
             which causes it to dispatch whatever's inside of this action delegate
           </p>
           <figure>
-            <pre class="prettyprint">return Task.Factory.StartNew&lt;List&lt;string&gt;&gt;(() =&gt;</pre>
+            <pre><code class="language-csharp">return Task.Factory.StartNew&lt;List&lt;string&gt;&gt;(() =&gt;</code></pre>
             <figcaption>Fig 07-240</figcaption>
           </figure>
           <p>on a separate thread.</p>
@@ -1024,7 +1024,7 @@ private bool PropertyErrorsPresent()
           </p>
           <p>So, basically, I want this:</p>
           <figure>
-                <pre class="prettyprint">Task&lt;List&lt;string&gt;&gt; GetErrorsForPhone(string value)
+                <pre><code class="language-csharp">Task&lt;List&lt;string&gt;&gt; GetErrorsForPhone(string value)
 {
     // Simulate async call - typically to a web service
     return Task.Factory.StartNew&lt;List&lt;string&gt;&gt;(() =&gt;
@@ -1035,7 +1035,7 @@ private bool PropertyErrorsPresent()
             return new List&lt;string&gt; { &quot;Invalid phone format&quot; };
         return null;
     });
-}</pre>
+}</code></pre>
             <figcaption>Fig 07-241</figcaption>
           </figure>
           <p>to be invoked at a point where I know that a phone value has changed. So, naturally, a good place for that
@@ -1043,7 +1043,7 @@ private bool PropertyErrorsPresent()
             can dispatch some asynchronous work.
           </p>
           <figure>
-                <pre class="prettyprint">private string _CellPhone;
+                <pre><code class="language-csharp">private string _CellPhone;
 public string CellPhone
 {
     get { return _CellPhone; }
@@ -1065,7 +1065,7 @@ public string CellPhone
 
         }
     }
-}</pre>
+}</code></pre>
             <figcaption>Fig 07-242</figcaption>
           </figure>
           <p>So I'm going to call that task-based method, which is non-blocking because it's asynchronous, and when it
@@ -1078,25 +1078,25 @@ public string CellPhone
           </p>
           <p>So I basically just take the result property:</p>
           <figure>
-            <pre class="prettyprint">_PropertyErrors[&quot;CellPhone&quot;] = errorsTask.Result;</pre>
+            <pre><code class="language-csharp">_PropertyErrors[&quot;CellPhone&quot;] = errorsTask.Result;</code></pre>
             <figcaption>Fig 07-243</figcaption>
           </figure>
           <p>of the task that come back in from our ContinueWith:</p>
           <figure>
-            <pre class="prettyprint">GetErrorsForPhone(CellPhone).ContinueWith((errorsTask) =&gt;</pre>
+            <pre><code class="language-csharp">GetErrorsForPhone(CellPhone).ContinueWith((errorsTask) =&gt;</code></pre>
             <figcaption>Fig 07-244</figcaption>
           </figure>
           <p>that will be the list of strings that came out of my Task, and I can push that into the appropriate
             dictionary entry based on the property that I'm setting.
           </p>
           <figure>
-            <pre class="prettyprint">_PropertyErrors[&quot;CellPhone&quot;] = errorsTask.Result;</pre>
+            <pre><code class="language-csharp">_PropertyErrors[&quot;CellPhone&quot;] = errorsTask.Result;</code></pre>
             <figcaption>Fig 07-245</figcaption>
           </figure>
           <p>Once I know I've modified that collection, I need to raise that ErrorsChanged event:</p>
           <figure>
             <pre
-              class="prettyprint">ErrorsChanged(this, new DataErrorsChangedEventArgs(&quot;CellPhone&quot;));</pre>
+              class="prettyprint">ErrorsChanged(this, new DataErrorsChangedEventArgs(&quot;CellPhone&quot;));</code></pre>
             <figcaption>Fig 07-246</figcaption>
           </figure>
           <p>associated with the INotifyDataErrorInfo and tell it what property has changed. That's going to trigger the
@@ -1118,7 +1118,7 @@ public string CellPhone
             doing here:
           </p>
           <figure>
-                <pre class="prettyprint">public System.Collections.IEnumerable GetErrors(string propertyName)
+                <pre><code class="language-csharp">public System.Collections.IEnumerable GetErrors(string propertyName)
 {
     lock (_PropertyErrors)
     {
@@ -1126,14 +1126,14 @@ public string CellPhone
             return _PropertyErrors[propertyName];
     }
     return null;
-}</pre>
+}</code></pre>
             <figcaption>Fig 07-248</figcaption>
           </figure>
           <p>is returning whatever is already in the Errors collection. So if we're able to synchronously invoke a
             ValidationRule client-side up here from the set block:
           </p>
           <figure>
-                <pre class="prettyprint">private string _CellPhone;
+                <pre><code class="language-csharp">private string _CellPhone;
 public string CellPhone
 {
     get { return _CellPhone; }
@@ -1155,7 +1155,7 @@ public string CellPhone
 
         }
     }
-}</pre>
+}</code></pre>
             <figcaption>Fig 07-249</figcaption>
           </figure>
           <p>of the property and populate the PropertyErrors then, those errors will show up automatically as soon as
@@ -1163,7 +1163,7 @@ public string CellPhone
           </p>
           <p>Those errors will be returned automatically when this gets called:</p>
           <figure>
-                <pre class="prettyprint"> public System.Collections.IEnumerable GetErrors(string propertyName)
+                <pre><code class="language-csharp"> public System.Collections.IEnumerable GetErrors(string propertyName)
 {
     lock (_PropertyErrors)
     {
@@ -1171,14 +1171,14 @@ public string CellPhone
             return _PropertyErrors[propertyName];
     }
     return null;
-}</pre>
+}</code></pre>
             <figcaption>Fig 07-250</figcaption>
           </figure>
           <p>Which happens after the PropertyChanged fires from the set block. Now notice that our demo worked even
             though we have ValidatesOnDataErrors=true here.
           </p>
           <figure>
-                <pre class="prettyprint">&lt;TextBox x:Name=&quot;cellPhoneTextBox&quot;
+                <pre><code class="language-csharp">&lt;TextBox x:Name=&quot;cellPhoneTextBox&quot;
     Grid.Column=&quot;1&quot;
     HorizontalAlignment=&quot;Left&quot;
     Height=&quot;23&quot;
@@ -1186,14 +1186,14 @@ public string CellPhone
     Grid.Row=&quot;0&quot;
     Text=&quot;{Binding CellPhone, ValidatesOnDataErrors=true, NotifyOnValidationError=True}&quot;
     VerticalAlignment=&quot;Center&quot;
-    Width=&quot;120&quot;</pre>
+    Width=&quot;120&quot;</code></pre>
             <figcaption>Fig 07-251</figcaption>
           </figure>
           <p>There's a separate property for ValidatesOnNotifyDataErrors if you only want to support
             INotifyDataErrorInfo:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;TextBox x:Name=&quot;cellPhoneTextBox&quot;
+                <pre><code class="language-csharp">&lt;TextBox x:Name=&quot;cellPhoneTextBox&quot;
     Grid.Column=&quot;1&quot;
     HorizontalAlignment=&quot;Left&quot;
     Height=&quot;23&quot;
@@ -1201,7 +1201,7 @@ public string CellPhone
     Grid.Row=&quot;0&quot;
     Text=&quot;{Binding CellPhone, ValidatesOnNotifyDataErrors=true, NotifyOnValidationError=True}&quot;
     VerticalAlignment=&quot;Center&quot;
-    Width=&quot;120&quot;</pre>
+    Width=&quot;120&quot;</code></pre>
             <figcaption>Fig 07-252</figcaption>
           </figure>
           <p>but ValidateOnDataErrors will also pick up INotifyDataErrorInfo.</p>
@@ -1248,7 +1248,7 @@ public string CellPhone
             we set another property called NotifyOnValidationError=true.
           </p>
           <figure>
-                <pre class="prettyprint">&lt;TextBox x:Name=&quot;cellPhoneTextBox&quot;
+                <pre><code class="language-csharp">&lt;TextBox x:Name=&quot;cellPhoneTextBox&quot;
     Grid.Column=&quot;1&quot;
     HorizontalAlignment=&quot;Left&quot;
     Height=&quot;23&quot;
@@ -1256,7 +1256,7 @@ public string CellPhone
     Grid.Row=&quot;0&quot;
     Text=&quot;{Binding CellPhone, ValidatesOnNotifyDataErrors=true, NotifyOnValidationError=True}&quot;
     VerticalAlignment=&quot;Center&quot;
-    Width=&quot;120&quot;</pre>
+    Width=&quot;120&quot;</code></pre>
             <figcaption>Fig 07-253</figcaption>
           </figure>
           <p>Once that flag is set, anytime the validation state of that control, meaning errors present or not,
@@ -1266,9 +1266,9 @@ public string CellPhone
             my TextBox here and say, ValidationError equals some handler that I'm going to put in my code-behind.
           </p>
           <figure>
-                <pre class="prettyprint">&lt;TextBox x:Name=&quot;cellPhoneTextBox&quot;
+                <pre><code class="language-csharp">&lt;TextBox x:Name=&quot;cellPhoneTextBox&quot;
                      Validation.Error=&quot;cellPhoneTextBox_Error&quot;
-                    Grid.Column=&quot;1&quot;</pre>
+                    Grid.Column=&quot;1&quot;</code></pre>
             <figcaption>Fig 07-254</figcaption>
           </figure>
           <p>Because these are bubbling events, I could also put them further up the chain. So instead of on the TextBox
@@ -1276,10 +1276,10 @@ public string CellPhone
             code-behind, so I'll drop into the code, add the method:
           </p>
           <figure>
-                <pre class="prettyprint">private void cellPhoneTextBox_Error(object sender, ValidationErrorEventArgs e)
+                <pre><code class="language-csharp">private void cellPhoneTextBox_Error(object sender, ValidationErrorEventArgs e)
 {
     Debug.WriteLine(e.Error.ErrorContent);
-}</pre>
+}</code></pre>
             <figcaption>Fig 07-255</figcaption>
           </figure>
           <p>and you can see you get passed a ValidationErrorEventArgs.</p>
@@ -1287,10 +1287,10 @@ public string CellPhone
             at and that error has a bunch of context on it.
           </p>
           <figure>
-                <pre class="prettyprint">public ValidationRule RuleInError { get; set; }
+                <pre><code class="language-csharp">public ValidationRule RuleInError { get; set; }
 public object ErrorContent { get; set; }
 public Exception Exception { get; set; }
-public object BindingInError { get; }</pre>
+public object BindingInError { get; }</code></pre>
             <figcaption>Fig 07-256</figcaption>
           </figure>
           <p>The ErrorContent property is the main thing you're going to look at, it's generally going to be the error
@@ -1373,7 +1373,7 @@ public object BindingInError { get; }</pre>
           </p>
           <p>I'm going to give this Style a name of ErrorStyle and let its TargetType be FrameworkElement</p>
           <figure>
-                <pre class="prettyprint">&lt;Window.Resources&gt;
+                <pre><code class="language-csharp">&lt;Window.Resources&gt;
     &lt;CollectionViewSource x:Key=&quot;customerViewSource&quot;
                           d:DesignSource=&quot;{d:DesignInstance {x:Type local:Customer}, CreateList=True}&quot; /&gt;
     &lt;Style x:Key=&quot;ErrorStyle&quot;
@@ -1387,7 +1387,7 @@ public object BindingInError { get; }</pre>
             &lt;/Trigger&gt;
         &lt;/Style.Triggers&gt;
     &lt;/Style&gt;
-&lt;/Window.Resources&gt;</pre>
+&lt;/Window.Resources&gt;</code></pre>
             <figcaption>Fig 07-259</figcaption>
           </figure>
           <p>so any FrameworkElement can have a ToolTip, we don't have to constrain it to a particular type. What we're
@@ -1395,13 +1395,13 @@ public object BindingInError { get; }</pre>
           </p>
           <p>So we set up a Trigger section to our Style:</p>
           <figure>
-            <pre class="prettyprint">&lt;Style.Triggers&gt;</pre>
+            <pre><code class="language-csharp">&lt;Style.Triggers&gt;</code></pre>
             <figcaption>Fig 07-260</figcaption>
           </figure>
           <p>and we set up a Property Trigger on the attached property, Validation.HasError:</p>
           <figure>
-                <pre class="prettyprint">&lt;Trigger Property=&quot;Validation.HasError&quot;
-                         Value=&quot;true&quot;&gt;</pre>
+                <pre><code class="language-csharp">&lt;Trigger Property=&quot;Validation.HasError&quot;
+                         Value=&quot;true&quot;&gt;</code></pre>
             <figcaption>Fig 07-261</figcaption>
           </figure>
           <p>So whichever FrameworkElement that we apply this to, basically, this is going to be monitoring the HasError
@@ -1409,9 +1409,9 @@ public object BindingInError { get; }</pre>
             trigger this Setter.
           </p>
           <figure>
-                <pre class="prettyprint">&lt;Setter Property=&quot;ToolTip&quot;
+                <pre><code class="language-csharp">&lt;Setter Property=&quot;ToolTip&quot;
             Value=&quot;{Binding RelativeSource={x:Static RelativeSource.Self},
-            Path=(Validation.Errors).CurrentItem.ErrorContent}&quot; /&gt;</pre>
+            Path=(Validation.Errors).CurrentItem.ErrorContent}&quot; /&gt;</code></pre>
             <figcaption>Fig 07-262</figcaption>
           </figure>
           <p>This Setter is going to go set the ToolTip property of that FrameworkElement, and it's going to set it to a
@@ -1427,7 +1427,7 @@ public object BindingInError { get; }</pre>
             Style="(StaticResource ErrorStyle)":
           </p>
           <figure>
-                <pre class="prettyprint">&lt;TextBox x:Name=&quot;cellPhoneTextBox&quot;
+                <pre><code class="language-csharp">&lt;TextBox x:Name=&quot;cellPhoneTextBox&quot;
     Grid.Column=&quot;1&quot;
     HorizontalAlignment=&quot;Left&quot;
     Height=&quot;23&quot;
@@ -1437,7 +1437,7 @@ public object BindingInError { get; }</pre>
     VerticalAlignment=&quot;Center&quot;
     Width=&quot;120&quot;
     Validation.Error=&quot;cellPhoneTextBox_Error&quot;
-Style=&quot;{StaticResource ErrorStyle}&quot; /&gt;</pre>
+Style=&quot;{StaticResource ErrorStyle}&quot; /&gt;</code></pre>
             <figcaption>Fig 07-263</figcaption>
           </figure>
           <p>Now with that in place, I can put in my abc, tab out, wait for the 5 seconds:</p>
@@ -1457,7 +1457,7 @@ Style=&quot;{StaticResource ErrorStyle}&quot; /&gt;</pre>
             define a couple more resources. Now this does require you to understand ControlTemplates a little bit:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;ControlTemplate x:Key=&quot;TextBoxErrorTemplate&quot;&gt;
+                <pre><code class="language-csharp">&lt;ControlTemplate x:Key=&quot;TextBoxErrorTemplate&quot;&gt;
     &lt;DockPanel&gt;
         &lt;Ellipse DockPanel.Dock=&quot;Right&quot;
                  Margin=&quot;2,0&quot;
@@ -1475,7 +1475,7 @@ Style=&quot;{StaticResource ErrorStyle}&quot; /&gt;</pre>
         &lt;/Ellipse&gt;
         &lt;AdornedElementPlaceholder /&gt;
     &lt;/DockPanel&gt;
-&lt;/ControlTemplate&gt;</pre>
+&lt;/ControlTemplate&gt;</code></pre>
             <figcaption>Fig 07-266</figcaption>
           </figure>
           <p>because what we're doing is we're defining a custom ControlTemplate that we're going to apply to our input
@@ -1493,7 +1493,7 @@ Style=&quot;{StaticResource ErrorStyle}&quot; /&gt;</pre>
             associated with it:
           </p>
           <figure>
-            <pre class="prettyprint">ToolTip=&quot;Contains invalid data&quot;</pre>
+            <pre><code class="language-csharp">ToolTip=&quot;Contains invalid data&quot;</code></pre>
             <figcaption>Fig 07-267</figcaption>
           </figure>
           <p>that we can hover over. So we've defined this ControlTemplate and now we have to associate it with the
@@ -1503,7 +1503,7 @@ Style=&quot;{StaticResource ErrorStyle}&quot; /&gt;</pre>
             Style
           </p>
           <figure>
-                <pre class="prettyprint">&lt;Style TargetType=&quot;TextBox&quot;&gt;
+                <pre><code class="language-csharp">&lt;Style TargetType=&quot;TextBox&quot;&gt;
     &lt;Setter Property=&quot;Margin&quot;
             Value=&quot;4,4,15,4&quot; /&gt;
     &lt;Setter Property=&quot;Validation.ErrorTemplate&quot;
@@ -1519,7 +1519,7 @@ Style=&quot;{StaticResource ErrorStyle}&quot; /&gt;</pre>
             &lt;/Setter&gt;
         &lt;/Trigger&gt;
     &lt;/Style.Triggers&gt;
-&lt;/Style&gt;</pre>
+&lt;/Style&gt;</code></pre>
             <figcaption>Fig 07-268</figcaption>
           </figure>
           <p>setting some margin, and then the key thing here is we're setting the ErrorTemplate and this
@@ -1528,8 +1528,8 @@ Style=&quot;{StaticResource ErrorStyle}&quot; /&gt;</pre>
           </p>
           <p>Validation system is smart enough to know, only use this template:</p>
           <figure>
-                <pre class="prettyprint">&lt;Setter Property=&quot;Validation.ErrorTemplate&quot;
-                    Value=&quot;{StaticResource TextBoxErrorTemplate}&quot; /&gt;</pre>
+                <pre><code class="language-csharp">&lt;Setter Property=&quot;Validation.ErrorTemplate&quot;
+                    Value=&quot;{StaticResource TextBoxErrorTemplate}&quot; /&gt;</code></pre>
             <figcaption>Fig 07-269</figcaption>
           </figure>
           <p>if there are validation errors. In addition, we want a ToolTip on these controls as well, so similar to the
@@ -1612,7 +1612,7 @@ Style=&quot;{StaticResource ErrorStyle}&quot; /&gt;</pre>
             EntityBase.
           </p>
           <figure>
-                <pre class="prettyprint">public class EntityBase
+                <pre><code class="language-csharp">public class EntityBase
 {
     protected virtual void ValidateProperty(string propertyName, object value)
     {
@@ -1620,7 +1620,7 @@ Style=&quot;{StaticResource ErrorStyle}&quot; /&gt;</pre>
         context.MemberName = propertyName;
         Validator.ValidateProperty(value, context);
     }
-}</pre>
+}</code></pre>
             <figcaption>Fig 07-273</figcaption>
           </figure>
           <p>And we're using this to encapsulate just the few lines of code that we need to evaluate DataAnnotations.
@@ -1628,21 +1628,21 @@ Style=&quot;{StaticResource ErrorStyle}&quot; /&gt;</pre>
           <p>Specifically, there's a class called the ValidationContext.</p>
           <figure>
             <pre
-              class="prettyprint">ValidationContext context = new ValidationContext(this, null, null);</pre>
+              class="prettyprint">ValidationContext context = new ValidationContext(this, null, null);</code></pre>
             <figcaption>Fig 07-274</figcaption>
           </figure>
           <p>You pass it a reference to the object that you're trying to validate, you set a property on it called
             MemberName to tell it what property is being evaluated:
           </p>
           <figure>
-            <pre class="prettyprint">context.MemberName = propertyName;</pre>
+            <pre><code class="language-csharp">context.MemberName = propertyName;</code></pre>
             <figcaption>Fig 07-275</figcaption>
           </figure>
           <p>and then you use the Validator class .ValidateProperty method, passing in the value that's being set on
             that property, and the context object that you created up above:
           </p>
           <figure>
-            <pre class="prettyprint">Validator.ValidateProperty(value, context);</pre>
+            <pre><code class="language-csharp">Validator.ValidateProperty(value, context);</code></pre>
             <figcaption>Fig 07-276</figcaption>
           </figure>
           <p>that wraps the object being validated.</p>
@@ -1654,7 +1654,7 @@ Style=&quot;{StaticResource ErrorStyle}&quot; /&gt;</pre>
             several DataAnnotation attributes.
           </p>
           <figure>
-                <pre class="prettyprint">private string _HomePhone;
+                <pre><code class="language-csharp">private string _HomePhone;
 [RegularExpression(@&quot;^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$&quot;)]
 [Required]
 [StringLength(12)]
@@ -1670,12 +1670,12 @@ public string HomePhone
             PropertyChanged(this, new PropertyChangedEventArgs(&quot;HomePhone&quot;));
         }
     }
-}</pre>
+}</code></pre>
             <figcaption>Fig 07-277</figcaption>
           </figure>
           <p>So first off, I'm going to put a RegularExpression:</p>
           <figure>
-            <pre class="prettyprint">[RegularExpression(@&quot;^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$&quot;)]</pre>
+            <pre><code class="language-csharp">[RegularExpression(@&quot;^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$&quot;)]</code></pre>
             <figcaption>Fig 07-278</figcaption>
           </figure>
           <p>as one of the built-in attributes, so that we can just declaratively put the RegularExpression that applies
@@ -1684,12 +1684,12 @@ public string HomePhone
           </p>
           <p>Likewise, we could say this is a Required field:</p>
           <figure>
-            <pre class="prettyprint">[Required]</pre>
+            <pre><code class="language-csharp">[Required]</code></pre>
             <figcaption>Fig 07-279</figcaption>
           </figure>
           <p>and it will give a validation error if it's empty or null. We could give it a StringLength:</p>
           <figure>
-            <pre class="prettyprint">[StringLength(12)]</pre>
+            <pre><code class="language-csharp">[StringLength(12)]</code></pre>
             <figcaption>Fig 07-280</figcaption>
           </figure>
           <p>If it was a numeric value, there is a Range attribute. There's also a CustomValidation attribute that you
@@ -1699,20 +1699,20 @@ public string HomePhone
           </p>
           <p>So that is why we put that EntityBase class in place, if we add EntityBase:</p>
           <figure>
-            <pre class="prettyprint">public class Customer : EntityBase, INotifyPropertyChanged, INotifyDataErrorInfo</pre>
+            <pre><code class="language-csharp">public class Customer : EntityBase, INotifyPropertyChanged, INotifyDataErrorInfo</code></pre>
             <figcaption>Fig 07-281</figcaption>
           </figure>
           <p>as a base class for our entity, and then in the property we invoke that validate method. So we call
             ValidateProperty on our base class
           </p>
           <figure>
-            <pre class="prettyprint">ValidateProperty(&quot;HomePhone&quot;, value);</pre>
+            <pre><code class="language-csharp">ValidateProperty(&quot;HomePhone&quot;, value);</code></pre>
             <figcaption>Fig 07-282</figcaption>
           </figure>
           <p>passing in the property name and the value that's being set.</p>
           <p>That's going to trigger that code down in EntityBase:</p>
           <figure>
-                <pre class="prettyprint">public class EntityBase
+                <pre><code class="language-csharp">public class EntityBase
 {
     protected virtual void ValidateProperty(string propertyName, object value)
     {
@@ -1720,7 +1720,7 @@ public string HomePhone
         context.MemberName = propertyName;
         Validator.ValidateProperty(value, context);
     }
-}</pre>
+}</code></pre>
             <figcaption>Fig 07-283</figcaption>
           </figure>
           <p>to use the ValidationContext and Validator to basically reach back up to this property, pull off each of
@@ -1837,7 +1837,8 @@ public string HomePhone
             associated with data bindings for things like ComboBoxes, ListBoxes, TabControls, and DataGrids, as well as
             CollectionViewSources.
           </p>
-          <p>And finally, we finished off in this module with Validation. So that pretty much wraps it up. Thank you
+          <p>And finally, we finished off in this module with Validation.</p>
+          <p>So that pretty much wraps it up. Thank you
             very much for viewing the course. Please recommend it to your friends. Be sure to come back and watch parts
             again if you need to review concepts and review the code, and hopefully at this point you feel very
             well-equipped to go start hooking up your complex data-bound UIs for your business applications.

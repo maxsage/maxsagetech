@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
   <meta charset="UTF-8">
-  <title>maxsagetech - Vue JS Fundamentals</title>
+  <title>maxsagetech - WPF Databinding In Depth</title>
   <script src="https://unpkg.com/vue"></script>
   <!--<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"-->
   <!--integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">-->
@@ -137,7 +137,7 @@
               case computed from the FirstName and LastName property and those are data bindable as well.
             </p>
             <figure>
-                    <pre class="prettyprint">public class Customer
+                    <pre><code class="language-csharp">public class Customer
 {
     public Guid Id { get; set; }
     public string FirstName { get; set; }
@@ -145,7 +145,7 @@
     public string Email { get; set; }
     public List&lt;Order&gt; Orders { get; set; }
     public string FullName { get { return string.Format("{0} {1}",FirstName,LastName); } }
-}</pre>
+}</code></pre>
               <figcaption>Fig 02-004</figcaption>
             </figure>
             <p>
@@ -153,25 +153,25 @@
               OrderStatusId that will set through a drop-down ComboBox, and then finally an ItemsTotal.
             </p>
             <figure>
-                    <pre class="prettyprint"> public class Order
+                    <pre><code class="language-csharp"> public class Order
 {
     public long Id { get; set; }
     public Guid CustomerId { get; set; }
     public DateTime OrderDate { get; set; }
     public int OrderStatusId { get; set; }
     public decimal ItemsTotal { get; set; }
-}</pre>
+}</code></pre>
               <figcaption>Fig 02-005</figcaption>
             </figure>
             <p>
               The OrderStatus object is just a simple lookup list kind of thing with an Id and a Name.
             </p>
             <figure>
-                    <pre class="prettyprint">public class OrderStatus
+                    <pre><code class="language-csharp">public class OrderStatus
 {
     public int Id { get; set; }
     public string Name { get; set; }
-}</pre>
+}</code></pre>
               <figcaption>Fig 02-006</figcaption>
             </figure>
             <p>
@@ -180,7 +180,7 @@
               and then we've got some ModelBuilder stuff down here.
             </p>
             <figure>
-                    <pre class="prettyprint">public class ZzaDbContext : DbContext
+                    <pre><code class="language-csharp">public class ZzaDbContext : DbContext
 {
     public DbSet&lt;Customer&gt; Customers { get; set; }
     public DbSet&lt;Order&gt; Orders { get; set; }
@@ -197,7 +197,7 @@
                     .Property(c => c.Id) // Client must set the ID.
                     .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
     }
-}</pre>
+}</code></pre>
               <figcaption>Fig 02-007</figcaption>
             </figure>
             <p>
@@ -207,7 +207,7 @@
               selection, the Add and Cancel buttons for adding orders.
             </p>
             <figure>
-                    <pre class="prettyprint"> private void OnCustomerSelected(object sender, SelectionChangedEventArgs e)
+                    <pre><code class="language-csharp"> private void OnCustomerSelected(object sender, SelectionChangedEventArgs e)
 {
 
 }
@@ -220,7 +220,7 @@ private void OnAdd(object sender, RoutedEventArgs e)
 private void OnCancel(object sender, RoutedEventArgs e)
 {
 
-}</pre>
+}</code></pre>
               <figcaption>Fig 02-008</figcaption>
             </figure>
             <p>
@@ -232,8 +232,8 @@ private void OnCancel(object sender, RoutedEventArgs e)
               those individual input fields for the SelectedCustomer.
             </p>
             <figure>
-                    <pre class="prettyprint">public List&lt;Customer&gt; Customers { get; set; }
-public Customer SelectedCustomer { get; set; }</pre>
+                    <pre><code class="language-csharp">public List&lt;Customer&gt; Customers { get; set; }
+public Customer SelectedCustomer { get; set; }</code></pre>
               <figcaption>Fig 02-009</figcaption>
             </figure>
             <p>
@@ -245,7 +245,7 @@ public Customer SelectedCustomer { get; set; }</pre>
               properties exposed by the Window are now accessible on the DataContext for bindings to use.
             </p>
             <figure>
-                    <pre class="prettyprint">ZzaDbContext _DbContext = new ZzaDbContext();
+                    <pre><code class="language-csharp">ZzaDbContext _DbContext = new ZzaDbContext();
 
 public MainWindow()
 {
@@ -253,7 +253,7 @@ public MainWindow()
     Customers = _DbContext.Customers.ToList();
     CustomersCombo.SelectedItem = Customers[0];
     DataContext = this;
-}</pre>
+}</code></pre>
               <figcaption>Fig 02-010</figcaption>
             </figure>
 
@@ -264,13 +264,13 @@ public MainWindow()
               a Customer, and set that as our Customer property.
             </p>
             <figure>
-                    <pre class="prettyprint">public List&lt;Customer&gt; Customers { get; set; }
+                    <pre><code class="language-csharp">public List&lt;Customer&gt; Customers { get; set; }
 public Customer SelectedCustomer { get; set; }
 
 private void OnCustomerSelected(object sender, SelectionChangedEventArgs e)
 {
     SelectedCustomer = CustomersCombo.SelectedItem as Customer;
-}</pre>
+}</code></pre>
               <figcaption>Fig 02-011</figcaption>
             </figure>
 
@@ -287,7 +287,7 @@ private void OnCustomerSelected(object sender, SelectionChangedEventArgs e)
               on our Entity and we'll set the SelectedValuePath to the Id property.
             </p>
             <figure>
-                    <pre class="prettyprint">&lt;Label Content="Customers" /&gt;
+                    <pre><code class="language-csharp">&lt;Label Content="Customers" /&gt;
 &lt;ComboBox x:Name="CustomersCombo"
           Grid.Column="1"
           Width="250"
@@ -295,7 +295,7 @@ private void OnCustomerSelected(object sender, SelectionChangedEventArgs e)
           ItemsSource="{Binding Customers}"
           DisplayMemberPath="FullName"
           SelectedValuePath="Id"
-          SelectionChanged="OnCustomerSelected" /&gt;</pre>
+          SelectionChanged="OnCustomerSelected" /&gt;</code></pre>
               <figcaption>Fig 02-012</figcaption>
             </figure>
             <p>
@@ -305,7 +305,7 @@ private void OnCustomerSelected(object sender, SelectionChangedEventArgs e)
               LastName and for the Email.
             </p>
             <figure>
-                    <pre class="prettyprint">&lt;TextBox Grid.Column="1"
+                    <pre><code class="language-csharp">&lt;TextBox Grid.Column="1"
    Text="{Binding SelectedCustomer.LastName}" /&gt;
 &lt;Label Content="Last Name:"
    Grid.Column="2" /&gt;
@@ -314,7 +314,7 @@ private void OnCustomerSelected(object sender, SelectionChangedEventArgs e)
 &lt;Label Content="Email:"
    Grid.Column="4" /&gt;
 &lt;TextBox Grid.Column="5"
-   Text="{Binding SelectedCustomer.Email}" /&gt;</pre>
+   Text="{Binding SelectedCustomer.Email}" /&gt;</code></pre>
               <figcaption>Fig 02-013</figcaption>
             </figure>
             <p>
@@ -448,7 +448,7 @@ private void OnCustomerSelected(object sender, SelectionChangedEventArgs e)
               If we go to our Customer object, you can see it's just a simple Plain Old CLR Object.
             </p>
             <figure>
-                    <pre class="prettyprint">public class Customer
+                    <pre><code class="language-csharp">public class Customer
 {
     public Guid Id { get; set; }
     public string FirstName { get; set; }
@@ -456,7 +456,7 @@ private void OnCustomerSelected(object sender, SelectionChangedEventArgs e)
     public string Email { get; set; }
     public List&lt;Order&gt; Orders { get; set; }
     public string FullName { get { return string.Format("{0} {1}",FirstName,LastName); } }
-}</pre>
+}</code></pre>
               <figcaption>Fig 02-020</figcaption>
             </figure>
             <p>
@@ -465,7 +465,7 @@ private void OnCustomerSelected(object sender, SelectionChangedEventArgs e)
               is you can see it got a lot bigger. First off, I'm implementing the INotifyPropertyChanged interface.
             </p>
             <figure>
-              <pre class="prettyprint">public class Customer : INotifyPropertyChanged</pre>
+              <pre><code class="language-csharp">public class Customer : INotifyPropertyChanged</code></pre>
               <figcaption>Fig 02-021</figcaption>
             </figure>
             <p>
@@ -474,7 +474,7 @@ private void OnCustomerSelected(object sender, SelectionChangedEventArgs e)
             </p>
             <figure>
               <pre
-                class="prettyprint">public event PropertyChangedEventHandler PropertyChanged = delegate { };</pre>
+                class="prettyprint">public event PropertyChangedEventHandler PropertyChanged = delegate { };</code></pre>
               <figcaption>Fig 02-022</figcaption>
             </figure>
             <p>
@@ -488,7 +488,7 @@ private void OnCustomerSelected(object sender, SelectionChangedEventArgs e)
               getters and setters on those member variables.
             </p>
             <figure>
-                    <pre class="prettyprint">public class Customer : INotifyPropertyChanged
+                    <pre><code class="language-csharp">public class Customer : INotifyPropertyChanged
 {
 public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
@@ -508,7 +508,7 @@ public Guid Id
     {
         _Id = value;
     }
-}</pre>
+}</code></pre>
               <figcaption>Fig 02-023</figcaption>
             </figure>
             <p>
@@ -518,7 +518,7 @@ public Guid Id
               PropertyChangedEventArg that takes the name of the Property that's being changed.
             </p>
             <figure>
-                    <pre class="prettyprint">public string FirstName
+                    <pre><code class="language-csharp">public string FirstName
 {
     get
     {
@@ -529,7 +529,7 @@ public Guid Id
         _FirstName = value;
         PropertyChanged(this, new PropertyChangedEventArgs("FirstName"));
     }
-}</pre>
+}</code></pre>
               <figcaption>Fig 02-024</figcaption>
             </figure>
             <p>
@@ -540,7 +540,7 @@ public Guid Id
               computed based off the FirstName and LastName.
             </p>
             <figure>
-              <pre class="prettyprint">public string FullName { get { return string.Format("{0} {1}", FirstName, LastName); } }</pre>
+              <pre><code class="language-csharp">public string FullName { get { return string.Format("{0} {1}", FirstName, LastName); } }</code></pre>
               <figcaption>Fig 02-025</figcaption>
             </figure>
             <p>
@@ -552,7 +552,7 @@ public Guid Id
             </p>
 
             <figure>
-                    <pre class="prettyprint">public string FirstName
+                    <pre><code class="language-csharp">public string FirstName
 {
     get
     {
@@ -577,7 +577,7 @@ public string LastName
         PropertyChanged(this, new PropertyChangedEventArgs("LastName"));
         PropertyChanged(this, new PropertyChangedEventArgs("FullName"));
     }
-}</pre>
+}</code></pre>
               <figcaption>Fig 02-026</figcaption>
             </figure>
             <p>
@@ -692,8 +692,8 @@ public string LastName
               on the UI. Now the reason for that is this right here.
             </p>
             <figure>
-                    <pre class="prettyprint">public List&lt;Customer&gt; Customers { get; set; }
-public Customer SelectedCustomer { get; set; }</pre>
+                    <pre><code class="language-csharp">public List&lt;Customer&gt; Customers { get; set; }
+public Customer SelectedCustomer { get; set; }</code></pre>
               <figcaption>Fig 02-027</figcaption>
             </figure>
             <p>
@@ -703,7 +703,7 @@ public Customer SelectedCustomer { get; set; }</pre>
             </p>
             <figure>
               <pre
-                class="prettyprint">public partial class MainWindow : Window, INotifyPropertyChanged</pre>
+                class="prettyprint">public partial class MainWindow : Window, INotifyPropertyChanged</code></pre>
               <figcaption>Fig 02-028</figcaption>
             </figure>
             <p>
@@ -715,7 +715,7 @@ public Customer SelectedCustomer { get; set; }</pre>
               then I start filling in the blanks,
             </p>
             <figure>
-                    <pre class="prettyprint"> public int MyProperty
+                    <pre><code class="language-csharp"> public int MyProperty
 {
     get { return (int)GetValue(MyPropertyProperty); }
     set { SetValue(MyPropertyProperty, value); }
@@ -723,14 +723,14 @@ public Customer SelectedCustomer { get; set; }</pre>
 
 // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
 public static readonly DependencyProperty MyPropertyProperty =
-    DependencyProperty.Register("MyProperty", typeof(int), typeof(ownerclass), new PropertyMetadata(0));</pre>
+    DependencyProperty.Register("MyProperty", typeof(int), typeof(ownerclass), new PropertyMetadata(0));</code></pre>
               <figcaption>Fig 02-029</figcaption>
             </figure>
             <p>
               The first one was my List of Customers called Customers:
             </p>
             <figure>
-              <pre class="prettyprint">public List&lt;Customer&gt; Customers { get; set; }</pre>
+              <pre><code class="language-csharp">public List&lt;Customer&gt; Customers { get; set; }</code></pre>
               <figcaption>Fig 02-030</figcaption>
             </figure>
             <p>
@@ -738,18 +738,18 @@ public static readonly DependencyProperty MyPropertyProperty =
               the main window, and then I'll tab right one more time and there's a default value which I'll set to null.
             </p>
             <figure>
-                    <pre class="prettyprint">public static readonly DependencyProperty CustomersProperty =
+                    <pre><code class="language-csharp">public static readonly DependencyProperty CustomersProperty =
     DependencyProperty.Register(&quot;Customers&quot;,
     typeof(List&lt;Customer&gt;),
     typeof(MainWindow),
-    new PropertyMetadata(null));</pre>
+    new PropertyMetadata(null));</code></pre>
               <figcaption>Fig 02-031</figcaption>
             </figure>
             <p>
               So let me just clean that up a little bit:
             </p>
             <figure>
-                    <pre class="prettyprint">public List&lt;Customer&gt; Customers
+                    <pre><code class="language-csharp">public List&lt;Customer&gt; Customers
 {
     get { return (List&lt;Customer&gt;)GetValue(CustomersProperty); }
     set { SetValue(CustomersProperty, value); }
@@ -759,7 +759,7 @@ public static readonly DependencyProperty CustomersProperty =
     DependencyProperty.Register(&quot;Customers&quot;,
     typeof(List&lt;Customer&gt;),
     typeof(MainWindow),
-    new PropertyMetadata(null));</pre>
+    new PropertyMetadata(null));</code></pre>
               <figcaption>Fig 02-032</figcaption>
             </figure>
             <p>
@@ -775,11 +775,11 @@ public static readonly DependencyProperty CustomersProperty =
               Then paired with your DependencyProperty, you'll always have what's called a wrapper property:
             </p>
             <figure>
-                    <pre class="prettyprint">public List&lt;Customer&gt; Customers
+                    <pre><code class="language-csharp">public List&lt;Customer&gt; Customers
 {
     get { return (List&lt;Customer&gt;)GetValue(CustomersProperty); }
     set { SetValue(CustomersProperty, value); }
-}</pre>
+}</code></pre>
               <figcaption>Fig 02-033</figcaption>
             </figure>
             <p>
@@ -891,14 +891,14 @@ public static readonly DependencyProperty CustomersProperty =
               object that those fields can bind to called <span class="code">NewOrder</span>:
             </p>
             <figure>
-                    <pre class="prettyprint">public Order NewOrder
+                    <pre><code class="language-csharp">public Order NewOrder
 {
     get { return (Order)GetValue(NewOrderProperty); }
     set { SetValue(NewOrderProperty, value); }
 }
 
 public static readonly DependencyProperty NewOrderProperty =
-    DependencyProperty.Register("NewOrder", typeof(Order), typeof(MainWindow), new PropertyMetadata(null));</pre>
+    DependencyProperty.Register("NewOrder", typeof(Order), typeof(MainWindow), new PropertyMetadata(null));</code></pre>
               <figcaption>Fig 02-036</figcaption>
             </figure>
             <p>
@@ -907,14 +907,14 @@ public static readonly DependencyProperty NewOrderProperty =
               from the database.
             </p>
             <figure>
-                    <pre class="prettyprint">public List&lt;OrderStatus&gt; OrderStatuses
+                    <pre><code class="language-csharp">public List&lt;OrderStatus&gt; OrderStatuses
 {
     get { return (List&lt;OrderStatus&gt;>)GetValue(OrderStatusesProperty); }
     set { SetValue(OrderStatusesProperty, value); }
 }
 
 public static readonly DependencyProperty OrderStatusesProperty =
-    DependencyProperty.Register(&quot;OrderStatuses&quot;, typeof(List&lt;OrderStatus&gt;), typeof(MainWindow), new PropertyMetadata(null));</pre>
+    DependencyProperty.Register(&quot;OrderStatuses&quot;, typeof(List&lt;OrderStatus&gt;), typeof(MainWindow), new PropertyMetadata(null));</code></pre>
               <figcaption>Fig 02-037</figcaption>
             </figure>
             <p>
@@ -922,7 +922,7 @@ public static readonly DependencyProperty OrderStatusesProperty =
               our Customer information in our DataContext and add a few more things.
             </p>
             <figure>
-                    <pre class="prettyprint">public MainWindow()
+                    <pre><code class="language-csharp">public MainWindow()
 {
     InitializeComponent();
     DataContext = this;
@@ -931,7 +931,7 @@ public static readonly DependencyProperty OrderStatusesProperty =
     OrderStatuses = _DbContext.OrderStatuses.ToList();
     CustomersCombo.SelectedItem = Customers[0];
     OrderStatusCombo.SelectedIndex = 0;
-}</pre>
+}</code></pre>
               <figcaption>Fig 02-038</figcaption>
             </figure>
             <p>
@@ -945,7 +945,7 @@ public static readonly DependencyProperty OrderStatusesProperty =
               is set now to some point before we start populating the properties on whatever that DataContext is:
             </p>
             <figure>
-                    <pre class="prettyprint">public MainWindow()
+                    <pre><code class="language-csharp">public MainWindow()
 {
     InitializeComponent();
     DataContext = this;
@@ -954,7 +954,7 @@ public static readonly DependencyProperty OrderStatusesProperty =
     OrderStatuses = _DbContext.OrderStatuses.ToList();
     CustomersCombo.SelectedItem = Customers[0];
     OrderStatusCombo.SelectedIndex = 0;
-}</pre>
+}</code></pre>
               <figcaption>Fig 02-039</figcaption>
             </figure>
             <p>
@@ -966,14 +966,14 @@ public static readonly DependencyProperty OrderStatusesProperty =
               class="code">CustomerSelected</span> handler, and then add in some code:
             </p>
             <figure>
-                    <pre class="prettyprint">private void OnCustomerSelected(object sender, SelectionChangedEventArgs e)
+                    <pre><code class="language-csharp">private void OnCustomerSelected(object sender, SelectionChangedEventArgs e)
 {
     SelectedCustomer = CustomersCombo.SelectedItem as Customer;
     NewOrder = new Order();
     NewOrder.BeginEdit();
     NewOrder.CustomerId = SelectedCustomer.Id;
     SelectedCustomer.Orders = new ObservableCollection&lt;Order&gt;(_DbContext.Orders.Where(o => o.CustomerId == SelectedCustomer.Id));
-}</pre>
+}</code></pre>
               <figcaption>Fig 02-040</figcaption>
             </figure>
             <p>
@@ -990,7 +990,7 @@ public static readonly DependencyProperty OrderStatusesProperty =
               class="code">Orders</span> collection that hangs off of it.
             </p>
             <figure>
-              <pre class="prettyprint">&lt;DataGrid ItemsSource="{Binding SelectedCustomer.Orders}"</pre>
+              <pre><code class="language-csharp">&lt;DataGrid ItemsSource="{Binding SelectedCustomer.Orders}"</code></pre>
               <figcaption>Fig 02-041</figcaption>
             </figure>
             <p>
@@ -1001,7 +1001,7 @@ public static readonly DependencyProperty OrderStatusesProperty =
               And then I'm going to slide down and update the fields in our Order form to include appropriate bindings.
             </p>
             <figure>
-                    <pre class="prettyprint">&lt;Label Content=&quot;Order ID:&quot; /&gt;
+                    <pre><code class="language-csharp">&lt;Label Content=&quot;Order ID:&quot; /&gt;
 &lt;Label Content=&quot;{Binding Id}&quot;
     Grid.Column=&quot;1&quot; /&gt;
 &lt;Label Content=&quot;Order Date:&quot;
@@ -1020,7 +1020,7 @@ public static readonly DependencyProperty OrderStatusesProperty =
     ItemsSource=&quot;{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.OrderStatuses}&quot;
     DisplayMemberPath=&quot;Name&quot;
     SelectedValuePath=&quot;Id&quot;
-    SelectedValue=&quot;{Binding Path=NewOrder.OrderStatusId, Mode=TwoWay}"</pre>
+    SelectedValue=&quot;{Binding Path=NewOrder.OrderStatusId, Mode=TwoWay}"</code></pre>
               <figcaption>Fig 02-042</figcaption>
             </figure>
             <p>
@@ -1043,13 +1043,13 @@ public static readonly DependencyProperty OrderStatusesProperty =
               handler:
             </p>
             <figure>
-<pre class="prettyprint">private void OnAdd(object sender, RoutedEventArgs e)
+<pre><code class="language-csharp">private void OnAdd(object sender, RoutedEventArgs e)
 {
     SelectedCustomer.Orders.Add(NewOrder);
     _DbContext.Orders.Add(NewOrder);
     _DbContext.SaveChanges();
     NewOrder = new Order { CustomerId = SelectedCustomer.Id };
-}</pre>
+}</code></pre>
               <figcaption>Fig 02-043</figcaption>
             </figure>
             <p>
@@ -1089,7 +1089,7 @@ public static readonly DependencyProperty OrderStatusesProperty =
               just declared as a <span class="code">List</span> of <span class="code">Order</span>.
             </p>
             <figure>
-                    <pre class="prettyprint">public List&lt;Order&gt; Orders
+                    <pre><code class="language-csharp">public List&lt;Order&gt; Orders
 {
     get
     {
@@ -1100,7 +1100,7 @@ public static readonly DependencyProperty OrderStatusesProperty =
         _Orders = value;
         PropertyChanged(this, new PropertyChangedEventArs("Orders"));
     }
-}</pre>
+}</code></pre>
               <figcaption>Fig 02-045</figcaption>
             </figure>
             <p>
@@ -1112,14 +1112,14 @@ public static readonly DependencyProperty OrderStatusesProperty =
               <span class="code">ObservableCollection&lt;T&gt;,</span>:
             </p>
             <figure>
-              <pre class="prettyprint">public ObservableCollection&lt;Order&gt; Orders</pre>
+              <pre><code class="language-csharp">public ObservableCollection&lt;Order&gt; Orders</code></pre>
               <figcaption>Fig 02-046</figcaption>
             </figure>
             <p>
               We will also have to go change the member variable, as well, to be an <span class="code">ObservableCollection</span>:
             </p>
             <figure>
-              <pre class="prettyprint">private ObservableCollection&lt;Order&gt; _Orders;</pre>
+              <pre><code class="language-csharp">private ObservableCollection&lt;Order&gt; _Orders;</code></pre>
               <figcaption>Fig 02-047</figcaption>
             </figure>
             <p>
@@ -1129,7 +1129,7 @@ public static readonly DependencyProperty OrderStatusesProperty =
               comes out of this LINQ expression to populate that collection.
             </p>
             <figure>
-              <pre class="prettyprint">SelectedCustomer.Orders = new ObservableCollection&lt;Order&gt;(_DbContext.Orders.Where(o =&gt; o.CustomerId == SelectedCustomer.Id));</pre>
+              <pre><code class="language-csharp">SelectedCustomer.Orders = new ObservableCollection&lt;Order&gt;(_DbContext.Orders.Where(o =&gt; o.CustomerId == SelectedCustomer.Id));</code></pre>
               <figcaption>Fig 02-048</figcaption>
             </figure>
             <p>
@@ -1149,11 +1149,11 @@ public static readonly DependencyProperty OrderStatusesProperty =
               Now in a similar fashion, I really should go up here in the code-behind:
             </p>
             <figure>
-                    <pre class="prettyprint">public List&lt;Customer&gt; Customers
+                    <pre><code class="language-csharp">public List&lt;Customer&gt; Customers
 {
     get { return (List&lt;Customer&gt;)GetValue(CustomersProperty); }
     set { SetValue(CustomersProperty, value); }
-}</pre>
+}</code></pre>
               <figcaption>Fig 02-050</figcaption>
             </figure>
             <p>
@@ -1161,11 +1161,11 @@ public static readonly DependencyProperty OrderStatusesProperty =
               going to replace that with <span class="code">ObservableCollection</span> as the type of that collection:
             </p>
             <figure>
-                    <pre class="prettyprint">public ObservableCollection&lt;Customer&gt; Customers
+                    <pre><code class="language-csharp">public ObservableCollection&lt;Customer&gt; Customers
 {
     get { return (ObservableCollection&lt;Customer&gt;)GetValue(CustomersProperty); }
     set { SetValue(CustomersProperty, value); }
-}</pre>
+}</code></pre>
               <figcaption>Fig 02-051</figcaption>
             </figure>
             <p>
@@ -1178,7 +1178,7 @@ public static readonly DependencyProperty OrderStatusesProperty =
               class="code">Customers</span> collection in the constructor:
             </p>
             <figure>
-                    <pre class="prettyprint">public MainWindow()
+                    <pre><code class="language-csharp">public MainWindow()
 {
     DataContext = this;
 
@@ -1187,7 +1187,7 @@ public static readonly DependencyProperty OrderStatusesProperty =
     OrderStatuses = _DbContext.OrderStatuses.ToList();
     CustomersCombo.SelectedItem = Customers[0];
     OrderStatusCombo.SelectedItem = SelectedCustomer;
-}</pre>
+}</code></pre>
               <figcaption>Fig 02-052</figcaption>
             </figure>
             <p>
@@ -1270,14 +1270,14 @@ public static readonly DependencyProperty OrderStatusesProperty =
               objects.
             </p>
             <figure>
-                    <pre class="prettyprint">public class Order
+                    <pre><code class="language-csharp">public class Order
 {
     public long Id { get; set; }
     public Guid CustomerId { get; set; }
     public DateTime OrderDate { get; set; }
     public int OrderStatusId { get; set; }
     public decimal ItemsTotal { get; set; }
-}</pre>
+}</code></pre>
               <figcaption>Fig 02-053</figcaption>
             </figure>
             <p>
@@ -1318,7 +1318,7 @@ public static readonly DependencyProperty OrderStatusesProperty =
               that.
             </p>
             <figure>
-                    <pre class="prettyprint">namespace EntityDataBinding
+                    <pre><code class="language-csharp">namespace EntityDataBinding
 {
     public class Order : INotifyPropertyChanged
     {
@@ -1339,7 +1339,7 @@ public static readonly DependencyProperty OrderStatusesProperty =
             }
             set
             {
-                _Id = value;</pre>
+                _Id = value;</code></pre>
               <figcaption>Fig 02-056</figcaption>
             </figure>
             <p>
@@ -1350,9 +1350,9 @@ public static readonly DependencyProperty OrderStatusesProperty =
               class="code">IEditableObject</span> interface, so I declare that I want to implement that interface:
             </p>
             <figure>
-                    <pre class="prettyprint">namespace EntityDataBinding
+                    <pre><code class="language-csharp">namespace EntityDataBinding
 {
-    public class Order : INotifyPropertyChanged, IEditableObject</pre>
+    public class Order : INotifyPropertyChanged, IEditableObject</code></pre>
               <figcaption>Fig 02-057</figcaption>
             </figure>
             <p>
@@ -1361,7 +1361,7 @@ public static readonly DependencyProperty OrderStatusesProperty =
               class="code">EndEdit</span>:
             </p>
             <figure>
-                    <pre class="prettyprint">public void BeginEdit()
+                    <pre><code class="language-csharp">public void BeginEdit()
 {
     throw new NotImplementedException();
 }
@@ -1374,7 +1374,7 @@ public void CancelEdit()
 public void EndEdit()
 {
     throw new NotImplementedException();
-}</pre>
+}</code></pre>
               <figcaption>Fig 02-058</figcaption>
             </figure>
             <p>
@@ -1388,7 +1388,7 @@ public void EndEdit()
               we really need to do on these methods? Well let me add some implementation:
             </p>
             <figure>
-                    <pre class="prettyprint">public void BeginEdit()
+                    <pre><code class="language-csharp">public void BeginEdit()
 {
     _TempValues = new Order()
     {
@@ -1398,7 +1398,7 @@ public void EndEdit()
         OrderStatusId = OrderStatusId,
         ItemsTotal = ItemsTotal
     };
-}</pre>
+}</code></pre>
               <figcaption>Fig 02-059</figcaption>
             </figure>
             <p>
@@ -1406,7 +1406,7 @@ public void EndEdit()
               declared as a member variable on the class that is an <span class="code">Order</span> itself:
             </p>
             <figure>
-              <pre class="prettyprint">private Order _TempValues;</pre>
+              <pre><code class="language-csharp">private Order _TempValues;</code></pre>
               <figcaption>Fig 02-060</figcaption>
             </figure>
             <p>
@@ -1419,14 +1419,14 @@ public void EndEdit()
               values:
             </p>
             <figure>
-                    <pre class="prettyprint">public void CancelEdit()
+                    <pre><code class="language-csharp">public void CancelEdit()
 {
     Id = _TempValues.Id;
     CustomerId = _TempValues.CustomerId;
     OrderDate = _TempValues.OrderDate;
     OrderStatusId = _TempValues.OrderStatusId;
     ItemsTotal = _TempValues.ItemsTotal;
-}</pre>
+}</code></pre>
               <figcaption>Fig 02-061</figcaption>
             </figure>
             <p>
@@ -1434,10 +1434,10 @@ public void EndEdit()
               longer needed
             </p>
             <figure>
-                    <pre class="prettyprint">public void EndEdit()
+                    <pre><code class="language-csharp">public void EndEdit()
 {
     _TempValues = null;
-}</pre>
+}</code></pre>
               <figcaption>Fig 02-062</figcaption>
             </figure>
             <p>
@@ -1474,14 +1474,14 @@ public void EndEdit()
               that editing can begin.
             </p>
             <figure>
-                    <pre class="prettyprint">private void OnCustomerSelected(object sender, SelectionChangedEventArgs e)
+                    <pre><code class="language-csharp">private void OnCustomerSelected(object sender, SelectionChangedEventArgs e)
 {
     SelectedCustomer = CustomersCombo.SelectedItem as Customer;
     NewOrder = new Order();
     NewOrder.BeginEdit();
     NewOrder.CustomerId = SelectedCustomer.Id;
     SelectedCustomer.Orders = new ObservableCollection&lt;Order&gt;(_DbContext.Orders.Where(o =&gt; o.CustomerId == SelectedCustomer.Id));
-}</pre>
+}</code></pre>
               <figcaption>Fig 02-067</figcaption>
             </figure>
             <p>
@@ -1490,24 +1490,24 @@ public void EndEdit()
               is pressed, that's basically the success case, we would call <span class="code">EndEdit</span>:
             </p>
             <figure>
-                    <pre class="prettyprint">private void OnAdd(object sender, RoutedEventArgs e)
+                    <pre><code class="language-csharp">private void OnAdd(object sender, RoutedEventArgs e)
 {
     SelectedCustomer.Orders.Add(NewOrder);
     _DbContext.Orders.Add(NewOrder);
     _DbContext.SaveChanges();
     NewOrder = new Order { CustomerId = SelectedCustomer.Id };
-}</pre>
+}</code></pre>
               <figcaption>Fig 02-068</figcaption>
             </figure>
             <p>
               and then in <span class="code">Cancel</span>, naturally we would call <span class="code">CancelEdit</span>.
             </p>
             <figure>
-<pre class="prettyprint">
+<pre><code class="language-csharp">
         private void OnCancel(object sender, RoutedEventArgs e)
         {
             NewOrder.CancelEdit();
-        }</pre>
+        }</code></pre>
               <figcaption>Fig 02-069</figcaption>
             </figure>
             <p>
@@ -1608,8 +1608,8 @@ public void EndEdit()
               and add another property on it called <span class="code">IsSynchronizedWithCurrentItem</span>:
             </p>
             <figure>
-                    <pre class="prettyprint">&lt;DataGrid ItemsSource=&quot;{Binding SelectedCustomer.Orders}&quot;
-                      IsSynchronizedWithCurrentItem=&quot;True&quot;&gt;</pre>
+                    <pre><code class="language-csharp">&lt;DataGrid ItemsSource=&quot;{Binding SelectedCustomer.Orders}&quot;
+                      IsSynchronizedWithCurrentItem=&quot;True&quot;&gt;</code></pre>
               <figcaption>Fig 02-074</figcaption>
             </figure>
             <p>
@@ -1617,26 +1617,26 @@ public void EndEdit()
               class="code">Orders</span> here:
             </p>
             <figure>
-                        <pre class="prettyprint">&lt;DataGrid ItemsSource=&quot;{Binding SelectedCustomer.Orders}&quot;
-                      IsSynchronizedWithCurrentItem=&quot;True&quot;&gt;</pre>
+                        <pre><code class="language-csharp">&lt;DataGrid ItemsSource=&quot;{Binding SelectedCustomer.Orders}&quot;
+                      IsSynchronizedWithCurrentItem=&quot;True&quot;&gt;</code></pre>
               <figcaption>Fig 02-075</figcaption>
             </figure>
             <p>
               <span class="code">Customers</span> here,
             </p>
             <figure>
-                    <pre class="prettyprint">&lt;ComboBox x:Name=&quot;CustomersCombo&quot;
+                    <pre><code class="language-csharp">&lt;ComboBox x:Name=&quot;CustomersCombo&quot;
     ItemsSource=&quot;{Binding Customers}&quot;
     DisplayMemberPath=&quot;FullName&quot;
     SelectedValuePath=&quot;Id&quot;
-    SelectionChanged=&quot;OnCustomerSelected&quot; /&gt;</pre>
+    SelectionChanged=&quot;OnCustomerSelected&quot; /&gt;</code></pre>
               <figcaption>Fig 02-076</figcaption>
             </figure>
             <p>
               or <span class="code">OrderStatuses</span> here:
             </p>
             <figure>
-                    <pre class="prettyprint">&lt;ComboBox x:Name=&quot;OrderStatusCombo&quot;
+                    <pre><code class="language-csharp">&lt;ComboBox x:Name=&quot;OrderStatusCombo&quot;
     ItemsSource=&quot;{Binding OrderStatuses}&quot;
     DisplayMemberPath=&quot;Name&quot;
     SelectedValuePath=&quot;Id&quot;
@@ -1644,7 +1644,7 @@ public void EndEdit()
     Grid.Column=&quot;1&quot;
     Grid.Row=&quot;3&quot;
     Width=&quot;200&quot;
-    HorizontalAlignment=&quot;Left&quot; /&gt;</pre>
+    HorizontalAlignment=&quot;Left&quot; /&gt;</code></pre>
               <figcaption>Fig 02-077</figcaption>
             </figure>
             <p>
@@ -1667,8 +1667,8 @@ public void EndEdit()
               to:
             </p>
             <figure>
-                    <pre class="prettyprint">&lt;DataGrid ItemsSource=&quot;{Binding SelectedCustomer.Orders}&quot;
-                      IsSynchronizedWithCurrentItem=&quot;True&quot;&gt;</pre>
+                    <pre><code class="language-csharp">&lt;DataGrid ItemsSource=&quot;{Binding SelectedCustomer.Orders}&quot;
+                      IsSynchronizedWithCurrentItem=&quot;True&quot;&gt;</code></pre>
               <figcaption>Fig 02-078</figcaption>
             </figure>
             <p>
@@ -1691,7 +1691,7 @@ public void EndEdit()
               class="code">ItemsTotal</span>:
             </p>
             <figure>
-                    <pre class="prettyprint">&lt;Label Content=&quot;Order ID:&quot; /&gt;
+                    <pre><code class="language-csharp">&lt;Label Content=&quot;Order ID:&quot; /&gt;
 &lt;Label Content=&quot;{Binding Id}&quot;
     Grid.Column=&quot;1&quot; /&gt;
 &lt;Label Content=&quot;Order Date:&quot;
@@ -1699,7 +1699,7 @@ public void EndEdit()
 &lt;TextBox Grid.Column=&quot;1&quot;
     Grid.Row=&quot;1&quot;
     Text=&quot;{Binding OrderDate}&quot; /&gt;
-            </pre>
+            </code></pre>
               <figcaption>Fig 02-079</figcaption>
             </figure>
             <p>
@@ -1717,11 +1717,11 @@ public void EndEdit()
               itself:
             </p>
             <figure>
-                    <pre class="prettyprint">&lt;ComboBox x:Name=&quot;OrderStatusCombo&quot;
+                    <pre><code class="language-csharp">&lt;ComboBox x:Name=&quot;OrderStatusCombo&quot;
     ItemsSource=&quot;{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.OrderStatuses}&quot;
     DisplayMemberPath=&quot;Name&quot;
     SelectedValuePath=&quot;Id&quot;
-    SelectedValue=&quot;{Binding Path=NewOrder.OrderStatusId, Mode=TwoWay}&quot; /&gt;</pre>
+    SelectedValue=&quot;{Binding Path=NewOrder.OrderStatusId, Mode=TwoWay}&quot; /&gt;</code></pre>
               <figcaption>Fig02-080</figcaption>
             </figure>
             <p>
@@ -1751,7 +1751,7 @@ public void EndEdit()
               class="code">StackPanel</span> that contains the <span class="code">DataGrid</span>:
             </p>
             <figure>
-                    <pre class="prettyprint"> &lt;StackPanel Grid.Row=&quot;2&quot;&gt;
+                    <pre><code class="language-csharp"> &lt;StackPanel Grid.Row=&quot;2&quot;&gt;
     &lt;StackPanel Orientation=&quot;Horizontal&quot;&gt;
         &lt;Button Click=&quot;OnMoveDown&quot;&gt;
             &lt;Image Source=&quot;Resources/arrow-down.jpg&quot;
@@ -1763,7 +1763,7 @@ public void EndEdit()
         &lt;/Button&gt;
     &lt;/StackPanel&gt;
     &lt;DataGrid ItemsSource=&quot;{Binding SelectedCustomer.Orders}&quot;
-              IsSynchronizedWithCurrentItem=&quot;True&quot;&gt;</pre>
+              IsSynchronizedWithCurrentItem=&quot;True&quot;&gt;</code></pre>
               <figcaption>Fig 02-082</figcaption>
             </figure>
             <p>
@@ -1777,7 +1777,7 @@ public void EndEdit()
               drawing a blue box around it:
             </p>
             <figure>
-                    <pre class="prettyprint">&lt;DataGrid ItemsSource=&quot;{Binding SelectedCustomer.Orders}&quot;
+                    <pre><code class="language-csharp">&lt;DataGrid ItemsSource=&quot;{Binding SelectedCustomer.Orders}&quot;
         IsSynchronizedWithCurrentItem=&quot;True&quot;&gt;
     &lt;DataGrid.RowStyle&gt;
         &lt;Style TargetType=&quot;DataGridRow&quot;&gt;
@@ -1792,7 +1792,7 @@ public void EndEdit()
             &lt;/Style.Triggers&gt;
         &lt;/Style&gt;
     &lt;/DataGrid.RowStyle&gt;
-&lt;/DataGrid&gt;</pre>
+&lt;/DataGrid&gt;</code></pre>
               <figcaption>Fig 02-083</figcaption>
             </figure>
             <p>
@@ -1800,7 +1800,7 @@ public void EndEdit()
               code-behind. So I'm just going to go to the bottom of the code-behind here and add the event handlers.
             </p>
             <figure>
-                    <pre class="prettyprint">private void OnMoveDown(object sender, RoutedEventArgs e)
+                    <pre><code class="language-csharp">private void OnMoveDown(object sender, RoutedEventArgs e)
 {
     ICollectionView collView = CollectionViewSource.GetDefaultView(SelectedCustomer.Orders);
     if (collView.CurrentPosition &gt; 0)
@@ -1812,7 +1812,7 @@ private void OnMoveUp(object sender, RoutedEventArgs e)
     ICollectionView collView = CollectionViewSource.GetDefaultView(SelectedCustomer.Orders);
     if (collView.CurrentPosition &lt; SelectedCustomer.Orders.Count - 1)
         collView.MoveCurrentToNext();
-}</pre>
+}</code></pre>
               <figcaption>Fig 02-084</figcaption>
             </figure>
             <p>
@@ -1943,14 +1943,14 @@ private void OnMoveUp(object sender, RoutedEventArgs e)
               property called Customers, and in that Customers I'm expecting a bindable collection of something:
             </p>
             <figure>
-                    <pre class="prettyprint">&lt;ComboBox x:Name=&quot;CustomersCombo&quot;
+                    <pre><code class="language-csharp">&lt;ComboBox x:Name=&quot;CustomersCombo&quot;
     Grid.Column=&quot;1&quot;
     Width=&quot;250&quot;
     HorizontalAlignment=&quot;Left&quot;
     ItemsSource=&quot;{Binding Customers}&quot;
     DisplayMemberPath=&quot;FullName&quot;
     SelectedValuePath=&quot;Id&quot;
-    SelectionChanged=&quot;OnCustomerSelected&quot; /&gt;</pre>
+    SelectionChanged=&quot;OnCustomerSelected&quot; /&gt;</code></pre>
               <figcaption>Fig 02-088</figcaption>
             </figure>
             <p>
@@ -1968,7 +1968,7 @@ private void OnMoveUp(object sender, RoutedEventArgs e)
               demos with entities:
             </p>
             <figure>
-                    <pre class="prettyprint">&lt;Label Content=&quot;First Name:&quot; /&gt;
+                    <pre><code class="language-csharp">&lt;Label Content=&quot;First Name:&quot; /&gt;
 &lt;TextBox Grid.Column=&quot;1&quot;
          Text=&quot;{Binding SelectedCustomer.LastName}&quot; /&gt;
 &lt;Label Content=&quot;Last Name:&quot;
@@ -1978,7 +1978,7 @@ private void OnMoveUp(object sender, RoutedEventArgs e)
 &lt;Label Content=&quot;Email:&quot;
        Grid.Column=&quot;4&quot; /&gt;
 &lt;TextBox Grid.Column=&quot;5&quot;
-         Text=&quot;{Binding SelectedCustomer.Email}&quot; /&gt;</pre>
+         Text=&quot;{Binding SelectedCustomer.Email}&quot; /&gt;</code></pre>
               <figcaption>Fig 02-089</figcaption>
             </figure>
             <p>
@@ -1986,7 +1986,7 @@ private void OnMoveUp(object sender, RoutedEventArgs e)
               only thing that's going to be a little different is the way you do the data access.
             </p>
             <figure>
-                    <pre class="prettyprint">public CustomersDataSet.CustomerDataTable Customers
+                    <pre><code class="language-csharp">public CustomersDataSet.CustomerDataTable Customers
 {
     get { return (CustomersDataSet.CustomerDataTable)GetValue(CustomersProperty); }
     set { SetValue(CustomersProperty, value); }
@@ -2008,7 +2008,7 @@ public static readonly DependencyProperty SelectedCustomerProperty =
     DependencyProperty.Register(&quot;SelectedCustomer&quot;,
     typeof(DataRowView),
     typeof(MainWindow),
-    new PropertyMetadata(null));</pre>
+    new PropertyMetadata(null));</code></pre>
               <figcaption>Fig 02-090</figcaption>
             </figure>
             <p>
@@ -2031,13 +2031,13 @@ public static readonly DependencyProperty SelectedCustomerProperty =
               just write directly into my wrapper property for my <span id="">DependencyProperty</span> Customers:
             </p>
             <figure>
-                    <pre class="prettyprint">public MainWindow()
+                    <pre><code class="language-csharp">public MainWindow()
 {
     InitializeComponent();
     DataContext = this;
     CustomerTableAdapter tableAdapter = new CustomerTableAdapter();
     Customers = tableAdapter.GetData();
-}</pre>
+}</code></pre>
               <figcaption>Fig 02-091</figcaption>
             </figure>
             <p>
@@ -2046,10 +2046,10 @@ public static readonly DependencyProperty SelectedCustomerProperty =
               and getting the <span class="code">SelectedItem</span>:
             </p>
             <figure>
-                    <pre class="prettyprint">private void OnCustomerSelected(object sender, SelectionChangedEventArgs e)
+                    <pre><code class="language-csharp">private void OnCustomerSelected(object sender, SelectionChangedEventArgs e)
 {
     SelectedCustomer = CustomersCombo.SelectedItem as DataRowView;
-}</pre>
+}</code></pre>
               <figcaption>Fig 02-092</figcaption>
             </figure>
             <p>
@@ -2072,11 +2072,11 @@ public static readonly DependencyProperty SelectedCustomerProperty =
               non-strongly-typed <span class="code">DataTable</span>:
             </p>
             <figure>
-                    <pre class="prettyprint">public DataTable Customers
+                    <pre><code class="language-csharp">public DataTable Customers
 {
     get { return (DataTable)GetValue(CustomersProperty); }
     set { SetValue(CustomersProperty, value); }
-}</pre>
+}</code></pre>
               <figcaption>Fig 02-094</figcaption>
             </figure>
             <p>
@@ -2086,7 +2086,7 @@ public static readonly DependencyProperty SelectedCustomerProperty =
               in the DataSet.
             </p>
             <figure>
-                    <pre class="prettyprint">public MainWindow()
+                    <pre><code class="language-csharp">public MainWindow()
 {
     InitializeComponent();
     DataContext = this;
@@ -2095,7 +2095,7 @@ public static readonly DependencyProperty SelectedCustomerProperty =
                 new SqlConnection("server=.;database=Zza;trusted_Connection=true"));
     adapter.Fill(_DataSet);
     Customers = _DataSet.Tables["Table"];
-}</pre>
+}</code></pre>
               <figcaption>Fig02-095</figcaption>
             </figure>
             <p>
@@ -2181,7 +2181,7 @@ public static readonly DependencyProperty SelectedCustomerProperty =
               orders from the Zza database:
             </p>
             <figure>
-                <pre class="prettyprint">&lt;?xml version=&quot;1.0&quot;?&gt;
+                <pre><code class="language-csharp">&lt;?xml version=&quot;1.0&quot;?&gt;
 &lt;Customers xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;
   &lt;Customer&gt;
     &lt;Id&gt;7462c7c8-e24c-484a-8f93-013f1c479615&lt;/Id&gt;
@@ -2219,7 +2219,7 @@ public static readonly DependencyProperty SelectedCustomerProperty =
         &lt;Phone&gt;(954) 594-9355&lt;/Phone&gt;
         &lt;OrderItems /&gt;
       &lt;/Order&gt;
-                </pre>
+                </code></pre>
               <figcaption>Fig 02-097</figcaption>
             </figure>
             <p>
@@ -2236,7 +2236,7 @@ public static readonly DependencyProperty SelectedCustomerProperty =
               Code-behind for this has absolutely nothing in it, and you'll see that we're going to keep it that way:
             </p>
             <figure>
-                <pre class="prettyprint">namespace XmlDataBinding
+                <pre><code class="language-csharp">namespace XmlDataBinding
 {
     /// &lt;summary&gt;
     /// Interaction logic for MainWindow.xaml
@@ -2248,7 +2248,7 @@ public static readonly DependencyProperty SelectedCustomerProperty =
             InitializeComponent();
         }
     }
-}</pre>
+}</code></pre>
               <figcaption>Fig 02-099</figcaption>
             </figure>
 
@@ -2261,10 +2261,10 @@ public static readonly DependencyProperty SelectedCustomerProperty =
               for the window to an object called an <span class="code">XmlDataProvider</span>:
             </p>
             <figure>
-                <pre class="prettyprint">&lt;Window.DataContext&gt;
+                <pre><code class="language-csharp">&lt;Window.DataContext&gt;
     &lt;XmlDataProvider Source=&quot;Zza.xml&quot;
                      XPath=&quot;&quot;Customers/Customer&quot; /&gt;
-&lt;/Window.DataContext&gt;</pre>
+&lt;/Window.DataContext&gt;</code></pre>
               <figcaption>Fig 02-100</figcaption>
             </figure>
             <p>
@@ -2285,14 +2285,14 @@ public static readonly DependencyProperty SelectedCustomerProperty =
               and add some data binding properties to it:
             </p>
             <figure>
-                <pre class="prettyprint">&lt;ComboBox x:Name=&quot;CustomersCombo&quot;
+                <pre><code class="language-csharp">&lt;ComboBox x:Name=&quot;CustomersCombo&quot;
     ItemsSource=&quot;{Binding}&quot;
     DisplayMemberPath=&quot;LastName&quot;
     SelectedValuePath=&quot;Id&quot;
     Grid.Column=&quot;1&quot;
     Width=&quot;250&quot;
     HorizontalAlignment=&quot;Left&quot;
-    IsSynchronizedWithCurrentItem=&quot;True&quot; /&gt;</pre>
+    IsSynchronizedWithCurrentItem=&quot;True&quot; /&gt;</code></pre>
               <figcaption>Fig 02-101</figcaption>
             </figure>
             <p>
@@ -2319,7 +2319,7 @@ public static readonly DependencyProperty SelectedCustomerProperty =
               class="code">XPath</span>.
             </p>
             <figure>
-                <pre class="prettyprint">&lt;Grid Grid.Row=&quot;1&quot;&gt;
+                <pre><code class="language-csharp">&lt;Grid Grid.Row=&quot;1&quot;&gt;
     &lt;Grid.ColumnDefinitions&gt;
         &lt;ColumnDefinition Width=&quot;Auto&quot; /&gt;
         &lt;ColumnDefinition Width=&quot;*&quot; /&gt;
@@ -2338,7 +2338,7 @@ public static readonly DependencyProperty SelectedCustomerProperty =
     &lt;Label Content=&quot;Email:&quot;
            Grid.Column=&quot;4&quot; /&gt;
     &lt;TextBox Grid.Column=&quot;5&quot;
-             Text=&quot;{Binding XPath=Email}&quot; /&gt;</pre>
+             Text=&quot;{Binding XPath=Email}&quot; /&gt;</code></pre>
               <figcaption>Fig 02-102</figcaption>
             </figure>
             <p>
@@ -2359,10 +2359,10 @@ public static readonly DependencyProperty SelectedCustomerProperty =
               through this Provider:
             </p>
             <figure>
-                <pre class="prettyprint">&lt;Window.DataContext&gt;
+                <pre><code class="language-csharp">&lt;Window.DataContext&gt;
     &lt;XmlDataProvider Source=&quot;Zza.xml&quot;
         XPath=&quot;Customers/Customer&quot; /&gt;
-&lt;/Window.DataContext&gt;</pre>
+&lt;/Window.DataContext&gt;</code></pre>
               <figcaption>Fig 02-104</figcaption>
             </figure>
             <p>
@@ -2370,7 +2370,7 @@ public static readonly DependencyProperty SelectedCustomerProperty =
               collection:
             </p>
             <figure>
-                <pre class="prettyprint">&lt;Label Content=&quot;Customers&quot; /&gt;
+                <pre><code class="language-csharp">&lt;Label Content=&quot;Customers&quot; /&gt;
 &lt;ComboBox x:Name=&quot;CustomersCombo&quot;
     ItemsSource=&quot;{Binding}&quot;
     DisplayMemberPath=&quot;LastName&quot;
@@ -2378,14 +2378,14 @@ public static readonly DependencyProperty SelectedCustomerProperty =
     Grid.Column=&quot;1&quot;
     Width=&quot;250&quot;
     HorizontalAlignment=&quot;Left&quot;
-    IsSynchronizedWithCurrentItem=&quot;True&quot; /&gt;</pre>
+    IsSynchronizedWithCurrentItem=&quot;True&quot; /&gt;</code></pre>
               <figcaption>Fig 02-105</figcaption>
             </figure>
             <p>
               and also binding to the current item, Fields through the concurrency of the underlying view.
             </p>
             <figure>
-                <pre class="prettyprint">&lt;TextBox Grid.Column=&quot;1&quot;
+                <pre><code class="language-csharp">&lt;TextBox Grid.Column=&quot;1&quot;
     Text=&quot;{Binding XPath=LastName}&quot; /&gt;
 &lt;Label Content=&quot;Last Name:&quot;
     Grid.Column=&quot;2&quot; /&gt;
@@ -2394,7 +2394,7 @@ public static readonly DependencyProperty SelectedCustomerProperty =
 &lt;Label Content=&quot;Email:&quot;
     Grid.Column=&quot;4&quot; /&gt;
 &lt;TextBox Grid.Column=&quot;5&quot;
-    Text=&quot;{Binding XPath=Email}&quot; /&gt;</pre>
+    Text=&quot;{Binding XPath=Email}&quot; /&gt;</code></pre>
               <figcaption>Fig 02-106</figcaption>
             </figure>
             <p>

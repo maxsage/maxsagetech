@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
   <meta charset="UTF-8">
-  <title>maxsagetech - Vue JS Fundamentals</title>
+  <title>maxsagetech - WPF MVVM In Depth</title>
   <script src="https://unpkg.com/vue"></script>
   <!--<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"-->
   <!--integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">-->
@@ -277,9 +277,9 @@
             functionality:
           </p>
           <figure>
-                <pre class="prettyprint"> &lt;Grid&gt;
+                <pre><code class="language-csharp"> &lt;Grid&gt;
     &lt;TextBlock Text=&quot;OrderPrep View&quot; /&gt;
-&lt;/Grid&gt;</pre>
+&lt;/Grid&gt;</code></pre>
             <figcaption>Fig 05-001</figcaption>
           </figure>
           <p>
@@ -293,9 +293,9 @@
           </p>
 
           <figure>
-                <pre class="prettyprint">&lt;Grid&gt;
+                <pre><code class="language-csharp">&lt;Grid&gt;
     &lt;ContentControl Content=&quot;{Binding CurrentViewModel}&quot; /&gt;
-&lt;/Grid&gt;</pre>
+&lt;/Grid&gt;</code></pre>
             <figcaption>Fig 05-002</figcaption>
           </figure>
           <p>
@@ -303,12 +303,12 @@
             for each View we will need to bring in their corresponding child namespaces:
           </p>
           <figure>
-                <pre class="prettyprint">xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+                <pre><code class="language-csharp">xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
 xmlns:cust=&quot;clr-namespace:ZzaDesktop.Customers&quot;
 xmlns:order=&quot;clr-namespace:ZzaDesktop.Orders&quot;
 xmlns:prep=&quot;clr-namespace:ZzaDesktop.OrderPrep&quot;
 xmlns:local=&quot;clr-namespace:ZzaDesktop&quot;
-Title=&quot;MainWindow&quot;</pre>
+Title=&quot;MainWindow&quot;</code></pre>
             <figcaption>Fig 05-003</figcaption>
           </figure>
           <p>
@@ -317,7 +317,7 @@ Title=&quot;MainWindow&quot;</pre>
             ViewType:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;Window.Resources&gt;
+                <pre><code class="language-csharp">&lt;Window.Resources&gt;
     &lt;DataTemplate DataType=&quot;{x:Type cust:CustomerListViewModel}&quot;&gt;
         &lt;cust:CustomerListView /&gt;
     &lt;/DataTemplate&gt;
@@ -331,7 +331,7 @@ Title=&quot;MainWindow&quot;</pre>
         &lt;cust:AddEditCustomerView /&gt;
     &lt;/DataTemplate&gt;
 
-&lt;/Window.Resources&gt;</pre>
+&lt;/Window.Resources&gt;</code></pre>
             <figcaption>Fig 05-004</figcaption>
           </figure>
           <p>
@@ -347,9 +347,9 @@ Title=&quot;MainWindow&quot;</pre>
           <p>Create a class called MainWindowViewModel. In MainWindow view we can use static hook-up in the XAML:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;Window.DataContext&gt;
+                <pre><code class="language-csharp">&lt;Window.DataContext&gt;
     &lt;local:MainWindowViewModel /&gt;
-&lt;/Window.DataContext&gt;</pre>
+&lt;/Window.DataContext&gt;</code></pre>
             <figcaption>Fig 05-005</figcaption>
           </figure>
 
@@ -361,7 +361,7 @@ Title=&quot;MainWindow&quot;</pre>
             property called CurrentViewModel which we will set to a type of object for now:
           </p>
           <figure>
-            <pre class="prettyprint">public object CurrentViewModel { get; set; }</pre>
+            <pre><code class="language-csharp">public object CurrentViewModel { get; set; }</code></pre>
             <figcaption>Fig 05-006</figcaption>
           </figure>
           <p>
@@ -370,9 +370,9 @@ Title=&quot;MainWindow&quot;</pre>
             the Child ViewModel types that we are going to be placing into that CurrentViewModel property:
           </p>
           <figure>
-                <pre class="prettyprint">private CustomerListViewModel _customerListViewModel = new CustomerListViewModel();
+                <pre><code class="language-csharp">private CustomerListViewModel _customerListViewModel = new CustomerListViewModel();
 private OrderViewModel _orderViewModel = new OrderViewModel();
-private OrderPrepViewModel _orderPrepViewModel = new OrderPrepViewModel();</pre>
+private OrderPrepViewModel _orderPrepViewModel = new OrderPrepViewModel();</code></pre>
             <figcaption>Fig 05-007</figcaption>
           </figure>
           <p>
@@ -423,12 +423,12 @@ private OrderPrepViewModel _orderPrepViewModel = new OrderPrepViewModel();</pre>
             they can easily trigger the appropriate notifications. Firstly, this class needs to implement INPC:
           </p>
           <figure>
-                <pre class="prettyprint">namespace ZzaDesktop
+                <pre><code class="language-csharp">namespace ZzaDesktop
 {
     public class BindableBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
-}</pre>
+}</code></pre>
             <figcaption>Fig 05-007A</figcaption>
           </figure>
           <p>and then it needs to expose a way for the derived classes to trigger that PropertyChanged event at the
@@ -440,7 +440,7 @@ private OrderPrepViewModel _orderPrepViewModel = new OrderPrepViewModel();</pre>
             OnPropertyChanged:
           </p>
           <figure>
-                <pre class="prettyprint">protected virtual void SetProperty&lt;T&gt;(ref T member, T val, [CallerMemberName] string propertyName = null)
+                <pre><code class="language-csharp">protected virtual void SetProperty&lt;T&gt;(ref T member, T val, [CallerMemberName] string propertyName = null)
 {
     if (object.Equals(member, val)) return;
 
@@ -451,7 +451,7 @@ private OrderPrepViewModel _orderPrepViewModel = new OrderPrepViewModel();</pre>
 protected virtual void OnPropertyChanged(string propertyName)
 {
     PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-}</pre>
+}</code></pre>
             <figcaption>Fig 05-007B</figcaption>
           </figure>
           <p>The SetProperty method is intended to be set from the set block of each property and encapsulates the check
@@ -474,7 +474,7 @@ protected virtual void OnPropertyChanged(string propertyName)
             set MainWindowViewModel to inherit from BindableBase:
           </p>
           <figure>
-                <pre class="prettyprint">class MainWindowViewModel : BindableBase
+                <pre><code class="language-csharp">class MainWindowViewModel : BindableBase
 {
     private CustomerListViewModel _customerListViewModel = new CustomerListViewModel();
     private OrderViewModel _orderViewModel = new OrderViewModel();
@@ -486,7 +486,7 @@ protected virtual void OnPropertyChanged(string propertyName)
     {
         get { return _CurrentViewModel; }
         set { SetProperty(ref _CurrentViewModel, value); }
-}</pre>
+}</code></pre>
             <figcaption>Fig 05-008</figcaption>
           </figure>
           <p>
@@ -497,17 +497,17 @@ protected virtual void OnPropertyChanged(string propertyName)
             In the BindableBase implementation of SetProperty you can see how those members are coming in:
           </p>
           <figure>
-                <pre class="prettyprint">public class BindableBase : INotifyPropertyChanged
+                <pre><code class="language-csharp">public class BindableBase : INotifyPropertyChanged
 {
     protected virtual void SetProperty&lt;T&gt;(ref T member, T val,
-                [CallerMemberName] string propertyName = null)</pre>
+                [CallerMemberName] string propertyName = null)</code></pre>
             <figcaption>Fig 05-008A</figcaption>
           </figure>
           <p>The by ref member variable comes in in the first argument, the value comes in second and the third one gets
             set with a nice feature of C# which is the CallerMemberName attribute:
           </p>
           <figure>
-            <pre class="prettyprint">[CallerMemberName] string propertyName = null</pre>
+            <pre><code class="language-csharp">[CallerMemberName] string propertyName = null</code></pre>
             <figcaption>Fig 05-008B</figcaption>
           </figure>
           <p>That attribute makes it so it can automatically pick off the name of the thing that called in here – which
@@ -515,7 +515,7 @@ protected virtual void OnPropertyChanged(string propertyName)
             CurrentViewModel.
           </p>
           <figure>
-                <pre class="prettyprint">class MainWindowViewModel : BindableBase
+                <pre><code class="language-csharp">class MainWindowViewModel : BindableBase
 {
     private CustomerListViewModel _customerListViewModel = new CustomerListViewModel();
     private OrderViewModel _orderViewModel = new OrderViewModel();
@@ -527,7 +527,7 @@ protected virtual void OnPropertyChanged(string propertyName)
     {
         get { return _CurrentViewModel; }
         set { SetProperty(ref _CurrentViewModel, value); }
-    }</pre>
+    }</code></pre>
             <figcaption>Fig 05-009</figcaption>
           </figure>
           <p>
@@ -537,26 +537,26 @@ protected virtual void OnPropertyChanged(string propertyName)
             each of our ViewModels will inherit from that. So now let’s add BindableBase to each of our ViewModels.
           </p>
           <figure>
-                <pre class="prettyprint">namespace ZzaDesktop.Customers
+                <pre><code class="language-csharp">namespace ZzaDesktop.Customers
 {
     class CustomerListViewModel : BindableBase
-    {</pre>
+    {</code></pre>
             <figcaption>Fig 05-009A</figcaption>
           </figure>
           <figure>
-                <pre class="prettyprint">namespace ZzaDesktop.Orders
+                <pre><code class="language-csharp">namespace ZzaDesktop.Orders
 {
     class OrderViewModel : BindableBase
-    {</pre>
+    {</code></pre>
             <figcaption>Fig 05-009B</figcaption>
           </figure>
           <figure>
-                <pre class="prettyprint">namespace ZzaDesktop.OrderPrep
+                <pre><code class="language-csharp">namespace ZzaDesktop.OrderPrep
 {
     class OrderPrepViewModel : BindableBase
     {
     }
-}</pre>
+}</code></pre>
             <figcaption>Fig 05-009C</figcaption>
           </figure>
           <p>So next we'll hook up the Commanding to actually drive this switching and navigation.</p>
@@ -589,7 +589,7 @@ protected virtual void OnPropertyChanged(string propertyName)
             property to the appropriate child ViewModel when a certain identifier comes in:
           </p>
           <figure>
-                <pre class="prettyprint">private void OnNav(string destination)
+                <pre><code class="language-csharp">private void OnNav(string destination)
 {
     switch (destination)
     {
@@ -601,7 +601,7 @@ protected virtual void OnPropertyChanged(string propertyName)
             CurrentViewModel = _customerListViewModel;
             break;
     }
-}</pre>
+}</code></pre>
             <figcaption>Fig 05-010</figcaption>
           </figure>
           <p>
@@ -610,7 +610,7 @@ protected virtual void OnPropertyChanged(string propertyName)
           </p>
           <figure>
             <pre
-              class="prettyprint">public RelayCommand&lt;string&gt; NavCommand { get; private set; }</pre>
+              class="prettyprint">public RelayCommand&lt;string&gt; NavCommand { get; private set; }</code></pre>
             <figcaption>Fig 05-011</figcaption>
           </figure>
           <p>
@@ -618,10 +618,10 @@ protected virtual void OnPropertyChanged(string propertyName)
             to the OnNav method:
           </p>
           <figure>
-                <pre class="prettyprint"> public MainWindowViewModel()
+                <pre><code class="language-csharp"> public MainWindowViewModel()
 {
     NavCommand = new RelayCommand&lt;string&gt;(OnNav);
-}</pre>
+}</code></pre>
             <figcaption>Fig 05-012</figcaption>
           </figure>
           <p>
@@ -629,7 +629,7 @@ protected virtual void OnPropertyChanged(string propertyName)
             Buttons. Add two rows to the Grid in the MainWindow.xaml View:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;Grid&gt;
+                <pre><code class="language-csharp">&lt;Grid&gt;
 &lt;Grid.RowDefinitions&gt;
     &lt;RowDefinition Height=&quot;Auto&quot; /&gt;
     &lt;RowDefinition Height=&quot;*&quot; /&gt;
@@ -648,7 +648,7 @@ protected virtual void OnPropertyChanged(string propertyName)
             Command=&quot;{Binding NavCommand}&quot;
             CommandParameter=&quot;orderPrep&quot;
             Grid.Column=&quot;2&quot; /&gt;
-&lt;/Grid&gt;</pre>
+&lt;/Grid&gt;</code></pre>
             <figcaption>Fig 05-013</figcaption>
           </figure>
           <p>
@@ -690,7 +690,7 @@ protected virtual void OnPropertyChanged(string propertyName)
             CustomerListView. Replace the TextBox with a DataGrid:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;Grid&gt;
+                <pre><code class="language-csharp">&lt;Grid&gt;
     &lt;DataGrid ItemsSource=&quot;{Binding Customers}&quot;
               AutoGenerateColumns=&quot;False&quot;
               CanUserAddRows=&quot;False&quot;
@@ -710,7 +710,7 @@ protected virtual void OnPropertyChanged(string propertyName)
             &lt;/DataGridTemplateColumn&gt;
         &lt;/DataGrid.Columns&gt;
     &lt;/DataGrid&gt;
-&lt;/Grid&gt;</pre>
+&lt;/Grid&gt;</code></pre>
             <figcaption>Fig 05-015</figcaption>
           </figure>
           <p>
@@ -726,10 +726,10 @@ protected virtual void OnPropertyChanged(string propertyName)
             binding:
           </p>
           <figure>
-                <pre class="prettyprint"> &lt;Button Content=&quot;Place Order&quot;
+                <pre><code class="language-csharp"> &lt;Button Content=&quot;Place Order&quot;
     Command=&quot;{Binding DataContext.PlaceOrderCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}&quot;
     CommandParameter=&quot;{Binding}&quot;
-    Margin=&quot;5&quot; /&gt;</pre>
+    Margin=&quot;5&quot; /&gt;</code></pre>
             <figcaption>Fig 05-015A</figcaption>
           </figure>
           <p>
@@ -740,12 +740,12 @@ protected virtual void OnPropertyChanged(string propertyName)
           <p>In the CustomerListViewModel we will start by adding the Customers Collection and the PlaceOrderCommand:
           </p>
           <figure>
-                <pre class="prettyprint">private ObservableCollection&lt;Customer&gt; _customers;
+                <pre><code class="language-csharp">private ObservableCollection&lt;Customer&gt; _customers;
 public ObservableCollection&lt;Customer&gt; Customers
 {
     get { return _customers; }
     set { SetProperty(ref _customers, value); }
-}</pre>
+}</code></pre>
             <figcaption>Fig 05-016</figcaption>
           </figure>
           <p>
@@ -755,7 +755,7 @@ public ObservableCollection&lt;Customer&gt; Customers
             just hard code it in here:
           </p>
           <figure>
-            <pre class="prettyprint">private ICustomersRepository _repo = new CustomersRepository();</pre>
+            <pre><code class="language-csharp">private ICustomersRepository _repo = new CustomersRepository();</code></pre>
             <figcaption>Fig 05-017</figcaption>
           </figure>
           <p>
@@ -766,11 +766,11 @@ public ObservableCollection&lt;Customer&gt; Customers
             that we want to invoke when the Loaded event fires:
           </p>
           <figure>
-                <pre class="prettyprint">public async void LoadCustomers()
+                <pre><code class="language-csharp">public async void LoadCustomers()
 {
     Customers = new ObservableCollection&lt;Customer&gt;(
         await _repo.GetCustomersAsync());
-}</pre>
+}</code></pre>
             <figcaption>Fig 05-018</figcaption>
           </figure>
           <p>
@@ -804,11 +804,11 @@ public ObservableCollection&lt;Customer&gt; Customers
             to just Binding to get to a reference of our ViewModel and the MethodName to LoadCustomers:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;i:Interaction.Triggers&gt;
+                <pre><code class="language-csharp">&lt;i:Interaction.Triggers&gt;
     &lt;i:EventTrigger EventName=&quot;Loaded&quot;&gt;
         &lt;ei:CallMethodAction TargetObject=&quot;{Binding}&quot; MethodName=&quot;LoadCustomers&quot;/&gt;
     &lt;/i:EventTrigger&gt;
-&lt;/i:Interaction.Triggers&gt;</pre>
+&lt;/i:Interaction.Triggers&gt;</code></pre>
             <figcaption>Fig 05-019</figcaption>
           </figure>
           <p>With that we should be able to run, click on the Customers Button and the Customers should be loaded
@@ -824,24 +824,24 @@ public ObservableCollection&lt;Customer&gt; Customers
           </p>
           <figure>
             <pre
-              class="prettyprint">public RelayCommand&lt;Customer&gt; PlaceOrderCommand { get; private set; }</pre>
+              class="prettyprint">public RelayCommand&lt;Customer&gt; PlaceOrderCommand { get; private set; }</code></pre>
             <figcaption>Fig 05-021</figcaption>
           </figure>
           <p>In the constructor for the ViewModel initialize the Command property and point it to a handling method:
           </p>
           <figure>
-                <pre class="prettyprint"> public CustomerListViewModel()
+                <pre><code class="language-csharp"> public CustomerListViewModel()
 {
     PlaceOrderCommand = new RelayCommand&lt;Customer&gt;(OnPlaceOrder);
-}</pre>
+}</code></pre>
             <figcaption>Fig 05-022</figcaption>
           </figure>
           <p>Now add the handling method:</p>
           <figure>
-                <pre class="prettyprint">private void OnPlaceOrder(Customer customer)
+                <pre><code class="language-csharp">private void OnPlaceOrder(Customer customer)
 {
     PlaceOrderRequested(customer.Id);
-}</pre>
+}</code></pre>
             <figcaption>Fig 05-023</figcaption>
           </figure>
           <p>Just to make sure that is all setup correctly we can set a break point on the OnPlaceOrder method and run,
@@ -894,7 +894,7 @@ public ObservableCollection&lt;Customer&gt; Customers
           </p>
           <figure>
             <pre
-              class="prettyprint">public event Action&lt;Guid&gt; PlaceOrderRequested = delegate { };</pre>
+              class="prettyprint">public event Action&lt;Guid&gt; PlaceOrderRequested = delegate { };</code></pre>
             <figcaption>Fig 05-023B</figcaption>
           </figure>
           <p>
@@ -902,10 +902,10 @@ public ObservableCollection&lt;Customer&gt; Customers
             Customer Id of the Customer the Command was raised for:
           </p>
           <figure>
-                <pre class="prettyprint">private void OnPlaceOrder(Customer customer)
+                <pre><code class="language-csharp">private void OnPlaceOrder(Customer customer)
 {
     PlaceOrderRequested(customer.Id);
-}</pre>
+}</code></pre>
             <figcaption>Fig 05-024</figcaption>
           </figure>
           <p>
@@ -914,18 +914,18 @@ public ObservableCollection&lt;Customer&gt; Customers
             method that we will place here in the parent:
           </p>
           <figure>
-                <pre class="prettyprint"> public MainWindowViewModel()
+                <pre><code class="language-csharp"> public MainWindowViewModel()
         {
             NavCommand = new RelayCommand&lt;string&gt;(OnNav);
             _customerListViewModel.PlaceOrderRequested += NavToOrder;
-        }</pre>
+        }</code></pre>
             <figcaption>Fig 05-025</figcaption>
           </figure>
           <p>To implement the method, we will drop down to the bottom of the class and declare a method with the
             appropriate signature:
           </p>
           <figure>
-            <pre class="prettyprint">private void NavToOrder(Guid customerId)</pre>
+            <pre><code class="language-csharp">private void NavToOrder(Guid customerId)</code></pre>
             <figcaption>Fig 05-026</figcaption>
           </figure>
           <p>
@@ -935,31 +935,31 @@ public ObservableCollection&lt;Customer&gt; Customers
             passed to us and just push it down to the child ViewModel:
           </p>
           <figure>
-                <pre class="prettyprint">private void NavToOrder(Guid customerId)
+                <pre><code class="language-csharp">private void NavToOrder(Guid customerId)
         {
             _orderViewModel.CustomerId = customerId;
             CurrentViewModel = _orderViewModel;
-        }</pre>
+        }</code></pre>
             <figcaption>Fig 05-027</figcaption>
           </figure>
           <p>In the OrderViewModel add an appropriate property:</p>
           <figure>
-                <pre class="prettyprint">private Guid _CustomerId;
+                <pre><code class="language-csharp">private Guid _CustomerId;
 
 public Guid CustomerId
 {
     get { return _CustomerId; }
     set { SetProperty(ref _CustomerId, value); }
-}</pre>
+}</code></pre>
             <figcaption>Fig 05-028</figcaption>
           </figure>
 
           <p>In the OrderView add the following XAML:</p>
           <figure>
-                <pre class="prettyprint">&lt;StackPanel Orientation=&quot;Horizontal&quot;&gt;
+                <pre><code class="language-csharp">&lt;StackPanel Orientation=&quot;Horizontal&quot;&gt;
     &lt;TextBlock Text=&quot;Placing Order for Customer: &quot; /&gt;
     &lt;TextBlock Text=&quot;{Binding CustomerId}&quot; /&gt;
-&lt;/StackPanel&gt;</pre>
+&lt;/StackPanel&gt;</code></pre>
             <figcaption>Fig 05-029</figcaption>
           </figure>
           <p>
@@ -1000,7 +1000,7 @@ public Guid CustomerId
             buttons onto our CustomerListView:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;Grid&gt;
+                <pre><code class="language-csharp">&lt;Grid&gt;
     &lt;Grid.RowDefinitions&gt;
         &lt;RowDefinition Height=&quot;Auto&quot; /&gt;
         &lt;RowDefinition Height=&quot;*&quot; /&gt;
@@ -1013,7 +1013,7 @@ public Guid CustomerId
     &lt;DataGrid ItemsSource=&quot;{Binding Customers}&quot;
               AutoGenerateColumns=&quot;False&quot;
               CanUserAddRows=&quot;False&quot;
-              Grid.Row=&quot;1&quot;&gt;</pre>
+              Grid.Row=&quot;1&quot;&gt;</code></pre>
             <figcaption>Fig 05-031</figcaption>
           </figure>
           <p>
@@ -1023,7 +1023,7 @@ public Guid CustomerId
             templated column similar to the PlaceOrderCommand:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;DataGridTemplateColumn Width=&quot;Auto&quot;&gt;
+                <pre><code class="language-csharp">&lt;DataGridTemplateColumn Width=&quot;Auto&quot;&gt;
     &lt;DataGridTemplateColumn.CellTemplate&gt;
         &lt;DataTemplate&gt;
             &lt;Button Content=&quot;Place Order&quot;
@@ -1032,7 +1032,7 @@ public Guid CustomerId
                     Margin=&quot;5&quot; /&gt;
         &lt;/DataTemplate&gt;
     &lt;/DataGridTemplateColumn.CellTemplate&gt;
-&lt;/DataGridTemplateColumn&gt;</pre>
+&lt;/DataGridTemplateColumn&gt;</code></pre>
             <figcaption>Fig 05-032</figcaption>
           </figure>
           <p>
@@ -1044,8 +1044,8 @@ public Guid CustomerId
             getting familiar now. First we define the property on our ViewModel that exposes that Command:
           </p>
           <figure>
-                <pre class="prettyprint">public RelayCommand AddCustomerCommand { get; private set; }
-public RelayCommand&lt;Customer&gt; EditCustomerCommand { get; private set; }</pre>
+                <pre><code class="language-csharp">public RelayCommand AddCustomerCommand { get; private set; }
+public RelayCommand&lt;Customer&gt; EditCustomerCommand { get; private set; }</code></pre>
             <figcaption>Fig 05-033</figcaption>
           </figure>
           <p>
@@ -1054,25 +1054,25 @@ public RelayCommand&lt;Customer&gt; EditCustomerCommand { get; private set; }</p
             pointing it to a handling method:
           </p>
           <figure>
-                <pre class="prettyprint">public CustomerListViewModel()
+                <pre><code class="language-csharp">public CustomerListViewModel()
 {
     PlaceOrderCommand = new RelayCommand&lt;Customer&gt;(OnPlaceOrder);
     AddCustomerCommand = new RelayCommand(OnAddCustomer);
     EditCustomerCommand = new RelayCommand&lt;Customer&gt;(OnEditCustomer);
 
-}</pre>
+}</code></pre>
             <figcaption>Fig 05-034</figcaption>
           </figure>
           <p>Now stub out the handling methods:</p>
           <figure>
-                <pre class="prettyprint">private void OnAddCustomer()
+                <pre><code class="language-csharp">private void OnAddCustomer()
 {
     AddCustomerRequested(new Customer { Id = Guid.NewGuid() });
 }
 private void OnEditCustomer(Customer cust)
 {
     EditCustomerRequested(cust);
-}</pre>
+}</code></pre>
             <figcaption>Fig 05-035</figcaption>
           </figure>
           <p>
@@ -1080,8 +1080,8 @@ private void OnEditCustomer(Customer cust)
             pattern we established is to raise an event to our Parent ViewModel. We will need two more events for that:
           </p>
           <figure>
-                <pre class="prettyprint">public event Action&lt;Customer&gt; AddCustomerRequested = delegate { };
-public event Action&lt;Customer&gt; EditCustomerRequested = delegate { };</pre>
+                <pre><code class="language-csharp">public event Action&lt;Customer&gt; AddCustomerRequested = delegate { };
+public event Action&lt;Customer&gt; EditCustomerRequested = delegate { };</code></pre>
             <figcaption>Fig 05-036</figcaption>
           </figure>
           <p>Each event will pass a Customer and now we just need to fire those from the Command handlers:</p>
@@ -1091,14 +1091,14 @@ public event Action&lt;Customer&gt; EditCustomerRequested = delegate { };</pre>
             Command:
           </p>
           <figure>
-                <pre class="prettyprint">private void OnAddCustomer()
+                <pre><code class="language-csharp">private void OnAddCustomer()
 {
     AddCustomerRequested(new Customer { Id = Guid.NewGuid() });
 }
 private void OnEditCustomer(Customer cust)
 {
     EditCustomerRequested(cust);
-}</pre>
+}</code></pre>
             <figcaption>Fig 05-037</figcaption>
           </figure>
           <p>
@@ -1107,19 +1107,19 @@ private void OnEditCustomer(Customer cust)
           </p>
 
           <figure>
-            <pre class="prettyprint">private AddEditCustomerViewModel _addEditViewModel = new AddEditCustomerViewModel();</pre>
+            <pre><code class="language-csharp">private AddEditCustomerViewModel _addEditViewModel = new AddEditCustomerViewModel();</code></pre>
             <figcaption>Fig 05-038</figcaption>
           </figure>
           <p>We can then subscribe to its events in the constructor of the ViewModel (as we did for PlaceOrder):
           </p>
           <figure>
-                <pre class="prettyprint">_customerListViewModel.AddCustomerRequested += NavToAddCustomer;
-_customerListViewModel.EditCustomerRequested += NavToEditCustomer;</pre>
+                <pre><code class="language-csharp">_customerListViewModel.AddCustomerRequested += NavToAddCustomer;
+_customerListViewModel.EditCustomerRequested += NavToEditCustomer;</code></pre>
             <figcaption>Fig 05-039</figcaption>
           </figure>
           <p>Now we just need to implement the handling methods:</p>
           <figure>
-                <pre class="prettyprint">private void NavToAddCustomer(Customer cust)
+                <pre><code class="language-csharp">private void NavToAddCustomer(Customer cust)
 {
     _addEditViewModel.EditMode = false;
     _addEditViewModel.SetCustomer(cust);
@@ -1131,7 +1131,7 @@ private void NavToEditCustomer(Customer cust)
     _addEditViewModel.EditMode = true;
     _addEditViewModel.SetCustomer(cust);
     CurrentViewModel = _addEditViewModel;
-}</pre>
+}</code></pre>
             <figcaption>Fig 05-040</figcaption>
           </figure>
           <p>
@@ -1146,7 +1146,7 @@ private void NavToEditCustomer(Customer cust)
           </p>
           <p>So in AddEditCustomerViewModel add the following code:</p>
           <figure>
-                <pre class="prettyprint">class AddEditCustomerViewModel : BindableBase
+                <pre><code class="language-csharp">class AddEditCustomerViewModel : BindableBase
 {
     private bool _EditMode;
 
@@ -1162,7 +1162,7 @@ private void NavToEditCustomer(Customer cust)
     {
         _editingCustomer = cust;
     }
-}</pre>
+}</code></pre>
             <figcaption>Fig 05-041</figcaption>
           </figure>
           <p>
@@ -1177,17 +1177,17 @@ private void NavToEditCustomer(Customer cust)
           </p>
           <p>For now, we need to put something in the View so we can identify when it is on screen:</p>
           <figure>
-                <pre class="prettyprint">&lt;Grid&gt;
+                <pre><code class="language-csharp">&lt;Grid&gt;
     &lt;TextBlock Text=&quot;Add / Edit Customer View&quot; /&gt;
 
-&lt;/Grid&gt;</pre>
+&lt;/Grid&gt;</code></pre>
             <figcaption>Fig 05-042</figcaption>
           </figure>
           <p>We then want to go to the MainWindow View and add another DataTemplate:</p>
           <figure>
-                <pre class="prettyprint">&lt;DataTemplate DataType=&quot;{x:Type cust:AddEditCustomerViewModel}&quot;&gt;
+                <pre><code class="language-csharp">&lt;DataTemplate DataType=&quot;{x:Type cust:AddEditCustomerViewModel}&quot;&gt;
     &lt;cust:AddEditCustomerView /&gt;
-&lt;/DataTemplate&gt;</pre>
+&lt;/DataTemplate&gt;</code></pre>
             <figcaption>Fig 05-043</figcaption>
           </figure>
           <p>

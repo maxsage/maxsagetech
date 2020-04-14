@@ -31,7 +31,7 @@
         <p>First, let's talk a little bit about Webpack's role in a modern web application. By default, Webpack pumps
           out static assets only:</p>
         <figure>
-          <img src="./images/Fig08-001.PNG"/>
+          <img src="./images/Fig08-001.png"/>
           <figcaption>Fig 08-001</figcaption>
         </figure>
         <p>So when we say static asset, that mostly refers to anything that is not served by a dynamic web server. So
@@ -44,7 +44,7 @@
           database, you might not be looking to make only a static project.</p>
         <p>In comparison to that is something that has our static assets plus our own custom server:</p>
         <figure>
-          <img src="./images/Fig08-002.PNG"/>
+          <img src="./images/Fig08-002.png"/>
           <figcaption>Fig 08-002</figcaption>
         </figure>
         <p>So in this sort of world, we have some intermediary server, be it node, rails,.net, django with Python, any
@@ -61,7 +61,7 @@
         <p>Now, here's a list of just kind of like general providers of hosting for both static assets and server-based
           providers as well:</p>
         <figure>
-          <img src="./images/Fig08-003.PNG"/>
+          <img src="./images/Fig08-003.png"/>
           <figcaption>Fig 08-003</figcaption>
         </figure>
         <p>On the left-hand side, we've got very common services like Github Pages, which is completely free. Amazon S3,
@@ -93,7 +93,7 @@
           we're going to do is open up our webpack config file and go down to the plugin section all the way at the
           bottom, so we'll go all the way to the bottom. Now, we've already got two plug ins in here:</p>
         <figure>
-          <img src="./images/Fig08-004.PNG"/>
+          <img src="./images/Fig08-004.png"/>
           <figcaption>Fig 08-004</figcaption>
         </figure>
         <p>one about our Commons Chunk Plug in and one for our Html webpack Plug in, as well. We're going to add in one
@@ -102,7 +102,7 @@
           we're going to add a little bit of repetitive statements in here so bear with me. In a string, we'll start off
           by saying 'process.env.NODE_ENV' and then colon 'JSON.stringify(process.env.NODE_ENV)':</p>
         <figure>
-          <img src="./images/Fig08-005.PNG"/>
+          <img src="./images/Fig08-005.png"/>
           <figcaption>Fig 08-005</figcaption>
         </figure>
         <p>Okay. So, I encourage you to please double check, make sure you have the comma, make sure you've got the
@@ -126,12 +126,12 @@
           within our bundle.js file, or really our javascript output files. On the left hand side, we define the
           variable that we want defined:</p>
         <figure>
-          <img src="./images/Fig08-006.PNG"/>
+          <img src="./images/Fig08-006.png"/>
           <figcaption>Fig 08-006</figcaption>
         </figure>
         <p>And on the right hand side, we define the value that we want it to be assigned:</p>
         <figure>
-          <img src="./images/Fig08-007.PNG"/>
+          <img src="./images/Fig08-007.png"/>
           <figcaption>Fig 08-007</figcaption>
         </figure>
         <p>Now, do notice the JSON stringify statement in here, that just makes sure that when we pass in this NODE_ENV
@@ -142,7 +142,7 @@
           over to my package.JSON file, I'm going to find my build script, and right before we run the script, we're
           going to set an environment variable by running or by adding NODE_ENV=production, like so:</p>
         <figure>
-          <img src="./images/Fig08-009.PNG"/>
+          <img src="./images/Fig08-009.png"/>
           <figcaption>Fig 08-009</figcaption>
         </figure>
         <p>So by adding in NODE_ENV=production, it makes sure or ensures that when node runs are clean and webpack
@@ -156,7 +156,7 @@
           additional switch that we can pass to the webpack command line. So I'm going to put a space and then dash
           p:</p>
         <figure>
-          <img src="./images/Fig08-010.PNG"/>
+          <img src="./images/Fig08-010.png"/>
           <figcaption>Fig 08-010</figcaption>
         </figure>
         <p>Adding in the -p right here tells webpack that we want a production version of our output. When webpack runs
@@ -222,12 +222,12 @@
           surge, really just a fantastic service. So our website is now available at your pre-generated URL, which
           you'll find down here at the bottom right:</p>
         <figure>
-          <img src="./images/Fig08-014.PNG"/>
+          <img src="./images/Fig08-014.png"/>
           <figcaption>Fig 08-014</figcaption>
         </figure>
         <p>So I'm gonna copy that URL, I'm gonna go over to Chrome, and I'm gonna visit it:</p>
         <figure>
-          <img src="./images/Fig08-015.PNG"/>
+          <img src="./images/Fig08-015.png"/>
           <figcaption>Fig 08-015</figcaption>
         </figure>
         <p>And ta-da, there we go. That's pretty much it. So again, surge, without a doubt, the easiest way to get your
@@ -259,7 +259,7 @@
         <p>So how do we serve a webpage using GitHub? When you first create a GitHub repository, you'll usually end up
           with a branch called "master":</p>
         <figure>
-          <img src="./images/Fig08-016.PNG"/>
+          <img src="./images/Fig08-016.png"/>
           <figcaption>Fig 08-016</figcaption>
         </figure>
         <p>And that will be the central repository, the central branch of all of your code. Now GitHub makes use of a
@@ -277,7 +277,7 @@
           account - and I'm going to create a new repository. So at the top right, I'll click create new and then
           repository:</p>
         <figure>
-          <img src="./images/Fig08-017.PNG"/>
+          <img src="./images/Fig08-017.png"/>
           <figcaption>Fig 08-017</figcaption>
         </figure>
         <p>Then once here, I need to enter a name for my repository. Note that the name you put in there is going to be
@@ -286,7 +286,7 @@
           URL to distribute it to other people.</p>
         <p>So for my case, I'm going to use WebpackSampleDeploy:</p>
         <figure>
-          <img src="./images/Fig08-018.PNG"/>
+          <img src="./images/Fig08-018.png"/>
           <figcaption>Fig 08-018</figcaption>
         </figure>
         <p>Not the prettiest URL, but certainly anyone is going to be able to, you know, get to it pretty easily. I
@@ -295,7 +295,7 @@
           paid account, so I have the option to make it private. So let's go ahead and create the repository.</p>
         <p>Then we get our GitHub link right here:</p>
         <figure>
-          <img src="./images/Fig08-019.PNG"/>
+          <img src="./images/Fig08-019.png"/>
           <figcaption>Fig 08-019</figcaption>
         </figure>
         <p>I'm going to use my SSH link. I can only use this because I've set up my machine to use SSH with GitHub. If
@@ -309,19 +309,19 @@
         </figure>
         <p>I'll then add all of my code and commit it:</p>
         <figure>
-          <img src="./images/Fig08-021.PNG"/>
+          <img src="./images/Fig08-021.png"/>
           <figcaption>Fig 08-021</figcaption>
         </figure>
         <p>Next, I'm going to add my GitHub Pages, or - I assume - I'm going to add my GitHub repository as a remote
           target for this repo by running the command:</p>
         <figure>
-          <img src="./images/Fig08-022.PNG"/>
+          <img src="./images/Fig08-022.png"/>
           <figcaption>Fig 08-022</figcaption>
         </figure>
         <p>and then I'll paste the link that I just copied. So this says, "Add a remote called origin using this URL."
           So we'll add that. Next, we'll check out our branch gh-pages.</p>
         <figure>
-          <img src="./images/Fig08-023.PNG"/>
+          <img src="./images/Fig08-023.png"/>
           <figcaption>Fig 08-023</figcaption>
         </figure>
         <p>So this checks out a branch called github-pages or gh-pages. So we're on the branch right now and so all you
@@ -330,7 +330,7 @@
           entire codebase, we want to push just the dist directory and the files that are inside of it - we're going to
           use a little bit of fancy command. We're going to say:</p>
         <figure>
-          <img src="./images/Fig08-024.PNG"/>
+          <img src="./images/Fig08-024.png"/>
           <figcaption>Fig 08-024</figcaption>
         </figure>
         <p>What this does is it says, "I acknowledge that I've got a full git repository of code here - like many files,
@@ -345,7 +345,7 @@
         <p>If you used a different repository name, you'll make sure that you want to put that different repo name in
           there. So we'll go, we'll visit it and ta-da:</p>
         <figure>
-          <img src="./images/Fig08-025.PNG"/>
+          <img src="./images/Fig08-025.png"/>
           <figcaption>Fig 08-025</figcaption>
         </figure>
         <p>Here's our project. Fantastic. Not too - or not too bad, right? Just takes a little bit of setup and that's
@@ -353,7 +353,7 @@
           pretty good idea to add in a NPM script to automatically deploy our project for us. So inside of my
           package.json file, I'm going to find my scripts directory and I'm going to add on a new script of deploy:</p>
         <figure>
-          <img src="./images/Fig08-026.PNG"/>
+          <img src="./images/Fig08-026.png"/>
           <figcaption>Fig 08-026</figcaption>
         </figure>
         <p>And in deploy, we will first "npm run build" - so I'm going to first build my project - and then after I have
@@ -416,14 +416,14 @@
           logged into my console. On the top right, I'm going to click my name, and I'm going to find my security
           credentials:</p>
         <figure>
-          <img src="./images/Fig08-027.PNG"/>
+          <img src="./images/Fig08-027.png"/>
           <figcaption>Fig 08-027</figcaption>
         </figure>
         <p>Now, once over here, I'm going to find the section called Access Keys. I'll expand it, and scroll down a
           little bit until I see the button that says, "Create new access key." So I'm going to click that button, and
           then I'll click on, "Show access key.":</p>
         <figure>
-          <img src="./images/Fig08-028.PNG"/>
+          <img src="./images/Fig08-028.png"/>
           <figcaption>Fig 08-028</figcaption>
         </figure>
         <p>So these keys right here, again, this is the very sensitive stuff. If you're using Git to follow along with
@@ -434,14 +434,14 @@
         <p>So now we've got these access keys, we need to make sure that we can provide them to the S3 website tool.
           Back in my code editor, I'm going to create a new file inside of my root project directory called ".env":</p>
         <figure>
-          <img src="./images/Fig08-029.PNG"/>
+          <img src="./images/Fig08-029.png"/>
           <figcaption>Fig 08-029</figcaption>
         </figure>
         <p>When we run that S3 website tool, it will automatically look into this file to find our access keys that we
           just generated. So, we're going to define two variables inside this file, and then the S3 website tool will
           make use of those two keys for us:</p>
         <figure>
-          <img src="./images/Fig08-030.PNG"/>
+          <img src="./images/Fig08-030.png"/>
           <figcaption>Fig 08-030</figcaption>
         </figure>
         <p>First, we define AWS_ACCESS_KEY_ID and then put equals. And then AWS_SECRET_ACCESS_KEY equals. Do make sure
@@ -449,13 +449,13 @@
           now we're going to copy-paste our keys directly into this file. So I'm going to go back over to Chrome, I'm
           going to find my access key first, I'm going to highlight it all or copy it and then paste it over here:</p>
         <figure>
-          <img src="./images/Fig08-031.PNG"/>
+          <img src="./images/Fig08-031.png"/>
           <figcaption>Fig 08-031</figcaption>
         </figure>
         <p>Then we'll repeat the same thing for our secret access key as well. Flip back over, grab the secret access
           key. I'm going to copy it, go back over, and paste it:</p>
         <figure>
-          <img src="./images/Fig08-032.PNG"/>
+          <img src="./images/Fig08-032.png"/>
           <figcaption>Fig 08-032</figcaption>
         </figure>
         <p>Okay. That's pretty much it. So now we can make use of the S3 website tool and deploy our application. Back
@@ -473,7 +473,7 @@
         <p>So we'll run that command, and S3 website is pretty much going to take it from there. When we first run the
           command, it's going to automatically create the bucket for us:</p>
         <figure>
-          <img src="./images/Fig08-034.PNG"/>
+          <img src="./images/Fig08-034.png"/>
           <figcaption>Fig 08-034</figcaption>
         </figure>
         <p>After creating the bucket, we then need to actually deploy our application. So we only just created the
@@ -485,14 +485,14 @@
         <p>and then the directory that we want to deploy, which in our case is the dist directory. So we'll run that.
           It's going to upload our files:</p>
         <figure>
-          <img src="./images/Fig08-035.PNG"/>
+          <img src="./images/Fig08-035.png"/>
           <figcaption>Fig 08-035</figcaption>
         </figure>
         <p>and that's what got uploaded. Fantastic. Definitely looks good. Let's now copy this link right here. I'm
           going to copy it, we'll go over to Chrome, I'm going to open up a new tab, paste the link, and let's give it a
           shot. So we go there, and ta-da!:</p>
         <figure>
-          <img src="./images/Fig08-036.PNG"/>
+          <img src="./images/Fig08-036.png"/>
           <figcaption>Fig 08-036</figcaption>
         </figure>
         <p>Our application loads up. Fantastic. And it's pretty darn lightning fast I would say, reasonably fast. Yeah,
@@ -522,7 +522,7 @@
         <p>I'm going to go back over to our management console. I'm going to close this dialogue that I had open, and
           then on the right hand side under actions, I'm going to click delete:</p>
         <figure>
-          <img src="./images/Fig08-039.PNG"/>
+          <img src="./images/Fig08-039.png"/>
           <figcaption>Fig 08-039</figcaption>
         </figure>
         <p>So this is going to immediately delete my access key for that bucket, and it's just going to go away, and
@@ -530,20 +530,20 @@
           automatically created as well, to make sure that I never get billed for it in any way, shape, or form in the
           future. So I'm going to click services up at the top left:</p>
         <figure>
-          <img src="./images/Fig08-040.PNG"/>
+          <img src="./images/Fig08-040.png"/>
           <figcaption>Fig 08-040</figcaption>
         </figure>
         <p>I'm going to search for S3, and I should find S3 scalable cloud storage. Then once here, on the left hand
           side, I'm going to find the server or the bucket that I just created, webpack deploy:</p>
         <figure>
-          <img src="./images/Fig08-041.PNG"/>
+          <img src="./images/Fig08-041.png"/>
           <figcaption>Fig 08-041</figcaption>
         </figure>
         <p>I'm going to click it, and then on the top left, I'll go to actions and then delete bucket. And then it just
           asked me for the name of the bucket that I want to deploy, I'm just going to confirm with "webpack" dash
           "deploy":</p>
         <figure>
-          <img src="./images/Fig08-042.PNG"/>
+          <img src="./images/Fig08-042.png"/>
           <figcaption>Fig 08-042</figcaption>
         </figure>
         <p>I'll click delete, and there we go. So now, absolutely no chance of getting billed or anything like that for

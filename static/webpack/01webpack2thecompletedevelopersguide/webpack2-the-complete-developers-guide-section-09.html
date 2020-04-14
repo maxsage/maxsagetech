@@ -37,7 +37,7 @@
           in which we might structure our application, or kind of the general architecture, is to put together two
           separate addresses:</p>
         <figure>
-          <img src="./images/Fig08-043.PNG"/>
+          <img src="./images/Fig08-043.png"/>
           <figcaption>Fig 08-043</figcaption>
         </figure>
         <p>One address with, that the user might visit would be something like www.app.com. and if the user visits that
@@ -57,7 +57,7 @@
         <p>Now the second type of architecture that we can use when we've got this intelligence server that we want to
           include looks like this:
           <figure>
-            <img src="./images/Fig08-044.PNG"/>
+            <img src="./images/Fig08-044.png"/>
             <figcaption>Fig 08-044</figcaption>
           </figure>
         <p>So this is the second type of architecture that we might use. In this world, we'll put together a single
@@ -98,7 +98,7 @@
           it's gonna behave differently depending on whether or not it's in a development or production type of world.
           So let's first look at how Node is going to behave when we are running on our local machine:</p>
         <figure>
-          <img src="./images/Fig08-045.PNG"/>
+          <img src="./images/Fig08-045.png"/>
           <figcaption>Fig 08-045</figcaption>
         </figure>
         <p>In the development world, we are gonna set up Node so that it automatically passes request through to our
@@ -111,7 +111,7 @@
           start up a separate Webpack server. So it's all gonna be running internally toward NodeJS server.</p>
         <p>Now in the production world, things are gonna behave just a little bit differently:</p>
         <figure>
-          <img src="./images/Fig08-046.PNG"/>
+          <img src="./images/Fig08-046.png"/>
           <figcaption>Fig 08-046</figcaption>
         </figure>
         <p>The thing to keep in mind is that in a production world, we don't want to run Webpack at all because it is a
@@ -145,7 +145,7 @@
         <p>While that's installing, I'm gonna pull up my code editor. And inside of my root project directory, I'm going
           to make a file called server.js:</p>
         <figure>
-          <img src="./images/Fig08-047.PNG"/>
+          <img src="./images/Fig08-047.png"/>
           <figcaption>Fig 08-047</figcaption>
         </figure>
         <p>Now, I wanted to remind you right now that this is really a course about Webpack, not quite so much about
@@ -153,7 +153,7 @@
           will explain what's going on but we're just gonna kind of try to put the code up there just to get everything
           working:</p>
         <figure>
-          <img src="./images/Fig08-048.PNG"/>
+          <img src="./images/Fig08-048.png"/>
           <figcaption>Fig 08-048</figcaption>
         </figure>
         <p>So inside of our server.js file, we'll first require an express. We'll use express to make an app object and
@@ -170,7 +170,7 @@
         </figure>
         <p>and then we see the message right here:</p>
         <figure>
-          <img src="./images/Fig08-050.PNG"/>
+          <img src="./images/Fig08-050.png"/>
           <figcaption>Fig 08-050</figcaption>
         </figure>
         <p>OK, so that looks good.</p>
@@ -187,7 +187,7 @@
         <p>We'll now continue inside of our server.js file by wiring up Webpack to make sure that it works correctly in
           development:</p>
         <figure>
-          <img src="./images/Fig08-051.PNG"/>
+          <img src="./images/Fig08-051.png"/>
           <figcaption>Fig 08-051</figcaption>
         </figure>
         <p>So remember, the idea here is that we're gonna have this thing called a Webpack middleware to help us serve
@@ -199,7 +199,7 @@
           application and respond with the compiled JavaScript application.</p>
         <p>So you can kind of imagine this Webpack middleware right here as watching for incoming requests:</p>
         <figure>
-          <img src="./images/Fig08-052.PNG"/>
+          <img src="./images/Fig08-052.png"/>
           <figcaption>Fig 08-052</figcaption>
         </figure>
         <p>If it sees one that it thinks it needs to take care of, it's gonna snatch it and respond with our application
@@ -219,7 +219,7 @@
           you right now. We're gonna say webpackMiddleware is going to come from webpack-dev-middleware. We're going to
           import webpack, and then we're also going to import our Webpack config file:</p>
         <figure>
-          <img src="./images/Fig08-054.PNG"/>
+          <img src="./images/Fig08-054.png"/>
           <figcaption>Fig 08-054</figcaption>
         </figure>
         <p>So, webpack.config.js, like so. Now, the Webpack middleware that we just required in, that's the middleware
@@ -235,7 +235,7 @@
           then we're going to pass in webpackMiddleware. Again, make sure you get the e there – easy to make typos.
           We're going to pass to webpackMiddleware webpack, and to that we're gonna pass webpackConfig:</p>
         <figure>
-          <img src="./images/Fig08-055.PNG"/>
+          <img src="./images/Fig08-055.png"/>
           <figcaption>Fig 08-055</figcaption>
         </figure>
         <p>Yeah, that's a pretty nasty little line of code. We've got app.use on the outside, we've got the middleware,
@@ -248,7 +248,7 @@
         <p>Let's save this file, and then we're go back over to the Terminal. It looks like our middleware installed
           correctly:</p>
         <figure>
-          <img src="./images/Fig08-056.PNG"/>
+          <img src="./images/Fig08-056.png"/>
           <figcaption>Fig 08-056</figcaption>
         </figure>
         <p>so that's good. And we'll start up our server, again with:</p>
@@ -258,20 +258,20 @@
         </figure>
         <p>like so. So it looks like we're listening again:</p>
         <figure>
-          <img src="./images/Fig08-058.PNG"/>
+          <img src="./images/Fig08-058.png"/>
           <figcaption>Fig 08-058</figcaption>
         </figure>
         <p>Let's open up our browser, and we're going to try navigating to local host 3050. And remember it's 3050
           specifically because that's what we told our application to listen to for our port. So I'm gonna pull up my
           browser and go to local host 3050:</p>
         <figure>
-          <img src="./images/Fig08-059.PNG"/>
+          <img src="./images/Fig08-059.png"/>
           <figcaption>Fig 08-059</figcaption>
         </figure>
         <p>And OK, cool, it looks like everything worked correctly. If I go back over to my Terminal, you'll notice some
           of the output that we would expect to get from Webpack appear in our server logs here:</p>
         <figure>
-          <img src="./images/Fig08-060.PNG"/>
+          <img src="./images/Fig08-060.png"/>
           <figcaption>Fig 08-060</figcaption>
         </figure>
         <p>So Webpack is internally running inside of our Node server right now. Just to be really clear on exactly why
@@ -286,14 +286,14 @@
           gonna open up the header.js file. And there's a lot of code in here, a lot of code, but let's scroll down just
           a little bit. And I'm gonna find an anchor tag:</p>
         <figure>
-          <img src="./images/Fig08-061.PNG"/>
+          <img src="./images/Fig08-061.png"/>
           <figcaption>Fig 08-061</figcaption>
         </figure>
         <p>here it is, on about line 27 that says UpStar Music. So, let's just change this out – let's just delete
           UpStar, how about that. So I'm just gonna delete that. I'm gonna save the file. And now if I go back over to
           my browser and refresh the page, I should see only Music appear in the header up here:</p>
         <figure>
-          <img src="./images/Fig08-062.PNG"/>
+          <img src="./images/Fig08-062.png"/>
           <figcaption>Fig 08-062</figcaption>
         </figure>
         <p>So, clearly, Webpack is watching over our project files and rebuilding our project whenever we make a little
@@ -309,7 +309,7 @@
           function properly in production. So remember, the idea here is that we want to build our production assets
           exactly one time and stick them into our disk directory:</p>
         <figure>
-          <img src="./images/Fig08-063.PNG"/>
+          <img src="./images/Fig08-063.png"/>
           <figcaption>Fig 08-063</figcaption>
         </figure>
         <p>Then, any time that a user comes to our server, if they say, if they want our index.html file or any of our
@@ -321,7 +321,7 @@
           currently running in production. So add in an "if" statement and say process.env.NODE_ENV. If we are not in
           production, then I want to go ahead and use the webpackMiddleware to serve up all of our assets:</p>
         <figure>
-          <img src="./images/Fig08-064.PNG"/>
+          <img src="./images/Fig08-064.png"/>
           <figcaption>Fig 08-064</figcaption>
         </figure>
         <p>So this line of code right here, just, are we running in production or not? That's it. And if we are not in
@@ -337,7 +337,7 @@
           variable is getting set or make sure that we actually set it ourselves if required. Now outside the "if"
           statement, we are currently loading up the webpack modules up at the top here:</p>
         <figure>
-          <img src="./images/Fig08-065.PNG"/>
+          <img src="./images/Fig08-065.png"/>
           <figcaption>Fig 08-065</figcaption>
         </figure>
         <p>We probably don't want to have to load this up if we are in production. Right? So, if we're in production I
@@ -346,7 +346,7 @@
           these three require statements and we're going to move them down directly into the "if" statement. So I'm
           going to cut, we'll go into the "if" statement and paste:</p>
         <figure>
-          <img src="./images/Fig08-066.PNG"/>
+          <img src="./images/Fig08-066.png"/>
           <figcaption>Fig 08-066</figcaption>
         </figure>
         <p>So now, only in the case that we are not in production will we load up all these development resources and
@@ -359,7 +359,7 @@
           the Express stuff. But, I'll definitely tell you what these two lines of code are going to be doing for us. So
           the first thing we going to put down is:</p>
         <figure>
-          <img src="./images/Fig08-067.PNG"/>
+          <img src="./images/Fig08-067.png"/>
           <figcaption>Fig 08-067</figcaption>
         </figure>
         <p>This line of code right here tells Express that it should make everything inside of the dist directory freely
@@ -368,7 +368,7 @@
           the dist directory for the wide world to see.</p>
         <p>Now, one little more line of code here:</p>
         <figure>
-          <img src="./images/Fig08-068.PNG"/>
+          <img src="./images/Fig08-068.png"/>
           <figcaption>Fig 08-068</figcaption>
         </figure>
         <p>
@@ -378,14 +378,14 @@
           here again.</p>
         <p>Before we forget, let's make sure we require that at the top of this file:</p>
         <figure>
-          <img src="./images/Fig08-069.PNG"/>
+          <img src="./images/Fig08-069.png"/>
           <figcaption>Fig 08-069</figcaption>
         </figure>
         <p>So if this dist folder right here opens up the dist directory to everyone who's asking for javascript files,
           the second line here has a very similar but somewhat distinctly purpose that is really handling an edge case
           for us. So this line of code right here:</p>
         <figure>
-          <img src="./images/Fig08-070.PNG"/>
+          <img src="./images/Fig08-070.png"/>
           <figcaption>Fig 08-070</figcaption>
         </figure>
         <p>it says that if anyone makes a get request to any route on our server, go ahead and send them back the
@@ -404,20 +404,20 @@
         </figure>
         <p>Now this time around you'll notice that we don't see anything about webpack here:</p>
         <figure>
-          <img src="./images/Fig08-072.PNG"/>
+          <img src="./images/Fig08-072.png"/>
           <figcaption>Fig 08-072</figcaption>
         </figure>
         <p>Let's make a request to our server and we should just instantly see our application pop up without anything
           having to do with webpack because webpack should not be getting executed or touched whatsoever. So I'm going
           to flip over to my browser. I'm still on localhost:3050. I'm going to refresh the page:</p>
         <figure>
-          <img src="./images/Fig08-073.PNG"/>
+          <img src="./images/Fig08-073.png"/>
           <figcaption>Fig 08-073</figcaption>
         </figure>
         <p>It looks like I still get everything I would expect. And back at the terminal, still don't have any output
           here about webpack:</p>
         <figure>
-          <img src="./images/Fig08-074.PNG"/>
+          <img src="./images/Fig08-074.png"/>
           <figcaption>Fig 08-074</figcaption>
         </figure>
         <p>So this is great. This means that our application is being served solely from our static assets. Now the one,
@@ -435,13 +435,13 @@
           routes right above our webpack configuration stuff. You know, maybe we make a route handler at 'hello', and
           respond with like a, "Hi there". You know, a classic "Hi there":</p>
         <figure>
-          <img src="./images/Fig08-075.PNG"/>
+          <img src="./images/Fig08-075.png"/>
           <figcaption>Fig 08-075</figcaption>
         </figure>
         <p>Very important to make sure that we define these route handlers above all of our webpack configuration.
           Specifically, this line of code right here, the app.get('*'):</p>
         <figure>
-          <img src="./images/Fig08-076.PNG"/>
+          <img src="./images/Fig08-076.png"/>
           <figcaption>Fig 08-076</figcaption>
         </figure>
         <p>If we define our server routes after all of our webpack configuration, then this line right here, this route
@@ -452,14 +452,14 @@
           many different service providers, like AWS and especially Heroku, will not allow you to define your own port
           here:</p>
         <figure>
-          <img src="./images/Fig08-077.PNG"/>
+          <img src="./images/Fig08-077.png"/>
           <figcaption>Fig 08-077</figcaption>
         </figure>
         <p>and instead, they will want you to bind to a port specified by the server. To make sure that we handle that
           appropriately, we're going to change our port definition here to be process.env.PORT, port, like so. And then
           we'll say, "or 3050":</p>
         <figure>
-          <img src="./images/Fig08-078.PNG"/>
+          <img src="./images/Fig08-078.png"/>
           <figcaption>Fig 08-078</figcaption>
         </figure>
         <p>So this allows us to say, "Hey, if our production provider, whoever it is, if they provide a port environment
@@ -480,7 +480,7 @@
           for Procfile and it has no extension whatsoever so it's not Procfile.js. It is just Procfile with a capital
           P:</p>
         <figure>
-          <img src="./images/Fig08-079.PNG"/>
+          <img src="./images/Fig08-079.png"/>
           <figcaption>Fig 08-079</figcaption>
         </figure>
         <p>
@@ -489,7 +489,7 @@
           want to run the command node server.js. Right? Then like we want to run that server.js file. So inside of the
           Procfile, we will say:</p>
         <figure>
-          <img src="./images/Fig08-080.PNG"/>
+          <img src="./images/Fig08-080.png"/>
           <figcaption>Fig 08-080</figcaption>
         </figure>
         <p>This tells Heroku that when it is starting up our server for use as a web server just go ahead and run this
@@ -498,7 +498,7 @@
         <p>Now, and it's still a little bit more set up, so let's keep going through this. Heroku deployments work by
           use of Git repositories:</p>
         <figure>
-          <img src="./images/Fig08-081.PNG"/>
+          <img src="./images/Fig08-081.png"/>
           <figcaption>Fig 08-081</figcaption>
         </figure>
         <p>So right now we've got our code. We're going to add all of our code to a Git repository and note that I'm not
@@ -511,7 +511,7 @@
           have already started up a Git repository depending on how you originally downloaded and installed this
           project. No matter what, you can just go ahead and run:</p>
         <figure>
-          <img src="./images/Fig08-082.PNG"/>
+          <img src="./images/Fig08-082.png"/>
           <figcaption>Fig 08-082</figcaption>
         </figure>
         <p>If you have already cloned this or if you already have a Git repository in here you're going to get a message
@@ -520,7 +520,7 @@
         <p>So now that's created, a Git repository, I'm going to add all the code inside of my project with Git add. and
           then I'll run get commit initial commit like so:</p>
         <figure>
-          <img src="./images/Fig08-083.PNG"/>
+          <img src="./images/Fig08-083.png"/>
           <figcaption>Fig</figcaption>
         </figure>
         <p>So that's going to take all the code inside of my project directory and add it directly to the Git
@@ -531,7 +531,7 @@
           over here in one second to my, the account that I've already got created. All you gotta do is fill in all this
           very basic information:</p>
         <figure>
-          <img src="./images/Fig08-084.PNG"/>
+          <img src="./images/Fig08-084.png"/>
           <figcaption>Fig 08-084</figcaption>
         </figure>
         <p>I do not recall whether or not they require e-mail authentication or, you know, require you to go click link
@@ -543,14 +543,14 @@
           on here and inside of here you'll get some directions on how to download and install it based on your
           operating system:</p>
         <figure>
-          <img src="./images/Fig08-085.PNG"/>
+          <img src="./images/Fig08-085.png"/>
           <figcaption>Fig 08-085</figcaption>
         </figure>
         <p>So you've got the three options inside of here. I already have the CLI installed but, you know, if I didn't I
           would go ahead and download that thing and install it. Once you have installed the CLI you can open up your
           terminal and run just the command Heroku:</p>
         <figure>
-          <img src="./images/Fig08-086.PNG"/>
+          <img src="./images/Fig08-086.png"/>
           <figcaption>Fig 08-086</figcaption>
         </figure>
         <p>Now when you run it for the first time it should say, hey, do you want to log in and it will prompt you for
@@ -559,26 +559,26 @@
           from here it is basically as easy as it gets.</p>
         <p>Inside of my project directory, we're going to run the command Heroku create:</p>
         <figure>
-          <img src="./images/Fig08-087.PNG"/>
+          <img src="./images/Fig08-087.png"/>
           <figcaption>Fig 08-087</figcaption>
         </figure>
         <p>That's going to reach out to Heroku and create a application for us. This is the URL of our application. It's
           also going to automatically add a remote target to our Git repository. So if you run:</p>
         <figure>
-          <img src="./images/Fig08-088.PNG"/>
+          <img src="./images/Fig08-088.png"/>
           <figcaption>Fig 08-088</figcaption>
         </figure>
         <p>you'll notice that we now have a place that we could push our code to, which is called Heroku. So to do the
           actual deployment all we have to do is run:</p>
         <figure>
-          <img src="./images/Fig08-089.PNG"/>
+          <img src="./images/Fig08-089.png"/>
           <figcaption>Fig 08-089</figcaption>
         </figure>
         <p>So it's going to take all of our project code and push it out to this Heroku server. So we'll run that and
           the deployment process is always very surprisingly very fast. So it should only take a moment to get going.
           You'll notice in some of the output that we get here:</p>
         <figure>
-          <img src="./images/Fig08-090.PNG"/>
+          <img src="./images/Fig08-090.png"/>
           <figcaption>Fig 08-090</figcaption>
         </figure>
         <p>there's a line that says creating runtime environment and one of the very specific lines that is in here is
@@ -588,25 +588,25 @@
         <p>So Heroku is going to automatically install all of our project dependencies and then launch the project. If
           you get any type of error message, you can always run the command Heroku logs:</p>
         <figure>
-          <img src="./images/Fig08-091.PNG"/>
+          <img src="./images/Fig08-091.png"/>
           <figcaption>Fig 08-091</figcaption>
         </figure>
         <p>like so, and that will fetch whatever output has been generated by our server. When I run Heroku logs it
           looks like everything worked correctly and you'll notice I see the console log of listening:</p>
         <figure>
-          <img src="./images/Fig08-092.PNG"/>
+          <img src="./images/Fig08-092.png"/>
           <figcaption>Fig 08-092</figcaption>
         </figure>
         <p>and that's our console log. That is the log from the server that we had added in. Now to open up our server
           inside the browser, we can write Heroku open:</p>
         <figure>
-          <img src="./images/Fig08-093.PNG"/>
+          <img src="./images/Fig08-093.png"/>
           <figcaption>Fig 08-093</figcaption>
         </figure>
         <p>and that will launch our web browser and take us directly to our application. So here's our automatically
           generated URL and we get our application:</p>
         <figure>
-          <img src="./images/Fig08-094.PNG"/>
+          <img src="./images/Fig08-094.png"/>
           <figcaption>Fig 08-094</figcaption>
         </figure>
         <p>Fantastic, cool, so this is great. This is Heroku deployment. If we now make any other changes to our
@@ -614,7 +614,7 @@
           redeploy, we would rerun our build script, so we'd say npm run build. We would then add our changes with Git
           add . We would commit our changes and then we would redeploy our application with git push heroku master:</p>
         <figure>
-          <img src="./images/Fig08-095.PNG"/>
+          <img src="./images/Fig08-095.png"/>
           <figcaption>Fig 08-095</figcaption>
         </figure>
         <p>So the whole deployment process with Heroku, pretty darn straightforward, very enjoyable personally. I think
@@ -640,7 +640,7 @@
           main way of doing deployments to Elastic Beanstalk. The installation process is gonna be a little bit
           different depending on your operating system:</p>
         <figure>
-          <img src="./images/Fig08-096.PNG"/>
+          <img src="./images/Fig08-096.png"/>
           <figcaption>Fig 08-096</figcaption>
         </figure>
         <p>I've got the links to both the OS X installation and Windows installation on the screen. And if you just skip
@@ -654,18 +654,18 @@
         <p>After you've installed the CLI, you can run the command eb --version and you should see the version pop up on
           the screen:</p>
         <figure>
-          <img src="./images/Fig08-097.PNG"/>
+          <img src="./images/Fig08-097.png"/>
           <figcaption>Fig 08-097</figcaption>
         </figure>
         <p>Now if you've got a slightly newer version, that's totally fine, don't sweat it. OK, let's get to it. Inside
           of my root project directory, I'm going to run the command eb init:</p>
         <figure>
-          <img src="./images/Fig08-098.PNG"/>
+          <img src="./images/Fig08-098.png"/>
           <figcaption>Fig 08-098</figcaption>
         </figure>
         <p>Now we immediately get asked a question about the region that we want to deploy our application to:</p>
         <figure>
-          <img src="./images/Fig08-099.PNG"/>
+          <img src="./images/Fig08-099.png"/>
           <figcaption>Fig 08-099</figcaption>
         </figure>
         <p>AWS has a variety of physical data centers, and so when we get prompted for a region, it is asking us what
@@ -676,25 +676,25 @@
           good success.</p>
         <p>So I'm gonna say one. Next, we're gonna get prompted for our security credentials:</p>
         <figure>
-          <img src="./images/Fig08-100.PNG"/>
+          <img src="./images/Fig08-100.png"/>
           <figcaption>Fig 08-100</figcaption>
         </figure>
         <p>So this is essentially our log-in information for our AWS account. We can fetch these credentials from the
           online console. So I'll go back to Chrome; I'm on AWS, I'm going to sign into the console. Once I'm signed in,
           I am gonna click on my username on the top right and go to My Security Credentials:</p>
         <figure>
-          <img src="./images/Fig08-101.PNG"/>
+          <img src="./images/Fig08-101.png"/>
           <figcaption>Fig 08-101</figcaption>
         </figure>
         <p>And then on the list that pops up, I will find Access Keys, right here in the center. I'll expand that
           section and then I'm going to create a brand new access key. Then I'll click on Show Access Key:</p>
         <figure>
-          <img src="./images/Fig08-102.PNG"/>
+          <img src="./images/Fig08-102.png"/>
           <figcaption>Fig 08-102</figcaption>
         </figure>
         <p>and these are the two keys that we need to make use of:</p>
         <figure>
-          <img src="./images/Fig08-103.PNG"/>
+          <img src="./images/Fig08-103.png"/>
           <figcaption>Fig 08-103</figcaption>
         </figure>
         <p>Note that the secret access key on here is very much a secret. So you want to make sure that nobody else gets
@@ -705,7 +705,7 @@
           and hit enter. I'm gonna repeat the same thing for the secret key as well. I am gonna take the key, copy it,
           and paste it:</p>
         <figure>
-          <img src="./images/Fig08-104.PNG"/>
+          <img src="./images/Fig08-104.png"/>
           <figcaption>Fig 08-104</figcaption>
         </figure>
         <p>Now I'll tell you right now, I have already deleted the keys, my keys that you see on the screen by the time
@@ -715,7 +715,7 @@
           then get asked if we want to use AWS's CodeCommit, which is something similar to GitHub. We don't need to use
           that so I'll say no. We get asked if we want to set up SSH:</p>
         <figure>
-          <img src="./images/Fig08-105.PNG"/>
+          <img src="./images/Fig08-105.png"/>
           <figcaption>Fig 08-105</figcaption>
         </figure>
         <p>This is something that we're not gonna use in this tutorial, but we might use at some point in the future. So
@@ -723,21 +723,21 @@
           you do not have a list here at all, so I'm gonna say four to create a new key. I then get prompted for a name,
           we can just use the default. And we do not need a passphrase on here, so I'll hit enter and enter:</p>
         <figure>
-          <img src="./images/Fig08-106.PNG"/>
+          <img src="./images/Fig08-106.png"/>
           <figcaption>Fig 08-106</figcaption>
         </figure>
         <p>OK, so that's pretty much it for initializing our AWS account or Elastic Beanstalk account. The next thing we
           need to do is create an application environment. So this is what is going to be like the actual kind of
           workspace that is sitting up at Amazon EB. We'll do this by running command eb create:</p>
         <figure>
-          <img src="./images/Fig08-107.PNG"/>
+          <img src="./images/Fig08-107.png"/>
           <figcaption>Fig 08-107</figcaption>
         </figure>
         <p>Now we get asked a couple of questions about our very specific project. So we get asked for an environment
           name, we will use the default. We get asked for DNS CNAME, which is our essentially domain name, we'll just
           skip that. And then we get asked for a Load Balancer type:</p>
         <figure>
-          <img src="./images/Fig08-108.PNG"/>
+          <img src="./images/Fig08-108.png"/>
           <figcaption>Fig 08-108</figcaption>
         </figure>
         <p>So this is getting kind of into the weeds on exactly how Elastic Beanstalk works for us, we're going to
@@ -745,7 +745,7 @@
           documentation on the difference.</p>
         <p>Now I've got a message that says Git could not find the HEAD:</p>
         <figure>
-          <img src="./images/Fig08-109.PNG#"/>
+          <img src="./images/Fig08-109.png#"/>
           <figcaption>Fig 08-109</figcaption>
         </figure>
         <p>That means that I created a new Git repository, but I did not actually commit any code here. So I am gonna
@@ -755,7 +755,7 @@
         <p>So now we get some information about how Elastic Beanstalk has bundled up our project into a single zip
           file:</p>
         <figure>
-          <img src="./images/Fig08-110.PNG"/>
+          <img src="./images/Fig08-110.png"/>
           <figcaption>Fig 08-110</figcaption>
         </figure>
         <p>
@@ -769,53 +769,53 @@
         <p>In the last section we went through the process of deploying to Elastic Beanstalk. We finished up the initial
           EB deploy command and now we can open up our application in the browser by running the command eb open:</p>
         <figure>
-          <img src="./images/Fig08-111.PNG"/>
+          <img src="./images/Fig08-111.png"/>
           <figcaption>Fig 08-111</figcaption>
         </figure>
         <p>When we do this we're going to see something a little bit unexpected. Specifically, a big error message that
           says 502 Bad Gateway:</p>
         <figure>
-          <img src="./images/Fig08-112.PNG"/>
+          <img src="./images/Fig08-112.png"/>
           <figcaption>Fig 08-112</figcaption>
         </figure>
         <p>So, what's going wrong here? Well, let's do a little bit of research. I'm going to change over to my AWS
           console. Here it is right here. I'm going to make sure that I'm in my correct region so I deploy to US
           East:</p>
         <figure>
-          <img src="./images/Fig08-113.PNG"/>
+          <img src="./images/Fig08-113.png"/>
           <figcaption>Fig 08-113</figcaption>
         </figure>
         <p>
           If you used a different region, you'll want to make sure that you select your particular region. I will then
           open up the Elastic Beanstalk service. Here it is right here:</p>
         <figure>
-          <img src="./images/Fig08-114.PNG"/>
+          <img src="./images/Fig08-114.png"/>
           <figcaption>Fig 08-114</figcaption>
         </figure>
         <p>and then once here I will be able to see the deployment that we just did including the application that we
           just added. So here is my application right here:</p>
         <figure>
-          <img src="./images/Fig08-115.PNG"/>
+          <img src="./images/Fig08-115.png"/>
           <figcaption>Fig 08-115</figcaption>
         </figure>
         <p>and it's red to signal, hey, something really went wrong. If I click on it you can see, hey, health is
           degraded:</p>
         <figure>
-          <img src="./images/Fig08-116.PNG"/>
+          <img src="./images/Fig08-116.png"/>
           <figcaption>Fig 08-116</figcaption>
         </figure>
         <p>Well, all right, that's interesting. But how do we actually figure out what's going wrong? If I go over to
           the left hand side and click on Logs I can then open up the latest batch of log files from the application by
           clicking on download:</p>
         <figure>
-          <img src="./images/Fig08-117.PNG"/>
+          <img src="./images/Fig08-117.png"/>
           <figcaption>Fig 08-117</figcaption>
         </figure>
         <p>So these logs right here are the actual log files out of our server and they're going to tell us exactly what
           went wrong. You'll see in here, cannot find module webpack-dev server and it gets repeated quite a little
           bit:</p>
         <figure>
-          <img src="./images/Fig08-118.PNG"/>
+          <img src="./images/Fig08-118.png"/>
           <figcaption>Fig 08-118</figcaption>
         </figure>
         <p>
@@ -823,7 +823,7 @@
           inside of our server.js file, so inside a server.js. Okay, here is our web pack-dev server require statement
           right here:</p>
         <figure>
-          <img src="./images/Fig08-119.PNG"/>
+          <img src="./images/Fig08-119.png"/>
           <figcaption>Fig 08-119</figcaption>
         </figure>
         <p>Of course, we shouldn't be hitting that line if the correct environment variable was being set. So clearly
@@ -834,7 +834,7 @@
           the command line, we'll use the EB CLI again to set an environment variable. We'll do so by saying eb setenv
           NODE_NV=production:</p>
         <figure>
-          <img src="./images/Fig08-120.PNG"/>
+          <img src="./images/Fig08-120.png"/>
           <figcaption>Fig 08-120</figcaption>
         </figure>
         <p>like so. Now the instant we run this command right here our application will automatically reboot for us. So
@@ -842,14 +842,14 @@
           portal over here a little bit more. Okay, so we took a look at the log section. You'll notice that there's
           also a lot of other settings in here:</p>
         <figure>
-          <img src="./images/Fig08-121.PNG"/>
+          <img src="./images/Fig08-121.png"/>
           <figcaption>Fig 08-121</figcaption>
         </figure>
         <p>as well for getting a really good handle on exactly what's going on with the Elastic Beanstalk application.
           We can check out configuration, which has a little bit of information about how our application will
           automatically scale up. The scaling command right here:</p>
         <figure>
-          <img src="./images/Fig08-122.PNG"/>
+          <img src="./images/Fig08-122.png"/>
           <figcaption>Fig 08-122</figcaption>
         </figure>
         <p>will instruct Elastic Beanstalk on how we want our application to be expanded or scaled up or open up new
@@ -863,7 +863,7 @@
           manually set and then there's also some information about some other, you know, network tier stuff in
           here:</p>
         <figure>
-          <img src="./images/Fig08-123.PNG"/>
+          <img src="./images/Fig08-123.png"/>
           <figcaption>Fig 08-123</figcaption>
         </figure>
         <p>and also allows us the ability to set up a connected database by using the integrated RDS or, what is that,
@@ -871,12 +871,12 @@
         <p>Some of the other items in here are the logs, which we just saw, the health of our server has a bunch of
           information about requests that are being made to our app:</p>
         <figure>
-          <img src="./images/Fig08-124.PNG"/>
+          <img src="./images/Fig08-124.png"/>
           <figcaption>Fig 08-124</figcaption>
         </figure>
         <p>We've got some stuff about monitoring:</p>
         <figure>
-          <img src="./images/Fig08-125.PNG"/>
+          <img src="./images/Fig08-125.png"/>
           <figcaption>Fig 08-125</figcaption>
         </figure>
         <p>So CPU utilization, this is especially helpful for deciding whether or not you want to increase the power of
@@ -885,20 +885,20 @@
         <p>Okay, let's see how we're doing. It looks like we've got the environment correctly updated and has been
           successfully redeployed. So let's try eb open again:</p>
         <figure>
-          <img src="./images/Fig08-126.PNG"/>
+          <img src="./images/Fig08-126.png"/>
           <figcaption>Fig 08-126</figcaption>
         </figure>
         <p>That should open up our browser once again. There we go. And this time it looks like our application
           successfully booted up:</p>
         <figure>
-          <img src="./images/Fig08-127.PNG"/>
+          <img src="./images/Fig08-127.png"/>
           <figcaption>Fig 08-127</figcaption>
         </figure>
         <p>Awesome. Okay. So this has been Elastic Beanstalk deployment. The last thing I want to remind you about if
           you do not intend to keep this application around, you can terminate this environment and make sure that you
           are, no longer pay for it by running the command eb terminate:</p>
         <figure>
-          <img src="./images/Fig08-128.PNG"/>
+          <img src="./images/Fig08-128.png"/>
           <figcaption>Fig 08-128</figcaption>
         </figure>
         <p>So, only use this if you want to completely shut down the server, like completely kill it. I, in my case, do

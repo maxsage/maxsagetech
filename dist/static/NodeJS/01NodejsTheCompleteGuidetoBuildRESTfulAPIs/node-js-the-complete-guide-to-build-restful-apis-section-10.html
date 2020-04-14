@@ -328,44 +328,44 @@ router.get('/', async (req, res) =&gt; {
         <p>In the body of the request set the raw property and type to Json (application/json)
           object and then pass three properties:</p>
         <figure>
-          <img src="images/Fig10-025.PNG"/>
+          <img src="images/Fig10-025.png"/>
           <figcaption>Fig 10-025</figcaption>
         </figure>
         <p>So in this request I am sending an invalid email and we are not passing a password.</p>
         <p>You should receive the following response:</p>
         <figure>
-          <img src="images/Fig10-026.PNG"/>
+          <img src="images/Fig10-026.png"/>
           <figcaption>Fig 10-026</figcaption>
         </figure>
         <p>So change the email to:</p>
         <figure>
-          <img src="images/Fig10-027.PNG"/>
+          <img src="images/Fig10-027.png"/>
           <figcaption>Fig 10-027</figcaption>
         </figure>
         <p>You should receive the following response:</p>
         <figure>
-          <img src="images/Fig10-028.PNG"/>
+          <img src="images/Fig10-028.png"/>
           <figcaption>Fig 10-028</figcaption>
         </figure>
         <p>So, now, let's change the email to:</p>
         <figure>
-          <img src="images/Fig10-029.PNG"/>
+          <img src="images/Fig10-029.png"/>
           <figcaption>Fig 10-029</figcaption>
         </figure>
         <p>And now you should receive the following message:</p>
         <figure>
-          <img src="images/Fig10-030.PNG"/>
+          <img src="images/Fig10-030.png"/>
           <figcaption>Fig 10-030</figcaption>
         </figure>
         <p>Finally let's add a password that is 5 characters long:</p>
         <figure>
-          <img src="images/Fig10-031.PNG"/>
+          <img src="images/Fig10-031.png"/>
           <figcaption>Fig 10-031</figcaption>
         </figure>
         <p>At last you should get a 200 response and the user object that has been stored in the
           database should be returned to you:</p>
         <figure>
-          <img src="images/Fig10-032.PNG"/>
+          <img src="images/Fig10-032.png"/>
           <figcaption>Fig 10-032</figcaption>
         </figure>
         <p>When registering a new user it isn't ideal that we are returning their password in the
@@ -374,7 +374,7 @@ router.get('/', async (req, res) =&gt; {
         <p>If we post again with the same values we should receive the following error message
           (along with 400 bad request):</p>
         <figure>
-          <img src="images/Fig10-033.PNG"/>
+          <img src="images/Fig10-033.png"/>
           <figcaption>Fig 10-033</figcaption>
         </figure>
         <h3>127 - Using Lodash</h3>
@@ -441,7 +441,7 @@ router.get('/', async (req, res) =&gt; {
         <p>Test the application in postman. Send a new post request to the server and you should see
           the following object in the response:</p>
         <figure>
-          <img src="images/Fig10-040.PNG"/>
+          <img src="images/Fig10-040.png"/>
           <figcaption>Fig 10-040</figcaption>
         </figure>
         <p>Which contains only id, name and email. Now in all these requests so far we have sent
@@ -532,7 +532,7 @@ run();</code></pre>
         <p>We log the salt to the console and finally we call the run function. Run the
           application:</p>
         <figure>
-          <img src="images/Fig10-041.PNG"/>
+          <img src="images/Fig10-041.png"/>
           <figcaption>Fig 10-041</figcaption>
         </figure>
         <p>So this is an example of a Salt. We can see the number of rounds we use included in the
@@ -557,7 +557,7 @@ run();</code></pre>
         </figure>
         <p>Run the application:</p>
         <figure>
-          <img src="images/Fig10-044.PNG"/>
+          <img src="images/Fig10-044.png"/>
           <figcaption>Fig 10-044</figcaption>
         </figure>
         <p>On the first line we have our salt, on the second line we can see the salt as well - so
@@ -587,13 +587,13 @@ user.password = await bcrypt.hash(user.password, salt);</code></pre>
         <p>In Compass delete the users collection because all the user documents so far contain
           plain text passwords. Run the application and send a new post request in postman:</p>
         <figure>
-          <img src="images/Fig10-048.PNG"/>
+          <img src="images/Fig10-048.png"/>
           <figcaption>Fig 10-048</figcaption>
         </figure>
         <p>So here we have a new user. Refresh the list in compass and you should see the new user
           with a hashed password:</p>
         <figure>
-          <img src="images/Fig10-049.PNG"/>
+          <img src="images/Fig10-049.png"/>
           <figcaption>Fig 10-049</figcaption>
         </figure>
         <p>So we have now implemented the register new user endpoint.</p>
@@ -716,7 +716,7 @@ await user.save();</code></pre>
         </figure>
         <p>In the body of the request we are going to send a Json object:</p>
         <figure>
-          <img src="images/Fig10-064.PNG"/>
+          <img src="images/Fig10-064.png"/>
           <figcaption>Fig 10-064</figcaption>
         </figure>
         <p>If your application hangs it might be that we forgot to import Joi at the top of our auth
@@ -727,18 +727,18 @@ await user.save();</code></pre>
         </figure>
         <p>Send the request again you get a status 200 with a response of true:</p>
         <figure>
-          <img src="images/Fig10-066.PNG"/>
+          <img src="images/Fig10-066.png"/>
           <figcaption>Fig 10-066</figcaption>
         </figure>
         <p>If we change the password to an invalid value:</p>
         <figure>
-          <img src="images/Fig10-067.PNG"/>
+          <img src="images/Fig10-067.png"/>
           <figcaption>Fig 10-067</figcaption>
         </figure>
         <p>Send the request and you get a status 400 Bad Request with a message of "Invalid email or
           password":</p>
         <figure>
-          <img src="images/Fig10-068.PNG"/>
+          <img src="images/Fig10-068.png"/>
           <figcaption>Fig 10-068</figcaption>
         </figure>
         <p>If we send a valid password but change the email so that it is invalid again we get a
@@ -750,7 +750,7 @@ await user.save();</code></pre>
           think of it as you drivers license or your passport.</p>
         <p>So when the user logs in on the server we generate the Json web token:</p>
         <figure>
-          <img src="images/Fig10-069.PNG"/>
+          <img src="images/Fig10-069.png"/>
           <figcaption>Fig 10-069</figcaption>
         </figure>
         <p>We give it to the client and then tell them - hey next time you want to come back here
@@ -764,7 +764,7 @@ await user.save();</code></pre>
         <p>So now, let me show you an example of a Json web token. Head over to <a href="jwt.io">jwt.io</a>.
           On this website we have a debugger for working with Json web tokens:</p>
         <figure>
-          <img src="images/Fig10-070.PNG"/>
+          <img src="images/Fig10-070.png"/>
           <figcaption>Fig 10-070</figcaption>
         </figure>
         fig xx-xx
@@ -875,12 +875,12 @@ await user.save();</code></pre>
         <p>To test this send a post request with a valid email and password from Postman to our
           authentication endpoint. You should receive a response containing a Json web token:</p>
         <figure>
-          <img src="images/Fig10-078.PNG"/>
+          <img src="images/Fig10-078.png"/>
           <figcaption>Fig 10-078</figcaption>
         </figure>
         <p>Copy this and then in jwt.io in the debugger paste it in:</p>
         <figure>
-          <img src="images/Fig10-079.PNG"/>
+          <img src="images/Fig10-079.png"/>
           <figcaption>Fig 10-079</figcaption>
         </figure>
         <p>So now you can see the payload of our Json web token. We have our _id property which we
@@ -979,7 +979,7 @@ await user.save();</code></pre>
         </figure>
         <p>You receive the same error:</p>
         <figure>
-          <img src="images/Fig10-091.PNG"/>
+          <img src="images/Fig10-091.png"/>
           <figcaption>Fig 10-091</figcaption>
         </figure>
         <p>but node terminates and we are back in the terminal.</p>
@@ -994,7 +994,7 @@ await user.save();</code></pre>
         <p>If you back to postman and send another request to login you should see a valid Json web
           token that is signed with a private key that is stored in an environment variable:</p>
         <figure>
-          <img src="images/Fig10-093.PNG"/>
+          <img src="images/Fig10-093.png"/>
           <figcaption>Fig 10-093</figcaption>
         </figure>
         <h4>Windows - View Environment Variables from the Command Line</h4>
@@ -1065,17 +1065,17 @@ await user.save();</code></pre>
         </figure>
         <p>In Postman find the Register user template and modify the email in the req.body:</p>
         <figure>
-          <img src="images/Fig10-102.PNG"/>
+          <img src="images/Fig10-102.png"/>
           <figcaption>Fig 10-102</figcaption>
         </figure>
         <p>Send this and you get the following response as you did before:</p>
         <figure>
-          <img src="images/Fig10-103.PNG"/>
+          <img src="images/Fig10-103.png"/>
           <figcaption>Fig 10-103</figcaption>
         </figure>
         <p>Look in the headers tab and you should see a new header:</p>
         <figure>
-          <img src="images/Fig10-104.PNG"/>
+          <img src="images/Fig10-104.png"/>
           <figcaption>Fig 10-104</figcaption>
         </figure>
         <p>This is set to our Json token. So in our client app, when we register the user we can
@@ -1266,13 +1266,13 @@ const jwt = require('jsonwebtoken');</code></pre>
         <p>and add them to the top of the user module. Test the application by registering a new
           user in Postman:</p>
         <figure>
-          <img src="images/Fig10-124.PNG"/>
+          <img src="images/Fig10-124.png"/>
           <figcaption>Fig 10-124</figcaption>
         </figure>
 
         <p>and our authentication should be visible in the headers section:</p>
         <figure>
-          <img src="images/Fig10-125.PNG"/>
+          <img src="images/Fig10-125.png"/>
           <figcaption>Fig 10-125</figcaption>
         </figure>
         <h3>136 - Authorization Middleware</h3>
@@ -1468,35 +1468,35 @@ res.status(401);</code></pre>
         </figure>
         <p>You should receive response code 401 Unauthorized and the message:</p>
         <figure>
-          <img src="images/Fig10-149.PNG"/>
+          <img src="images/Fig10-149.png"/>
           <figcaption>Fig 10-149</figcaption>
         </figure>
         <p>Now in the Headers tab of Postman provide an invalid token by entering x-auth-token for
           the key and 1234 for the value:</p>
         <figure>
-          <img src="images/Fig10-150.PNG"/>
+          <img src="images/Fig10-150.png"/>
           <figcaption>Fig 10-150</figcaption>
         </figure>
         <p>You should receive response code 400 Bad Request and the message - "Invalid token":</p>
         <figure>
-          <img src="images/Fig10-151.PNG"/>
+          <img src="images/Fig10-151.png"/>
           <figcaption>Fig 10-151</figcaption>
         </figure>
         <p>Finally let's supply a valid token (copied from our POST User method that we use to
           register a new user):</p>
         <figure>
-          <img src="images/Fig10-152.PNG"/>
+          <img src="images/Fig10-152.png"/>
           <figcaption>Fig 10-152</figcaption>
         </figure>
         <p>Also make sure you supply a valid Json object in the body of the request:</p>
         <figure>
-          <img src="images/Fig10-153.PNG"/>
+          <img src="images/Fig10-153.png"/>
           <figcaption>Fig 10-153</figcaption>
         </figure>
         <p>You should receive response code 200 OK and the new JSON genre object in the body of the
           response:</p>
         <figure>
-          <img src="images/Fig10-154.PNG"/>
+          <img src="images/Fig10-154.png"/>
           <figcaption>Fig 10-154</figcaption>
         </figure>
         <p>As an exercise apply this middleware function can now be applied to other middleware
@@ -1572,18 +1572,18 @@ res.status(401);</code></pre>
         <p>Initially dont specify a JWT and you will receive a 401 Unauthorized response with the
           message - "Access denied. No token provided":</p>
         <figure>
-          <img src="images/Fig10-163.PNG"/>
+          <img src="images/Fig10-163.png"/>
           <figcaption>Fig 10-163</figcaption>
         </figure>
         <p>Now add a valid JWT (you can get this from Register User) in the header:</p>
         <figure>
-          <img src="images/Fig10-164.PNG"/>
+          <img src="images/Fig10-164.png"/>
           <figcaption>Fig 10-164</figcaption>
         </figure>
         <p>and click send. You will receive a 200 OK response and the user account details that
           match the supplied JWT in the body of the response:</p>
         <figure>
-          <img src="images/Fig10-165.PNG"/>
+          <img src="images/Fig10-165.png"/>
           <figcaption>Fig 10-165</figcaption>
         </figure>
         <p>Note the password has been excluded.</p>
@@ -1639,7 +1639,7 @@ res.status(401);</code></pre>
         <p>In MongoDB Compass make one of the users an admin by editing a document and adding a
           field after password:</p>
         <figure>
-          <img src="images/Fig10-168.PNG"/>
+          <img src="images/Fig10-168.png"/>
           <figcaption>Fig 10-168</figcaption>
         </figure>
         <p>Don't forget to change the default type from string to Boolean. So, now we have a user
@@ -1720,7 +1720,7 @@ res.status(401);</code></pre>
         </figure>
         <p>So initially I don't have a token:</p>
         <figure>
-          <img src="images/Fig10-175.PNG"/>
+          <img src="images/Fig10-175.png"/>
           <figcaption>Fig 10-175</figcaption>
         </figure>
         <p>We receive a response status 401 Unauthorized with the message - "Access denied. No token
@@ -1730,34 +1730,34 @@ res.status(401);</code></pre>
           only see the _id and _iat properties . Let's verify that this user cant delete genres.</p>
         <p>You will receive a response status 403 Forbidden with the message:</p>
         <figure>
-          <img src="images/Fig10-176.PNG"/>
+          <img src="images/Fig10-176.png"/>
           <figcaption>Fig 10-176</figcaption>
         </figure>
         <p>Now login at the auth endpoint with a user that IS an admin:</p>
         <figure>
-          <img src="images/Fig10-177.PNG"/>
+          <img src="images/Fig10-177.png"/>
           <figcaption>Fig 10-177</figcaption>
         </figure>
         <p>In the response body you should receive a JWT:</p>
         <figure>
-          <img src="images/Fig10-178.PNG"/>
+          <img src="images/Fig10-178.png"/>
           <figcaption>Fig 10-178</figcaption>
         </figure>
         <p>We can verify that this user is an admin by going to JWT debugger (jwt.io) and pasting
           the JWT into the encoded section:</p>
         <figure>
-          <img src="images/Fig10-179.PNG"/>
+          <img src="images/Fig10-179.png"/>
           <figcaption>Fig 10-179</figcaption>
         </figure>
         <p>Next, copy and paste this JWT in the DELETE Genre request in Postman:</p>
         <figure>
-          <img src="images/Fig10-180.PNG"/>
+          <img src="images/Fig10-180.png"/>
           <figcaption>Fig 10-180</figcaption>
         </figure>
         <p>hit Send and you will receive a response status 200 OK and the deleted Genre object in
           the body of the response:</p>
         <figure>
-          <img src="images/Fig10-181.PNG"/>
+          <img src="images/Fig10-181.png"/>
           <figcaption>Fig 10-181</figcaption>
         </figure>
         <p>One last thing before we finish the lecture. In this simple application we have a single

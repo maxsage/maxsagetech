@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
   <meta charset="UTF-8">
-  <title>maxsagetech - Vue JS Fundamentals</title>
+  <title>maxsagetech - WPF MVVM In Depth</title>
   <script src="https://unpkg.com/vue"></script>
   <!--<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"-->
   <!--integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">-->
@@ -22,1230 +22,952 @@
     <div class="panel-group">
       <div class="panel panel-primary">
         <div class="panel-heading">
-          <h2>Applied MVVM Part 1 – Hierarchies and Navigation</h2>
+          <h2>View/ViewModel Communication in WPF</h2>
         </div>
         <div class="panel-body">
-          <h2>Overview</h2>
-          <p>
-            We will now start building out a few more fully functional use cases from start to finish. In doing so we
-            will hit on a number of other design considerations and things you will need to know how to tackle when
-            using the MVVM pattern. We will start with a few concepts first including:
+          <h3>Introduction</h3>
+          <p>Hi and welcome back to this fourth module in WPF MVVM in Depth. The focus in this module will be on how to
+            add interactivity to your MVVM apps, how to cleanly call logic that is implemented in the ViewModel when
+            something happens in the View as well as letting the View know when something happens behind the scenes in
+            your ViewModel, Model Objects or Client Services. And you'll see that all of this is done maintaining that
+            loose coupling and good structuring that's at the heart of the MVVM pattern.
           </p>
+          <p>
+            First up we'll talk about Commands a bit more. You saw a quick example of using a Command to invoke some
+            logic in the ViewModel object in the demos of the second module. In this module I'll go a bit deeper looking
+            at how things get hooked up, what happens under the covers during that hook-up, how to use Command Enabling
+            and Keyboard Shortcuts.
+          </p>
+          <p>
+            Next we will look at Attached Properties and Behaviors covering what the relationship between them is, what
+            their general capabilities are and how to use them in the context of MVVM as another means of setting up
+            communication paths between the View elements and View Model logic or vice a versa.
+          </p>
+          <p>
+            We will finish the module with a review of how Property Change Notifications work with Data Binding in WPF
+            and show how they can be used as a signalling mechanism from the ViewModel to make things happen in the View
+            at the appropriate time.
+          </p>
+          <h3>Commands for View to ViewModel Communication</h3>
+          <p>
+            The Command pattern has been a well-documented and frequently used design pattern for a couple of decades’
+            now and is especially prevalent in UI frameworks. In that pattern there are two main actors - the invoker
+            and the receiver:
+          </p>
+          <figure>
+            <img src="./images/Fig04-001.png"/>
+            <figcaption>Fig 04-001</figcaption>
+          </figure>
           <ul>
-            <li>Naming and Location of Components</li>
-            <li>Hierarchical MVVM and how it ties in with Navigation where compose your app from hierarchies of Views
-              and ViewModels.
+            <li>Invoker – whatever piece of code wants to cause some imperative logic to be executed. Typically, the
+              Invoker is a UI element that the user interacts with in the context of the UI framework. It could also
+              just be another chunk of logic code somewhere in the application.
             </li>
-            <li>From there we'll dive straight into writing code and start building out several use cases for a Pizza
-              order management app. We'll build out use cases including hierarchical MVVM and Navigation, getting some
-              data on the screen in a listing and being able to switch to other Views and pass navigation parameters.
-              That app development will continue into the next module as well as to finish out the rest of the course.
+            <li>Receiver – the logic that is intended for execution when the Invoker fires. In the context of MVVM the
+              Receiver is typically a method in your ViewModel or in a Client Service that needs to be called.
             </li>
           </ul>
-          <h2>Naming MVVM Components</h2>
           <p>
-            When it comes to naming components in software there are no correct names, only good or bad ones depending
-            on who you talk to. What really matters is having a pattern and using it consistently.
+            In between the Invoker and Receiver, you have an abstraction layer that makes it so the Invoker and Receiver
+            do not have to explicitly know about each other. This is typically represented as an Interface abstraction
+            exposed to the Invoker and a concrete implementation of that interface is capable of calling the Receiver in
+            the delegating fashion.
           </p>
-          <p>Most often your Views will be implemented as a UserControl that will be hosted or contained within some UI
-            container or parent View.
-          </p>
-          <p>Some guidance when naming Views:</p>
-          <p>
-            Views should generally be named with a suffix of View with their name indicating what they contain or
-            something about the action or use case that they support.
-          </p>
-          <p>
-            You might also have cases where you are creating a top level construct such as a Window, Dialog or Page and
-            you want to name the View with those as a suffix to indicate what kind of construct they are. This is
-            absolutely fine.
+          <p>In XAML frameworks like WPF ICommand is a built-in Interface of the platform and while WPF does have some
+            built-in implementations of concrete Commands called Routed Commands they are not designed with the
+            delegating capability needed to be used cleanly with MVVM. What you will typically use in MVVM is a Command
+            Type that uses .NET delegates to be able to point to the handling method that resides in your ViewModel.
+            Depending on whether you write your own or use a popular MVVM framework these are typically named either
+            DelegateCommand or RelayCommand.
           </p>
           <p>
-            One recommendation is that you should avoid naming something with a View suffix if it does not have a
-            corresponding ViewModel. That way you don’t have to dig into the internals of a View to figure out if it is
-            part of a View/ViewModel pair.
+            The key thing about Commands is that they support a decoupled way of calling from the View to the ViewModel.
+            As a side benefit the implementation in XAML also supports driving whether the associated Control is enabled
+            or disabled through the same decoupled interface.
           </p>
-          <p>Some guidance when naming ViewModels:</p>
-          <p>
-            If you are following the above guidance on View naming, then simply apply Model to the end of the View name
-            to create the ViewModel name (e.g. CustomerEditView/CustomerEditViewModel).
-          </p>
-          <p>If you have a View that’s name doesn't end in View, then append ViewModel to the end of the View name (e.g.
-            MainWindow/MainWindowViewModel)
-          </p>
-          <p>
-            Model objects are usually just objects with properties to contain the data of the Model. These kind of
-            objects are often called entities but don’t let that term confuse you and make you think that they are
-            necessarily associated with the Entity Framework in any way. Entity is just a general term for a lightweight
-            object that contains data and properties.
-          </p>
-          <p>
-            Name Model objects for the domain object that they represent. So your Model objects should have noun based
-            names like Customer, Order, Patient, Prescription etc.
-          </p>
-          <p>
-            One last thing to consider is what to name classes that are wrappers for model objects. For example, assume
-            you are given the requirement to present an Order History for a Customer in a table consisting of the
-            Product Name, the Order Date and the Quantity of that item:
-          </p>
-          <figure>
-            <img src="./images/Fig05-000A.png"/>
-            <figcaption>Fig 05-000A</figcaption>
-          </figure>
-          <p>But then you go look at your Model object definitions and realize that you need to get the Product Name
-            from the Product object, the Order Date from the Order and the Quantity from the OrderItem but you need a
-            collection of something you can easily bind to from a Grid. The solution, as discussed in the first module
-            is to wrap your model objects in a separate type that is a helper to the ViewModel. Some people append
-            ViewModel to the end of type names of these kinds of object but I recommeend you avoid that. Use some kind
-            of entity name for the object and keep it so ViewModel's always have a View they are associated with. To
-            keep things clean and easy to understand Wrapped Models should be kept in a different location to where the
-            Models are defined – often side by side with the Views and ViewModels they are servicing.
-          </p>
-          <h2>Locating MVVM Components</h2>
-          <p>
-            When it comes to creating your MVVM components in your Solution structure there are no hard and fast rules
-            here either. The two most common approaches are to locate your View and ViewModel components either in
-            folders by type or folders by feature. When using folder by type you have sub folders foreach each type of
-            construct one for Views:
-          </p>
-          <figure>
-            <img src="./images/Fig05-000AB.png"/>
-            <figcaption>Fig 05-000AB</figcaption>
-          </figure>
-          <p>
-            and one for ViewModels:
-          </p>
-          <figure>
-            <img src="./images/Fig05-000AC.png"/>
-            <figcaption>Fig 05-000AC</figcaption>
-          </figure>
-          <p>
-            When using folder by feature you have Views and ViewModels grouped into folders named for a feature area
-            (e.g. Customers):
-          </p>
-          <figure>
-            <img src="./images/Fig05-000AD.png"/>
-            <figcaption>Fig 05-000AD</figcaption>
-          </figure>
+          <p>Let's take a deeper look at Commands through a demo.</p>
 
+          <h3>Demo: Commands for View to ViewModel Communication</h3>
+          <div class="example">
+            <div class="input-group">
+              <input id="Ex04-001" type="text"
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 4\MVVMCommsDemo-Commands-Start\MVVMCommsDemo.sln">
+<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex04-001"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
+            </div>
+          </div>
+          <div class="example">
+            <div class="input-group">
+              <input id="Ex04-002" type="text"
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 4\MVVMCommsDemo-Commands-End\MVVMCommsDemo.sln">
+<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex04-002"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
+            </div>
+          </div>
           <p>
-            or set of related use cases and the Views and ViewModels live side by side in that common folder and
-            namespace.
+            In this demo I'm going to do a deep dive into Commands and demonstrate how to use them to communicate from
+            the View down to the ViewModel in a loosely coupled way.
           </p>
           <p>
-            The problem with the folder by type approach for Views and ViewModels is that in a large complex app you
-            could easily end up with dozens of files in those single folders making it hard to locate the type you are
-            looking for. On the other hand, using folder by feature there are rarely more than half a dozen Views
-            supporting any single feature area. This makes it a lot easier to find a particular View or ViewModel type.
+            The starting point for this demo is the ending point of the demo from the last module where we had our
+            CustomerListView hooked up with a DataGrid and a ListBox presenting Customer data from a ViewModel that just
+            exposed that Customer data.
           </p>
           <p>
-            For your Model types and Client Services those types are often used across multiple features so using a
-            folder by type for those typically makes sense:
+            In the CustomerListView add a Button to delete a Customer. Working with Commands on Buttons is very easy
+            because they have a Command Property to hook-up to an ICommand. This means we can expose a property on our
+            ViewModel that is an ICommand and bind to it from the Buttons Command Property:
           </p>
           <figure>
-            <img src="./images/Fig05-000AE.png"/>
-            <figcaption>Fig 05-000AE</figcaption>
+            <pre><code class="language-csharp">Command="Binding DeleteCommand"</code></pre>
+            <figcaption>Fig 04-002</figcaption>
           </figure>
-          <p>In fact, in the majority of real applications out there the Model types were often in a separate library
-            altogether:
-          </p>
-          <figure>
-            <img src="./images/Fig05-000AF.png"/>
-            <figcaption>Fig 05-000AF</figcaption>
-          </figure>
-          <p>
-            because they were objects produced either through data access calls to a database or service calls to a back
-            end web service and putting them in a separate class library makes it easier to share them with other parts
-            of your architecture.
-          </p>
-          <h2>MVVM Hierarchies and Navigation</h2>
-          <p>
-            One of the last concepts to discuss briefly before we dive into the code is hierarchical MVVM and
-            Navigation. When building an MVVM app you typically decompose complex screens of information into a set of
-            Parent and Child Views where the Child Views are contained within the Parent Views in Panels or
-            ContainerControls and they form a hierarchy of Views themselves:
-          </p>
-          <figure>
-            <img src="./images/Fig05-000B.png"/>
-            <figcaption>Fig 05-000B</figcaption>
-          </figure>
-          <p>
-            When you do that not every piece of content that you separate into its own XAML file necessarily needs to be
-            an MVVM View. If the chunk of content just provides the structure to render something to the screen and does
-            not support any input or manipulation by the user for that content it may not warrant defining a separate
-            ViewModel for it. It could just be a chunk of XAML that renders based on properties exposed by the parent's
-            ViewModel
-          </p>
-          <p>
-            However, if there is justification for having a ViewModel for a Child View then one way to structure things
-            is to form a ViewModel hierarchy that mimics the View hierarchy and use ViewModel-First construction with
-            Data Templates as the way to setup that hierarchy. We will implement this in the demos coming up shortly.
-          </p>
-          <p>
-            Finally, if you have a hierarchy of Views and ViewModels the Parent ViewModel can become a hub for
-            communications so that each Child ViewModel can remain decoupled from the other Child ViewModels and from
-            their Parent as much as possible.
-          </p>
-          <h2>Demo Use Case Review</h2>
-          <p>\DevelopmentTutorials\Pluralsight Courses\WPF MVVM In Depth\5Pluralsight Courses\WPF MVVM In
-            Depth\ZzaDesktop-Start
-          </p>
-          <p>\DevelopmentTutorials\Pluralsight Courses\WPF MVVM In Depth\5Pluralsight Courses\WPF MVVM In
-            Depth\ZzaDesktop-End
-          </p>
-          <p>
-            Now it's time to dive into a series of demos that will span the rest of this module and carry on into the
-            next. For those demos we are going to start with a set of end user use cases that form the requirements for
-            what will be building out. Those use cases include:
+          <p>With this definition we expect to have a DeleteCommand property of type ICommand exposed from our ViewModel
+            and as the XAML gets parsed here several things are going to happen.
           </p>
           <ul>
-            <li>The ability to List Customers so that we can take certain actions on a given Customer:</li>
-            <ul>
-              <li>Placing Orders for a Customer</li>
-              <li>Adding/Editing Customers</li>
-            </ul>
-            <li>We'll also have a separate notional requirement, just to show some navigation, that we need to have a
-              separate part of our app that let's us monitor the order preparation process for all Customers to know
-              when the order is :
+            <li>First it's going to call the get block on that ICommand Property to get a reference to the Command
+              object.
             </li>
-            <ul>
-              <li>Queued</li>
-              <li>Prepared</li>
-              <li>Out for delivery</li>
-            </ul>
+            <li>Then it's going to call CanExecute() on that Command to determine the initial enabled or disabled state
+              of the Command and it will enable or disable the Button as a result.
+            </li>
+            <li> Then it will subscribe to CanExecuteChanged on that ICommand. This will allow us to be notified in the
+              future if the enabled or disabled state of the Command changes.
+            </li>
           </ul>
-          <p>Now to keep the length of this course reasonable and to avoid showing a bunch of repetitive coding
-            techniques we're not going to fully flesh out all these use cases but we're going to use them as a framework
-            of requirements to build out a series of demos in this module and the next to show how to build out some
-            more realistic screens and interaction patterns. So let's get started.
-          </p>
-          <h2>Demo: Building Out an MVVM Hierarchy</h2>
-          <div class="example">
-            <div class="input-group">
-              <input id="Ex05-001" type="text"
-                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 5\ZzaDesktop-Start\ZzaDesktop.sln">
-              <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex05-001"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
-          <div class="example">
-            <div class="input-group">
-            <input id="Ex05-002" type="text"
-                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 5\ZzaDesktop-End\ZzaDesktop.sln">
-<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex05-002"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
-          <p>
-            In this demo we are going to start building up our set of use cases from scratch starting from an
-            essentially empty WPF application project. We have already added the Zza.Data project which contains the
-            DbContext that we are using for data access and the Model object definitions for our Data Model. This is
-            referenced already from our WPF project.
-          </p>
-          <p>
-            We also have our Services Layer with our CustomerRepository and OrderRepository that we have seen in
-            previous demos. We also have our RelayCommand.cs class that we are using for our ICommand implementation to
-            delegate calls into our ViewModels when Commands fire.
-          </p>
-          Fig05-000BA.png
+          <p>Next add a Delete Command to the CustomerListViewModel. Add a public property of type ICommand:</p>
           <figure>
-            <img src="./images/Fig05-000BA.png"/>
-            <figcaption>Fig 05-000BA</figcaption>
+            <pre><code class="language-csharp">public ICommand DeleteCommand { get; private set; }</code></pre>
+            <figcaption>Fig 04-003</figcaption>
           </figure>
+          <p>It has a private setter because the Property should only be set one time inside the ViewModel upon
+            construction.
+          </p>
           <p>
-            Finally add or modify the connection string in the App.config file that points to our Zza Database.
-          </p>
-          <p>Firstly, we will define a set of Views and define the View switching or navigation that can happen to
-            navigate throughout the application as an end user. To achieve this, we will create a series of feature
-            folders.
-          </p>
-          <ul>
-            <li>Customers</li>
-            <li>Orders</li>
-            <li>OrderPrep</li>
-          </ul>
-          <p>Now we will add a View and ViewModel to each one of those feature folders where the Views are UserControls
-            and the ViewModels are classes:
-          </p>
-          <ul>
-            <li>CustomerListView</li>
-            <li>CustomerListViewModel</li>
-            <li>OrderPrepView</li>
-            <li>OrderPrepViewModel</li>
-            <li>OrderView</li>
-            <li>OrderViewModel</li>
-          </ul>
-          <p>Next we will add a TextBlock to each View to differentiate between them before adding any actual
-            functionality:
+            We need a concrete type that implements ICommand to put into that property. The one we will use in the demo
+            is already in the project in the download code and is called RelayCommand:
           </p>
           <figure>
-                <pre class="prettyprint"> &lt;Grid&gt;
-    &lt;TextBlock Text=&quot;OrderPrep View&quot; /&gt;
-&lt;/Grid&gt;</pre>
-            <figcaption>Fig 05-001</figcaption>
-          </figure>
-          <p>
-            Now we need somewhere to host these Views. A good place for that (since this is a simple app) is in the
-            MainWindow View. We need a ContainerControl that we can place our Views in and switch them in a navigation
-            fashion. The perfect control for that is a ContentControl. What we will end up doing here is using its
-            Content property and bind to a ViewModel reference. Similar to what we saw when we were covering data
-            templates in the third module here we are going to expose a CurrentViewModel property from this View's
-            ViewModel (which doesn't exist yet). By setting the CurrentViewModel property to an instance of a ViewModel
-            and having a data template for it we can drive the rendering of the View and its ViewModel.
-          </p>
-
-          <figure>
-                <pre class="prettyprint">&lt;Grid&gt;
-    &lt;ContentControl Content=&quot;{Binding CurrentViewModel}&quot; /&gt;
-&lt;/Grid&gt;</pre>
-            <figcaption>Fig 05-002</figcaption>
-          </figure>
-          <p>
-            Now we need to add data templates that match up to our Views and ViewModels. To define the data templates
-            for each View we will need to bring in their corresponding child namespaces:
-          </p>
-          <figure>
-                <pre class="prettyprint">xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
-xmlns:cust=&quot;clr-namespace:ZzaDesktop.Customers&quot;
-xmlns:order=&quot;clr-namespace:ZzaDesktop.Orders&quot;
-xmlns:prep=&quot;clr-namespace:ZzaDesktop.OrderPrep&quot;
-xmlns:local=&quot;clr-namespace:ZzaDesktop&quot;
-Title=&quot;MainWindow&quot;</pre>
-            <figcaption>Fig 05-003</figcaption>
-          </figure>
-          <p>
-            So we have a child namespace per sub folder and one for the root folder. Now we can define the DataTemplates
-            in a ResourceDictionary for this window. We will setup one DataTemplate per ViewModel mapping to its
-            ViewType:
-          </p>
-          <figure>
-                <pre class="prettyprint">&lt;Window.Resources&gt;
-    &lt;DataTemplate DataType=&quot;{x:Type cust:CustomerListViewModel}&quot;&gt;
-        &lt;cust:CustomerListView /&gt;
-    &lt;/DataTemplate&gt;
-    &lt;DataTemplate DataType=&quot;{x:Type order:OrderViewModel}&quot;&gt;
-        &lt;order:OrderView /&gt;
-    &lt;/DataTemplate&gt;
-    &lt;DataTemplate DataType=&quot;{x:Type prep:OrderPrepViewModel}&quot;&gt;
-        &lt;prep:OrderPrepView /&gt;
-    &lt;/DataTemplate&gt;
-    &lt;DataTemplate DataType=&quot;{x:Type cust:AddEditCustomerViewModel}&quot;&gt;
-        &lt;cust:AddEditCustomerView /&gt;
-    &lt;/DataTemplate&gt;
-
-&lt;/Window.Resources&gt;</pre>
-            <figcaption>Fig 05-004</figcaption>
-          </figure>
-          <p>
-            Note how each DataTemplate maps a DataType (the ViewModel Type) to a corresponding View and the use of this
-            DataTemplate will create this View, set its DataContext to its ViewModel. So now anytime CurrentViewModel is
-            set to instance of a CustomerListViewModel it will render out a CustomerListView with the ViewModel hooked
-            up.
-          </p>
-          <p>
-            So we just need a ViewModel that has a CurrentViewModel property and some logic and Commanding to switch the
-            current reference of ViewModel inside that property.
-          </p>
-          <p>Create a class called MainWindowViewModel. In MainWindow view we can use static hook-up in the XAML:
-          </p>
-          <figure>
-                <pre class="prettyprint">&lt;Window.DataContext&gt;
-    &lt;local:MainWindowViewModel /&gt;
-&lt;/Window.DataContext&gt;</pre>
-            <figcaption>Fig 05-005</figcaption>
-          </figure>
-
-          <p>The above XAML just creates an instance of the ViewModel from XAML and use it to set the DataContext
-            property of the Window.
-          </p>
-          <p>
-            Now let's start fleshing out our MainWindowViewModel. The first property we know our ViewModel needs is a
-            property called CurrentViewModel which we will set to a type of object for now:
-          </p>
-          <figure>
-            <pre class="prettyprint">public object CurrentViewModel { get; set; }</pre>
-            <figcaption>Fig 05-006</figcaption>
-          </figure>
-          <p>
-            To drive the navigation, the MainWindowViewModel is going to act as a Parent in a hierarchy of ViewModels
-            where the Child ViewModels will be managed by the parent ViewModel. We will declare an instance of each of
-            the Child ViewModel types that we are going to be placing into that CurrentViewModel property:
-          </p>
-          <figure>
-                <pre class="prettyprint">private CustomerListViewModel _customerListViewModel = new CustomerListViewModel();
-private OrderViewModel _orderViewModel = new OrderViewModel();
-private OrderPrepViewModel _orderPrepViewModel = new OrderPrepViewModel();</pre>
-            <figcaption>Fig 05-007</figcaption>
-          </figure>
-          <p>
-            We can see that just like the MainWindow ContentControl will act as a Container for the rendered Views our
-            MainWindowViewModel can act as a Container or Parent to the contained ViewModels.
-          </p>
-          <p>
-            The next thing to consider is that we will be setting the CurrentViewModel property over and over again as
-            navigation occurs. Anytime that you are going to be setting a property that you are bound to after the
-            initial XAML parsing has happened you would need to support INotifyPropertyChanged. We could just implement
-            INPC directly on MainWindowViewModel and then later we would find we would need to do it on
-            CustomerListViewModel, OrderViewModel and so on. The thing to recognise is that you pretty much always need
-            INPC support on your ViewModels.
-          </p>
-          <p>
-            We also need to make sure that whatever type you make the CurrentViewModel property we are able to put an
-            instance of each of the child ViewModels into that property. Obviously using the object base class for all
-            types of objects in .Net will work but it is better to be a bit more specific.
-          </p>
-          <p>
-            So the combination of facts that each ViewModel will need to implement INPC and that we need some common
-            base type for those ViewModels leads us to creating something that encapsulates the INPC pattern, and makes
-            it so our ViewModels don’t have to be repetitive in declaring INPC and makes it so our property definitions
-            can be a little bit more trim as well.
-          </p>
-          <p>In our next demo we will create a base class to encapsulate that INPC implementation then have our
-            ViewModels inherit from it.
-          </p>
-          <h2>Demo: Encapsulating INotifyPropertyChanged</h2>
-          <div class="example">
-            <div class="input-group">
-              <input id="Ex05-003" type="text"
-                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 5\ZzaDesktop-Start\ZzaDesktop.sln">
-<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex05-003"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
-          <div class="example">
-            <div class="input-group">
-              <input id="Ex05-004" type="text"
-                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 5\ZzaDesktop-End\ZzaDesktop.sln">
-<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex05-004"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
-          <p>
-            So we need to create a base class to encapsulate the implementation of INPC for our ViewModels. To do that
-            we are going to add a new class to the project called BindableBase. The main idea behind BindableBase is to
-            encapsulate the INotifyPropertyChanged implementation and provide helper methods to the derived class so
-            they can easily trigger the appropriate notifications. Firstly, this class needs to implement INPC:
-          </p>
-          <figure>
-                <pre class="prettyprint">namespace ZzaDesktop
+                <pre><code class="language-csharp">public class RelayCommand : ICommand
 {
-    public class BindableBase : INotifyPropertyChanged
-    {
-        public event PropertyChangedEventHandler PropertyChanged = delegate { };
-}</pre>
-            <figcaption>Fig 05-007A</figcaption>
-          </figure>
-          <p>and then it needs to expose a way for the derived classes to trigger that PropertyChanged event at the
-            appropriate time as well as encapsulating the check to make sure that the value of any property that is
-            being set is actually changing.
-          </p>
-          <p>
-            To do that we will define two methods on this class. One called SetProperty and one called
-            OnPropertyChanged:
-          </p>
-          <figure>
-                <pre class="prettyprint">protected virtual void SetProperty&lt;T&gt;(ref T member, T val, [CallerMemberName] string propertyName = null)
-{
-    if (object.Equals(member, val)) return;
+    Action _TargetExecuteMethod;
+    Func&lt;bool&amp;gt; _TargetCanExecuteMethod;
 
-    member = val;
-    PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+                  public RelayCommand(Action executeMethod) { _TargetExecuteMethod=executeMethod; }
+
+                  public RelayCommand(Action executeMethod, Func&amp;lt;bool&amp;gt; canExecuteMethod) {
+                  _TargetExecuteMethod=executeMethod; _TargetCanExecuteMethod=canExecuteMethod; }
+
+                  public void RaiseCanExecuteChanged() { CanExecuteChanged(this, EventArgs.Empty); }
+    // ICommand Members
 }
 
-protected virtual void OnPropertyChanged(string propertyName)
-{
-    PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-}</pre>
-            <figcaption>Fig 05-007B</figcaption>
+public class RelayCommand&amp;lt;T&amp;gt; : ICommand
+{</code></pre>
+            <figcaption>Fig 04-004</figcaption>
           </figure>
-          <p>The SetProperty method is intended to be set from the set block of each property and encapsulates the check
-            to see if the value actually changed and if so it sets the member variable and triggers the PropertyChanged
+          <p>
+            This is a simple delegating implementation of ICommand where we have two delegates – one for the Execute
+            method and one for the CanExecute method. Those can be passed through on construction and you can see there
+            are two overloaded constructors – one for only an Execute method and one for an Execute method and a
+            CanExecute method.
+          </p>
+          <p>The implementation of ICommand is fairly straightforward:</p>
+          <figure>
+                <pre><code class="language-csharp">bool ICommand.CanExecute(object parameter)
+{
+    if (_TargetCanExecuteMethod != null)
+    {
+        return _TargetCanExecuteMethod();
+    }
+    if (_TargetExecuteMethod != null)
+    {
+        return true;
+    }
+    return false;
+}
+
+// Beware - should use weak references if command instance lifetime is longer than lifetime of UI objects that get hooked up to command
+// Prism commands solve this in their implementation
+public event EventHandler CanExecuteChanged = delegate { };
+
+void ICommand.Execute(object parameter)
+{
+    if (_TargetExecuteMethod != null)
+    {
+        _TargetExecuteMethod();
+    }
+}</code></pre>
+            <figcaption>Fig 04-005</figcaption>
+          </figure>
+          <p>
+            When either of the methods are invoked it just checks to see if there is a method for that delegate and
+            invokes it. And in the case of the CanExecute method if there is no delegate for that it will return true
+            meaning that it’s always enabled.
+          </p>
+          <p>
+            Back in CustomerListViewModel change the DeleteCommand to be of type RelayCommand instead of just ICommand:
+          </p>
+          <figure>
+            <pre><code class="language-csharp">public RelayCommand DeleteCommand { get; private set; }</code></pre>
+            <figcaption>Fig 05-005A</figcaption>
+          </figure>
+          <p>Now we need to construct an instance and put it into that property; we will do this in the constructor.
+          </p>
+          <figure>
+                <pre><code class="language-csharp">public CustomerListViewModel()
+{
+    if (DesignerProperties.GetIsInDesignMode(
+        new System.Windows.DependencyObject())) return;
+
+    Customers = new ObservableCollection&lt;Customer&gt;( _repository.GetCustomersAsync().Result);
+    DeleteCommand = new RelayCommand(OnDelete,CanDelete);
+
+}</code></pre>
+            <figcaption>Fig 04-006</figcaption>
+          </figure>
+          <p>
+            We could just use the constructor that only takes an Execute method (which we will call OnDelete) and the
+            Command would then always be enabled. However, because we are going to hook-up enable/disable logic shortly
+            we will also supply a CanExecute method called CanDelete.
+          </p>
+          <p>Now we can stub the methods out:</p>
+          <figure>
+                <pre><code class="language-csharp">private void OnDelete()
+{
+    Customers.Remove(SelectedCustomer);
+}
+
+private bool CanDelete()
+{
+    return true;
+}</code></pre>
+            <figcaption>Fig 04-007</figcaption>
+          </figure>
+          <p>For the moment we will just return true from CanDelete.</p>
+          <p>
+            The ViewModel will need some context of what Customer is it supposed to be deleting from the Collection. A
+            Command can take an argument, the signature of the CanExecute and Execute methods on ICommand have a single
+            argument of type object. We could pass down an argument using the Command parameter property of the Button.
+            However, we will take a different approach which is more in tune with the way MVVM works.
+          </p>
+          <p>
+            We are going to expose another property (called SelectedCustomer) from our ViewModel that our View can bind
+            to. That way the ViewModel will always know what the current context is in terms of selection:
+          </p>
+          <figure>
+                <pre><code class="language-csharp">private Customer _selectedCustomer;
+public Customer SelectedCustomer
+{
+    get
+    {
+        return _selectedCustomer;
+    }
+    set
+    {
+        _selectedCustomer = value;
+    }
+}</code></pre>
+            <figcaption>Fig 04-008</figcaption>
+          </figure>
+          <p>So I've added a new SelectedCustomer property and we can go over to the View now and set it up so it's
+            always being populated when selections are made in the DataGrid. To do that I just drop over to my View, go
+            to my DataGrid and set the SelectedItem property bound to the SelectedCustomer Property on my ViewModel.
+          </p>
+          <figure>
+                <pre><code class="language-csharp"> &lt;DataGrid x:Name=&quot;customerDataGrid&quot;
+          AutoGenerateColumns=&quot;False&quot;
+          ItemsSource=&quot;{Binding Customers}&quot;
+          SelectedItem=&quot;{Binding SelectedCustomer}&quot;
+          Grid.Row=&quot;1&quot;&gt;
+    &lt;DataGrid.Columns&gt;
+        &lt;DataGridTextColumn Binding=&quot;{Binding FirstName}&quot;
+                            Header=&quot;First Name&quot;
+                            Width=&quot;SizeToHeader&quot; /&gt;
+        &lt;DataGridTextColumn Binding=&quot;{Binding LastName}&quot;
+                            Header=&quot;Last Name&quot;
+                            Width=&quot;SizeToHeader&quot; /&gt;</code></pre>
+            <figcaption>Fig 04-009</figcaption>
+          </figure>
+          <p>Now the ViewModel will always be in tune with what the selection is and it can use that as the context for
+            the Command.
+          </p>
+          <p>So now I can drop back over to the ViewModel to the OnDelete method and simply remove the SelectedCustomer
+            from the Customer Collection when the Delete button is pressed and the Command fires.
+          </p>
+          <figure>
+                <pre><code class="language-csharp"> private void OnDelete()
+{
+    Customers.Remove(SelectedCustomer);
+}
+
+private bool CanDelete()
+{
+    return SelectedCustomer != null;
+}</code></pre>
+            <figcaption>Fig 04-010</figcaption>
+          </figure>
+          <p>
+            Now if you run the application, select a Customer and click Delete it is removed from both the DataGrid and
+            ListBox since both controls are both bound to the same collection – which is an Observable Collection so it
+            will raise collection changed events whenever an item is added or removed from the Collection. However, one
+            problem with our current implementation is that the Delete button is always enabled (even if no Customer is
+            selected). We will address that now.
+          </p>
+          <p>
+            We need to make it so the CanDelete logic is driven by whether a Customer is selected or not. Since we
+            already have that context through our SelectedCustomer property we should be able to check that property for
+            null and return true or false accordingly:
+          </p>
+          <figure>
+                <pre><code class="language-csharp">private bool CanDelete()
+{
+    return SelectedCustomer != null;
+}</code></pre>
+            <figcaption>Fig 04-011</figcaption>
+          </figure>
+          <p>
+            However, if we run the application now and select a customer the button remains disabled. This is because
+            CanExecute is called when the binding is first evaluated as the XAML is being parsed and it subscribes to
+            the CanExecuteChanged event. However, this won’t be checked again unless you call the CanExecuteChanged
             event.
           </p>
-          <p>
-            The other method, OnPropertyChanged, is meant for places where maybe changing one property means you need to
-            trigger an update on two properties such as a computed property. So for that one you can just pass in the
-            property name and the event will be fired, since it's encapsulated down here at the base level. Now let's go
-            see what it can do for us with our ViewModels
-          </p>
-          <p>
-            So back in our MainWindowViewModel we can change the way we define our properties, we can’t do just auto
-            implemented properties because we need to have a set block to trigger the change but we want that to be as
-            compact as possible.
-          </p>
-          <p>
-            We can use BindableBase as our property type and the property name is still CurrentViewModel. Make sure you
-            set MainWindowViewModel to inherit from BindableBase:
+          <p>In the ViewModel we know that the SelectedCustomer is going to be set through our other binding so if we
+            just drop in here to the set block inside the SelectedCustomer property and call RaiseCanExecuteChanged on
+            the Command we'll be good to go:
           </p>
           <figure>
-                <pre class="prettyprint">class MainWindowViewModel : BindableBase
+                <pre><code class="language-csharp">set
 {
-    private CustomerListViewModel _customerListViewModel = new CustomerListViewModel();
-    private OrderViewModel _orderViewModel = new OrderViewModel();
-    private OrderPrepViewModel _orderPrepViewModel = new OrderPrepViewModel();
-
-    private BindableBase _CurrentViewModel;
-
-    public BindableBase CurrentViewModel
+    _selectedCustomer = value;
+    DeleteCommand.RaiseCanExecuteChanged();
+}</code></pre>
+            <figcaption>Fig 04-012</figcaption>
+          </figure>
+          <p>
+            Now if you run the application again the button will be initially disabled, then when a selection is made
+            the button becomes enabled, if you click delete the button becomes disabled.
+          </p>
+          <p>Lastly we will hook-up input gestures to trigger your bindings such as keyboard shortcuts. In the View add
+            InputBindings as a collection on the Root element.
+          </p>
+          <figure>
+                <pre><code class="language-csharp">&lt;UserControl.InputBindings&gt;
+    &lt;KeyBinding Key=&quot;D&quot;
+                Modifiers=&quot;Control&quot;
+                Command=&quot;{Binding DeleteCommand}&quot; /&gt;
+&lt;/UserControl.InputBindings&gt;</code></pre>
+            <figcaption>Fig 04-013</figcaption>
+          </figure>
+          <p>
+            The primary type of InputBinding you will use will probably be a KeyBinding which is a keyboard shortcut.
+            Those are called key bindings and you can see you can set the Key and Modifiers (in this case Control D) as
+            the keystroke that's gonna trigger our delete Command and then we just point to same Command property that
+            we did with the Button making it an alternate invoker of that command.
+          </p>
+          <p>
+            With that in place, we can run, I can make a selection, hit Ctrl + D and it deletes the same as clicking the
+            button does. So that's how you use Commands to communicate from your View to your ViewModel to invoke some
+            logic down in the ViewModel.
+          </p>
+          <h3>Attached Properties and Behaviors</h3>
+          <p>
+            Now let’s talk about Attached Properties and Behaviors and how they form a communication path between Views
+            and ViewModels for scenario’s where Commands and Property Change Notifications are not sufficient. Attached
+            Properties are a special kind of Dependency Property and are a fundamental part of all XAML platforms. They
+            can be defined in any class and then applied to any object that derives from Dependency Object (which all UI
+            elements do). Attached Properties are used for a lot of things in XAML including:
+          </p>
+          <ul>
+            <li>Grid Layout</li>
+            <li>Tool Tip Behaviors</li>
+            <li>Text Formatting</li>
+          </ul>
+          <p>
+            They also form the basis for Custom Behaviors because when an Attached Property is set on some element you
+            can wire up a change handler that can make programmatic calls against the exposed API of the control it’s
+            being attached to doing things like subscribing to events or setting properties on the control.
+          </p>
+          <p>
+            As a result, you can create what is called a Behavior with just a custom Attached Property but the more
+            common way is to leverage the Blend SDK to create them. Even when you use the Blend SDK Blend Behaviors get
+            attached to UI elements through Attached Properties which are defined in the SDK. Behaviors can expose their
+            own Dependency Properties and thus form a communication bridge between Views and ViewModels because the
+            Behavior can subscribe to events on the element it’s attached to or monitor property changes on it and can
+            despatch calls into the ViewModel as a result either through Commands by setting a data-bound property on
+            the Behavior that points to the ViewModel or by directly invoking a method on the ViewModel.
+          </p>
+          <p>
+            In the other direction the Behavior can be bound to a Property exposed by the ViewModel that is either an
+            interface with events on it or just a data property that raises property or collection changed events. Code
+            in the Behavior can use that as a trigger to go do something on the element on which the Behavior is
+            attached or some other element or elements in the UI that are reachable through the Visual tree of that
+            Behaviours element.
+          </p>
+          <p>
+            I'm sure thats all a little abstract if you have never worked with or implemented behaviours before. So
+            let's take a look at a couple of demos that will make this all a bit more concrete.
+          </p>
+          <h3>Demo: Custom Attached Behavior</h3>
+          <div class="example">
+            <div class="input-group">
+              <input id="Ex04-003" type="text"
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 4\MVVMCommsDemo-Behaviors-Start\MVVMCommsDemo.sln">
+<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex04-003"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
+            </div>
+          </div>
+          <div class="example">
+            <div class="input-group">
+              <input id="Ex04-004" type="text"
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 4\MVVMCommsDemo-Behaviors-End\MVVMCommsDemo.sln">
+<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex04-004"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
+            </div>
+          </div>
+          <p>
+            In this demo we will look at the basis of Behaviors with Attached Properties and how they can be used
+            communicate between View and ViewModel. The thing we are going to try and achieve is to make it so the
+            ViewModel can handle the Loaded event and defer loading of the data until the loaded event of the View has
+            fired. To do that we are going to start off by creating an Attached Property in a separate public static
+            class called MvvmBehaviors.
+          </p>
+          <p>Next use the propa Visual Code snippet that is built into Visual Studio to create an Attached Property
+            called LoadedMethodName. Make it of type string:
+          </p>
+          <figure>
+                <pre><code class="language-csharp">public static class MvvmBehaviors
+{
+    public static string GetLoadedMethodName(DependencyObject obj)
     {
-        get { return _CurrentViewModel; }
-        set { SetProperty(ref _CurrentViewModel, value); }
-}</pre>
-            <figcaption>Fig 05-008</figcaption>
-          </figure>
-          <p>
-            The standard use of SetProperty is that you pass in the backing variable by ref into the SetProperty method
-            on the base class. You will also pass in the value that is currently being set for that property.
-          </p>
-          <p>
-            In the BindableBase implementation of SetProperty you can see how those members are coming in:
-          </p>
-          <figure>
-                <pre class="prettyprint">public class BindableBase : INotifyPropertyChanged
-{
-    protected virtual void SetProperty&lt;T&gt;(ref T member, T val,
-                [CallerMemberName] string propertyName = null)</pre>
-            <figcaption>Fig 05-008A</figcaption>
-          </figure>
-          <p>The by ref member variable comes in in the first argument, the value comes in second and the third one gets
-            set with a nice feature of C# which is the CallerMemberName attribute:
-          </p>
-          <figure>
-            <pre class="prettyprint">[CallerMemberName] string propertyName = null</pre>
-            <figcaption>Fig 05-008B</figcaption>
-          </figure>
-          <p>That attribute makes it so it can automatically pick off the name of the thing that called in here – which
-            in our case, since the SetProperty it being called from the property is the property name itself –
-            CurrentViewModel.
-          </p>
-          <figure>
-                <pre class="prettyprint">class MainWindowViewModel : BindableBase
-{
-    private CustomerListViewModel _customerListViewModel = new CustomerListViewModel();
-    private OrderViewModel _orderViewModel = new OrderViewModel();
-    private OrderPrepViewModel _orderPrepViewModel = new OrderPrepViewModel();
-
-    private BindableBase _CurrentViewModel;
-
-    public BindableBase CurrentViewModel
-    {
-        get { return _CurrentViewModel; }
-        set { SetProperty(ref _CurrentViewModel, value); }
-    }</pre>
-            <figcaption>Fig 05-009</figcaption>
-          </figure>
-          <p>
-            You can see it allows you to have a nice compact property definition with the get and set blocks but still
-            do all the things that you need to do for INPC like checking the value actually changed and firing the
-            event. As a nice consequence it allows us to set the type of this property to be BindableBase assuming that
-            each of our ViewModels will inherit from that. So now let’s add BindableBase to each of our ViewModels.
-          </p>
-          <figure>
-                <pre class="prettyprint">namespace ZzaDesktop.Customers
-{
-    class CustomerListViewModel : BindableBase
-    {</pre>
-            <figcaption>Fig 05-009A</figcaption>
-          </figure>
-          <figure>
-                <pre class="prettyprint">namespace ZzaDesktop.Orders
-{
-    class OrderViewModel : BindableBase
-    {</pre>
-            <figcaption>Fig 05-009B</figcaption>
-          </figure>
-          <figure>
-                <pre class="prettyprint">namespace ZzaDesktop.OrderPrep
-{
-    class OrderPrepViewModel : BindableBase
-    {
+        return (string)obj.GetValue(LoadedMethodNameProperty);
     }
-}</pre>
-            <figcaption>Fig 05-009C</figcaption>
-          </figure>
-          <p>So next we'll hook up the Commanding to actually drive this switching and navigation.</p>
-          <h2>Demo: View Switching Navigation</h2>
-          <div class="example">
-            <div class="input-group">
-              <input id="Ex05-005" type="text"
-                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 5\ZzaDesktop-Start\ZzaDesktop.sln">
-<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex05-005"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
-          <div class="example">
-            <div class="input-group">
-              <input id="Ex05-006" type="text"
-                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 5\ZzaDesktop-Start\ZzaDesktop.sln">
-<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex05-006"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
-          <p>
-            So in this demo we will start doing some actual View switching using our CurrentViewModel property. We just
-            need some way to drive the setting of this property and we are going to make it so the end user can command
-            going to the CustomerList or to the OrderPreparation View. To get to the OrderView we are going to need to
-            know what Customer that order is being placed for so that one is going to be driven in a slightly different
-            way.
-          </p>
-          <p>
-            So we need to setup some top level navigation to the CustomerListViewModel and the OrderPrepViewModel and
-            the logic for that switching should belong inside of this ViewModel. We will declare a method called OnNav
-            that takes a string destination and then we will setup a simple switch case to set the CurrentViewModel
-            property to the appropriate child ViewModel when a certain identifier comes in:
-          </p>
-          <figure>
-                <pre class="prettyprint">private void OnNav(string destination)
-{
-    switch (destination)
+
+    public static void SetLoadedMethodName(DependencyObject obj, string value)
     {
-        case &quot;orderPrep&quot;:
-            CurrentViewModel = _orderPrepViewModel;
-            break;
-        case &quot;customers&quot;:
-        default:
-            CurrentViewModel = _customerListViewModel;
-            break;
+        obj.SetValue(LoadedMethodNameProperty, value);
     }
-}</pre>
-            <figcaption>Fig 05-010</figcaption>
+
+    public static readonly DependencyProperty LoadedMethodNameProperty =
+        DependencyProperty.RegisterAttached(&quot;LoadedMethodName&quot;,
+        typeof(string), typeof(MvvmBehaviors), new PropertyMetadata(null));</code></pre>
+            <figcaption>Fig 04-014</figcaption>
           </figure>
           <p>
-            We need some way to call that when the user interacts with the View. We know from previous modules a good
-            way to set that up is with Commands. So let’s declare a Command that we can invoke the method with:
+            Now to make this attached property a behaviour we need to wire up a change handler. So we'll go into the
+            Property meta data and say my change handler is going to be named OnLoadedMethodNameChanged.
           </p>
           <figure>
-            <pre
-              class="prettyprint">public RelayCommand&lt;string&gt; NavCommand { get; private set; }</pre>
-            <figcaption>Fig 05-011</figcaption>
+                <pre><code class="language-csharp"> public static readonly DependencyProperty LoadedMethodNameProperty =
+    DependencyProperty.RegisterAttached(&quot;LoadedMethodName&quot;,
+    typeof(string), typeof(MvvmBehaviors), new PropertyMetadata(null, OnLoadedMethodNameChanged));</code></pre>
+            <figcaption>Fig 04-015</figcaption>
           </figure>
           <p>
-            Now we just need to construct that so we will add a Constructor to the class and set that Command pointing
-            to the OnNav method:
+            Stub the method out. Now in the new method we expect this Attached Property to be set on our View so we want
+            to handle the Views Loaded event inside the change handler. Once we handle the Change event we want to
+            invoke a method on the ViewModel. We know that the ViewModel should be the DataContext of that View. So we
+            can get that ViewModel and use reflection to invoke a method with the specified method name on it:
           </p>
           <figure>
-                <pre class="prettyprint"> public MainWindowViewModel()
+                <pre><code class="language-csharp">private static void OnLoadedMethodNameChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
 {
-    NavCommand = new RelayCommand&lt;string&gt;(OnNav);
-}</pre>
-            <figcaption>Fig 05-012</figcaption>
+    FrameworkElement element = d as FrameworkElement;
+    if (element != null)
+    {
+
+        element.Loaded += (s, e2) =&gt;
+        {
+            var viewModel = element.DataContext;
+            if (viewModel == null) return;
+            var methodInfo = viewModel.GetType().GetMethod(e.NewValue.ToString());
+            if (methodInfo != null) methodInfo.Invoke(viewModel, null);
+        };
+    }
+}</code></pre>
+            <figcaption>Fig 04-016</figcaption>
           </figure>
+
           <p>
-            Now we just need to be able to trigger that Command from our View so keeping it simple we will use some
-            Buttons. Add two rows to the Grid in the MainWindow.xaml View:
+            This code takes the d argument that comes into the change handler which will be the object on which the
+            Attached Property was set and tries to cast that to Framework Element. As long as that succeeds we know the
+            Framework Element has a Loaded event and it also has a DataContext. We subscribe to the Loaded event and
+            when that Loaded event fires we get the DataContext. As long as that isn’t null we use reflection to get a
+            reference to the Method of the name that is being set for LoadedMethodName. Once we have that reference we
+            can just invoke it through reflection.
+          </p>
+          <p>To use this we need to go over to the CustomerListView add a namespace for the local namespace wherever we
+            put the Behavior definition:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;Grid&gt;
-&lt;Grid.RowDefinitions&gt;
-    &lt;RowDefinition Height=&quot;Auto&quot; /&gt;
-    &lt;RowDefinition Height=&quot;*&quot; /&gt;
-&lt;/Grid.RowDefinitions&gt;
-&lt;Grid x:Name=&quot;NavBar&quot;&gt;
-    &lt;Grid.ColumnDefinitions&gt;
-        &lt;ColumnDefinition Width=&quot;*&quot; /&gt;
-        &lt;ColumnDefinition Width=&quot;*&quot; /&gt;
-        &lt;ColumnDefinition Width=&quot;*&quot; /&gt;
-    &lt;/Grid.ColumnDefinitions&gt;
-    &lt;Button Content=&quot;Customers&quot;
-            Command=&quot;{Binding NavCommand}&quot;
-            CommandParameter=&quot;customers&quot;
-            Grid.Column=&quot;0&quot; /&gt;
-    &lt;Button Content=&quot;OrderPrep&quot;
-            Command=&quot;{Binding NavCommand}&quot;
-            CommandParameter=&quot;orderPrep&quot;
-            Grid.Column=&quot;2&quot; /&gt;
-&lt;/Grid&gt;</pre>
-            <figcaption>Fig 05-013</figcaption>
+            <pre><code class="language-csharp">xmlns:local=&amp;quot&amp;quot;clr-namespace:MVVMCommsDemo&amp;quot;</code></pre>
+            <figcaption>Fig 04-017</figcaption>
           </figure>
-          <p>
-            We add some Buttons to the top row, in the second row of the Grid we have our ContentControl as before. The
-            Button on the left is used for navigating to Customers whilst the Button on the right is used for navigating
-            to Orders. You can see we are just pointing those at the NavCommand property exposed by our ViewModel and
-            using the CommandParameter to pass in the string to drive which navigation should take place. With all that
-            in place we should be able to go ahead and run the application. We can see the two Buttons and clicking on
-            them takes you to the relevant View:
+          <p>Then in the root element of the View use the Attached Property (LoadedMethodName) and specify the Method
+            name that you expect to find in your ViewModel:
           </p>
           <figure>
-            <img src="./images/Fig05-014.png"/>
-            <figcaption>Fig 05-014</figcaption>
+            <pre><code class="language-csharp">local:MvvmBehaviors.LoadMethodName=&quot;LoadCustomers&quot;&gt;</code></pre>
+            <figcaption>Fig 04-018</figcaption>
           </figure>
           <p>
-            So we are getting top level navigation driven by the User, triggering Commands into the ViewModel, and the
-            ViewModel encapsulates the navigation logic. We are leveraging implicit DataTemplates to marry up the Views
-            and ViewModels simply by setting a child ViewModel property.
+            Now we need to add a LoadCustomers method into our ViewModel. In previous demos we were initializing the
+            Customers Collection in the constructor of our ViewModel. We had to force that asynchronous method to
+            execute synchronously because you cannot use async and await in a constructor.
           </p>
-          <p>Now to start making this more real we're going to flesh out the CustomerListView cause the only way we can
-            get to the Order view is if we know what Customer to create an Order for.
+          <p>Now that we are going to add a method that will fire later after construction when the Loaded event of the
+            View fires we can move that initialization logic out to that Loaded handler and do it properly async. So cut
+            the code out of the constructor, add a LoadCustomers method and paste the code in. Remove the Result
+            property that forced the GetCustomerAsync method to run synchronous, put an await in front of the
+            GetCustomerAsync method call and make the LoadCustomers method async:
           </p>
-          <h2>Demo: Data Loading into a ViewModel</h2>
+          <figure>
+                <pre><code class="language-csharp">public async void LoadCustomers()
+{
+    if (DesignerProperties.GetIsInDesignMode(
+        new System.Windows.DependencyObject())) return;
+
+    Customers = new ObservableCollection&lt;Customer&gt;(await _repository.GetCustomersAsync());
+
+}</code></pre>
+            <figcaption>Fig 04-019</figcaption>
+          </figure>
+          <p>
+            If you set a breakpoint in the method and run the application, you will see the LoadCustomers method is
+            being called when the Loaded event of the View is firing. However, there is a problem: Customers aren’t
+            populating:
+          </p>
+          <figure>
+            <img src="./images/Fig04-020.png"/>
+            <figcaption>Fig 04-020</figcaption>
+          </figure>
+          <p>This is related to Property Change Events which we will fix in a later module.</p>
+          <h3>Demo: Using Blend Behaviors</h3>
           <div class="example">
             <div class="input-group">
-              <input id="Ex05-007" type="text"
-                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 5\ZzaDesktop-Start\ZzaDesktop.sln">
-<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex05-007"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
+              <input id="Ex04-005" type="text"
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 4\MVVMCommsDemo-Behaviors-Start\MVVMCommsDemo.sln">
+              <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex04-005"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
             </div>
           </div>
           <div class="example">
             <div class="input-group">
-              <input id="Ex05-008" type="text"
-                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 5\ZzaDesktop-End\ZzaDesktop.sln">
-<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex05-008"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
+              <input id="Ex04-006" type="text"
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 4\MVVMCommsDemo-Behaviors-End\MVVMCommsDemo.sln">
+              <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex04-006"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
             </div>
           </div>
-          <p>Now that we have our basic top-level navigation working it is time to start fleshing out the
-            CustomerListView. Replace the TextBox with a DataGrid:
+          <p>
+            In the last demo we created a Behavior through Attached Properties. Now let’s look at how you can achieve
+            the same thing quickly using the built-in Behaviors of the Blend SDK. To do that we switch to Blend and open
+            the same solution. Go to the Projects tab, expand Customers, find the CustomerListView and open it.
+          </p>
+          <p>
+            Now click on the Assets tab, Behaviors, and after selecting the UserControl in the Object and Timeline
+            double click the CallMethodAction to add it as a child. Several steps are completed automatically for you at
+            this point – Blend has:
+          </p>
+          <ul>
+            <li>Added references to two libraries that are part of the Blend SDK</li>
+            <li>Added a XAML XML namespace to facilitate access to those libraries</li>
+            <li>Added the CallMethodAction with several lines of XAML to my UserControl</li>
+          </ul>
+          <p>
+            Now, back in Visual Studio, we will finish filling out the properties of that Behavior. In the References
+            list in Solution Explorer you will see that it has added the following references:
+          </p>
+          <ul>
+            <li>Microsoft.Expression.Interactions</li>
+            <li>System.Windows.Interactivity</li>
+          </ul>
+          <p>
+            These are from the Blend SDK. In the CustomerListView you can see it added corresponding XML namespaces so
+            we can access the stuff that is in those libraries from our XAML.
           </p>
           <figure>
-                <pre class="prettyprint">&lt;Grid&gt;
-    &lt;DataGrid ItemsSource=&quot;{Binding Customers}&quot;
-              AutoGenerateColumns=&quot;False&quot;
-              CanUserAddRows=&quot;False&quot;
-              Grid.Row=&quot;1&quot;&gt;
-        &lt;DataGrid.Columns&gt;
-            &lt;DataGridTextColumn Binding=&quot;{Binding FullName}&quot;
-                                Width=&quot;*&quot; /&gt;
-            &lt;DataGridTemplateColumn Width=&quot;Auto&quot;&gt;
-                &lt;DataGridTemplateColumn.CellTemplate&gt;
-                    &lt;DataTemplate&gt;
-                        &lt;Button Content=&quot;Place Order&quot;
-                                Command=&quot;{Binding DataContext.PlaceOrderCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}&quot;
-                                CommandParameter=&quot;{Binding}&quot;
-                                Margin=&quot;5&quot; /&gt;
-                    &lt;/DataTemplate&gt;
-                &lt;/DataGridTemplateColumn.CellTemplate&gt;
-            &lt;/DataGridTemplateColumn&gt;
-        &lt;/DataGrid.Columns&gt;
-    &lt;/DataGrid&gt;
-&lt;/Grid&gt;</pre>
-            <figcaption>Fig 05-015</figcaption>
+                <pre><code class="language-csharp">xmlns:i=&quot;http://schemas.microsoft.com/expression/2010/interactivity&quot;
+xmlns:ei=&quot;http://schemas.microsoft.com/expression/2010/interactions&quot;</code></pre>
+            <figcaption>Fig 04-021</figcaption>
           </figure>
-          <p>
-            We have added a DataGrid that is binding to Customers which means our ViewModel must now expose a Customers
-            Collection. We have got a set of two columns defined. The first one is bound to the FullName property of the
-            Customer and will take up most of the row. The second one is a templated column that contains a Button to
-            place an order for a given Customer. That Button is going to pass the Customer by grabbing just the current
-            DataContext for the cell.
-          </p>
-          <p>
-            The Command itself will exist on our ViewModel. So to get to our ViewModel from inside of the row where the
-            DataContext is not the ViewModel we have to break out of the local DataContext using a RelativeSource
-            binding:
-          </p>
+          <p>Scrolling down you see that Blend has added some more XAML:</p>
           <figure>
-                <pre class="prettyprint"> &lt;Button Content=&quot;Place Order&quot;
-    Command=&quot;{Binding DataContext.PlaceOrderCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}&quot;
-    CommandParameter=&quot;{Binding}&quot;
-    Margin=&quot;5&quot; /&gt;</pre>
-            <figcaption>Fig 05-015A</figcaption>
-          </figure>
-          <p>
-            that let’s us walk up the Visual Tree until we get to the DataGrid at which point we are in the part of the
-            XAML where our ViewModel is the current DataContext. Then we can set the path to the DataContext of the
-            DataGrid then dot down into PlaceOrderCommand which we will add to our ViewModel.
-          </p>
-          <p>In the CustomerListViewModel we will start by adding the Customers Collection and the PlaceOrderCommand:
-          </p>
-          <figure>
-                <pre class="prettyprint">private ObservableCollection&lt;Customer&gt; _customers;
-public ObservableCollection&lt;Customer&gt; Customers
-{
-    get { return _customers; }
-    set { SetProperty(ref _customers, value); }
-}</pre>
-            <figcaption>Fig 05-016</figcaption>
-          </figure>
-          <p>
-            Now we need to be able to load Customers into that Customers collection. For that we will need the
-            repository. The ViewModel can new up an instance of the repository as an initial crude attempt. In the next
-            module we will cover dependency injection and how we can use that to pass the repository in. For now, let’s
-            just hard code it in here:
-          </p>
-          <figure>
-            <pre class="prettyprint">private ICustomersRepository _repo = new CustomersRepository();</pre>
-            <figcaption>Fig 05-017</figcaption>
-          </figure>
-          <p>
-            So we new up an instance of the Customers repository and hold it in a member variable of the interface type.
-            Now we need to trigger where we are going to load the Customers into the collection and because that is
-            going to be an asynchronous load using the Loaded event of the View is actually a good way to go. We just
-            have to wire it up with the behavior as we saw in the previous module. First let’s define the target method
-            that we want to invoke when the Loaded event fires:
-          </p>
-          <figure>
-                <pre class="prettyprint">public async void LoadCustomers()
-{
-    Customers = new ObservableCollection&lt;Customer&gt;(
-        await _repo.GetCustomersAsync());
-}</pre>
-            <figcaption>Fig 05-018</figcaption>
-          </figure>
-          <p>
-            Here we can see that we are going to go out to our CustomerRepository and call GetCustomersAsync, await on
-            the async method. When it returns the value we are going to pass it into the constructor of
-            ObservableCollection and populate our Customers property. Now we just need to call that when the event
-            fires.
-          </p>
-          <p>
-            The quickest way to get that hooked up is in Blend. Make sure the UserControl root element is selected in
-            Objects and Timeline:
-          </p>
-          <figure>
-            <img src="./images/Fig05-018A.png"/>
-            <figcaption>Fig 05-018A</figcaption>
-          </figure>
-          <p>
-            go up to the Assets tab, Behaviors and then double click CallMethodAction:
-          </p>
-          <figure>
-            <img src="./images/Fig05-018B.png"/>
-            <figcaption>Fig 05-018B</figcaption>
-          </figure>
-          <p>
-            That adds it as a child of the root element.
-          </p>
-          <p>
-            If you open the CustomerListView back in Visual Studio you will see that Blend has added two namespaces of
-            the Blend SDK, it added the Triggers collection to the Root element, and it added an EventTrigger which we
-            want to change to the Loaded event and a CallMethodAction underneath that. We want to set the TargetObject
-            to just Binding to get to a reference of our ViewModel and the MethodName to LoadCustomers:
-          </p>
-          <figure>
-                <pre class="prettyprint">&lt;i:Interaction.Triggers&gt;
-    &lt;i:EventTrigger EventName=&quot;Loaded&quot;&gt;
-        &lt;ei:CallMethodAction TargetObject=&quot;{Binding}&quot; MethodName=&quot;LoadCustomers&quot;/&gt;
+                <pre><code class="language-csharp">&lt;i:Interaction.Triggers&gt;
+    &lt;i:EventTrigger EventName=&quot;MouseLeftButtonDown&quot;&gt;
+        &lt;ei:CallMethodAction /&gt;
     &lt;/i:EventTrigger&gt;
-&lt;/i:Interaction.Triggers&gt;</pre>
-            <figcaption>Fig 05-019</figcaption>
+&lt;/i:Interaction.Triggers&gt;</code></pre>
+            <figcaption>Fig 04-022</figcaption>
           </figure>
-          <p>With that we should be able to run, click on the Customers Button and the Customers should be loaded
-            asynchronously:
+
+          <p>
+            It added an Attached Property that is a Triggers collection, it added a Trigger with the MouseLeftButtonDown
+            which we need to change to the Loaded event. It also added a CallMethodAction. The CallMethodAction needs to
+            know what it is going to call so we need to set the TargetObject property and MethodName property:
+          </p>
+          <p>
+            We set the TargetObject to binding (just setting it to Binding in curly braces means the entire DataContext
+            object – our ViewModel in this example). Then we set the MethodName property which we set to the
+            LoadCustomers method (achieving the same thing as our Attached Behaviour did):
           </p>
           <figure>
-            <img src="./images/Fig05-020.png"/>
-            <figcaption>Fig 05-020</figcaption>
+            <pre><code class="language-csharp">&lt;ei:CallMethodAction TargetObject=&quot;{Binding}&quot; MethodName=&quot;LoadCustomers&quot; /&gt;</code></pre>
+            <figcaption>Fig 04-023</figcaption>
           </figure>
           <p>
-            Now we just have to get the Place Order Button wired up with a Command in the ViewModel. In the ViewModel
-            define a Command property called PlaceOrderCommand:
+            Now remove the Attached Behavior from the root and run the application. We still have the bug where the
+            Customers aren’t showing but we will fix that after we talk about Property Change Events a little bit.
+          </p>
+          <h3>Property Change Notifications</h3>
+          <p>
+            Property Change Notifications are essential to data-binding because they notify the binding when the
+            underlying data has changed so that the binding can refresh and keep the data on screen in sync with the
+            underlying data model.
+          </p>
+          <p>They can also be used to signal the View or a Behavior in the View to make some change not directly related
+            to data-binding such as:
+          </p>
+          <ul>
+            <li>Changing the visibility of some element</li>
+            <li>Kicking off an animation</li>
+            <li>Causing a visual state change</li>
+          </ul>
+          <p>
+            There are two options for raising Property Change Notifications that a binding will automatically monitor.
+            First is to make the Property a Dependency Property which has its own internal change notification mechanism
+            that bindings are natively aware of. Second is to implement the INotifyPropertyChanged (INPC) Interface
+            which requires declaration of a Property Changed event and firing that event in the set block of each
+            Property on the object.
+          </p>
+          <p>
+            For your ViewModel and Model objects in MVVM INotifyPropertyChanged is more appropriate because Dependency
+            Property declarations are verbose and require your object to inherit from Dependency Object both of which
+            make it a heavyweight approach to achieve the goal of change notifications in Model and ViewModel objects.
+          </p>
+          <h3>Demo: Leveraging INotifyPropertyChanged</h3>
+          <div class="example">
+            <div class="input-group">
+              <input id="Ex04-008" type="text"
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 4\MVVMCommsDemo-PropertyChanged-Start\MVVMCommsDemo.sln">
+              <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex04-008"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
+            </div>
+          </div>
+          <div class="example">
+            <div class="input-group">
+              <input id="Ex04-009" type="text"
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 4\MVVMCommsDemo-PropertyChanged-End\MVVMCommsDemo.sln">
+              <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex04-009"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
+            </div>
+          </div>
+          <p>
+            In the last demo we hooked up some Behaviors to populate our Customers OnLoaded instead of in the
+            constructor. However, we introduced a bug where the Customers were being retrieved but they are not showing
+            up on screen. Usually that means that data binding is not being notified when something happens after the
+            initial XAML parsing is done - such as the Loaded event. To fix this issue all we need to do is make it so
+            our ViewModel implements INotifyPropertyChanged. So modify CustomerListViewModel so that it implements
+            INotifyPropertyChanged:
+          </p>
+          <figure>
+            <pre><code class="language-csharp">public class CustomerListViewModel : INotifyPropertyChanged</code></pre>
+            <figcaption>Fig 04-024</figcaption>
+          </figure>
+          <p>
+            Stub the method out using the Visual Studio Ctrl +. enter shortcut. This will add the PropertyChanged event
+            to the bottom of our class. Next we use a delegate trick where we assign an empty anonymous method in as a
+            subscriber. That means that subscriber is always in the list and you never have to worry about property
+            change being null:
           </p>
           <figure>
             <pre
-              class="prettyprint">public RelayCommand&lt;Customer&gt; PlaceOrderCommand { get; private set; }</pre>
-            <figcaption>Fig 05-021</figcaption>
+              class="prettyprint">public event PropertyChangedEventHandler PropertyChanged = delegate { };</code></pre>
+            <figcaption>Fig 04-025</figcaption>
           </figure>
-          <p>In the constructor for the ViewModel initialize the Command property and point it to a handling method:
+          <p>
+            Now we need to go to the properties of our ViewModel and fire that event when they change. Since you are now
+            going to be raising an event when they change you need to make sure the value actually changed:
           </p>
           <figure>
-                <pre class="prettyprint"> public CustomerListViewModel()
+                <pre><code class="language-csharp">public ObservableCollection&lt;Customer&gt; Customers
 {
-    PlaceOrderCommand = new RelayCommand&lt;Customer&gt;(OnPlaceOrder);
-}</pre>
-            <figcaption>Fig 05-022</figcaption>
+    get
+    {
+        return _customers;
+    }
+    set
+    {
+        if (_customers != value)
+        {
+            _customers = value;
+            PropertyChanged(this, new PropertyChangedEventArgs(&quot;Customers&quot;));
+        }
+    }
+}</code></pre>
+            <figcaption>Fig 04-026</figcaption>
           </figure>
-          <p>Now add the handling method:</p>
+          <p>
+            We compare the value being set to the current value of the underlying member variable as long as it is
+            different than we set our member variable and raise the PropertyChanged event signalling that it is for this
+            particular property.
+          </p>
+          <p>
+            For completeness, you can do the same thing for the SelectedCustomer. This isn't really necessary since the
+            SelectedCustomer is always set by the View but you should really have all the publicly exposed properties on
+            your INotifyPropertyChanged object follow the pattern.
+          </p>
+          <p>
+            Now that we raise PropertyChanged when Customers are set after the fact in the Loaded event we can start up
+            and see that our problem is fixed. Now our Customers populate, and they do so asynchronously in the Loaded
+            event handler showing the data once the Customers property has been set because the binding was notified
+            about the event.
+          </p>
+          <p>
+            Another place where you might need to do this is in your Model objects. Let's say we have another button on
+            our screen that ends up changing a customer object behind the scenes:
+          </p>
           <figure>
-                <pre class="prettyprint">private void OnPlaceOrder(Customer customer)
+                <pre><code class="language-csharp">&lt;Button Content=&quot;Change Customer&quot;
+    HorizontalAlignment=&quot;Left&quot;
+    Margin=&quot;80,0,0,0&quot;
+    VerticalAlignment=&quot;Top&quot;
+    Width=&quot;100&quot;
+    Click=&quot;OnChangeCustomer&quot; /&gt;
+                </code></pre>
+            <figcaption>Fig 04-027</figcaption>
+          </figure>
+          <p>For speed (but anti-MVVM) we will hook-up a change event in the code-behind:</p>
+          <figure>
+                <pre><code class="language-csharp">private void OnChangeCustomer(object sender, RoutedEventArgs e)
 {
-    PlaceOrderRequested(customer.Id);
-}</pre>
-            <figcaption>Fig 05-023</figcaption>
-          </figure>
-          <p>Just to make sure that is all setup correctly we can set a break point on the OnPlaceOrder method and run,
-            go to our Customers View, click on Place Order and you can see we're calling our command handler with the
-            Customer reference.
-          </p>
-          <p>Next up we need to tackle navigating to an OrderView with that Customers context.</p>
-          <h2>Demo: Navigation with Parameters</h2>
-          <div class="example">
-            <div class="input-group">
-              <input id="Ex05-009" type="text"
-                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 5\ZzaDesktop-Start\ZzaDesktop.sln">
-              <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex05-009"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
-          <div class="example">
-            <div class="input-group">
-              <input id="Ex05-010" type="text"
-                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 5\ZzaDesktop-Start\ZzaDesktop.sln">
-<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex05-010"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
-          <p>
-            At this point we are all wired up to do top level navigation between the CustomersList and the OrderPrep
-            area of the application. Now we wired ourselves up to present a list of Customers and have a PlaceOrder
-            Command that we can then invoke on each Customer passing that into the CustomerListViewModel.
-          </p>
-          <p>
-            Now we need to cause navigation from the Child ViewModel but that navigation is going to replace this
-            ViewModels View as the Current View in the top level navigation container. That means this child ViewModel
-            needs to be able to communicate up to its parent ViewModel:
-          </p>
-          <figure>
-            <img src="./images/Fig05-023A.png"/>
-            <figcaption>Fig 05-023A</figcaption>
+    var cust = customerDataGrid.SelectedItem as Customer;
+    cust.FirstName = &quot;Changed in background&quot;;
+}</code></pre>
+            <figcaption>Fig 04-028</figcaption>
           </figure>
           <p>
-            which is the MainWindowViewModel because that is where the navigation is being managed.
+            We are really just doing this to emphasize how there are potentially different code paths in your
+            application that end up modifying the objects that you are binding to and when that happens those objects
+            also need to raise change events or the screen wont update.
           </p>
           <p>
-            There is a number of ways you can go about doing this but one simple and straightforward way is to allow
-            Child ViewModels to raise events that their Parent ViewModel can handle. Much like a human child tries to
-            get its parent to do something with events – sometimes polite and controlled, sometimes disastrous (we'll
-            avoid those here in our code).
+            In the code above we are taking the selected item in the DataGrid, getting a reference to it and
+            programmatically setting the FirstName to "Changed in background".
           </p>
           <p>
-            Basically we need to raise an event to our parent. To do that we can simply declare an event that is raised
-            by this ViewModel. So we will have an event that can pass a GUID (the CustomerId) that we want to start
-            placing an Order for:
+            If you now run the application and click the Change Customer button the name doesn't change on screen even
+            though we know in the background the FirstName property has been changed. We can fix this by going to our
+            Customer Model object definition and ensure that it also implements INotifyPropertyChanged, stub the method
+            out, and use the delegate trick again:
           </p>
           <figure>
             <pre
-              class="prettyprint">public event Action&lt;Guid&gt; PlaceOrderRequested = delegate { };</pre>
-            <figcaption>Fig 05-023B</figcaption>
+              class="prettyprint">public event PropertyChangedEventHandler PropertyChanged = delegate { };</code></pre>
+            <figcaption>Fig 04-029</figcaption>
           </figure>
           <p>
-            Once we have the event defined we can raise it from inside of our PlaceOrder command handler passing the
-            Customer Id of the Customer the Command was raised for:
+            Now in the FirstName property modify the set block to add the PropertyChanged event. This pattern should
+            really be applied to all the properties in the Model but as this is just a demo we will limit our changes to
+            the FirstName property.
           </p>
-          <figure>
-                <pre class="prettyprint">private void OnPlaceOrder(Customer customer)
-{
-    PlaceOrderRequested(customer.Id);
-}</pre>
-            <figcaption>Fig 05-024</figcaption>
-          </figure>
-          <p>
-            In the MainWindowViewModel (the parent ViewModel) in the constructor , since our ViewModel is constructed up
-            above with an initializer, we can just subscribe to the PlaceOrderRequested event and have some handling
-            method that we will place here in the parent:
+          <p>Now if you run the application, select a customer, and click the Change Customer button you will see the
+            screen updates properly.
           </p>
-          <figure>
-                <pre class="prettyprint"> public MainWindowViewModel()
-        {
-            NavCommand = new RelayCommand&lt;string&gt;(OnNav);
-            _customerListViewModel.PlaceOrderRequested += NavToOrder;
-        }</pre>
-            <figcaption>Fig 05-025</figcaption>
-          </figure>
-          <p>To implement the method, we will drop down to the bottom of the class and declare a method with the
-            appropriate signature:
-          </p>
-          <figure>
-            <pre class="prettyprint">private void NavToOrder(Guid customerId)</pre>
-            <figcaption>Fig 05-026</figcaption>
-          </figure>
-          <p>
-            Now before we go and set the CurrentViewModel to cause the navigation to occur to the OrderViewModel we need
-            to pass some context. What we can do is pan on exposing a property on the ViewModel that the parent can set
-            as the context that drives the way it is going to behave when it is presented. We take the Guid that was
-            passed to us and just push it down to the child ViewModel:
-          </p>
-          <figure>
-                <pre class="prettyprint">private void NavToOrder(Guid customerId)
-        {
-            _orderViewModel.CustomerId = customerId;
-            CurrentViewModel = _orderViewModel;
-        }</pre>
-            <figcaption>Fig 05-027</figcaption>
-          </figure>
-          <p>In the OrderViewModel add an appropriate property:</p>
-          <figure>
-                <pre class="prettyprint">private Guid _CustomerId;
-
-public Guid CustomerId
-{
-    get { return _CustomerId; }
-    set { SetProperty(ref _CustomerId, value); }
-}</pre>
-            <figcaption>Fig 05-028</figcaption>
-          </figure>
-
-          <p>In the OrderView add the following XAML:</p>
-          <figure>
-                <pre class="prettyprint">&lt;StackPanel Orientation=&quot;Horizontal&quot;&gt;
-    &lt;TextBlock Text=&quot;Placing Order for Customer: &quot; /&gt;
-    &lt;TextBlock Text=&quot;{Binding CustomerId}&quot; /&gt;
-&lt;/StackPanel&gt;</pre>
-            <figcaption>Fig 05-029</figcaption>
-          </figure>
-          <p>
-            We have added a Horizontal StackPanel with two TextBlocks to present that we are placing an order for a
-            given Customer Id. With that in place we can go ahead and run the application, go to Customers, select a
-            Customer, click Place Order and you will be taken to the Order page showing the Customer Id:
-          </p>
-          <figure>
-            <img src="./images/Fig05-030.png"/>
-            <figcaption>Fig 05-030</figcaption>
-          </figure>
-          <p>Now we're not going to fully flesh out this View with taking orders, order items and all that kind of
-            stuff, we're going to focus on rounding out the functionality for Customers.
-          </p>
-          <h2>Demo: Add/Edit Navigation</h2>
+          <h3>Demo: Custom Blend Behavior with INotifyPropertyChanged Trigger</h3>
           <div class="example">
             <div class="input-group">
-              <input id="Ex05-011" type="text"
-                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 5\ZzaDesktop-Start\ZzaDesktop.sln">
-              <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex05-011"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
+              <input id="Ex04-010" type="text"
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 4\MVVMCommsDemo-CustomBehavior-Start\MVVMCommsDemo.sln">
+              <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex04-010"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
             </div>
           </div>
           <div class="example">
             <div class="input-group">
-              <input id="Ex05-012" type="text"
-                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 5\ZzaDesktop-Start\ZzaDesktop.sln">
-<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex05-012"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
+              <input id="Ex04-011" type="text"
+                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 4\MVVMCommsDemo-CustomBehavior-End\MVVMCommsDemo.sln">
+              <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex04-011"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
             </div>
           </div>
           <p>
-            So to finish up the navigation topics in this module we just need to add a new View and ViewModel to handle
-            adding and editing. Since the two will combine the same data entry fields we can combine them into a single
-            View and ViewModel that has a mode to it that switches between Add mode and Edit mode.
+            In this demo we will show the combination of Property Changed Notifications as a communication method from
+            ViewModel to View and a Custom Behavior using the Blend SDK. The scenario we are going to address is one
+            where we want to send alerts to the screen when stuff happens in the background. To do that we are going to
+            need a Custom Behavior that show the alerts as they arrive in a Content Control. To create a Custom Behavior
+            using the Blend SDK you have to reference the Blend SDK (which we did in a previous demo).
           </p>
           <p>
-            The first step is to define a new AddEditCustomerView and AddEditCustomerViewModel. Now we just need to put
-            in place some way to navigate to this View in Add mode or Edit mode. That will involve putting some Command
-            buttons onto our CustomerListView:
+            Add a new class called ShowNotificationMessageBehavior. Make the class public and inherit from Behavior of T
+            where T is a ContentControl:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;Grid&gt;
+            <pre
+              class="prettyprint">public class ShowNotificationMessageBehavior : Behavior&lt;ContentControl&gt;</code></pre>
+            <figcaption>Fig 04-029A</figcaption>
+          </figure>
+          <p>Next, using the propp code snippet, expose a property on the Behavior called Message of type string which
+            can be set on the ViewModel through data binding (which means it will need to be a Dependency Property):
+          </p>
+          <figure>
+                <pre><code class="language-csharp">public string Message
+{
+    get { return (string)GetValue(MessageProperty); }
+    set { SetValue(MessageProperty, value); }
+}
+
+public static readonly DependencyProperty MessageProperty =
+    DependencyProperty.Register(&quot;Message&quot;, typeof(string),
+    typeof(ShowNotificationMessageBehavior), new PropertyMetadata(null, OnMessageChanged));</code></pre>
+            <figcaption>Fig 04-029B</figcaption>
+          </figure>
+          <p>
+            Now we want to add a change handler called OnMessageChanged so that we can monitor changes on this property
+            and make the appropriate changes in the View when it happens.
+          </p>
+          <figure>
+                <pre><code class="language-csharp">private static void OnMessageChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+{
+    var behavior = ((ShowNotificationMessageBehavior)d);</code></pre>
+            <figcaption>Fig 04-030</figcaption>
+          </figure>
+          <p>
+            We take the incoming d object which will be the class on which this Dependency Property is defined – which
+            is our Behavior and cast it to that. That lets us get to a property on our base class called
+            AssociatedObject which will be a strongly typed reference to the ContentControl that you use this Behavior
+            on.
+          </p>
+          <figure>
+                <pre><code class="language-csharp">var behavior = ((ShowNotificationMessageBehavior)d);
+behavior.AssociatedObject.Content = e.NewValue;
+behavior.AssociatedObject.Visibility = Visibility.Visible;</code></pre>
+            <figcaption>Fig 04-030A</figcaption>
+          </figure>
+          <p>
+            Using that we can set the content to the value of the Message that was set and we can change its visibility
+            to visible making it pop open in the UI. We also want to make our notification click dismissible so we are
+            going to add another handler - an override of the base class OnAttached() method. In the OnAttached method
+            we can subscribe to events on the element to which we attached this Behavior. In this case MouseLeftButton
+            down as a click dismiss and change the visibility to collapsed at that point.
+          </p>
+          <figure>
+                <pre><code class="language-csharp">protected override void OnAttached()
+{
+    AssociatedObject.MouseLeftButtonDown += (s, e) =&gt;
+        AssociatedObject.Visibility = Visibility.Collapsed;
+}</code></pre>
+            <figcaption>Fig 04-031</figcaption>
+          </figure>
+          <p>
+            Now we need a Content Control to put this on. In the MainWindow View replace the current ContentControl with
+            a two row Grid and a new ContentControl in the top row above our existing ContentControl in the bottom row:
+          </p>
+          <figure>
+                <pre><code class="language-csharp">&lt;Grid&gt;
     &lt;Grid.RowDefinitions&gt;
         &lt;RowDefinition Height=&quot;Auto&quot; /&gt;
-        &lt;RowDefinition Height=&quot;*&quot; /&gt;
+        &lt;RowDefinition /&gt;
     &lt;/Grid.RowDefinitions&gt;
-    &lt;Grid&gt;
-        &lt;Button Content=&quot;Add Customer&quot;
-                Command=&quot;{Binding AddCustomerCommand}&quot;
-                HorizontalAlignment=&quot;Left&quot; /&gt;
-    &lt;/Grid&gt;
-    &lt;DataGrid ItemsSource=&quot;{Binding Customers}&quot;
-              AutoGenerateColumns=&quot;False&quot;
-              CanUserAddRows=&quot;False&quot;
-              Grid.Row=&quot;1&quot;&gt;</pre>
-            <figcaption>Fig 05-031</figcaption>
-          </figure>
-          <p>
-            Our root Grid now has two rows, the top one will Autosize based on its content. We have added some content
-            to that first row that is a Button that invokes an AddCustomerCommand in our ViewModel. For our Edit we want
-            to use the context of a given row within the Grid that is a single Customer. We will just add another
-            templated column similar to the PlaceOrderCommand:
-          </p>
-          <figure>
-                <pre class="prettyprint">&lt;DataGridTemplateColumn Width=&quot;Auto&quot;&gt;
-    &lt;DataGridTemplateColumn.CellTemplate&gt;
-        &lt;DataTemplate&gt;
-            &lt;Button Content=&quot;Place Order&quot;
-                    Command=&quot;{Binding DataContext.PlaceOrderCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}&quot;
-                    CommandParameter=&quot;{Binding}&quot;
-                    Margin=&quot;5&quot; /&gt;
-        &lt;/DataTemplate&gt;
-    &lt;/DataGridTemplateColumn.CellTemplate&gt;
-&lt;/DataGridTemplateColumn&gt;</pre>
-            <figcaption>Fig 05-032</figcaption>
-          </figure>
-          <p>
-            We use a RelativeSource Binding to get up to the DataGrid, uses the DataContext property of the DataGrid to
-            get to the ViewModel, then dots down to the EditCustomerCommand that we will be adding shortly.
-          </p>
-          <p>
-            Let’s add the EditCustomerCommand and AddCustomerCommand to the CustomerListViewModel. The pattern should be
-            getting familiar now. First we define the property on our ViewModel that exposes that Command:
-          </p>
-          <figure>
-                <pre class="prettyprint">public RelayCommand AddCustomerCommand { get; private set; }
-public RelayCommand&lt;Customer&gt; EditCustomerCommand { get; private set; }</pre>
-            <figcaption>Fig 05-033</figcaption>
-          </figure>
-          <p>
-            The AddCustomerCommand takes no arguments, the EditCustomerCommand takes the Customer object for the row the
-            Button was clicked in. Next we go to the constructor for our ViewModel and construct the command object,
-            pointing it to a handling method:
-          </p>
-          <figure>
-                <pre class="prettyprint">public CustomerListViewModel()
-{
-    PlaceOrderCommand = new RelayCommand&lt;Customer&gt;(OnPlaceOrder);
-    AddCustomerCommand = new RelayCommand(OnAddCustomer);
-    EditCustomerCommand = new RelayCommand&lt;Customer&gt;(OnEditCustomer);
+    &lt;ContentControl&gt;
+        &lt;i:Interaction.Behaviors&gt;
+            &lt;local:ShowNotificationMessageBehavior Message=&quot;{Binding NotificationMessage}&quot; /&gt;
+        &lt;/i:Interaction.Behaviors&gt;
+    &lt;/ContentControl&gt;
+    &lt;ContentControl Content=&quot;{Binding CurrentViewModel}&quot;
+                    Grid.Row=&quot;1&quot; /&gt;
 
-}</pre>
-            <figcaption>Fig 05-034</figcaption>
-          </figure>
-          <p>Now stub out the handling methods:</p>
-          <figure>
-                <pre class="prettyprint">private void OnAddCustomer()
-{
-    AddCustomerRequested(new Customer { Id = Guid.NewGuid() });
-}
-private void OnEditCustomer(Customer cust)
-{
-    EditCustomerRequested(cust);
-}</pre>
-            <figcaption>Fig 05-035</figcaption>
+    &lt;!--&lt;Customers:CustomerListView /&gt;--&gt;
+&lt;/Grid&gt;</code></pre>
+            <figcaption>Fig 04-032</figcaption>
           </figure>
           <p>
-            Now, just like PlaceOrder, we need to cause navigation to occur from down inside the child ViewModel so the
-            pattern we established is to raise an event to our Parent ViewModel. We will need two more events for that:
+            On that ContentControl you can see we add the InteractionBehaviors Collection (similar to the Triggers
+            Attached Property we saw in a previous demo). We put our Behavior inside of that and we combine the Message
+            property of our Behavior to something we expect our ViewModel to expose. We need to add some namespaces to
+            the top of the file to bring in the i prefix (we can steal those from the previous View that already has a
+            Behavior in it). I also need to add in the i prefix pointing to the Interactivity namespace which the
+            Behaviors Attached Property resides in.
           </p>
           <figure>
-                <pre class="prettyprint">public event Action&lt;Customer&gt; AddCustomerRequested = delegate { };
-public event Action&lt;Customer&gt; EditCustomerRequested = delegate { };</pre>
-            <figcaption>Fig 05-036</figcaption>
-          </figure>
-          <p>Each event will pass a Customer and now we just need to fire those from the Command handlers:</p>
-          <p>
-            For AddCustomer we will just fire the event and pass in a new Customer object setting its Id to a new Guid.
-            For EditCustomer we will just fire the event passing in the Customer that was passed to us through the
-            Command:
-          </p>
-          <figure>
-                <pre class="prettyprint">private void OnAddCustomer()
-{
-    AddCustomerRequested(new Customer { Id = Guid.NewGuid() });
-}
-private void OnEditCustomer(Customer cust)
-{
-    EditCustomerRequested(cust);
-}</pre>
-            <figcaption>Fig 05-037</figcaption>
+            <pre><code class="language-csharp">xmlns:i=&quot;http://schemas.microsoft.com/expression/2010/interactivity&quot;</code></pre>
+            <figcaption>Fig 04-033</figcaption>
           </figure>
           <p>
-            So now we just need to go up to the Parent ViewModel level and do the event handling and navigation. So
-            first we will need an instance of the new child ViewModel that we are going to navigate to:
-          </p>
-
-          <figure>
-            <pre class="prettyprint">private AddEditCustomerViewModel _addEditViewModel = new AddEditCustomerViewModel();</pre>
-            <figcaption>Fig 05-038</figcaption>
-          </figure>
-          <p>We can then subscribe to its events in the constructor of the ViewModel (as we did for PlaceOrder):
+            Now we need to implement the NotificationMessage in the MainWindowViewModel class. Make the class inherit
+            from INotifyPropertyChanged and add the NotificationMessage Property to the ViewModel:
           </p>
           <figure>
-                <pre class="prettyprint">_customerListViewModel.AddCustomerRequested += NavToAddCustomer;
-_customerListViewModel.EditCustomerRequested += NavToEditCustomer;</pre>
-            <figcaption>Fig 05-039</figcaption>
-          </figure>
-          <p>Now we just need to implement the handling methods:</p>
-          <figure>
-                <pre class="prettyprint">private void NavToAddCustomer(Customer cust)
-{
-    _addEditViewModel.EditMode = false;
-    _addEditViewModel.SetCustomer(cust);
-    CurrentViewModel = _addEditViewModel;
-}
-
-private void NavToEditCustomer(Customer cust)
-{
-    _addEditViewModel.EditMode = true;
-    _addEditViewModel.SetCustomer(cust);
-    CurrentViewModel = _addEditViewModel;
-}</pre>
-            <figcaption>Fig 05-040</figcaption>
-          </figure>
-          <p>
-            Each takes in a Customer. What we expect to do here is set a flag on the AddEditViewModel to tell it whether
-            it is in EditMode or not and then we need some way to pass that Customer context down into the ViewModel. We
-            are doing that with an imperative call to a method. Finally, we set the CurrentViewModel property so that it
-            becomes the current View in the root container.
-          </p>
-          <p>
-            Now for all of that to work we need to implement the property, the method, and make it so that
-            AddEditViewModel is a BindableBase object because that is the type of CurrentViewModel.
-          </p>
-          <p>So in AddEditCustomerViewModel add the following code:</p>
-          <figure>
-                <pre class="prettyprint">class AddEditCustomerViewModel : BindableBase
-{
-    private bool _EditMode;
-
-    public bool EditMode
+                <pre><code class="language-csharp">public class MainWindowViewModel : INotifyPropertyChanged
     {
-        get { return _EditMode; }
-        set { SetProperty(ref _EditMode, value); }
-    }
+        public MainWindowViewModel()
+        {
+            CurrentViewModel = new CustomerListViewModel();
+        }
+        public object CurrentViewModel { get; set; }
 
-    private Customer _editingCustomer = null;
+        public event PropertyChangedEventHandler PropertyChanged = delegate { };
+    }</code></pre>
+            <figcaption>Fig 04-033A</figcaption>
+          </figure>
 
-    public void SetCustomer(Customer cust)
+          <p>Because adding properties with the INPC pattern to them is so common I have my own code snippet to do it
+            which is propc:
+          </p>
+          <figure>
+                <pre><code class="language-csharp">private string _NotificationMessage;
+
+public string NotificationMessage
+{
+    get { return _NotificationMessage; }
+    set
     {
-        _editingCustomer = cust;
+        if (value != _NotificationMessage)
+        {
+            _NotificationMessage = value;
+            PropertyChanged(this, new PropertyChangedEventArgs(&quot;NotificationMessage&quot;));
+        }
     }
-}</pre>
-            <figcaption>Fig 05-041</figcaption>
+}</code></pre>
+            <figcaption>Fig 04-034</figcaption>
           </figure>
-          <p>
-            Firstly, we add the BindableBase base class, define our EditMode as a boolean property, define a SetCustomer
-            method that takes in a Customer and hold onto that Customer for the span of the editing context:
-          </p>
-          <p>
-            Now if we were going to just bind to this Customer directly and let the editing happen directly against it
-            we could have just set a property. As we will see in the next module you may not always want to directly
-            edit your Model objects you may need to wrap them in some scenarios. In that case we can pass this Customer
-            down in here and produce a wrapped object. We will cover this in the next module.
-          </p>
-          <p>For now, we need to put something in the View so we can identify when it is on screen:</p>
-          <figure>
-                <pre class="prettyprint">&lt;Grid&gt;
-    &lt;TextBlock Text=&quot;Add / Edit Customer View&quot; /&gt;
 
-&lt;/Grid&gt;</pre>
-            <figcaption>Fig 05-042</figcaption>
-          </figure>
-          <p>We then want to go to the MainWindow View and add another DataTemplate:</p>
-          <figure>
-                <pre class="prettyprint">&lt;DataTemplate DataType=&quot;{x:Type cust:AddEditCustomerViewModel}&quot;&gt;
-    &lt;cust:AddEditCustomerView /&gt;
-&lt;/DataTemplate&gt;</pre>
-            <figcaption>Fig 05-043</figcaption>
-          </figure>
-          <p>
-            This maps the AddEditCustomerViewModel to the AddEditCustomerView so it can be rendered out.
+          <p>Type is string, the name of the property is NotificationMessage and you can see that my code snippet stubs
+            out the standard INotifyProperty changed pattern in the set block of that property .
           </p>
           <p>
-            With all that in place we can run the application, go to Customers, click on the Edit Button for a selected
-            Customer and see that we end up in the Add/Edit Customer View:
+            Now we need to add code that will actually push some values into that NotificationMessage Property. For this
+            we will use a simple Timer. Add a Timer that ticks every 5 seconds to the MainWindowViewModel’s constructor:
           </p>
           <figure>
-            <img src="./images/Fig05-044.png"/>
-            <figcaption>Fig 05-044</figcaption>
+                <pre><code class="language-csharp"> _timer.Elapsed += (s, e) =&gt; NotificationMessage = &quot;At the tone the time will be: &quot; + DateTime.Now.ToLocalTime() + &quot; beep.&quot;;
+_timer.Start();</code></pre>
+            <figcaption>Fig 04-035</figcaption>
           </figure>
-          <p>And likewise when clicking the Add customer button we end up in the same place.</p>
           <p>
-            Now this might seem like a lot of ceremony: having to define a Command that gets despatched down into this
-            ViewModel, the ViewModel raises an event to the Parent ViewModel, the Parent ViewModel handles that event
-            and causes the navigation. The point of all of this is to keep each of these parts loosely coupled from the
-            other ones. We have all the navigation logic centralized in the MainWindowViewModel, it just handles its
-            part of the interaction which is to manage the Customer List and events surrounding it.
+            Run the application and if you watch the top of the MainWindow you will see the message appear:
           </p>
-          <p>Now there are certainly other ways to go about this:</p>
-          <ul>
-            <li>You could have a client service that manages navigation for a given container or set of containers.
-            </li>
-            <li>If you use a framework like Prism you could do something like region navigation</li>
-          </ul>
-          <p>However, this approach is simple and straightforward and it only takes moments to stub each navigation out.
+          <figure>
+            <img src="./images/Fig04-036.png"/>
+            <figcaption>Fig 04-036</figcaption>
+          </figure>
+          <p>
+            If you left click on the message text you can dismiss it, and five seconds later another one. So our Custom
+            Behavior is acting as a nice little bridge between our View and ViewModel for our ViewModel to be able to
+            push information up to the View and make modifications in the View but notice it required no code behind to
+            do this just a nice declarative modification to a ContentControl using our Behavior.
+          </p>
+          <h3>Summary</h3>
+          <p>
+            As you saw in this module you have a variety of ways in which you can handle communication between your
+            Views and ViewModels in MVVM that still allow them to remain loosely coupled from one another. You saw that
+            Commands are a primary form of communication from View to ViewModel and should typically be used when a user
+            action in the View (such as clicking on something, or some kind of input gesture) is really an imperative
+            request from the User for the app to do something for them.
           </p>
           <p>
-            In the next module we will finish fleshing out the AddEditCustomerView and in the process of doing so we
-            will touch on a number of other concepts including:
+            Behaviors are another way to setup a communication path. Where the Behavior might fire a Command for some
+            Control that does not directly support Commands, set a property or call a method on the ViewModel or
+            possibly provide a path for the ViewModel to trigger a change in the View
           </p>
-          <ul>
-            <li>Wrapping model objects</li>
-            <li>Using the Visual Studio Designer to scaffold out data entry views</li>
-            <li>Doing validation on your editable objects</li>
-            <li>Doing dependency injection for your ViewModels</li>
-          </ul>
-          <h2>Summary</h2>
-          <p>In this module we saw a number of things and got started building out our application. We saw:</p>
-          <ul>
-            <li>Naming and location of components is important for maintainability and you want to put some thought into
-              where you want to put things and how you name them so that you don't have to go hunting around and trying
-              to find a View/ViewModel or Model object that's poorly named for what it's purpose is.
-            </li>
-            <li>We saw how hierarchical MVVM works and how it can mirror the way you can compose a complex screen of
-              multiple child views and have the ViewModels mirror that structure and allow parent ViewModels control
-              child ViewModels and coordinate between them.
-            </li>
-            <li>And then you started to see through the demos that building out an MVVM app is a progressive sequence of
-              defining Views, ViewModels, navigation and communications to satisfy the requirement at a granular level
-              for each component.
-            </li>
-          </ul>
-          <p>In the next module we'll continue building out those use cases and we'll look at things like leveraging the
-            designer in Visual Studio, validating input from the user and using dependency injection to tie together
-            ViewModels with their client services. So hang in there for one more module and you'll be an MVVM ninja
+          <p>PropertyChanged notifications through a binding can always be used as a communication path to trigger
+            behaviour in either direction.
+          </p>
+          <p>In the next module we'll finish out the structural topics you need to understand to apply MVVM correctly
+            including how you should name and locate your MVVM parts, how to build out heirarchies of Views and
+            ViewModels and how to work with Dependency Injection in your ViewModels and Services. We'll also touch on an
+            overview of what MVVM frameworks are available to you. .
           </p>
         </div>
       </div>

@@ -178,7 +178,7 @@
             <p>Let's open up VS Code. I'm using the Insiders version. Now I'm going to hit Cmd+Shift+P, or it could be
               Ctrl+Shift+P on Windows, then we're going to open up the integrated terminal, just like that. Now notice
               that I'm inside of the folder called play/vue:</p>
-            <figure> <img src="images/Fig04-010.PNG" />
+            <figure> <img src="images/Fig04-010.png" />
               <figcaption>Fig 04-010</figcaption>
             </figure>
             <p>You should be inside whatever folder that you're creating these projects in. First we're going to type in
@@ -188,12 +188,12 @@
               <figcaption>Fig 04-011</figcaption>
             </figure>
             <p>That's going to give us the help commands for the Vue CLI itself. We see that create is in there:</p>
-            <figure> <img src="images/Fig04-012.PNG" />
+            <figure> <img src="images/Fig04-012.png" />
               <figcaption>Fig 04-012</figcaption>
             </figure>
             <p>so we're going to do vue create --help. Now we can see the different commands that we can use on vue
               create:</p>
-            <figure> <img src="images/Fig04-013.PNG" />
+            <figure> <img src="images/Fig04-013.png" />
               <figcaption>Fig 04-013</figcaption>
             </figure>
             <p>We've used vue default before right here, but let's try out the bare with default. So now we'll do:</p>
@@ -203,8 +203,8 @@
             </figure>
             <p>We'll do d for default, b for bare, and let's also throw in the m for package manager and we'll specify
               yarn. Now when I hit Enter, it's going to create this project. And notice it's using yarn, right here:</p>
-            <figure> <img src="images/Fig04-015.PNG" />
-              <figcaption>Fig 04-015.PNG</figcaption>
+            <figure> <img src="images/Fig04-015.png" />
+              <figcaption>Fig 04-015.png</figcaption>
             </figure>
             <p>so yarn install, and it's going to go get all of the packages that we need and put it on our machines.
               Perfect. Now we have hello vue bare, and it's giving us the commands to get in there. We'll do:</p>
@@ -219,7 +219,7 @@
             </figure>
             <p>but here's a quick VS Code tip. When you're inside the integrated terminal, notice that my folder on the
               left in the Explorer is the Vue folder:</p>
-            <figure> <img src="images/Fig04-018.PNG" />
+            <figure> <img src="images/Fig04-018.png" />
               <figcaption>Fig 04-018</figcaption>
             </figure>
             <p>And now inside of terminal, I'm one level down. If I want to make the Explorer show just hello-vue-bare,
@@ -237,23 +237,23 @@
               I'm going to do -r. Basically it's going to replace this running instance of VS Code with one that'll have
               the folders in the left showing that folder I want. Now I hit Enter, you'll see a flash of the screen, and
               now you can see that the folder I'm in is the vue bare project:</p>
-            <figure> <img src="images/Fig04-021.PNG" />
+            <figure> <img src="images/Fig04-021.png" />
               <figcaption>Fig 04-021</figcaption>
             </figure>
             <p>If we open up package. json, we can see the name right there on line 2:</p>
-            <figure> <img src="images/Fig04-022.PNG" />
+            <figure> <img src="images/Fig04-022.png" />
               <figcaption>Fig 04-022</figcaption>
             </figure>
             <p>I'm going to open up the terminal again, Cmd+Shift+P, view integrated terminal, and we're back in
               business. So what did the vue bare project give us? If we scroll down a little bit and we come over to
               src, we'll see that we have a single App.vue:</p>
-            <figure> <img src="images/Fig04-023.PNG" />
+            <figure> <img src="images/Fig04-023.png" />
               <figcaption>Fig 04-023</figcaption>
             </figure>
             <p>which really just has the Vue logo and then an h1. If we went back and looked at the project when we
               didn't run it with bare, we would see we have all these links and helpful tips to go into the
               documentation. You'll also notice we do have yarn.lock files in here:</p>
-            <figure> <img src="images/Fig04-024.PNG" />
+            <figure> <img src="images/Fig04-024.png" />
               <figcaption>Fig 04-024</figcaption>
             </figure>
             <p>because we specified Yarn as our package manager. And of course we've got the defaults because we used
@@ -265,7 +265,7 @@
             <p> Defaults are great, but most often you're going to want to set up your own customizations or use some of
               the different prompts that the CLI offers you to create your own projects. This is why it's really
               important to master the CLI prompts. I like to think about the prompts in three different ways.</p>
-            <figure> <img src="images/Fig04-025.PNG" />
+            <figure> <img src="images/Fig04-025.png" />
               <figcaption>Fig 04-025</figcaption>
             </figure>
             <p>First, we have the absence of prompts where we just use -d for our defaults. Second, we could also walk
@@ -279,7 +279,7 @@
             <h3>Exploring the Application Creation Prompts</h3>
             <p> Let's go back to VS Code in the integrated terminal, or you can choose your own separate terminal, and
               I'm going to go back to my play/vue folder. I'm going to open back into the vue folder itself:</p>
-            <figure> <img src="images/Fig04-026.PNG" />
+            <figure> <img src="images/Fig04-026.png" />
               <figcaption>Fig 04-026</figcaption>
             </figure>
             <p>We'll type in:</p>
@@ -288,58 +288,58 @@
               <figcaption>Fig 04-027</figcaption>
             </figure>
             <p>We're going to walk through the different prompts here:</p>
-            <figure> <img src="images/Fig04-028.PNG" />
+            <figure> <img src="images/Fig04-028.png" />
               <figcaption>Fig 04-028</figcaption>
             </figure>
             <p>The first prompt is a preset that I already created. You're probably not seeing that one. We'll talk more
               about prompts shortly. The second one is choosing the defaults:</p>
-            <figure> <img src="images/Fig04-029.PNG" />
+            <figure> <img src="images/Fig04-029.png" />
               <figcaption>Fig 04-029</figcaption>
             </figure>
             <p>and that we've already done with the -d flag. Same thing here. And then the third option is to manually
               select our features:</p>
-            <figure> <img src="images/Fig04-030.PNG" />
+            <figure> <img src="images/Fig04-030.png" />
               <figcaption>Fig 04-030</figcaption>
             </figure>
             <p>We're going to select this one. Notice how I'm going up and down here too. I'm using the up and down
               arrows to do this, and then I'll hit the Enter key to select it. Now we get a bunch of options that we can
               choose. Two of them are on by default currently, Babel and the Linter/Formatter:</p>
-            <figure> <img src="images/Fig04-031.PNG" />
+            <figure> <img src="images/Fig04-031.png" />
               <figcaption>Fig 04-031</figcaption>
             </figure>
             <p>Notice the hints on how we can select them. We can do space to select, A to toggle them all, or I to
               invert a selection. So we can do I here:</p>
-            <figure> <img src="images/Fig04-032.PNG" />
+            <figure> <img src="images/Fig04-032.png" />
               <figcaption>Fig 04-032</figcaption>
             </figure>
             <p>and you'll notice they're inverting all of the selections. We can do A to select them all:</p>
-            <figure> <img src="images/Fig04-033.PNG" />
+            <figure> <img src="images/Fig04-033.png" />
               <figcaption>Fig 04-033</figcaption>
             </figure>
             <p>A again to deselect them:</p>
-            <figure> <img src="images/Fig04-034.PNG" />
+            <figure> <img src="images/Fig04-034.png" />
               <figcaption>Fig 04-034</figcaption>
             </figure>
             <p>or we can walk through one by one. Let's choose everything, because we're just going to walk through what
               these different things mean. First, we chose that we wanted to use TypeScript, and we're now getting asked
               a question about do we want to use class-style component syntax, yes or no:</p>
-            <figure> <img src="images/Fig04-035.PNG" />
+            <figure> <img src="images/Fig04-035.png" />
               <figcaption>Fig 04-035</figcaption>
             </figure>
             <p>Notice that Yes is uppercase and no is in lowercase</p>
-            <figure> <img src="images/Fig04-036.PNG" />
+            <figure> <img src="images/Fig04-036.png" />
               <figcaption>Fig 04-036</figcaption>
             </figure>
             <p>That means that Yes is the default. If we just hit Enter, it will be Yes. Class-style component syntax
               means that we're going to have a class for our components, and it's going to use this at component
               decorator for TypeScript. We'll choose Yes for now.</p>
             <p>Should we use Babel alongside TypeScript for auto-detecting polyfills:</p>
-            <figure> <img src="images/Fig04-037.PNG" />
+            <figure> <img src="images/Fig04-037.png" />
               <figcaption>Fig 04-037</figcaption>
             </figure>
             <p>This is a good idea to make sure if we have to support older browsers, so we'll select Yes. Next, it's
               asking about the router:</p>
-            <figure> <img src="images/Fig04-038.PNG" />
+            <figure> <img src="images/Fig04-038.png" />
               <figcaption>Fig 04-038</figcaption>
             </figure>
             <p>Because we selected the router, we're being asked about the history mode. Generally, a good idea these
@@ -347,41 +347,41 @@
               this, we're going to have to use hash routing, and hash routing will allow us to use client-side routing
               on any server, but that's going to put the little hash in all of our URLs. We don't want that. We want
               normal URLs without the hashes, so we're going to use history mode.</p>
-            <figure> <img src="images/Fig04-039.PNG" />
+            <figure> <img src="images/Fig04-039.png" />
               <figcaption>Fig 04-039</figcaption>
             </figure>
             <p>Then we can choose our CSS preprocessor. This could be Sass, Less, or Stylus. We'll choose Sass.</p>
             <p>Next, we get to choose our linter or formatter, or a combination thereof:</p>
-            <figure> <img src="images/Fig04-040.PNG" />
+            <figure> <img src="images/Fig04-040.png" />
               <figcaption>Fig 04-040</figcaption>
             </figure>
             <p>Because we're using TypeScript, we could choose TSLint. My favorite when I'm not using TypeScript is just
               ESLint with Prettier. You could choose whichever you like.</p>
             <p>Next, it's asking about how to fix things when we're linting:</p>
-            <figure> <img src="images/Fig04-041.PNG" />
+            <figure> <img src="images/Fig04-041.png" />
               <figcaption>Fig 04-041</figcaption>
             </figure>
             <p>I like to lint on save. That way when I save my files, it'll automatically check them. I happen to use
               auto save in VS Code, which I can show you up here. In the menu, you go to File, Auto Save is
               automatically checked for me:</p>
-            <figure> <img src="images/Fig04-042.PNG" />
+            <figure> <img src="images/Fig04-042.png" />
               <figcaption>Fig 04-042</figcaption>
             </figure>
             <p>it may not be for you. That means any time I make a change in a file, it's going to save the code and
               it'll automatically lint it. If auto save is not on for your editor, it'll only lint when you press Save.
               If you don't want it to be that frequent, you could do lint and fix on commits.</p>
             <p>Next, we pick our unit testing solution:</p>
-            <figure> <img src="images/Fig04-043.PNG" />
+            <figure> <img src="images/Fig04-043.png" />
               <figcaption>Fig 04-043</figcaption>
             </figure>
             <p>That could be Mocha and Chai or Jest. You pick your choice. And then we can choose our end-to-end testing
               framework:</p>
-            <figure> <img src="images/Fig04-044.PNG" />
+            <figure> <img src="images/Fig04-044.png" />
               <figcaption>Fig 04-044</figcaption>
             </figure>
             <p>Cypress or Nightwatch currently. I like Cypress, so that's the one I'm going to choose. Here's one that a
               lot of people have a strong opinion on, and I'm one of those people:</p>
-            <figure> <img src="images/Fig04-045.PNG" />
+            <figure> <img src="images/Fig04-045.png" />
               <figcaption>Fig 04-045</figcaption>
             </figure>
             <p>I like to have all of my configs for all these different things in dedicated config files as opposed to
@@ -389,8 +389,8 @@
               a separate file for ESLint and for Babel and for everything that we used for configuration. It's more
               files in the root, but it's much more conventional too.</p>
             <p>And then finally when you're done making your selections, it'll ask if you want to create a preset:</p>
-            <figure> <img src="images/Fig04-046.PNG" />
-              <figcaption>Fig 04-046.PNG</figcaption>
+            <figure> <img src="images/Fig04-046.png" />
+              <figcaption>Fig 04-046.png</figcaption>
             </figure>
             <p>No is a default here. We're not going to do it for this one, but you can absolutely choose a preset and
               then save it and then reload that later. We'll be seeing that in an upcoming section here in this module.
@@ -402,7 +402,7 @@
                 <figcaption>Fig 04-047</figcaption>
               </figure>
               <p>and this time I do manually select and I only select let's say Babel and the linter:</p>
-              <figure> <img src="images/Fig04-047.PNG" />
+              <figure> <img src="images/Fig04-047.png" />
                 <figcaption>Fig 04-047</figcaption>
               </figure>
               <p>now we're skipping all the other questions that don't apply. There's no more TypeScript questions, for
@@ -417,18 +417,18 @@
             <p>So the presets are really a lifesaver. They help us save those preferences, your preferences, for
               creating new Vue projects. Let's see how we do this. To create a preset, first we go through the prompts.
               We might use prompts like this:</p>
-            <figure> <img src="images/Fig04-048.PNG" />
+            <figure> <img src="images/Fig04-048.png" />
               <figcaption>Fig 04-048</figcaption>
             </figure>
             <p>where we pick a preset and we say nope, we're going to do manual features, you might choose Babel on the
               linter, we choose all the options that we want, and when we're done, it's going to ask us if we want to
               save this as a preset. So at that point, we can save the preset by putting a y in here for yes:</p>
-            <figure> <img src="images/Fig04-049.PNG" />
+            <figure> <img src="images/Fig04-049.png" />
               <figcaption>Fig 04-049</figcaption>
             </figure>
             <p>and then we'll name that preset. Now by default when you save a preset, it stores it in your. vuerc file:
             </p>
-            <figure> <img src="images/Fig04-050.PNG" />
+            <figure> <img src="images/Fig04-050.png" />
               <figcaption>Fig 04-050</figcaption>
             </figure>
             <p>This dot file is in your home folder on your computer. Now that doesn't really help you for sharing it
@@ -463,19 +463,19 @@
             <p>and we'll just call this one all because that's what we're going to select in this preset. We're going to
               walk through some prompts here. We'll choose Manually select all features, and then we're going to choose
               everything. We can hit A here to select them all, and we're going to un-select TypeScript:</p>
-            <figure> <img src="images/Fig04-054.PNG" />
+            <figure> <img src="images/Fig04-054.png" />
               <figcaption>Fig 04-054</figcaption>
             </figure>
             <p>We're just going to do everything that happens to be JavaScript just for now just to show how we can do
               this. So we're going to walk through our different selections here. I'm going to choose Enter, Enter,
               Enter, Enter, Enter, Enter, Enter:</p>
-            <figure> <img src="images/Fig04-055.PNG" />
+            <figure> <img src="images/Fig04-055.png" />
               <figcaption>Fig 04-055</figcaption>
             </figure>
             <p>Just go through all of these options here and we're just going to try this out. Then we can choose to
               select a preset. I'm going to say Yes in this case, and then give it a name like all JavaScript. Now I
               already made one of my own, which you probably saw as I typed it right up here:</p>
-            <figure> <img src="images/Fig04-056.PNG" />
+            <figure> <img src="images/Fig04-056.png" />
               <figcaption>Fig 04-056</figcaption>
             </figure>
             <p>at the beginning, preset for all options JavaScript. So once you save yours, you'll see it in your list
@@ -490,44 +490,44 @@
             <p>Mine happens to be in my home folder on my Mac. Like this, it'll be in your home folder on Windows if
               you're using that as well. And then to make sure it loads inside of this instance of VS Code, I'm going to
               use -r. It's going to load:</p>
-            <figure> <img src="images/Fig04-058.PNG" />
+            <figure> <img src="images/Fig04-058.png" />
               <figcaption>Fig 04-058</figcaption>
             </figure>
             <p>Now you'll see that that's what the options look like. Notice the name I gave it. It's up here:</p>
-            <figure> <img src="images/Fig04-059.PNG" />
+            <figure> <img src="images/Fig04-059.png" />
               <figcaption>Fig 04-059</figcaption>
             </figure>
             <p>Your name should appear there as well. Then I've got all of my plugins and other options that I happen to
               set in my preset. You might be wondering why it's all the same color, I'm not getting any IntelliSense
               here. If I highlight everything and I de-indent it there, if that's a word, and then I format, nothing's
               really working here. In fact, the editor tells me I don't know what kind of file this is:</p>
-            <figure> <img src="images/Fig04-060.PNG" />
+            <figure> <img src="images/Fig04-060.png" />
               <figcaption>Fig 04-060</figcaption>
             </figure>
             <p> It's a. vuerc. We can't expect the editor to know everything, right? So here's a neat thing you can try
               inside of VS Code. If you go to Cmd+Shift+P, or Ctrl+Shift+P, the Command palette, and you type in
               settings up top, we're going to go to the Preferences, User settings:</p>
-            <figure> <img src="images/Fig04-061.PNG" />
+            <figure> <img src="images/Fig04-061.png" />
               <figcaption>Fig 04-061</figcaption>
             </figure>
             <p>Now up here we're going to type in file associations, or part of the word like this:</p>
-            <figure> <img src="images/Fig04-062.PNG" />
+            <figure> <img src="images/Fig04-062.png" />
               <figcaption>Fig 04-062</figcaption>
             </figure>
             <p>And then we can select Files: Associations here in the JSON settings. Now at the bottom of this file, I'm
               just going to type in file. associations, and then I'm going to tell it, look, when you see a. vuerc file
               that happens to be JSON format, like this:</p>
-            <figure> <img src="images/Fig04-063.PNG" />
+            <figure> <img src="images/Fig04-063.png" />
               <figcaption>Fig 04-063</figcaption>
             </figure>
             <p>and make sure you save that file if you don't have auto save on. Now when I go back to my. vuerc, notice
               I'm getting color coding:</p>
-            <figure> <img src="images/Fig04-064.PNG" />
+            <figure> <img src="images/Fig04-064.png" />
               <figcaption>Fig 04-064</figcaption>
             </figure>
             <p>because it knows it's JSON, and if I format this document, which I can do through Cmd+Shift+P again or
               Ctrl+Shift+P on Windows, now I can format that:</p>
-            <figure> <img src="images/Fig04-065.PNG" />
+            <figure> <img src="images/Fig04-065.png" />
               <figcaption>Fig 04-065</figcaption>
             </figure>
             <p>So here we can see where we can find our. vuerc file and look at the formatting for the presets and how
@@ -537,18 +537,18 @@
             <h3>Creating an App from a Preset</h3>
             <p>If you want to create a file that you can use or give to a friend so they can use your presets, you can
               do that too. To do that, let's grab just the preset information:</p>
-            <figure> <img src="images/Fig04-066.PNG" />
+            <figure> <img src="images/Fig04-066.png" />
               <figcaption>Fig 04-066</figcaption>
             </figure>
             <p>We don't need all the JSON from. vuerc file. We could type this from here if we wanted to, but just to
               make this easier to see, I'll collapse the plugins. Let me grab everything that's inside of these curly
               braces right there:</p>
-            <figure> <img src="images/Fig04-067.PNG" />
+            <figure> <img src="images/Fig04-067.png" />
               <figcaption>Fig 04-067</figcaption>
             </figure>
             <p>I'll create a new file, and then you'll see here I've got some JSON, which basically includes all the
               settings that we want for our preset:</p>
-            <figure> <img src="images/Fig04-068.PNG" />
+            <figure> <img src="images/Fig04-068.png" />
               <figcaption>Fig 04-068</figcaption>
             </figure>
             <p>I'm going to save this file. We're going to call it preset.json and I'm going to put it inside my
@@ -556,7 +556,7 @@
               got all the JSON right. Now once I have that file and I have these different options in there, whatever
               those presets are, we can automatically use those to create a project, and of course you can edit this if
               you want to. For example, we can say you know what, we don't really want Vuex in this particular case:</p>
-            <figure> <img src="images/Fig04-069.PNG" />
+            <figure> <img src="images/Fig04-069.png" />
               <figcaption>Fig 04-069</figcaption>
             </figure>
             <p>So now I could say inside of my vue folder:</p>
@@ -574,7 +574,7 @@
               app, so I'm just going to call it my-app, and then when I run through this, it's going to generate an app
               using the presets that I have right here. Perfect. Once that's done, we now have a project, which we can
               get into called my-app, and we can see all the files that happen to be in there:</p>
-            <figure> <img src="images/Fig04-072.PNG" />
+            <figure> <img src="images/Fig04-072.png" />
               <figcaption>Fig 04-072</figcaption>
             </figure>
             <p>This is how you can create a local file for preset. json. </p>
@@ -584,16 +584,16 @@
             <p> A lot of us work on teams, large and small. When I work on teams, what I like is to have consistent
               conventions. So for my presets, I like to put them up in GitHub. You'll see one here at this GitHub
               repository at johnpapa/vue-cli-preset-all-javascript:</p>
-            <figure> <img src="images/Fig04-073.PNG" />
+            <figure> <img src="images/Fig04-073.png" />
               <figcaption>Fig 04-073</figcaption>
             </figure>
             <p>and you can see inside the preset.json file:</p>
-            <figure> <img src="images/Fig04-074.PNG" />
+            <figure> <img src="images/Fig04-074.png" />
               <figcaption>Fig 04-074</figcaption>
             </figure>
             <p>those are the presets I use when I want to use all the JavaScript options. Then from the ReadMe, you can
               see the command that we can use to run that:</p>
-            <figure> <img src="images/Fig04-075.PNG" />
+            <figure> <img src="images/Fig04-075.png" />
               <figcaption>Fig 04-075</figcaption>
             </figure>
             <p>Let's copy that for a moment. And we'll flip back to VS Code. Inside of our vue folder, we'll paste that.
@@ -608,20 +608,20 @@
               happen to need.</p>
             <p>Now while it's doing that, another option we could do, we'll flip back over to the GitHub repository, is
               notice inside the preset, I've got the eslint plugin here on line 6:</p>
-            <figure> <img src="images/Fig04-077.PNG" />
+            <figure> <img src="images/Fig04-077.png" />
               <figcaption>Fig 04-077</figcaption>
             </figure>
             <p>set to use Prettier and lintOn save. What if we wanted to use this eslint plugin, but instead of defining
               we want Prettier and lintOn save, we want to ask the user with a prompt. Instead we could replace lines 7
               and 8:</p>
-            <figure> <img src="images/Fig04-078.PNG" />
+            <figure> <img src="images/Fig04-078.png" />
               <figcaption>Fig 04-078</figcaption>
             </figure>
             <p>with prompts true, so we just change that JSON here and that could prompt just that one part. Now the
               plugin that you're using has to support those prompts for this to work. And you can learn more about this
               more advanced option in the docs of the Vue CLI. So if we flip back over to our project that we just
               created, we can see we successfully created vue-hello-js:</p>
-            <figure> <img src="images/Fig04-079.PNG" />
+            <figure> <img src="images/Fig04-079.png" />
               <figcaption>Fig 04-079</figcaption>
             </figure>
             <p>That's what I called mine. We could then see the end of that folder, and then I'm going to open it up
@@ -631,12 +631,12 @@
               <figcaption>Fig 04-080</figcaption>
             </figure>
             <p>and here we can see we've got Cypress running:</p>
-            <figure> <img src="images/Fig04-080.PNG" />
+            <figure> <img src="images/Fig04-080.png" />
               <figcaption>Fig 04-080</figcaption>
             </figure>
             <p>That was our end-to-end test. If we look in the package. json, which is really the source of truth here,
               we can see we've got our end-to-end tests, our unit tests on lines 9 and 10:</p>
-            <figure> <img src="images/Fig04-081.PNG" />
+            <figure> <img src="images/Fig04-081.png" />
               <figcaption>Fig 04-081</figcaption>
             </figure>
             <p>we've got our router on line 15, our service worker for our PWA in 13, Vuex on line 16, and so on and so
@@ -647,7 +647,7 @@
           <div>
             <h3>App Creation Options and What's Next?</h3>
             <p> You just learned how to use the Vue CLI to create Vue applications in a variety of ways:</p>
-            <figure> <img src="images/Fig04-082.PNG" />
+            <figure> <img src="images/Fig04-082.png" />
               <figcaption>Fig 04-082</figcaption>
             </figure>
             <p>You can use the options like default and bare, or you can set the package manager to Yarn or npm.

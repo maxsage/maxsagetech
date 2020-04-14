@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
   <meta charset="UTF-8">
-  <title>maxsagetech - Vue JS Fundamentals</title>
+  <title>maxsagetech - WPF Databinding In Depth</title>
   <script src="https://unpkg.com/vue"></script>
   <!--<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"-->
   <!--integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">-->
@@ -118,7 +118,7 @@
           </p>
 
           <figure>
-                <pre class="prettyprint">&lt;TextBox x:Name=&quot;SourceTextBox&quot;
+                <pre><code class="language-csharp">&lt;TextBox x:Name=&quot;SourceTextBox&quot;
     HorizontalAlignment=&quot;Left&quot;
     Height=&quot;23&quot;
     Margin=&quot;35,200,0,0&quot;
@@ -140,14 +140,14 @@
 &lt;Label Content=&quot;Target:&quot;
     HorizontalAlignment=&quot;Left&quot;
     Margin=&quot;207,175,0,0&quot;
-    VerticalAlignment=&quot;Top&quot; /&gt;</pre>
+    VerticalAlignment=&quot;Top&quot; /&gt;</code></pre>
             <figcaption>Fig 04-002</figcaption>
           </figure>
           <p>And the way the bindings are set up here between these is that you can see the Source TextBox has no
             binding, so it's just going to reflect whatever is put into it as a source object.
           </p>
           <figure>
-                <pre class="prettyprint">&lt;TextBox x:Name=&quot;SourceTextBox&quot;
+                <pre><code class="language-csharp">&lt;TextBox x:Name=&quot;SourceTextBox&quot;
     HorizontalAlignment=&quot;Left&quot;
     Height=&quot;23&quot;
     Margin=&quot;35,200,0,0&quot;
@@ -161,7 +161,7 @@
     Margin=&quot;207,200,0,0&quot;
     TextWrapping=&quot;Wrap&quot;
     VerticalAlignment=&quot;Top&quot;
-    Width=&quot;120&quot; /&gt;</pre>
+    Width=&quot;120&quot; /&gt;</code></pre>
             <figcaption>Fig 04-003</figcaption>
           </figure>
           <p>The Target TextBox has its text bound, but it's using an ElementName binding, which we covered earlier, to
@@ -172,12 +172,12 @@
           </p>
           <p>Now notice this UpdateSourceTrigger=PropertyChanged.</p>
           <figure>
-            <pre class="prettyprint">Path=Text, UpdateSourceTrigger=PropertyChanged}</pre>
+            <pre><code class="language-csharp">Path=Text, UpdateSourceTrigger=PropertyChanged}</code></pre>
             <figcaption>Fig 04-004</figcaption>
           </figure>
           <p>If I leave it on Default:</p>
           <figure>
-            <pre class="prettyprint">Path=Text, UpdateSourceTrigger=Default}</pre>
+            <pre><code class="language-csharp">Path=Text, UpdateSourceTrigger=Default}</code></pre>
             <figcaption>Fig 04-005</figcaption>
           </figure>
           <p>once I start putting stuff in the Source, you can see that the Target stays in synch on every keystroke:
@@ -193,9 +193,9 @@
             PropertyChanged:
           </p>
           <figure>
-                <pre class="prettyprint">TextBox x:Name="TargetTextBox"
+                <pre><code class="language-csharp">TextBox x:Name="TargetTextBox"
                     Text="{Binding ElementName=SourceTextBox,
-                    Path=Text, UpdateSourceTrigger=PropertyChanged}"</pre>
+                    Path=Text, UpdateSourceTrigger=PropertyChanged}"</code></pre>
             <figcaption>Fig 04-007</figcaption>
           </figure>
           <p>It basically says, every time the Target property changes, which is the Text property of this TextBox, go
@@ -288,7 +288,7 @@
             you can see that it has two methods, Convert, and ConvertBack.
           </p>
           <figure>
-                <pre class="prettyprint">public class NegativeNumberConverter : IValueConverter
+                <pre><code class="language-csharp">public class NegativeNumberConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
@@ -299,7 +299,7 @@
     {
         throw new NotImplementedException();
     }
-}</pre>
+}</code></pre>
             <figcaption>Fig 04-011</figcaption>
           </figure>
           <p>Convert gets called as data is flowing from the source to the target. The value that is going to be set,
@@ -310,7 +310,7 @@
           </p>
           <p>So I'm going to replace this implementation with a fully fleshed out version:</p>
           <figure>
-                <pre class="prettyprint">public class NegativeNumberConverter : IValueConverter
+                <pre><code class="language-csharp">public class NegativeNumberConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
@@ -327,7 +327,7 @@
         }
         else return value;
     }
-}</pre>
+}</code></pre>
             <figcaption>Fig 04-012</figcaption>
           </figure>
           <p>and you can see what the implementation does here, is it's expecting this to only be hooked up to integers.
@@ -343,19 +343,19 @@
             UpdateSourceTrigger=PropertyChanged.
           </p>
           <figure>
-            <pre class="prettyprint">public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)</pre>
+            <pre><code class="language-csharp">public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)</code></pre>
             <figcaption>Fig 04-013</figcaption>
           </figure>
           <p> And we're going to look here and see if it starts with parentheses and ends with parentheses.</p>
           <figure>
-                <pre class="prettyprint">public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+                <pre><code class="language-csharp">public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
 {
     if (value.ToString().StartsWith(&quot;(&quot;) &amp;&amp; value.ToString().EndsWith(&quot;)&quot;))
     {
         return -int.Parse(value.ToString().Substring(1, value.ToString().Length - 2));
     }
     else return value;
-}</pre>
+}</code></pre>
             <figcaption>Fig 04-014</figcaption>
           </figure>
           <p>We're basically going to strip those off and negate the value that's there to return the negative integer
@@ -366,9 +366,9 @@
             converter is by creating an instance of it in your Resources collection and give it a key:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;Window.Resources&gt;
+                <pre><code class="language-csharp">&lt;Window.Resources&gt;
     &lt;local:NegativeNumberConverter x:Key=&quot;NegConverter&quot; /&gt;
-&lt;/Window.Resources&gt;</pre>
+&lt;/Window.Resources&gt;</code></pre>
             <figcaption>Fig 04-015</figcaption>
           </figure>
           <p>Then you can refer to it in a binding using a StaticResource.</p>
@@ -377,7 +377,7 @@
             Converter as we defined it up above, and pass that as the key in the StaticResource.
           </p>
           <figure>
-                <pre class="prettyprint">&lt;TextBox x:Name=&quot;ageTextBox&quot;
+                <pre><code class="language-csharp">&lt;TextBox x:Name=&quot;ageTextBox&quot;
      Width=&quot;120&quot;
      VerticalAlignment=&quot;Center&quot;
      Text=&quot;{Binding Path=Age, Converter={StaticResource NegConverter}}&quot;
@@ -385,7 +385,7 @@
      Margin=&quot;3&quot;
      Height=&quot;23&quot;
      HorizontalAlignment=&quot;Left&quot;
-     Grid.Column=&quot;1&quot; /&gt;</pre>
+     Grid.Column=&quot;1&quot; /&gt;</code></pre>
             <figcaption>Fig 04-016</figcaption>
           </figure>
           <p>So that's going to pull in a reference to that converter and basically invoke it.</p>
@@ -396,13 +396,13 @@
             property as -35 there:
           </p>
           <figure>
-                <pre class="prettyprint">Customer = new Customer
+                <pre><code class="language-csharp">Customer = new Customer
 {
     Id = 42,
     Name = &quot;Joe&quot;,
     PremiumCustomer = true,
     Age = -35
-};</pre>
+};</code></pre>
             <figcaption>Fig 04-017</figcaption>
           </figure>
 
@@ -410,7 +410,7 @@
             set what it's being set to.
           </p>
           <figure>
-                <pre class="prettyprint">public int Age
+                <pre><code class="language-csharp">public int Age
 {
     get
     {
@@ -424,7 +424,7 @@
             PropertyChanged(this, new PropertyChangedEventArgs(&quot;Age&quot;));
         }
     }
-}</pre>
+}</code></pre>
             <figcaption>Fig 04-018</figcaption>
           </figure>
           <p>We'll go ahead and start up and it will be called here one time as it's initializing</p>
@@ -449,7 +449,7 @@
             going to add a BoolToStyle Converter class and I'll quickly flesh out the implementation:
           </p>
           <figure>
-                <pre class="prettyprint">public class BoolToStyleConverter : IValueConverter
+                <pre><code class="language-csharp">public class BoolToStyleConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
@@ -471,7 +471,7 @@
     {
         return Application.Current.Resources[key] as Style;
     }
-}</pre>
+}</code></pre>
             <figcaption>Fig 04-022</figcaption>
           </figure>
           <p>You can see what this is doing is it's doing a little more type checking, so it's saying, if the target
@@ -482,27 +482,27 @@
             FalseStyle corresponding to those Boolean values:
           </p>
           <figure>
-                <pre class="prettyprint"> if (targetType == typeof(Style) && value is bool)
+                <pre><code class="language-csharp"> if (targetType == typeof(Style) && value is bool)
 {
     if ((bool)value) { return GetStyle(styles[0]); }
     else { return GetStyle("FalseStyle"); }
-</pre>
+</code></pre>
             <figcaption>Fig 04-023</figcaption>
           </figure>
           <p>and go use a Helper method here:</p>
           <figure>
-                <pre class="prettyprint">Style GetStyle(string key)
+                <pre><code class="language-csharp">Style GetStyle(string key)
 {
     return Application.Current.Resources[key] as Style;
-}</pre>
+}</code></pre>
             <figcaption>Fig 04-024</figcaption>
           </figure>
           <p>to reach out to my Application Resources and get the Style by name out of my Resource dictionary:</p>
           <p>Then I'm just going to return that as the value that actually gets set on the target of the binding.
           </p>
           <figure>
-                <pre class="prettyprint">if ((bool)value) { return GetStyle(styles[0]); }
-else { return GetStyle(styles[1]); }</pre>
+                <pre><code class="language-csharp">if ((bool)value) { return GetStyle(styles[0]); }
+else { return GetStyle(styles[1]); }</code></pre>
             <figcaption>Fig 04-025</figcaption>
           </figure>
           <p>Based on that code, I'll need those styles to exist so I'll go out of here to my Application.Resources and
@@ -510,7 +510,7 @@ else { return GetStyle(styles[1]); }</pre>
             True and Black for False:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;Application x:Class=&quot;BindingProperties.App&quot;
+                <pre><code class="language-csharp">&lt;Application x:Class=&quot;BindingProperties.App&quot;
              xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
              xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
              StartupUri=&quot;MainWindow.xaml&quot;&gt;
@@ -524,7 +524,7 @@ else { return GetStyle(styles[1]); }</pre>
                     Value=&quot;Black&quot; /&gt;
         &lt;/Style&gt;
     &lt;/Application.Resources&gt;
-&lt;/Application&gt;</pre>
+&lt;/Application&gt;</code></pre>
             <figcaption>Fig 04-026</figcaption>
           </figure>
           <p>Now to use that in my application, I would go to my MainWindow to the Resources, and create an instance of
@@ -533,7 +533,7 @@ else { return GetStyle(styles[1]); }</pre>
             Style, but the input is a Boolean:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;TextBox x:Name=&quot;nameTextBox&quot;
+                <pre><code class="language-csharp">&lt;TextBox x:Name=&quot;nameTextBox&quot;
     Style=&quot;{Binding Path=PremiumCustomer,
         Converter={StaticResource BoolToStyleConverter}}&quot;
     Width=&quot;120&quot;
@@ -543,7 +543,7 @@ else { return GetStyle(styles[1]); }</pre>
     Margin=&quot;3&quot;
     Height=&quot;23&quot;
     HorizontalAlignment=&quot;Left&quot;
-    Grid.Column=&quot;1&quot; /&gt;</pre>
+    Grid.Column=&quot;1&quot; /&gt;</code></pre>
             <figcaption>Fig 04-027</figcaption>
           </figure>
           <p>So I'm pointing to a Boolean property on my model called premium customer and then I'm using my Converter
@@ -561,20 +561,20 @@ else { return GetStyle(styles[1]); }</pre>
             this object parameter can come in.
           </p>
           <figure>
-            <pre class="prettyprint">public object Convert(object value, Type targetType, object parameter, CultureInfo culture)</pre>
+            <pre><code class="language-csharp">public object Convert(object value, Type targetType, object parameter, CultureInfo culture)</code></pre>
             <figcaption>Fig 04-029</figcaption>
           </figure>
           <p>You can pass ConverterParameters to a converter to drive its behavior. So if I modify that implementation a
             little bit, and I expect my parameter to be a semi-colon separated pair of Style names:
           </p>
           <figure>
-                <pre class="prettyprint">string[] styles = parameter.ToString().Split(';');
+                <pre><code class="language-csharp">string[] styles = parameter.ToString().Split(';');
 if (targetType == typeof(Style) &amp;&amp; value is bool)
 {
     if ((bool)value) { return GetStyle(styles[0]); }
     else { return GetStyle(styles[1]); }
 }
-else return value;</pre>
+else return value;</code></pre>
             <figcaption>Fig 04-030</figcaption>
           </figure>
           <p>I can split that out into an array and then use the first one as my TrueStyle and the second one as my
@@ -584,7 +584,7 @@ else return value;</pre>
             ConverterParameter, and pass that value, which is going to be TrueStyle;FalseStyle:
           </p>
           <figure>
-            <pre class="prettyprint">Converter={StaticResource BoolToStyleConverter}, ConverterParameter=TrueStyle;FalseStyle}</pre>
+            <pre><code class="language-csharp">Converter={StaticResource BoolToStyleConverter}, ConverterParameter=TrueStyle;FalseStyle}</code></pre>
             <figcaption>Fig 04-031</figcaption>
           </figure>
           <p>With that in place, the same behavior is manifest, it's red now, it goes to black when I uncheck the
@@ -595,7 +595,7 @@ else return value;</pre>
             you use a ConverterParameter, the values will have to be statically expressible in the code here:
           </p>
           <figure>
-            <pre class="prettyprint">Converter={StaticResource BoolToStyleConverter}, ConverterParameter=TrueStyle;FalseStyle}</pre>
+            <pre><code class="language-csharp">Converter={StaticResource BoolToStyleConverter}, ConverterParameter=TrueStyle;FalseStyle}</code></pre>
             <figcaption>Fig 04-032</figcaption>
           </figure>
           <p>And that's the basics of using Converters.</p>
@@ -658,7 +658,7 @@ else return value;</pre>
             be Async.
           </p>
           <figure>
-                <pre class="prettyprint">public string Phone
+                <pre><code class="language-csharp">public string Phone
 {
     get
     {
@@ -672,7 +672,7 @@ else return value;</pre>
             PropertyChanged(this, new PropertyChangedEventArgs(&quot;Phone&quot;));
         }
     }
-}</pre>
+}</code></pre>
             <figcaption>Fig 04-033</figcaption>
           </figure>
           <p>But depending on the way you structure things, you may have setters and getters on a given property that
@@ -680,7 +680,7 @@ else return value;</pre>
             set block of my Phone property on my Customer:
           </p>
           <figure>
-                <pre class="prettyprint">public string Phone
+                <pre><code class="language-csharp">public string Phone
 {
     get
     {
@@ -696,7 +696,7 @@ else return value;</pre>
             PropertyChanged(this, new PropertyChangedEventArgs(&quot;Phone&quot;));
         }
     }
-}</pre>
+}</code></pre>
             <figcaption>Fig 04-034</figcaption>
           </figure>
           <p>And if I did that without doing anything else and tried to run, first off, we can see as it starts up it's
@@ -724,7 +724,7 @@ else return value;</pre>
             Async and say, IsAsync=True:
           </p>
           <figure>
-                <pre class="prettyprint"> &lt;TextBox x:Name=&quot;phoneTextBox&quot;
+                <pre><code class="language-csharp"> &lt;TextBox x:Name=&quot;phoneTextBox&quot;
     Width=&quot;120&quot;
     VerticalAlignment=&quot;Center&quot;
     Text=&quot;{Binding Phone, IsAsync=True}&quot;
@@ -732,7 +732,7 @@ else return value;</pre>
     Margin=&quot;3&quot;
     Height=&quot;23&quot;
     HorizontalAlignment=&quot;Left&quot;
-    Grid.Column=&quot;1&quot; /&gt;</pre>
+    Grid.Column=&quot;1&quot; /&gt;</code></pre>
             <figcaption>Fig 04-037</figcaption>
           </figure>
           <p>Now, if we start up our same exact scenario, you can see the UI comes up and is responsive right away:
@@ -769,14 +769,14 @@ else return value;</pre>
             I can add Delay=500 on my data binding to my two TextBoxes down here:
           </p>
           <figure>
-                <pre class="prettyprint">&lt;TextBox x:Name=&quot;TargetTextBox&quot;
+                <pre><code class="language-csharp">&lt;TextBox x:Name=&quot;TargetTextBox&quot;
     Text=&quot;{Binding ElementName=SourceTextBox, Path=Text, UpdateSourceTrigger=PropertyChanged, Delay=500}&quot;
     HorizontalAlignment=&quot;Left&quot;
     Height=&quot;23&quot;
     Margin=&quot;207,200,0,0&quot;
     TextWrapping=&quot;Wrap&quot;
     VerticalAlignment=&quot;Top&quot;
-    Width=&quot;120&quot; /&gt;</pre>
+    Width=&quot;120&quot; /&gt;</code></pre>
             <figcaption>Fig 04-040</figcaption>
           </figure>
           <p>So I could add Delay=500, and that's in ms, on my two TextBoxes that are bound to each other down here. And
@@ -844,7 +844,7 @@ else return value;</pre>
             TargetNullValue-'Not set'.
           </p>
           <figure>
-                <pre class="prettyprint">&lt;TextBox x:Name=&quot;nameTextBox&quot;
+                <pre><code class="language-csharp">&lt;TextBox x:Name=&quot;nameTextBox&quot;
         Style=&quot;{Binding Path=PremiumCustomer,
             Converter={StaticResource BoolToStyleConverter}, ConverterParameter=TrueStyle;FalseStyle}&quot;
          Width=&quot;120&quot;
@@ -855,7 +855,7 @@ else return value;</pre>
          Margin=&quot;3&quot;
          Height=&quot;23&quot;
          HorizontalAlignment=&quot;Left&quot;
-         Grid.Column=&quot;1&quot; /&gt;</pre>
+         Grid.Column=&quot;1&quot; /&gt;</code></pre>
             <figcaption>Fig 04-042</figcaption>
           </figure>
 
@@ -864,7 +864,7 @@ else return value;</pre>
             point where we're setting the name, and we set it to null here:
           </p>
           <figure>
-                <pre class="prettyprint">private void Window_Loaded(object sender, RoutedEventArgs e)
+                <pre><code class="language-csharp">private void Window_Loaded(object sender, RoutedEventArgs e)
 {
     Customer = new Customer
     {
@@ -873,7 +873,7 @@ else return value;</pre>
         PremiumCustomer = true,
         Age = -35
     };
-}</pre>
+}</code></pre>
             <figcaption>Fig 04-043</figcaption>
           </figure>
           <p>Start up the UI, and we see, Not set:</p>
@@ -888,14 +888,14 @@ else return value;</pre>
             value':
           </p>
           <figure>
-                    <pre class="prettyprint">{Binding Path=Name, TargetNullValue='Not set', FallbackValue='no value'}</pre>
+                    <pre><code class="language-csharp">{Binding Path=Name, TargetNullValue='Not set', FallbackValue='no value'}</code></pre>
             <figcaption>Fig 04-045</figcaption>
           </figure>
           <p>This will be used when the binding is unable to come up with a value at all based on the Path that it's
             given. So if I corrupt my Path over here and say Namex, which doesn't exist on my DataContext object:
           </p>
           <figure>
-                    <pre class="prettyprint">{Binding Path=Name, TargetNullValue='Not set', FallbackValue='no value'}</pre>
+                    <pre><code class="language-csharp">{Binding Path=Name, TargetNullValue='Not set', FallbackValue='no value'}</code></pre>
             <figcaption>Fig 04-046</figcaption>
           </figure>
           <p>and I run, now we see no value in there because the binding was unable to evaluate and come up with a value
@@ -966,19 +966,19 @@ else return value;</pre>
             can put some decimal points in there:
           </p>
           <figure>
-                <pre class="prettyprint">public class Customer : INotifyPropertyChanged
+                <pre><code class="language-csharp">public class Customer : INotifyPropertyChanged
 {
     private bool _PremiumCustomer;
     private int _Age;
     private float _Age2;
     private string _Phone = &quot;555-555-5555&quot;;
     private string _Name;
-    private int _Id;</pre>
+    private int _Id;</code></pre>
             <figcaption>Fig 04-050</figcaption>
           </figure>
           <p>And I'll do that on the member variable and on the property:</p>
           <figure>
-                <pre class="prettyprint">public float Age2
+                <pre><code class="language-csharp">public float Age2
 {
     get
     {
@@ -992,14 +992,14 @@ else return value;</pre>
             PropertyChanged(this, new PropertyChangedEventArgs(&quot;Age2&quot;));
         }
     }
-}</pre>
+}</code></pre>
             <figcaption>Fig 04-051</figcaption>
           </figure>
           <p>Then I'm going to drop into the UI and find the Age input, and I'm going to replace that with a slightly
             different Text Binding.
           </p>
           <figure>
-                <pre class="prettyprint">&lt;TextBox x:Name=&quot;ageTextBox&quot;
+                <pre><code class="language-csharp">&lt;TextBox x:Name=&quot;ageTextBox&quot;
     Width=&quot;120&quot;
     VerticalAlignment=&quot;Center&quot;
     Text=&quot;{Binding Path=Age, StringFormat=f2}&quot;
@@ -1007,7 +1007,7 @@ else return value;</pre>
     Margin=&quot;3&quot;
     Height=&quot;23&quot;
     HorizontalAlignment=&quot;Left&quot;
-Grid.Column=&quot;1&quot; /&gt;</pre>
+Grid.Column=&quot;1&quot; /&gt;</code></pre>
             <figcaption>Fig 04-052</figcaption>
           </figure>
           <p>So here we can see we're still binding to the Age Property, but now we just simply set the StringFormat
@@ -1040,7 +1040,7 @@ Grid.Column=&quot;1&quot; /&gt;</pre>
             UpdateSourceTrigger=PropertyChanged property on our binding, which we saw earlier in the module:
           </p>
           <figure>
-                    <pre class="prettyprint">{Binding Path=Age, StringFormat=f2, UpdateSourceTrigger=PropertyChanged}}</pre>
+                    <pre><code class="language-csharp">{Binding Path=Age, StringFormat=f2, UpdateSourceTrigger=PropertyChanged}}</code></pre>
             <figcaption>Fig 04-056</figcaption>
           </figure>
 

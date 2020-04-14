@@ -42,7 +42,7 @@
         <p>So to understand why we are using Webpack, we're going to talk a little bit about
           server-side templating and single-page applications:</p>
         <figure>
-          <img src="./images/Fig02-001.PNG"/>
+          <img src="./images/Fig02-001.png"/>
           <figcaption>Fig 02-001</figcaption>
         </figure>
         <p>Server-side templating is a little bit more legacy technology for creating web
@@ -65,7 +65,7 @@
           web document, our HTML document. So just to make sure it's really clear about how these
           two approaches work. In a server-side templating world:</p>
         <figure>
-          <img src="./images/Fig02-002.PNG"/>
+          <img src="./images/Fig02-002.png"/>
           <figcaption>Fig 02-002</figcaption>
         </figure>
         <p>a user is going to visit our page - that forms - you know, they're going to, like,
@@ -75,7 +75,7 @@
           get back a new HTML document. So every time that you navigate around the web page inside
           of a server-side templating world, you're getting back a completely new HTML document.</p>
         <figure>
-          <img src="./images/Fig02-003.PNG"/>
+          <img src="./images/Fig02-003.png"/>
           <figcaption>Fig 02-003</figcaption>
         </figure>
         <p>In a single-page application world, however, a user is going to visit a page that makes a
@@ -91,7 +91,7 @@
         <p>Now if we think about the popularity of these two frameworks or these two approaches over
           time:</p>
         <figure>
-          <img src="./images/Fig02-004.PNG"/>
+          <img src="./images/Fig02-004.png"/>
           <figcaption>Fig 02-004</figcaption>
         </figure>
         <p>this is not an exact chart right here by any means. All I mean to say is that over time,
@@ -107,7 +107,7 @@
           single-page application world, we are relying upon Javascript code that is being executed
           on our user's browser to assemble the entire web application:</p>
         <figure>
-          <img src="./images/Fig02-005.PNG"/>
+          <img src="./images/Fig02-005.png"/>
           <figcaption>Fig 02-005</figcaption>
         </figure>
         <p>So in a single-page application world, we have a huge pile of Javascript that is being
@@ -139,7 +139,7 @@
           have tens of thousands of lines of code split between just three different files: main.js,
           util.js, and home.js:</p>
         <figure>
-          <img src="./images/Fig02-006.PNG"/>
+          <img src="./images/Fig02-006.png"/>
           <figcaption>Fig 02-006</figcaption>
         </figure>
         <p>So each of these we can imagine is several thousand lines of code long. Now of course,
@@ -161,7 +161,7 @@
           starts growing. So to address the issue of very large codebases, the idea of JavaScript
           modules was born:</p>
         <figure>
-          <img src="./images/Fig02-007.PNG"/>
+          <img src="./images/Fig02-007.png"/>
           <figcaption>Fig 02-007</figcaption>
         </figure>
         <p>A JavaScript module is a single JavaScript file that contains some small amount of code.
@@ -194,7 +194,7 @@
         <p>First, if our code is all spread out into separate modules, we need to start thinking
           about... a lot about the order in which our code is executed:</p>
         <figure>
-          <img src="./images/Fig02-008.PNG"/>
+          <img src="./images/Fig02-008.png"/>
           <figcaption>Fig 02-008</figcaption>
         </figure>
         <p>So, if our project has several files like the four that's shown here on the screen, it
@@ -208,7 +208,7 @@
           application runs, that order is exactly the same. So, it's a very codified, very distinct
           order of loading different files into our application.</p>
         <figure>
-          <img src="./images/Fig02-009.PNG"/>
+          <img src="./images/Fig02-009.png"/>
           <figcaption>Fig 02-009</figcaption>
         </figure>
         <p>The second big issue that we run into with having many small files inside of our
@@ -222,7 +222,7 @@
           big issue on a mobile connection. Here is a screenshot of the different javascript files
           that are loaded up on a different web app:</p>
         <figure>
-          <img src="./images/Fig02-010.PNG"/>
+          <img src="./images/Fig02-010.png"/>
           <figcaption>Fig02-010</figcaption>
         </figure>
         <p>one where the developers are a little bit more responsible with the amount of javascript
@@ -242,7 +242,7 @@
           files.</p>
         <p>So this right here is a diagram:</p>
         <figure>
-          <img src="./images/Fig02-011.PNG"/>
+          <img src="./images/Fig02-011.png"/>
           <figcaption>Fig 02-011</figcaption>
         </figure>
         <p>that we will be seeing many variations of over time throughout this entire course. The
@@ -277,7 +277,7 @@
         <p>So let's get started by looking at a list of tasks that we're going to have to do to make
           all this stuff happen:</p>
         <figure>
-          <img src="./images/Fig02-012.PNG"/>
+          <img src="./images/Fig02-012.png"/>
           <figcaption>Fig 02-012</figcaption>
         </figure>
         <p>And so this is gonna be our guide, our general guide for the next couple of sections.</p>
@@ -304,7 +304,7 @@
           and then we're going to create our npm project. So this is done by running the command npm
           init:</p>
         <figure>
-          <img src="./images/Fig02-013.PNG"/>
+          <img src="./images/Fig02-013.png"/>
           <figcaption>Fig 02-013</figcaption>
         </figure>
         <p>Once we run this command, we'll be prompted with a couple of different questions down
@@ -314,7 +314,7 @@
           finishes, the only change to our project at this point is that a package.json file has
           been generated inside of our project directory:</p>
         <figure>
-          <img src="./images/Fig02-014.PNG"/>
+          <img src="./images/Fig02-014.png"/>
           <figcaption>Fig 02-014</figcaption>
         </figure>
         <p>This file right here is used to record any dependencies that our project might have, and
@@ -332,7 +332,7 @@
           JavaScript modules that we're about to create. So I'm gonna make a new folder and I'm
           gonna call it src:</p>
         <figure>
-          <img src="./images/Fig02-015.PNG"/>
+          <img src="./images/Fig02-015.png"/>
           <figcaption>Fig 02-015</figcaption>
         </figure>
         <p>which is short for source. The purpose of this directory is to hold all the JavaScript
@@ -342,7 +342,7 @@
           files to serve as JavaScript modules. I'm gonna make one file called index.js, and I'm
           gonna make one other file which is going to be called sum.js:</p>
         <figure>
-          <img src="./images/Fig02-016.PNG"/>
+          <img src="./images/Fig02-016.png"/>
           <figcaption>Fig 02-016</figcaption>
         </figure>
         <p>Inside of these two files, we're gonna add some JavaScript code and then we will somehow
@@ -360,7 +360,7 @@
         <p>Let's explore the purpose of both the files that we've just created. So I've got a little
           bit of a diagram here:</p>
         <figure>
-          <img src="./images/Fig02-017.PNG"/>
+          <img src="./images/Fig02-017.png"/>
           <figcaption>Fig 02-017</figcaption>
         </figure>
         <p>The first file we're going to be working with is called sum.js. And we're going to say
@@ -376,7 +376,7 @@
           use of some amount of code that the sum file has, we can consider the index file to depend
           upon the sum file:</p>
         <figure>
-          <img src="./images/Fig02-018.PNG"/>
+          <img src="./images/Fig02-018.png"/>
           <figcaption>Fig 02-018</figcaption>
         </figure>
         <p>So we can say sum file is required to be loaded before the index.js file can be executed.
@@ -424,7 +424,7 @@
           a rough spot for many people and it's definitely a sore spot in the community. So let's
           take a little bit of time to look at some of the module systems that are in use:</p>
         <figure>
-          <img src="./images/Fig02-021.PNG"/>
+          <img src="./images/Fig02-021.png"/>
           <figcaption>Fig 02-021</figcaption>
         </figure>
         <p>Okay. Here we go. So this is just three of the several different module systems that are
@@ -471,7 +471,7 @@
           Let's take a look at a diagram. That's gonna help us understand exactly how this is going
           to work:</p>
         <figure>
-          <img src="./images/Fig02-022.PNG"/>
+          <img src="./images/Fig02-022.png"/>
           <figcaption>Fig 02-022</figcaption>
         </figure>
         <p>So this diagram models relationship between our sum and index.js files. At present, our
@@ -560,14 +560,14 @@
           single bundle. So this configuration is done inside of a file that we usually call
           "webpack.config.js":</p>
         <figure>
-          <img src="./images/Fig02-028.PNG"/>
+          <img src="./images/Fig02-028.png"/>
           <figcaption>Fig 02-028</figcaption>
         </figure>
         <p>Let's change over to our code editor, not our project directory. So inside of our root
           project directory, I'm gonna make a new file, and we're going to call it
           webpack.config.js:</p>
         <figure>
-          <img src="./images/Fig02-029.PNG"/>
+          <img src="./images/Fig02-029.png"/>
           <figcaption>Fig 02-029</figcaption>
         </figure>
         <p>So when we run Webpack, it will automatically look for a file with this exact name inside
@@ -592,7 +592,7 @@
         <p>OK, let's flip back over to our Terminal really quick. I'm gonna verify that Webpack
           finished installing without any errors. And yup, looks like it did:</p>
         <figure>
-          <img src="./images/Fig02-032.PNG"/>
+          <img src="./images/Fig02-032.png"/>
           <figcaption>Fig 02-032</figcaption>
         </figure>
         <p>Fantastic! All right, so that looks good. There's now two pieces of configuration that
@@ -603,7 +603,7 @@
           is called the entry property. So let's figure out what this entry property is. If we think
           about our project structure right now, it looks a little bit like this. Right?</p>
         <figure>
-          <img src="./images/Fig02-033.PNG"/>
+          <img src="./images/Fig02-033.png"/>
           <figcaption>Fig 02-033</figcaption>
         </figure>
         <p>We have an index.js file which requires or depends upon or imports this sum.js file. The
@@ -619,7 +619,7 @@
 
         <p>Imagine that we had several different files inside of our project:</p>
         <figure>
-          <img src="./images/Fig02-034.PNG"/>
+          <img src="./images/Fig02-034.png"/>
           <figcaption>Fig 02-034</figcaption>
         </figure>
         <p>the top file is still called index.js, and then we've got the store and the util being
@@ -773,12 +773,12 @@ filename: 'bundle.js'</code></pre>
           that or put text, I suppose, some tutorials will say, "Hey, do this." You know, npm
           install -g webpack, and then that gives the ability to just run Webpack like so:</p>
         <figure>
-          <img src="./images/Fig02-043.PNG"/>
+          <img src="./images/Fig02-043.png"/>
           <figcaption>Fig 02-043</figcaption>
         </figure>
         <p>OK, so like what's the pros and cons of that approach:</p>
         <figure>
-          <img src="./images/Fig02-044.PNG"/>
+          <img src="./images/Fig02-044.png"/>
           <figcaption>Fig 02-044</figcaption>
         </figure>
         <p>Well, I kind of like to argue that that's a bad approach or not the best one to take. So,
@@ -814,7 +814,7 @@ filename: 'bundle.js'</code></pre>
           execute. So after it runs, we get this nice output on the screen right here; and if you've
           ever ran Webpack before, this probably looks pretty familiar:</p>
         <figure>
-          <img src="./images/Fig02-046.PNG"/>
+          <img src="./images/Fig02-046.png"/>
           <figcaption>Fig 02-046</figcaption>
         </figure>
         <p>The output right here tells us the version of Webpack that was used, the time that it
@@ -847,7 +847,7 @@ filename: 'bundle.js'</code></pre>
         <p>So I'm gonna open up the bundle.js file. And the instant I open this thing up, you can
           see that, wow, there's a lot of code inside of here:</p>
         <figure>
-          <img src="./images/Fig02-047.PNG"/>
+          <img src="./images/Fig02-047.png"/>
           <figcaption>Fig 02-047</figcaption>
         </figure>
         <p>A lot of stuff got generated when we ran Webpack. So, rather than kind of crawl through
@@ -857,7 +857,7 @@ filename: 'bundle.js'</code></pre>
           altogether to kind of simplify what Webpack is doing here. So, I'm going to take some
           alternate version of this and paste it in:</p>
         <figure>
-          <img src="./images/Fig02-048.PNG"/>
+          <img src="./images/Fig02-048.png"/>
           <figcaption>Fig 02-048</figcaption>
         </figure>
         <p>Okay. So, this is not like functional code right here – this is more pseudocode than
@@ -868,7 +868,7 @@ filename: 'bundle.js'</code></pre>
         <p>Okay, let's walk through this thing and figure out what's going on. At the top of the
           file, an array was created called myModules:</p>
         <figure>
-          <img src="./images/Fig02-049.PNG"/>
+          <img src="./images/Fig02-049.png"/>
           <figcaption>Fig 02-049</figcaption>
         </figure>
         <p>And, again, I took some liberties with the naming here just to make the stuff a little
@@ -892,7 +892,7 @@ filename: 'bundle.js'</code></pre>
         <p>So Webpack then looks inside to the myModules array to get a reference to that index.js
           function or the function that represents index.js, and then it executes it:</p>
         <figure>
-          <img src="./images/Fig02-051.PNG"/>
+          <img src="./images/Fig02-051.png"/>
           <figcaption>Fig 02-051</figcaption>
         </figure>
         <p>Okay, so this statement down here, it says look into the myModules array, find this
@@ -903,7 +903,7 @@ filename: 'bundle.js'</code></pre>
           right here or the index.js module, the myModules array is referenced at the zero
           index:</p>
         <figure>
-          <img src="./images/Fig02-052.PNG"/>
+          <img src="./images/Fig02-052.png"/>
           <figcaption>Fig 02-052</figcaption>
         </figure>
         <p>
@@ -956,7 +956,7 @@ filename: 'bundle.js'</code></pre>
           inside of index.html we're going to add the bare minimum amount of html required to get
           this thing loaded in the browser.</p>
         <figure>
-          <img src="./images/Fig02-053.PNG"/>
+          <img src="./images/Fig02-053.png"/>
           <figcaption>Fig 02-053</figcaption>
         </figure>
         <p>First, I'm going to declare a head tag. I'll put in a body tag and then inside the body
@@ -983,7 +983,7 @@ filename: 'bundle.js'</code></pre>
           evidence that we're actually loading the script tag, is a console log statement of 15 or
           whatever your total should be:</p>
         <figure>
-          <img src="./images/Fig02-055.PNG"/>
+          <img src="./images/Fig02-055.png"/>
           <figcaption>Fig 02-055</figcaption>
         </figure>
         <p>So you can open up that javascript console by right clicking anywhere on the page, and

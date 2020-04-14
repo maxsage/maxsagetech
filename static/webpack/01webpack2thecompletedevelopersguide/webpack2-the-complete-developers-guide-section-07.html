@@ -37,7 +37,7 @@
           started.</p>
         <p>Inside of my source directory, I'm going to find the router.js file:</p>
         <figure>
-          <img src="./images/Fig07-001.PNG"/>
+          <img src="./images/Fig07-001.png"/>
           <figcaption>Fig</figcaption>
         </figure>
         <p>So this project makes use of the very popular React-router library. It uses Version two or Version three,
@@ -51,7 +51,7 @@
           you might not be able to directly copy and paste all the code. That's what I'm really trying to say. Okay, so
           in the router file we import a bunch of components at the top:</p>
         <figure>
-          <img src="./images/Fig07-002.PNG"/>
+          <img src="./images/Fig07-002.png"/>
           <figcaption>Fig 07-002</figcaption>
         </figure>
         <p>and then we define our different routes in the application:</p>
@@ -82,7 +82,7 @@
         <p>So here's how we're going to start. Right above the routes function of the routes component, we're going to
           add in a new object called componentRoutes:</p>
         <figure>
-          <img src="./images/Fig07-004.PNG"/>
+          <img src="./images/Fig07-004.png"/>
           <figcaption>Fig 07-004</figcaption>
         </figure>
         <p>And inside of here, we're going to define some amount of configuration inside this object that will mirror
@@ -95,20 +95,20 @@
           in here. Again, this is like a direct translation of the jsx into a javascript object so let's just get to
           it:</p>
         <figure>
-          <img src="./images/Fig07-005.PNG"/>
+          <img src="./images/Fig07-005.png"/>
           <figcaption>Fig 07-005</figcaption>
         </figure>
         <p>First, we'll define the component to use, which will be home. We'll define the path with which to use it,
           which will be forward slash. And that's it, that's it for our first route. That's all we have to add in to
           replace this route right here:</p>
         <figure>
-          <img src="./images/Fig07-006.PNG"/>
+          <img src="./images/Fig07-006.png"/>
           <figcaption>Fig 07-006</figcaption>
         </figure>
         <p>Now, to tell the home route or the route route to use this index route of ArtistMain, we will also add in an
           index route property with an object containing component ArtistMain:</p>
         <figure>
-          <img src="./images/Fig07-007.PNG"/>
+          <img src="./images/Fig07-007.png"/>
           <figcaption>Fig 07-007</figcaption>
         </figure>
         <p>So I hope we kind of feel it's starting to get like a little bit obvious what we're doing here when I say
@@ -122,7 +122,7 @@
         <p>So, I bet you can guess what these child routes are. They are the different routes that our application is
           making use of:</p>
         <figure>
-          <img src="./images/Fig07-009.PNG"/>
+          <img src="./images/Fig07-009.png"/>
           <figcaption>Fig 07-009</figcaption>
         </figure>
         <p>so, the artist create, detail and edit. Each of these, all three of them, will look nearly identical. They're
@@ -130,7 +130,7 @@
           decide when we want to show this component. And so, hey we can read directly off of the jsx. We want artist
           new, artist ID and artist ID edit. So, we'll start off with artist new first:</p>
         <figure>
-          <img src="./images/Fig07-010.PNG"/>
+          <img src="./images/Fig07-010.png"/>
           <figcaption>Fig 07-010</figcaption>
         </figure>
         <p>Now, the complexity starts to come in with this get component function. By default, React-router assumes that
@@ -140,7 +140,7 @@
         <p>However, if we want to asynchronously load up our component, we can use this get component function. It takes
           the arguments, location and cb:</p>
         <figure>
-          <img src="./images/Fig07-011.PNG"/>
+          <img src="./images/Fig07-011.png"/>
           <figcaption>Fig 07-011</figcaption>
         </figure>
         <p>Cb right here is the real magic. React-router expects us to call cb. It is a function that expects us to call
@@ -168,12 +168,12 @@
           just a little bit and right up here you'll find the path for ArtistCreate, which is the component that we are
           currently trying to show. So I'm just going to copy the exact path right here:</p>
         <figure>
-          <img src="./images/Fig07-012.PNG"/>
+          <img src="./images/Fig07-012.png"/>
           <figcaption>Fig 07-012</figcaption>
         </figure>
         <p>and we'll pass it into the System.import call:</p>
         <figure>
-          <img src="./images/Fig07-013.PNG"/>
+          <img src="./images/Fig07-013.png"/>
           <figcaption>Fig 07-013</figcaption>
         </figure>
         <p>and then I make sure that I have a string in there. There we go. So, because this is an asynchronous call,
@@ -181,7 +181,7 @@
           loaded. So we're going to take that module and we're going to call the callback function with the module that
           just got loaded:</p>
         <figure>
-          <img src="./images/Fig07-014.PNG"/>
+          <img src="./images/Fig07-014.png"/>
           <figcaption>Fig 07-014</figcaption>
         </figure>
         <p>So say cb and then here's the one big gotcha, or I should say the two big gotchas. Around this whole code
@@ -200,7 +200,7 @@
           then I'll paste. So I know there's a lot of code on the screen right now but we've got child routes, we've got
           the route that we just added, and then the route that I just copy/pasted in:</p>
         <figure>
-          <img src="./images/Fig07-015.PNG"/>
+          <img src="./images/Fig07-015.png"/>
           <figcaption>Fig 07-015</figcaption>
         </figure>
         <p>Now, we'll update this one as well. So I need to update the path to use or like the actual url and the path
@@ -208,7 +208,7 @@
           component. So it looks like the path or the URL to use is artist:ID. So let's do that first. So on the second
           path or the second child route,we'll do artist: ID:</p>
         <figure>
-          <img src="./images/Fig07-016.PNG"/>
+          <img src="./images/Fig07-016.png"/>
           <figcaption>Fig 07-016</figcaption>
         </figure>
         <p>and then we want to grab the ArtistDetail component. So I'm gonna make sure to update the module path, as
@@ -216,33 +216,33 @@
         <p>Okay. Just one more copy/paste. I know these copy/pastes are very large. So we'll do the last copy paste,
           there we go. So, I've got another object in here. Don't forget the comma:</p>
         <figure>
-          <img src="./images/Fig07-017.PNG"/>
+          <img src="./images/Fig07-017.png"/>
           <figcaption>Fig 07-017</figcaption>
         </figure>
         <p>
           And the last path that we have to do, let's double check down here, artistID edit. So we've got
           artistsID/edit. And then we will update the path on here, as well, to the component ArtistEdit:</p>
         <figure>
-          <img src="./images/Fig07-018.PNG"/>
+          <img src="./images/Fig07-018.png"/>
           <figcaption>Fig 07-018</figcaption>
         </figure>
         <p>Okay, so a little bit of a nasty refactor just because there's so much code on the screen. So we've now
           defined this big object called componentRoutes:</p>
         <figure>
-          <img src="./images/Fig07-019.PNG"/>
+          <img src="./images/Fig07-019.png"/>
           <figcaption>Fig 07-019</figcaption>
         </figure>
         <p>and we need to make sure that we actually use it inside of our router. So I am going to scroll back down to
           all of our jsx and I'm going to find our RoutesComponent:</p>
         <figure>
-          <img src="./images/Fig07-020.PNG"/>
+          <img src="./images/Fig07-020.png"/>
           <figcaption>Fig 07-020</figcaption>
         </figure>
         <p>Here it is. So we just refactor all of this jsx right here into a single javascript object. So we don't need
           any of this jsx anymore because it's being taken care of in that code that we just added. So, we're going to
           take all this code:</p>
         <figure>
-          <img src="./images/Fig07-021.PNG"/>
+          <img src="./images/Fig07-021.png"/>
           <figcaption>Fig 07-021</figcaption>
         </figure>
         <p>everything from the nesting route and the four internal routes and we're just going to dump it.</p>
@@ -250,14 +250,14 @@
         <p>This is now a self-closing tag. So I'm going to take off the closing tag and I'm going to make sure I close
           this tag off as a self-closing tag:</p>
         <figure>
-          <img src="./images/Fig07-022.PNG"/>
+          <img src="./images/Fig07-022.png"/>
           <figcaption>Fig 07-022</figcaption>
         </figure>
         <p>So at this point, we've got router, the history object, and then the closing tag.</p>
         <p>Now, the very last step, we need to tell the router what route configuration object it should use so we'll
           pass in a routes={componentRoutes}, like so:</p>
         <figure>
-          <img src="./images/Fig07-023.PNG"/>
+          <img src="./images/Fig07-023.png"/>
           <figcaption>Fig 07-023</figcaption>
         </figure>
         <p>And so, component routes right here, is the object that we just declared; it's a big route configuration
@@ -266,7 +266,7 @@
           I'm going to highlight all three of these import statements and we're going to take them out because those
           modules are now being dynamically loaded:</p>
         <figure>
-          <img src="./images/Fig07-024.PNG"/>
+          <img src="./images/Fig07-024.png"/>
           <figcaption>Fig 07-024</figcaption>
         </figure>
         <p>Okay. That's pretty much it. Now, the big thing I want to point out here again, is that we are choosing to
@@ -282,14 +282,14 @@
         <p>So we could have very easily included ArtistMain as a fetched component inside of our hierarchy but I think
           that makes a lot of sense to just include it by default:</p>
         <figure>
-          <img src="./images/Fig07-025.PNG"/>
+          <img src="./images/Fig07-025.png"/>
           <figcaption>Fig 07-025</figcaption>
         </figure>
         <p>Okay, so I'm going to make sure that I've got my webpack dev server running and we're going to do a little
           bit of a test to make sure everything is still working. So I'm going to go back over to my code. All right,
           I've got a big error message at my terminal so it looks like I left off a semi-colon here:</p>
         <figure>
-          <img src="./images/Fig07-026.PNG"/>
+          <img src="./images/Fig07-026.png"/>
           <figcaption>Fig 07-026</figcaption>
         </figure>
         <p>totally my mistake. You'll want to check your terminal as well and see if you have any error messages like
@@ -297,14 +297,14 @@
           routes I think I'm missing one basically, after every path. So, I'll save this and looks like we are, there we
           go:</p>
         <figure>
-          <img src="./images/Fig07-027.PNG"/>
+          <img src="./images/Fig07-027.png"/>
           <figcaption>Fig 07-027</figcaption>
         </figure>
         <p>So now I've got a successful rebuild of my project, which means I'm ready to test it out inside the browser.
           So I'm going to go back over to Chrome. I'm going to make sure I'm that local host, 80 80, and then I'll
           refresh the page:</p>
         <figure>
-          <img src="./images/Fig07-028.PNG"/>
+          <img src="./images/Fig07-028.png"/>
           <figcaption>Fig 07-028</figcaption>
         </figure>
         <p>Okay, so it looks like everything loads up just the same as I would expect. You'll notice that I've got the
@@ -313,14 +313,14 @@
           here to get that additional component. So let's click on the play button for Angus Spinka. That will take me
           to the artist detail component:</p>
         <figure>
-          <img src="./images/Fig07-029.PNG"/>
+          <img src="./images/Fig07-029.png"/>
           <figcaption>Fig 07-029</figcaption>
         </figure>
         <p>And as soon as I do, you'll notice the additional request for one.C3 blah, blah, blah. And I can go to say,
           CreateArtist, and I get two, and I think that if I go back to the edit screen, so here's edit again. And if I
           go to the edit page right here, then I get module 0:</p>
         <figure>
-          <img src="./images/Fig07-030.PNG"/>
+          <img src="./images/Fig07-030.png"/>
           <figcaption>Fig 07-030</figcaption>
         </figure>
         <p>which was the edit component. Cool. So, it looks like everything is working out pretty well. I've got an

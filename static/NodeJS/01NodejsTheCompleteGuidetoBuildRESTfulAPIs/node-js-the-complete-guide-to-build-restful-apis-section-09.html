@@ -188,7 +188,7 @@ let author = {
         </figure>
         <p>Run the application:</p>
         <figure>
-          <img src="images/Fig09-009.PNG"/>
+          <img src="images/Fig09-009.png"/>
           <figcaption>Fig 09-009</figcaption>
         </figure>
         <p>So we created one Author - you can see the id above. Now let's copy this and then back in
@@ -239,13 +239,13 @@ let author = {
           complain about that.</p>
         <p>So now have modified the model run the application again:</p>
         <figure>
-          <img src="images/Fig09-014.PNG"/>
+          <img src="images/Fig09-014.png"/>
           <figcaption>Fig 09-014</figcaption>
         </figure>
         <p>we now have the author property. Now, back in MongoDB compass, let's look at this
           playground database and our courses collection:</p>
         <figure>
-          <img src="images/Fig09-015.PNG"/>
+          <img src="images/Fig09-015.png"/>
           <figcaption>Fig 09-015</figcaption>
         </figure>
         <p>You can see we have two documents. The first one doesn't have an author, but the second
@@ -270,7 +270,7 @@ let author = {
         <p>We are calling the find method to get all the courses and we're selecting only their name
           property. Save the changes and run the application.</p>
         <figure>
-          <img src="images/Fig09-017.PNG"/>
+          <img src="images/Fig09-017.png"/>
           <figcaption>Fig 09-017</figcaption>
         </figure>
         <p>We only get _id and name in the results. If we add author:</p>
@@ -285,7 +285,7 @@ let author = {
         </figure>
         <p>And run the program again. We get the following results:</p>
         <figure>
-          <img src="images/Fig09-019.PNG"/>
+          <img src="images/Fig09-019.png"/>
           <figcaption>Fig 09-019</figcaption>
         </figure>
         <p>Our second document now has an author. We are only getting the reference or the object id
@@ -317,7 +317,7 @@ let author = {
         <p>When we load a course object and populate the author property, Mongoose knows that it
           should query the authors collection in MongoDB. Run the application:</p>
         <figure>
-          <img src="images/Fig09-022.PNG"/>
+          <img src="images/Fig09-022.png"/>
           <figcaption>Fig 09-022</figcaption>
         </figure>
         <p>Our first document doesn't have an author so we don't get anything. Our second course
@@ -333,7 +333,7 @@ let author = {
         </figure>
         <p>This will exclude the _id property. If you run the application again:</p>
         <figure>
-          <img src="images/Fig09-024.PNG"/>
+          <img src="images/Fig09-024.png"/>
           <figcaption>Fig 09-024</figcaption>
         </figure>
         <p>Now the author property only contains the name property. It's also possible to use the
@@ -357,13 +357,13 @@ let author = {
           possible to set our author to an invalid document. You can use Compass to simulate this by
           manually editing the ObjectId of the author property:</p>
         <figure>
-          <img src="images/Fig09-026.PNG"/>
+          <img src="images/Fig09-026.png"/>
           <figcaption>Fig 09-026</figcaption>
         </figure>
         <p>MongoDB allows you to make this modification without complaining. If you run the
           application:</p>
         <figure>
-          <img src="images/Fig09-027.PNG"/>
+          <img src="images/Fig09-027.png"/>
           <figcaption>Fig 09-027</figcaption>
         </figure>
         <p>You can see the author is now null because there is no author with the given id in our
@@ -455,7 +455,7 @@ let author = {
           to start on a clean canvas to make sure we are on the same page.</p>
         <p>Run the application:</p>
         <figure>
-          <img src="images/Fig09-036.PNG"/>
+          <img src="images/Fig09-036.png"/>
           <figcaption>Fig 09-036</figcaption>
         </figure>
         <p>You can see the new course document. We can see author is an object with two properties -
@@ -488,7 +488,7 @@ let author = {
           Refresh the view then browse the playground database, courses collection, course document,
           author property. You should see the author name has been updated:</p>
         <figure>
-          <img src="images/Fig09-039.PNG"/>
+          <img src="images/Fig09-039.png"/>
           <figcaption>Fig 09-039</figcaption>
         </figure>
         <p>We can also update a sub-document directly. So, instead of querying it first, we can
@@ -516,7 +516,7 @@ let author = {
           it directly in the database. So back in the terminal run the application again. Go into
           Compass and refresh. You should see the author name has been updated:</p>
         <figure>
-          <img src="images/Fig09-042.PNG"/>
+          <img src="images/Fig09-042.png"/>
           <figcaption>Fig 09-042</figcaption>
         </figure>
         <p>If you want to remove the sub-document you use the unset operator:</p>
@@ -599,7 +599,7 @@ let author = {
         <p>In Compass refresh and look at the new document that has been created in the courses
           collection:</p>
         <figure>
-          <img src="images/Fig09-050.PNG"/>
+          <img src="images/Fig09-050.png"/>
           <figcaption>Fig 09-050</figcaption>
         </figure>
         <p>You can see the courses collection and the course document with an array of authors.
@@ -647,7 +647,7 @@ let author = {
         </figure>
         <p>Run the application and take a look at the data in Compass:</p>
         <figure>
-          <img src="images/Fig09-055.PNG"/>
+          <img src="images/Fig09-055.png"/>
           <figcaption>Fig 09-055</figcaption>
         </figure>
         <p>The specified author should have been removed.</p>
@@ -1075,7 +1075,7 @@ rental = await rental.save();</code></pre>
         <p>In some relational database like SQL server or MySQL we have the concept of transaction
           which basically means a group of operations that should be performed as a unit:</p>
         <figure>
-          <img src="images/Fig09-080.PNG"/>
+          <img src="images/Fig09-080.png"/>
           <figcaption>Fig 09-080</figcaption>
         </figure>
         <p> So either all these operations will complete and change the state of the database or, if
@@ -1136,8 +1136,8 @@ movie.save(); </code></pre>
           name is case sensitive. If you look in Compass you will see the name of the collections
           are all lowercase:</p>
         <figure>
-          <img src="images/Fig09-088.PNG"/>
-          <figcaption>Fig 09-088.PNG</figcaption>
+          <img src="images/Fig09-088.png"/>
+          <figcaption>Fig 09-088.png</figcaption>
         </figure>
         <p>This is our first operation - saving the rental.</p>
         <p>As part of this unit we also want to update the movies collection. Here, as the second
@@ -1205,8 +1205,8 @@ movie.save(); </code></pre>
         </figure>
         <p>Back in Compass look at the movies collection:</p>
         <figure>
-          <img src="images/Fig09-093.PNG"/>
-          <figcaption>Fig 09-093.PNG</figcaption>
+          <img src="images/Fig09-093.png"/>
+          <figcaption>Fig 09-093.png</figcaption>
         </figure>
         <p>Here we have a movie with numberInStock of 8. We will create a new rental and then check
           the numberInStock has decremented by 1 to 7.</p>
@@ -1217,19 +1217,19 @@ movie.save(); </code></pre>
         </figure>
         <p>In the body of the request I have a valid customerId and movieId:</p>
         <figure>
-          <img src="images/Fig09-095.PNG"/>
+          <img src="images/Fig09-095.png"/>
           <figcaption>Fig 09-095</figcaption>
         </figure>
         <p>Let's send this and our response should be:</p>
         <figure>
-          <img src="images/Fig09-096.PNG"/>
+          <img src="images/Fig09-096.png"/>
           <figcaption>Fig 09-096</figcaption>
         </figure>
         <p>We can see dateOut, id, customer and movie.</p>
         <p>Now, back in the Compass, in the movies collection refresh the list and you should see
           the number in stock drops to 7:</p>
         <figure>
-          <img src="images/Fig09-097.PNG"/>
+          <img src="images/Fig09-097.png"/>
           <figcaption>Fig 09-097</figcaption>
         </figure>
         <p>So this verifies that our transaction completed successfully.</p>
@@ -1253,7 +1253,7 @@ movie.save(); </code></pre>
           then send the rental object to the client. In this code we didn't set the id or dateOut
           property but in the body of the response we can see both the properties are set:</p>
         <figure>
-          <img src="images/Fig09-099.PNG"/>
+          <img src="images/Fig09-099.png"/>
           <figcaption>Fig 09-099</figcaption>
         </figure>
         <p>So how did this happen?</p>
@@ -1272,7 +1272,7 @@ movie.save(); </code></pre>
           finish this lecture. Back in Compass click the refresh collections button and you will see
           a new collection ojlinttaskcollections:</p>
         <figure>
-          <img src="images/Fig09-101.PNG"/>
+          <img src="images/Fig09-101.png"/>
           <figcaption>Fig 09-101</figcaption>
         </figure>
         <p>So where did that come from? The Fawn library that we installed uses that collection to
@@ -1368,7 +1368,7 @@ console.log(id.getTimestamp());</code></pre>
         <p>Run the application:</p>
         <p>You can see the time we generated this Object Id:</p>
         <figure>
-          <img src="images/Fig09-107.PNG"/>
+          <img src="images/Fig09-107.png"/>
           <figcaption>Fig 09-107</figcaption>
         </figure>
         <p>We also have a static method on this ObjectId class for validating object ids:</p>
@@ -1379,7 +1379,7 @@ console.log(isValid);</code></pre>
         </figure>
         <p>Obviously this is not a valid object id so when we run the application we see:</p>
         <figure>
-          <img src="images/Fig09-109.PNG"/>
+          <img src="images/Fig09-109.png"/>
           <figcaption>Fig 09-109</figcaption>
         </figure>
         <h3>121 - Validating Object ID's</h3>
@@ -1391,19 +1391,19 @@ console.log(isValid);</code></pre>
         </figure>
         <p>In the body of the request we have a valid customerId and movieId:</p>
         <figure>
-          <img src="images/Fig09-111.PNG"/>
+          <img src="images/Fig09-111.png"/>
           <figcaption>Fig 09-111</figcaption>
         </figure>
         <p>Now let see what happens if we change the customerId object id in the body of the request
           to a value like 1234:</p>
         <figure>
-          <img src="images/Fig09-112.PNG"/>
+          <img src="images/Fig09-112.png"/>
           <figcaption>Fig 09-112</figcaption>
         </figure>
         <p>Run the application and send the request in Postman. Postman hangs and in the terminal
           you see the following error:</p>
         <figure>
-          <img src="images/Fig09-113.PNG"/>
+          <img src="images/Fig09-113.png"/>
           <figcaption>Fig 09-113</figcaption>
         </figure>
         <p>This basically means we had a promise that was rejected but we didn't handle it properly.
@@ -1521,7 +1521,7 @@ require('joi-objectid')(Joi);</code></pre>
         <p>In Postman send another POST request with an invalid customerId. You should see the
           following:</p>
         <figure>
-          <img src="images/Fig09-126.PNG"/>
+          <img src="images/Fig09-126.png"/>
           <figcaption>Fig 09-126</figcaption>
         </figure>
         <p>You should also receive a 400 - Bad Request. The Terminal should now also not be showing

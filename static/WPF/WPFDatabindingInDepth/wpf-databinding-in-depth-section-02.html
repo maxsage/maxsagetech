@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
   <meta charset="UTF-8">
-  <title>maxsagetech - Vue JS Fundamentals</title>
+  <title>maxsagetech - WPF Databinding In Depth</title>
   <script src="https://unpkg.com/vue"></script>
   <!--<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"-->
   <!--integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">-->
@@ -195,7 +195,7 @@
             So another key thing to keep in mind is that the target properties of a binding must be
             DependencyProperties. That typically means that they are a property defined on a framework element that's
             part of the WPF framework, but they could be custom DependencyProperties on your own objects, but the thing
-            you hook the binding up to directly is going to be a DependencyProperty. The S ource object property does
+            you hook the binding up to directly is going to be a DependencyProperty. The Source object property does
             not have to be a DependencyProperty.
           </p>
         </div>
@@ -400,7 +400,7 @@
             Customer's Collection.
           </p>
           <figure>
-<pre><code class="language-">void MainWindow_Loaded(object sender, RoutedEventArgs e)
+<pre><code class="language-csharp">void MainWindow_Loaded(object sender, RoutedEventArgs e)
 {
 
     var firstCustomer = _ZzaContext.Customers.FirstOrDefault();
@@ -421,8 +421,8 @@
             property on a TextBox.
           </p>
           <figure>
-<pre><code class="language-">CustomerIdLabel.Content = firstCustomer.Id;
-  CustomerLastNameTextBox.Text = firstCustomer.LastName;</code></pre>
+<pre><code class="language-csharp">CustomerIdLabel.Content = firstCustomer.Id;
+CustomerLastNameTextBox.Text = firstCustomer.LastName;</code></pre>
             <figcaption>Fig 01-019</figcaption>
           </figure>
           <p>Next you can see I'm executing a query to go get the Orders for that current Customer and selecting just
@@ -430,9 +430,9 @@
             ListBox.
           </p>
           <figure>
-<pre><code class="language-">var orderDates = _ZzaContext.Orders
+<pre><code class="language-csharp">var orderDates = _ZzaContext.Orders
     .Where(o => o.CustomerId == firstCustomer.Id).Select(o => o.OrderDate).ToList();
-  OrdersList.ItemsSource = orderDates;</code></pre>
+OrdersList.ItemsSource = orderDates;</code></pre>
             <figcaption>Fig 01-020</figcaption>
           </figure>
           <p>
@@ -442,13 +442,13 @@
             the ListBox and the CustomerId matches the one that is the current Customer based on our CustomerIdLabel.
           </p>
           <figure>
-<pre><code class="language-">void OnOrderSelected(object sender, SelectionChangedEventArgs args)
+<pre><code class="language-csharp">void OnOrderSelected(object sender, SelectionChangedEventArgs args)
 {
-    var selectedOrder = _ZzaContext.Orders.Include("OrderItems")
-        .Where(o => o.OrderDate == (DateTime)OrdersList.SelectedItem &&
-            o.CustomerId == (Guid)CustomerIdLabel.Content).FirstOrDefault();
-    OrderItemsDataGrid.ItemsSource = selectedOrder.OrderItems;
-  }</code></pre>
+  var selectedOrder = _ZzaContext.Orders.Include("OrderItems")
+      .Where(o => o.OrderDate == (DateTime)OrdersList.SelectedItem &&
+          o.CustomerId == (Guid)CustomerIdLabel.Content).FirstOrDefault();
+  OrderItemsDataGrid.ItemsSource = selectedOrder.OrderItems;
+}</code></pre>
             <figcaption>Fig 01-021</figcaption>
           </figure>
           <p>
@@ -463,7 +463,7 @@
             member variable.
           </p>
           <figure>
-<pre><code class="language-">private void OnSave(object sender, RoutedEventArgs e)
+<pre><code class="language-csharp">private void OnSave(object sender, RoutedEventArgs e)
 {
     var customer = _ZzaContext.Customers.Where(c => c.Id == (Guid)(CustomerIdLabel.Content)).FirstOrDefault();
     customer.LastName = CustomerLastNameTextBox.Text;
@@ -528,10 +528,10 @@
 
           <p>So first we'll go to our CustomerIdLabel here:</p>
           <figure>
-                <pre><code class="language-">&lt;Label x:Name="CustomerIdLabel"
-   Grid.Row="0"
-   Grid.Column="1"
-                  Content="{Binding Id}" /&gt;</code></pre>
+                <pre><code class="language-csharp">&lt;Label x:Name="CustomerIdLabel"
+  Grid.Row="0"
+  Grid.Column="1"
+  Content="{Binding Id}" /&gt;</code></pre>
             <figcaption>Fig 01-023A</figcaption>
           </figure>
 
@@ -550,25 +550,24 @@
             and that Source object has to be set as the DataContext for this TextBox.
           </p>
           <figure>
-                <pre><code class="language-">&lt;TextBox x:Name="CustomerLastNameTextBox"
-    Grid.Row="1"
-    Grid.Column="1"
-                  Text="{Binding LastName}" /&gt;</code></pre>
+                <pre><code class="language-csharp">&lt;TextBox x:Name="CustomerLastNameTextBox"
+  Grid.Row="1"
+  Grid.Column="1"
+  Text="{Binding LastName}" /&gt;</code></pre>
             <figcaption>Fig 01-024</figcaption>
           </figure>
           <p>
             Next, for our ListBox, we can drop down here and we can do a Binding like this:
           </p>
           <figure>
-                <pre><code class="language-">&lt;ListBox x:Name="OrdersList"
-     Grid.Row="2"
-     Grid.Column="1"
-     Height="100"
-     ItemsSource="{Binding}"
-                  SelectionChanged="OnOrderSelected" /&gt;</code></pre>
+                <pre><code class="language-csharp">&lt;ListBox x:Name="OrdersList"
+  Grid.Row="2"
+  Grid.Column="1"
+  Height="100"
+  ItemsSource="{Binding}"
+  SelectionChanged="OnOrderSelected" /&gt;</code></pre>
             <figcaption>Fig01-025</figcaption>
           </figure>
-
           <p>Ultimately we need to get a Collection into our ItemSource property and we can just use Binding here and
             that basically says, I'm expecting the DataContext for this ListBox to be a Collection of something I'm
             going to present. And by default, it will call ToString on each one of those objects if we don't do anything
@@ -577,7 +576,7 @@
             but Binding on its own like this:
           </p>
           <figure>
-            <pre><code class="language-">ItemsSource="{Binding}"</code></pre>
+            <pre><code class="language-csharp">ItemsSource="{Binding}"</code></pre>
             <figcaption>Fig01-025A</figcaption>
           </figure>
           <p>implies that the Source object is the DataContext and that we're not looking for any particular property on
@@ -587,11 +586,11 @@
             Then we could drop down to the DataGrid and do the same thing:
           </p>
           <figure>
-                <pre><code class="language-">&lt;DataGrid x:Name="OrderItemsDataGrid"
-    ItemsSource="{Binding}"
-    AutoGenerateColumns="True"
-    Grid.Row="2"&gt;
-                  &lt;/DataGrid&gt;</code></pre>
+                <pre><code class="language-csharp">&lt;DataGrid x:Name="OrderItemsDataGrid"
+  ItemsSource="{Binding}"
+  AutoGenerateColumns="True"
+  Grid.Row="2"&gt;
+&lt;/DataGrid&gt;</code></pre>
             <figcaption>Fig01-026</figcaption>
           </figure>
 
@@ -600,26 +599,26 @@
             little weird, because this implies that we have a different DataContext for the DataGrid:
           </p>
           <figure>
-                <pre><code class="language-">&lt;DataGrid x:Name="OrderItemsDataGrid"
-    ItemsSource="{Binding}"
-    AutoGenerateColumns="True"
-    Grid.Row="2"&gt;
-                  &lt;/DataGrid&gt;</code></pre>
+                <pre><code class="language-csharp">&lt;DataGrid x:Name="OrderItemsDataGrid"
+  ItemsSource="{Binding}"
+  AutoGenerateColumns="True"
+  Grid.Row="2"&gt;
+&lt;/DataGrid&gt;</code></pre>
             <figcaption>Fig01-026A</figcaption>
           </figure>
           <p>for the ListBox:</p>
           <figure>
-                <pre><code class="language-">&lt;ListBox x:Name="OrdersList"
-     Grid.Row="2"
-     Grid.Column="1"
-     Height="100"
-     ItemsSource="{Binding}"
-                  SelectionChanged="OnOrderSelected" /&gt;</code></pre>
+                <pre><code class="language-csharp">&lt;ListBox x:Name="OrdersList"
+  Grid.Row="2"
+  Grid.Column="1"
+  Height="100"
+  ItemsSource="{Binding}"
+  SelectionChanged="OnOrderSelected" /&gt;</code></pre>
             <figcaption>Fig01-026B</figcaption>
           </figure>
           <p>and for the customer-oriented controls up above:</p>
           <figure>
-<pre><code class="language-">&lt;Label x:Name="CustomerIdLabel"
+<pre><code class="language-csharp">&lt;Label x:Name="CustomerIdLabel"
     Grid.Row="0"
     Grid.Column="1"
     Content="{Binding Id}" /&gt;
@@ -629,7 +628,7 @@
 &lt;TextBox x:Name="CustomerLastNameTextBox"
     Grid.Row="1"
     Grid.Column="1"
-  Text="{Binding LastName}" /&gt;</code></pre>
+    Text="{Binding LastName}" /&gt;</code></pre>
             <figcaption>Fig01-026C</figcaption>
           </figure>
 
@@ -642,13 +641,12 @@
             set to something different at an element level.
           </p>
           <figure>
-                <pre><code class="language-">void MainWindow_Loaded(object sender, RoutedEventArgs e)
+                <pre><code class="language-csharp">void MainWindow_Loaded(object sender, RoutedEventArgs e)
 {
-
-    var firstCustomer = _ZzaContext.Customers.FirstOrDefault();
-    DataContext = firstCustomer;
-    //CustomerIdLabel.Content = firstCustomer.Id;
-                  //CustomerLastNameTextBox.Text = firstCustomer.LastName;</code></pre>
+  var firstCustomer = _ZzaContext.Customers.FirstOrDefault();
+  DataContext = firstCustomer;
+  //CustomerIdLabel.Content = firstCustomer.Id;
+  //CustomerLastNameTextBox.Text = firstCustomer.LastName;</code></pre>
             <figcaption>Fig01-027</figcaption>
           </figure>
           <p>
@@ -656,10 +654,10 @@
             list because the ItemsSource is being set through the binding now that we added in the XAML.
           </p>
           <figure>
-                <pre><code class="language-">var orderDates = _ZzaContext.Orders
-    .Where(o => o.CustomerId == firstCustomer.Id).Select(o => o.OrderDate).ToList();
+                <pre><code class="language-csharp">var orderDates = _ZzaContext.Orders
+  .Where(o => o.CustomerId == firstCustomer.Id).Select(o => o.OrderDate).ToList();
 //OrdersList.ItemsSource = orderDates;
-                  OrdersList.DataContext = orderDates;</code></pre>
+OrdersList.DataContext = orderDates;</code></pre>
             <figcaption>Fig01-028</figcaption>
           </figure>
           <p>
@@ -668,12 +666,12 @@
             ItemsSource property in the XAML will pick it up and render it.
           </p>
           <figure>
-<pre><code class="language-"> void OnOrderSelected(object sender, SelectionChangedEventArgs args)
-    {
-        var selectedOrder = _ZzaContext.Orders.Include("OrderItems")
-            .Where(o => o.OrderDate == (DateTime)OrdersList.SelectedItem &&
-                o.CustomerId == (Guid)CustomerIdLabel.Content).FirstOrDefault();
-        //OrderItemsDataGrid.ItemsSource = selectedOrder.OrderItems;
+<pre><code class="language-csharp">void OnOrderSelected(object sender, SelectionChangedEventArgs args)
+{
+  var selectedOrder = _ZzaContext.Orders.Include("OrderItems")
+    .Where(o => o.OrderDate == (DateTime)OrdersList.SelectedItem &&
+      o.CustomerId == (Guid)CustomerIdLabel.Content).FirstOrDefault();
+  //OrderItemsDataGrid.ItemsSource = selectedOrder.OrderItems;
   OrderItemsDataGrid.DataContext = selectedOrder.OrderItems;</code></pre>
             <figcaption>Fig01-029</figcaption>
           </figure>
@@ -683,17 +681,17 @@
             some column definitions that include just those columns that we want to do.
           </p>
           <figure>
-                    <pre><code class="language-">      AutoGenerateColumns="False"
-      Grid.Row="2">
-    &lt;DataGrid.Columns&gt;
-        &lt;DataGridTextColumn x:Name="idColumn"
-                            Binding="{Binding Id}"
-                            Header="Id"
-                            Width="SizeToHeader" /&gt;
-        &lt;DataGridTextColumn x:Name="instructionsColumn"
-                            Binding="{Binding Instructions}"
-                            Header="Instructions"
-                      Width="Auto" /&gt;</code></pre>
+                    <pre><code class="language-csharp">AutoGenerateColumns="False"
+Grid.Row="2">
+&lt;DataGrid.Columns&gt;
+    &lt;DataGridTextColumn x:Name="idColumn"
+                        Binding="{Binding Id}"
+                        Header="Id"
+                        Width="SizeToHeader" /&gt;
+    &lt;DataGridTextColumn x:Name="instructionsColumn"
+                        Binding="{Binding Instructions}"
+                        Header="Instructions"
+                        Width="Auto" /&gt;</code></pre>
             <figcaption>Fig01-030</figcaption>
           </figure>
           <p>
@@ -703,18 +701,18 @@
             bindings are assuming their DataContext has properties like Id, Instructions, ProductId, and so on.
           </p>
           <figure>
-                    <pre><code class="language-">      AutoGenerateColumns="False"
-      Grid.Row="2"&gt;
-    &lt;DataGrid.Columns&gt;
-        &lt;DataGridTextColumn x:Name="idColumn"
-                            Binding="{Binding Id}"
-                            Header="Id"
-                            Width="SizeToHeader" /&gt;
-        &lt;DataGridTextColumn x:Name="instructionsColumn"
-                            Binding="{Binding Instructions}"
-                            Header="Instructions"
+                    <pre><code class="language-csharp">AutoGenerateColumns="False"
+Grid.Row="2"&gt;
+&lt;DataGrid.Columns&gt;
+  &lt;DataGridTextColumn x:Name="idColumn"
+                      Binding="{Binding Id}"
+                      Header="Id"
+                      Width="SizeToHeader" /&gt;
+  &lt;DataGridTextColumn x:Name="instructionsColumn"
+                      Binding="{Binding Instructions}"
+                      Header="Instructions"
                       Width="Auto" /&gt;</code></pre>
-            <figcaption>Fig01-031</figcaption>
+              <figcaption>Fig01-031</figcaption>
           </figure>
           <p>
             That's because when a list-oriented control like a DataGrid, ListBox or ComboBox, renders out its items, it
@@ -728,10 +726,10 @@
             writing it this way.
           </p>
           <figure>
-                <pre><code class="language-">&lt;DataGridTextColumn x:Name="idColumn"
-    Binding="{Binding Path=Id}"
-    Header="Id"
-                  Width="SizeToHeader" /&gt;</code></pre>
+                <pre><code class="language-csharp">&lt;DataGridTextColumn x:Name="idColumn"
+  Binding="{Binding Path=Id}"
+  Header="Id"
+  Width="SizeToHeader" /&gt;</code></pre>
             <figcaption>Fig01-032</figcaption>
           </figure>
           <p>
@@ -751,14 +749,14 @@
             So if we drop into the code-behind here we can clean up those commented lines of code.
           </p>
           <figure>
-                <pre><code class="language-">private void OnSave(object sender, RoutedEventArgs e)
+                <pre><code class="language-csharp">private void OnSave(object sender, RoutedEventArgs e)
 {
-    //var customer = _ZzaContext.Customers.Where(c => c.Id == (Guid)(CustomerIdLabel.Content)).FirstOrDefault();
-    //customer.LastName = CustomerLastNameTextBox.Text;
-    // Get all the other editable field values...
-    // Persist those changes somewhere
-    _ZzaContext.SaveChanges();
-                  }</code></pre>
+  //var customer = _ZzaContext.Customers.Where(c => c.Id == (Guid)(CustomerIdLabel.Content)).FirstOrDefault();
+  //customer.LastName = CustomerLastNameTextBox.Text;
+  // Get all the other editable field values...
+  // Persist those changes somewhere
+  _ZzaContext.SaveChanges();
+}</code></pre>
             <figcaption>Fig01-034</figcaption>
           </figure>
 
@@ -771,10 +769,10 @@
             save changes here and not have to do any pushing and pulling anymore.
           </p>
           <figure>
-                <pre><code class="language-">private void OnSave(object sender, RoutedEventArgs e)
+                <pre><code class="language-csharp">private void OnSave(object sender, RoutedEventArgs e)
 {
-    _ZzaContext.SaveChanges();
-                  }</code></pre>
+  _ZzaContext.SaveChanges();
+}</code></pre>
             <figcaption>Fig01-035</figcaption>
           </figure>
           <p>
@@ -785,7 +783,7 @@
             for other properties on a customer
           </p>
           <figure>
-<pre><code class="language-">&lt;Label Grid.Row=&quot;1&quot;
+<pre><code class="language-csharp">&lt;Label Grid.Row=&quot;1&quot;
     Grid.Column=&quot;0&quot;
     Content=&quot;Customer Last Name&quot; /&gt;
 &lt;TextBox Text=&quot;{Binding LastName}&quot;
@@ -808,7 +806,7 @@
     Content=&quot;Customer Email&quot; /&gt;
 &lt;TextBox Text=&quot;{Binding Email}&quot;
     Grid.Row=&quot;4&quot;
-  Grid.Column=&quot;1&quot; /&gt;</code></pre>
+    Grid.Column=&quot;1&quot; /&gt;</code></pre>
             <figcaption>Fig01-036</figcaption>
           </figure>
           <p>
@@ -853,7 +851,7 @@
             separate DataContext on the DataGrid itself.
           </p>
           <figure>
-<pre><code class="language-">public MainWindow()
+<pre><code class="language-csharp">public MainWindow()
 {
     InitializeComponent();
     Loaded += MainWindow_Loaded;
@@ -868,7 +866,7 @@ void MainWindow_Loaded(object sender, RoutedEventArgs e)
     var orderDates = _ZzaContext.Orders
         .Where(o => o.CustomerId == firstCustomer.Id).Select(o => o.OrderDate).ToList();
     OrdersList.DataContext = orderDates;
-  }</code></pre>
+}</code></pre>
             <figcaption>Fig01-038</figcaption>
           </figure>
           <p>
@@ -884,7 +882,7 @@ void MainWindow_Loaded(object sender, RoutedEventArgs e)
             screen, all just exposed as properties on that ViewModel.
           </p>
           <figure>
-                <pre><code class="language-">namespace DataBindingBasics
+                <pre><code class="language-csharp">namespace DataBindingBasics
 {
     public class MainWindowViewModel
     {
@@ -892,7 +890,7 @@ void MainWindow_Loaded(object sender, RoutedEventArgs e)
         public List&lt;DateTime&gt; OrderDates { get; set; }
         public List&lt;OrderItem&gt; OrderItems { get; set; }
     }
-                  }</code></pre>
+}</code></pre>
             <figcaption>Fig01-039</figcaption>
           </figure>
 
@@ -910,9 +908,9 @@ void MainWindow_Loaded(object sender, RoutedEventArgs e)
             this DataContext setting
           </p>
           <figure>
-                <pre><code class="language-">var firstCustomer = _ZzaContext.Customers.FirstOrDefault();
+                <pre><code class="language-csharp">var firstCustomer = _ZzaContext.Customers.FirstOrDefault();
 _ViewModel.Customer = firstCustomer;
-                  DataContext = firstCustomer;</code></pre>
+DataContext = firstCustomer;</code></pre>
             <figcaption>Fig01-040</figcaption>
           </figure>
           <p>
@@ -921,22 +919,21 @@ _ViewModel.Customer = firstCustomer;
             for the current Order.
           </p>
           <figure>
-                <pre><code class="language-"> void MainWindow_Loaded(object sender, RoutedEventArgs e)
+                <pre><code class="language-csharp"> void MainWindow_Loaded(object sender, RoutedEventArgs e)
 {
+  var firstCustomer = _ZzaContext.Customers.FirstOrDefault();
+  _ViewModel.Customer = firstCustomer;
 
-    var firstCustomer = _ZzaContext.Customers.FirstOrDefault();
-    _ViewModel.Customer = firstCustomer;
-
-    var orderDates = _ZzaContext.Orders
-        .Where(o => o.CustomerId == firstCustomer.Id).Select(o => o.OrderDate).ToList();
-    _ViewModel.OrderDates = orderDates;
+  var orderDates = _ZzaContext.Orders
+      .Where(o => o.CustomerId == firstCustomer.Id).Select(o => o.OrderDate).ToList();
+  _ViewModel.OrderDates = orderDates;
 
 void OnOrderSelected(object sender, SelectionChangedEventArgs args)
 {
-    var selectedOrder = _ZzaContext.Orders.Include("OrderItems")
-        .Where(o => o.OrderDate == (DateTime)OrdersList.SelectedItem &&
-            o.CustomerId == (Guid)CustomerIdLabel.Content).FirstOrDefault();
-    _ViewModel.OrderItems = selectedOrder.OrderItems.ToList();
+  var selectedOrder = _ZzaContext.Orders.Include("OrderItems")
+      .Where(o => o.OrderDate == (DateTime)OrdersList.SelectedItem &&
+          o.CustomerId == (Guid)CustomerIdLabel.Content).FirstOrDefault();
+  _ViewModel.OrderItems = selectedOrder.OrderItems.ToList();
                 </code></pre>
             <figcaption>Fig01-041</figcaption>
           </figure>
@@ -945,10 +942,10 @@ void OnOrderSelected(object sender, SelectionChangedEventArgs args)
             DataContext will be set at a window level and it'll flow down to all of the child controls.
           </p>
           <figure>
-                <pre><code class="language-">var orderDates = _ZzaContext.Orders
-    .Where(o => o.CustomerId == firstCustomer.Id).Select(o => o.OrderDate).ToList();
+                <pre><code class="language-csharp">var orderDates = _ZzaContext.Orders
+  .Where(o => o.CustomerId == firstCustomer.Id).Select(o => o.OrderDate).ToList();
 _ViewModel.OrderDates = orderDates;
-                  DataContext = _ViewModel;</code></pre>
+DataContext = _ViewModel;</code></pre>
             <figcaption>Fig01-042</figcaption>
           </figure>
           <p>
@@ -958,12 +955,12 @@ _ViewModel.OrderDates = orderDates;
             here, and so on.
           </p>
           <figure>
-                <pre><code class="language-">&lt;Label Grid.Row="1"
-   Grid.Column="0"
-   Content="Customer Last Name" />
+                <pre><code class="language-csharp">&lt;Label Grid.Row="1"
+  Grid.Column="0"
+  Content="Customer Last Name" />
 &lt;TextBox Text="{Binding Customer.LastName}"
-   Grid.Row="1"
-                  Grid.Column="1" /&gt;</code></pre>
+  Grid.Row="1"
+  .Column="1" /&gt;</code></pre>
             <figcaption>Fig01-043</figcaption>
           </figure>
           <p>
@@ -972,18 +969,18 @@ _ViewModel.OrderDates = orderDates;
             our ViewModel
           </p>
           <figure>
-                <pre><code class="language-">&lt;Grid DataContext="{Binding Customer}"&gt;
-    &lt;Grid.ColumnDefinitions&gt;
-        &lt;ColumnDefinition Width="Auto" /&gt;
-        &lt;ColumnDefinition Width="*" /&gt;
-    &lt;/Grid.ColumnDefinitions&gt;
-    &lt;Grid.RowDefinitions&gt;
-        &lt;RowDefinition Height="Auto" /&gt;
-        &lt;RowDefinition Height="Auto" /&gt;
-        &lt;RowDefinition Height="Auto" /&gt;
-        &lt;RowDefinition Height="Auto" /&gt;
-                  &lt;/Grid.RowDefinitions&gt;</code></pre>
-            <figcaption>Fig01-044</figcaption>
+                <pre><code class="language-csharp">&lt;Grid DataContext="{Binding Customer}"&gt;
+  &lt;Grid.ColumnDefinitions&gt;
+      &lt;ColumnDefinition Width="Auto" /&gt;
+      &lt;ColumnDefinition Width="*" /&gt;
+  &lt;/Grid.ColumnDefinitions&gt;
+  &lt;Grid.RowDefinitions&gt;
+      &lt;RowDefinition Height="Auto" /&gt;
+      &lt;RowDefinition Height="Auto" /&gt;
+      &lt;RowDefinition Height="Auto" /&gt;
+      &lt;RowDefinition Height="Auto" /&gt;
+      &lt;/Grid.RowDefinitions&gt;</code></pre>
+  <figcaption>Fig01-044</figcaption>
           </figure>
           <p>
             So it basically grabs that object reference, sets it as DataContext, and everything under this grid now will
@@ -994,23 +991,23 @@ _ViewModel.OrderDates = orderDates;
             ViewModel:
           </p>
           <figure>
-                <pre><code class="language-">&lt;ListBox x:Name="OrdersList"
-    ItemsSource="{Binding OrderDates}"
-    Grid.Row="0"
-    Grid.Column="1"
-    Height="100"
-                  SelectionChanged="OnOrderSelected" /></code></pre>
+                <pre><code class="language-csharp">&lt;ListBox x:Name="OrdersList"
+  ItemsSource="{Binding OrderDates}"
+  Grid.Row="0"
+  Grid.Column="1"
+  Height="100"
+  SelectionChanged="OnOrderSelected" /></code></pre>
             <figcaption>Fig01-045</figcaption>
           </figure>
           <p>
             And go down to the DataGrid and change that one to point to the OrderItems.
           </p>
           <figure>
-                <pre><code class="language-">&lt;DataGrid x:Name="OrderItemsDataGrid"
-    ItemsSource="{Binding OrderItems}"
-    AutoGenerateColumns="False"
-    Grid.Row="2"&gt;
-                  &lt;DataGrid.Columns&gt;</code></pre>
+                <pre><code class="language-csharp">&lt;DataGrid x:Name="OrderItemsDataGrid"
+  ItemsSource="{Binding OrderItems}"
+  AutoGenerateColumns="False"
+  Grid.Row="2"&gt;
+&lt;DataGrid.Columns&gt;</code></pre>
             <figcaption>Fig01-046</figcaption>
           </figure>
 
@@ -1030,12 +1027,11 @@ _ViewModel.OrderDates = orderDates;
             when our event handler fires, the Data Binding doesn't know anything about it.
           </p>
           <figure>
-                <pre><code class="language-">public Customer Customer { get; set; }
+                <pre><code class="language-csharp">public Customer Customer { get; set; }
 public List&lt;DateTime&gt; OrderDates { get; set; }
-                  public List&lt;OrderItem&gt; OrderItems { get; set; }</code></pre>
+public List&lt;OrderItem&gt; OrderItems { get; set; }</code></pre>
             <figcaption>Fig01-048</figcaption>
           </figure>
-
           <p>
             Now as a quick workaround and to show you something we'll cover later in the course, we could force it to
             update. If you've worked with older technologies like Windows Forms, you may have seen methods called
@@ -1044,8 +1040,8 @@ public List&lt;DateTime&gt; OrderDates { get; set; }
             workaround at this point.
           </p>
           <figure>
-                <pre><code class="language-">OrderItemsDataGrid.GetBindingExpression(DataGrid.ItemsSourceProperty)
-                  .UpdateTarget();</code></pre>
+                <pre><code class="language-csharp">OrderItemsDataGrid.GetBindingExpression(DataGrid.ItemsSourceProperty)
+  .UpdateTarget();</code></pre>
             <figcaption>Fig01-049</figcaption>
           </figure>
           <p>
@@ -1056,11 +1052,11 @@ public List&lt;DateTime&gt; OrderDates { get; set; }
             object here.
           </p>
           <figure>
-                <pre><code class="language-">&lt;DataGrid x:Name="OrderItemsDataGrid"
-    ItemsSource="{Binding OrderItems}"
-    AutoGenerateColumns="False"
-    Grid.Row="2"&gt;
-                  &lt;DataGrid.Columns&gt;</code></pre>
+                <pre><code class="language-csharp">&lt;DataGrid x:Name="OrderItemsDataGrid"
+  ItemsSource="{Binding OrderItems}"
+  AutoGenerateColumns="False"
+  Grid.Row="2"&gt;
+&lt;DataGrid.Columns&gt;</code></pre>
             <figcaption>Fig01-050</figcaption>
           </figure>
           <p>

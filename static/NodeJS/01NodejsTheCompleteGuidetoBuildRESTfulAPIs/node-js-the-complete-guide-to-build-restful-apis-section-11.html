@@ -40,18 +40,18 @@
         <p>Let's demonstrate with a real world scenario where the MongoDB server dies. So, here in
           the terminal, we are running the application with nodemon:</p>
         <figure>
-          <img src="images/Fig11-001.PNG"/>
+          <img src="images/Fig11-001.png"/>
           <figcaption>Fig 11-001</figcaption>
         </figure>
         <p>and we also have another terminal window open running the Mongo Daemon:</p>
         <figure>
-          <img src="images/Fig11-002.PNG"/>
+          <img src="images/Fig11-002.png"/>
           <figcaption>Fig 11-002</figcaption>
         </figure>
         <p>This is the background service that is running on port 27017:</p>
         <p>In Postman we have a tab open to send a get request to api/genres:</p>
         <figure>
-          <img src="images/Fig11-003.PNG"/>
+          <img src="images/Fig11-003.png"/>
           <figcaption>Fig 11-003</figcaption>
         </figure>
         <p>Currently if we send this request we get a 200 response and some result(s) displayed in
@@ -61,7 +61,7 @@
           Send button in postman should change to Sending... and after approx 30 seconds (although I
           got a message immediately saying):</p>
         <figure>
-          <img src="images/Fig11-004.PNG"/>
+          <img src="images/Fig11-004.png"/>
           <figcaption>Fig 11-004</figcaption>
         </figure>
         <p>This means that the connection was interrupted whilst MongoDB was being written to) you
@@ -70,7 +70,7 @@
           driver will attempt to reconnect 30 times in 1 second intervals. Look at the warning in
           the terminal:</p>
         <figure>
-          <img src="images/Fig11-005.PNG"/>
+          <img src="images/Fig11-005.png"/>
           <figcaption>Fig 11-005</figcaption>
         </figure>
         <p>This means in future versions of Node the application will stop running if it encounters
@@ -130,13 +130,13 @@ catch (ex) {
         <p>We will add logging later in this section. Start the mongo demon and then run the vidly
           application, stop the mongo demon and then submit a get genres request from postman:</p>
         <figure>
-          <img src="images/Fig11-011.PNG"/>
+          <img src="images/Fig11-011.png"/>
           <figcaption>Fig 11-011</figcaption>
         </figure>
         <p>Now in Postman after about 30 seconds you should see a response status 500 and the
           message:</p>
         <figure>
-          <img src="images/Fig11-012.PNG"/>
+          <img src="images/Fig11-012.png"/>
           <figcaption>Fig 11-012</figcaption>
         </figure>
         <p>Importantly if you look at the terminal window that you used to launch the vidly
@@ -497,13 +497,13 @@ catch(ex) {
         <p>Now test by running mongod in the terminal, start the vidly application and get all the
           genres in postman to check that endpoint is working:</p>
         <figure>
-          <img src="images/Fig11-046.PNG"/>
+          <img src="images/Fig11-046.png"/>
           <figcaption>Fig 11-046</figcaption>
         </figure>
         <p>Now stop mongodb and retry the get genres request in postman. After a fairly long period
           of time you should receive a status 500 internal server error along with the message:</p>
         <figure>
-          <img src="images/Fig11-047.PNG"/>
+          <img src="images/Fig11-047.png"/>
           <figcaption>Fig 11-047</figcaption>
         </figure>
         <p>This verifies that the module we installed properly moved control from our route handler
@@ -597,13 +597,13 @@ catch(ex) {
         <p>So let's run the application and get genres in postman - you should see the response code
           500 - internal server error.</p>
         <figure>
-          <img src="images/Fig11-055.PNG"/>
+          <img src="images/Fig11-055.png"/>
           <figcaption>Fig 11-055</figcaption>
         </figure>
         <p>In the console you will see the error: Could not get the genres. You will also see the
           stack trace below (which is part of the err object):</p>
         <figure>
-          <img src="images/Fig11-056.PNG"/>
+          <img src="images/Fig11-056.png"/>
           <figcaption>Fig 11-056</figcaption>
         </figure>
         <p>So this is the console transport which is configured on the default logger</p>
@@ -650,7 +650,7 @@ catch(ex) {
           application again and submit a get genres request in postman. If you now look in
           MongoDBCompass if you refresh you should see a log collection with one object:</p>
         <figure>
-          <img src="images/Fig11-061.PNG"/>
+          <img src="images/Fig11-061.png"/>
           <figcaption>Fig 11-061</figcaption>
         </figure>
         <p>You can see a timestamp, an error level, a message and a meta object. The meta property
@@ -702,7 +702,7 @@ catch(ex) {
         </figure>
         <p>In the terminal we see our error:</p>
         <figure>
-          <img src="images/Fig11-065.PNG"/>
+          <img src="images/Fig11-065.png"/>
           <figcaption>Fig 11-065</figcaption>
         </figure>
         <p>If you check the logfile.log it will still be empty. So if you deployed this application
@@ -729,7 +729,7 @@ catch(ex) {
         </figure>
         <p>Back in the terminal run the application again:</p>
         <figure>
-          <img src="images/Fig11-067.PNG"/>
+          <img src="images/Fig11-067.png"/>
           <figcaption>Fig 11-067</figcaption>
         </figure>
         <p>Notice this time the process doesn't terminate because we caught the exception. The
@@ -786,7 +786,7 @@ catch(ex) {
         <p>but I wont call catch() So we will have an unhandled rejection.</p>
         <p>So if we run the application again we will get an UnhandledPromiseRejectionWarning:</p>
         <figure>
-          <img src="images/Fig11-073.PNG"/>
+          <img src="images/Fig11-073.png"/>
           <figcaption>Fig 11-073</figcaption>
         </figure>
         <p>Currently the application will continue to run but remember that Unhandled promise
@@ -802,12 +802,12 @@ catch(ex) {
         </figure>
         <p>If we run the application again we will see the unhandled promise rejection:</p>
         <figure>
-          <img src="images/Fig11-075.PNG"/>
+          <img src="images/Fig11-075.png"/>
           <figcaption>Fig 11-075</figcaption>
         </figure>
         <p>The logfile.log will also show our unhandled promise rejection:</p>
         <figure>
-          <img src="images/Fig11-076.PNG"/>
+          <img src="images/Fig11-076.png"/>
           <figcaption>Fig 11-076</figcaption>
         </figure>
         <p>As a best practice whether you are dealing with an uncaught exception or an unhandled
@@ -1008,13 +1008,13 @@ module.exports = function() {
         <p>So stop mongod and then run the application you should see an exception thrown in the
           console window where the app was started:</p>
         <figure>
-          <img src="images/Fig11-093.PNG"/>
+          <img src="images/Fig11-093.png"/>
           <figcaption>Fig 11-093</figcaption>
         </figure>
         <p>You should also see that the exception has been logged in the uncaughtExceptions
           file:</p>
         <figure>
-          <img src="images/Fig11-094.PNG"/>
+          <img src="images/Fig11-094.png"/>
           <figcaption>Fig 11-094</figcaption>
         </figure>
         <p>
@@ -1033,7 +1033,7 @@ module.exports = function() {
         </figure>
         <p>Now in index.js take the code for setting up winston:</p>
         <figure>
-          <img src="images/Fig11-096.PNG"/>
+          <img src="images/Fig11-096.png"/>
           <figcaption>Fig 11-096</figcaption>
         </figure>
         <p>and move it to logging.js within the function.</p>
@@ -1142,7 +1142,7 @@ Joi.objectId = require('joi-objectid')(Joi);</code></pre>
 </figure>
         <p>Run the application:</p>
 <figure>
-  <img src="images/Fig11-110.PNG"/>
+  <img src="images/Fig11-110.png"/>
   <figcaption>Fig 11-110</figcaption>
 </figure>
         <p>These are the two info messages coming from winston.</p>
@@ -1166,7 +1166,7 @@ Joi.objectId = require('joi-objectid')(Joi);</code></pre>
         <p>Now if you run the application again on the new machine you will see the exception on the
           console (in this case jwtPrivateKey is not defined)</p>
         <figure>
-          <img src="images/Fig11-113.PNG"/>
+          <img src="images/Fig11-113.png"/>
           <figcaption>Fig 11-113</figcaption>
         </figure>
         <h3>159 - Recap</h3>

@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
   <meta charset="UTF-8">
-  <title>maxsagetech - Vue JS Fundamentals</title>
+  <title>maxsagetech - WPF Databinding In Depth</title>
   <script src="https://unpkg.com/vue"></script>
   <!--<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"-->
   <!--integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">-->
@@ -18,6 +18,7 @@
   </style>
 </head>
 <body>
+  <div class="container">
   <div class="panel-group">
     <div class="panel panel-primary">
       <div class="panel-heading">
@@ -115,7 +116,7 @@
           objects for the data entities:
         </p>
         <figure>
-                <pre class="prettyprint">namespace Zza.Data
+                <pre><code class="language-csharp">namespace Zza.Data
 {
     public class Customer
     {
@@ -138,12 +139,12 @@
         public List&lt;Order&gt; Orders { get; set; }
     }
 }
-                </pre>
+                </code></pre>
           <figcaption>Fig 03-002</figcaption>
         </figure>
         <p>And it's got a DBContext and an Entity Framework DBContext that we're doing the data access through.</p>
         <figure>
-                <pre class="prettyprint">public class ZzaDbContext : DbContext
+                <pre><code class="language-csharp">public class ZzaDbContext : DbContext
 {
     public DbSet&lt;Customer&gt; Customers { get; set; }
     public DbSet&lt;Order&gt; Orders { get; set; }
@@ -152,7 +153,7 @@
     public DbSet&lt;OrderItemOption&gt; OrderItemOptions { get; set; }
     public DbSet&lt;ProductOption&gt; ProductOptions { get; set; }
     public DbSet&lt;ProductSize&gt; ProductSizes { get; set; }
-    public DbSet&lt;OrderStatus&gt; OrderStatuses { get; set; }</pre>
+    public DbSet&lt;OrderStatus&gt; OrderStatuses { get; set; }</code></pre>
           <figcaption>Fig 03-003</figcaption>
         </figure>
         <p>
@@ -164,7 +165,7 @@
           and each of the columns is bound to properties on the individual Customer object that's being rendered out.
         </p>
         <figure>
-                <pre class="prettyprint">&lt;DataGrid x:Name=&quot;customerDataGrid&quot;
+                <pre><code class="language-csharp">&lt;DataGrid x:Name=&quot;customerDataGrid&quot;
       Grid.Row=&quot;1&quot;
       ItemsSource=&quot;{Binding Source={StaticResource customerViewSource}}&quot;
       AutoGenerateColumns=&quot;False&quot;
@@ -186,7 +187,7 @@
     &lt;DataGridTextColumn x:Name=&quot;emailColumn&quot;
                         Width=&quot;Auto&quot;
                         Header=&quot;Email&quot;
-                        Binding=&quot;{Binding Email}&quot; /&gt;</pre>
+                        Binding=&quot;{Binding Email}&quot; /&gt;</code></pre>
           <figcaption>Fig 03-004</figcaption>
         </figure>
         <p>
@@ -196,7 +197,7 @@
           code-behind.
         </p>
         <figure>
-                <pre class="prettyprint">public MainWindow()
+                <pre><code class="language-csharp">public MainWindow()
 {
     InitializeComponent();
     using (ZzaDbContext context = new ZzaDbContext())
@@ -216,7 +217,7 @@ public static readonly DependencyProperty CustomersProperty =
     DependencyProperty.Register(&quot;Customers&quot;,
     typeof(ObservableCollection&lt;Customer&gt;),
     typeof(MainWindow),
-    new PropertyMetadata(null));</pre>
+    new PropertyMetadata(null));</code></pre>
           <figcaption>Fig 03-005</figcaption>
         </figure>
         <p>
@@ -233,7 +234,7 @@ public static readonly DependencyProperty CustomersProperty =
           So I'll delete that from the code-behind:
         </p>
         <figure>
-                <pre class="prettyprint">public MainWindow()
+                <pre><code class="language-csharp">public MainWindow()
 {
     InitializeComponent();
     using (ZzaDbContext context = new ZzaDbContext())
@@ -241,7 +242,7 @@ public static readonly DependencyProperty CustomersProperty =
         Customers = new ObservableCollection&lt;Customer&gt;(context.Customers);
     }
     DataContext = this;
-}</pre>
+}</code></pre>
           <figcaption>Fig 03-006</figcaption>
         </figure>
         <p>
@@ -250,7 +251,7 @@ public static readonly DependencyProperty CustomersProperty =
           DataContext as its Source object.
         </p>
         <figure>
-          <pre class="prettyprint">DataContext=&quot;{Binding RelativeSource={RelativeSource Self}}&quot;</pre>
+          <pre><code class="language-csharp">DataContext=&quot;{Binding RelativeSource={RelativeSource Self}}&quot;</code></pre>
           <figcaption>Fig 03-007</figcaption>
         </figure>
         <p>
@@ -278,10 +279,10 @@ public static readonly DependencyProperty CustomersProperty =
           possibly deletes it from our database.
         </p>
         <figure>
-                <pre class="prettyprint">private void OnDeleteCustomer(Customer customer)
+                <pre><code class="language-csharp">private void OnDeleteCustomer(Customer customer)
 {
     Customers.Remove(customer);
-}</pre>
+}</code></pre>
           <figcaption>Fig 03-008</figcaption>
         </figure>
         <p>In this case, I'm just going to remove it from the data bound collection, and we need a way to target that
@@ -292,7 +293,7 @@ public static readonly DependencyProperty CustomersProperty =
           here called DeleteCustomerCommand:
         </p>
         <figure>
-                <pre class="prettyprint">public RelayCommand&lt;Customer&gt; DeleteSelectedCommand
+                <pre><code class="language-csharp">public RelayCommand&lt;Customer&gt; DeleteSelectedCommand
 {
     get { return (RelayCommand&lt;Customer&gt;)GetValue(DeleteSelectedCommandProperty); }
     set { SetValue(DeleteSelectedCommandProperty, value); }
@@ -302,7 +303,7 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
     DependencyProperty.Register(&quot;DeleteSelectedCommand&quot;,
     typeof(RelayCommand&lt;Customer&gt;),
     typeof(MainWindow),
-    new PropertyMetadata(null));</pre>
+    new PropertyMetadata(null));</code></pre>
           <figcaption>Fig 03-009</figcaption>
         </figure>
         <p>
@@ -311,7 +312,7 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
           can target some other object's method and invoke it when this Command object gets executed.
         </p>
         <figure>
-                <pre class="prettyprint">    public class RelayCommand : ICommand
+                <pre><code class="language-csharp">    public class RelayCommand : ICommand
     {
         Action _TargetExecuteMethod;
         Func&lt;bool&gt; _TargetCanExecuteMethod;
@@ -358,7 +359,7 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
             }
         }
         #endregion
-    }</pre>
+    }</code></pre>
           <figcaption>Fig 03-010</figcaption>
         </figure>
         <p>
@@ -366,10 +367,10 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
           we're going to be targeting is our DeleteCustomer method and some other object will be the Window itself.
         </p>
         <figure>
-                <pre class="prettyprint">private void OnDeleteCustomer(Customer customer)
+                <pre><code class="language-csharp">private void OnDeleteCustomer(Customer customer)
 {
     Customers.Remove(customer);
-}</pre>
+}</code></pre>
           <figcaption>Fig 03-011</figcaption>
         </figure>
         <p>
@@ -378,7 +379,7 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
           that property to an instance of the RelayCommand:
         </p>
         <figure>
-                <pre class="prettyprint">public MainWindow()
+                <pre><code class="language-csharp">public MainWindow()
 {
     InitializeComponent();
     using (ZzaDbContext context = new ZzaDbContext())
@@ -387,7 +388,7 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
     }
     DeleteCustomerCommand = new RelayCommand&lt;Customer&gt;(OnDeleteCustomer);
     DeleteSelectedCommand = new RelayCommand&lt;Customer&gt;(OnDeleteCustomer, CanDeleteCustomer);
-}</pre>
+}</code></pre>
           <figcaption>Fig 03-012</figcaption>
         </figure>
         <p>
@@ -403,7 +404,7 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
           in here and add a new column at the front here.
         </p>
         <figure>
-                <pre class="prettyprint">&lt;DataGrid x:Name=&quot;customerDataGrid&quot;
+                <pre><code class="language-csharp">&lt;DataGrid x:Name=&quot;customerDataGrid&quot;
             Grid.Row=&quot;1&quot;
             AutoGenerateColumns=&quot;False&quot;
             ItemsSource=&quot;{Binding Customers}&quot;
@@ -419,7 +420,7 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
             &lt;/DataGridTemplateColumn.CellTemplate&gt;
         &lt;/DataGridTemplateColumn&gt;
     &lt;/DataGrid.Columns&gt;
-&lt;/DataGrid&gt;</pre>
+&lt;/DataGrid&gt;</code></pre>
           <figcaption>Fig 03-013</figcaption>
         </figure>
         <p>
@@ -436,7 +437,7 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
           property on them which we can use to set a binding:
         </p>
         <figure>
-          <pre class="prettyprint">&lt;Button Command=&quot;{Binding}&quot; Content=&quot;Delete&quot; /&gt;</pre>
+          <pre><code class="language-csharp">&lt;Button Command=&quot;{Binding}&quot; Content=&quot;Delete&quot; /&gt;</code></pre>
           <figcaption>Fig 03-014</figcaption>
         </figure>
         <p>
@@ -457,10 +458,10 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
           to get to some parent element and then look at properties on it.
         </p>
         <figure>
-                <pre class="prettyprint">&lt;Button Command=&quot;{Binding
+                <pre><code class="language-csharp">&lt;Button Command=&quot;{Binding
     RelativeSource={RelativeSource AncestorType=DataGrid},
     Path=DataContext.DeleteCustomerCommand}&quot;
-    Content="Delete" /></pre>
+    Content="Delete" /></code></pre>
           <figcaption>Fig 03-015</figcaption>
         </figure>
         <p>
@@ -494,11 +495,11 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
           one we want to delete.
         </p>
         <figure>
-                <pre class="prettyprint">&lt;Button Command=&quot;{Binding
+                <pre><code class="language-csharp">&lt;Button Command=&quot;{Binding
     RelativeSource={RelativeSource AncestorType=DataGrid},
     Path=DataContext.DeleteCustomerCommand}&quot;
     CommandParameter="{Binding}"
-    Content="Delete" /></pre>
+    Content="Delete" /></code></pre>
           <figcaption>Fig 03-016</figcaption>
         </figure>
         <p>
@@ -549,7 +550,7 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
         </p>
         <p>So I'm going to add a DeleteSelectedCommand that's also a RelayCommand&lt;Customer&gt;:</p>
         <figure>
-                <pre class="prettyprint">public RelayCommand&lt;Customer&gt; DeleteSelectedCommand
+                <pre><code class="language-csharp">public RelayCommand&lt;Customer&gt; DeleteSelectedCommand
 {
     get { return (RelayCommand&lt;Customer&gt;)GetValue(DeleteSelectedCommandProperty); }
     set { SetValue(DeleteSelectedCommandProperty, value); }
@@ -559,7 +560,7 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
     DependencyProperty.Register(&quot;DeleteSelectedCommand&quot;,
     typeof(RelayCommand&lt;Customer&gt;),
     typeof(MainWindow),
-    new PropertyMetadata(null));</pre>
+    new PropertyMetadata(null));</code></pre>
           <figcaption>Fig 03-018</figcaption>
         </figure>
         <p>And we're going to end up targeting that same OnDeleteCustomer as the Execute method for that command. We're
@@ -567,7 +568,7 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
           to an instance of a RelayCommand:
         </p>
         <figure>
-          <pre class="prettyprint">DeleteSelectedCommand = new RelayCommand&lt;Customer&gt;(OnDeleteCustomer, CanDeleteCustomer);</pre>
+          <pre><code class="language-csharp">DeleteSelectedCommand = new RelayCommand&lt;Customer&gt;(OnDeleteCustomer, CanDeleteCustomer);</code></pre>
           <figcaption>Fig 03-019</figcaption>
         </figure>
         <p>But this one's going to pass an extra method here to the constructor of the RelayCommand.</p>
@@ -577,10 +578,10 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
         </p>
         <p>That method takes this kind of signature:</p>
         <figure>
-                <pre class="prettyprint">private bool CanDeleteCustomer(Customer customer)
+                <pre><code class="language-csharp">private bool CanDeleteCustomer(Customer customer)
 {
     return customerDataGrid.SelectedItem != null;
-}</pre>
+}</code></pre>
           <figcaption>Fig 03-020</figcaption>
         </figure>
         <p>It takes in the same parameter as the Execute method does, a Customer, and it returns a Boolean. The Boolean,
@@ -597,10 +598,10 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
           is modified.
         </p>
         <figure>
-                <pre class="prettyprint">private void customerDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+                <pre><code class="language-csharp">private void customerDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
 {
     DeleteSelectedCommand.RaiseCanExecuteChanged();
-}</pre>
+}</code></pre>
           <figcaption>Fig 03-021</figcaption>
         </figure>
         <p>So we have our SelectionChanged handler for DataGrid, we can just call that anytime Selection changes, and
@@ -614,10 +615,10 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
           right on top of our DataGrid and be a Delete button:
         </p>
         <figure>
-                <pre class="prettyprint">&lt;StackPanel Grid.Row=&quot;0&quot;
+                <pre><code class="language-csharp">&lt;StackPanel Grid.Row=&quot;0&quot;
             Orientation=&quot;Horizontal&quot;&gt;
     &lt;Button Content=&quot;Delete&quot; /&gt;
-&lt;/StackPanel&gt;</pre>
+&lt;/StackPanel&gt;</code></pre>
           <figcaption>Fig 03-022</figcaption>
         </figure>
         <p>Now we need to hook this up to our command. Well hooking it up to the Command is actually easier here than it
@@ -628,10 +629,10 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
           straightforward binding that goes to the DeleteSelectedCommand:
         </p>
         <figure>
-                <pre class="prettyprint">&lt;StackPanel Grid.Row=&quot;0&quot;
+                <pre><code class="language-csharp">&lt;StackPanel Grid.Row=&quot;0&quot;
             Orientation=&quot;Horizontal&quot;&gt;
     &lt;Button Content=&quot;Delete&quot; Command="{Binding DeleteSelectedCommand}" /&gt;
-&lt;/StackPanel&gt;</pre>
+&lt;/StackPanel&gt;</code></pre>
           <figcaption>Fig 03-023</figcaption>
         </figure>
         <p>Now we also need to pass a CommandParameter, so I'm also going to use the CommandParameter property and set
@@ -641,12 +642,12 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
           say ElementName=customerDataGrid, which you can see down below is the x:Name of the DataGrid:
         </p>
         <figure>
-                <pre class="prettyprint">&lt;StackPanel Grid.Row=&quot;0&quot;
+                <pre><code class="language-csharp">&lt;StackPanel Grid.Row=&quot;0&quot;
             Orientation=&quot;Horizontal&quot;&gt;
     &lt;Button Content=&quot;Delete&quot;
             Command=&quot;{Binding DeleteSelectedCommand}&quot;
             CommandParameter=&quot;{Binding ElementName=customerDataGrid, Path=SelectedItem}&quot; /&gt;
-&lt;/StackPanel&gt;</pre>
+&lt;/StackPanel&gt;</code></pre>
           <figcaption>Fig 03-024</figcaption>
         </figure>
         <p>That makes that the Source object for this binding and then I just need the Path to point to the SelectedItem
@@ -688,12 +689,12 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
           customers down into my DataGrid here:
         </p>
         <figure>
-                <pre class="prettyprint">&lt;DataGrid x:Name=&quot;customerDataGrid&quot;
+                <pre><code class="language-csharp">&lt;DataGrid x:Name=&quot;customerDataGrid&quot;
     Grid.Row=&quot;1&quot;
     ItemsSource=&quot;{Binding Source={StaticResource customerViewSource}}&quot;
     AutoGenerateColumns=&quot;False&quot;
     SelectionChanged=&quot;customerDataGrid_SelectionChanged&quot;
-    CanUserAddRows=&quot;False&quot;&gt;</pre>
+    CanUserAddRows=&quot;False&quot;&gt;</code></pre>
           <figcaption>Fig 03-026</figcaption>
         </figure>
         <p>And I didn't want to rely on the DataContext being set to something that exposed that Customers collection, I
@@ -703,10 +704,10 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
           define a resource on the current view that you're working with.
         </p>
         <figure>
-                <pre class="prettyprint">&lt;Window.Resources&gt;
+                <pre><code class="language-csharp">&lt;Window.Resources&gt;
     &lt;CollectionViewSource x:Key=&quot;customerViewSource&quot;
                           Source=&quot;{Binding Customers}&quot; /&gt;
-&lt;/Window.Resources&gt;</pre>
+&lt;/Window.Resources&gt;</code></pre>
           <figcaption>Fig 03-027</figcaption>
         </figure>
         <p>It could be an application-scoped resource in the window itself down in some user control that you're working
@@ -727,12 +728,12 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
           put that in the StaticResource markup extension:
         </p>
         <figure>
-                <pre class="prettyprint">&lt;DataGrid x:Name=&quot;customerDataGrid&quot;
+                <pre><code class="language-csharp">&lt;DataGrid x:Name=&quot;customerDataGrid&quot;
     Grid.Row=&quot;1&quot;
     ItemsSource=&quot;{Binding Source={StaticResource customerViewSource}}&quot;
     AutoGenerateColumns=&quot;False&quot;
     SelectionChanged=&quot;customerDataGrid_SelectionChanged&quot;
-    CanUserAddRows=&quot;False&quot;&gt;</pre>
+    CanUserAddRows=&quot;False&quot;&gt;</code></pre>
           <figcaption>Fig 03-028</figcaption>
         </figure>
         <p>And you can see the squigglies go away, it's now pointing to that CustomerViewSource object, that's coming in
@@ -742,7 +743,7 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
           the Customers context:
         </p>
         <figure>
-                <pre class="prettyprint"> public MainWindow()
+                <pre><code class="language-csharp"> public MainWindow()
 {
     InitializeComponent();
     DeleteCustomerCommand = new RelayCommand&lt;Customer&gt;(OnDeleteCustomer);
@@ -751,7 +752,7 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
     {
         Customers = new ObservableCollection&lt;Customer&gt;(context.Customers.Include(&quot;Orders&quot;).Include(&quot;Orders.OrderItems&quot;).Include(&quot;Orders.OrderItems.Product&quot;));
     }
-}</pre>
+}</code></pre>
           <figcaption>Fig 03-029</figcaption>
         </figure>
         <p>Because as the Customers bind, it actually changes the selection, tries to use this command object, and if it
@@ -863,16 +864,16 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
         </p>
         <p>Most of the bindings we've looked at take on a form like this:</p>
         <figure>
-                <pre class="prettyprint">&lt;Window.Resources&gt;
+                <pre><code class="language-csharp">&lt;Window.Resources&gt;
     &lt;CollectionViewSource x:Key=&quot;customerViewSource&quot;
                           Source=&quot;{Binding Customers}&quot; /&gt;
-&lt;/Window.Resources&gt;</pre>
+&lt;/Window.Resources&gt;</code></pre>
           <figcaption>Fig 03-036</figcaption>
         </figure>
         <p>which is really saying the Binding Path property is equal to Customers:</p>
         <figure>
-                <pre class="prettyprint"> &lt;CollectionViewSource x:Key=&quot;customerViewSource&quot;
-    Source=&quot;{Binding Path=Customers}&quot; /&gt;</pre>
+                <pre><code class="language-csharp"> &lt;CollectionViewSource x:Key=&quot;customerViewSource&quot;
+    Source=&quot;{Binding Path=Customers}&quot; /&gt;</code></pre>
           <figcaption>Fig 03-037</figcaption>
         </figure>
         <p>The way it works out without the Path property is that the Binding markup extension itself has a
@@ -883,12 +884,12 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
         </p>
         <p>Now another path we saw in one of the last demos was this Path=DataContext.DeleteCustomerCommand.</p>
         <figure>
-                <pre class="prettyprint">&lt;Button Command=&quot;{Binding
+                <pre><code class="language-csharp">&lt;Button Command=&quot;{Binding
     RelativeSource={RelativeSource AncestorType=DataGrid},
     Path=DataContext.DeleteCustomerCommand}&quot;
         CommandParameter=&quot;{Binding}&quot;
         Content=&quot;Delete&quot; /&gt;
-                </pre>
+                </code></pre>
           <figcaption>Fig 03-038</figcaption>
         </figure>
         <p>Remember this was with the RelativeSource binding where we were walking up the visual tree to get to the
@@ -899,7 +900,7 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
           going to add in a label:
         </p>
         <figure>
-          <pre class="prettyprint">&lt;Label Content=&quot;{Binding Path=Customers[0].Orders[1].OrderItems[0].Product.Name}&quot; /&gt;</pre>
+          <pre><code class="language-csharp">&lt;Label Content=&quot;{Binding Path=Customers[0].Orders[1].OrderItems[0].Product.Name}&quot; /&gt;</code></pre>
           <figcaption>Fig 03-039</figcaption>
         </figure>
         <p>and set the content of that label using a binding. That binding is going to be pointing to the DataContext,
@@ -918,13 +919,13 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
           collections and objects there.
         </p>
         <figure>
-                <pre class="prettyprint"> using (ZzaDbContext context = new ZzaDbContext())
+                <pre><code class="language-csharp"> using (ZzaDbContext context = new ZzaDbContext())
 {
     Customers = new ObservableCollection&lt;Customer&gt;(context.Customers
                     .Include(&quot;Orders&quot;)
                     .Include(&quot;Orders.OrderItems&quot;)
                     .Include(&quot;Orders.OrderItems.Product&quot;));
-}</pre>
+}</code></pre>
           <figcaption>Fig 03-040</figcaption>
         </figure>
 
@@ -939,9 +940,9 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
           If I have a typo in my path here, say I put an inadvertent x on the end of my DeleteSelectedCommand:
         </p>
         <figure>
-                <pre class="prettyprint">&lt;Button Content=&quot;Delete&quot;
+                <pre><code class="language-csharp">&lt;Button Content=&quot;Delete&quot;
     Command=&quot;{Binding DeleteSelectedCommandx}&quot;
-    CommandParameter=&quot;{Binding ElementName=customerDataGrid, Path=SelectedItem}&quot; /&gt;</pre>
+    CommandParameter=&quot;{Binding ElementName=customerDataGrid, Path=SelectedItem}&quot; /&gt;</code></pre>
           <figcaption>Fig 03-042</figcaption>
         </figure>
         <p>I go ahead and run, the app is not going to blow up, it's just going to start up and run, and then you'll
@@ -1032,23 +1033,23 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
           a RelativeSource binding like we saw earlier in this module:
         </p>
         <figure>
-          <pre class="prettyprint">DataContext="{Binding RelativeSource={RelativeSource Self}}"></pre>
+          <pre><code class="language-csharp">DataContext="{Binding RelativeSource={RelativeSource Self}}"></code></pre>
           <figcaption>Fig 03-048</figcaption>
         </figure>
         <p>We've got the grid as a whole, bound to a Customer property exposed from the Windows code-behind:</p>
         <figure>
-                <pre class="prettyprint">&lt;Grid x:Name=&quot;grid1&quot;
+                <pre><code class="language-csharp">&lt;Grid x:Name=&quot;grid1&quot;
     DataContext=&quot;{Binding Customer}&quot;
     VerticalAlignment=&quot;Top&quot;
     Margin=&quot;10,10,0,0&quot;
-    HorizontalAlignment=&quot;Left&quot;&gt;</pre>
+    HorizontalAlignment=&quot;Left&quot;&gt;</code></pre>
           <figcaption>Fig 03-049</figcaption>
         </figure>
         <p>and then the individual fields are just using DataContext bindings to point to the properties of that
           Customer object.
         </p>
         <figure>
-                <pre class="prettyprint"> &lt;TextBox x:Name=&quot;idTextBox&quot;
+                <pre><code class="language-csharp"> &lt;TextBox x:Name=&quot;idTextBox&quot;
     Width=&quot;120&quot;
     VerticalAlignment=&quot;Center&quot;
     Text=&quot;{Binding Id}&quot;
@@ -1071,7 +1072,7 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
     Margin=&quot;3&quot;
     Height=&quot;23&quot;
     HorizontalAlignment=&quot;Left&quot;
-    Grid.Column=&quot;1&quot; /&gt;</pre>
+    Grid.Column=&quot;1&quot; /&gt;</code></pre>
           <figcaption>Fig 03-050</figcaption>
         </figure>
         <p>Now by default, a binding has a Mode, and the Default Mode depends on the property that you're binding on the
@@ -1081,7 +1082,7 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
           Customer object is being called.
         </p>
         <figure>
-                <pre class="prettyprint">public string Name
+                <pre><code class="language-csharp">public string Name
 {
     get
     {
@@ -1095,7 +1096,7 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
             PropertyChanged(this, new PropertyChangedEventArgs(&quot;Name&quot;));
         }
     }
-}</pre>
+}</code></pre>
           <figcaption>Fig 03-051</figcaption>
         </figure>
 
@@ -1109,7 +1110,7 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
           the other values.
         </p>
         <figure>
-                <pre class="prettyprint">&lt;TextBox x:Name=&quot;nameTextBox&quot;
+                <pre><code class="language-csharp">&lt;TextBox x:Name=&quot;nameTextBox&quot;
     Width=&quot;120&quot;
     VerticalAlignment=&quot;Center&quot;
     Text=&quot;{Binding Path=Name}&quot;
@@ -1117,7 +1118,7 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
     Margin=&quot;3&quot;
     Height=&quot;23&quot;
     HorizontalAlignment=&quot;Left&quot;
-    Grid.Column=&quot;1&quot; /&gt;</pre>
+    Grid.Column=&quot;1&quot; /&gt;</code></pre>
           <figcaption>Fig 03-052</figcaption>
         </figure>
         <p>I'll start with OneWay. If we explicitly set it to be a OneWay binding and we have that same breakpoint on
@@ -1141,7 +1142,7 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
           object.
         </p>
         <figure>
-                <pre class="prettyprint">public string Name
+                <pre><code class="language-csharp">public string Name
 {
     get
     {
@@ -1155,7 +1156,7 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
             PropertyChanged(this, new PropertyChangedEventArgs(&quot;Name&quot;));
         }
     }
-}</pre>
+}</code></pre>
           <figcaption>Fig 03-054</figcaption>
         </figure>
         <p>Now that's a pretty rarely used value, generally you want OneWay or TwoWay, but that's an option if you have
@@ -1163,7 +1164,7 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
         </p>
         <p>Another option you have there is OneTime.</p>
         <figure>
-                <pre class="prettyprint">&lt;TextBox x:Name=&quot;nameTextBox&quot;
+                <pre><code class="language-csharp">&lt;TextBox x:Name=&quot;nameTextBox&quot;
     Width=&quot;120&quot;
     VerticalAlignment=&quot;Center&quot;
     Text=&quot;{Binding Path=Name, Mode=OneTime}&quot;
@@ -1171,7 +1172,7 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
     Margin=&quot;3&quot;
     Height=&quot;23&quot;
     HorizontalAlignment=&quot;Left&quot;
-    Grid.Column=&quot;1&quot; /&gt;</pre>
+    Grid.Column=&quot;1&quot; /&gt;</code></pre>
           <figcaption>Fig 03-055</figcaption>
         </figure>
         <p>OneTime means that it will do normal data binding from source to target one time, but if it changes behind
@@ -1214,7 +1215,7 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
           by default and give it a name of "TheContent":
         </p>
         <figure>
-                <pre class="prettyprint">&lt;UserControl x:Class=&quot;BindingProperties.MyCustomControl&quot;
+                <pre><code class="language-csharp">&lt;UserControl x:Class=&quot;BindingProperties.MyCustomControl&quot;
              xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
              xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
              xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
@@ -1222,12 +1223,12 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
              mc:Ignorable=&quot;d&quot;
              d:DesignHeight=&quot;300&quot; d:DesignWidth=&quot;300&quot;&gt;
     &lt;Rectangle x:Name=&quot;TheContent&quot; Fill=&quot;Gray&quot;&gt;&lt;/Rectangle&gt;
-&lt;/UserControl&gt;</pre>
+&lt;/UserControl&gt;</code></pre>
           <figcaption>Fig 03-057</figcaption>
         </figure>
         <p>Then I'm going to drop into the code-behind of that control and define a DependencyProperty:</p>
         <figure>
-                <pre class="prettyprint">public MyCustomControl()
+                <pre><code class="language-csharp">public MyCustomControl()
 {
     InitializeComponent();
     TheContent.MouseDown += ChangeIt;
@@ -1249,19 +1250,19 @@ public static readonly DependencyProperty MyBackgroundProperty =
 private static void OnBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
 {
     ((MyCustomControl)d).TheContent.Fill = e.NewValue as Brush;
-}</pre>
+}</code></pre>
           <figcaption>Fig 03-058</figcaption>
         </figure>
         <p>So this DependencyProperty is going to be of type Brush called MyBackground, and what's different about the
           declaration of this DependencyProperty, is notice this down here.
         </p>
         <figure>
-                <pre class="prettyprint">public static readonly DependencyProperty MyBackgroundProperty =
+                <pre><code class="language-csharp">public static readonly DependencyProperty MyBackgroundProperty =
     DependencyProperty.Register(&quot;MyBackground&quot;, typeof(Brush),
     typeof(MyCustomControl),
     new FrameworkPropertyMetadata(new SolidColorBrush(Colors.Gray),
         FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
-        OnBrushChanged));</pre>
+        OnBrushChanged));</code></pre>
           <figcaption>Fig 03-059</figcaption>
         </figure>
 
@@ -1273,10 +1274,10 @@ private static void OnBrushChanged(DependencyObject d, DependencyPropertyChanged
           option to say BindsTwoWayByDefault. Then I also hook up a Change handler here (<span class="code">OnBrushChanged</span>):
         </p>
         <figure>
-                <pre class="prettyprint">private static void OnBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+                <pre><code class="language-csharp">private static void OnBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
 {
     ((MyCustomControl)d).TheContent.Fill = e.NewValue as Brush;
-}</pre>
+}</code></pre>
           <figcaption>Fig 03-060</figcaption>
         </figure>
         <p>so that whenever my background gets set I'm going to go set the Fill property of the rectangle that's my
@@ -1286,7 +1287,7 @@ private static void OnBrushChanged(DependencyObject d, DependencyPropertyChanged
           MouseDown event on my rectangle that's my content.
         </p>
         <figure>
-                <pre class="prettyprint">public MyCustomControl()
+                <pre><code class="language-csharp">public MyCustomControl()
 {
     InitializeComponent();
     TheContent.MouseDown += ChangeIt;
@@ -1301,7 +1302,7 @@ public Brush MyBackground
 {
     get { return (Brush)GetValue(MyBackgroundProperty); }
     set { SetValue(MyBackgroundProperty, value); }
-}</pre>
+}</code></pre>
           <figcaption>Fig 03-061</figcaption>
         </figure>
         <p>And what I'm going to do when I get that click on is I am going to explicitly set the MyBackground property
@@ -1311,12 +1312,12 @@ public Brush MyBackground
           CustomControl:
         </p>
         <figure>
-                <pre class="prettyprint">&lt;local:MyCustomControl MyBackground=&quot;{Binding TheBrush}&quot;
+                <pre><code class="language-csharp">&lt;local:MyCustomControl MyBackground=&quot;{Binding TheBrush}&quot;
     HorizontalAlignment=&quot;Left&quot;
     Height=&quot;74&quot;
     Margin=&quot;292,57,0,0&quot;
     VerticalAlignment=&quot;Top&quot;
-    Width=&quot;105&quot; /&gt;</pre>
+    Width=&quot;105&quot; /&gt;</code></pre>
           <figcaption>Fig 03-062</figcaption>
         </figure>
         <p>Notice that I'm setting the MyBackground property to a Brush returned from the current DataContext called
@@ -1324,7 +1325,7 @@ public Brush MyBackground
         </p>
         <p>So I add this DependencyProperty called TheBrush to my code-behind:</p>
         <figure>
-                <pre class="prettyprint"> public Brush TheBrush
+                <pre><code class="language-csharp"> public Brush TheBrush
 {
     get { return (Brush)GetValue(TheBrushProperty); }
     set { SetValue(TheBrushProperty, value); }
@@ -1333,25 +1334,25 @@ public Brush MyBackground
 public static readonly DependencyProperty TheBrushProperty =
     DependencyProperty.Register("TheBrush", typeof(Brush), typeof(MainWindow),
     new PropertyMetadata(null, OnTheBrushChanged));
-                </pre>
+                </code></pre>
           <figcaption>Fig 03-063</figcaption>
         </figure>
         <p>And it's just a standard DependencyProperty with a Change handler that's hooked up here so we can set a
           breakpoint and tell when the binding has actually set that value for us:
         </p>
         <figure>
-                <pre class="prettyprint">private static void OnTheBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+                <pre><code class="language-csharp">private static void OnTheBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
 {
-}</pre>
+}</code></pre>
           <figcaption>Fig 03-064</figcaption>
         </figure>
         <p>And then I'm just going to go into my constructor and set an initial value for my Property of Chartreuse.</p>
         <figure>
-                <pre class="prettyprint">public MainWindow()
+                <pre><code class="language-csharp">public MainWindow()
 {
     InitializeComponent();
     TheBrush = new SolidColorBrush(Colors.Chartreuse);
-}</pre>
+}</code></pre>
           <figcaption>Fig 03-065</figcaption>
         </figure>
         <p>So with that in place, if I go ahead and run, we can see it starts up with our chartreuse rectangle:</p>
@@ -1372,9 +1373,9 @@ public static readonly DependencyProperty TheBrushProperty =
           DataContext:
         </p>
         <figure>
-                <pre class="prettyprint">private static void OnTheBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+                <pre><code class="language-csharp">private static void OnTheBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
 {
-}</pre>
+}</code></pre>
           <figcaption>Fig 03-068</figcaption>
         </figure>
         <p>So the TwoWay data binding has worked out for us and is passing that value in.</p>
@@ -1420,5 +1421,6 @@ public static readonly DependencyProperty TheBrushProperty =
       </div>
     </div>
   </div>
+</div>
 </body>
 </html>

@@ -41,7 +41,7 @@
           going to click it and we can either download it as a zip file or clone it directly. I'm going to go with
           cloning it directly by using git. So I'm going to copy the link that's right here:</p>
         <figure>
-          <img src="./images/Fig05-001.PNG"/>
+          <img src="./images/Fig05-001.png"/>
           <figcaption>Fig 05-001</figcaption>
         </figure>
         <p>and I'm going to change back over to my terminal. Now I'm going to make sure, either way, either if you're
@@ -50,7 +50,7 @@
           I'm going to go up one directory and go back into my workspace directory which for me I call prod. And then
           inside of here we can download the repository or clone it by running git clone and then the link:</p>
         <figure>
-          <img src="./images/Fig05-002.PNG"/>
+          <img src="./images/Fig05-002.png"/>
           <figcaption>Fig 05-002</figcaption>
         </figure>
         <p>Which essentially is going to be the github link and dot git on the end. OK. So we will run this and after
@@ -74,7 +74,7 @@
           similar to the ones we've been working with so far. So we've got a source folder, a style folder, we've got an
           index HTML, package JSON, and Webpack config file:</p>
         <figure>
-          <img src="./images/Fig05-003.PNG"/>
+          <img src="./images/Fig05-003.png"/>
           <figcaption>Fig 05-003</figcaption>
         </figure>
         <p>You'll also notice that there is a database folder in here; this is tied to some of the data that is included
@@ -82,19 +82,19 @@
         <p>Let's open up the Webpack config file and the package.json file and see what we have to work with. So inside
           the package.json file, you'll notice that we've already got a script in here for building the project:</p>
         <figure>
-          <img src="./images/Fig05-004.PNG"/>
+          <img src="./images/Fig05-004.png"/>
           <figcaption>Fig 05-004</figcaption>
         </figure>
         <p>So underneath the script section, yep, build Webpack is already inside of here. If we scroll down a little
           bit more and go down to the devDependencies section, you'll see that we've already got a lot of dependencies
           related to Webpack in handling CSS and a bunch of stuff for handling babel as well:</p>
         <figure>
-          <img src="./images/Fig05-005.PNG"/>
+          <img src="./images/Fig05-005.png"/>
           <figcaption>Fig 05-005</figcaption>
         </figure>
         <p>So, already have all the dependencies there as well. Let's look at the Webpack config file now:</p>
         <figure>
-          <img src="./images/Fig05-006.PNG"/>
+          <img src="./images/Fig05-006.png"/>
           <figcaption>Fig 05-006</figcaption>
         </figure>
         <p>So inside the Webpack config file, there is very little code inside of here right now. There is absolutely
@@ -110,7 +110,7 @@
         <p>So we'll first start off with our module section. Inside of here, we have the rules property, which will be
           an array of different rules:</p>
         <figure>
-          <img src="./images/Fig05-007.PNG"/>
+          <img src="./images/Fig05-007.png"/>
           <figcaption>Fig 05-007</figcaption>
         </figure>
         <p>So our first rule is going to be using the babel loader. Don't forget, we're going to assign the test
@@ -122,7 +122,7 @@
           property on you, but I'll tell you exactly what we're doing with it. So we're gonna add in another property
           called exclude, and we're going to give it a regex that looks for the string node modules:</p>
         <figure>
-          <img src="./images/Fig05-008.PNG"/>
+          <img src="./images/Fig05-008.png"/>
           <figcaption>Fig 05-008</figcaption>
         </figure>
         <p>So we've got forward slash, node modules and then forward slash. The purpose of exclude right here is to say
@@ -157,7 +157,7 @@
           installed into our project. If we open up the package.json file and scroll down to the devDependencies
           section, you'll see the babel-preset-react inside of here:</p>
         <figure>
-          <img src="./images/Fig05-010.PNG"/>
+          <img src="./images/Fig05-010.png"/>
           <figcaption>Fig 05-010</figcaption>
         </figure>
         <p>So again, that preset is inside of here solely to handle the react code inside this codebase. Okay. I think
@@ -166,7 +166,7 @@
           inside of the style directory of the project. So inside of here, you'll find materialize, react-range and
           style.css:</p>
         <figure>
-          <img src="./images/Fig05-011.PNG"/>
+          <img src="./images/Fig05-011.png"/>
           <figcaption>Fig 05-011</figcaption>
         </figure>
         <p>So rather than using the extract text plugin, this time around we're going to rely solely upon the style
@@ -175,7 +175,7 @@
         <p>So let's add in our additional loader for handling the CSS as well. I am going to make sure I place a comma
           after our existing rule and then we will add in our rule for handling the CSS:</p>
         <figure>
-          <img src="./images/Fig05-012.PNG"/>
+          <img src="./images/Fig05-012.png"/>
           <figcaption>Fig 05-012</figcaption>
         </figure>
         <p>So we'll say use style-loader and css-loader. Remember, css.loader allows Webpack to understand and read the
@@ -184,7 +184,7 @@
         <p>We will also remember to add on the test property to make sure that we only run this on CSS files and dollar
           sign:</p>
         <figure>
-          <img src="./images/Fig05-013.PNG"/>
+          <img src="./images/Fig05-013.png"/>
           <figcaption>Fig 05-013</figcaption>
         </figure>
         <p>All right. So that should be it - everything we need to get our project running. So remember how we build our
@@ -198,13 +198,13 @@
           something for us to use. You'll notice that when Webpack finishes running, we start to get a lot of yellow
           warnings inside of here about general size limits:</p>
         <figure>
-          <img src="./images/Fig05-015.PNG"/>
+          <img src="./images/Fig05-015.png"/>
           <figcaption>Fig 05-015</figcaption>
         </figure>
         <p>So it's telling you here that recommended size limit is 250 kilobytes and the bundle that we have generated
           is a whopping gigantic 3.28 megabytes:</p>
         <figure>
-          <img src="./images/Fig05-016.PNG"/>
+          <img src="./images/Fig05-016.png"/>
           <figcaption>Fig 05-016</figcaption>
         </figure>
         <p>That is gigantic in the context of a react application. So in this section, the primary goal that we're going
@@ -215,7 +215,7 @@
           output file. So I'm going to open up the index.html document and we'll take a look at what this thing
           does:</p>
         <figure>
-          <img src="./images/Fig05-017.PNG"/>
+          <img src="./images/Fig05-017.png"/>
           <figcaption>Fig 05-017</figcaption>
         </figure>
         <p>So the instant we open up the index.html document, you're going to see a little bit from what's going on.
@@ -224,13 +224,13 @@
           singer or musician of some sort. And so we can look at the number of albums they've released. We can also look
           at details about each individual artist:</p>
         <figure>
-          <img src="./images/Fig05-018.PNG"/>
+          <img src="./images/Fig05-018.png"/>
           <figcaption>Fig 05-018</figcaption>
         </figure>
         <p>So like the years old, they're net worth and some albums they've worked on. We can edit each individual
           artist if we so choose:</p>
         <figure>
-          <img src="./images/Fig05-019.PNG"/>
+          <img src="./images/Fig05-019.png"/>
           <figcaption>Fig 05-019</figcaption>
         </figure>
         <p>We can delete them if we want to. We can do search, filtering, random artists - all this different stuff. So
@@ -263,7 +263,7 @@
         <p>The first technique that we're going to look at will revolve around splitting up our codebase into two big
           separate chunks of files, or JavaScript, using code splitting:</p>
         <figure>
-          <img src="./images/Fig05-020.PNG"/>
+          <img src="./images/Fig05-020.png"/>
           <figcaption>Fig 05-020</figcaption>
         </figure>
         <p>So we had just looked at code splitting previously and we saw that we can use it to kind of delay the load-up
@@ -281,7 +281,7 @@
         <p>What is that really gonna do for us when we go to load up our app? Well, let's think about it a little
           bit:</p>
         <figure>
-          <img src="./images/Fig05-021.PNG"/>
+          <img src="./images/Fig05-021.png"/>
           <figcaption>Fig 05-021</figcaption>
         </figure>
         <p>
@@ -312,7 +312,7 @@
           concepts to get some performance benefits in our application.</p>
         <p>I want to ask you a question for a second. I want you to think in your head:</p>
         <figure>
-          <img src="./images/Fig05-022.PNG"/>
+          <img src="./images/Fig05-022.png"/>
           <figcaption>Fig 05-022</figcaption>
         </figure>
         <p>if you have included, say ReactJS or AngularJS, like the actual source code for React or Angular or any other
@@ -329,7 +329,7 @@
           yourself, are writing? Well, updates to our codebase might happen far, far more frequently, like daily or
           hourly:</p>
         <figure>
-          <img src="./images/Fig05-023.PNG"/>
+          <img src="./images/Fig05-023.png"/>
           <figcaption>Fig 05-023</figcaption>
         </figure>
         <p>and we want to update our production bundle, or we want to update our application very frequently. So we can
@@ -342,7 +342,7 @@
           our project.</p>
         <p>Then the first time that a user visits, they're going to grab this vendor.js file and the bundle.js file:</p>
         <figure>
-          <img src="./images/Fig05-024.PNG"/>
+          <img src="./images/Fig05-024.png"/>
           <figcaption>Fig 05-024</figcaption>
         </figure>
         <p>And in both cases, because the user has never been to our website before, the browser is gonna say, "Nope,
@@ -392,12 +392,12 @@
         <p>Okay. So let's walk through this update. You know, let's do the refactor, and we'll see exactly how it works.
           The first thing we're going to do is delete the string that we're currently passing to the entry property:</p>
         <figure>
-          <img src="./images/Fig05-025.PNG"/>
+          <img src="./images/Fig05-025.png"/>
           <figcaption>Fig 05-025</figcaption>
         </figure>
         <p>So I'm going take out the entire string, I'm going to replace it with an object, like so:</p>
         <figure>
-          <img src="./images/Fig05-026.PNG"/>
+          <img src="./images/Fig05-026.png"/>
           <figcaption>Fig 05-026</figcaption>
         </figure>
         <p>Do make sure that you still have the comma after that object. So by passing an object to the entry property,
@@ -407,7 +407,7 @@
           first of all, define a key value pair of bundle and we'll pass it the exact same string that we had
           before:</p>
         <figure>
-          <img src="./images/Fig05-027.PNG"/>
+          <img src="./images/Fig05-027.png"/>
           <figcaption>Fig 05-027</figcaption>
         </figure>
         <p>So this key value pair right here says, "I want to produce a bundle.js file." And it's specifically going to
@@ -418,7 +418,7 @@
           exactly what we were doing before.</p>
         <p>So here's the update. Here's like the big new thing. We're going to say:</p>
         <figure>
-          <img src="./images/Fig05-028.PNG"/>
+          <img src="./images/Fig05-028.png"/>
           <figcaption>Fig 05-028</figcaption>
         </figure>
         <p>And then, above that, we define const VENDOR_LIBS, which is an array.</p>
@@ -434,7 +434,7 @@
           up my package.js file. And if I scroll down a little bit, I'll go to my dependencies section. So these
           dependencies section right here:</p>
         <figure>
-          <img src="./images/Fig05-029.PNG"/>
+          <img src="./images/Fig05-029.png"/>
           <figcaption>Fig 05-029</figcaption>
         </figure>
         <p>these are all the dependencies that my project currently relies upon as a third party library. So in theory,
@@ -442,7 +442,7 @@
           candidate to place into this separate bundle file, the separate vendor.js. So I'm going to copy all these
           different modules right here, all the different module names, and place them inside that array of strings:</p>
         <figure>
-          <img src="./images/Fig05-030.PNG"/>
+          <img src="./images/Fig05-030.png"/>
           <figcaption>Fig 05-030</figcaption>
         </figure>
         <p>Now, when Webpack runs, it's going to say, "Okay. I see that they want me to build a bundle.js file based off
@@ -456,7 +456,7 @@
           so I'd kind of rather have that inside of my bundle.js, because, you know, I'm going to update it all the
           time." No problem, we can just take it right out:</p>
         <figure>
-          <img src="./images/Fig05-031.PNG"/>
+          <img src="./images/Fig05-031.png"/>
           <figcaption>Fig 05-031</figcaption>
         </figure>
         <p>We can say, "I don't want to include that dependency." You might do that if you expect to be updating the
@@ -464,20 +464,20 @@
           put faker in here twice, the first one should be react not faker. So react, lodash, redux, react-dom, faker,
           my mistake:</p>
         <figure>
-          <img src="./images/Fig05-032.PNG"/>
+          <img src="./images/Fig05-032.png"/>
           <figcaption>Fig 05-032</figcaption>
         </figure>
         <p>Okay. Now the last thing you have to do inside of here, and then we'll actually run this and see what we get.
           Last thing we have do is update the output section. So right now we're saying, "Hey, no matter what..." out of
           these two separate bundles that I want to create, we're saying, always name it bundle.js:</p>
         <figure>
-          <img src="./images/Fig05-033.PNG"/>
+          <img src="./images/Fig05-033.png"/>
           <figcaption>Fig 05-033</figcaption>
         </figure>
         <p>And so, we're going to run into a little bit of naming collision there. To kind of dynamically update the
           name, we're going to replace bundle with square brackets and name like so:</p>
         <figure>
-          <img src="./images/Fig05-034.PNG"/>
+          <img src="./images/Fig05-034.png"/>
           <figcaption>Fig 05-034</figcaption>
         </figure>
         <p>So this says, "Go and build this bundle.js file, starting with index.js." When the bundle is completely
@@ -498,7 +498,7 @@
           see, let's go up just a little bit. Oh, let's not scroll all the way to the top. You can see in at least the
           warning message:</p>
         <figure>
-          <img src="./images/Fig05-036.PNG"/>
+          <img src="./images/Fig05-036.png"/>
           <figcaption>Fig 05-036</figcaption>
         </figure>
         <p>If you don't see a warning message here, because, you know, again, Webpack does change frequently and these
@@ -506,7 +506,7 @@
           could always scroll all the way to the top of this list, like right here. So we can see bundle.js and
           vendor.js:</p>
         <figure>
-          <img src="./images/Fig05-037.PNG"/>
+          <img src="./images/Fig05-037.png"/>
           <figcaption>Fig 05-037</figcaption>
         </figure>
         <p>but there's something a little bit off here. Bundle.js is 3.28 megabytes, which is what we saw before. You
@@ -524,7 +524,7 @@
           large?</p>
         <p>Let's take a look at a diagram that's gonna help us figure out what's happening:</p>
         <figure>
-          <img src="./images/Fig05-038.PNG"/>
+          <img src="./images/Fig05-038.png"/>
           <figcaption>Fig 05-038</figcaption>
         </figure>
         <p>So this is kind of a crude diagram of the two separate files that we just generated. On the left-hand side,
@@ -532,7 +532,7 @@
           of our project, which is the entry point. So I'm gonna come back over to my project directory, I'm gonna find
           source and then open up index.js:</p>
         <figure>
-          <img src="./images/Fig05-039.PNG"/>
+          <img src="./images/Fig05-039.png"/>
           <figcaption>Fig 05-039</figcaption>
         </figure>
         <p>So now at the very top, we've got a ton of different import statements inside of here. We don't really need
@@ -558,7 +558,7 @@
         <p>I'm gonna go back over to my Webpack config file and we'll scroll down to the bottom and we're gonna add in a
           plugins section:</p>
         <figure>
-          <img src="./images/Fig05-040.PNG"/>
+          <img src="./images/Fig05-040.png"/>
           <figcaption>Fig 05-040</figcaption>
         </figure>
         <p>Remember the purpose of plugins. Plugins are like loaders, but they are more about looking at the total sum
@@ -567,7 +567,7 @@
           says optimize so you know this is probably gonna be good, and then we're going to look for
           CommonsChunkPlugin:</p>
         <figure>
-          <img src="./images/Fig05-041.PNG"/>
+          <img src="./images/Fig05-041.png"/>
           <figcaption>Fig 05-041</figcaption>
         </figure>
         <p>
@@ -584,7 +584,7 @@
           machine is just a little bit faster than mine. I'm running a 2015 MacBook Pro. So if you're on a desktop, I
           bet it'll be a little bit faster. OK. So now we've got a bundle.js and a vendor.js:</p>
         <figure>
-          <img src="./images/Fig05-042.PNG"/>
+          <img src="./images/Fig05-042.png"/>
           <figcaption>Fig 05-042</figcaption>
         </figure>
         <p>bundle this time around only has 401 kilobytes, vendor has 2.89. Awesome. OK, so this is gonna go a long way
@@ -611,7 +611,7 @@
           appears that the application isn't working at all. And if I open up my console, I get an error message that
           says webpackJsonp is not defined:</p>
         <figure>
-          <img src="./images/Fig05-043.PNG"/>
+          <img src="./images/Fig05-043.png"/>
           <figcaption>Fig 05-043</figcaption>
         </figure>
         <p>So it looks like something is not quite working correctly. Well, let's open up our code editor and see if we
@@ -619,7 +619,7 @@
           files. Now if I open up my index.html document - remember, the index.html document in our root project
           directory - you may recall that inside of here, we have that bundle.js script reference:</p>
         <figure>
-          <img src="./images/Fig05-044.PNG"/>
+          <img src="./images/Fig05-044.png"/>
           <figcaption>Fig 05-044</figcaption>
         </figure>
         <p>but we never added in an additional reference to pick up that new vendor.js file. So the error message that
@@ -651,14 +651,14 @@
           file and at the top, we're going to require, in that html webpack plugin module that we just installed - so at
           the top, we'll add:</p>
         <figure>
-          <img src="./images/Fig05-046.PNG"/>
+          <img src="./images/Fig05-046.png"/>
           <figcaption>Fig 05-046</figcaption>
         </figure>
         <p>
           And then down at the bottom, we'll add it to our plugin section. So we'll go down to the bottom of the file
           and underneath our existing CommonsChunkPlugin, we'll also add in a new HtmlWebpackPlugin:</p>
         <figure>
-          <img src="./images/Fig05-047.PNG"/>
+          <img src="./images/Fig05-047.png"/>
           <figcaption>Fig 05-047</figcaption>
         </figure>
         <p>And we're going to pass some amount of configuration to this thing. The first thing that we're going to pass
@@ -669,7 +669,7 @@
           like, an HTML tag, a head tag, a body tag and then the script tags. But as you can see, inside of this upstart
           music index.html file:</p>
         <figure>
-          <img src="./images/Fig05-048.PNG"/>
+          <img src="./images/Fig05-048.png"/>
           <figcaption>Fig 05-048</figcaption>
         </figure>
         <p>we've got the title already set, we've got a link to some icon family in here and we've also got in a custom
@@ -682,7 +682,7 @@
         <p>So we will move our HTML document into the source directory in just a second, but for right now, we'll just
           say yeah, look into that source directory to find the HTML document to start off with:</p>
         <figure>
-          <img src="./images/Fig05-049.PNG"/>
+          <img src="./images/Fig05-049.png"/>
           <figcaption>Fig 05-049</figcaption>
         </figure>
         <p>Then inside the source directory, I'm going to make a new file called index.html and then inside of here,
@@ -690,13 +690,13 @@
           everything. I'm going to change over to the new one that we just created and then paste it all. And then
           finally, last step, I'm going to make sure that I delete the old one inside the root project directory:</p>
         <figure>
-          <img src="./images/Fig05-050.PNG"/>
+          <img src="./images/Fig05-050.png"/>
           <figcaption>Fig 05-050</figcaption>
         </figure>
         <p>And I'm just deleting it to make sure that I don't have any dangling references to the old HTML document. Now
           inside of here, last thing I'm going to do is find my script tag - here it is:</p>
         <figure>
-          <img src="./images/Fig05-051.PNG"/>
+          <img src="./images/Fig05-051.png"/>
           <figcaption>Fig 05-051</figcaption>
         </figure>
         <p>and I'm going to delete this existing script tag. Remember, the purpose of that plugin that we just installed
@@ -712,14 +712,14 @@
           installation of my HtmlWebpackPlugin. All right. So we'll build our project. Again, about 15 seconds or so
           goes by and now you'll see some new markup down here at the bottom:</p>
         <figure>
-          <img src="./images/Fig05-052.PNG"/>
+          <img src="./images/Fig05-052.png"/>
           <figcaption>Fig 05-052</figcaption>
         </figure>
         <p>some new reporter that says okay, well, you know I did something with index.html. So let's now flip over to
           our code editor. I'm going to close the existing index.html template that we have. Then I'm going to go into
           my dist directory and let's look at this new index.html file that was just generated:</p>
         <figure>
-          <img src="./images/Fig05-053.PNG"/>
+          <img src="./images/Fig05-053.png"/>
           <figcaption>Fig 05-053</figcaption>
         </figure>
         <p>So now inside of here, underneath that div tag that we had - so there is a div in here. Remember, I wanted
@@ -727,7 +727,7 @@
           application actually work. You'll notice that there are two additional script tags that have been injected
           inside of my document. And at the very end, we got the body closing it off:</p>
         <figure>
-          <img src="./images/Fig05-054.PNG"/>
+          <img src="./images/Fig05-054.png"/>
           <figcaption>Fig 05-054</figcaption>
         </figure>
         <p>Inside of here, you'll notice that we've got the script tag references for both bundle.js and vendor.js as
@@ -737,14 +737,14 @@
           directory and just make sure that everything works. So I'm going to flip back over to my code editor and then
           I'll manually open up dist/index.html:</p>
         <figure>
-          <img src="./images/Fig05-055.PNG"/>
+          <img src="./images/Fig05-055.png"/>
           <figcaption>Fig 05-055</figcaption>
         </figure>
         <p>Chrome opens up. You'll notice that we are inside the dist directory. It grabs the index HTML document and
           ta-da! We've got our application still working and showing up on the screen. And if we open up the elements
           tab - yep, still got vendor.js and bundle.js in here:</p>
         <figure>
-          <img src="./images/Fig05-056.PNG"/>
+          <img src="./images/Fig05-056.png"/>
           <figcaption>Fig 05-056</figcaption>
         </figure>
         <p>and we didn't have to do a single darn manual thing related to the script tags. Okay. So this definitely
@@ -766,7 +766,7 @@
         <p>>Here's the thing. When we were talking about the differences between the first visit and the next visit and
           how the browser decides whether or not it has downloaded a file:</p>
         <figure>
-          <img src="./images/Fig05-057.PNG"/>
+          <img src="./images/Fig05-057.png"/>
           <figcaption>Fig 05-057</figcaption>
         </figure>
         <p>we never really specified how it's answering the question whether or not it has downloaded that file before.
@@ -783,7 +783,7 @@
           little bit, we can find a little setting that is just nested away in here it called Disable cache while
           DevTools is open:</p>
         <figure>
-          <img src="./images/Fig05-058.PNG"/>
+          <img src="./images/Fig05-058.png"/>
           <figcaption>Fig 05-058</figcaption>
         </figure>
         <p>So by default, I usually have this checked because I want to make sure that as I'm developing my project, I
@@ -799,7 +799,7 @@
         <p>So I'm gonna open up my Webpack config file, and inside the output section, I'm gonna find the filename
           specifier. So here's filename right here:</p>
         <figure>
-          <img src="./images/Fig05-059.PNG"/>
+          <img src="./images/Fig05-059.png"/>
           <figcaption>Fig 05-059</figcaption>
         </figure>
         <p>We've already seen the instance of one kind of like interpolated variable in here – the square brackets with
@@ -809,7 +809,7 @@
           There's another property that we can reference in here that will help uniquely identify each file when it's
           generated, and that's called the chunkhash. So after name, I'm gonna add:</p>
         <figure>
-          <img src="./images/Fig05-060.PNG"/>
+          <img src="./images/Fig05-060.png"/>
           <figcaption>Fig 05-060</figcaption>
         </figure>
         <p>
@@ -825,7 +825,7 @@
         <p>Now there's one other little gotcha in here, one other little setting that we have to change as well. If you
           recall, we had wired up that CommonsChunkPlugin at the bottom here:</p>
         <figure>
-          <img src="./images/Fig05-061.PNG"/>
+          <img src="./images/Fig05-061.png"/>
           <figcaption>Fig 05-061</figcaption>
         </figure>
         <p>And we had said, hey, if there's any common modules, stick them in vendor. So the gotcha is that as a part of
@@ -835,7 +835,7 @@
         <p>So to fix that little gotcha, we're going to change the name of this property right here to names and we're
           gonna have it be an array where the first entry is vendor and the second is manifest, like so:</p>
         <figure>
-          <img src="./images/Fig05-062.PNG"/>
+          <img src="./images/Fig05-062.png"/>
           <figcaption>Fig 05-062</figcaption>
         </figure>
         <p>So this creates a third JavaScript file in our output directory – in our disk directory – called manifest.js.
@@ -852,7 +852,7 @@
         <h2>Cache Busting Wrap up</h2>
         <p>In the last section, we added in the chunk hash of every output file into the individual files name:</p>
         <figure>
-          <img src="./images/Fig05-063.PNG"/>
+          <img src="./images/Fig05-063.png"/>
           <figcaption>Fig 05-063</figcaption>
         </figure>
         <p>So I'm looking at the output right here from the rebuild that we just did two seconds go in the last section
@@ -876,14 +876,14 @@
         <p>So to make a change in that file, I'm going to open up my code editor and we can change any individual file
           inside of the source directory:</p>
         <figure>
-          <img src="./images/Fig05-064.PNG"/>
+          <img src="./images/Fig05-064.png"/>
           <figcaption>Fig 05-064</figcaption>
         </figure>
         <p>That's all we got to do. Just have to change one of the javascript files in there and the hash should end up
           being different. So I'm going to look at my source directory and find the index.js file. And then once inside
           of here, I'm going to just console.log "hi! " like so:</p>
         <figure>
-          <img src="./images/Fig05-065.PNG"/>
+          <img src="./images/Fig05-065.png"/>
           <figcaption>Fig 05-065</figcaption>
         </figure>
         <p>Because we made a change to this file, we can now reasonably expect the hash to be different. So let's now
@@ -898,7 +898,7 @@
           but until we get there we've got to deal with it for a little bit. OK. The rebuild is now complete. Let's go
           and look at the chunk hash for the bundle file:</p>
         <figure>
-          <img src="./images/Fig05-067.PNG"/>
+          <img src="./images/Fig05-067.png"/>
           <figcaption>Fig 05-067</figcaption>
         </figure>
         <p>So now the bundle rather than the b544 that we saw before, the chunk hash is 39247 which is distinctly
@@ -911,14 +911,14 @@
           this is part of the deal that it's taken care of by that html-webpack-plugin. So I'm going to open up my
           webpack.config file. If you recall at the very bottom, we just set up that html-webpack-plugin:</p>
         <figure>
-          <img src="./images/Fig05-068.PNG"/>
+          <img src="./images/Fig05-068.png"/>
           <figcaption>Fig 05-068</figcaption>
         </figure>
         <p>whose purpose was in part to make sure that the script tags from whatever came out of webpack was
           automatically added into our index.html document. So if I go into my dist directory, here's dist and then open
           up my index.html file:</p>
         <figure>
-          <img src="./images/Fig05-069.PNG"/>
+          <img src="./images/Fig05-069.png"/>
           <figcaption>Fig 05-069</figcaption>
         </figure>
         <p>you'll notice that in here my script tags have now automatically been updated to include the chunk hash as
@@ -937,7 +937,7 @@
         <p>I want to open up my dist directory inside of my project bundle-- project folder, excuse me. Inside of here,
           you'll notice that I currently have two bundle files and two manifest files:</p>
         <figure>
-          <img src="./images/Fig05-070.PNG"/>
+          <img src="./images/Fig05-070.png"/>
           <figcaption>Fig 05-070</figcaption>
         </figure>
         <p>So every single time that I make a change to my project and then rebuild it, I'm getting additional
@@ -964,7 +964,7 @@
           script section, and inside of here, we're going to add in another command which we're going to call
           "clean":</p>
         <figure>
-          <img src="./images/Fig05-072.PNG"/>
+          <img src="./images/Fig05-072.png"/>
           <figcaption>Fig 05-072</figcaption>
         </figure>
         <p>
@@ -974,7 +974,7 @@
         <p>The next thing that we'll do is make sure that we call this script whenever we build our project. So I'm
           gonna update the build script to say:</p>
         <figure>
-          <img src="./images/Fig05-073.PNG"/>
+          <img src="./images/Fig05-073.png"/>
           <figcaption>Fig 05-073</figcaption>
         </figure>
         <p>So this will have the effect of, first, deleting all the files inside of our dist directory and then running
@@ -989,7 +989,7 @@
           depending on how fast your computer is. But when it eventually finishes up, there we go. We should now be able
           to go into our dist directory:</p>
         <figure>
-          <img src="./images/Fig05-075.PNG"/>
+          <img src="./images/Fig05-075.png"/>
           <figcaption>Fig 05-075</figcaption>
         </figure>
         <p>And we're down to just our project files, the bare minimum for actually running our project. So now we don't
