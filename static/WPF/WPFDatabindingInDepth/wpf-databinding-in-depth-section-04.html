@@ -109,8 +109,8 @@
           using for sample data in this course.
         </p>
         <figure>
-          <img src="./images/Fig03-001.png" class="image"/>
-          <figcaption>Fig 03-001</figcaption>
+          <img src="./images/Fig04-001.png" class="image"/>
+          <figcaption>Fig 04-001</figcaption>
         </figure>
         <p>The data access is being done through a data layer that's part of the solution. It just has plain old CLR
           objects for the data entities:
@@ -140,7 +140,7 @@
     }
 }
                 </code></pre>
-          <figcaption>Fig 03-002</figcaption>
+          <figcaption>Fig 04-002</figcaption>
         </figure>
         <p>And it's got a DBContext and an Entity Framework DBContext that we're doing the data access through.</p>
         <figure>
@@ -154,7 +154,7 @@
     public DbSet&lt;ProductOption&gt; ProductOptions { get; set; }
     public DbSet&lt;ProductSize&gt; ProductSizes { get; set; }
     public DbSet&lt;OrderStatus&gt; OrderStatuses { get; set; }</code></pre>
-          <figcaption>Fig 03-003</figcaption>
+          <figcaption>Fig 04-003</figcaption>
         </figure>
         <p>
           Again, how you do your data access is up to you, just get it into Entities and you're ready to data bind.
@@ -188,7 +188,7 @@
                         Width=&quot;Auto&quot;
                         Header=&quot;Email&quot;
                         Binding=&quot;{Binding Email}&quot; /&gt;</code></pre>
-          <figcaption>Fig 03-004</figcaption>
+          <figcaption>Fig 04-004</figcaption>
         </figure>
         <p>
           As we talked about before, when a DataGrid renders its rows it sets the DataContext for the current row to the
@@ -218,7 +218,7 @@ public static readonly DependencyProperty CustomersProperty =
     typeof(ObservableCollection&lt;Customer&gt;),
     typeof(MainWindow),
     new PropertyMetadata(null));</code></pre>
-          <figcaption>Fig 03-005</figcaption>
+          <figcaption>Fig 04-005</figcaption>
         </figure>
         <p>
           Here you can see we're using our DBContext to execute a query on top of the Customers collection, push that
@@ -243,7 +243,7 @@ public static readonly DependencyProperty CustomersProperty =
     }
     DataContext = this;
 }</code></pre>
-          <figcaption>Fig 03-006</figcaption>
+          <figcaption>Fig 04-006</figcaption>
         </figure>
         <p>
           I'll switch over to the XAML and go up to the top to the window element, and I'll add in the declaration here
@@ -252,7 +252,7 @@ public static readonly DependencyProperty CustomersProperty =
         </p>
         <figure>
           <pre><code class="language-csharp">DataContext=&quot;{Binding RelativeSource={RelativeSource Self}}&quot;</code></pre>
-          <figcaption>Fig 03-007</figcaption>
+          <figcaption>Fig 04-007</figcaption>
         </figure>
         <p>
           Well, that's going to get you in kind of a recursive thing here, which isn't going to work, so we need the
@@ -283,7 +283,7 @@ public static readonly DependencyProperty CustomersProperty =
 {
     Customers.Remove(customer);
 }</code></pre>
-          <figcaption>Fig 03-008</figcaption>
+          <figcaption>Fig 04-008</figcaption>
         </figure>
         <p>In this case, I'm just going to remove it from the data bound collection, and we need a way to target that
           method in a data bound way.
@@ -304,7 +304,7 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
     typeof(RelayCommand&lt;Customer&gt;),
     typeof(MainWindow),
     new PropertyMetadata(null));</code></pre>
-          <figcaption>Fig 03-009</figcaption>
+          <figcaption>Fig 04-009</figcaption>
         </figure>
         <p>
           DeleteCustomerCommand is of type RelayCommand&lt;T&gt;, and that's a type that's in my solution here, it's a
@@ -360,7 +360,7 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
         }
         #endregion
     }</code></pre>
-          <figcaption>Fig 03-010</figcaption>
+          <figcaption>Fig 04-010</figcaption>
         </figure>
         <p>
           RelayCommand just uses delegates under the covers to point to that method on some other object. The method
@@ -371,7 +371,7 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
 {
     Customers.Remove(customer);
 }</code></pre>
-          <figcaption>Fig 03-011</figcaption>
+          <figcaption>Fig 04-011</figcaption>
         </figure>
         <p>
           So now we need to initialize this DeleteCustomerCommand to an instance of a RelayCommand that points to
@@ -389,7 +389,7 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
     DeleteCustomerCommand = new RelayCommand&lt;Customer&gt;(OnDeleteCustomer);
     DeleteSelectedCommand = new RelayCommand&lt;Customer&gt;(OnDeleteCustomer, CanDeleteCustomer);
 }</code></pre>
-          <figcaption>Fig 03-012</figcaption>
+          <figcaption>Fig 04-012</figcaption>
         </figure>
         <p>
           and the RelayCommand constructor takes a delegate reference to the target method, which is our
@@ -421,7 +421,7 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
         &lt;/DataGridTemplateColumn&gt;
     &lt;/DataGrid.Columns&gt;
 &lt;/DataGrid&gt;</code></pre>
-          <figcaption>Fig 03-013</figcaption>
+          <figcaption>Fig 04-013</figcaption>
         </figure>
         <p>
           And the kind of column that I added here is a DataGridTemplateColumn. A DataGridTemplateColumn uses a
@@ -438,7 +438,7 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
         </p>
         <figure>
           <pre><code class="language-csharp">&lt;Button Command=&quot;{Binding}&quot; Content=&quot;Delete&quot; /&gt;</code></pre>
-          <figcaption>Fig 03-014</figcaption>
+          <figcaption>Fig 04-014</figcaption>
         </figure>
         <p>
           and basically we need to be able to point this binding to that Command object in our code-behind. The
@@ -462,7 +462,7 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
     RelativeSource={RelativeSource AncestorType=DataGrid},
     Path=DataContext.DeleteCustomerCommand}&quot;
     Content="Delete" /></code></pre>
-          <figcaption>Fig 03-015</figcaption>
+          <figcaption>Fig 04-015</figcaption>
         </figure>
         <p>
           So now I've fleshed out this binding and I'm setting a RelativeSource property on it like I did with the
@@ -500,7 +500,7 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
     Path=DataContext.DeleteCustomerCommand}&quot;
     CommandParameter="{Binding}"
     Content="Delete" /></code></pre>
-          <figcaption>Fig 03-016</figcaption>
+          <figcaption>Fig 04-016</figcaption>
         </figure>
         <p>
           So I can just use binding with nothing else on it here, and it's going to grab the whole DataContext object
@@ -510,8 +510,8 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
           You can see the Delete button there, and I can start deleting, and we can see the rows are, in fact, deleting.
         </p>
         <figure>
-          <img src="./images/Fig03-017.png" class="image"/>
-          <figcaption>Fig 03-017</figcaption>
+          <img src="./images/Fig04-017.png" class="image"/>
+          <figcaption>Fig 04-017</figcaption>
         </figure>
         <p>
           So those are the primary forms of RelativeSource bindings you'll use. An AncestorType one to walk up the
@@ -561,7 +561,7 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
     typeof(RelayCommand&lt;Customer&gt;),
     typeof(MainWindow),
     new PropertyMetadata(null));</code></pre>
-          <figcaption>Fig 03-018</figcaption>
+          <figcaption>Fig 04-018</figcaption>
         </figure>
         <p>And we're going to end up targeting that same OnDeleteCustomer as the Execute method for that command. We're
           going to need to initialize that, so we'll add an initializer up here in the constructor to set that property
@@ -569,7 +569,7 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
         </p>
         <figure>
           <pre><code class="language-csharp">DeleteSelectedCommand = new RelayCommand&lt;Customer&gt;(OnDeleteCustomer, CanDeleteCustomer);</code></pre>
-          <figcaption>Fig 03-019</figcaption>
+          <figcaption>Fig 04-019</figcaption>
         </figure>
         <p>But this one's going to pass an extra method here to the constructor of the RelayCommand.</p>
         <p>RelayCommand supports the concept of executing a target method. It also supports having a CanExecute handler
@@ -582,7 +582,7 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
 {
     return customerDataGrid.SelectedItem != null;
 }</code></pre>
-          <figcaption>Fig 03-020</figcaption>
+          <figcaption>Fig 04-020</figcaption>
         </figure>
         <p>It takes in the same parameter as the Execute method does, a Customer, and it returns a Boolean. The Boolean,
           if it's true, says that the command is enabled, you can go ahead and invoke the Execute method. If it returns
@@ -602,7 +602,7 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
 {
     DeleteSelectedCommand.RaiseCanExecuteChanged();
 }</code></pre>
-          <figcaption>Fig 03-021</figcaption>
+          <figcaption>Fig 04-021</figcaption>
         </figure>
         <p>So we have our SelectionChanged handler for DataGrid, we can just call that anytime Selection changes, and
           that's going to cause the CanDeleteCustomer method to be called by the Button to re-query the state and get a
@@ -619,7 +619,7 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
             Orientation=&quot;Horizontal&quot;&gt;
     &lt;Button Content=&quot;Delete&quot; /&gt;
 &lt;/StackPanel&gt;</code></pre>
-          <figcaption>Fig 03-022</figcaption>
+          <figcaption>Fig 04-022</figcaption>
         </figure>
         <p>Now we need to hook this up to our command. Well hooking it up to the Command is actually easier here than it
           was down inside the DataGrid because the overall DataContext is flowing down to this from up above and that
@@ -633,7 +633,7 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
             Orientation=&quot;Horizontal&quot;&gt;
     &lt;Button Content=&quot;Delete&quot; Command="{Binding DeleteSelectedCommand}" /&gt;
 &lt;/StackPanel&gt;</code></pre>
-          <figcaption>Fig 03-023</figcaption>
+          <figcaption>Fig 04-023</figcaption>
         </figure>
         <p>Now we also need to pass a CommandParameter, so I'm also going to use the CommandParameter property and set
           that equal to a binding. But this binding needs to point to the Customer that needs to be deleted, and how do
@@ -648,7 +648,7 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
             Command=&quot;{Binding DeleteSelectedCommand}&quot;
             CommandParameter=&quot;{Binding ElementName=customerDataGrid, Path=SelectedItem}&quot; /&gt;
 &lt;/StackPanel&gt;</code></pre>
-          <figcaption>Fig 03-024</figcaption>
+          <figcaption>Fig 04-024</figcaption>
         </figure>
         <p>That makes that the Source object for this binding and then I just need the Path to point to the SelectedItem
           property of that Source object.
@@ -657,8 +657,8 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
           disabled because of the CanExecute checks, and there is no SelectedItem currently:
         </p>
         <figure>
-          <img src="./images/Fig03-025.png" class="image"/>
-          <figcaption>Fig 03-025</figcaption>
+          <img src="./images/Fig04-025.png" class="image"/>
+          <figcaption>Fig 04-025</figcaption>
         </figure>
         <p>As soon as I select an item, the event handler fires, it raises CanExecuteChanged, and the Command calls that
           CanExecute handler again and sees that it can enable.
@@ -695,7 +695,7 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
     AutoGenerateColumns=&quot;False&quot;
     SelectionChanged=&quot;customerDataGrid_SelectionChanged&quot;
     CanUserAddRows=&quot;False&quot;&gt;</code></pre>
-          <figcaption>Fig 03-026</figcaption>
+          <figcaption>Fig 04-026</figcaption>
         </figure>
         <p>And I didn't want to rely on the DataContext being set to something that exposed that Customers collection, I
           would point explicitly to some Source object that contained the Customer collection.
@@ -708,7 +708,7 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
     &lt;CollectionViewSource x:Key=&quot;customerViewSource&quot;
                           Source=&quot;{Binding Customers}&quot; /&gt;
 &lt;/Window.Resources&gt;</code></pre>
-          <figcaption>Fig 03-027</figcaption>
+          <figcaption>Fig 04-027</figcaption>
         </figure>
         <p>It could be an application-scoped resource in the window itself down in some user control that you're working
           with, but a resource that's in-scope for the element that's going to have the binding. And what I'm using here
@@ -734,7 +734,7 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
     AutoGenerateColumns=&quot;False&quot;
     SelectionChanged=&quot;customerDataGrid_SelectionChanged&quot;
     CanUserAddRows=&quot;False&quot;&gt;</code></pre>
-          <figcaption>Fig 03-028</figcaption>
+          <figcaption>Fig 04-028</figcaption>
         </figure>
         <p>And you can see the squigglies go away, it's now pointing to that CustomerViewSource object, that's coming in
           as the Source object, and will provide the collection to the ItemsSource.
@@ -753,15 +753,15 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
         Customers = new ObservableCollection&lt;Customer&gt;(context.Customers.Include(&quot;Orders&quot;).Include(&quot;Orders.OrderItems&quot;).Include(&quot;Orders.OrderItems.Product&quot;));
     }
 }</code></pre>
-          <figcaption>Fig 03-029</figcaption>
+          <figcaption>Fig 04-029</figcaption>
         </figure>
         <p>Because as the Customers bind, it actually changes the selection, tries to use this command object, and if it
           wasn't initialized yet, it's null, that's going to throw a null reference exception. So we generally want to
           set up our commands earlier, I meant to put those before the loading of the data, so I've corrected that now.
         </p>
         <figure>
-          <img src="./images/Fig03-030.png" class="image"/>
-          <figcaption>Fig 03-030</figcaption>
+          <img src="./images/Fig04-030.png" class="image"/>
+          <figcaption>Fig 04-030</figcaption>
         </figure>
         <p>So with that in place I go ahead and run, and we can see we have our Customers collection bound again:</p>
         <p>But now we're doing it through an explicit Source reference on our binding that points to an object that
@@ -780,8 +780,8 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
         </p>
         <p>Basically, the path to the binding can be passed one of two ways:</p>
         <figure>
-          <img src="./images/Fig03-031.png" class="image"/>
-          <figcaption>Fig 03-031</figcaption>
+          <img src="./images/Fig04-031.png" class="image"/>
+          <figcaption>Fig 04-031</figcaption>
         </figure>
         <p>If you use the syntax on the left, which we've seen a number of times, where we just say Binding and Name,
           you're actually calling a parameterized constructor on the binding markup extension object and that name gets
@@ -805,8 +805,8 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
           the name once we get down to a discrete value that we're trying to set through our binding, we're ready to go.
         </p>
         <figure>
-          <img src="./images/Fig03-032.png" class="image"/>
-          <figcaption>Fig 03-032</figcaption>
+          <img src="./images/Fig04-032.png" class="image"/>
+          <figcaption>Fig 04-032</figcaption>
         </figure>
         <p>You can also add no path at all. So you can basically let the bindings say, give me the whole Source object,
           and we've seen a couple of these in previous demos as well. You can express this with just Binding and no
@@ -814,8 +814,8 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
           object, similar to a file system path.
         </p>
         <figure>
-          <img src="./images/Fig03-033.png" class="image"/>
-          <figcaption>Fig 03-033</figcaption>
+          <img src="./images/Fig04-033.png" class="image"/>
+          <figcaption>Fig 04-033</figcaption>
         </figure>
         <p>Now an important concept related to binding paths is how you go about debugging bindings that are not working
           for you. Basically, you want to always be paying attention to the output window when you're hooking up data
@@ -824,8 +824,8 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
           this.
         </p>
         <figure>
-          <img src="./images/Fig03-034.png" class="image"/>
-          <figcaption>Fig 03-034</figcaption>
+          <img src="./images/Fig04-034.png" class="image"/>
+          <figcaption>Fig 04-034</figcaption>
         </figure>
         <p>You can either have data warnings or data errors and it's going to tell you detailed information including
           what property was not found on what Source object, in this case, 'Idx' and 'Customer', and then it's also
@@ -837,8 +837,8 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
           where you can change the data binding WPF Trace Settings.
         </p>
         <figure>
-          <img src="./images/Fig03-035.png" class="image"/>
-          <figcaption>Fig 03-035</figcaption>
+          <img src="./images/Fig04-035.png" class="image"/>
+          <figcaption>Fig 04-035</figcaption>
         </figure>
         <p>So let's take a look at Property Paths and debugging in a demo.</p>
       </div>
@@ -868,13 +868,13 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
     &lt;CollectionViewSource x:Key=&quot;customerViewSource&quot;
                           Source=&quot;{Binding Customers}&quot; /&gt;
 &lt;/Window.Resources&gt;</code></pre>
-          <figcaption>Fig 03-036</figcaption>
+          <figcaption>Fig 04-036</figcaption>
         </figure>
         <p>which is really saying the Binding Path property is equal to Customers:</p>
         <figure>
                 <pre><code class="language-csharp"> &lt;CollectionViewSource x:Key=&quot;customerViewSource&quot;
     Source=&quot;{Binding Path=Customers}&quot; /&gt;</code></pre>
-          <figcaption>Fig 03-037</figcaption>
+          <figcaption>Fig 04-037</figcaption>
         </figure>
         <p>The way it works out without the Path property is that the Binding markup extension itself has a
           parameterized constructor that takes one argument and it'll use that argument to set the Path property.
@@ -890,7 +890,7 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
         CommandParameter=&quot;{Binding}&quot;
         Content=&quot;Delete&quot; /&gt;
                 </code></pre>
-          <figcaption>Fig 03-038</figcaption>
+          <figcaption>Fig 04-038</figcaption>
         </figure>
         <p>Remember this was with the RelativeSource binding where we were walking up the visual tree to get to the
           DataGrid and then basically saying, go to its DataContext property, which happened to be the Window in that
@@ -901,7 +901,7 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
         </p>
         <figure>
           <pre><code class="language-csharp">&lt;Label Content=&quot;{Binding Path=Customers[0].Orders[1].OrderItems[0].Product.Name}&quot; /&gt;</code></pre>
-          <figcaption>Fig 03-039</figcaption>
+          <figcaption>Fig 04-039</figcaption>
         </figure>
         <p>and set the content of that label using a binding. That binding is going to be pointing to the DataContext,
           which is our Window, which exposes a Customers collection.
@@ -926,15 +926,15 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
                     .Include(&quot;Orders.OrderItems&quot;)
                     .Include(&quot;Orders.OrderItems.Product&quot;));
 }</code></pre>
-          <figcaption>Fig 03-040</figcaption>
+          <figcaption>Fig 04-040</figcaption>
         </figure>
 
         <p>With that in place, I can go ahead and run, and notice up here next to the Delete button we have Taj Mahal is
           the name of the product that is on the related objects there.
         </p>
         <figure>
-          <img src="./images/Fig03-041.png" class="image"/>
-          <figcaption>Fig 03-041</figcaption>
+          <img src="./images/Fig04-041.png" class="image"/>
+          <figcaption>Fig 04-041</figcaption>
         </figure>
         <p>Now one other thing that's related to property paths that's important is debugging when binding goes wrong.
           If I have a typo in my path here, say I put an inadvertent x on the end of my DeleteSelectedCommand:
@@ -943,7 +943,7 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
                 <pre><code class="language-csharp">&lt;Button Content=&quot;Delete&quot;
     Command=&quot;{Binding DeleteSelectedCommandx}&quot;
     CommandParameter=&quot;{Binding ElementName=customerDataGrid, Path=SelectedItem}&quot; /&gt;</code></pre>
-          <figcaption>Fig 03-042</figcaption>
+          <figcaption>Fig 04-042</figcaption>
         </figure>
         <p>I go ahead and run, the app is not going to blow up, it's just going to start up and run, and then you'll
           wonder why, in this case, the Delete button is enabled and I'm clicking away on it and nothing's happening,
@@ -954,9 +954,9 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
           BindingExpression path error:
         </p>
         <figure>
-          <img src="./images/Fig03-043.png" class="image"/> <img
-          src="./images/Fig03-044.png" class="image"/>
-          <figcaption>Fig 03-043</figcaption>
+          <img src="./images/Fig04-043.png" class="image"/> <img
+          src="./images/Fig04-044.png" class="image"/>
+          <figcaption>Fig 04-043</figcaption>
         </figure>
         <p>and it basically breaks it down for you and it says, this property was not found on this object, which is the
           DataContext object.
@@ -966,9 +966,9 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
           'Button' 'Command' property.
         </p>
         <figure>
-          <img src="./images/Fig03-045.png" class="image"/> <img
-          src="./images/Fig03-046.png" class="image"/>
-          <figcaption>Fig 03-045</figcaption>
+          <img src="./images/Fig04-045.png" class="image"/> <img
+          src="./images/Fig04-046.png" class="image"/>
+          <figcaption>Fig 04-045</figcaption>
         </figure>
         <p>So when you screw up a binding path, you always want to be looking for these System.Windows.Data Errors in
           your output window for debugging your bindings.
@@ -1025,8 +1025,8 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
         </p>
 
         <figure>
-          <img src="./images/Fig03-047.png" class="image"/>
-          <figcaption>Fig 03-047</figcaption>
+          <img src="./images/Fig04-047.png" class="image"/>
+          <figcaption>Fig 04-047</figcaption>
         </figure>
         <p>If you watch the Name field when I click on that, it's going to go programmatically set the name of the
           Customer. Now the current structure of the code is we're setting the DataContext to the Window itself through
@@ -1034,7 +1034,7 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
         </p>
         <figure>
           <pre><code class="language-csharp">DataContext="{Binding RelativeSource={RelativeSource Self}}"></code></pre>
-          <figcaption>Fig 03-048</figcaption>
+          <figcaption>Fig 04-048</figcaption>
         </figure>
         <p>We've got the grid as a whole, bound to a Customer property exposed from the Windows code-behind:</p>
         <figure>
@@ -1043,7 +1043,7 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
     VerticalAlignment=&quot;Top&quot;
     Margin=&quot;10,10,0,0&quot;
     HorizontalAlignment=&quot;Left&quot;&gt;</code></pre>
-          <figcaption>Fig 03-049</figcaption>
+          <figcaption>Fig 04-049</figcaption>
         </figure>
         <p>and then the individual fields are just using DataContext bindings to point to the properties of that
           Customer object.
@@ -1073,7 +1073,7 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
     Height=&quot;23&quot;
     HorizontalAlignment=&quot;Left&quot;
     Grid.Column=&quot;1&quot; /&gt;</code></pre>
-          <figcaption>Fig 03-050</figcaption>
+          <figcaption>Fig 04-050</figcaption>
         </figure>
         <p>Now by default, a binding has a Mode, and the Default Mode depends on the property that you're binding on the
           control itself. Data entry controls, such as TextBoxes, ComboBoxes, DatePickers, and so on, set the Default
@@ -1097,7 +1097,7 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
         }
     }
 }</code></pre>
-          <figcaption>Fig 03-051</figcaption>
+          <figcaption>Fig 04-051</figcaption>
         </figure>
 
         <p>So the normal flow is from the Source object to the element with the binding, but if we edit it in the bound
@@ -1119,7 +1119,7 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
     Height=&quot;23&quot;
     HorizontalAlignment=&quot;Left&quot;
     Grid.Column=&quot;1&quot; /&gt;</code></pre>
-          <figcaption>Fig 03-052</figcaption>
+          <figcaption>Fig 04-052</figcaption>
         </figure>
         <p>I'll start with OneWay. If we explicitly set it to be a OneWay binding and we have that same breakpoint on
           our Customer object behind the scenes, I can modify that Name property and tab out of the field, but we never
@@ -1132,8 +1132,8 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
           object for Name:
         </p>
         <figure>
-          <img src="./images/Fig03-053.png" class="image"/>
-          <figcaption>Fig 03-053</figcaption>
+          <img src="./images/Fig04-053.png" class="image"/>
+          <figcaption>Fig 04-053</figcaption>
         </figure>
         <p>it didn't read it because it's only got the one direction in the opposite direction that a binding normally
           works.
@@ -1157,7 +1157,7 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
         }
     }
 }</code></pre>
-          <figcaption>Fig 03-054</figcaption>
+          <figcaption>Fig 04-054</figcaption>
         </figure>
         <p>Now that's a pretty rarely used value, generally you want OneWay or TwoWay, but that's an option if you have
           a specialized scenario.
@@ -1173,7 +1173,7 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
     Height=&quot;23&quot;
     HorizontalAlignment=&quot;Left&quot;
     Grid.Column=&quot;1&quot; /&gt;</code></pre>
-          <figcaption>Fig 03-055</figcaption>
+          <figcaption>Fig 04-055</figcaption>
         </figure>
         <p>OneTime means that it will do normal data binding from source to target one time, but if it changes behind
           the scenes, even if it's raising Change Notifications, notice if I click on the Trigger Customer Change here,
@@ -1204,8 +1204,8 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
           to:
         </p>
         <figure>
-          <img src="./images/Fig03-056.png" class="image"/>
-          <figcaption>Fig 03-056</figcaption>
+          <img src="./images/Fig04-056.png" class="image"/>
+          <figcaption>Fig 04-056</figcaption>
         </figure>
         <p>By default, binding will only be supported one way, but there's a property you can set on the
           DependencyProperty itself to make it so it will be a TwoWay binding by default.
@@ -1224,7 +1224,7 @@ public static readonly DependencyProperty DeleteSelectedCommandProperty =
              d:DesignHeight=&quot;300&quot; d:DesignWidth=&quot;300&quot;&gt;
     &lt;Rectangle x:Name=&quot;TheContent&quot; Fill=&quot;Gray&quot;&gt;&lt;/Rectangle&gt;
 &lt;/UserControl&gt;</code></pre>
-          <figcaption>Fig 03-057</figcaption>
+          <figcaption>Fig 04-057</figcaption>
         </figure>
         <p>Then I'm going to drop into the code-behind of that control and define a DependencyProperty:</p>
         <figure>
@@ -1251,7 +1251,7 @@ private static void OnBrushChanged(DependencyObject d, DependencyPropertyChanged
 {
     ((MyCustomControl)d).TheContent.Fill = e.NewValue as Brush;
 }</code></pre>
-          <figcaption>Fig 03-058</figcaption>
+          <figcaption>Fig 04-058</figcaption>
         </figure>
         <p>So this DependencyProperty is going to be of type Brush called MyBackground, and what's different about the
           declaration of this DependencyProperty, is notice this down here.
@@ -1263,7 +1263,7 @@ private static void OnBrushChanged(DependencyObject d, DependencyPropertyChanged
     new FrameworkPropertyMetadata(new SolidColorBrush(Colors.Gray),
         FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
         OnBrushChanged));</code></pre>
-          <figcaption>Fig 03-059</figcaption>
+          <figcaption>Fig 04-059</figcaption>
         </figure>
 
         <p>With the default code snippet, it's going to define just a PropertyMetadata object here and allow you to set
@@ -1278,7 +1278,7 @@ private static void OnBrushChanged(DependencyObject d, DependencyPropertyChanged
 {
     ((MyCustomControl)d).TheContent.Fill = e.NewValue as Brush;
 }</code></pre>
-          <figcaption>Fig 03-060</figcaption>
+          <figcaption>Fig 04-060</figcaption>
         </figure>
         <p>so that whenever my background gets set I'm going to go set the Fill property of the rectangle that's my
           content.
@@ -1303,7 +1303,7 @@ public Brush MyBackground
     get { return (Brush)GetValue(MyBackgroundProperty); }
     set { SetValue(MyBackgroundProperty, value); }
 }</code></pre>
-          <figcaption>Fig 03-061</figcaption>
+          <figcaption>Fig 04-061</figcaption>
         </figure>
         <p>And what I'm going to do when I get that click on is I am going to explicitly set the MyBackground property
           to red so that we can see that that change actually occurred.
@@ -1318,7 +1318,7 @@ public Brush MyBackground
     Margin=&quot;292,57,0,0&quot;
     VerticalAlignment=&quot;Top&quot;
     Width=&quot;105&quot; /&gt;</code></pre>
-          <figcaption>Fig 03-062</figcaption>
+          <figcaption>Fig 04-062</figcaption>
         </figure>
         <p>Notice that I'm setting the MyBackground property to a Brush returned from the current DataContext called
           TheBrush. So I need to go declare that in the code-behind in my MainWindow that is my DataContext.
@@ -1335,7 +1335,7 @@ public static readonly DependencyProperty TheBrushProperty =
     DependencyProperty.Register("TheBrush", typeof(Brush), typeof(MainWindow),
     new PropertyMetadata(null, OnTheBrushChanged));
                 </code></pre>
-          <figcaption>Fig 03-063</figcaption>
+          <figcaption>Fig 04-063</figcaption>
         </figure>
         <p>And it's just a standard DependencyProperty with a Change handler that's hooked up here so we can set a
           breakpoint and tell when the binding has actually set that value for us:
@@ -1344,7 +1344,7 @@ public static readonly DependencyProperty TheBrushProperty =
                 <pre><code class="language-csharp">private static void OnTheBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
 {
 }</code></pre>
-          <figcaption>Fig 03-064</figcaption>
+          <figcaption>Fig 04-064</figcaption>
         </figure>
         <p>And then I'm just going to go into my constructor and set an initial value for my Property of Chartreuse.</p>
         <figure>
@@ -1353,20 +1353,20 @@ public static readonly DependencyProperty TheBrushProperty =
     InitializeComponent();
     TheBrush = new SolidColorBrush(Colors.Chartreuse);
 }</code></pre>
-          <figcaption>Fig 03-065</figcaption>
+          <figcaption>Fig 04-065</figcaption>
         </figure>
         <p>So with that in place, if I go ahead and run, we can see it starts up with our chartreuse rectangle:</p>
         <figure>
-          <img src="./images/Fig03-066.png" class="image"/>
-          <figcaption>Fig 03-066</figcaption>
+          <img src="./images/Fig04-066.png" class="image"/>
+          <figcaption>Fig 04-066</figcaption>
         </figure>
         <p>Remember that I have a MouseDown handler inside the CustomControl that's going to set the
           MyBackgroundProperty. That's equivalent to something like a TextBox setting the Text property when I do data
           input on the control here.
         </p>
         <figure>
-          <img src="./images/Fig03-067.png" class="image"/>
-          <figcaption>Fig 03-067</figcaption>
+          <img src="./images/Fig04-067.png" class="image"/>
+          <figcaption>Fig 04-067</figcaption>
         </figure>
         <p>And we want to see that that value flows to the Source object because the data binding is TwoWay. So when I
           click on this, we can see that our breakpoint is being hit in our Change handler for TheBrush property and our
@@ -1376,7 +1376,7 @@ public static readonly DependencyProperty TheBrushProperty =
                 <pre><code class="language-csharp">private static void OnTheBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
 {
 }</code></pre>
-          <figcaption>Fig 03-068</figcaption>
+          <figcaption>Fig 04-068</figcaption>
         </figure>
         <p>So the TwoWay data binding has worked out for us and is passing that value in.</p>
         <p>So the default mode for a binding is basically going to be OneWay unless the DependencyProperty that you're

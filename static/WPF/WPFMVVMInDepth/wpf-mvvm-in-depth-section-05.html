@@ -88,20 +88,10 @@
           <p>Let's take a deeper look at Commands through a demo.</p>
 
           <h3>Demo: Commands for View to ViewModel Communication</h3>
-          <div class="example">
-            <div class="input-group">
-              <input id="Ex04-001" type="text"
+              <input id="Ex04-001" type="text" style="width: 100%;"
                      value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 4\MVVMCommsDemo-Commands-Start\MVVMCommsDemo.sln">
-<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex04-001"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
-          <div class="example">
-            <div class="input-group">
-              <input id="Ex04-002" type="text"
+              <input id="Ex04-002" type="text" style="width: 100%;"
                      value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 4\MVVMCommsDemo-Commands-End\MVVMCommsDemo.sln">
-<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex04-002"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
           <p>
             In this demo I'm going to do a deep dive into Commands and demonstrate how to use them to communicate from
             the View down to the ViewModel in a loosely coupled way.
@@ -150,11 +140,11 @@
                 <pre><code class="language-csharp">public class RelayCommand : ICommand
 {
     Action _TargetExecuteMethod;
-    Func&lt;bool&amp;gt; _TargetCanExecuteMethod;
+    Func&lt;bool&gt; _TargetCanExecuteMethod;
 
                   public RelayCommand(Action executeMethod) { _TargetExecuteMethod=executeMethod; }
 
-                  public RelayCommand(Action executeMethod, Func&amp;lt;bool&amp;gt; canExecuteMethod) {
+                  public RelayCommand(Action executeMethod, Func&lt;bool&gt; canExecuteMethod) {
                   _TargetExecuteMethod=executeMethod; _TargetCanExecuteMethod=canExecuteMethod; }
 
                   public void RaiseCanExecuteChanged() { CanExecuteChanged(this, EventArgs.Empty); }
@@ -389,8 +379,12 @@ private bool CanDelete()
           </p>
           <p>
             As a result, you can create what is called a Behavior with just a custom Attached Property but the more
-            common way is to leverage the Blend SDK to create them. Even when you use the Blend SDK Blend Behaviors get
-            attached to UI elements through Attached Properties which are defined in the SDK. Behaviors can expose their
+            common way is to leverage the open source XAML Behaviours for WPF. The behaviours functionality that is 
+            in the open source project came from what was originally the Blend SDK. The code for them was open sourced by 
+            Microsoft at the end of 2018. So now you can just add them to your projects as a Nuget package published from that 
+            open source project named XAML Behaviors for WPF.</p>
+            <p> Even when you use the  Behaviors for WPF package the behaviors get
+            attached to UI elements through Attached Properties which are defined as part of that library. Behaviors can expose their
             own Dependency Properties and thus form a communication bridge between Views and ViewModels because the
             Behavior can subscribe to events on the element it’s attached to or monitor property changes on it and can
             despatch calls into the ViewModel as a result either through Commands by setting a data-bound property on
@@ -408,20 +402,10 @@ private bool CanDelete()
             let's take a look at a couple of demos that will make this all a bit more concrete.
           </p>
           <h3>Demo: Custom Attached Behavior</h3>
-          <div class="example">
-            <div class="input-group">
-              <input id="Ex04-003" type="text"
+              <input id="Ex04-003" type="text" style="width: 100%;"
                      value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 4\MVVMCommsDemo-Behaviors-Start\MVVMCommsDemo.sln">
-<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex04-003"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
-          <div class="example">
-            <div class="input-group">
-              <input id="Ex04-004" type="text"
+              <input id="Ex04-004" type="text" style="width: 100%;"
                      value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 4\MVVMCommsDemo-Behaviors-End\MVVMCommsDemo.sln">
-<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex04-004"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
           <p>
             In this demo we will look at the basis of Behaviors with Attached Properties and how they can be used
             communicate between View and ViewModel. The thing we are going to try and achieve is to make it so the
@@ -540,74 +524,79 @@ private bool CanDelete()
           </figure>
           <p>This is related to Property Change Events which we will fix in a later module.</p>
           <h3>Demo: Using Blend Behaviors</h3>
-          <div class="example">
-            <div class="input-group">
-              <input id="Ex04-005" type="text"
+              <input id="Ex04-005" type="text" style="width: 100%;"
                      value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 4\MVVMCommsDemo-Behaviors-Start\MVVMCommsDemo.sln">
-              <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex04-005"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
-          <div class="example">
-            <div class="input-group">
-              <input id="Ex04-006" type="text"
+              <input id="Ex04-006" type="text" style="width: 100%;"
                      value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 4\MVVMCommsDemo-Behaviors-End\MVVMCommsDemo.sln">
-              <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex04-006"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
           <p>
             In the last demo we created a Behavior through Attached Properties. Now let’s look at how you can achieve
-            the same thing quickly using the built-in Behaviors of the Blend SDK. To do that we switch to Blend and open
+            the same thing very quickly using the Behaviors from the XAML Behaviors for WPF library. To do that we switch to Blend and open
             the same solution. Go to the Projects tab, expand Customers, find the CustomerListView and open it.
           </p>
           <p>
-            Now click on the Assets tab, Behaviors, and after selecting the UserControl in the Object and Timeline
-            double click the CallMethodAction to add it as a child. Several steps are completed automatically for you at
+            Now click on the Assets tab, Behaviors, and click the Install Behaviors Nuget Package Link:</p>
+
+            <figure>
+        <img src="./images/Fig04-020A.png"/>
+	<figcaption>Fig 04-020A</figcaption>
+</figure>
+            <p>To add the XAML Behaviors for WPF Library as a Nuget package. Once that completes your project will have a reference to that Nuget package and it switches to display the collection of pre-built behaviors that are part of this library:</p>
+            <figure>
+              <img src="./images/Fig04-020B.png"/>
+        <figcaption>Fig 04-020B</figcaption>
+      </figure>
+            <p>The one we want is called CallMethodAction which is what we are trying to do - call a method on our ViewModel.</p>
+            <p>I can select my UserControl in the Objects and Timeline panel:</p>
+            <figure>
+              <img src="./images/Fig04-020C.png"/>
+        <figcaption>Fig 04-020C</figcaption>
+      </figure>
+      <p>Then double-click on CallMethodAction up in the assets to add it as a child of the UserControl.</p>
+      <p>That single double-click action completed automatically for you at
             this point – Blend has:
           </p>
           <ul>
-            <li>Added references to two libraries that are part of the Blend SDK</li>
-            <li>Added a XAML XML namespace to facilitate access to those libraries</li>
-            <li>Added the CallMethodAction with several lines of XAML to my UserControl</li>
+            <li>Added a XAML XML namespace for the behaviors library into the view as a Uri</li>
+            <li>Added several lines of XAML to attach the behavior to the View properly</li>
           </ul>
           <p>
             Now, back in Visual Studio, we will finish filling out the properties of that Behavior. In the References
-            list in Solution Explorer you will see that it has added the following references:
+            list in Solution Explorer you will see that it has added the following reference:
           </p>
           <ul>
-            <li>Microsoft.Expression.Interactions</li>
-            <li>System.Windows.Interactivity</li>
+            <li>Microsoft.Xaml.Behaviors</li>
           </ul>
           <p>
-            These are from the Blend SDK. In the CustomerListView you can see it added corresponding XML namespaces so
+            In the CustomerListView you can see it added corresponding XML namespaces so
             we can access the stuff that is in those libraries from our XAML.
           </p>
           <figure>
-                <pre><code class="language-csharp">xmlns:i=&quot;http://schemas.microsoft.com/expression/2010/interactivity&quot;
-xmlns:ei=&quot;http://schemas.microsoft.com/expression/2010/interactions&quot;</code></pre>
+                <pre><code class="language-csharp">xmlns:b=&quot;http://schemas.microsoft.com/xaml/behaviors&quot;
+</code></pre>
             <figcaption>Fig 04-021</figcaption>
           </figure>
-          <p>Scrolling down you see that Blend has added some more XAML:</p>
+          <p>Scrolling down you see the chunk of XAML that it added:</p>
           <figure>
-                <pre><code class="language-csharp">&lt;i:Interaction.Triggers&gt;
-    &lt;i:EventTrigger EventName=&quot;MouseLeftButtonDown&quot;&gt;
-        &lt;ei:CallMethodAction /&gt;
-    &lt;/i:EventTrigger&gt;
-&lt;/i:Interaction.Triggers&gt;</code></pre>
+                <pre><code class="language-csharp">&lt;b:Interaction.Triggers&gt;
+    &lt;b:EventTrigger EventName=&quot;MouseLeftButtonDown&quot;&gt;
+        &lt;b:CallMethodAction /&gt;
+    &lt;/b:EventTrigger&gt;
+&lt;/b:Interaction.Triggers&gt;</code></pre>
             <figcaption>Fig 04-022</figcaption>
           </figure>
 
           <p>
-            It added an Attached Property that is a Triggers collection, it added a Trigger with the MouseLeftButtonDown
-            which we need to change to the Loaded event. It also added a CallMethodAction. The CallMethodAction needs to
-            know what it is going to call so we need to set the TargetObject property and MethodName property:
+            It added an Attached Property that is a Triggers collection, it added an Event Trigger hooked up to the MouseLeftButtonDown
+            event. It also added a CallMethodAction underneath the event trigger. The way this works is that the EventTrigger will watch for the 
+            specified event to fire in the view and then will invoke the behavior that is contained as a child element. Switch the event that the
+            EventTrigger is watching for to Loaded since that's the event that we want to use.
           </p>
-          <p>
-            We set the TargetObject to binding (just setting it to Binding in curly braces means the entire DataContext
+          <p>Now on the CallMethodAction behavior it needs to know what it's going to call. We set the TargetObject to {Binding} (just setting it to Binding in curly braces means the entire DataContext
             object – our ViewModel in this example). Then we set the MethodName property which we set to the
             LoadCustomers method (achieving the same thing as our Attached Behaviour did):
           </p>
           <figure>
-            <pre><code class="language-csharp">&lt;ei:CallMethodAction TargetObject=&quot;{Binding}&quot; MethodName=&quot;LoadCustomers&quot; /&gt;</code></pre>
+            <pre><code class="language-csharp">&lt;b:CallMethodAction TargetObject=&quot;{Binding}&quot; MethodName=&quot;LoadCustomers&quot; /&gt;</code></pre>
             <figcaption>Fig 04-023</figcaption>
           </figure>
           <p>
@@ -641,20 +630,10 @@ xmlns:ei=&quot;http://schemas.microsoft.com/expression/2010/interactions&quot;</
             make it a heavyweight approach to achieve the goal of change notifications in Model and ViewModel objects.
           </p>
           <h3>Demo: Leveraging INotifyPropertyChanged</h3>
-          <div class="example">
-            <div class="input-group">
               <input id="Ex04-008" type="text"
                      value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 4\MVVMCommsDemo-PropertyChanged-Start\MVVMCommsDemo.sln">
-              <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex04-008"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
-          <div class="example">
-            <div class="input-group">
               <input id="Ex04-009" type="text"
                      value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 4\MVVMCommsDemo-PropertyChanged-End\MVVMCommsDemo.sln">
-              <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex04-009"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
           <p>
             In the last demo we hooked up some Behaviors to populate our Customers OnLoaded instead of in the
             constructor. However, we introduced a bug where the Customers were being retrieved but they are not showing
@@ -674,8 +653,7 @@ xmlns:ei=&quot;http://schemas.microsoft.com/expression/2010/interactions&quot;</
             change being null:
           </p>
           <figure>
-            <pre
-              class="prettyprint">public event PropertyChangedEventHandler PropertyChanged = delegate { };</code></pre>
+            <pre><code class="language-csharp">public event PropertyChangedEventHandler PropertyChanged = delegate { };</code></pre>
             <figcaption>Fig 04-025</figcaption>
           </figure>
           <p>
@@ -755,8 +733,7 @@ xmlns:ei=&quot;http://schemas.microsoft.com/expression/2010/interactions&quot;</
             out, and use the delegate trick again:
           </p>
           <figure>
-            <pre
-              class="prettyprint">public event PropertyChangedEventHandler PropertyChanged = delegate { };</code></pre>
+            <pre><code class="language-csharp">public event PropertyChangedEventHandler PropertyChanged = delegate { };</code></pre>
             <figcaption>Fig 04-029</figcaption>
           </figure>
           <p>
@@ -765,37 +742,31 @@ xmlns:ei=&quot;http://schemas.microsoft.com/expression/2010/interactions&quot;</
             the FirstName property.
           </p>
           <p>Now if you run the application, select a customer, and click the Change Customer button you will see the
-            screen updates properly.
+            screen updates properly:
           </p>
+          <figure>
+            <img src="./images/Fig04-029AA.png"/>
+      <figcaption>Fig 04-029AA</figcaption>
+    </figure>
+
           <h3>Demo: Custom Blend Behavior with INotifyPropertyChanged Trigger</h3>
-          <div class="example">
-            <div class="input-group">
-              <input id="Ex04-010" type="text"
+              <input id="Ex04-010" type="text" style="width: 100%;"
                      value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 4\MVVMCommsDemo-CustomBehavior-Start\MVVMCommsDemo.sln">
-              <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex04-010"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
-          <div class="example">
-            <div class="input-group">
-              <input id="Ex04-011" type="text"
+              <input id="Ex04-011" type="text" style="width: 100%;"
                      value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 4\MVVMCommsDemo-CustomBehavior-End\MVVMCommsDemo.sln">
-              <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex04-011"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
           <p>
-            In this demo we will show the combination of Property Changed Notifications as a communication method from
-            ViewModel to View and a Custom Behavior using the Blend SDK. The scenario we are going to address is one
+            In this demo we will show the combination of Property Changed Notifications as a communication mechanism  from
+            ViewModel to View and a Custom Behavior using the XAML Behaviors for WPF Library. The scenario we are going to address is one
             where we want to send alerts to the screen when stuff happens in the background. To do that we are going to
-            need a Custom Behavior that show the alerts as they arrive in a Content Control. To create a Custom Behavior
-            using the Blend SDK you have to reference the Blend SDK (which we did in a previous demo).
+            need a Custom Behavior that cna show the alerts as they arrive in a Content Control. To create a Custom Behavior
+            using the XAML Behaviors for WPF library you have to reference that Nuget package (which we did in a previous demo).
           </p>
           <p>
             Add a new class called ShowNotificationMessageBehavior. Make the class public and inherit from Behavior of T
             where T is a ContentControl:
           </p>
           <figure>
-            <pre
-              class="prettyprint">public class ShowNotificationMessageBehavior : Behavior&lt;ContentControl&gt;</code></pre>
+            <pre><code class="language-csharp">public class ShowNotificationMessageBehavior : Behavior&lt;ContentControl&gt;</code></pre>
             <figcaption>Fig 04-029A</figcaption>
           </figure>
           <p>Next, using the propp code snippet, expose a property on the Behavior called Message of type string which
@@ -876,12 +847,12 @@ behavior.AssociatedObject.Visibility = Visibility.Visible;</code></pre>
             On that ContentControl you can see we add the InteractionBehaviors Collection (similar to the Triggers
             Attached Property we saw in a previous demo). We put our Behavior inside of that and we combine the Message
             property of our Behavior to something we expect our ViewModel to expose. We need to add some namespaces to
-            the top of the file to bring in the i prefix (we can steal those from the previous View that already has a
-            Behavior in it). I also need to add in the i prefix pointing to the Interactivity namespace which the
+            the top of the file to bring in the b prefix (we can steal those from the previous View that already has a
+            Behavior in it). I also need to add in the b prefix pointing to the Interactivity namespace which the
             Behaviors Attached Property resides in.
           </p>
           <figure>
-            <pre><code class="language-csharp">xmlns:i=&quot;http://schemas.microsoft.com/expression/2010/interactivity&quot;</code></pre>
+            <pre><code class="language-csharp">xmlns:b=&quot;http://schemas.microsoft.com/xaml/behaviors&quot;</code></pre>
             <figcaption>Fig 04-033</figcaption>
           </figure>
           <p>

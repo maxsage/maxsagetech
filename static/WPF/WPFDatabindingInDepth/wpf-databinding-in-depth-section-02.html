@@ -135,8 +135,8 @@
             could even be a service that you're making web service calls out to, but conceptually you're reading data in
             from a persistent store and writing it out and putting it into objects in-memory.
           </p>
-          <figure><img src="./images/Fig01-001.png"/>
-            <figcaption>Fig 01-001</figcaption>
+          <figure><img src="./images/Fig02-001.png"/>
+            <figcaption>Fig 02-001</figcaption>
           </figure>
           <p>
             Data binding, on the other hand, sits upstream of data access, so your initial focus is going to be on a
@@ -148,8 +148,8 @@
             back into those data source objects when it changes on screen. From data binding's perspective, it shouldn't
             know or care where those data source objects came from or even be coupled to what kind of object they are.
           </p>
-          <figure><img src="./images/Fig01-002.png"/>
-            <figcaption>Fig 01-002</figcaption>
+          <figure><img src="./images/Fig02-002.png"/>
+            <figcaption>Fig 02-002</figcaption>
           </figure>
         </div>
         <div class="panel-body">
@@ -177,8 +177,8 @@
             going to flow back and forth, where those values can be a single primitive value, they can be a complex
             object or they can be an entire collection of complex objects.
           </p>
-          <figure><img src="./images/Fig01-003.png"/>
-            <figcaption>Fig 01-003</figcaption>
+          <figure><img src="./images/Fig02-003.png"/>
+            <figcaption>Fig 02-003</figcaption>
           </figure>
           <p>
             Now it's important to note that the terms Source and Target can get a little confusing because in Two-Way
@@ -188,8 +188,8 @@
             but just realize that the flow reverses in the case of two-way data binding when edits are made in the
             screen.
           </p>
-          <figure><img src="./images/Fig01-004.png"/>
-            <figcaption>Fig 01-004</figcaption>
+          <figure><img src="./images/Fig02-004.png"/>
+            <figcaption>Fig 02-004</figcaption>
           </figure>
           <p>
             So another key thing to keep in mind is that the target properties of a binding must be
@@ -213,8 +213,8 @@
             the Window level, all of the child elements within that Window will have access to the same object that was
             set as the DataContext on the root Window element.
           </p>
-          <figure><img src="./images/Fig01-005.png"/>
-            <figcaption>Fig 01-005</figcaption>
+          <figure><img src="./images/Fig02-005.png"/>
+            <figcaption>Fig 02-005</figcaption>
           </figure>
           <p>
             The next concept are Bindings. Bindings provide the glue between the single element property, such as the
@@ -223,8 +223,8 @@
             Two-Way Data Binding you can also flow data back from the Target element property back into the Source
             object property.
           </p>
-          <figure><img src="./images/Fig01-006.png"/>
-            <figcaption>Fig 01-006</figcaption>
+          <figure><img src="./images/Fig02-006.png"/>
+            <figcaption>Fig 02-006</figcaption>
           </figure>
           <p>
             Another important concept to do with binding is the way XAML parsing works. If you have some chunk of XAML
@@ -237,8 +237,8 @@
           </p>
 
           <figure>
-            <img src="./images/Fig01-007.png"/>
-            <figcaption>Fig 01-007</figcaption>
+            <img src="./images/Fig02-007.png"/>
+            <figcaption>Fig 02-007</figcaption>
           </figure>
           <p>
             Next there's the concept of Change Notifications. Change Notifications are important because if the data can
@@ -251,8 +251,8 @@
             scenes to stay in sync with what the user sees in the screen.
           </p>
           <figure>
-            <img src="./images/Fig01-008.png"/>
-            <figcaption>Fig 01-008</figcaption>
+            <img src="./images/Fig02-008.png"/>
+            <figcaption>Fig 02-008</figcaption>
           </figure>
         </div>
         <div class="panel-body">
@@ -264,8 +264,8 @@
             source for all of the child elements within that Window.
           </p>
           <figure>
-            <img src="./images/Fig01-009.png"/>
-            <figcaption>Fig 01-009</figcaption>
+            <img src="./images/Fig02-009.png"/>
+            <figcaption>Fig 02-009</figcaption>
           </figure>
           <p>
             However, you can also set a DataContext at a more granular level. So in this example I could set a
@@ -275,8 +275,8 @@
             their Source objects.
           </p>
           <figure>
-            <img src="./images/Fig01-010.png"/>
-            <figcaption>Fig 01-010</figcaption>
+            <img src="./images/Fig02-010.png"/>
+            <figcaption>Fig 02-010</figcaption>
           </figure>
           <p>
             Now when it comes to DataBound List controls, it's important to realize that they will dynamically set a
@@ -289,8 +289,8 @@
             object they're rendering out.
           </p>
           <figure>
-            <img src="./images/Fig01-011.png"/>
-            <figcaption>Fig 01-011</figcaption>
+            <img src="./images/Fig02-011.png"/>
+            <figcaption>Fig 02-011</figcaption>
           </figure>
           <p>
             You can also set a DataContext in a more granular fashion to a set of elements. And you would do that by
@@ -300,16 +300,16 @@
             Customer object without needing to know about what the DataContext is for the rest of the form.
           </p>
           <figure>
-            <img src="./images/Fig01-012.png"/>
-            <figcaption>Fig 01-012</figcaption>
+            <img src="./images/Fig02-012.png"/>
+            <figcaption>Fig 02-012</figcaption>
           </figure>
           <p>
             And finally, you could set it for an individual element. It's fairly rare that you would set DataContexts at
             that granular of level, although I will do it in the demos just to show how it works.
           </p>
           <figure>
-            <img src="./images/Fig01-013.png"/>
-            <figcaption>Fig 01-013</figcaption>
+            <img src="./images/Fig02-013.png"/>
+            <figcaption>Fig 02-013</figcaption>
           </figure>
         </div>
         <div class="panel-body">
@@ -332,8 +332,8 @@
             such as my Windows 8 MVVM course. So let's dive right into some coding.
           </p>
           <figure>
-            <img src="./images/Fig01-014.png"/>
-            <figcaption>Fig 01-014</figcaption>
+            <img src="./images/Fig02-014.png"/>
+            <figcaption>Fig 02-014</figcaption>
           </figure>
         </div>
         <div class="panel-body">
@@ -362,8 +362,8 @@
             here. In later demos I'll mostly be using Entity Framework Code First.
           </p>
           <figure>
-            <img src="./images/Fig01-015.png"/>
-            <figcaption>Fig 01-015</figcaption>
+            <img src="./images/Fig02-015.png"/>
+            <figcaption>Fig 02-015</figcaption>
           </figure>
           <p>
             The UI that we'll be using in this demo is a simple crude data form here. At the top we have some current
@@ -374,8 +374,8 @@
             some other fields as we go here to save off other modifications to the Customer.
           </p>
           <figure>
-            <img src="./images/Fig01-016.png"/>
-            <figcaption>Fig 01-016</figcaption>
+            <img src="./images/Fig02-016.png"/>
+            <figcaption>Fig 02-016</figcaption>
           </figure>
           <p>
             Now really a good starting point when it comes to considering Data Binding is to think about what does the
@@ -393,7 +393,7 @@
         InitializeComponent();
         Loaded += MainWindow_Loaded;
   }</code></pre>
-            <figcaption>Fig 01-017</figcaption>
+            <figcaption>Fig 02-017</figcaption>
           </figure>
           <p>
             In that event handler we go out through our object context, execute a query to get the first Customer in the
@@ -412,7 +412,7 @@
     OrdersList.ItemsSource = orderDates;
 
   }</code></pre>
-            <figcaption>Fig 01-018</figcaption>
+            <figcaption>Fig 02-018</figcaption>
           </figure>
           <p>
             Then comes the part that gets really tedious about not using Data Binding is we have to go field by field
@@ -423,7 +423,7 @@
           <figure>
 <pre><code class="language-csharp">CustomerIdLabel.Content = firstCustomer.Id;
 CustomerLastNameTextBox.Text = firstCustomer.LastName;</code></pre>
-            <figcaption>Fig 01-019</figcaption>
+            <figcaption>Fig 02-019</figcaption>
           </figure>
           <p>Next you can see I'm executing a query to go get the Orders for that current Customer and selecting just
             the OrderDate so we end up with a list of DateTime objects that we set as the ItemsSource property on our
@@ -433,7 +433,7 @@ CustomerLastNameTextBox.Text = firstCustomer.LastName;</code></pre>
 <pre><code class="language-csharp">var orderDates = _ZzaContext.Orders
     .Where(o => o.CustomerId == firstCustomer.Id).Select(o => o.OrderDate).ToList();
 OrdersList.ItemsSource = orderDates;</code></pre>
-            <figcaption>Fig 01-020</figcaption>
+            <figcaption>Fig 02-020</figcaption>
           </figure>
           <p>
             We also have a SelectionChanged event handler hooked up to the ListBox, and that's down here. And here you
@@ -449,7 +449,7 @@ OrdersList.ItemsSource = orderDates;</code></pre>
           o.CustomerId == (Guid)CustomerIdLabel.Content).FirstOrDefault();
   OrderItemsDataGrid.ItemsSource = selectedOrder.OrderItems;
 }</code></pre>
-            <figcaption>Fig 01-021</figcaption>
+            <figcaption>Fig 02-021</figcaption>
           </figure>
           <p>
             You can see one of the downsides to doing it this way is that things like SelectedItem and Content are
@@ -475,7 +475,7 @@ OrdersList.ItemsSource = orderDates;</code></pre>
     // Persist those changes somewhere
     _ZzaContext.SaveChanges();
   }</code></pre>
-            <figcaption>Fig 01-022</figcaption>
+            <figcaption>Fig 02-022</figcaption>
           </figure>
 
           <p>
@@ -500,8 +500,8 @@ OrdersList.ItemsSource = orderDates;</code></pre>
             by using Data Binding instead.
           </p>
           <figure>
-            <img src="./images/Fig01-023.png"/>
-            <figcaption>Fig 01-023</figcaption>
+            <img src="./images/Fig02-023.png"/>
+            <figcaption>Fig 02-023</figcaption>
           </figure>
         </div>
         <div class="panel-body">
@@ -532,7 +532,7 @@ OrdersList.ItemsSource = orderDates;</code></pre>
   Grid.Row="0"
   Grid.Column="1"
   Content="{Binding Id}" /&gt;</code></pre>
-            <figcaption>Fig 01-023A</figcaption>
+            <figcaption>Fig 02-023A</figcaption>
           </figure>
 
           <p>and we'll introduce a Binding for the Content property that says go and get me the Id property of whatever
@@ -554,7 +554,7 @@ OrdersList.ItemsSource = orderDates;</code></pre>
   Grid.Row="1"
   Grid.Column="1"
   Text="{Binding LastName}" /&gt;</code></pre>
-            <figcaption>Fig 01-024</figcaption>
+            <figcaption>Fig 02-024</figcaption>
           </figure>
           <p>
             Next, for our ListBox, we can drop down here and we can do a Binding like this:
@@ -566,7 +566,7 @@ OrdersList.ItemsSource = orderDates;</code></pre>
   Height="100"
   ItemsSource="{Binding}"
   SelectionChanged="OnOrderSelected" /&gt;</code></pre>
-            <figcaption>Fig01-025</figcaption>
+            <figcaption>Fig02-025</figcaption>
           </figure>
           <p>Ultimately we need to get a Collection into our ItemSource property and we can just use Binding here and
             that basically says, I'm expecting the DataContext for this ListBox to be a Collection of something I'm
@@ -577,7 +577,7 @@ OrdersList.ItemsSource = orderDates;</code></pre>
           </p>
           <figure>
             <pre><code class="language-csharp">ItemsSource="{Binding}"</code></pre>
-            <figcaption>Fig01-025A</figcaption>
+            <figcaption>Fig02-025A</figcaption>
           </figure>
           <p>implies that the Source object is the DataContext and that we're not looking for any particular property on
             that DataContext, we're expecting it to be whole objects that we're pushing in as a Collection here.
@@ -591,7 +591,7 @@ OrdersList.ItemsSource = orderDates;</code></pre>
   AutoGenerateColumns="True"
   Grid.Row="2"&gt;
 &lt;/DataGrid&gt;</code></pre>
-            <figcaption>Fig01-026</figcaption>
+            <figcaption>Fig02-026</figcaption>
           </figure>
 
           <p>Now this implies that this DataGrid's DataContext has to be set to whatever collection it expects to render
@@ -604,7 +604,7 @@ OrdersList.ItemsSource = orderDates;</code></pre>
   AutoGenerateColumns="True"
   Grid.Row="2"&gt;
 &lt;/DataGrid&gt;</code></pre>
-            <figcaption>Fig01-026A</figcaption>
+            <figcaption>Fig02-026A</figcaption>
           </figure>
           <p>for the ListBox:</p>
           <figure>
@@ -614,7 +614,7 @@ OrdersList.ItemsSource = orderDates;</code></pre>
   Height="100"
   ItemsSource="{Binding}"
   SelectionChanged="OnOrderSelected" /&gt;</code></pre>
-            <figcaption>Fig01-026B</figcaption>
+            <figcaption>Fig02-026B</figcaption>
           </figure>
           <p>and for the customer-oriented controls up above:</p>
           <figure>
@@ -629,7 +629,7 @@ OrdersList.ItemsSource = orderDates;</code></pre>
     Grid.Row="1"
     Grid.Column="1"
     Text="{Binding LastName}" /&gt;</code></pre>
-            <figcaption>Fig01-026C</figcaption>
+            <figcaption>Fig02-026C</figcaption>
           </figure>
 
           <p>which is not something you'd normally do and we'll evolve past that quickly here in the demos.</p>
@@ -647,7 +647,7 @@ OrdersList.ItemsSource = orderDates;</code></pre>
   DataContext = firstCustomer;
   //CustomerIdLabel.Content = firstCustomer.Id;
   //CustomerLastNameTextBox.Text = firstCustomer.LastName;</code></pre>
-            <figcaption>Fig01-027</figcaption>
+            <figcaption>Fig02-027</figcaption>
           </figure>
           <p>
             For our OrderList, we could replace setting the ItemsSource directly with setting a DataContext for that
@@ -658,7 +658,7 @@ OrdersList.ItemsSource = orderDates;</code></pre>
   .Where(o => o.CustomerId == firstCustomer.Id).Select(o => o.OrderDate).ToList();
 //OrdersList.ItemsSource = orderDates;
 OrdersList.DataContext = orderDates;</code></pre>
-            <figcaption>Fig01-028</figcaption>
+            <figcaption>Fig02-028</figcaption>
           </figure>
           <p>
             And then down here in our OrderSelected handler we could do the same where we replace setting the
@@ -673,7 +673,7 @@ OrdersList.DataContext = orderDates;</code></pre>
       o.CustomerId == (Guid)CustomerIdLabel.Content).FirstOrDefault();
   //OrderItemsDataGrid.ItemsSource = selectedOrder.OrderItems;
   OrderItemsDataGrid.DataContext = selectedOrder.OrderItems;</code></pre>
-            <figcaption>Fig01-029</figcaption>
+            <figcaption>Fig02-029</figcaption>
           </figure>
           <p>
             The other thing we probably want to do is get rid of the ugly columns that we didn't intend to render in the
@@ -692,7 +692,7 @@ Grid.Row="2">
                         Binding="{Binding Instructions}"
                         Header="Instructions"
                         Width="Auto" /&gt;</code></pre>
-            <figcaption>Fig01-030</figcaption>
+            <figcaption>Fig02-030</figcaption>
           </figure>
           <p>
             Now the other thing to point out here in the XAML is the way DataContext work in list bound controls. So
@@ -712,7 +712,7 @@ Grid.Row="2"&gt;
                       Binding="{Binding Instructions}"
                       Header="Instructions"
                       Width="Auto" /&gt;</code></pre>
-              <figcaption>Fig01-031</figcaption>
+              <figcaption>Fig02-031</figcaption>
           </figure>
           <p>
             That's because when a list-oriented control like a DataGrid, ListBox or ComboBox, renders out its items, it
@@ -730,7 +730,7 @@ Grid.Row="2"&gt;
   Binding="{Binding Path=Id}"
   Header="Id"
   Width="SizeToHeader" /&gt;</code></pre>
-            <figcaption>Fig01-032</figcaption>
+            <figcaption>Fig02-032</figcaption>
           </figure>
           <p>
             When you say Binding Id, you're really implicitly setting the Path through a parameterized constructor on
@@ -742,8 +742,8 @@ Grid.Row="2"&gt;
             our selections happen and now we don't have the extra columns that we didn't want in the first place.
           </p>
           <figure>
-            <img src="./images/Fig01-033.png"/>
-            <figcaption>Fig 01-033</figcaption>
+            <img src="./images/Fig02-033.png"/>
+            <figcaption>Fig 02-033</figcaption>
           </figure>
           <p>
             So if we drop into the code-behind here we can clean up those commented lines of code.
@@ -757,7 +757,7 @@ Grid.Row="2"&gt;
   // Persist those changes somewhere
   _ZzaContext.SaveChanges();
 }</code></pre>
-            <figcaption>Fig01-034</figcaption>
+            <figcaption>Fig02-034</figcaption>
           </figure>
 
           <p>
@@ -773,7 +773,7 @@ Grid.Row="2"&gt;
 {
   _ZzaContext.SaveChanges();
 }</code></pre>
-            <figcaption>Fig01-035</figcaption>
+            <figcaption>Fig02-035</figcaption>
           </figure>
           <p>
             So I can go ahead and run, I can modify Pucket's name, Save, shut down, and restart, and we can see those
@@ -807,7 +807,7 @@ Grid.Row="2"&gt;
 &lt;TextBox Text=&quot;{Binding Email}&quot;
     Grid.Row=&quot;4&quot;
     Grid.Column=&quot;1&quot; /&gt;</code></pre>
-            <figcaption>Fig01-036</figcaption>
+            <figcaption>Fig02-036</figcaption>
           </figure>
           <p>
             So now we're binding to the customer LastName, FirstName, Phone, and Email in individual TextBoxes and we
@@ -817,8 +817,8 @@ Grid.Row="2"&gt;
             changes have been persisted.
           </p>
           <figure>
-            <img src="./images/Fig01-037.png"/>
-            <figcaption>Fig 01-037</figcaption>
+            <img src="./images/Fig02-037.png"/>
+            <figcaption>Fig 02-037</figcaption>
           </figure>
           <p>
             So now you just get to focus on the markup and deciding how do you want to render something and what is the
@@ -867,7 +867,7 @@ void MainWindow_Loaded(object sender, RoutedEventArgs e)
         .Where(o => o.CustomerId == firstCustomer.Id).Select(o => o.OrderDate).ToList();
     OrdersList.DataContext = orderDates;
 }</code></pre>
-            <figcaption>Fig01-038</figcaption>
+            <figcaption>Fig02-038</figcaption>
           </figure>
           <p>
             Generally when you're doing data binding you're going to try to aggregate all of the objects needed to
@@ -891,7 +891,7 @@ void MainWindow_Loaded(object sender, RoutedEventArgs e)
         public List&lt;OrderItem&gt; OrderItems { get; set; }
     }
 }</code></pre>
-            <figcaption>Fig01-039</figcaption>
+            <figcaption>Fig02-039</figcaption>
           </figure>
 
           <p>
@@ -911,7 +911,7 @@ void MainWindow_Loaded(object sender, RoutedEventArgs e)
                 <pre><code class="language-csharp">var firstCustomer = _ZzaContext.Customers.FirstOrDefault();
 _ViewModel.Customer = firstCustomer;
 DataContext = firstCustomer;</code></pre>
-            <figcaption>Fig01-040</figcaption>
+            <figcaption>Fig02-040</figcaption>
           </figure>
           <p>
             And then once we have our OrderDates we'll set those as the OrderDates property on the ViewModel and down
@@ -935,7 +935,7 @@ void OnOrderSelected(object sender, SelectionChangedEventArgs args)
           o.CustomerId == (Guid)CustomerIdLabel.Content).FirstOrDefault();
   _ViewModel.OrderItems = selectedOrder.OrderItems.ToList();
                 </code></pre>
-            <figcaption>Fig01-041</figcaption>
+            <figcaption>Fig02-041</figcaption>
           </figure>
           <p>
             Now all we need to do is set the DataContext as a whole to an instance of that ViewModel. Now that
@@ -946,7 +946,7 @@ void OnOrderSelected(object sender, SelectionChangedEventArgs args)
   .Where(o => o.CustomerId == firstCustomer.Id).Select(o => o.OrderDate).ToList();
 _ViewModel.OrderDates = orderDates;
 DataContext = _ViewModel;</code></pre>
-            <figcaption>Fig01-042</figcaption>
+            <figcaption>Fig02-042</figcaption>
           </figure>
           <p>
             That implies that we need to change some of the bindings over here in our XAML. So first off, each of these
@@ -961,7 +961,7 @@ DataContext = _ViewModel;</code></pre>
 &lt;TextBox Text="{Binding Customer.LastName}"
   Grid.Row="1"
   .Column="1" /&gt;</code></pre>
-            <figcaption>Fig01-043</figcaption>
+            <figcaption>Fig02-043</figcaption>
           </figure>
           <p>
             Another way I could do the same thing is, because all these controls are grouped inside of this grid, I
@@ -980,7 +980,7 @@ DataContext = _ViewModel;</code></pre>
       &lt;RowDefinition Height="Auto" /&gt;
       &lt;RowDefinition Height="Auto" /&gt;
       &lt;/Grid.RowDefinitions&gt;</code></pre>
-  <figcaption>Fig01-044</figcaption>
+  <figcaption>Fig02-044</figcaption>
           </figure>
           <p>
             So it basically grabs that object reference, sets it as DataContext, and everything under this grid now will
@@ -997,7 +997,7 @@ DataContext = _ViewModel;</code></pre>
   Grid.Column="1"
   Height="100"
   SelectionChanged="OnOrderSelected" /></code></pre>
-            <figcaption>Fig01-045</figcaption>
+            <figcaption>Fig02-045</figcaption>
           </figure>
           <p>
             And go down to the DataGrid and change that one to point to the OrderItems.
@@ -1008,15 +1008,15 @@ DataContext = _ViewModel;</code></pre>
   AutoGenerateColumns="False"
   Grid.Row="2"&gt;
 &lt;DataGrid.Columns&gt;</code></pre>
-            <figcaption>Fig01-046</figcaption>
+            <figcaption>Fig02-046</figcaption>
           </figure>
 
           <p>
             Now if we go ahead and run, you can see we've got the same kind of experience up at the top as we had before
           </p>
           <figure>
-            <img src="./images/Fig01-047.png"/>
-            <figcaption>Fig 01-047</figcaption>
+            <img src="./images/Fig02-047.png"/>
+            <figcaption>Fig 02-047</figcaption>
           </figure>
           <p>
             But notice when I'm making selections in the OrderDate list we've got a problem, it's not actually doing
@@ -1030,7 +1030,7 @@ DataContext = _ViewModel;</code></pre>
                 <pre><code class="language-csharp">public Customer Customer { get; set; }
 public List&lt;DateTime&gt; OrderDates { get; set; }
 public List&lt;OrderItem&gt; OrderItems { get; set; }</code></pre>
-            <figcaption>Fig01-048</figcaption>
+            <figcaption>Fig02-048</figcaption>
           </figure>
           <p>
             Now as a quick workaround and to show you something we'll cover later in the course, we could force it to
@@ -1042,7 +1042,7 @@ public List&lt;OrderItem&gt; OrderItems { get; set; }</code></pre>
           <figure>
                 <pre><code class="language-csharp">OrderItemsDataGrid.GetBindingExpression(DataGrid.ItemsSourceProperty)
   .UpdateTarget();</code></pre>
-            <figcaption>Fig01-049</figcaption>
+            <figcaption>Fig02-049</figcaption>
           </figure>
           <p>
             We can go to the DataGrid itself, we can use a method called GetBindingExpression that we pass a reference
@@ -1057,7 +1057,7 @@ public List&lt;OrderItem&gt; OrderItems { get; set; }</code></pre>
   AutoGenerateColumns="False"
   Grid.Row="2"&gt;
 &lt;DataGrid.Columns&gt;</code></pre>
-            <figcaption>Fig01-050</figcaption>
+            <figcaption>Fig02-050</figcaption>
           </figure>
           <p>
             Then on that binding object there is a method exposed called UpdateTarget. And remember the terminology of
@@ -1070,8 +1070,8 @@ public List&lt;OrderItem&gt; OrderItems { get; set; }</code></pre>
             is updating even though our layout's not that great now.
           </p>
           <figure>
-            <img src="./images/Fig01-051.png"/>
-            <figcaption>Fig 01-051</figcaption>
+            <img src="./images/Fig02-051.png"/>
+            <figcaption>Fig 02-051</figcaption>
           </figure>
           <p>
             So that code will work, but it's not very efficient. We'll see in the next module the better way to do this
