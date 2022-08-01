@@ -220,20 +220,10 @@
             more realistic screens and interaction patterns. So let's get started.
           </p>
           <h2>Demo: Building Out an MVVM Hierarchy</h2>
-          <div class="example">
-            <div class="input-group">
-              <input id="Ex05-001" type="text"
+              <input id="Ex05-001" type="text" style="width: 100%;"
                      value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 5\ZzaDesktop-Start\ZzaDesktop.sln">
-              <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex05-001"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
-          <div class="example">
-            <div class="input-group">
-            <input id="Ex05-002" type="text"
+            <input id="Ex05-002" type="text" style="width: 100%;"
                      value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 5\ZzaDesktop-End\ZzaDesktop.sln">
-<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex05-002"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
           <p>
             In this demo we are going to start building up our set of use cases from scratch starting from an
             essentially empty WPF application project. We have already added the Zza.Data project which contains the
@@ -402,20 +392,10 @@ private OrderPrepViewModel _orderPrepViewModel = new OrderPrepViewModel();</code
             ViewModels inherit from it.
           </p>
           <h2>Demo: Encapsulating INotifyPropertyChanged</h2>
-          <div class="example">
-            <div class="input-group">
-              <input id="Ex05-003" type="text"
+              <input id="Ex05-003" type="text" style="width: 100%;"
                      value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 5\ZzaDesktop-Start\ZzaDesktop.sln">
-<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex05-003"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
-          <div class="example">
-            <div class="input-group">
-              <input id="Ex05-004" type="text"
+              <input id="Ex05-004" type="text" style="width: 100%;"
                      value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 5\ZzaDesktop-End\ZzaDesktop.sln">
-<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex05-004"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
           <p>
             So we need to create a base class to encapsulate the implementation of INPC for our ViewModels. To do that
             we are going to add a new class to the project called BindableBase. The main idea behind BindableBase is to
@@ -561,20 +541,10 @@ protected virtual void OnPropertyChanged(string propertyName)
           </figure>
           <p>So next we'll hook up the Commanding to actually drive this switching and navigation.</p>
           <h2>Demo: View Switching Navigation</h2>
-          <div class="example">
-            <div class="input-group">
-              <input id="Ex05-005" type="text"
+              <input id="Ex05-005" type="text" style="width: 100%;"
                      value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 5\ZzaDesktop-Start\ZzaDesktop.sln">
-<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex05-005"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
-          <div class="example">
-            <div class="input-group">
-              <input id="Ex05-006" type="text"
+              <input id="Ex05-006" type="text" style="width: 100%;"
                      value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 5\ZzaDesktop-Start\ZzaDesktop.sln">
-<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex05-006"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
           <p>
             So in this demo we will start doing some actual View switching using our CurrentViewModel property. We just
             need some way to drive the setting of this property and we are going to make it so the end user can command
@@ -609,8 +579,7 @@ protected virtual void OnPropertyChanged(string propertyName)
             way to set that up is with Commands. So let’s declare a Command that we can invoke the method with:
           </p>
           <figure>
-            <pre
-              class="prettyprint">public RelayCommand&lt;string&gt; NavCommand { get; private set; }</code></pre>
+            <pre><code class="language-csharp">public RelayCommand&lt;string&gt; NavCommand { get; private set; }</code></pre>
             <figcaption>Fig 05-011</figcaption>
           </figure>
           <p>
@@ -672,20 +641,10 @@ protected virtual void OnPropertyChanged(string propertyName)
             get to the Order view is if we know what Customer to create an Order for.
           </p>
           <h2>Demo: Data Loading into a ViewModel</h2>
-          <div class="example">
-            <div class="input-group">
-              <input id="Ex05-007" type="text"
+              <input id="Ex05-007" type="text" style="width: 100%;"
                      value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 5\ZzaDesktop-Start\ZzaDesktop.sln">
-<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex05-007"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
-          <div class="example">
-            <div class="input-group">
-              <input id="Ex05-008" type="text"
+              <input id="Ex05-008" type="text" style="width: 100%;"
                      value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 5\ZzaDesktop-End\ZzaDesktop.sln">
-<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex05-008"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
           <p>Now that we have our basic top-level navigation working it is time to start fleshing out the
             CustomerListView. Replace the TextBox with a DataGrid:
           </p>
@@ -823,8 +782,7 @@ public ObservableCollection&lt;Customer&gt; Customers
             define a Command property called PlaceOrderCommand:
           </p>
           <figure>
-            <pre
-              class="prettyprint">public RelayCommand&lt;Customer&gt; PlaceOrderCommand { get; private set; }</code></pre>
+            <pre><code class="language-csharp">public RelayCommand&lt;Customer&gt; PlaceOrderCommand { get; private set; }</code></pre>
             <figcaption>Fig 05-021</figcaption>
           </figure>
           <p>In the constructor for the ViewModel initialize the Command property and point it to a handling method:
@@ -850,20 +808,10 @@ public ObservableCollection&lt;Customer&gt; Customers
           </p>
           <p>Next up we need to tackle navigating to an OrderView with that Customers context.</p>
           <h2>Demo: Navigation with Parameters</h2>
-          <div class="example">
-            <div class="input-group">
-              <input id="Ex05-009" type="text"
+              <input id="Ex05-009" type="text" style="width: 100%;"
                      value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 5\ZzaDesktop-Start\ZzaDesktop.sln">
-              <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex05-009"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
-          <div class="example">
-            <div class="input-group">
-              <input id="Ex05-010" type="text"
+              <input id="Ex05-010" type="text" style="width: 100%;"
                      value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 5\ZzaDesktop-Start\ZzaDesktop.sln">
-<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex05-010"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
           <p>
             At this point we are all wired up to do top level navigation between the CustomersList and the OrderPrep
             area of the application. Now we wired ourselves up to present a list of Customers and have a PlaceOrder
@@ -893,8 +841,7 @@ public ObservableCollection&lt;Customer&gt; Customers
             placing an Order for:
           </p>
           <figure>
-            <pre
-              class="prettyprint">public event Action&lt;Guid&gt; PlaceOrderRequested = delegate { };</code></pre>
+            <pre><code class="language-csharp">public event Action&lt;Guid&gt; PlaceOrderRequested = delegate { };</code></pre>
             <figcaption>Fig 05-023B</figcaption>
           </figure>
           <p>
@@ -930,7 +877,7 @@ public ObservableCollection&lt;Customer&gt; Customers
           </figure>
           <p>
             Now before we go and set the CurrentViewModel to cause the navigation to occur to the OrderViewModel we need
-            to pass some context. What we can do is pan on exposing a property on the ViewModel that the parent can set
+            to pass some context. What we can do is plan on exposing a property on the ViewModel that the parent can set
             as the context that drives the way it is going to behave when it is presented. We take the Guid that was
             passed to us and just push it down to the child ViewModel:
           </p>
@@ -975,20 +922,10 @@ public Guid CustomerId
             stuff, we're going to focus on rounding out the functionality for Customers.
           </p>
           <h2>Demo: Add/Edit Navigation</h2>
-          <div class="example">
-            <div class="input-group">
-              <input id="Ex05-011" type="text"
+              <input id="Ex05-011" type="text" style="width: 100%;"
                      value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 5\ZzaDesktop-Start\ZzaDesktop.sln">
-              <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex05-011"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
-          <div class="example">
-            <div class="input-group">
-              <input id="Ex05-012" type="text"
+              <input id="Ex05-012" type="text" style="width: 100%;"
                      value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 5\ZzaDesktop-Start\ZzaDesktop.sln">
-<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex05-012"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
           <p>
             So to finish up the navigation topics in this module we just need to add a new View and ViewModel to handle
             adding and editing. Since the two will combine the same data entry fields we can combine them into a single

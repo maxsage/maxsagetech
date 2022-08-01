@@ -110,8 +110,8 @@
           </p>
 
           <figure>
-            <img src="./images/Fig04-001.png" class="image"/>
-            <figcaption>Fig 04-001</figcaption>
+            <img src="./images/Fig05-001.png" class="image"/>
+            <figcaption>Fig 05-001</figcaption>
           </figure>
           <p>That is the default UpdateSourceTrigger for most bindings. I'm going to drop into the XAML here and add a
             couple of Labels and TextBoxes which we can show up down here as Source and Target, two different TextBoxes.
@@ -141,7 +141,7 @@
     HorizontalAlignment=&quot;Left&quot;
     Margin=&quot;207,175,0,0&quot;
     VerticalAlignment=&quot;Top&quot; /&gt;</code></pre>
-            <figcaption>Fig 04-002</figcaption>
+            <figcaption>Fig 05-002</figcaption>
           </figure>
           <p>And the way the bindings are set up here between these is that you can see the Source TextBox has no
             binding, so it's just going to reflect whatever is put into it as a source object.
@@ -162,7 +162,7 @@
     TextWrapping=&quot;Wrap&quot;
     VerticalAlignment=&quot;Top&quot;
     Width=&quot;120&quot; /&gt;</code></pre>
-            <figcaption>Fig 04-003</figcaption>
+            <figcaption>Fig 05-003</figcaption>
           </figure>
           <p>The Target TextBox has its text bound, but it's using an ElementName binding, which we covered earlier, to
             point to the source TextBox as a source object. And because the Path that we point to is a
@@ -173,18 +173,18 @@
           <p>Now notice this UpdateSourceTrigger=PropertyChanged.</p>
           <figure>
             <pre><code class="language-csharp">Path=Text, UpdateSourceTrigger=PropertyChanged}</code></pre>
-            <figcaption>Fig 04-004</figcaption>
+            <figcaption>Fig 05-004</figcaption>
           </figure>
           <p>If I leave it on Default:</p>
           <figure>
             <pre><code class="language-csharp">Path=Text, UpdateSourceTrigger=Default}</code></pre>
-            <figcaption>Fig 04-005</figcaption>
+            <figcaption>Fig 05-005</figcaption>
           </figure>
           <p>once I start putting stuff in the Source, you can see that the Target stays in synch on every keystroke:
           </p>
           <figure>
-            <img src="./images/Fig04-006.png" class="image"/>
-            <figcaption>Fig 04-006</figcaption>
+            <img src="./images/Fig05-006.png" class="image"/>
+            <figcaption>Fig 05-006</figcaption>
           </figure>
           <p>However, if I go to the Target and start putting stuff in, the Source does not update until I tab out of
             the field and then the Source is updated because of the focus change.
@@ -196,7 +196,7 @@
                 <pre><code class="language-csharp">TextBox x:Name="TargetTextBox"
                     Text="{Binding ElementName=SourceTextBox,
                     Path=Text, UpdateSourceTrigger=PropertyChanged}"</code></pre>
-            <figcaption>Fig 04-007</figcaption>
+            <figcaption>Fig 05-007</figcaption>
           </figure>
           <p>It basically says, every time the Target property changes, which is the Text property of this TextBox, go
             ahead and push its current value down into the source object's property.
@@ -207,8 +207,8 @@
             the current value of the text of the Target down into the Source property.
           </p>
           <figure>
-            <img src="./images/Fig04-008.png" class="image"/>
-            <figcaption>Fig 04-008</figcaption>
+            <img src="./images/Fig05-008.png" class="image"/>
+            <figcaption>Fig 05-008</figcaption>
           </figure>
           <p>So basically, when you want the source set immediately every time the bound property changes, then you want
             to use the PropertyChanged on UpdateSourceTrigger. This is especially good for validation scenarios where
@@ -280,8 +280,8 @@
           </p>
           <p>So I'm going to go and add a class to my project here called NegativeNumberConverter:</p>
           <figure>
-            <img src="./images/Fig04-010.png" class="image"/>
-            <figcaption>Fig 04-010</figcaption>
+            <img src="./images/Fig05-010.png" class="image"/>
+            <figcaption>Fig 05-010</figcaption>
           </figure>
           <p>To implement a Converter, you're going to want it to be public so it can be called by the framework, and
             you're going to implement the IValueConverter interface. I can stub out the methods on that interface and
@@ -300,7 +300,7 @@
         throw new NotImplementedException();
     }
 }</code></pre>
-            <figcaption>Fig 04-011</figcaption>
+            <figcaption>Fig 05-011</figcaption>
           </figure>
           <p>Convert gets called as data is flowing from the source to the target. The value that is going to be set,
             flows in here and tells you what the typeof the Target property is that's going to be set and it has an
@@ -328,7 +328,7 @@
         else return value;
     }
 }</code></pre>
-            <figcaption>Fig 04-012</figcaption>
+            <figcaption>Fig 05-012</figcaption>
           </figure>
           <p>and you can see what the implementation does here, is it's expecting this to only be hooked up to integers.
             Now to write a production of one of these, you want to do a little more type checking and not just blindly
@@ -344,7 +344,7 @@
           </p>
           <figure>
             <pre><code class="language-csharp">public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)</code></pre>
-            <figcaption>Fig 04-013</figcaption>
+            <figcaption>Fig 05-013</figcaption>
           </figure>
           <p> And we're going to look here and see if it starts with parentheses and ends with parentheses.</p>
           <figure>
@@ -356,7 +356,7 @@
     }
     else return value;
 }</code></pre>
-            <figcaption>Fig 04-014</figcaption>
+            <figcaption>Fig 05-014</figcaption>
           </figure>
           <p>We're basically going to strip those off and negate the value that's there to return the negative integer
             down to the source object.
@@ -369,7 +369,7 @@
                 <pre><code class="language-csharp">&lt;Window.Resources&gt;
     &lt;local:NegativeNumberConverter x:Key=&quot;NegConverter&quot; /&gt;
 &lt;/Window.Resources&gt;</code></pre>
-            <figcaption>Fig 04-015</figcaption>
+            <figcaption>Fig 05-015</figcaption>
           </figure>
           <p>Then you can refer to it in a binding using a StaticResource.</p>
           <p>So then we're going to drop down into the form here to the field that we have that's a numeric value, such
@@ -386,7 +386,7 @@
      Height=&quot;23&quot;
      HorizontalAlignment=&quot;Left&quot;
      Grid.Column=&quot;1&quot; /&gt;</code></pre>
-            <figcaption>Fig 04-016</figcaption>
+            <figcaption>Fig 05-016</figcaption>
           </figure>
           <p>So that's going to pull in a reference to that converter and basically invoke it.</p>
           <p>Anytime data is flowing from the source to the target, it's going to call the Convert method, and then if
@@ -403,7 +403,7 @@
     PremiumCustomer = true,
     Age = -35
 };</code></pre>
-            <figcaption>Fig 04-017</figcaption>
+            <figcaption>Fig 05-017</figcaption>
           </figure>
 
           <p>I'll go over to the Age property on my Customer object and set a breakpoint so we can see when it's being
@@ -425,24 +425,24 @@
         }
     }
 }</code></pre>
-            <figcaption>Fig 04-018</figcaption>
+            <figcaption>Fig 05-018</figcaption>
           </figure>
           <p>We'll go ahead and start up and it will be called here one time as it's initializing</p>
           <figure>
-            <img src="./images/Fig04-019.png" class="image"/>
-            <figcaption>Fig 04-019</figcaption>
+            <img src="./images/Fig05-019.png" class="image"/>
+            <figcaption>Fig 05-019</figcaption>
           </figure>
           <p>and we see it renders out with parentheses instead of the -35.</p>
           <figure>
-            <img src="./images/Fig04-020.png" class="image"/>
-            <figcaption>Fig 04-020</figcaption>
+            <img src="./images/Fig05-020.png" class="image"/>
+            <figcaption>Fig 05-020</figcaption>
           </figure>
           <p>And if we put in some other values, such as (99), and tab out of the field, our set block gets called, and
             the current value is -99:
           </p>
           <figure>
-            <img src="./images/Fig04-021.png" class="image"/>
-            <figcaption>Fig 04-021</figcaption>
+            <img src="./images/Fig05-021.png" class="image"/>
+            <figcaption>Fig 05-021</figcaption>
           </figure>
           <p>so it strips off those parentheses and turns it into an actual negative integer.</p>
           <p>Now as another example, let's say we want to set a style based on a Boolean property in our model. I'm
@@ -472,7 +472,7 @@
         return Application.Current.Resources[key] as Style;
     }
 }</code></pre>
-            <figcaption>Fig 04-022</figcaption>
+            <figcaption>Fig 05-022</figcaption>
           </figure>
           <p>You can see what this is doing is it's doing a little more type checking, so it's saying, if the target
             type is a Style and the input is a Boolean, then that's what this thing was designed to do, otherwise, it's
@@ -487,7 +487,7 @@
     if ((bool)value) { return GetStyle(styles[0]); }
     else { return GetStyle("FalseStyle"); }
 </code></pre>
-            <figcaption>Fig 04-023</figcaption>
+            <figcaption>Fig 05-023</figcaption>
           </figure>
           <p>and go use a Helper method here:</p>
           <figure>
@@ -495,7 +495,7 @@
 {
     return Application.Current.Resources[key] as Style;
 }</code></pre>
-            <figcaption>Fig 04-024</figcaption>
+            <figcaption>Fig 05-024</figcaption>
           </figure>
           <p>to reach out to my Application Resources and get the Style by name out of my Resource dictionary:</p>
           <p>Then I'm just going to return that as the value that actually gets set on the target of the binding.
@@ -503,7 +503,7 @@
           <figure>
                 <pre><code class="language-csharp">if ((bool)value) { return GetStyle(styles[0]); }
 else { return GetStyle(styles[1]); }</code></pre>
-            <figcaption>Fig 04-025</figcaption>
+            <figcaption>Fig 05-025</figcaption>
           </figure>
           <p>Based on that code, I'll need those styles to exist so I'll go out of here to my Application.Resources and
             pop in a Name Style called TrueStyle and FalseStyle that are just going to set the foreground to Red for
@@ -525,7 +525,7 @@ else { return GetStyle(styles[1]); }</code></pre>
         &lt;/Style&gt;
     &lt;/Application.Resources&gt;
 &lt;/Application&gt;</code></pre>
-            <figcaption>Fig 04-026</figcaption>
+            <figcaption>Fig 05-026</figcaption>
           </figure>
           <p>Now to use that in my application, I would go to my MainWindow to the Resources, and create an instance of
             that Converter and give it a name. And then on the control that I wanted to use it on, such as my TextBox, I
@@ -544,7 +544,7 @@ else { return GetStyle(styles[1]); }</code></pre>
     Height=&quot;23&quot;
     HorizontalAlignment=&quot;Left&quot;
     Grid.Column=&quot;1&quot; /&gt;</code></pre>
-            <figcaption>Fig 04-027</figcaption>
+            <figcaption>Fig 05-027</figcaption>
           </figure>
           <p>So I'm pointing to a Boolean property on my model called premium customer and then I'm using my Converter
             instance to convert that Boolean value into a Style value.
@@ -553,8 +553,8 @@ else { return GetStyle(styles[1]); }</code></pre>
             Premium Customer:
           </p>
           <figure>
-            <img src="./images/Fig04-028.png" class="image"/>
-            <figcaption>Fig 04-028</figcaption>
+            <img src="./images/Fig05-028.png" class="image"/>
+            <figcaption>Fig 05-028</figcaption>
           </figure>
           <p>If I uncheck it, it goes to black and back to red.</p>
           <p>Now obviously hard-coding Style names down inside some code like this is not a great idea, and that's where
@@ -562,7 +562,7 @@ else { return GetStyle(styles[1]); }</code></pre>
           </p>
           <figure>
             <pre><code class="language-csharp">public object Convert(object value, Type targetType, object parameter, CultureInfo culture)</code></pre>
-            <figcaption>Fig 04-029</figcaption>
+            <figcaption>Fig 05-029</figcaption>
           </figure>
           <p>You can pass ConverterParameters to a converter to drive its behavior. So if I modify that implementation a
             little bit, and I expect my parameter to be a semi-colon separated pair of Style names:
@@ -575,7 +575,7 @@ if (targetType == typeof(Style) &amp;&amp; value is bool)
     else { return GetStyle(styles[1]); }
 }
 else return value;</code></pre>
-            <figcaption>Fig 04-030</figcaption>
+            <figcaption>Fig 05-030</figcaption>
           </figure>
           <p>I can split that out into an array and then use the first one as my TrueStyle and the second one as my
             FalseStyle.
@@ -585,7 +585,7 @@ else return value;</code></pre>
           </p>
           <figure>
             <pre><code class="language-csharp">Converter={StaticResource BoolToStyleConverter}, ConverterParameter=TrueStyle;FalseStyle}</code></pre>
-            <figcaption>Fig 04-031</figcaption>
+            <figcaption>Fig 05-031</figcaption>
           </figure>
           <p>With that in place, the same behavior is manifest, it's red now, it goes to black when I uncheck the
             Premium Customer property.
@@ -596,7 +596,7 @@ else return value;</code></pre>
           </p>
           <figure>
             <pre><code class="language-csharp">Converter={StaticResource BoolToStyleConverter}, ConverterParameter=TrueStyle;FalseStyle}</code></pre>
-            <figcaption>Fig 04-032</figcaption>
+            <figcaption>Fig 05-032</figcaption>
           </figure>
           <p>And that's the basics of using Converters.</p>
         </div>
@@ -673,7 +673,7 @@ else return value;</code></pre>
         }
     }
 }</code></pre>
-            <figcaption>Fig 04-033</figcaption>
+            <figcaption>Fig 05-033</figcaption>
           </figure>
           <p>But depending on the way you structure things, you may have setters and getters on a given property that
             take a while to execute. So I'm going to simulate that in this case by putting a Thread.Sleep in the get and
@@ -697,23 +697,23 @@ else return value;</code></pre>
         }
     }
 }</code></pre>
-            <figcaption>Fig 04-034</figcaption>
+            <figcaption>Fig 05-034</figcaption>
           </figure>
           <p>And if I did that without doing anything else and tried to run, first off, we can see as it starts up it's
             waiting a full 5 seconds before the UI becomes responsive because it's got to read that value in to populate
             the UI through the binding and it's got to wait for that full execution of the get block to complete:
           </p>
           <figure>
-            <img src="./images/Fig04-035.png" class="image"/>
-            <figcaption>Fig 04-035</figcaption>
+            <img src="./images/Fig05-035.png" class="image"/>
+            <figcaption>Fig 05-035</figcaption>
           </figure>
           <p>Likewise, if we go and change that field and tab out of the field, you can see the cursor didn't move, it's
             gone completely unresponsive, and will stay that way until the set block execution completes and then it
             comes back to life:
           </p>
           <figure>
-            <img src="./images/Fig04-036.png" class="image"/>
-            <figcaption>Fig 04-036</figcaption>
+            <img src="./images/Fig05-036.png" class="image"/>
+            <figcaption>Fig 05-036</figcaption>
           </figure>
           <p>Obviously not the user experience you're going for.</p>
           <p>So if you're doing complex model objects that you're binding to where the get and set blocks of the
@@ -733,18 +733,18 @@ else return value;</code></pre>
     Height=&quot;23&quot;
     HorizontalAlignment=&quot;Left&quot;
     Grid.Column=&quot;1&quot; /&gt;</code></pre>
-            <figcaption>Fig 04-037</figcaption>
+            <figcaption>Fig 05-037</figcaption>
           </figure>
           <p>Now, if we start up our same exact scenario, you can see the UI comes up and is responsive right away:
           </p>
           <figure>
-            <img src="./images/Fig04-038.png" class="image"/>
-            <figcaption>Fig 04-038</figcaption>
+            <img src="./images/Fig05-038.png" class="image"/>
+            <figcaption>Fig 05-038</figcaption>
           </figure>
           <p>And then 5 seconds later the Phone pops in there when the set block is finally done executing:</p>
           <figure>
-            <img src="./images/Fig04-039.png" class="image"/>
-            <figcaption>Fig 04-039</figcaption>
+            <img src="./images/Fig05-039.png" class="image"/>
+            <figcaption>Fig 05-039</figcaption>
           </figure>
           <p>And, likewise, if we modify it and tab out of the field, it just goes blank and we can be using the rest of
             the UI until the point where the Phone set block completes and the value pops back in there.
@@ -777,7 +777,7 @@ else return value;</code></pre>
     TextWrapping=&quot;Wrap&quot;
     VerticalAlignment=&quot;Top&quot;
     Width=&quot;120&quot; /&gt;</code></pre>
-            <figcaption>Fig 04-040</figcaption>
+            <figcaption>Fig 05-040</figcaption>
           </figure>
           <p>So I could add Delay=500, and that's in ms, on my two TextBoxes that are bound to each other down here. And
             what that's going to do is act as a throttle for input. So this only affects the calling of the set block
@@ -790,8 +790,8 @@ else return value;</code></pre>
             start setting things there in sync. I go to my target and I rapidly input some stuff:
           </p>
           <figure>
-            <img src="./images/Fig04-041.png" class="image"/>
-            <figcaption>Fig 04-041</figcaption>
+            <img src="./images/Fig05-041.png" class="image"/>
+            <figcaption>Fig 05-041</figcaption>
           </figure>
           <p>500 ms later, it fills in the source and it only set the source one time in that case at the 500 ms point.
             Do it again, and 500 ms later, one set of the source happens, not one for each character that I was setting.
@@ -856,7 +856,7 @@ else return value;</code></pre>
          Height=&quot;23&quot;
          HorizontalAlignment=&quot;Left&quot;
          Grid.Column=&quot;1&quot; /&gt;</code></pre>
-            <figcaption>Fig 04-042</figcaption>
+            <figcaption>Fig 05-042</figcaption>
           </figure>
 
           <p>What TargetNullValue means, the name is a little misleading there, it's really if the source value is null,
@@ -874,12 +874,12 @@ else return value;</code></pre>
         Age = -35
     };
 }</code></pre>
-            <figcaption>Fig 04-043</figcaption>
+            <figcaption>Fig 05-043</figcaption>
           </figure>
           <p>Start up the UI, and we see, Not set:</p>
           <figure>
-            <img src="./images/Fig04-044.png" class="image"/>
-            <figcaption>Fig 04-044</figcaption>
+            <img src="./images/Fig05-044.png" class="image"/>
+            <figcaption>Fig 05-044</figcaption>
           </figure>
           <p>So because of the value that the binding came up with was equal to null, and we had the TargetNullValue
             there, it used the value provided by the TargetNullValue property on the binding.
@@ -889,30 +889,30 @@ else return value;</code></pre>
           </p>
           <figure>
                     <pre><code class="language-csharp">{Binding Path=Name, TargetNullValue='Not set', FallbackValue='no value'}</code></pre>
-            <figcaption>Fig 04-045</figcaption>
+            <figcaption>Fig 05-045</figcaption>
           </figure>
           <p>This will be used when the binding is unable to come up with a value at all based on the Path that it's
             given. So if I corrupt my Path over here and say Namex, which doesn't exist on my DataContext object:
           </p>
           <figure>
                     <pre><code class="language-csharp">{Binding Path=Name, TargetNullValue='Not set', FallbackValue='no value'}</code></pre>
-            <figcaption>Fig 04-046</figcaption>
+            <figcaption>Fig 05-046</figcaption>
           </figure>
           <p>and I run, now we see no value in there because the binding was unable to evaluate and come up with a value
             to set the target property. And, again, down here in the output window, notice that we have one of these
             System.Data Warnings that says, Namex not found on Customer:
           </p>
           <figure>
-            <img src="./images/Fig04-047.png" class="image"/>
-            <figcaption>Fig 04-047</figcaption>
+            <img src="./images/Fig05-047.png" class="image"/>
+            <figcaption>Fig 05-047</figcaption>
           </figure>
           <p>So you always want to be looking for those. In this case, it was a warning, not an error, because we had
             the FallbackValue here. If we get rid of the FallbackValue and run with Namex in place there, now you can
             see it's a System.Windows.Data Error down here because it can't come up with any value to present in the UI:
           </p>
           <figure>
-            <img src="./images/Fig04-048.png" class="image"/>
-            <figcaption>Fig 04-048</figcaption>
+            <img src="./images/Fig05-048.png" class="image"/>
+            <figcaption>Fig 05-048</figcaption>
           </figure>
           <p>So those are TargetNullValue used when the Source property is null, and gives a value to set on the target
             and FallbackValue when it can't resolve a value from the specified binding Path.
@@ -958,8 +958,8 @@ else return value;</code></pre>
             applying a converter there that's putting the parentheses there for a negative value.
           </p>
           <figure>
-            <img src="./images/Fig04-049.png" class="image"/>
-            <figcaption>Fig 04-049</figcaption>
+            <img src="./images/Fig05-049.png" class="image"/>
+            <figcaption>Fig 05-049</figcaption>
           </figure>
           <p>We're going to replace that and do some string formatting. So, first off, I'm going to drop into my
             Customer and change my Age property (I created a new property called Age2) to be a floating value so that we
@@ -974,7 +974,7 @@ else return value;</code></pre>
     private string _Phone = &quot;555-555-5555&quot;;
     private string _Name;
     private int _Id;</code></pre>
-            <figcaption>Fig 04-050</figcaption>
+            <figcaption>Fig 05-050</figcaption>
           </figure>
           <p>And I'll do that on the member variable and on the property:</p>
           <figure>
@@ -993,7 +993,7 @@ else return value;</code></pre>
         }
     }
 }</code></pre>
-            <figcaption>Fig 04-051</figcaption>
+            <figcaption>Fig 05-051</figcaption>
           </figure>
           <p>Then I'm going to drop into the UI and find the Age input, and I'm going to replace that with a slightly
             different Text Binding.
@@ -1008,7 +1008,7 @@ else return value;</code></pre>
     Height=&quot;23&quot;
     HorizontalAlignment=&quot;Left&quot;
 Grid.Column=&quot;1&quot; /&gt;</code></pre>
-            <figcaption>Fig 04-052</figcaption>
+            <figcaption>Fig 05-052</figcaption>
           </figure>
           <p>So here we can see we're still binding to the Age Property, but now we just simply set the StringFormat
             property and here we're using one of the pre-defined StringFormats, a floating point with two decimals. If
@@ -1017,20 +1017,20 @@ Grid.Column=&quot;1&quot; /&gt;</code></pre>
             out of the field the value is written to the underlying object and the value becomes 44.44.
           </p>
           <figure>
-            <img src="./images/Fig04-053.png" class="image"/>
-            <figcaption>Fig 04-053</figcaption>
+            <img src="./images/Fig05-053.png" class="image"/>
+            <figcaption>Fig 05-053</figcaption>
           </figure>
           <p>Now let's go set a breakpoint in the set block and do that again, and we'll say 44.4455, tab out, and we
             can see the value that's being set is the full precision value:
           </p>
           <figure>
-            <img src="./images/Fig04-054.png" class="image"/>
-            <figcaption>Fig 04-054</figcaption>
+            <img src="./images/Fig05-054.png" class="image"/>
+            <figcaption>Fig 05-054</figcaption>
           </figure>
           <p> but when we run, all we see is the rounded off value applied by StringFormat:</p>
           <figure>
-            <img src="./images/Fig04-055.png" class="image"/>
-            <figcaption>Fig 04-055</figcaption>
+            <img src="./images/Fig05-055.png" class="image"/>
+            <figcaption>Fig 05-055</figcaption>
           </figure>
           <p>So one downside to using these is to realize that what you see on the screen and what the actual underlying
             values are might be slightly different, but if the way you want to display it to the user is always with two
@@ -1041,7 +1041,7 @@ Grid.Column=&quot;1&quot; /&gt;</code></pre>
           </p>
           <figure>
                     <pre><code class="language-csharp">{Binding Path=Age, StringFormat=f2, UpdateSourceTrigger=PropertyChanged}}</code></pre>
-            <figcaption>Fig 04-056</figcaption>
+            <figcaption>Fig 05-056</figcaption>
           </figure>
 
           <p>and go run our scenario again, now watch what happens as I put in a value. I hit 5, and it immediately
@@ -1049,8 +1049,8 @@ Grid.Column=&quot;1&quot; /&gt;</code></pre>
             which happens on every keystroke, it's going to set the underlying source property.
           </p>
           <figure>
-            <img src="./images/Fig04-057.png" class="image"/>
-            <figcaption>Fig 04-057</figcaption>
+            <img src="./images/Fig05-057.png" class="image"/>
+            <figcaption>Fig 05-057</figcaption>
           </figure>
           <p>The source property raises a PropertyChangedEvent, that forces the binding to re-bind and re-render based
             on the StringFormat. The problem with this is, for a rapid input scenario, say that I wanted to highlight
@@ -1058,8 +1058,8 @@ Grid.Column=&quot;1&quot; /&gt;</code></pre>
           </p>
           <p>If I do that quickly, 55.55, look what I end up with.</p>
           <figure>
-            <img src="./images/Fig04-058.png" class="image"/>
-            <figcaption>Fig 04-058</figcaption>
+            <img src="./images/Fig05-058.png" class="image"/>
+            <figcaption>Fig 05-058</figcaption>
           </figure>
           <p>It's because after each keystroke it's re-rendering, it's putting the decimal place in there for me, so
             when I get around and type the decimal place I'm actually adding another decimal place and I've got an

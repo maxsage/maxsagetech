@@ -54,20 +54,10 @@
           <p>The good news is we can easily morph the code into clean MVVM st ructure with just a few minor changes.
           </p>
           <h3>Demo: Scaffolding an Edit View in Visual Studio</h3>
-          <div class="example">
-            <div class="input-group">
-              <input id="Ex06-001" type="text"
+              <input id="Ex06-001" type="text" style="width: 100%;"
                      value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 6\ZzaDesktop-Start\ZzaDesktop.sln">
-<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex06-001"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
-          <div class="example">
-            <div class="input-group">
-              <input id="Ex06-002" type="text"
+              <input id="Ex06-002" type="text" style="width: 100%;"
                      value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 6\ZzaDesktop-End\ZzaDesktop.sln">
-<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex06-002"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
           <p>
             Previously we created the AddEditCustomerView.xaml and the navigation to it from the CustomerListView.xaml.
             We will now continue to flesh out the AddEditCustomerView.xaml and put the data entry form together by
@@ -158,20 +148,10 @@
             the next demo.
           </p>
           <h3>Demo: Wrapping Model Objects</h3>
-          <div class="example">
-            <div class="input-group">
-              <input id="Ex06-003" type="text"
+              <input id="Ex06-003" type="text" style="width: 100%;"
                      value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 6\ZzaDesktop-Start\ZzaDesktop.sln">
-<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex06-003"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
-          <div class="example">
-            <div class="input-group">
-              <input id="Ex06-004" type="text"
+              <input id="Ex06-004" type="text" style="width: 100%;"
                      value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 6\ZzaDesktop-End\ZzaDesktop.sln">
-<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex06-004"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
           <p>
             So, now we have to expose a Customer as a property to satisfy the binding for our input fields. We won't
             expose the Customer Model object directly. You can't guarantee that your model objects will be in the right
@@ -278,20 +258,10 @@ private void CopyCustomer(Customer source, SimpleEditableCustomer target)
             Customer and to Cancel and be able to back out of that operation if desired.
           </p>
           <h3>Demo: Command Handling and Converters</h3>
-          <div class="example">
-            <div class="input-group">
-              <input id="Ex06-005" type="text"
+              <input id="Ex06-005" type="text" style="width: 100%;"
                      value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 6\ZzaDesktop-Start\ZzaDesktop.sln">
-<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex06-005"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
-          <div class="example">
-            <div class="input-group">
-              <input id="Ex06-006" type="text"
+              <input id="Ex06-006" type="text" style="width: 100%;"
                      value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 6\ZzaDesktop-End\ZzaDesktop.sln">
-<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex06-006"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
           <p>Now we need to wire up the actual command handling to Add or Save an edited Customer as well as cancelling.
           </p>
           <p>
@@ -559,20 +529,10 @@ private bool CanSave()
           </ul>
           <p>So let's dive into implementing validation for our data entry scenario</p>
           <h3>Demo: Adding Validation to an Input View</h3>
-          <div class="example">
-            <div class="input-group">
-              <input id="Ex06-007" type="text"
+              <input id="Ex06-007" type="text" style="width: 100%;"
                      value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 6\ZzaDesktop-Start\ZzaDesktop.sln">
-<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex06-007"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
-          <div class="example">
-            <div class="input-group">
-              <input id="Ex06-008" type="text"
+              <input id="Ex06-008" type="text" style="width: 100%;"
                      value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 6\ZzaDesktop-End\ZzaDesktop.sln">
-<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex06-008"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
           <p>
             Now we want to add validation support to our data entry form. Validation can be useful in a number of places
             in your application (Views, ViewModels, Helper Objects). This makes it a good candidate for a common base
@@ -929,20 +889,10 @@ private void RaiseCanExecuteChanged(object sender, EventArgs e)
             ViewModels and the Client Services at this point in our code.
           </p>
           <h3>Demo: Adding Dependency Injection for Client Services</h3>
-          <div class="example">
-            <div class="input-group">
-              <input id="Ex06-009" type="text"
+              <input id="Ex06-009" type="text" style="width: 100%;"
                      value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 6\ZzaDesktop-Start\ZzaDesktop.sln">
-<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex06-009"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
-          <div class="example">
-            <div class="input-group">
-              <input id="Ex06-010" type="text"
+              <input id="Ex06-010" type="text" style="width: 100%;"
                      value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 6\ZzaDesktop-End\ZzaDesktop.sln">
-              <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex06-010"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
           <p>
             So in this demo we want to wire up the Save handling from our Add/Edit form and see how we can use
             Dependency Injection related to that. The initial straightforward way to do the Save handling would be to
@@ -1109,20 +1059,11 @@ _addEditViewModel = ContainerHelper.Container.Resolve&lt;AddEditCustomerViewMode
             searching and filtering the Customer list.
           </p>
           <h3>Demo: Searching and Filtering Data</h3>
-          <div class="example">
-            <div class="input-group">
-              <input id="Ex06-011" type="text"
+              <input id="Ex06-011" type="text" style="width: 100%;"
                      value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 6\ZzaDesktop-Start\ZzaDesktop.sln">
 <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex06-011"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
-          <div class="example">
-            <div class="input-group">
-              <input id="Ex06-012" type="text"
+              <input id="Ex06-012" type="text" style="width: 100%;"
                      value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 6\ZzaDesktop-End\ZzaDesktop.sln">
-<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex06-012"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
           <p>
             The one last use case that we will look at is searching the Customers list and filtering the list based on
             your search. Go to the CustomerListView and take the Grid that we had at the top which contains the

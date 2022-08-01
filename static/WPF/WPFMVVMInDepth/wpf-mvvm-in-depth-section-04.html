@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
+
 <head>
   <meta charset="UTF-8">
   <title>maxsagetech - WPF MVVM In Depth</title>
@@ -7,16 +8,17 @@
   <!--<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"-->
   <!--integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">-->
   <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" rel="stylesheet">
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" rel="stylesheet">
   <link href="prism.css" rel="stylesheet">
   <script src="prism.js"></script>
   <style>
-
     img {
       max-width: 100%;
     }
+
   </style>
 </head>
+
 <body>
   <div class="container">
     <div class="panel-group">
@@ -28,7 +30,7 @@
           <h2>Overview</h2>
           <p>
             In this module we will cover different ways that Views can be hooked up to their ViewModels. We will also
-            cover how databinding is used to expose data from your Data Models to your Views.
+            cover how databinding is used to expose data and commands from your Data Models to your Views.
           </p>
           <p>
             We will start with View-First Construction Patterns where the View is constructed first and then takes care
@@ -47,7 +49,7 @@
             is being constructed initiated by the call to InitializeComponent() that is in your Views Constructor:
           </p>
           <figure>
-                <pre><code class="language-csharp">&lt;UserControl x:Class=&quot;ZzaDashboard.Customers.CustomerEditView&quot;
+            <pre><code class="language-csharp">&lt;UserControl x:Class=&quot;ZzaDashboard.Customers.CustomerEditView&quot;
          Width=&quot;400&quot;
          Loaded=&quot;OnLoaded&quot;
          ...&gt;
@@ -65,7 +67,7 @@
             element.
           </p>
           <figure>
-            <img src="./images/Fig03-001AB.png"/>
+            <img src="./images/Fig03-001AB.png" />
             <figcaption>Fig 03-001AB</figcaption>
           </figure>
           <p>
@@ -76,7 +78,7 @@
             to be constructed as well:
           </p>
           <figure>
-            <img src="./images/Fig03-001AC.png"/>
+            <img src="./images/Fig03-001AC.png" />
             <figcaption>Fig 03-001AC</figcaption>
           </figure>
           <p>
@@ -88,7 +90,7 @@
             behind of your View and setting the DataContext there with the instance:
           </p>
           <figure>
-                <pre><code class="language-csharp">public partial class CustomerListView : UserControl
+            <pre><code class="language-csharp">public partial class CustomerListView : UserControl
 {
     public CustomerListView()
     {
@@ -115,20 +117,10 @@
           </p>
 
           <h2>Demo: View-First MVVM Hook-up</h2>
-          <div class="example">
-            <div class="input-group">
-              <input id="Ex03-001" type="text"
-                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 3\MVVMHookupDemo-XAMLHookup-Start\MVVMHookupDemo.sln">
-<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex03-001"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
-          <div class="example">
-            <div class="input-group">
-              <input id="Ex03-002" type="text"
-                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 3\MVVMHookupDemo-XAMLHookup-End\MVVMHookupDemo.sln">
-<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex03-002"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
+          <input id="Ex03-001" type="text" style="width: 100%"
+            value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 3\MVVMHookupDemo-XAMLHookup-Start\MVVMHookupDemo.sln">
+          <input id="Ex03-002" type="text" style="width: 100%"
+            value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 3\MVVMHookupDemo-XAMLHookup-End\MVVMHookupDemo.sln">
           <p>
             In this demo we will create a View and a ViewModel and hook them up statically through the XAML.
           </p>
@@ -138,7 +130,7 @@
             Pizza ordering domain:
           </p>
           <figure>
-            <img src="./images/Fig03-001BA.png"/>
+            <img src="./images/Fig03-001BA.png" />
             <figcaption>Fig 03-001BA</figcaption>
           </figure>
           <p>
@@ -146,14 +138,14 @@
             that.
           </p>
           <figure>
-            <img src="./images/Fig03-001BB.png"/>
+            <img src="./images/Fig03-001BB.png" />
             <figcaption>Fig 03-001BB</figcaption>
           </figure>
           <p>
             We will put the View and the ViewModel in a Customers feature folder:
           </p>
           <figure>
-            <img src="./images/Fig03-001BC.png"/>
+            <img src="./images/Fig03-001BC.png" />
             <figcaption>Fig 03-001BC</figcaption>
           </figure>
           <p>
@@ -161,29 +153,29 @@
             ViewModel is just a class called CustomerListViewModel:
           </p>
           <figure>
-            <img src="./images/Fig03-001BD.png"/>
+            <img src="./images/Fig03-001BD.png" />
             <figcaption>Fig 03-001BD</figcaption>
           </figure>
           <p>
             And it follows the naming conventions that the View has View at the end of it's type name and the ViewModel
-            has ViewModel at the end of it's typename so there easy to correlate.
+            has ViewModel at the end of it's typename so they are easy to correlate.
           </p>
           <p>Now before we dig into the MVVM let's go ahead and build this and I'll place an instance of my View in the
             MainWindow so we'll go to the designer, toolbox drag and drop CustomerListView:
           </p>
           <figure>
-            <img src="./images/Fig03-001BE.png"/>
+            <img src="./images/Fig03-001BE.png" />
             <figcaption>Fig 03-001BE</figcaption>
           </figure>
           <p>
             then right-click and select reset all from the Layout menu to remove the padding and margins etc:
           </p>
           <figure>
-            <img src="./images/Fig03-001BF.png"/>
+            <img src="./images/Fig03-001BF.png" />
             <figcaption>Fig 03-001BF</figcaption>
           </figure>
           <figure>
-                <pre><code class="language-csharp">&lt;Window xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+            <pre><code class="language-csharp">&lt;Window xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
         xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
         xmlns:Customers=&quot;clr-namespace:MVVMHookupDemo.Customers&quot;
         x:Class=&quot;MVVMHookupDemo.MainWindow&quot;
@@ -209,9 +201,8 @@
             Customers:
           </p>
           <figure>
-            <pre
-              class="prettyprint">public ObservableCollection&lt;Customer&gt; Customers { get; set; }</code></pre>
-            <figcaption>Fig 03-001</figcaption>
+            <pre><code class="language-csharp">public ObservableCollection&lt;Customer&gt; Customers { get; set; }</code></pre>
+            <figcaption>Fig 03-001BH</figcaption>
           </figure>
           <p>
             Next we will populate the Collection. Add an instance of our repository to the ViewModel:
@@ -222,7 +213,7 @@
           </figure>
           <p>and a constructor to populate our Customers collection.</p>
           <figure>
-<pre><code class="language-csharp">public CustomerListViewModel()
+            <pre><code class="language-csharp">public CustomerListViewModel()
 {
     Customers = _repo.GetCustomersAsync()
 }</code></pre>
@@ -255,8 +246,8 @@
             they can break the design surface so you can't use it anymore. To do that we'll add a simple line of code:
           </p>
           <figure>
-                    <pre><code class="language-csharp">if(DesignerProperties.GetIsInDesignMode(
-new System.Windows.DependencyObject())) return;</code></pre>
+            <pre><code class="language-csharp">if(DesignerProperties.GetIsInDesignMode(
+  new System.Windows.DependencyObject())) return;</code></pre>
             <figcaption>Fig 03-002A</figcaption>
           </figure>
           <p>
@@ -267,8 +258,7 @@ new System.Windows.DependencyObject())) return;</code></pre>
             it:
           </p>
           <figure>
-            <pre
-              class="prettyprint">xmlns:Class=&quot;MVVMHookupDemo.Customers.CustomerListView&quot;</code></pre>
+            <pre><code class="language-csharp">xmlns:Class=&quot;MVVMHookupDemo.Customers.CustomerListView&quot;</code></pre>
             <figcaption>Fig 03-002B</figcaption>
           </figure>
           <p>
@@ -276,7 +266,7 @@ new System.Windows.DependencyObject())) return;</code></pre>
             DataContext in XAML to an instance of the ViewModel:
           </p>
           <figure>
-                <pre><code class="language-csharp">&lt;UserControl.DataContext&gt;
+            <pre><code class="language-csharp">&lt;UserControl.DataContext&gt;
     &lt;cust:CustomerListViewModel /&gt;
 &lt;/UserControl.DataContext&gt;</code></pre>
             <figcaption>Fig 03-003</figcaption>
@@ -285,7 +275,7 @@ new System.Windows.DependencyObject())) return;</code></pre>
             data being produced by the ViewModel. Add a DataGrid to display the data:
           </p>
           <figure>
-                <pre><code class="language-csharp">&lt;Grid&gt;
+            <pre><code class="language-csharp">&lt;Grid&gt;
     &lt;DataGrid ItemsSource=&quot;{Binding Customers}&quot; /&gt;
 &lt;/Grid&gt;</code></pre>
             <figcaption>Fig 03-004</figcaption>
@@ -296,15 +286,14 @@ new System.Windows.DependencyObject())) return;</code></pre>
           </p>
           <p>Now if you run the application the DataGrid should be populated with data:</p>
           <figure>
-            <img src="./images/Fig03-005.png"/>
+            <img src="./images/Fig03-005.png" />
             <figcaption>Fig 03-005</figcaption>
           </figure>
           <p>We can also hook-up the View and ViewModel from the code behind with code like this (comment out the lines
             in the XAML first):
           </p>
           <figure>
-<pre><code class="language-csharp">
-public CustomerListView()
+            <pre><code class="language-csharp">public CustomerListView()
 {
     this.DataContext = new CustomerListViewModel();
     IntializeComponent();
@@ -348,20 +337,10 @@ public CustomerListView()
             <li>Finally, it sets the Views DataContext property to the ViewModel</li>
           </ul>
           <h2>Demo: MVVM Hook-up with ViewModelLocator</h2>
-          <div class="example">
-            <div class="input-group">
-              <input id="Ex03-003" type="text"
-                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 3\MVVMHookupDemo-ViewModelLocator-Start\MVVMHookupDemo.sln">
-<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex03-003"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
-          <div class="example">
-            <div class="input-group">
-              <input id="Ex03-004" type="text"
-                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 3\MVVMHookupDemo-ViewModelLocator-End\MVVMHookupDemo.sln">
-<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex03-004"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
+          <input id="Ex03-003" type="text" style="width: 100%;"
+            value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 3\MVVMHookupDemo-ViewModelLocator-Start\MVVMHookupDemo.sln">
+          <input id="Ex03-004" type="text" style="width: 100%"
+            value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 3\MVVMHookupDemo-ViewModelLocator-End\MVVMHookupDemo.sln">
           <p>In this demo we will look at using a ViewModelLocator to wire up our View and ViewModel in a View-First
             way.
           </p>
@@ -370,7 +349,7 @@ public CustomerListView()
           </p>
           <p>Define a ViewModelLocator class called ViewModelLocator. Make it public and static.</p>
           <figure>
-                <pre><code class="language-csharp">namespace MVVMHookupDemo
+            <pre><code class="language-csharp">namespace MVVMHookupDemo
 {
     public static class ViewModelLocator
     {
@@ -389,7 +368,7 @@ public CustomerListView()
             make its type Boolean:
           </p>
           <figure>
-                <pre><code class="language-csharp">public static bool GetMyProperty(DependencyObject obj)
+            <pre><code class="language-csharp">public static bool GetMyProperty(DependencyObject obj)
 {
     return (bool)obj.GetValue(MyPropertyProperty);
 }
@@ -410,7 +389,7 @@ public static readonly DependencyProperty MyPropertyProperty =
             and make it contained within the ViewModelLocator class with a default of false.
           </p>
           <figure>
-                <pre><code class="language-csharp">// Using a DependencyProperty as the backing store for MyProperty. This enables animation, styling, binding, etc...
+            <pre><code class="language-csharp">// Using a DependencyProperty as the backing store for MyProperty. This enables animation, styling, binding, etc...
 public static readonly DependencyProperty MyPropertyProperty =
     DependencyProperty.RegisterAttached(&amp;quot;MyProperty&amp;quot;,
     typeof(bool), typeof(ViewModelLocator),
@@ -425,7 +404,7 @@ public static readonly DependencyProperty MyPropertyProperty =
             AutoWireViewModelChanged
           </p>
           <figure>
-                <pre><code class="language-csharp">public static readonly DependencyProperty AutoWireViewModelProperty =
+            <pre><code class="language-csharp">public static readonly DependencyProperty AutoWireViewModelProperty =
 DependencyProperty.RegisterAttached(&quot;AutoWireViewModel&quot;,
 typeof(bool), typeof(ViewModelLocator),
 new PropertyMetadata(false, AutoWireViewModelChanged));</code></pre>
@@ -433,7 +412,7 @@ new PropertyMetadata(false, AutoWireViewModelChanged));</code></pre>
           </figure>
           <p>Stub this method out:</p>
           <figure>
-                <pre><code class="language-csharp">private static void AutoWireViewModelChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+            <pre><code class="language-csharp">private static void AutoWireViewModelChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
 {
     if (DesignerProperties.GetIsInDesignMode(d)) return;
     var viewType = d.GetType();
@@ -457,7 +436,7 @@ new PropertyMetadata(false, AutoWireViewModelChanged));</code></pre>
           <p>Next we need to get the ViewType name which we can do with a couple of lines of code:
           </p>
           <figure>
-                <pre><code class="language-csharp">var viewType = d.GetType();
+            <pre><code class="language-csharp">var viewType = d.GetType();
 var viewTypeName = viewType.FullName;</code></pre>
             <figcaption>Fig 03-010</figcaption>
           </figure>
@@ -474,7 +453,7 @@ var viewTypeName = viewType.FullName;</code></pre>
             the ViewModel:
           </p>
           <figure>
-                <pre><code class="language-csharp">var viewModelTypeName = viewType + &quot;Model&quot;;
+            <pre><code class="language-csharp">var viewModelTypeName = viewType + &quot;Model&quot;;
 var viewModelType = Type.GetType(viewModelTypeName);</code></pre>
             <figcaption>Fig 03-011</figcaption>
           </figure>
@@ -520,7 +499,7 @@ var viewModelType = Type.GetType(viewModelTypeName);</code></pre>
           </p>
           <p>Add a constructor to the ViewModel so we can set a breakpoint and see that it is being called:</p>
           <figure>
-<pre><code class="language-csharp">public CustomerDetailViewModel()
+            <pre><code class="language-csharp">public CustomerDetailViewModel()
 {
 
 }</code></pre>
@@ -544,14 +523,14 @@ var viewModelType = Type.GetType(viewModelTypeName);</code></pre>
           </p>
           <p>Run the application.</p>
           <figure>
-            <img src="./images/Fig03-014D.png"/>
+            <img src="./images/Fig03-014D.png" />
             <figcaption>Fig03-014D</figcaption>
           </figure>
           <p>You can see that we are hitting the breakpoint in our ViewModel's constructor because it was auto wired up
             and our previous view is getting it's ViewModel data so that's all wired up as well:
           </p>
           <figure>
-            <img src="./images/Fig03-014DA.png"/>
+            <img src="./images/Fig03-014DA.png" />
             <figcaption>Fig03-014DA</figcaption>
           </figure>
 
@@ -574,7 +553,7 @@ var viewModelType = Type.GetType(viewModelTypeName);</code></pre>
           </p>
 
           <figure>
-                <pre><code class="language-csharp">&lt;UserControl x:Class=&quot;...&quot; ...&gt;
+            <pre><code class="language-csharp">&lt;UserControl x:Class=&quot;...&quot; ...&gt;
     &lt;Grid&gt;
         ...
         &lt;Label Content=&quot;First Name:&quot; ... /&gt;
@@ -590,7 +569,7 @@ var viewModelType = Type.GetType(viewModelTypeName);</code></pre>
             You also need another object that the bindings will point to:
           </p>
           <figure>
-                <pre><code class="language-csharp">public class CustomerEditViewModel
+            <pre><code class="language-csharp">public class CustomerEditViewModel
     : INotifyPropertyChanged
 {
     public Customer Customer
@@ -625,26 +604,15 @@ var viewModelType = Type.GetType(viewModelTypeName);</code></pre>
             setting up Command or Behaviour based communication paths:
           </p>
           <figure>
-            <img src="./images/Fig03-014E.png"/>
+            <img src="./images/Fig03-014E.png" />
             <figcaption>Fig03-014E</figcaption>
           </figure>
           <p>Let's look at data binding in action supporting MVVM in a demo.</p>
           <h2>Demo: Data Binding for MVVM Data Flows</h2>
-          <div class="example">
-            <div class="input-group">
-              <input id="Ex03-005" type="text"
-                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 3\MVVMHookupDemo-DataBinding-Start\MVVMHookupDemo.sln">
-<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex03-005"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
-          <div class="example">
-            <div class="input-group">
-              <input id="Ex03-006" type="text"
-                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 3\MVVMHookupDemo-DataBinding-End\MVVMHookupDemo.sln">
-<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex03-006"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
-
+          <input id="Ex03-005" type="text" style="width: 100%;"
+            value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 3\MVVMHookupDemo-DataBinding-Start\MVVMHookupDemo.sln">
+          <input id="Ex03-006" type="text" style="width: 100%;"
+            value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 3\MVVMHookupDemo-DataBinding-End\MVVMHookupDemo.sln">
           <p>
             In this demo we will review how data binding works and show how it supports the ViewModel and Model Types.
             The starting point for this one is the end of the XAML wire up demo at the beginning of the module.
@@ -654,7 +622,7 @@ var viewModelType = Type.GetType(viewModelTypeName);</code></pre>
             true) with one that specifies more explicit column definitions:
           </p>
           <figure>
-                <pre><code class="language-csharp">&lt;Grid&gt;
+            <pre><code class="language-csharp">&lt;Grid&gt;
     &lt;DataGrid x:Name=&quot;customerDataGrid&quot;
               AutoGenerateColumns=&quot;False&quot;
               EnableRowVirtualization=&quot;True&quot;
@@ -685,7 +653,7 @@ var viewModelType = Type.GetType(viewModelTypeName);</code></pre>
           </p>
           <p>These bindings down here are also DataContext bindings:</p>
           <figure>
-                <pre><code class="language-csharp">&lt;DataGridTextColumn x:Name=&quot;firstNameColumn&quot;
+            <pre><code class="language-csharp">&lt;DataGridTextColumn x:Name=&quot;firstNameColumn&quot;
                         Binding=&quot;{Binding FirstName}&quot;
                         Header=&quot;First Name&quot;
                         Width=&quot;SizeToHeader&quot; /&gt;
@@ -711,7 +679,7 @@ var viewModelType = Type.GetType(viewModelTypeName);</code></pre>
             CustomerListViewModel and drop down to my Customer property and expand it to have a backing member variable.
           </p>
           <figure>
-<pre><code class="language-csharp">public ObservableCollection&lt;Customer&gt; Customers
+            <pre><code class="language-csharp">public ObservableCollection&lt;Customer&gt; Customers
 {
     get
     {
@@ -728,7 +696,7 @@ var viewModelType = Type.GetType(viewModelTypeName);</code></pre>
             it:
           </p>
           <figure>
-                <pre><code class="language-csharp">private string firstName;
+            <pre><code class="language-csharp">private string firstName;
 public string FirstName
 {
     get
@@ -747,7 +715,7 @@ public string FirstName
             to the repository and getting Customers:
           </p>
           <figure>
-                <pre><code class="language-csharp">public CustomerListViewModel()
+            <pre><code class="language-csharp">public CustomerListViewModel()
 {
     if (DesignerProperties.GetIsInDesignMode(
         new System.Windows.DependencyObject())) return;
@@ -772,7 +740,7 @@ public ObservableCollection&lt;Customer&gt; Customers
             here:
           </p>
           <figure>
-                <pre><code class="language-csharp">public Task&lt;List&lt;Customer&gt;&gt; GetCustomersAsync()
+            <pre><code class="language-csharp">public Task&lt;List&lt;Customer&gt;&gt; GetCustomersAsync()
 {
     return _context.Customers.ToListAsync();
 }</code></pre>
@@ -782,7 +750,7 @@ public ObservableCollection&lt;Customer&gt; Customers
             our ViewModel. So it comes into our ViewModel constructor now and it's trying to execute this line of code:
           </p>
           <figure>
-                <pre><code class="language-csharp">Customer = new ObservableCollection&lt;Customer&gt;(
+            <pre><code class="language-csharp">Customer = new ObservableCollection&lt;Customer&gt;(
     _repository.GetCustomersAsync().Result);
                 </code></pre>
             <figcaption>Fig03-015F</figcaption>
@@ -799,7 +767,7 @@ public ObservableCollection&lt;Customer&gt; Customers
           </p>
           <p>Now if I go ahead and put a break point on the get block for the Customer:</p>
           <figure>
-                <pre><code class="language-csharp">get
+            <pre><code class="language-csharp">get
 {
     return _customers; // breakpoint on this line
 }
@@ -808,7 +776,7 @@ public ObservableCollection&lt;Customer&gt; Customers
           </figure>
           <p>and the get block for the Customer FirstName property in the Customer model object:</p>
           <figure>
-                <pre><code class="language-csharp">get
+            <pre><code class="language-csharp">get
 {
     return _firstName; // breakpoint on this line
 }
@@ -818,7 +786,7 @@ public ObservableCollection&lt;Customer&gt; Customers
 
           <p>and go ahead an run again. Now we see the get block of the Customers property is being called:</p>
           <figure>
-                <pre><code class="language-csharp">public ObservableCollection&lt;Customer&gt; Customers
+            <pre><code class="language-csharp">public ObservableCollection&lt;Customer&gt; Customers
 {
     get
     {
@@ -833,7 +801,7 @@ public ObservableCollection&lt;Customer&gt; Customers
           </figure>
           <p>And this is the data binding that's in the View right here:</p>
           <figure>
-                <pre><code class="language-csharp">&lt;DataGrid x:Name=&quot;customerDataGrid&quot;
+            <pre><code class="language-csharp">&lt;DataGrid x:Name=&quot;customerDataGrid&quot;
       AutoGenerateColumns=&quot;False&quot;
       EnableRowVirtualization=&quot;True&quot;
       ItemsSource=&quot;{Binding Customers}&quot;
@@ -845,18 +813,18 @@ public ObservableCollection&lt;Customer&gt; Customers
             we execute further now we can see the getter of each Customer object, first Derek:
           </p>
           <figure>
-            <img src="./images/Fig03-015L.png"/>
+            <img src="./images/Fig03-015L.png" />
             <figcaption>Fig03-015L</figcaption>
           </figure>
           <p>Then Bernard, then Jordan:</p>
           <figure>
-            <img src="./images/Fig03-015M.png"/>
+            <img src="./images/Fig03-015M.png" />
             <figcaption>Fig03-015M</figcaption>
           </figure>
           <p>as it's rendering out the individual rows of the DataGrid.</p>
           <p>Now if we go ahead and run past all of that:</p>
           <figure>
-            <img src="./images/Fig03-015N.png"/>
+            <img src="./images/Fig03-015N.png" />
             <figcaption>Fig03-015N</figcaption>
           </figure>
           <p>because this DataGrid is editable by default we can see the bi-directional nature of the bindings which
@@ -867,7 +835,7 @@ public ObservableCollection&lt;Customer&gt; Customers
             Derek's first name here in the UI:
           </p>
           <figure>
-            <img src="./images/Fig03-015O.png"/>
+            <img src="./images/Fig03-015O.png" />
             <figcaption>Fig03-015O</figcaption>
           </figure>
           <p>Now the way the DataGrid works by default is that I can tab off that field and it's going to buffer those
@@ -876,7 +844,7 @@ public ObservableCollection&lt;Customer&gt; Customers
           </p>
           <p>So now we can see the setter being called for this FirstName property because we edited it:</p>
           <figure>
-            <img src="./images/Fig03-015P.png"/>
+            <img src="./images/Fig03-015P.png" />
             <figcaption>Fig03-015P</figcaption>
           </figure>
           <p>So you can see that the data bindings to ViewModel Properties and to Model Properties form a bidirectional
@@ -904,7 +872,7 @@ public ObservableCollection&lt;Customer&gt; Customers
             ViewModel instance
           </p>
           <figure>
-            <img src="./images/Fig03-015R.png"/>
+            <img src="./images/Fig03-015R.png" />
             <figcaption>Fig03-015R</figcaption>
           </figure>
           <p>the Control will go and look at the current Resource Dictionary that is in scope for the element and see if
@@ -912,12 +880,12 @@ public ObservableCollection&lt;Customer&gt; Customers
             binding:
           </p>
           <figure>
-            <img src="./images/Fig03-015S.png"/>
+            <img src="./images/Fig03-015S.png" />
             <figcaption>Fig03-015S</figcaption>
           </figure>
           <p>If it finds a match it creates an instance of the root element found in that data template:</p>
           <figure>
-            <img src="./images/Fig03-015T.png"/>
+            <img src="./images/Fig03-015T.png" />
             <figcaption>Fig03-015T</figcaption>
           </figure>
           <p>which implicitly causes the construction of any Child elements. Then it renders that element as the Child
@@ -925,27 +893,17 @@ public ObservableCollection&lt;Customer&gt; Customers
             kicked of the whole process:
           </p>
           <figure>
-            <img src="./images/Fig03-015U.png"/>
+            <img src="./images/Fig03-015U.png" />
             <figcaption>Fig03-015U</figcaption>
           </figure>
           <p>Which in this example means the DataContext of the Child View is set to its ViewModel marrying them up
             properly for MVVM.
           </p>
           <h2>Demo: Explicit and Implicit DataTemplates</h2>
-          <div class="example">
-            <div class="input-group">
-              <input id="Ex03-006" type="text"
-                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 3\MVVMHookupDemo-DataTemplates-Start\MVVMHookupDemo.sln">
-<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex03-006"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
-          <div class="example">
-            <div class="input-group">
-              <input id="Ex03-007" type="text"
-                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 3\MVVMHookupDemo-DataTemplates-End\MVVMHookupDemo.sln">
-<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex03-007"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
+          <input id="Ex03-006" type="text" style="width: 100%;"
+            value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 3\MVVMHookupDemo-DataTemplates-Start\MVVMHookupDemo.sln">
+          <input id="Ex03-007" type="text" style="width: 100%;"
+            value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 3\MVVMHookupDemo-DataTemplates-End\MVVMHookupDemo.sln">
           <p>Now let’s look at how you do ViewModel-First leveraging data templates (specifically implicit data
             templates).
           </p>
@@ -955,7 +913,7 @@ public ObservableCollection&lt;Customer&gt; Customers
             property and populates it on construction:
           </p>
           <figure>
-                <pre><code class="language-csharp">public class CustomerListViewModel
+            <pre><code class="language-csharp">public class CustomerListViewModel
 {
     private ObservableCollection&lt;Customer&gt; _customers;
     private ICustomersRepository _repository = new CustomersRepository();
@@ -988,7 +946,7 @@ public ObservableCollection&lt;Customer&gt; Customers
           </p>
 
           <figure>
-                <pre><code class="language-csharp">&lt;Grid.RowDefinitions&gt;
+            <pre><code class="language-csharp">&lt;Grid.RowDefinitions&gt;
     &lt;RowDefinition Height=&quot;*&quot; /&gt;
     &lt;RowDefinition Height=&quot;*&quot; /&gt;
 &lt;/Grid.RowDefinitions&gt;</code></pre>
@@ -999,7 +957,7 @@ public ObservableCollection&lt;Customer&gt; Customers
             Binding to the Customers property (the same one the DataGrid is bound to):
           </p>
           <figure>
-                <pre><code class="language-csharp">&lt;ListBox Grid.Row=&quot;1&quot;
+            <pre><code class="language-csharp">&lt;ListBox Grid.Row=&quot;1&quot;
      ItemsSource=&quot;{Binding Customers}&quot; /&gt;</code></pre>
             <figcaption>Fig 03-015VA</figcaption>
           </figure>
@@ -1007,7 +965,7 @@ public ObservableCollection&lt;Customer&gt; Customers
             If you run now what we're seeing is Zza.Data.Customer for each Customer:
           </p>
           <figure>
-            <img src="./images/Fig03-015W.png"/>
+            <img src="./images/Fig03-015W.png" />
             <figcaption>Fig03-015W</figcaption>
           </figure>
           <p>What's actually happening there is that when the binding gets the object it looks and sees if it's a UI
@@ -1019,7 +977,7 @@ public ObservableCollection&lt;Customer&gt; Customers
             DataTemplate called CustomerTemplate:
           </p>
           <figure>
-                <pre><code class="language-csharp">&lt;UserControl.Resources&gt;
+            <pre><code class="language-csharp">&lt;UserControl.Resources&gt;
     &lt;DataTemplate x:Key=&quot;CustomerTemplate&quot;&gt;
         &lt;Border BorderThickness=&quot;3&quot;
                 BorderBrush=&quot;Blue&quot;&gt;
@@ -1037,7 +995,7 @@ public ObservableCollection&lt;Customer&gt; Customers
             And then to actually use the template, we would go back to the ListBox and use the ItemTemplate property:
           </p>
           <figure>
-                <pre><code class="language-csharp">&lt;ListBox ItemsSource=&quot;{Binding Customers}&quot;
+            <pre><code class="language-csharp">&lt;ListBox ItemsSource=&quot;{Binding Customers}&quot;
     ItemTemplate=&quot;{StaticResource CustomerTemplate}&quot;
     Grid.Row=&quot;1&quot; /&gt;</code></pre>
             <figcaption>Fig 03-017</figcaption>
@@ -1047,7 +1005,7 @@ public ObservableCollection&lt;Customer&gt; Customers
             Customer:
           </p>
           <figure>
-            <img src="./images/Fig03-018.png"/>
+            <img src="./images/Fig03-018.png" />
             <figcaption>Fig03-018</figcaption>
           </figure>
           <p>
@@ -1073,25 +1031,15 @@ public ObservableCollection&lt;Customer&gt; Customers
             DataTemplate out of the Resources and applying that as the way it visually renders that Customer.
           </p>
           <figure>
-            <img src="./images/Fig03-020A.png"/>
+            <img src="./images/Fig03-020A.png" />
             <figcaption>Fig03-020A</figcaption>
           </figure>
           <p>Next let's take a look at how this can be leveraged for wiring up Views and ViewModels.</p>
           <h2>Demo: Implicit DataTemplates for ViewModel-First MVVM Hook-up</h2>
-          <div class="example">
-            <div class="input-group">
-              <input id="Ex03-008" type="text"
-                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 3\MVVMHookupDemo-DataTemplates-Start\MVVMHookupDemo.sln">
-<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex03-008"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
-          <div class="example">
-            <div class="input-group">
-              <input id="Ex03-009" type="text"
-                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 3\MVVMHookupDemo-DataTemplates-End\MVVMHookupDemo.sln">
-<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex03-009"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
+          <input id="Ex03-008" type="text" style="width: 100%;"
+            value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 3\MVVMHookupDemo-DataTemplates-Start\MVVMHookupDemo.sln">
+          <input id="Ex03-009" type="text" style="width: 100%;"
+            value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 3\MVVMHookupDemo-DataTemplates-End\MVVMHookupDemo.sln">
           <p>Now we want to use DataTemplates to wire up our View and ViewModel. To do this you generally want to have a
             hierarchical scheme which we'll get into later but first off we're going to add a ViewModel to our
             MainWindow
@@ -1102,7 +1050,7 @@ public ObservableCollection&lt;Customer&gt; Customers
             to from elements within the MainWindow.
           </p>
           <figure>
-                <pre><code class="language-csharp">namespace MVVMHookupDemo
+            <pre><code class="language-csharp">namespace MVVMHookupDemo
 {
     public class MainWindowViewModel
     {
@@ -1121,7 +1069,7 @@ public ObservableCollection&lt;Customer&gt; Customers
           </p>
 
           <figure>
-                <pre><code class="language-csharp">&lt;Window xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+            <pre><code class="language-csharp">&lt;Window xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
     xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
     xmlns:Customers=&quot;clr-namespace:MVVMHookupDemo.Customers&quot;
     xmlns:local=&quot;clr-namespace:MVVMHookupDemo&quot;
@@ -1142,14 +1090,14 @@ public ObservableCollection&lt;Customer&gt; Customers
             up we're going to replace the static instance of the View here:
           </p>
           <figure>
-                <pre><code class="language-csharp">&lt;Grid&gt;
+            <pre><code class="language-csharp">&lt;Grid&gt;
     &lt;Customers:CustomerListView /&gt;
 &lt;/Grid&gt;</code></pre>
             <figcaption>Fig 03-021A</figcaption>
           </figure>
           <p>with a ContentControl:</p>
           <figure>
-                <pre><code class="language-csharp">&lt;Grid&gt;
+            <pre><code class="language-csharp">&lt;Grid&gt;
     &lt;ContentControl Content=&quot;{Binding CurrentViewModel}&quot; /&gt;
 &lt;/Grid&gt;</code></pre>
             <figcaption>Fig 03-021B</figcaption>
@@ -1159,7 +1107,7 @@ public ObservableCollection&lt;Customer&gt; Customers
           </p>
           <p>Now, again, if we were to run at this point:</p>
           <figure>
-            <img src="./images/Fig03-021C.png"/>
+            <img src="./images/Fig03-021C.png" />
             <figcaption>Fig03-021C</figcaption>
           </figure>
           <p>We would just get a ToString of that type as it tries to render out that object. But if we go into
@@ -1168,7 +1116,7 @@ public ObservableCollection&lt;Customer&gt; Customers
             already defined as it's View
           </p>
           <figure>
-                <pre><code class="language-csharp">&lt;DataTemplate DataType=&quot;{x:Type Customers:CustomerListViewModel}&quot;&gt;
+            <pre><code class="language-csharp">&lt;DataTemplate DataType=&quot;{x:Type Customers:CustomerListViewModel}&quot;&gt;
     &lt;Customers:CustomerListView /&gt;
 &lt;/DataTemplate&gt;</code></pre>
             <figcaption>Fig 03-021D</figcaption>
@@ -1178,7 +1126,7 @@ public ObservableCollection&lt;Customer&gt; Customers
             ContentControl or an items Control:
           </p>
           <figure>
-                <pre><code class="language-csharp"> &lt;Grid&gt;
+            <pre><code class="language-csharp"> &lt;Grid&gt;
     &lt;ContentControl Content=&quot;{Binding CurrentViewModel}&quot; /&gt;
 &lt;/Grid&gt;</code></pre>
             <figcaption>Fig 03-021E</figcaption>
@@ -1191,7 +1139,7 @@ public ObservableCollection&lt;Customer&gt; Customers
           <p>To see that in action let's go ahead and run and you can see we're back in business with our View:
           </p>
           <figure>
-            <img src="./images/Fig03-021F.png"/>
+            <img src="./images/Fig03-021F.png" />
             <figcaption>Fig03-021F</figcaption>
           </figure>
           <p>Just one final reminder because I screw it up all the time myself. Make sure you use that x:Type mark-up
@@ -1206,7 +1154,7 @@ public ObservableCollection&lt;Customer&gt; Customers
             of the View to the ViewModel:
           </p>
           <figure>
-            <img src="./images/Fig03-021G.png"/>
+            <img src="./images/Fig03-021G.png" />
             <figcaption>Fig03-021G</figcaption>
           </figure>
           <p>An example of this would be a Client Service that manages pop up dialogs to be presented to the user. When
@@ -1244,4 +1192,6 @@ public ObservableCollection&lt;Customer&gt; Customers
       </div>
     </div>
   </div>
-</body></html>
+</body>
+
+</html>

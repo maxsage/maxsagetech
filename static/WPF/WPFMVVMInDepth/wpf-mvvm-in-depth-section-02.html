@@ -99,8 +99,23 @@
             <figcaption>Fig 01-003</figcaption>
           </figure>
           <p>
-            If you look closely at what the code is doing you can see code that is touching UI elements, interwoven with
-            code that is doing data access, interwoven with business logic or interaction logic code. Now take this out
+            If you look closely at what the code is doing you can see code that is touching UI elements:</p>
+            <figure>
+              <img src="./images/Fig01-003A.png"/>
+              <figcaption>Fig 01-003A</figcaption>
+            </figure>
+            <p>interwoven with
+            code that is doing data access:</p>
+            <figure>
+              <img src="./images/Fig01-003B.png"/>
+              <figcaption>Fig 01-003B</figcaption>
+            </figure>
+            <p>interwoven with business logic or interaction logic code:</p>
+            <figure>
+              <img src="./images/Fig01-003C.png"/>
+              <figcaption>Fig 01-003C</figcaption>
+            </figure>
+            <p>Now take this out
             of a slides worth of code and put it into the context of real world methods that I'm sure we have all either
             written or been asked to maintain where you have the same kind of interleaving of concerns but spread across
             a method that is hundreds or thousands of lines of code long. This the code equivalent of taking your
@@ -153,7 +168,7 @@
               sure it works right when written and keeps working even when things change in maintenance. Now that being
               said a lot of teams don't even get round to writing unit tests or just haven't convinced themselves of the
               benefits of doing so. That's kind of a whole separate topic. I'm not going to focus on unit testing in
-              this course but strongly encourage you to consider unit testing your ViewModel and client services project
+              this course but strongly encourage you to consider unit testing your ViewModel and client services logic
               with a decent degree of coverage.
             </li>
             <li>Extensibility - somewhat overlaps with maintainability because of the clean separation boundaries and
@@ -210,7 +225,7 @@
             <li>WPF</li>
             <li>Silverlight</li>
             <li>Windows 8/WinRT</li>
-            <li>HTML 5 (Knockout/Angular)</li>
+            <li>HTML 5 (Knockout/Angular/Vue)</li>
             <li>Xamarin/Mobile Apps</li>
             <li>Windows 10</li>
           </ul>
@@ -267,7 +282,8 @@
             InitializeComponent() that triggers XAML parsing as the the View is being constructed but the idea is to
             resist the urge to start dropping event handling code in the code-behind and coding up the interaction and
             data manipulation logic there. There are also other types of code that have to go in the code-behind. Any
-            code that's required to have a reference to a UI element is inherently view code. Things like animations
+            code that's required to have a reference to a UI element is inherently view code.</p>
+            <p>Things like animations
             expressed in code instead of XAML are one example and many controls have parts of their API that is not
             conducive to data binding forcing you to program against them in the code behind. But the key concept here
             is that when using the MVVM pattern you should always analyze any code that you start to put in the

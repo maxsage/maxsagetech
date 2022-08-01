@@ -65,7 +65,7 @@
               <a
                 target="_blank"
                 href="../../../static/wpf/wpfdatabindingindepth/wpf-databinding-in-depth-section-04.html"
-              >Binding Concepts</a>
+              >Binding Core Concepts</a>
               <ol>
                 <li>Introduction</li>
                 <li>Binding Sources</li>

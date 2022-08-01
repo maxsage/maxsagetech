@@ -57,8 +57,8 @@
             technologies as well.
           </p>
           <figure>
-            <img src="./images/Fig06-001.png" class="image"/>
-            <figcaption>Fig 06-001</figcaption>
+            <img src="./images/Fig07-001.png" class="image"/>
+            <figcaption>Fig 07-001</figcaption>
           </figure>
           <p>Basically, this Data Sources Window lets you point to different object types and it will provide the
             information about those object types so you can use it to hook up data binding. You can drag-and-drop those
@@ -78,8 +78,8 @@
           </p>
           <p>The icons in this window:</p>
           <figure>
-            <img src="./images/Fig06-002.png" class="image"/>
-            <figcaption>Fig 06-002</figcaption>
+            <img src="./images/Fig07-002.png" class="image"/>
+            <figcaption>Fig 07-002</figcaption>
           </figure>
           <p>represent the kind of control that's going to be generated. And you can see drop-down arrows next to the
             selected item, the Product, in this case, that allows you to change what those mappings are, so you can
@@ -93,22 +93,22 @@
             little tiny square there:
           </p>
           <figure>
-            <img src="./images/Fig06-003.png" class="image"/>
-            <figcaption>Fig 06-003</figcaption>
+            <img src="./images/Fig07-003.png" class="image"/>
+            <figcaption>Fig 07-003</figcaption>
           </figure>
           <p>that's kind of subtle what it is, but if you click on that, it'll bring up a context menu and in that
             context menu there's an option to create a data binding.
           </p>
           <figure>
-            <img src="./images/Fig06-004.png" class="image"/>
-            <figcaption>Fig 06-004</figcaption>
+            <img src="./images/Fig07-004.png" class="image"/>
+            <figcaption>Fig 07-004</figcaption>
           </figure>
           <p>If you click on that, you get a dialog that lets you basically set everything you need to set at a property
             level for data binding:
           </p>
           <figure>
-            <img src="./images/Fig06-005.png" class="image"/>
-            <figcaption>Fig 06-005</figcaption>
+            <img src="./images/Fig07-005.png" class="image"/>
+            <figcaption>Fig 07-005</figcaption>
           </figure>
           <p>So if you take the aggregate of all the fine-grained properties that we covered in various modules earlier
             in the course, things like, what are the different kinds of data sources a binding can have, DataContext,
@@ -137,29 +137,29 @@
             called DesignTimeData:
           </p>
           <figure>
-            <img src="./images/Fig06-006.png" class="image"/>
-            <figcaption>Fig 06-006</figcaption>
+            <img src="./images/Fig07-006.png" class="image"/>
+            <figcaption>Fig 07-006</figcaption>
           </figure>
           <p>I'm going to add into the solution my data layer that I've been using in other demos, so I'll add an
             existing project and I'll go find my ZzaData project.
           </p>
           <figure>
-            <img src="./images/Fig06-007.png" class="image"/>
-            <figcaption>Fig 06-007</figcaption>
+            <img src="./images/Fig07-007.png" class="image"/>
+            <figcaption>Fig 07-007</figcaption>
           </figure>
           <p>I need to update my NuGet packages to make sure both projects use Entity Framework. So now I've added
             Entity Framework to both projects.
           </p>
           <figure>
-            <img src="./images/Fig06-008.png" class="image"/>
-            <figcaption>Fig 06-008</figcaption>
+            <img src="./images/Fig07-008.png" class="image"/>
+            <figcaption>Fig 07-008</figcaption>
           </figure>
           <p>I need a connectionString in my App.config that's pointing to my Zza database:</p>
           <figure>
                 <pre><code class="language-csharp">&lt;connectionStrings&gt;
     &lt;add name=&quot;ZzaDbContext&quot; connectionString=&quot;server=.\sqlexpress;database=Zza;trusted_Connection=true&quot; providerName=&quot;System.Data.SqlClient&quot;/&gt;
 &lt;/connectionStrings&gt;</code></pre>
-            <figcaption>Fig 06-009</figcaption>
+            <figcaption>Fig 07-009</figcaption>
           </figure>
           <p>The other thing I did here is add a reference from the DesignTimeData project to the ZaaData project so we
             can use it as our data layer.
@@ -170,13 +170,13 @@
             and you can click on Add New Data Source:
           </p>
           <figure>
-            <img src="./images/Fig06-010.png" class="image"/>
-            <figcaption>Fig 06-010</figcaption>
+            <img src="./images/Fig07-010.png" class="image"/>
+            <figcaption>Fig 07-010</figcaption>
           </figure>
           <p>There's four choices here, but only one of them, Object, is the main one you're going to use.</p>
           <figure>
-            <img src="./images/Fig06-011.png" class="image"/>
-            <figcaption>Fig 06-011</figcaption>
+            <img src="./images/Fig07-011.png" class="image"/>
+            <figcaption>Fig 07-011</figcaption>
           </figure>
           <p>Database is going to put SQL statements and connections and things, directly into your Views, which is a
             bad idea from a Separation of Concerns perspective.
@@ -191,8 +191,8 @@
             I want to work with.
           </p>
           <figure>
-            <img src="./images/Fig06-012.png" class="image"/>
-            <figcaption>Fig 06-012</figcaption>
+            <img src="./images/Fig07-012.png" class="image"/>
+            <figcaption>Fig 07-012</figcaption>
           </figure>
           <p>I click Finish, and Visual Studio is basically going to reflect on that assembly and that type, and
             generate some information here in the Data Sources Window that we can then use to start generating
@@ -201,15 +201,15 @@
           <p>You can see that it starts off with a customer and presents all the properties defined on that customer.
           </p>
           <figure>
-            <img src="./images/Fig06-013.png" class="image"/>
-            <figcaption>Fig 06-013</figcaption>
+            <img src="./images/Fig07-013.png" class="image"/>
+            <figcaption>Fig 07-013</figcaption>
           </figure>
           <p>By default, if I drag this out onto my UI here into the main window, it's going to generate a DataGrid with
             columns for each of the properties mapped to specific column types.
           </p>
           <figure>
-            <img src="./images/Fig06-014.png" class="image"/>
-            <figcaption>Fig 06-014</figcaption>
+            <img src="./images/Fig07-014.png" class="image"/>
+            <figcaption>Fig 07-014</figcaption>
           </figure>
           <p>Now if we go look at the XAML that was generated, we can see it generated a DataGrid, it set up a binding
             that just says, ItemsSource="(Binding)":
@@ -239,7 +239,7 @@
                             IsReadOnly=&quot;True&quot;
                             Header=&quot;Full Name&quot;
                             Binding=&quot;{Binding FullName}&quot; /&gt;</code></pre>
-            <figcaption>Fig 06-015</figcaption>
+            <figcaption>Fig 07-015</figcaption>
           </figure>
           <p>So it's expecting a collection of customers to come down into this from somewhere, I'll show that in a
             moment, and then it defines explicit columns for each of the properties that it found on that data object,
@@ -251,7 +251,7 @@
     &lt;CollectionViewSource x:Key=&quot;customerViewSource&quot;
                           d:DesignSource=&quot;{d:DesignInstance {x:Type Data:Customer}, CreateList=True}&quot; /&gt;
 &lt;/Window.Resources&gt;</code></pre>
-            <figcaption>Fig 06-016</figcaption>
+            <figcaption>Fig 07-016</figcaption>
           </figure>
           <p>which we covered a little bit before and we'll cover more in a later module, but it's an ICollectionView
             object that wraps some data collection.
@@ -261,14 +261,14 @@
           </p>
           <figure>
             <pre><code class="language-csharp">d:DesignSource=&quot;{d:DesignInstance {x:Type Data:Customer}, CreateList=True}&quot; /&gt;</code></pre>
-            <figcaption>Fig 06-017</figcaption>
+            <figcaption>Fig 07-017</figcaption>
           </figure>
           <p>and it indicates that it is a list of objects, and then it sets the DataContext on the root Grid element to
             point to that CollectionViewSource.
           </p>
           <figure>
                     <pre>&lt;Grid DataContext=&quot;{StaticResource customerViewSource}&quot;&gt;</code></pre>
-            <figcaption>Fig 06-018</figcaption>
+            <figcaption>Fig 07-018</figcaption>
           </figure>
           <p>So it basically wires everything up so that the designer knows about the type of the object it's binding
             to, it can use the Type information from that object to generate the bindings for the columns, and it sets
@@ -283,12 +283,12 @@
 {
     System.Windows.Data.CollectionViewSource customerViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource(&quot;customerViewSource&quot;)));
     // Load data by setting the CollectionViewSource.Source property:</code></pre>
-            <figcaption>Fig 06-019</figcaption>
+            <figcaption>Fig 07-019</figcaption>
           </figure>
           <p>where it gets a reference to the customerViewSource through a FindResource call:</p>
           <figure>
             <pre><code class="language-csharp">((System.Windows.Data.CollectionViewSource)(this.FindResource(&quot;customerViewSource&quot;)));</code></pre>
-            <figcaption>Fig 06-020</figcaption>
+            <figcaption>Fig 07-020</figcaption>
           </figure>
           <p>and then it just has some commented-out code that says, if you set the Source property of that
             CollectionViewSource to a collection, then things are going to be ready to go.
@@ -303,14 +303,14 @@ using (ZzaDbContext context = new ZzaDbContext())
 {
     customerViewSource.Source = context.Customers.ToList();
 }</code></pre>
-            <figcaption>Fig 06-021</figcaption>
+            <figcaption>Fig 07-021</figcaption>
           </figure>
 
           <p>And with just that much effort, I can go and start and we can see our data being rendered out in a Grid.
           </p>
           <figure>
-            <img src="./images/Fig06-022.png" class="image"/>
-            <figcaption>Fig 06-022</figcaption>
+            <img src="./images/Fig07-022.png" class="image"/>
+            <figcaption>Fig 07-022</figcaption>
           </figure>
           <p>Obviously, we have some layout to do here, the columns are probably not in the order that you want by
             default. You can go and start moving those around in the editor, and in the case of a DataGrid, moving those
@@ -333,16 +333,16 @@ using (ZzaDbContext context = new ZzaDbContext())
             I'm going to expand my overall UI a little bit.
           </p>
           <figure>
-            <img src="./images/Fig06-023.png" class="image"/>
-            <figcaption>Fig 06-023</figcaption>
+            <img src="./images/Fig07-023.png" class="image"/>
+            <figcaption>Fig 07-023</figcaption>
           </figure>
           <p>I'm going to go back to the Data Sources Window. Now when I did the drag-and-drop before, we got a DataGrid
             because of this selection. It's the default selection that when you do a drag-and-drop of a given entity
             type, it's going to generate a DataGrid for that.
           </p>
           <figure>
-            <img src="./images/Fig06-024.png" class="image"/>
-            <figcaption>Fig 06-024</figcaption>
+            <img src="./images/Fig07-024.png" class="image"/>
+            <figcaption>Fig 07-024</figcaption>
           </figure>
           <p>You can see there's other options here including List that's going to generate a ListViewControl, which is
             mostly obsolete at this point by the DataGrid, and then the one I really want to show here is the Details
@@ -353,21 +353,21 @@ using (ZzaDbContext context = new ZzaDbContext())
             kind of field when you're doing details it's going to generate.
           </p>
           <figure>
-            <img src="./images/Fig06-025.png" class="image"/>
-            <figcaption>Fig 06-025</figcaption>
+            <img src="./images/Fig07-025.png" class="image"/>
+            <figcaption>Fig 07-025</figcaption>
           </figure>
           <p>So I can leave most of these to TextBox, but I can also exclude certain ones by saying (None). So I'll
             exclude a few of these and say that we just want the Id, FirstName, LastName, Email, and Phone properties to
             be generated as the DataForm or DetailsView.
           </p>
           <figure>
-            <img src="./images/Fig06-026.png" class="image"/>
-            <figcaption>Fig 06-026</figcaption>
+            <img src="./images/Fig07-026.png" class="image"/>
+            <figcaption>Fig 07-026</figcaption>
           </figure>
           <p>Now if I do my drag-and-drop, you can see that what it generates is a Grid or a little data form.</p>
           <figure>
-            <img src="./images/Fig06-027.png" class="image"/>
-            <figcaption>Fig 06-027</figcaption>
+            <img src="./images/Fig07-027.png" class="image"/>
+            <figcaption>Fig 07-027</figcaption>
           </figure>
           <p>Now the ordering of the properties may not be what you want again. It's going to go in alphabetical order,
             by default, but we can move those around later. If we go look at what it generated, first off, at the top,
@@ -378,7 +378,7 @@ using (ZzaDbContext context = new ZzaDbContext())
     &lt;CollectionViewSource x:Key=&quot;customerViewSource&quot;
             d:DesignSource=&quot;{d:DesignInstance {x:Type Data:Customer}, CreateList=True}&quot; /&gt;
 &lt;/Window.Resources&gt;</code></pre>
-            <figcaption>Fig 06-028</figcaption>
+            <figcaption>Fig 07-028</figcaption>
           </figure>
 
           <p>It saw that we did a drag-and-drop of the same exact entity type and so it just can reuse that same
@@ -411,7 +411,7 @@ using (ZzaDbContext context = new ZzaDbContext())
            Grid.Row=&quot;0&quot;
            VerticalAlignment=&quot;Center&quot; /&gt;
     &lt;TextBox x:Name=&quot;emailTextBox&quot;</code></pre>
-            <figcaption>Fig 06-029</figcaption>
+            <figcaption>Fig 07-029</figcaption>
           </figure>
           <p>Then it basically generates a Label based on the property, and an input field based on the property:
           </p>
@@ -431,7 +431,7 @@ using (ZzaDbContext context = new ZzaDbContext())
          Text=&quot;{Binding Email, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}&quot;
          VerticalAlignment=&quot;Center&quot;
          Width=&quot;120&quot; /&gt;</code></pre>
-            <figcaption>Fig 06-030</figcaption>
+            <figcaption>Fig 07-030</figcaption>
           </figure>
 
           <p>And you saw from those drop-downs where the given input field type was coming from.</p>
@@ -440,7 +440,7 @@ using (ZzaDbContext context = new ZzaDbContext())
           </p>
           <figure>
             <pre><code class="language-csharp">Text=&quot;{Binding Email, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}&quot;</code></pre>
-            <figcaption>Fig 06-031</figcaption>
+            <figcaption>Fig 07-031</figcaption>
           </figure>
           <p>The binding is going to have the Path to the property on the data-bound object. It's always going to
             declare the Mode TwoWay for input controls, even though in WPF, most of these are TwoWay by default. It does
@@ -456,7 +456,7 @@ using (ZzaDbContext context = new ZzaDbContext())
           </p>
           <figure>
             <pre><code class="language-csharp">Grid.Row=&quot;1&quot;</code></pre>
-            <figcaption>Fig 06-032</figcaption>
+            <figcaption>Fig 07-032</figcaption>
           </figure>
 
           <p>and then you'd probably want to move the XAML around, as well, so that it's in a linear layout in the XAML
@@ -470,8 +470,8 @@ using (ZzaDbContext context = new ZzaDbContext())
             we can see it generates a single grid with two columns to it:
           </p>
           <figure>
-            <img src="./images/Fig06-033.png" class="image"/>
-            <figcaption>Fig 06-033</figcaption>
+            <img src="./images/Fig07-033.png" class="image"/>
+            <figcaption>Fig 07-033</figcaption>
           </figure>
           <p>one for the Label and one for the input, and you could drag these out as individual grids on a per-property
             basis if you have some more exotic layout that you need.
@@ -490,35 +490,35 @@ using (ZzaDbContext context = new ZzaDbContext())
             just drag an unbound control out here, such as the TextBox here:
           </p>
           <figure>
-            <img src="./images/Fig06-034.png" class="image"/>
-            <figcaption>Fig 06-034</figcaption>
+            <img src="./images/Fig07-034.png" class="image"/>
+            <figcaption>Fig 07-034</figcaption>
           </figure>
           <p>And I want to start data binding this, I can go to the Properties Window, select the property that I want
             to data bind, and go to this little square over to the right of the input here.
           </p>
           <figure>
-            <img src="./images/Fig06-035.png" class="image"/>
-            <figcaption>Fig 06-035</figcaption>
+            <img src="./images/Fig07-035.png" class="image"/>
+            <figcaption>Fig 07-035</figcaption>
           </figure>
           <p>If I click on that, you can see a Context menu comes up that includes Create Data Binding:</p>
           <figure>
-            <img src="./images/Fig06-036.png" class="image"/>
-            <figcaption>Fig 06-036</figcaption>
+            <img src="./images/Fig07-036.png" class="image"/>
+            <figcaption>Fig 07-036</figcaption>
           </figure>
           <p>If I click on that, I get a dialog here that lets me start to specify how I want to hook up the data
             binding.
           </p>
           <figure>
-            <img src="./images/Fig06-037.png" class="image"/>
-            <figcaption>Fig 06-037</figcaption>
+            <img src="./images/Fig07-037.png" class="image"/>
+            <figcaption>Fig 07-037</figcaption>
           </figure>
           <p>At the top, you can see, is a drop-down that lets you pick what kind of source to use.</p>
           <p>DataContext is the default, and if there is a Design-Time DataContext available, such as the one shown
             here:
           </p>
           <figure>
-            <img src="./images/Fig06-038.png" class="image"/>
-            <figcaption>Fig 06-038</figcaption>
+            <img src="./images/Fig07-038.png" class="image"/>
+            <figcaption>Fig 07-038</figcaption>
           </figure>
           <p>You can see that it knows about this Customer List and this is because of the Grid that this TextBox sits
             within has a DataContext set using DesignTimeData, which we'll get more into later in the module.
@@ -528,15 +528,15 @@ using (ZzaDbContext context = new ZzaDbContext())
             StaticResource or Source bindings, by selecting those here.
           </p>
           <figure>
-            <img src="./images/Fig06-039.png" class="image"/>
-            <figcaption>Fig 06-039</figcaption>
+            <img src="./images/Fig07-039.png" class="image"/>
+            <figcaption>Fig 07-039</figcaption>
           </figure>
           <p>And when I do, then the inputs change to let me pick from what's out there that I can select as the
             ElementName and what property on that element to use to set the Path:
           </p>
           <figure>
-            <img src="./images/Fig06-040.png" class="image"/>
-            <figcaption>Fig 06-040</figcaption>
+            <img src="./images/Fig07-040.png" class="image"/>
+            <figcaption>Fig 07-040</figcaption>
           </figure>
           <p>We'll just use DataContext here, say FirstName as our property.</p>
           <p>Down at the bottom you can see if there are Converters out there, you can either add one dynamically here
@@ -546,8 +546,8 @@ using (ZzaDbContext context = new ZzaDbContext())
           <p>And then the More settings expands and shows all those other properties we covered in a previous module:
           </p>
           <figure>
-            <img src="./images/Fig06-041.png" class="image"/>
-            <figcaption>Fig 06-041</figcaption>
+            <img src="./images/Fig07-041.png" class="image"/>
+            <figcaption>Fig 07-041</figcaption>
           </figure>
           <p>for things like StringFormat, the Mode property, the UpdateSourceTrigger, FallbackValues, TargetNullValues,
             and so on.
@@ -563,7 +563,7 @@ using (ZzaDbContext context = new ZzaDbContext())
      Text=&quot;{Binding /FirstName}&quot;
      VerticalAlignment=&quot;Top&quot;
      Width=&quot;120&quot; /&gt;</code></pre>
-            <figcaption>Fig 06-042</figcaption>
+            <figcaption>Fig 07-042</figcaption>
           </figure>
 
           <p>We can see here is our TextBox, and all it was really doing there is creating a binding.</p>
@@ -589,16 +589,16 @@ using (ZzaDbContext context = new ZzaDbContext())
             covered the fact that the defaults here include DataGrid, List, and Details.
           </p>
           <figure>
-            <img src="./images/Fig06-043.png" class="image"/>
-            <figcaption>Fig 06-043</figcaption>
+            <img src="./images/Fig07-043.png" class="image"/>
+            <figcaption>Fig 07-043</figcaption>
           </figure>
           <p>The reason for that is, it assumes when you add an entity type or an object here, that you're talking about
             a collection of those. If we go to Customize here, you can see the dialog comes up that allows us to change
             the mapping there:
           </p>
           <figure>
-            <img src="./images/Fig06-044.png" class="image"/>
-            <figcaption>Fig 06-044</figcaption>
+            <img src="./images/Fig07-044.png" class="image"/>
+            <figcaption>Fig 07-044</figcaption>
           </figure>
           <p>and you can see the checkboxes there for DataGrid and List and Details is just kind of a built-in one that
             generates a form as we talked about before, but the important thing is at the top you can see it's mapped to
@@ -606,16 +606,16 @@ using (ZzaDbContext context = new ZzaDbContext())
           </p>
           <p>If you drop that down and go to something like String:</p>
           <figure>
-            <img src="./images/Fig06-045.png" class="image"/>
-            <figcaption>Fig 06-045</figcaption>
+            <img src="./images/Fig07-045.png" class="image"/>
+            <figcaption>Fig 07-045</figcaption>
           </figure>
           <p>then what this is showing is if you're dealing with an individual property of an entity that's of type
             String, this is the collection of controls it's going to show as options when you go to customize what it's
             going to generate on drag/drop.
           </p>
           <figure>
-            <img src="./images/Fig06-046.png" class="image"/>
-            <figcaption>Fig 06-046</figcaption>
+            <img src="./images/Fig07-046.png" class="image"/>
+            <figcaption>Fig 07-046</figcaption>
           </figure>
           <p>You can see at the bottom there's a link you can even add custom controls of your own and third party
             component libraries will show up in this list as well. And you can just check additional things. So, for
@@ -623,15 +623,15 @@ using (ZzaDbContext context = new ZzaDbContext())
             drag-and-drop an entity type that represents a list. I can click OK there
           </p>
           <figure>
-            <img src="./images/Fig06-047.png" class="image"/>
-            <figcaption>Fig 06-047</figcaption>
+            <img src="./images/Fig07-047.png" class="image"/>
+            <figcaption>Fig 07-047</figcaption>
           </figure>
           <p>and then now I could drop this down, select ComboBox, drag-and-drop, and you can see the sizing is kind of
             funky, but it generated a ComboBox:
           </p>
           <figure>
-            <img src="./images/Fig06-048.png" class="image"/>
-            <figcaption>Fig 06-048</figcaption>
+            <img src="./images/Fig07-048.png" class="image"/>
+            <figcaption>Fig 07-048</figcaption>
           </figure>
           <p>and if we go look at the XAML:</p>
           <figure>
@@ -646,7 +646,7 @@ using (ZzaDbContext context = new ZzaDbContext())
             &lt;/ItemsPanelTemplate&gt;
         &lt;/CombBox.ItemsPanel&gt;
     &lt;/ComboBox&gt;</code></pre>
-            <figcaption>Fig 06-049</figcaption>
+            <figcaption>Fig 07-049</figcaption>
           </figure>
 
           <p>what it created for me was a ComboBox with the ItemsSource bound to the current DataContext, because it saw
@@ -656,7 +656,7 @@ using (ZzaDbContext context = new ZzaDbContext())
           <figure>
             <pre
               class="prettyprint">&amp;lt;Grid DataContext=&amp;quot;{StaticResource customerViewSource}&amp;quot;&amp;gt;</code></pre>
-            <figcaption>Fig 06-050</figcaption>
+            <figcaption>Fig 07-050</figcaption>
           </figure>
           <p>Now notice a couple other things about dropping a ComboBox like this. One is that it hooks up two other
             properties relative to data binding that are important, the DisplayMemberPath property indicates what
@@ -669,8 +669,8 @@ using (ZzaDbContext context = new ZzaDbContext())
             that was marked None:
           </p>
           <figure>
-            <img src="./images/Fig06-051.png" class="image"/>
-            <figcaption>Fig 06-051</figcaption>
+            <img src="./images/Fig07-051.png" class="image"/>
+            <figcaption>Fig 07-051</figcaption>
           </figure>
           <p>and that's because it's the first string property that it found on the Customer alphabetically.</p>
           <p>So as I talked about when dragging and dropping and generating a form, it's always going to generate things
@@ -682,8 +682,8 @@ using (ZzaDbContext context = new ZzaDbContext())
           </p>
           <p>The other thing it did here is on a ComboBox it always adds this ItemsPanel customization:</p>
           <figure>
-            <img src="./images/Fig06-052.png" class="image"/>
-            <figcaption>Fig 06-052</figcaption>
+            <img src="./images/Fig07-052.png" class="image"/>
+            <figcaption>Fig 07-052</figcaption>
           </figure>
           <p>setting it to a virtualizing StackPanel. There are various reasons the Design Team chose to do that, but in
             general, you can kill that out of there.
@@ -695,15 +695,15 @@ using (ZzaDbContext context = new ZzaDbContext())
           </p>
           <p>So notice that you can also customize at the individual property level:</p>
           <figure>
-            <img src="./images/Fig06-053.png" class="image"/>
-            <figcaption>Fig 06-053</figcaption>
+            <img src="./images/Fig07-053.png" class="image"/>
+            <figcaption>Fig 07-053</figcaption>
           </figure>
           <p>and this is where those other type mappings such as string come in. The set of controls presented here are
             based on whatever that property type is in this dialog.
           </p>
           <figure>
-            <img src="./images/Fig06-054.png" class="image"/>
-            <figcaption>Fig 06-054</figcaption>
+            <img src="./images/Fig07-054.png" class="image"/>
+            <figcaption>Fig 07-054</figcaption>
           </figure>
         </div>
         <div class="panel-body">
@@ -722,46 +722,46 @@ using (ZzaDbContext context = new ZzaDbContext())
             if I go to the Toolbox and go grab a TextBox and put it out here on the UI:
           </p>
           <figure>
-            <img src="./images/Fig06-055.png" class="image"/>
-            <figcaption>Fig 06-055</figcaption>
+            <img src="./images/Fig07-055.png" class="image"/>
+            <figcaption>Fig 07-055</figcaption>
           </figure>
           <p>I could then decide what I want to put in that TextBox. In this case, I'm going to add another Data Source,
             so I'm going to grab the Object Data Source:
           </p>
           <figure>
-            <img src="./images/Fig06-056.png" class="image"/>
-            <figcaption>Fig 06-056</figcaption>
+            <img src="./images/Fig07-056.png" class="image"/>
+            <figcaption>Fig 07-056</figcaption>
           </figure>
           <p>I'm going to go to my ZzaData, and we'll pick Product this time and click Finish.</p>
           <figure>
-            <img src="./images/Fig06-057.png" class="image"/>
-            <figcaption>Fig 06-057</figcaption>
+            <img src="./images/Fig07-057.png" class="image"/>
+            <figcaption>Fig 07-057</figcaption>
           </figure>
           <p>You can see the icon here:</p>
           <figure>
-            <img src="./images/Fig06-058.png" class="image"/>
-            <figcaption>Fig 06-058</figcaption>
+            <img src="./images/Fig07-058.png" class="image"/>
+            <figcaption>Fig 07-058</figcaption>
           </figure>
           <p>that it's mapped to the DataGrid by default, and you can see our customizations from a previous demo there:
           </p>
           <figure>
-            <img src="./images/Fig06-059.png" class="image"/>
-            <figcaption>Fig 06-059</figcaption>
+            <img src="./images/Fig07-059.png" class="image"/>
+            <figcaption>Fig 07-059</figcaption>
           </figure>
           <p> that ComboBox also shows up now.</p>
           <p>What I could do is expand and say that maybe it's the Name of the property that I want to put into this
             TextBox:
           </p>
           <figure>
-            <img src="./images/Fig06-060.png" class="image"/>
-            <figcaption>Fig 06-060</figcaption>
+            <img src="./images/Fig07-060.png" class="image"/>
+            <figcaption>Fig 07-060</figcaption>
           </figure>
           <p>So I can drag-and-drop that onto the existing TextBox, and you can see that the icon changes to a shortcut
             arrow.
           </p>
           <figure>
-            <img src="./images/Fig06-061.png" class="image"/>
-            <figcaption>Fig 06-061</figcaption>
+            <img src="./images/Fig07-061.png" class="image"/>
+            <figcaption>Fig 07-061</figcaption>
           </figure>
           <p>If I release, basically it made no modifications to the control in terms of its layout or position, all it
             did is added a binding for the default property for that control type, so the Text property for a TextBox:
@@ -774,7 +774,7 @@ using (ZzaDbContext context = new ZzaDbContext())
      Text=&quot;{Binding Name, Mode=TwoWay, NotifyOnValidationError=true, Source={StaticResource productViewSource}}&quot;
      VerticalAlignment=&quot;Top&quot;
      Width=&quot;120&quot; /&gt;</code></pre>
-            <figcaption>Fig 06-062</figcaption>
+            <figcaption>Fig 07-062</figcaption>
           </figure>
           <p>and it bounded to the property on the data-bound object we dragged onto it, so Name in this case.</p>
           <p>It also added a couple other things. As I talked about in a previous demo, it's always going to put Mode
@@ -784,7 +784,7 @@ using (ZzaDbContext context = new ZzaDbContext())
           </p>
           <figure>
             <pre><code class="language-csharp">NotifyOnValidationError=true, Source={StaticResource productViewSource}}&quot;</code></pre>
-            <figcaption>Fig 06-063</figcaption>
+            <figcaption>Fig 07-063</figcaption>
           </figure>
           <p>If we go back up to the top of our UI now, we can see it added a new CollectionViewSource with a
             DesignInstance Type of Data:Product.
@@ -796,7 +796,7 @@ using (ZzaDbContext context = new ZzaDbContext())
     &lt;CollectionViewSource x:Key=&quot;productViewSource&quot;
                           d:DesignSource=&quot;{d:DesignInstance {x:Type Data:Product}, CreateList=True}&quot; /&gt;
 &lt;/Window.Resources&gt;</code></pre>
-            <figcaption>Fig 06-064</figcaption>
+            <figcaption>Fig 07-064</figcaption>
           </figure>
           <p>So, similar to what I had covered before for creating this Customer Source that it reused for all the
             different drag-and-drops of customers, it's going to create one CollectionViewSource for a given entity type
@@ -812,8 +812,8 @@ using (ZzaDbContext context = new ZzaDbContext())
             here:
           </p>
           <figure>
-            <img src="./images/Fig06-065.png" class="image"/>
-            <figcaption>Fig 06-065</figcaption>
+            <img src="./images/Fig07-065.png" class="image"/>
+            <figcaption>Fig 07-065</figcaption>
           </figure>
           <p>We won't worry too much about the presentation there.</p>
           <p>If I then go back to my Data Sources Window and drag-and-drop an entity type onto that ListBox and go look
@@ -828,7 +828,7 @@ using (ZzaDbContext context = new ZzaDbContext())
     DisplayMemberPath=&quot;Description&quot;
     ItemsSource=&quot;{Binding Source={StaticResource productViewSource}}&quot;
     SelectedValuePath=&quot;Description&quot; /&gt;</code></pre>
-            <figcaption>Fig 06-066</figcaption>
+            <figcaption>Fig 07-066</figcaption>
           </figure>
           <p>we can see the ListBox was pre-existing in this case, so all it hooked up for us were the data binding
             properties again.
@@ -847,15 +847,15 @@ using (ZzaDbContext context = new ZzaDbContext())
           </p>
           <p>You can see here I get IntelliSense down to the properties of a binding:</p>
           <figure>
-            <img src="./images/Fig06-067.png" class="image"/>
-            <figcaption>Fig 06-067</figcaption>
+            <img src="./images/Fig07-067.png" class="image"/>
+            <figcaption>Fig 07-067</figcaption>
           </figure>
           <p>where I can set the Path equal to Name, and I can set Source equal to a StaticResource or
             productViewSource.
           </p>
           <figure>
             <pre><code class="language-csharp">Text=&quot;{Binding Path=Name, Source={StaticResource productViewSource}}&quot;</code></pre>
-            <figcaption>Fig 06-068</figcaption>
+            <figcaption>Fig 07-068</figcaption>
           </figure>
           <p>But the one thing it did do, which was nice, was the declaration of that CollectionViewSource for me up in
             the Resources section, and getting this all hooked up. So that can definitely save you a little bit of time
@@ -905,49 +905,49 @@ using (ZzaDbContext context = new ZzaDbContext())
             is creating an ItemTemplate for use with that control.
           </p>
           <figure>
-            <img src="./images/Fig06-069.png" class="image"/>
-            <figcaption>Fig 06-069</figcaption>
+            <img src="./images/Fig07-069.png" class="image"/>
+            <figcaption>Fig 07-069</figcaption>
           </figure>
           <p>I can say, Create Empty:</p>
           <figure>
-            <img src="./images/Fig06-070.png" class="image"/>
-            <figcaption>Fig 06-070</figcaption>
+            <img src="./images/Fig07-070.png" class="image"/>
+            <figcaption>Fig 07-070</figcaption>
           </figure>
           <p>give it a name, we'll call this ProductTemplate. You can see there's some selections down below about where
             it's going to go:
           </p>
           <figure>
-            <img src="./images/Fig06-071.png" class="image"/>
-            <figcaption>Fig 06-071</figcaption>
+            <img src="./images/Fig07-071.png" class="image"/>
+            <figcaption>Fig 07-071</figcaption>
           </figure>
           <p>Those don't actually work correctly and you have no way to change them, so you just say OK here.</p>
           <p>And what you end up with doesn't seem like a very impressive designer experience at first, because what
             you've got here is just this little box in the Designer:
           </p>
           <figure>
-            <img src="./images/Fig06-072.png" class="image"/>
-            <figcaption>Fig 06-072</figcaption>
+            <img src="./images/Fig07-072.png" class="image"/>
+            <figcaption>Fig 07-072</figcaption>
           </figure>
           <p>A very important window in Visual Studio when working in this mode is the Document Outline View.</p>
           <figure>
-            <img src="./images/Fig06-073.png" class="image"/>
-            <figcaption>Fig 06-073</figcaption>
+            <img src="./images/Fig07-073.png" class="image"/>
+            <figcaption>Fig 07-073</figcaption>
           </figure>
           <p>You can see that the Document Outline View shows that we are working with the DataTemplate and it's got a
             single Grid within it. In fact, if we go look at the XAML, that's exactly what we're looking at, a
             DataTemplate named ProductTemplate with a Grid inside of it:
           </p>
           <figure>
-            <img src="./images/Fig06-074.png" class="image"/>
-            <figcaption>Fig 06-074</figcaption>
+            <img src="./images/Fig07-074.png" class="image"/>
+            <figcaption>Fig 07-074</figcaption>
           </figure>
           <p>but what we've got is a Design-Time experience for working with that.</p>
           <p>So I can zoom in a little bit here, we'll go to 800%, and we can see we have the same kinds of Design-Time
             experience working with that Grid:
           </p>
           <figure>
-            <img src="./images/Fig06-075.png" class="image"/>
-            <figcaption>Fig 06-075</figcaption>
+            <img src="./images/Fig07-075.png" class="image"/>
+            <figcaption>Fig 07-075</figcaption>
           </figure>
           <p>So say I want to set this up similar to the ProductTemplate we used in a previous module. We could click
             here to add a column to my Grid, so now I have two columns in my Grid.
@@ -956,14 +956,14 @@ using (ZzaDbContext context = new ZzaDbContext())
             it's fully within that cell, right-click, say Reset Layout, All:
           </p>
           <figure>
-            <img src="./images/Fig06-076.png" class="image"/>
-            <figcaption>Fig 06-076</figcaption>
+            <img src="./images/Fig07-076.png" class="image"/>
+            <figcaption>Fig 07-076</figcaption>
           </figure>
           <p>and now we'll take off all sizing and positioning so that Grid fills the right cell.</p>
           <p>Then on the edges of that Grid in the designer, you can see I could split it up into two rows.</p>
           <figure>
-            <img src="./images/Fig06-077.png" class="image"/>
-            <figcaption>Fig 06-077</figcaption>
+            <img src="./images/Fig07-077.png" class="image"/>
+            <figcaption>Fig 07-077</figcaption>
           </figure>
           <p>Now I've got a place to put an image on the left, the name on the top, and the description on the bottom,
             similar to the ProductTemplate that we used in a previous module.
@@ -973,15 +973,15 @@ using (ZzaDbContext context = new ZzaDbContext())
             guidelines on there, go to the Toolbox, grab a TextBlock, put it in the upper right:
           </p>
           <figure>
-            <img src="./images/Fig06-078.png" class="image"/>
-            <figcaption>Fig 06-078</figcaption>
+            <img src="./images/Fig07-078.png" class="image"/>
+            <figcaption>Fig 07-078</figcaption>
           </figure>
           <p>Now this one gets a little harder to resize because it's so darn big compared to that tiny little thing,
             but I can just shrink it down, get it fully within the cell:
           </p>
           <figure>
-            <img src="./images/Fig06-079.png" class="image"/>
-            <figcaption>Fig 06-079</figcaption>
+            <img src="./images/Fig07-079.png" class="image"/>
+            <figcaption>Fig 07-079</figcaption>
           </figure>
           <p>right-click, Reset Layout, All, and you can see things get a little wonky here because of the text being in
             there in a certain text size, but I could go edit that text and zero it out and then things shrink back down
@@ -992,8 +992,8 @@ using (ZzaDbContext context = new ZzaDbContext())
             handy:
           </p>
           <figure>
-            <img src="./images/Fig06-080.png" class="image"/>
-            <figcaption>Fig 06-080</figcaption>
+            <img src="./images/Fig07-080.png" class="image"/>
+            <figcaption>Fig 07-080</figcaption>
           </figure>
           <p>Sometimes it's hard, especially with these semi-non-visual controls, like how do I grab the TextBlock in
             here? You don't, you grab it in the Document Outline, and it will select it down below.
@@ -1024,7 +1024,7 @@ using (ZzaDbContext context = new ZzaDbContext())
                        TextWrapping=&quot;Wrap&quot; /&gt;
         &lt;/Grid&gt;
         &lt;Image Height=&quot;Auto&quot;</code></pre>
-            <figcaption>Fig 06-081</figcaption>
+            <figcaption>Fig 07-081</figcaption>
           </figure>
           <p>we have something fairly close to what we had done before manually by pasting in some code top level Grid
             with two columns, the inner Grid with two rows, an Image in the left cell, the TextBlocks in the right cell,
@@ -1035,40 +1035,40 @@ using (ZzaDbContext context = new ZzaDbContext())
             designer way of doing it, I could go to my Image in the Document Outline to make sure it's selected:
           </p>
           <figure>
-            <img src="./images/Fig06-082.png" class="image"/>
-            <figcaption>Fig 06-082</figcaption>
+            <img src="./images/Fig07-082.png" class="image"/>
+            <figcaption>Fig 07-082</figcaption>
           </figure>
           <p>go F4 to bring the Properties Window out, and go to the Source property.</p>
           <figure>
-            <img src="./images/Fig06-083.png" class="image"/>
-            <figcaption>Fig 06-083</figcaption>
+            <img src="./images/Fig07-083.png" class="image"/>
+            <figcaption>Fig 07-083</figcaption>
           </figure>
           <p>I go to this little square to the right of its input field and say, Create Data Binding, and we get back to
             our Properties data binding window that I've covered before:
           </p>
           <figure>
-            <img src="./images/Fig06-084.png" class="image"/>
-            <figcaption>Fig 06-084</figcaption>
+            <img src="./images/Fig07-084.png" class="image"/>
+            <figcaption>Fig 07-084</figcaption>
           </figure>
           <p>We would say that we're going to use the DataContext, which is going to flow down into that DataTemplate as
             we've covered, and we would use a custom Path up here to say that we're going to use the Image property of
             whatever that DataContext object is.
           </p>
           <figure>
-            <img src="./images/Fig06-085.png" class="image"/>
-            <figcaption>Fig 06-085</figcaption>
+            <img src="./images/Fig07-085.png" class="image"/>
+            <figcaption>Fig 07-085</figcaption>
           </figure>
           <p>Then, likewise, we could go to this TextBlock, F4 for its properties, go to the Text property, Create Data
             Binding, set it to DataContext, Path of Name for this one:
           </p>
           <figure>
-            <img src="./images/Fig06-086.png" class="image"/>
-            <figcaption>Fig 06-086</figcaption>
+            <img src="./images/Fig07-086.png" class="image"/>
+            <figcaption>Fig 07-086</figcaption>
           </figure>
           <p>Other TextBox, F4, Create Data Binding, DataContext, and Description for this one.</p>
           <figure>
-            <img src="./images/Fig06-087.png" class="image"/>
-            <figcaption>Fig 06-087</figcaption>
+            <img src="./images/Fig07-087.png" class="image"/>
+            <figcaption>Fig 07-087</figcaption>
           </figure>
           <p>So you can see that's a lot of mouse movement and a lot of clicking and pointing, and generally I just
             found it would be a lot quicker to drop into the XAML and write those expressions myself, but I just wanted
@@ -1078,21 +1078,21 @@ using (ZzaDbContext context = new ZzaDbContext())
             we're designing just the DataTemplate:
           </p>
           <figure>
-            <img src="./images/Fig06-088.png" class="image"/>
-            <figcaption>Fig 06-088</figcaption>
+            <img src="./images/Fig07-088.png" class="image"/>
+            <figcaption>Fig 07-088</figcaption>
           </figure>
           <p>How do we get out of this and back to the main Designer View?</p>
           <p>Over here in the Document Outline you see this up arrow, Return scope to (Window) in the upper left of the
             Document Outline:
           </p>
           <figure>
-            <img src="./images/Fig06-089.png" class="image"/>
-            <figcaption>Fig 06-089</figcaption>
+            <img src="./images/Fig07-089.png" class="image"/>
+            <figcaption>Fig 07-089</figcaption>
           </figure>
           <p>So we just click on that and we kind of zoom back out.</p>
           <figure>
-            <img src="./images/Fig06-090.png" class="image"/>
-            <figcaption>Fig 06-090</figcaption>
+            <img src="./images/Fig07-090.png" class="image"/>
+            <figcaption>Fig 07-090</figcaption>
           </figure>
           <p>Now you can see the Document Outline transforms to the top-level Window hierarchy, and we get our normal
             designer back.
@@ -1101,13 +1101,13 @@ using (ZzaDbContext context = new ZzaDbContext())
             right-click, Edit Additional Templates, Edit Generated Items (Item Template), and then Edit Current:
           </p>
           <figure>
-            <img src="./images/Fig06-091.png" class="image"/>
-            <figcaption>Fig 06-091</figcaption>
+            <img src="./images/Fig07-091.png" class="image"/>
+            <figcaption>Fig 07-091</figcaption>
           </figure>
           <p>and we'll go right back into that existing DataTemplate.</p>
           <figure>
-            <img src="./images/Fig06-092.png" class="image"/>
-            <figcaption>Fig 06-092</figcaption>
+            <img src="./images/Fig07-092.png" class="image"/>
+            <figcaption>Fig 07-092</figcaption>
           </figure>
         </div>
         <div class="panel-body">
@@ -1209,8 +1209,8 @@ using (ZzaDbContext context = new ZzaDbContext())
           </p>
           <p>The starting point here is a simple WPF application project.</p>
           <figure>
-            <img src="./images/Fig06-093.png" class="image"/>
-            <figcaption>Fig 06-093</figcaption>
+            <img src="./images/Fig07-093.png" class="image"/>
+            <figcaption>Fig 07-093</figcaption>
           </figure>
           <p>The only thing I've added here is I've added in the Zza data layer project that we've been using for our
             data, and I added a ViewModel where this ViewModel class is just set up to expose a Customers collection:
@@ -1229,7 +1229,7 @@ public ObservableCollection&lt;Customer&gt; Customers
         PropertyChanged(this, new PropertyChangedEventArgs(&quot;Customers&quot;));
     }
 }</code></pre>
-            <figcaption>Fig 06-094</figcaption>
+            <figcaption>Fig 07-094</figcaption>
           </figure>
           <p>and it has some hard-coded data in there right now for a couple of customers that are being put into that
             collection, but only if you're not in the Design-Time environment:
@@ -1246,7 +1246,7 @@ public ObservableCollection&lt;Customer&gt; Customers
         };
     }
 }</code></pre>
-            <figcaption>Fig 06-095</figcaption>
+            <figcaption>Fig 07-095</figcaption>
           </figure>
           <p>So this is one of the first things that, you know, starts tying in with the sample data here, is you can
             see that you have this switch available to you that we've used before to make sure the database calls did
@@ -1268,7 +1268,7 @@ public ObservableCollection&lt;Customer&gt; Customers
         };
     }
 }</code></pre>
-            <figcaption>Fig 06-096</figcaption>
+            <figcaption>Fig 07-096</figcaption>
           </figure>
           <p>and make it so that this data is only there if we're in the designer. Now this ViewModel is not hooked up
             to anything yet, we'll hook this up in a bit.
@@ -1277,20 +1277,20 @@ public ObservableCollection&lt;Customer&gt; Customers
             for some of the primary entities we'll be working with:
           </p>
           <figure>
-            <img src="./images/Fig06-097.png" class="image"/>
+            <img src="./images/Fig07-097.png" class="image"/>
             <figcaption>Fig 09-097</figcaption>
           </figure>
           <p>So I'm going to add one more for my ViewModel itself, because it is just a Data Object that I can bind to
             its properties:
           </p>
           <figure>
-            <img src="./images/Fig06-098.png" class="image"/>
-            <figcaption>Fig 06-098</figcaption>
+            <img src="./images/Fig07-098.png" class="image"/>
+            <figcaption>Fig 07-098</figcaption>
           </figure>
           <p>So I'm going to drill down in here:</p>
           <figure>
-            <img src="./images/Fig06-099.png" class="image"/>
-            <figcaption>Fig 06-099</figcaption>
+            <img src="./images/Fig07-099.png" class="image"/>
+            <figcaption>Fig 07-099</figcaption>
           </figure>
           <p>and check the box for my MainWindowViewModel.</p>
           <p> Now as we've seen before in other demos, I could then drag this Customers collection out onto my
@@ -1298,15 +1298,15 @@ public ObservableCollection&lt;Customer&gt; Customers
             it would also generate a CollectionViewSource for Customers.
           </p>
           <figure>
-            <img src="./images/Fig06-100.png" class="image"/>
-            <figcaption>Fig 06-100</figcaption>
+            <img src="./images/Fig07-100.png" class="image"/>
+            <figcaption>Fig 07-100</figcaption>
           </figure>
           <p>I'm going to Reset Layout, All, and I'm going to drag up the bottom and bring out a TextBox from the
             Toolbox that we'll also use in this demo.
           </p>
           <figure>
-            <img src="./images/Fig06-101.png" class="image"/>
-            <figcaption>Fig 06-101</figcaption>
+            <img src="./images/Fig07-101.png" class="image"/>
+            <figcaption>Fig 07-101</figcaption>
           </figure>
           <p>Now if we go into the XAML and inspect what was generated from the drag-and-drop of the ViewModel, it's a
             little bit more complicated than some of the demos we've seen before, but the thing I want to focus on here
@@ -1314,7 +1314,7 @@ public ObservableCollection&lt;Customer&gt; Customers
           </p>
           <figure>
             <pre><code class="language-csharp">d:DesignSource=&quot;{d:DesignInstance</code></pre>
-            <figcaption>Fig 06-102</figcaption>
+            <figcaption>Fig 07-102</figcaption>
           </figure>
           <p>I pointed it out before, but it generated a CollectionViewSource for the object that we dragged and
             dropped, and it uses this d:DesignSource property. So this d:namespace is a special namespace declared up
@@ -1323,7 +1323,7 @@ public ObservableCollection&lt;Customer&gt; Customers
           <figure>
                 <pre><code class="language-csharp">xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot;
 xmlns:mc=&quot;https://schemas.openxmlformats.org/markup-compatibility/2006&quot;</code></pre>
-            <figcaption>Fig 06-103</figcaption>
+            <figcaption>Fig 07-103</figcaption>
           </figure>
           <p>that contains a bunch of custom markup extensions that are able to detect whether they are in the designer
             or not. And they're really just using that same code that I showed in the ViewModel to do that detection.
@@ -1331,7 +1331,7 @@ xmlns:mc=&quot;https://schemas.openxmlformats.org/markup-compatibility/2006&quot
           </p>
           <figure>
             <pre><code class="language-csharp">d:DesignSource=&quot;{d:DesignInstance {x:Type local:MainWindowViewModel}, CreateList=True}&quot; /&gt;</code></pre>
-            <figcaption>Fig 06-104</figcaption>
+            <figcaption>Fig 07-104</figcaption>
           </figure>
           <p>Can basically null themselves out or make themselves so they do nothing when you're not in the designer. So
             it's as if these properties are not even here if you're at runtime.
@@ -1344,7 +1344,7 @@ xmlns:mc=&quot;https://schemas.openxmlformats.org/markup-compatibility/2006&quot
           <p>And you can see over here</p>
           <figure>
             <pre><code class="language-csharp">d:DesignSource=&quot;{d:DesignInstance {x:Type local:MainWindowViewModel}, CreateList=True}&quot; /&gt;</code></pre>
-            <figcaption>Fig 06-105</figcaption>
+            <figcaption>Fig 07-105</figcaption>
           </figure>
           <p>As we've talked about before, the CreateList=True is part of the CollectionViewSource to say, even though
             we're talking about an Entity type here, make it a collection of those entities.
@@ -1358,7 +1358,7 @@ xmlns:mc=&quot;https://schemas.openxmlformats.org/markup-compatibility/2006&quot
           </p>
           <figure>
             <pre><code class="language-csharp">Loaded=&quot;Window_Loaded&quot;&gt;</code></pre>
-            <figcaption>Fig 06-106</figcaption>
+            <figcaption>Fig 07-106</figcaption>
           </figure>
           <p>I'm going to kill these CollectionViewSources</p>
           <figure>
@@ -1368,12 +1368,12 @@ xmlns:mc=&quot;https://schemas.openxmlformats.org/markup-compatibility/2006&quot
     &lt;CollectionViewSource x:Key=&quot;mainWindowViewModelCustomersViewSource&quot;
                           Source=&quot;{Binding Customers, Source={StaticResource mainWindowViewModelViewSource}&quot; /&gt;
 &lt;/Window.Resources&gt;</code></pre>
-            <figcaption>Fig 06-107</figcaption>
+            <figcaption>Fig 07-107</figcaption>
           </figure>
           <p>I'm going to get rid of this DataContext on the root Grid:</p>
           <figure>
             <pre><code class="language-csharp">&lt;Grid DataContext=&quot;{StaticResource mainWindowViewModelCustomersViewSource}&quot;&gt;</code></pre>
-            <figcaption>Fig 06-108</figcaption>
+            <figcaption>Fig 07-108</figcaption>
           </figure>
           <p>and I'm going to set the binding on the DataGrid to be the Customers property that we expect to be exposed
             from our ViewModel:
@@ -1382,22 +1382,22 @@ xmlns:mc=&quot;https://schemas.openxmlformats.org/markup-compatibility/2006&quot
                 <pre><code class="language-csharp">&lt;DataGrid x:Name=&quot;customersDataGrid&quot;
     RowDetailsVisibilityMode=&quot;VisibleWhenSelected&quot;
     ItemsSource=&quot;{Binding Customers}&quot;&gt;</code></pre>
-            <figcaption>Fig 06-109</figcaption>
+            <figcaption>Fig 07-109</figcaption>
           </figure>
           <p>Now I'm going to drop in here and set the DataContext to the Window to our ViewModel.</p>
           <figure>
                 <pre><code class="language-csharp">&lt;Window.DataContext&gt;
     &lt;local:MainWindowViewModel /&gt;
 &lt;/Window.DataContext&gt;</code></pre>
-            <figcaption>Fig 06-110</figcaption>
+            <figcaption>Fig 07-110</figcaption>
           </figure>
           <p>This would be a fairly standard structuring for MVVM. Now the reason I'm doing this is to emphasize
             something about the designer. I'm going to go ahead and build here, and then we'll go over to the design
             surface itself, and we see that there is immediately data there.
           </p>
           <figure>
-            <img src="./images/Fig06-111.png" class="image"/>
-            <figcaption>Fig 06-111</figcaption>
+            <img src="./images/Fig07-111.png" class="image"/>
+            <figcaption>Fig 07-111</figcaption>
           </figure>
           <p>And that is because if we go back to our ViewModel, if you remember, we put this statement in here that
             says, only if you're in Design mode, populate the Customers with these hard-coded data values:
@@ -1414,7 +1414,7 @@ xmlns:mc=&quot;https://schemas.openxmlformats.org/markup-compatibility/2006&quot
         };
     }
 }</code></pre>
-            <figcaption>Fig 06-112</figcaption>
+            <figcaption>Fig 07-112</figcaption>
           </figure>
           <p>And it emphasizes the fact that in the Design-Time environment, what you're seeing in the designer is live
             code basically. It is constructing all the elements in the element tree and anything done during their
@@ -1423,14 +1423,14 @@ xmlns:mc=&quot;https://schemas.openxmlformats.org/markup-compatibility/2006&quot
           <figure>
                 <pre><code class="language-csharp">&lt;Window
     xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;</code></pre>
-            <figcaption>Fig 06-113</figcaption>
+            <figcaption>Fig 07-113</figcaption>
           </figure>
           <p>And then to set the DataContext property it constructed the MainViewModel:</p>
           <figure>
                 <pre><code class="language-csharp"> &lt;Window.DataContext&gt;
     &lt;local:MainWindowViewModel/&gt;
 &lt;/Window.DataContext&gt;</code></pre>
-            <figcaption>Fig 06-114</figcaption>
+            <figcaption>Fig 07-114</figcaption>
           </figure>
           <p>And in the MainViewModel's constructor, it checked and said, yes I am in Design mode, so I'll new up this
             collection of customers and set those properties:
@@ -1444,7 +1444,7 @@ xmlns:mc=&quot;https://schemas.openxmlformats.org/markup-compatibility/2006&quot
         new Customer { Id = Guid.NewGuid(), FirstName = &quot;Fred&quot;, LastName = &quot;Flintstone&quot; }
     };
 }</code></pre>
-            <figcaption>Fig 06-115</figcaption>
+            <figcaption>Fig 07-115</figcaption>
           </figure>
           <p>because we're setting customers here and it raises PropertyChanged:</p>
           <figure>
@@ -1463,7 +1463,7 @@ xmlns:mc=&quot;https://schemas.openxmlformats.org/markup-compatibility/2006&quot
     }
     public event PropertyChangedEventHandler PropertyChanged = delegate { };
 }</code></pre>
-            <figcaption>Fig 06-116</figcaption>
+            <figcaption>Fig 07-116</figcaption>
           </figure>
           <p>events fire, and you're actually looking at running code in the designer here.</p>
           <p>And so, this is one way you can get some sample data into your Design-Time environment, is if you have some
@@ -1472,8 +1472,8 @@ xmlns:mc=&quot;https://schemas.openxmlformats.org/markup-compatibility/2006&quot
             it's going to look like.
           </p>
           <figure>
-            <img src="./images/Fig06-117.png" class="image"/>
-            <figcaption>Fig 06-117</figcaption>
+            <img src="./images/Fig07-117.png" class="image"/>
+            <figcaption>Fig 07-117</figcaption>
           </figure>
           <p>The problem with that approach is you probably don't want to have all this hard-coded data:</p>
           <figure>
@@ -1482,7 +1482,7 @@ xmlns:mc=&quot;https://schemas.openxmlformats.org/markup-compatibility/2006&quot
     new Customer { Id = Guid.NewGuid(), FirstName = &quot;Brian&quot;, LastName = &quot;Noyes&quot; },
     new Customer { Id = Guid.NewGuid(), FirstName = &quot;Fred&quot;, LastName = &quot;Flintstone&quot; }
 };</code></pre>
-            <figcaption>Fig 06-118</figcaption>
+            <figcaption>Fig 07-118</figcaption>
           </figure>
           <p>especially any complex object model, cluttering up your production code like this, and that's where some of
             the other Design-Time data features come in.
@@ -1517,22 +1517,22 @@ xmlns:mc=&quot;https://schemas.openxmlformats.org/markup-compatibility/2006&quot
         new Customer { Id = Guid.NewGuid(), FirstName = &quot;Fred&quot;, LastName = &quot;Flintstone&quot; }
     };
 }</code></pre>
-            <figcaption>Fig 06-119</figcaption>
+            <figcaption>Fig 07-119</figcaption>
           </figure>
           <p>so that now these customers will only be populated at runtime. And again, if I simply build and go back to
             the Designer, now we can see our data is gone.
           </p>
           <figure>
-            <img src="./images/Fig06-120.png" class="image"/>
-            <figcaption>Fig 06-120</figcaption>
+            <img src="./images/Fig07-120.png" class="image"/>
+            <figcaption>Fig 07-120</figcaption>
           </figure>
           <p>Now I want to provide some sample data there, and there's a couple ways to go about this. There's one very
             simple and crude way, which is that you can go into your project and you can add a new Resource Dictionary
             which really just gives you a flat XAML file, and we'll call this MyDesignData:
           </p>
           <figure>
-            <img src="./images/Fig06-121.png" class="image"/>
-            <figcaption>Fig 06-121</figcaption>
+            <img src="./images/Fig07-121.png" class="image"/>
+            <figcaption>Fig 07-121</figcaption>
           </figure>
           <p>Once I'm in here, I can add in other namespaces, such as my Zza.Data namespace</p>
           <figure>
@@ -1540,7 +1540,7 @@ xmlns:mc=&quot;https://schemas.openxmlformats.org/markup-compatibility/2006&quot
                     xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
                     xmlns:data=&quot;clr-namesapce:Zza.Data;assembly=Zza.Data&quot;&gt;
 &lt;/ResourceDictionary&gt;</code></pre>
-            <figcaption>Fig 06-122</figcaption>
+            <figcaption>Fig 07-122</figcaption>
           </figure>
           <p>And then I could change the root element to be some object from that namespace:</p>
           <figure>
@@ -1548,7 +1548,7 @@ xmlns:mc=&quot;https://schemas.openxmlformats.org/markup-compatibility/2006&quot
                xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
            xmlns:data=&quot;clr-namespace:Zza.Data;assembly=Zza.Data&quot;&gt;
 &lt;/data:Customer&gt;</code></pre>
-            <figcaption>Fig 06-123</figcaption>
+            <figcaption>Fig 07-123</figcaption>
           </figure>
           <p>Once I've done that, I could drop in here and just start setting properties on the Customer. So I could set
             my Id equal to a GUID, I could set my FirstName equal to some value:
@@ -1559,7 +1559,7 @@ xmlns:mc=&quot;https://schemas.openxmlformats.org/markup-compatibility/2006&quot
             xmlns:data=&quot;clr-namespace:Zza.Data;assembly=Zza.Data&quot;&gt;
             Id:=&quot;5248500A-F89E-4FF2-83CE-E6A20205EAD2D&quot; FirstName=&quot;Brian&quot;&gt;
 &lt;/data:Customer&gt;</code></pre>
-            <figcaption>Fig 06-124</figcaption>
+            <figcaption>Fig 07-124</figcaption>
           </figure>
           <p>Now I have a sample data object that I can actually use in the Design-Time environment, so I'll save that
             and show you the direct way of using it.
@@ -1578,7 +1578,7 @@ xmlns:mc=&quot;https://schemas.openxmlformats.org/markup-compatibility/2006&quot
                     Text=&quot;{Binding FirstName}&quot;
                     VerticalAlignment=&quot;Top&quot;
                     Width=&quot;120&quot;/&gt;</code></pre>
-            <figcaption>Fig 06-125</figcaption>
+            <figcaption>Fig 07-125</figcaption>
           </figure>
           <p> It's all pointed to MyDesignData, and it's basically going to look into that XAML file, take the root
             element, create an instance of it, and use that as the DataContext.
@@ -1586,13 +1586,13 @@ xmlns:mc=&quot;https://schemas.openxmlformats.org/markup-compatibility/2006&quot
           <p>Then I can take the text here and just set up a binding to FirstName:</p>
           <figure>
             <pre><code class="language-csharp">Text=&quot;{Binding FirstName}&quot;</code></pre>
-            <figcaption>Fig 06-126</figcaption>
+            <figcaption>Fig 07-126</figcaption>
           </figure>
           <p>And as soon as I do that, in the designer we can see it's pulling Brian out of that DesignTimeData file.
           </p>
           <figure>
-            <img src="./images/Fig06-127.png" class="image"/>
-            <figcaption>Fig 06-127</figcaption>
+            <img src="./images/Fig07-127.png" class="image"/>
+            <figcaption>Fig 07-127</figcaption>
           </figure>
           <p>Now setting up those data files by hand can be a little bit of work. Unfortunately, there's no direct
             support in Visual Studio for this, but if you just drop over to Blend for Visual Studio, I'm going to fire
@@ -1602,27 +1602,27 @@ xmlns:mc=&quot;https://schemas.openxmlformats.org/markup-compatibility/2006&quot
           <p>I can go and open the same project, and once we're in here we can go to this Data tab over on the right:
           </p>
           <figure>
-            <img src="./images/Fig06-128.png" class="image"/>
-            <figcaption>Fig 06-128</figcaption>
+            <img src="./images/Fig07-128.png" class="image"/>
+            <figcaption>Fig 07-128</figcaption>
           </figure>
           <p>And we can select at a Project level, and in the upper right corner you can see Create Sample Data:
           </p>
           <figure>
-            <img src="./images/Fig06-129.png" class="image"/>
-            <figcaption>Fig 06-129</figcaption>
+            <img src="./images/Fig07-129.png" class="image"/>
+            <figcaption>Fig 07-129</figcaption>
           </figure>
           <p>We'll say, New Sample Data, and you can also create sample data from a class, but I'm just going to show
             you the raw experience here.
           </p>
           <figure>
-            <img src="./images/Fig06-130.png" class="image"/>
-            <figcaption>Fig 06-130</figcaption>
+            <img src="./images/Fig07-130.png" class="image"/>
+            <figcaption>Fig 07-130</figcaption>
           </figure>
           <p>I'll say, Create Sample Data, and we'll accept Sample Data Source:</p>
           <p>And what it starts out with here is it's got a root level collection, which we'll call Customers:</p>
           <figure>
-            <img src="./images/Fig06-131.png" class="image"/>
-            <figcaption>Fig 06-131</figcaption>
+            <img src="./images/Fig07-131.png" class="image"/>
+            <figcaption>Fig 07-131</figcaption>
           </figure>
           <p>Just like the Customers property hanging off of our ViewModel. And then it's got a couple of properties
             declared here, first off, a string, so we'll rename that one to be FirstName.
@@ -1631,8 +1631,8 @@ xmlns:mc=&quot;https://schemas.openxmlformats.org/markup-compatibility/2006&quot
             various options depending on the Type that you select, and we'll call this Id:
           </p>
           <figure>
-            <img src="./images/Fig06-132.png" class="image"/>
-            <figcaption>Fig 06-132</figcaption>
+            <img src="./images/Fig07-132.png" class="image"/>
+            <figcaption>Fig 07-132</figcaption>
           </figure>
           <p>Now you can see there's not a one-to-one match here, our ID is actually a GUID, a GUID is not an option for
             the sample data, but for getting the UI laid out and stuff, this can get you pretty close.
@@ -1641,48 +1641,48 @@ xmlns:mc=&quot;https://schemas.openxmlformats.org/markup-compatibility/2006&quot
             DataGrid out of here that was already here.
           </p>
           <figure>
-            <img src="./images/Fig06-133.png" class="image"/>
-            <figcaption>Fig 06-133</figcaption>
+            <img src="./images/Fig07-133.png" class="image"/>
+            <figcaption>Fig 07-133</figcaption>
           </figure>
           <p>I'm going to go into the Toolbox here, find a DataGrid:</p>
           <figure>
-            <img src="./images/Fig06-134.png" class="image"/>
-            <figcaption>Fig 06-134</figcaption>
+            <img src="./images/Fig07-134.png" class="image"/>
+            <figcaption>Fig 07-134</figcaption>
           </figure>
           <p>Select my root Grid here in the MainWindow, and double-click on the DataGrid.</p>
           <figure>
-            <img src="./images/Fig06-135.png" class="image"/>
-            <figcaption>Fig 06-135</figcaption>
+            <img src="./images/Fig07-135.png" class="image"/>
+            <figcaption>Fig 07-135</figcaption>
           </figure>
           <p>That's going to add a new instance of it. I'm going to go ahead and Reset Layout, All:</p>
           <figure>
-            <img src="./images/Fig06-136.png" class="image"/>
-            <figcaption>Fig 06-136</figcaption>
+            <img src="./images/Fig07-136.png" class="image"/>
+            <figcaption>Fig 07-136</figcaption>
           </figure>
           <p>It's going to end up overlaying my TextBox, but we're not going to use that anymore anyway.</p>
           <p>Now that I have an empty DataGrid here, I can drag-and-drop the Customers collection from my Sample Data
             Source onto my DataGrid:
           </p>
           <figure>
-            <img src="./images/Fig06-137.png" class="image"/>
-            <figcaption>Fig 06-137</figcaption>
+            <img src="./images/Fig07-137.png" class="image"/>
+            <figcaption>Fig 07-137</figcaption>
           </figure>
           <p>And we can see it immediately populates with some sample data.</p>
           <figure>
-            <img src="./images/Fig06-138.png" class="image"/>
-            <figcaption>Fig 06-138</figcaption>
+            <img src="./images/Fig07-138.png" class="image"/>
+            <figcaption>Fig 07-138</figcaption>
           </figure>
           <p>Now I'm just going to save what I did and jump back over to Visual Studio. We'll Reload All:</p>
           <figure>
-            <img src="./images/Fig06-139.png" class="image"/>
-            <figcaption>Fig 06-139</figcaption>
+            <img src="./images/Fig07-139.png" class="image"/>
+            <figcaption>Fig 07-139</figcaption>
           </figure>
           <p>and let's take a look at what it did for us. First off, you can see it added a Sample Data subfolder, the
             SampleDataSource, and under that a XAML file with an xsd.
           </p>
           <figure>
-            <img src="./images/Fig06-140.png" class="image"/>
-            <figcaption>Fig 06-140</figcaption>
+            <img src="./images/Fig07-140.png" class="image"/>
+            <figcaption>Fig 07-140</figcaption>
           </figure>
           <p>The structure of that XAML file is kind of similar to what we were setting up by hand.</p>
           <figure>
@@ -1692,7 +1692,7 @@ xmlns:mc=&quot;https://schemas.openxmlformats.org/markup-compatibility/2006&quot
       changes to this file can cause errors.
 --&amp;gt;
 &amp;lt;SampleData:SampleCustomersDataSource xmlns:SampleData=&amp;quot;clr-namespace:Expression.Blend.SampleData.SampleCustomersDataSource&amp;quot;&amp;gt;&amp;lt;SampleData:SampleCustomersDataSource.Customers&amp;gt;&amp;lt;SampleData:CustomersItem Id=&amp;quot;Aliquam integer class&amp;quot; FirstName=&amp;quot;Class aliquam integer&amp;quot; LastName=&amp;quot;Aenean maecenas&amp;quot;/&amp;gt;&amp;lt;SampleData:CustomersItem Id=&amp;quot;Aenean mauris quisque&amp;quot; FirstName=&amp;quot;Nam quisque aenean maecenas&amp;quot; LastName=&amp;quot;Cras mauris aliquam&amp;quot;/&amp;gt;&amp;lt;SampleData:CustomersItem Id=&amp;quot;Maecenas nullam nam vivamus&amp;quot; FirstName=&amp;quot;Cras vivamus sed&amp;quot; LastName=&amp;quot;Nullam duis nunc nam&amp;quot;/&amp;gt;&amp;lt;SampleData:CustomersItem Id=&amp;quot;Praesent curae sed accumsan&amp;quot; FirstName=&amp;quot;Mauris dis praesent&amp;quot; LastName=&amp;quot;Aptent class praesent&amp;quot;/&amp;gt;&amp;lt;SampleData:CustomersItem Id=&amp;quot;Donec aliquam&amp;quot; FirstName=&amp;quot;Accumsan est&amp;quot; LastName=&amp;quot;Amet integer auctor&amp;quot;/&amp;gt;&amp;lt;SampleData:CustomersItem Id=&amp;quot;Dis etiam bibendum est&amp;quot; FirstName=&amp;quot;Curae bibendum&amp;quot; LastName=&amp;quot;Congue quisque ante&amp;quot;/&amp;gt;&amp;lt;SampleData:CustomersItem Id=&amp;quot;Fusce aptent cras&amp;quot; FirstName=&amp;quot;Nullam aptent aliquam&amp;quot; LastName=&amp;quot;Sed cursus dis&amp;quot;/&amp;gt;&amp;lt;SampleData:CustomersItem Id=&amp;quot;Aliquet lorem morbi&amp;quot; FirstName=&amp;quot;Aliquet dictumst hac eleifend&amp;quot; LastName=&amp;quot;Dictum vivamus est&amp;quot;/&amp;gt;&amp;lt;SampleData:CustomersItem Id=&amp;quot;Hac dictumst&amp;quot; FirstName=&amp;quot;Blandit auctor&amp;quot; LastName=&amp;quot;Curae aliquam hac arcu&amp;quot;/&amp;gt;&amp;lt;SampleData:CustomersItem Id=&amp;quot;Duis nulla leo eleifend&amp;quot; FirstName=&amp;quot;Facilisi duis&amp;quot; LastName=&amp;quot;Aliquet leo donec&amp;quot;/&amp;gt;&amp;lt;/SampleData:SampleCustomersDataSource.Customers&amp;gt;&amp;lt;/SampleData:SampleCustomersDataSource&amp;gt;</code></pre>
-            <figcaption>Fig 06-141</figcaption>
+            <figcaption>Fig 07-141</figcaption>
           </figure>
           <p>It's got a single root object, it has a Customers collection property, and then it's got individual
             customer items underneath that.
@@ -1704,14 +1704,14 @@ xmlns:mc=&quot;https://schemas.openxmlformats.org/markup-compatibility/2006&quot
           <p>So as long as this:</p>
           <figure>
             <pre><code class="language-csharp">&lt;SampleData:SampleCustomersDataSource.Customers&gt;</code></pre>
-            <figcaption>Fig 06-142</figcaption>
+            <figcaption>Fig 07-142</figcaption>
           </figure>
           <p>Matches up with our Customers property on our ViewModel and the properties we put on our CustomerItems
             match up with the properties on a Customer:
           </p>
           <figure>
             <pre><code class="language-csharp">FirstName=&quot;Class aliquam integer&quot; LastName=&quot;Aenean maecenas&quot;</code></pre>
-            <figcaption>Fig 06-143</figcaption>
+            <figcaption>Fig 07-143</figcaption>
           </figure>
           <p>we should be good to go for getting this all hooked up.</p>
           <p>Because we selected Project Level, it declared an instance of that SampleDataSource as an object inside of
@@ -1723,7 +1723,7 @@ xmlns:mc=&quot;https://schemas.openxmlformats.org/markup-compatibility/2006&quot
     &lt;SampleData:SampleCustomersDataSource x:Key=&quot;SampleCustomersDataSource&quot; d:IsDataSource=&quot;True&quot;/&gt;
 
 &lt;/Application.Resources&gt;</code></pre>
-            <figcaption>Fig 06-144</figcaption>
+            <figcaption>Fig 07-144</figcaption>
           </figure>
           <p>In the MainWindow, you can see what it did is declared our DataGrid from our drag-and-drop operation:
           </p>
@@ -1735,17 +1735,17 @@ xmlns:mc=&quot;https://schemas.openxmlformats.org/markup-compatibility/2006&quot
         &lt;DataGridTextColumn Binding=&quot;{Binding LastName}&quot; Header=&quot;LastName&quot;/&gt;
     &lt;/DataGrid.Columns&gt;
 &lt;/DataGrid&gt;</code></pre>
-            <figcaption>Fig 06-145</figcaption>
+            <figcaption>Fig 07-145</figcaption>
           </figure>
           <p>and it set the DataContext on that equal to that SampleDataSource.</p>
           <figure>
             <pre><code class="language-csharp">&lt;Grid d:DataContext=&quot;{Binding Source={StaticResource SampleCustomersDataSource}}&quot; Margin=&quot;0,0,0.4,71.8&quot;&gt;</code></pre>
-            <figcaption>Fig 06-146</figcaption>
+            <figcaption>Fig 07-146</figcaption>
           </figure>
           <p>Now it should have, and sometimes does, use the d:DataContext here.</p>
           <figure>
             <pre><code class="language-csharp">d:DataContext=&quot;{Binding Source={StaticResource SampleCustomersDataSource}}&quot;</code></pre>
-            <figcaption>Fig 06-147</figcaption>
+            <figcaption>Fig 07-147</figcaption>
           </figure>
           <p>You really only want that to be the DataContext on this DataGrid for DesignTimeData. For runtime, we want
             our DataContext to flow down from the Window:
@@ -1754,13 +1754,13 @@ xmlns:mc=&quot;https://schemas.openxmlformats.org/markup-compatibility/2006&quot
                 <pre><code class="language-csharp"> &lt;Window.DataContext&gt;
     &lt;local:MainWindowViewModel/&gt;
 &lt;/Window.DataContext&gt;</code></pre>
-            <figcaption>Fig 06-148</figcaption>
+            <figcaption>Fig 07-148</figcaption>
           </figure>
           <p>especially if we're doing MVVM like this.</p>
           <p>So I can build, and go back to the designer, and just prove that our sample data is still there.</p>
           <figure>
-            <img src="./images/Fig06-149.png" class="image"/>
-            <figcaption>Fig 06-149</figcaption>
+            <img src="./images/Fig07-149.png" class="image"/>
+            <figcaption>Fig 07-149</figcaption>
           </figure>
           <p>But now, because our ViewModel was populating our Customers collection, if we are not in the designer, and
             because this DataContext is only going to overwrite what DataContext comes down the visual tree if we're in
@@ -1768,14 +1768,14 @@ xmlns:mc=&quot;https://schemas.openxmlformats.org/markup-compatibility/2006&quot
             at runtime:
           </p>
           <figure>
-            <img src="./images/Fig06-150.png" class="image"/>
-            <figcaption>Fig 06-150</figcaption>
+            <img src="./images/Fig07-150.png" class="image"/>
+            <figcaption>Fig 07-150</figcaption>
           </figure>
           <p>But in the designer we've got our sample data there.</p>
           <p>So you can see these d:namespace markup extensions:</p>
           <figure>
             <pre><code class="language-csharp">d:DataContext=&quot;{Binding Source={StaticResource Samp...</code></pre>
-            <figcaption>Fig 06-151</figcaption>
+            <figcaption>Fig 07-151</figcaption>
           </figure>
           <p>and properties give you a lot of power and flexibility to declare things that will be there in the
             Design-Time environment. These can help you in getting your UI laid out, visualizing what it's going to look

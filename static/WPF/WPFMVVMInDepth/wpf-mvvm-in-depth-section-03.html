@@ -9,6 +9,7 @@
   <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
         integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" rel="stylesheet">
   <link href="prism.css" rel="stylesheet">
+  <link href="../../../src/styles.css" rel="stylesheet" />
   <script src="prism.js"></script>
   <style>
 
@@ -59,17 +60,12 @@
             use it, and how you use it go way beyond what I have time to cover in this course. These are the types of
             calls that should be made async to keep the UI responsive.
           </p>
-          <p>For more info on async and await checkout Pause and Play with Await and the TPL Async course by Ian
-            Griffiths from Pluralsight.
+          <p>For more info on async and await checkout Getting Started with Asynchronous Programming in .NET by Filip Ekberg
+            from Pluralsight.<a href='https://app.pluralsight.com/library/courses/getting-started-with-asynchronous-programming-dotnet/table-of-contents'>here.</a>
           </p>
           <h2>Demo: Simple View with No MVVM or Data Binding</h2>
-          <div class="example">
-            <div class="input-group">
-              <input id="Ex02-001" type="text"
+              <input id="Ex02-001" type="text" style="width: 100%"
                      value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 2\ZzaDashboard-NoDataBinding\ZzaDashboard.sln">
-<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex02-001"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
           <p>
             In this first demo we're going to start with a very simple app that does not do any MVVM nor any data
             binding. First let's see it running so you can visualize what we're going to build up to:
@@ -286,13 +282,9 @@
             without data binding. In the next demo we'll quickly see how this evolves by using data binding.
           </p>
           <h2>Demo: Simple View with Data Binding</h2>
-          <div class="example">
-            <div class="input-group">
-              <input id="Ex02-002" type="text"
-                     value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 2\ZzaDashboard-DataBindingNoMVVM\ZzaDashboard.sln">
-              <span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex02-002"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
+            <div>
+              <input id="Ex02-002" type="text" style="width: 100%;" 
+              value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 2\ZzaDashboard-DataBindingNoMVVM\ZzaDashboard.sln">
           <p>
             In this next variant of the demo we have the same functionality but now we're moving in to actually using
             data binding to clean up the code some. So we have the same setup where we have the MainWindow with an
@@ -305,11 +297,25 @@
     VerticalAlignment=&quot;Top&quot; /&gt;</code></pre>
             <figcaption>Fig 02-013</figcaption>
           </figure>
-          <p>And the CustomerEditView is defined down in the Customers folder still. The main difference here is that
-            notice now the individual input controls are using Two-way databinding where they bind to their DataContext
+          <p>And the CustomerEditView is defined down in the Customers folder still:</p>
+          <figure>
+            <img src="./images/Fig02-013A.png"/>
+      <figcaption>Fig 02-013A</figcaption>
+    </figure>
+          <p>The main difference here is that
+            notice now the individual input controls are using Two-way databinding:</p>
+<figure>
+  <img src="./images/Fig02-013B.png"/>
+<figcaption>Fig 02-013B</figcaption>
+</figure>
+            <p>where they bind to their DataContext
             and expose that DataContext to expose a LastName, FirstName and Phone property. The Save button is just
-            using a click handler to get to an OnSave() method in the code-behind.
+            using a click handler to get to an OnSave() method in the code-behind:
           </p>
+          <figure>
+            <img src="./images/Fig02-013C.png"/>
+          <figcaption>Fig 02-013C</figcaption>
+          </figure> 
           <p>
             So now if we go and look what this does to the code-behind we can see it cleans things up considerably:
           </p>
@@ -356,13 +362,8 @@ private async void OnSave(object sender, RoutedEventArgs e)
             interaction logic into this separate thing we call a ViewModel.
           </p>
           <h2>Demo: Simple View Transformed to MVVM</h2>
-          <div class="example">
-            <div class="input-group">
-              <input id="Ex02-003" type="text"
+              <input id="Ex02-003" type="text" style="width: 100%"
                      value="C:\DevelopmentTutorials\Pluralsight-Courses\WPF MVVM In Depth\Module 2\ZzaDashboard-SimpleMVVM\ZzaDashboard.sln">
-<span class="input-group-btn"><button class="btn" data-clipboard-target="#Ex02-001"><img src="/./src/assets/clippy.svg" width="13" alt="Copy to clipboard"></button></span>
-            </div>
-          </div>
           <p>Now that leads us to this version of our simple little demo. We want to take this thing and turn it into an
             MVVM application with our single View that we're using. So that means we need to break up our View into a
             View and ViewModel instead of putting code in a code-behind we put all the interaction logic and data
@@ -373,11 +374,9 @@ private async void OnSave(object sender, RoutedEventArgs e)
             into the container.
           </p>
           <figure>
-                <pre><code class="language-csharp">Grid&gt;
-        &lt;Customers:CustomerEditView HorizontalAlignment=&quot;Left&quot;
-                                    Margin=&quot;42,35,0,0&quot;
-                                    VerticalAlignment=&quot;Top&quot; /&gt;
-    &lt;/Grid&gt;</code></pre>
+                <pre><code class="language-csharp">&lt;Grid&gt;
+  &lt;Customers:CustomerEditView HorizontalAlignment=&quot;Left&quot; Margin=&quot;42,35,0,0&quot; VerticalAlignment=&quot;Top&quot; /&gt;
+&lt;/Grid&gt;</code></pre>
             <figcaption>Fig 02-017</figcaption>
           </figure>
           <p>Notice the CustomerId property has gone from the MainWindow.xaml file because for the purposes of this demo
@@ -418,11 +417,21 @@ private async void OnSave(object sender, RoutedEventArgs e)
             <figcaption>Fig 02-019</figcaption>
           </figure>
           <p>And the instance that's created there will then be set as the value on the DataContext of the View
-            satisfying the basic equation of MVVM. So this is where we're statically setting our CustomerId for demo
+            satisfying the basic equation of MVVM:</p>
+            <figure>
+              <pre><code class="language-csharp">View.DataContext = ViewModel</code></pre>
+          <figcaption>Fig 02-019A</figcaption>
+        </figure>
+            <p>So this is where we're statically setting our CustomerId for demo
             purposes in this case but again we'll get into ways to pass that dynamically later on.
           </p>
           <p>The individual data bindings are not much different than they were before but instead of just referencing
-            for example FirstName and LastName they reference Customer.FirstName so we are expecting that our ViewModel,
+            for example FirstName and LastName they reference Customer.FirstName:</p>
+            <figure>
+              <img src="./images/Fig02-019B.png"/>
+        <figcaption>Fig 02-019B</figcaption>
+      </figure>
+            <p> so we are expecting that our ViewModel,
             which is the overall DataContext for this View now, is exposing a single property called Customer. That
             Customer is a reference to a Model object so we're exposing a Model object through our ViewModel allowing
             the bindings to dot down through it to it's individual properties to grab the values in a nice declarative
@@ -452,7 +461,8 @@ private async void OnSave(object sender, RoutedEventArgs e)
 &lt;/i:Interaction.Triggers&gt;</code></pre>
             <figcaption>Fig 02-021</figcaption>
           </figure>
-          <p>It uses a behaviour from the Blend SDK called CallMethodAction which is able to call a method on some
+          <p>What this is is a chunk of code using the XAML behaviours library that you can add as a Nuget Package.
+            I'm using one of those behaviours from the library named CallMethodAction which is able to call a method on some
             object. So we specify what object do we want to invoke something on. Well specifically what we're trying to
             do here is we still have that initialization that has to happen on Load of the View. So we want to handle
             the Loaded event in a declarative fashion here and dispatch it as a method call invocation against a method
@@ -493,7 +503,12 @@ private async void OnSave(object sender, RoutedEventArgs e)
             <figcaption>Fig 02-024</figcaption>
           </figure>
           <p>
-            We also see that we are implementing the INotifyPropertyChanged event because we are not going to set that
+            We also see that we are implementing the INotifyPropertyChanged event:</p>
+            <figure>
+              <img src="./images/Fig02-024A.png"/>
+        <figcaption>Fig 02-024A</figcaption>
+      </figure>
+            <p>thats because we are not going to set that
             Customer until our LoadCustomer method (this is being called from the Loaded event) gets invoked. By that
             point construction is already done, the XAML parsing is done, all the Bindings have been evaluated so we
             need to be able to signal to the View that it should refresh its data binding. That happens by firing the
@@ -565,11 +580,11 @@ private async void OnSave()
             dive into more details on in a later module.
           </p>
           <p>
-            In the next module, we'll take a look at a number of things that are just features of the WPF platform, such
-            as data binding and XAML parsing. But we'll look specifically at how those features support and enable the
-            MVVM pattern. So even if your an experienced WPF developer and know how to use those features you may want
-            to check out that module to put them into the context of MVVM.
+            In the next module, we'll look at different ways of getting Views and ViewModels hooked up to each other for the
+            MVVM pattern. We'll look at XAML construction, code-behind construction, ViewModel locators and using DataTemplates with
+            the ViewModel first approach.  
           </p>
+          <p>We'll also take a brief look at Databinding and how it facilitates the communication between View and ViewModel</p>
         </div>
       </div>
     </div>
